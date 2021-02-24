@@ -5,8 +5,8 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Events_For_Woocommerce
- * @subpackage Events_For_Woocommerce/public
+ * @package    Event_Tickets_Manager_For_Woocommerce
+ * @subpackage Event_Tickets_Manager_For_Woocommerce/public
  */
 
 /**
@@ -14,13 +14,13 @@
  *
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the public-facing stylesheet and JavaScript.
- * namespace events_for_woocommerce_public.
+ * namespace event_tickets_manager_for_woocommerce_public.
  *
- * @package    Events_For_Woocommerce
- * @subpackage Events_For_Woocommerce/public
+ * @package    Event_Tickets_Manager_For_Woocommerce
+ * @subpackage Event_Tickets_Manager_For_Woocommerce/public
  * @author     makewebbetter <webmaster@makewebbetter.com>
  */
-class Events_For_Woocommerce_Public {
+class Event_Tickets_Manager_For_Woocommerce_Public {
 
 	/**
 	 * The ID of this plugin.
@@ -59,9 +59,9 @@ class Events_For_Woocommerce_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function efw_public_enqueue_styles() {
+	public function etmfw_public_enqueue_styles() {
 
-		wp_enqueue_style( $this->plugin_name, EVENTS_FOR_WOOCOMMERCE_DIR_URL . 'public/src/scss/events-for-woocommerce-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/scss/event-tickets-manager-for-woocommerce-public.css', array(), $this->version, 'all' );
 
 	}
 
@@ -70,10 +70,10 @@ class Events_For_Woocommerce_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function efw_public_enqueue_scripts() {
+	public function etmfw_public_enqueue_scripts() {
 
-		wp_register_script( $this->plugin_name, EVENTS_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/events-for-woocommerce-public.js', array( 'jquery' ), $this->version, false );
-		wp_localize_script( $this->plugin_name, 'efw_public_param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+		wp_register_script( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-public.js', array( 'jquery' ), $this->version, false );
+		wp_localize_script( $this->plugin_name, 'etmfw_public_param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		wp_enqueue_script( $this->plugin_name );
 
 	}

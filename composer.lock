@@ -6082,7 +6082,7 @@
                     "homepage": "https://symfony.com/contributors"
                 }
             ],
-            "description": "Loads and duefw YAML files",
+            "description": "Loads and duetmfw YAML files",
             "homepage": "https://symfony.com",
             "support": {
                 "source": "https://github.com/symfony/yaml/tree/v5.2.3"

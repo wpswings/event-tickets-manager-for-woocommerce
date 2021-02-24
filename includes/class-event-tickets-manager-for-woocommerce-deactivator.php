@@ -5,8 +5,8 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Events_For_Woocommerce
- * @subpackage Events_For_Woocommerce/includes
+ * @package    Event_Tickets_Manager_For_Woocommerce
+ * @subpackage Event_Tickets_Manager_For_Woocommerce/includes
  */
 
 /**
@@ -15,11 +15,11 @@
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  * @since      1.0.0
- * @package    Events_For_Woocommerce
- * @subpackage Events_For_Woocommerce/includes
+ * @package    Event_Tickets_Manager_For_Woocommerce
+ * @subpackage Event_Tickets_Manager_For_Woocommerce/includes
  * @author     makewebbetter <webmaster@makewebbetter.com>
  */
-class Events_For_Woocommerce_Deactivator {
+class Event_Tickets_Manager_For_Woocommerce_Deactivator {
 
 	/**
 	 * Short Description. (use period)
@@ -28,7 +28,7 @@ class Events_For_Woocommerce_Deactivator {
 	 *
 	 * @since    1.0.0
 	 */
-	public static function events_for_woocommerce_deactivate() {
+	public static function event_tickets_manager_for_woocommerce_deactivate() {
 
 	}
 

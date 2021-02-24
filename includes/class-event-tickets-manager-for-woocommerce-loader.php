@@ -5,8 +5,8 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Events_For_Woocommerce
- * @subpackage Events_For_Woocommerce/includes
+ * @package    Event_Tickets_Manager_For_Woocommerce
+ * @subpackage Event_Tickets_Manager_For_Woocommerce/includes
  */
 
 /**
@@ -16,11 +16,11 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Events_For_Woocommerce
- * @subpackage Events_For_Woocommerce/includes
+ * @package    Event_Tickets_Manager_For_Woocommerce
+ * @subpackage Event_Tickets_Manager_For_Woocommerce/includes
  * @author     makewebbetter <webmaster@makewebbetter.com>
  */
-class Events_For_Woocommerce_Loader {
+class Event_Tickets_Manager_For_Woocommerce_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.
@@ -113,7 +113,7 @@ class Events_For_Woocommerce_Loader {
 	 *
 	 * @since    1.0.0
 	 */
-	public function efw_run() {
+	public function etmfw_run() {
 
 		foreach ( $this->filters as $hook ) {
 			add_filter( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );

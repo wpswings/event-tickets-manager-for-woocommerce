@@ -21,7 +21,7 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Events_For_Woocommerce
+ * @package    Event_Tickets_Manager_For_Woocommerce
  */
 
 // If uninstall not called from WordPress, then exit.

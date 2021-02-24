@@ -39,7 +39,7 @@ class standardPluginTest extends \Codeception\TestCase\WPTestCase
     public function test_it_works()
     {
         $classes = [];
-        $classes[] = 'Events_For_Woocommerce';
+        $classes[] = 'Event_Tickets_Manager_For_Woocommerce';
 
         $this->assertTrue( is_admin() );
         foreach ($classes as $class)

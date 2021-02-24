@@ -297,11 +297,11 @@ select {
     height: 100%;
 }
 
-#mwb-efw-table-inner-container {
+#mwb-etmfw-table-inner-container {
     width: 100%;
 }
 
-#mwb-efw-table-inner-container table thead th {
+#mwb-etmfw-table-inner-container table thead th {
     font-weight: bold;
     font-size: medium;
     font-family: 'NunitoSans-ExtraBold';

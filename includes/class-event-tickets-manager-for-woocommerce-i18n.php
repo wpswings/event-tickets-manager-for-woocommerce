@@ -8,8 +8,8 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Events_For_Woocommerce
- * @subpackage Events_For_Woocommerce/includes
+ * @package    Event_Tickets_Manager_For_Woocommerce
+ * @subpackage Event_Tickets_Manager_For_Woocommerce/includes
  */
 
 /**
@@ -19,11 +19,11 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    Events_For_Woocommerce
- * @subpackage Events_For_Woocommerce/includes
+ * @package    Event_Tickets_Manager_For_Woocommerce
+ * @subpackage Event_Tickets_Manager_For_Woocommerce/includes
  * @author     makewebbetter <webmaster@makewebbetter.com>
  */
-class Events_For_Woocommerce_I18n {
+class Event_Tickets_Manager_For_Woocommerce_I18n {
 
 
 	/**
@@ -34,7 +34,7 @@ class Events_For_Woocommerce_I18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'events-for-woocommerce',
+			'event-tickets-manager-for-woocommerce',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);

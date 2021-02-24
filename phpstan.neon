@@ -9,4 +9,4 @@ parameters:
 		- admin
 		- includes
 		- public
-		- events-for-woocommerce.php
+		- event-tickets-manager-for-woocommerce.php
