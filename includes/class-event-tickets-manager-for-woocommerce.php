@@ -93,8 +93,8 @@ class Event_Tickets_Manager_For_Woocommerce {
 		} else {
 			$this->event_tickets_manager_for_woocommerce_public_hooks();
 		}
-
 		$this->event_tickets_manager_for_woocommerce_api_hooks();
+		$this->event_tickets_manager_for_woocommerce_mail_hooks();
 
 	}
 
@@ -191,12 +191,20 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		// All admin actions and filters after License Validation goes here.
 		$this->loader->add_filter( 'mwb_add_plugins_menus_array', $etmfw_plugin_admin, 'etmfw_admin_submenu_page', 15 );
-		$this->loader->add_filter( 'etmfw_template_settings_array', $etmfw_plugin_admin, 'etmfw_admin_template_settings_page', 10 );
-		$this->loader->add_filter( 'etmfw_general_settings_array', $etmfw_plugin_admin, 'etmfw_admin_general_settings_page', 10 );
-		$this->loader->add_filter( 'etmfw_supprot_tab_settings_array', $etmfw_plugin_admin, 'etmfw_admin_support_settings_page', 10 );
+		$this->loader->add_filter( 'mwb_etmfw_general_settings_array', $etmfw_plugin_admin, 'mwb_etmfw_admin_general_settings_page', 10 );
+		$this->loader->add_filter( 'mwb_etmfw_integration_settings_array', $etmfw_plugin_admin, 'mwb_etmfw_admin_integration_settings_page', 10 );
+		$this->loader->add_filter( 'mwb_etmfw_email_template_settings_array', $etmfw_plugin_admin, 'mwb_etmfw_admin_email_template_settings_page', 10 );
+		$this->loader->add_filter( 'mwb_etmfw_supprot_tab_settings_array', $etmfw_plugin_admin, 'mwb_etmfw_admin_support_settings_page', 10 );
 
 		// Saving tab settings.
-		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'etmfw_admin_save_tab_settings' );
+		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'mwb_etmfw_admin_save_tab_settings' );
+
+		// Create an Event Product Type
+		$this->loader->add_filter( 'product_type_selector', $etmfw_plugin_admin, 'mwb_etmfw_event_ticket_product' );
+		$this->loader->add_filter( 'woocommerce_product_data_tabs', $etmfw_plugin_admin, 'mwb_etmfw_event_ticket_tab' );
+		$this->loader->add_action( 'woocommerce_product_data_panels', $etmfw_plugin_admin, 'mwb_etmfw_event_tab_content' );
+		$this->loader->add_action( 'save_post', $etmfw_plugin_admin, 'mwb_etmfw_save_product_data' );
+		$this->loader->add_action( 'admin_menu', $etmfw_plugin_admin, 'mwb_etmfw_event_menu' );
 
 	}
 
@@ -211,8 +219,18 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		$etmfw_plugin_public = new Event_Tickets_Manager_For_Woocommerce_Public( $this->etmfw_get_plugin_name(), $this->etmfw_get_version() );
 
+		add_action( 'woocommerce_event_ticket_manager_add_to_cart', 'woocommerce_simple_add_to_cart', 30 );
 		$this->loader->add_action( 'wp_enqueue_scripts', $etmfw_plugin_public, 'etmfw_public_enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $etmfw_plugin_public, 'etmfw_public_enqueue_scripts' );
+		$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $etmfw_plugin_public, 'mwb_etmfw_before_add_to_cart_button_html' );
+		$this->loader->add_filter( 'woocommerce_is_sold_individually', $etmfw_plugin_public, 'mwb_etmfw_allow_single_quantity', 10, 2 );
+		$this->loader->add_filter( 'woocommerce_add_cart_item_data', $etmfw_plugin_public, 'mwb_etmfw_cart_item_data', 10, 3 );
+		$this->loader->add_filter( 'woocommerce_get_item_data', $etmfw_plugin_public, 'mwb_etmfw_get_cart_item_data', 10, 2 );
+		$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $etmfw_plugin_public, 'mwb_etmfw_create_order_line_item', 10, 3 );
+		$this->loader->add_action( 'woocommerce_order_status_changed', $etmfw_plugin_public, 'mwb_etmfw_process_event_order', 10, 3 );
+		$this->loader->add_action( 'woocommerce_email_attachments', $etmfw_plugin_public, 'mwb_etmfw_attach_pdf_to_emails', 10, 4 );
+		$this->loader->add_action( 'woocommerce_order_details_after_order_table', $etmfw_plugin_public, 'mwb_etmfw_view_ticket_button', 10 );
+
 
 	}
 
@@ -230,6 +248,28 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		$this->loader->add_action( 'rest_api_init', $etmfw_plugin_api, 'mwb_etmfw_add_endpoint' );
 
+	}
+
+	/**
+	 * Register all of the hooks related to the mail functionality
+	 * of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function event_tickets_manager_for_woocommerce_mail_hooks() {
+		add_filter( 'woocommerce_email_classes', array( $this, 'mwb_etmfw_woocommerce_email_classes' ) );
+	}
+
+	/**
+	 * Initialization function to include mail template.
+	 *
+	 * @param array $emails email templates.
+	 * @since    1.0.0
+	 */
+	public function mwb_etmfw_woocommerce_email_classes( $emails ) {
+		$emails['mwb_etmfw_email_notification'] = include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/class-mwb-etmfw-emails-notification.php';
+		return $emails;
 	}
 
 
@@ -297,15 +337,19 @@ class Event_Tickets_Manager_For_Woocommerce {
 			'title'       => esc_html__( 'General Setting', 'event-tickets-manager-for-woocommerce' ),
 			'name'        => 'event-tickets-manager-for-woocommerce-general',
 		);
+		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-email-template'] = array(
+			'title'       => esc_html__( 'Ticket Setting', 'event-tickets-manager-for-woocommerce' ),
+			'name'        => 'event-tickets-manager-for-woocommerce-email-template',
+		);
+		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-integrations'] = array(
+			'title'       => esc_html__( 'Integrations', 'event-tickets-manager-for-woocommerce' ),
+			'name'        => 'event-tickets-manager-for-woocommerce-integrations',
+		);
 		$etmfw_default_tabs = apply_filters( 'mwb_etmfw_plugin_standard_admin_settings_tabs', $etmfw_default_tabs );
 
 		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-system-status'] = array(
 			'title'       => esc_html__( 'System Status', 'event-tickets-manager-for-woocommerce' ),
 			'name'        => 'event-tickets-manager-for-woocommerce-system-status',
-		);
-		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-template'] = array(
-			'title'       => esc_html__( 'Templates', 'event-tickets-manager-for-woocommerce' ),
-			'name'        => 'event-tickets-manager-for-woocommerce-template',
 		);
 
 		return $etmfw_default_tabs;
@@ -517,7 +561,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 								>
 							</label>
 							<div class="mdc-text-field-helper-line">
-								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo esc_attr( $etmfw_component['description'] ); ?></div>
+								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( $etmfw_component['description'] ); ?></div>
 							</div>
 						</div>
 					</div>
@@ -549,7 +593,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 								<i class="material-icons mdc-text-field__icon mdc-text-field__icon--trailing mwb-password-hidden" tabindex="0" role="button">visibility</i>
 							</label>
 							<div class="mdc-text-field-helper-line">
-								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo esc_attr( $etmfw_component['description'] ); ?></div>
+								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( $etmfw_component['description'] ); ?></div>
 							</div>
 						</div>
 					</div>
@@ -633,7 +677,10 @@ class Event_Tickets_Manager_For_Woocommerce {
 									type="checkbox"
 									class="mdc-checkbox__native-control <?php echo esc_attr( isset( $etmfw_component['class'] ) ? $etmfw_component['class'] : '' ); ?>"
 									value="<?php echo esc_attr( $etmfw_component['value'] ); ?>"
-									<?php checked( $etmfw_component['value'], '1' ); ?>
+									<?php if( 'on' === $etmfw_component['checked'] ){
+										checked( $etmfw_component['checked'], 'on' );
+									}
+									?>
 									/>
 									<div class="mdc-checkbox__background">
 										<svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
@@ -740,10 +787,118 @@ class Event_Tickets_Manager_For_Woocommerce {
 					<?php
 					break;
 
+					case 'wp_editor':
+					?>
+					<div class="mwb-form-group">
+						<div class="mwb-form-group__label">
+							<label for="" class="mwb-form-label"><?php echo esc_html( $etmfw_component['title'] ); ?></label>
+						</div>
+						<div class="mwb-form-group__control">
+							<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>">
+								<?php
+								$content = stripcslashes( $etmfw_component['value'] );
+								$editor_id = $etmfw_component['id'];
+								$settings = array(
+									'media_buttons'    => false,
+									'drag_drop_upload' => true,
+									'dfw'              => true,
+									'teeny'            => true,
+									'editor_height'    => 200,
+									'editor_class'       => 'mwb_etmfw_new_woo_ver_style_textarea',
+									'textarea_name'    => esc_attr( $etmfw_component['id'] ),
+								);
+								wp_editor( $content, $editor_id, $settings );
+								?>
+							</label>
+							<div class="mdc-text-field-helper-line">
+								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( $etmfw_component['description'] ); ?></div>
+							</div>
+						</div>
+					</div>
+					<?php
+					break;
+
+					case 'textWithButton':
+					?>
+					<div class="mwb-form-group">
+						<div class="mwb-form-group__label">
+							<label for="" class="mwb-form-label"><?php echo esc_html( $etmfw_component['title'] ); ?></label>
+						</div>
+						<div class="mwb-form-group__control">
+							<label class="mdc-text-field mdc-text-field--outlined">
+							<?php
+							if ( isset( $etmfw_component['custom_attribute'] ) && ! empty( $etmfw_component['custom_attribute'] ) && is_array( $etmfw_component['custom_attribute'] ) ) {
+									foreach ( $etmfw_component['custom_attribute'] as $key => $val ) {
+										if ( 'text' == $val['type'] ) {
+											$this->mwb_etmfw_generate_text_html( $val );
+										} elseif ( 'button' == $val['type'] ) {
+											$this->mwb_etmfw_generate_button_html( $val );
+										} elseif ( 'paragraph' == $val['type'] ) {
+											$this->mwb_etmfw_generate_showbox( $val );
+										}
+									}
+								}
+							?>
+							</label>
+							<div class="mdc-text-field-helper-line">
+								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( $etmfw_component['description'] ); ?></div>
+							</div>
+						</div>
+					</div>
+					<?php
+					break;
+					do_action( 'mwb_etmfw_add_custom_field_type', $etmfw_component );
+
 					default:
 					break;
 				}
 			}
 		}
+	}
+
+	public function mwb_etmfw_generate_text_html( $value ){
+		?>
+		<span class="mdc-notched-outline">
+			<span class="mdc-notched-outline__leading"></span>
+			<span class="mdc-notched-outline__notch">
+				<?php if ( 'number' != $value['type'] ) { ?>
+					<span class="mdc-floating-label" id="my-label-id" style=""><?php echo esc_attr( $value['placeholder'] ); ?></span>
+				<?php } ?>
+			</span>
+			<span class="mdc-notched-outline__trailing"></span>
+		</span>
+		<input 
+		class="mdc-text-field__input <?php echo esc_attr( $value['class'] ); ?>" 
+		name="<?php echo esc_attr( $value['id'] ); ?>"
+		id="<?php echo esc_attr( $value['id'] ); ?>"
+		type="<?php echo esc_attr( $value['type'] ); ?>"
+		value="<?php echo esc_attr( $value['value'] ); ?>"
+		>
+		<?php
+	}
+
+	public function mwb_etmfw_generate_button_html( $value ){
+		?>
+		<div class="mwb-form-group">
+			<div class="mwb-form-group__label"></div>
+			<div class="mwb-form-group__control">
+				<button class="mdc-button mdc-button--raised" name="<?php echo esc_attr( $value['id'] ); ?>"
+					id="<?php echo esc_attr( $value['id'] ); ?>"> <span class="mdc-button__ripple"></span>
+					<span class="mdc-button__label"><?php echo esc_attr( $value['button_text'] ); ?></span>
+				</button>
+			</div>
+		</div>
+		<?php
+	}
+
+	public function mwb_etmfw_generate_showbox( $value ) {
+		?>
+		<p id="<?php echo esc_attr( array_key_exists( 'id', $value ) ? $value['id'] : '' ); ?>">
+			<span class="<?php echo esc_attr( array_key_exists( 'id', $value ) ? $value['id'] : '' ); ?>">
+				<img src="" width="150px" height="150px" id="<?php echo esc_attr( array_key_exists( 'imgId', $value ) ? $value['imgId'] : '' ); ?>">
+				<span class="<?php echo esc_attr( array_key_exists( 'spanX', $value ) ? $value['spanX'] : '' ); ?>">X</span>
+			</span>
+		</p>
+		<?php
 	}
 }

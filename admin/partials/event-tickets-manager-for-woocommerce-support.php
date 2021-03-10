@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 global $etmfw_mwb_etmfw_obj;
-$etmfw_support_settings = apply_filters( 'etmfw_supprot_tab_settings_array', array() );
+$etmfw_support_settings = apply_filters( 'mwb_etmfw_supprot_tab_settings_array', array() );
 ?>
 <!--  template file for admin settings. -->
 <div class="etmfw-section-wrap">

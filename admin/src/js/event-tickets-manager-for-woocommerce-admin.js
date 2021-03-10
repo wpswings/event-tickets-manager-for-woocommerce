@@ -52,6 +52,60 @@
             }
         });
 
+        var imageurl = $( "#mwb_etmfw_mail_setting_upload_logo" ).val();
+			if (imageurl != null && imageurl != "") {
+				$( "#mwb_etmfw_mail_setting_upload_image" ).attr( "src",imageurl );
+				$( "#mwb_etmfw_mail_setting_remove_logo" ).show();
+
+			} else{
+				$( "#mwb_etmfw_mail_setting_remove_logo" ).hide();
+			}
+			$( ".mwb_etmfw_mail_setting_remove_logo_span" ).click(
+				function(){
+					$( "#mwb_etmfw_mail_setting_remove_logo" ).hide();
+					$( "#mwb_etmfw_mail_setting_upload_logo" ).val( "" );
+				}
+			);
+			var imageurl = $( "#mwb_etmfw_mail_setting_upload_logo" ).val();
+			if (imageurl != null && imageurl != "") {
+				$( "#mwb_etmfw_mail_setting_upload_image" ).attr( "src",imageurl );
+				$( "#mwb_etmfw_mail_setting_remove_logo" ).show();
+
+			}
+			$( "#mwb_etmfw_mail_setting" ).click(
+				function(){
+					$( "#mwb_etmfw_mail_setting_wrapper" ).slideToggle();
+				}
+			);
+
+			$( '#mwb_etmfw_mail_setting_upload_logo_button' ).click(
+				function(e){
+					e.preventDefault();
+					var imageurl = $( "#mwb_etmfw_mail_setting_upload_logo" ).val();
+					tb_show( '', 'media-upload.php?TB_iframe=true' );
+
+					window.send_to_editor = function(html)
+					{
+							var imageurl = $( html ).attr( 'href' );
+
+						if (typeof imageurl == 'undefined') {
+							imageurl = $( html ).attr( 'src' );
+						}
+							var last_index = imageurl.lastIndexOf( '/' );
+							var url_last_part = imageurl.substr( last_index + 1 );
+						if ( url_last_part == '' ) {
+
+							imageurl = $( html ).children( "img" ).attr( "src" );
+						}
+							$( "#mwb_etmfw_mail_setting_upload_logo" ).val( imageurl );
+							$( "#mwb_etmfw_mail_setting_upload_image" ).attr( "src",imageurl );
+							$( "#mwb_etmfw_mail_setting_remove_logo" ).show();
+							tb_remove();
+					};
+					return false;
+				}
+			);
+
 	});
 
 	$(window).load(function(){

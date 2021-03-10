@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 global $etmfw_mwb_etmfw_obj;
-$etmfw_genaral_settings = apply_filters( 'etmfw_general_settings_array', array() );
+$etmfw_genaral_settings = apply_filters( 'mwb_etmfw_general_settings_array', array() );
 ?>
 <!--  template file for admin settings. -->
 <form action="" method="POST" class="mwb-etmfw-gen-section-form">
@@ -23,6 +23,7 @@ $etmfw_genaral_settings = apply_filters( 'etmfw_general_settings_array', array()
 		<?php
 		$etmfw_general_html = $etmfw_mwb_etmfw_obj->mwb_etmfw_plug_generate_html( $etmfw_genaral_settings );
 		echo esc_html( $etmfw_general_html );
+		wp_nonce_field( 'mwb-etmfw-general-nonce', 'mwb-etmfw-general-nonce-field' );
 		?>
 	</div>
 </form>
