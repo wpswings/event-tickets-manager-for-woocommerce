@@ -55,7 +55,7 @@
 			else 
 				this.setOptions({ minTime: false });
 		}
-		$("#etmfw_start_date_time, #etmfw_end_date_time").datetimepicker({ format: 'Y-m-d H:i', minDate: 0, minTime: 0, step: 5, onShow: AdjustMinTime, onSelectDate: AdjustMinTime });
+		$("#etmfw_start_date_time, #etmfw_end_date_time").datetimepicker({ format: 'Y-m-d g:i A', minDate: 0, minTime: 0, step: 5, onShow: AdjustMinTime, onSelectDate: AdjustMinTime });
 		
 		$(document).find('.mwb_etmfw_add_fields_button').click( function(){
 			var fieldsetId = $(document).find('.mwb_etmfw_field_table').find('.mwb_etmfw_field_wrap').last().attr('data-id');

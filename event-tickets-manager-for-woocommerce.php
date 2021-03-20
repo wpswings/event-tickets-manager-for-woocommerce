@@ -51,6 +51,10 @@ if ( in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 		$wp_upload = wp_upload_dir();
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR', $wp_upload['basedir'] );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_URL', $wp_upload['baseurl'] );
+		event_tickets_manager_for_woocommerce_constants( 'CLIENT_ID', get_option( 'mwb_etmfw_google_client_id','' ) );
+		event_tickets_manager_for_woocommerce_constants( 'CLIENT_SECRET', get_option( 'mwb_etmfw_google_client_secret','' ) );
+		event_tickets_manager_for_woocommerce_constants( 'CLIENT_REDIRECT_URL', get_option( 'mwb_etmfw_google_redirect_url','' ) );
+
 	}
 
 	/**
@@ -89,6 +93,7 @@ if ( in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 			);
 		}
 		update_option( 'mwb_all_plugins_active', $mwb_etmfw_active_plugin );
+		mwb_etmfw_create_checkin_page();
 	}
 
 	/**
@@ -107,6 +112,13 @@ if ( in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 			}
 		}
 		update_option( 'mwb_all_plugins_active', $mwb_etmfw_deactive_plugin );
+		mwb_etmfw_delete_checkin_page();
+	}
+
+	function mwb_etmfw_delete_checkin_page() {
+		$checkin_pageid = get_option( 'event_checkin_page_created', false );
+		if ( $checkin_pageid )
+		wp_delete_post( $checkin_pageid );
 	}
 
 	register_activation_hook( __FILE__, 'activate_event_tickets_manager_for_woocommerce' );
@@ -130,7 +142,7 @@ if ( in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 	 */
 	function run_event_tickets_manager_for_woocommerce() {
 		define_event_tickets_manager_for_woocommerce_constants();
-
+		session_start();
 		$etmfw_plugin_standard = new Event_Tickets_Manager_For_Woocommerce();
 		$etmfw_plugin_standard->etmfw_run();
 		$GLOBALS['etmfw_mwb_etmfw_obj'] = $etmfw_plugin_standard;
@@ -214,8 +226,38 @@ if ( in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 	}
 
 	function mwb_etmfw_get_date_format( $date ){
-		return date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $date );
+		return date_i18n(get_option('date_format') . ' ' . get_option('time_format'), strtotime($date));// get format from WordPress settings.
 	}
+
+	/**
+	 * Function to create check in page template.
+	 */
+	function mwb_etmfw_create_checkin_page() {
+		/* ===== ====== Create the Check Gift Card Page ====== ======*/
+		if ( ! get_option( 'event_checkin_page_created', false ) ) {
+
+			$checkin_content = '[mwb_etmfw_event_checkin_page]';
+
+			$checkin_page = array(
+				'post_author'    => get_current_user_id(),
+				'post_name'      => __( 'Event Check In', 'event-tickets-manager-for-woocommerce' ),
+				'post_title'     => __( 'Event Check In', 'event-tickets-manager-for-woocommerce' ),
+				'post_type'      => 'page',
+				'post_status'    => 'publish',
+				'post_content'   => $checkin_content,
+			);
+			$page_id = wp_insert_post( $checkin_page );
+			update_option( 'event_checkin_page_created', $page_id );
+			/* ===== ====== End of Create the Gift Card Page ====== ======*/
+		}
+	}
+
+	function mwb_etmfw_register_widget() {
+		register_widget( 'event_tickets_manager_for_woocommerce_widget' );
+	}
+	add_action( 'widgets_init', 'mwb_etmfw_register_widget' );
+	require plugin_dir_path( __FILE__ ) . 'includes/class-event-tickets-manager-for-woocommerce-widget.php';
+
 
 } else {
 

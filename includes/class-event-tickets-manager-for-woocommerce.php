@@ -90,9 +90,9 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->event_tickets_manager_for_woocommerce_locale();
 		if ( is_admin() ) {
 			$this->event_tickets_manager_for_woocommerce_admin_hooks();
-		} else {
-			$this->event_tickets_manager_for_woocommerce_public_hooks();
 		}
+		$this->event_tickets_manager_for_woocommerce_public_hooks();
+		
 		$this->event_tickets_manager_for_woocommerce_api_hooks();
 		$this->event_tickets_manager_for_woocommerce_mail_hooks();
 
@@ -141,12 +141,10 @@ class Event_Tickets_Manager_For_Woocommerce {
 			if ( class_exists( 'Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps' ) ) {
 				$etmfw_onboard_steps = new Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps();
 			}
-		} else {
+		} 
 
-			// The class responsible for defining all actions that occur in the public-facing side of the site.
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-event-tickets-manager-for-woocommerce-public.php';
-
-		}
+		// The class responsible for defining all actions that occur in the public-facing side of the site.
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-event-tickets-manager-for-woocommerce-public.php';
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'package/rest-api/class-event-tickets-manager-for-woocommerce-rest-api.php';
 
@@ -228,8 +226,13 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_filter( 'woocommerce_get_item_data', $etmfw_plugin_public, 'mwb_etmfw_get_cart_item_data', 10, 2 );
 		$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $etmfw_plugin_public, 'mwb_etmfw_create_order_line_item', 10, 3 );
 		$this->loader->add_action( 'woocommerce_order_status_changed', $etmfw_plugin_public, 'mwb_etmfw_process_event_order', 10, 3 );
-		$this->loader->add_action( 'woocommerce_email_attachments', $etmfw_plugin_public, 'mwb_etmfw_attach_pdf_to_emails', 10, 4 );
-		$this->loader->add_action( 'woocommerce_order_details_after_order_table', $etmfw_plugin_public, 'mwb_etmfw_view_ticket_button', 10 );
+		$this->loader->add_filter( 'woocommerce_email_attachments', $etmfw_plugin_public, 'mwb_etmfw_attach_pdf_to_emails', 10, 4 );
+		$this->loader->add_action( 'woocommerce_order_details_before_order_table', $etmfw_plugin_public, 'mwb_etmfw_view_ticket_button', 10 );
+		$this->loader->add_action( 'init', $etmfw_plugin_public, 'mwb_etmfw_add_eventcheckin_shortcode' );
+		$this->loader->add_action( 'wp_ajax_mwb_etmfw_make_user_checkin', $etmfw_plugin_public, 'mwb_etmfw_make_user_checkin_for_event' );
+		$this->loader->add_action( 'wp_ajax_nopriv_mwb_etmfw_make_user_checkin', $etmfw_plugin_public, 'mwb_etmfw_make_user_checkin_for_event' );
+		$this->loader->add_action( 'wp_ajax_mwb_etmfw_edit_user_info', $etmfw_plugin_public, 'mwb_etmfw_edit_user_info_for_event' );
+		$this->loader->add_action( 'wp_ajax_nopriv_mwb_etmfw_edit_user_info', $etmfw_plugin_public, 'mwb_etmfw_edit_user_info_for_event' );
 
 
 	}
@@ -333,6 +336,10 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		$etmfw_default_tabs = array();
 
+		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-overview'] = array(
+			'title'       => esc_html__( 'Overview', 'event-tickets-manager-for-woocommerce' ),
+			'name'        => 'event-tickets-manager-for-woocommerce-overview',
+		);
 		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-general'] = array(
 			'title'       => esc_html__( 'General Setting', 'event-tickets-manager-for-woocommerce' ),
 			'name'        => 'event-tickets-manager-for-woocommerce-general',

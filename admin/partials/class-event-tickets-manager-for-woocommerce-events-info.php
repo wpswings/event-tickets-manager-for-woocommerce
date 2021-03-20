@@ -174,6 +174,17 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 							$order_date = $order->get_date_created()->date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) );
 							$order_url = $order->get_view_order_url();
 							$user_id = ( 0 != $order->get_user_id() ) ? '#'.$order->get_user_id() : 'Guest';
+							$checkin_status = 'Pending';
+							$generated_tickets = get_post_meta( $pro_id, 'mwb_etmfw_generated_tickets', true );
+							if( !empty( $generated_tickets ) ){
+								foreach ( $generated_tickets as $key => $value ) {
+									if( $ticket == $value['ticket']){
+										$checkin_status = $value['status'];
+										if( 'checked_in' === $checkin_status ) : $checkin_status = 'Checked In'; endif;
+									}
+								}
+							}
+
 
 							$event_attendees_details[] = array(
 								'ticket'      		=> $item->get_name().'#'.$ticket,
@@ -182,7 +193,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 								'venue'  			=> $venue,
 								'purchase_date'  	=> $order_date,
 								'schedule'   		=> mwb_etmfw_get_date_format( $start ).'-'.mwb_etmfw_get_date_format( $end ),
-								'check_in_status'   => '-',
+								'check_in_status'   => $checkin_status,
 								'action'   			=> '<a href="'.$order_url.'" target="_blank">View Ticket</a>',
 							);
 						}
