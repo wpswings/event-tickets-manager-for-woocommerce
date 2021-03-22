@@ -14,9 +14,36 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 
+	/**
+	 * Woocommerce Custom Email template to send event mails.
+	 *
+	 * @package    Event_Tickets_Manager_For_Woocommerce
+	 * @subpackage Event_Tickets_Manager_For_Woocommerce/emails
+	 * @author     makewebbetter <webmaster@makewebbetter.com>
+	 */
 	class Mwb_Etmfw_Emails_Notification extends WC_Email {
+
+		/**
+		 * Email Content to send in mail.
+		 *
+		 * @since    1.0.0
+		 * @access   public 
+		 * @var      string    $email_content    Email content in mail.
+		 */
 		public $email_content;
+
+		/**
+		 * Email subject for mail.
+		 *
+		 * @since    1.0.0
+		 * @access   public 
+		 * @var      string    $mwb_etmfw_email_subject    Email subject for mail.
+		 */
 		public $mwb_etmfw_email_subject;
+
+		/**
+		 * Initialize the class and set its properties.
+		 */
 		public function __construct() {
 			$this->id             = 'mwb_etmfw_email_notification';
 			$this->title          = __( 'Event order email', 'event-tickets-manager-for-woocommerce' );
@@ -60,7 +87,10 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 		 * Trigger the sending of this email.
 		 *
 		 * @since      1.0.8
-		 * @param int $transaction_id.
+		 * @param string $user_email.
+		 * @param string $email_content.
+		 * @param string $mwb_etmfw_email_subject.
+		 * @param object $order.
 		 */
 		public function trigger( $user_email, $email_content, $mwb_etmfw_email_subject, $order ) {
 			$this->setup_locale();

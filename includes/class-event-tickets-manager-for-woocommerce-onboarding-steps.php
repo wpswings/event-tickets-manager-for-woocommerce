@@ -170,7 +170,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 		if ( $this->mwb_etmfw_valid_page_screen_check() || $is_valid ) {
 			// comment the line of code Only when your plugin doesn't uses the Select2.
 			wp_enqueue_style( 'mwb-etmfw-onboarding-select2-style', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/event-tickets-manager-for-woocommerce-select2.css', array(), time(), 'all' );
-			
+
 			wp_enqueue_style( 'mwb-etmfw-meterial-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.css', array(), time(), 'all' );
 			wp_enqueue_style( 'mwb-etmfw-meterial-css2', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.css', array(), time(), 'all' );
 			wp_enqueue_style( 'mwb-etmfw-meterial-lite', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.css', array(), time(), 'all' );
@@ -253,7 +253,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 */
 	public function mwb_etmfw_skip_onboarding_popup() {
 
-	 $get_skipped_timstamp = update_option( 'mwb_etmfw_onboarding_data_skipped', time() );
+		$get_skipped_timstamp = update_option( 'mwb_etmfw_onboarding_data_skipped', time() );
 		echo json_encode( 'true' );
 		wp_die();
 	}

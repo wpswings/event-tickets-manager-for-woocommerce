@@ -53,19 +53,19 @@ $etmfw_default_tabs = $etmfw_mwb_etmfw_obj->mwb_etmfw_plug_default_tabs();
 
 	<section class="mwb-section">
 		<div>
-			<?php 
+			<?php
 				do_action( 'mwb_etmfw_before_general_settings_form' );
 						// if submenu is directly clicked on woocommerce.
-				if ( empty( $etmfw_active_tab ) ) {
-					$etmfw_active_tab = 'mwb_etmfw_plug_general';
-				}
+			if ( empty( $etmfw_active_tab ) ) {
+				$etmfw_active_tab = 'mwb_etmfw_plug_general';
+			}
 
 						// look for the path based on the tab id in the admin templates.
 				$etmfw_tab_content_path = 'admin/partials/' . $etmfw_active_tab . '.php';
 
 				$etmfw_mwb_etmfw_obj->mwb_etmfw_plug_load_template( $etmfw_tab_content_path );
 
-				do_action( 'mwb_etmfw_after_general_settings_form' ); 
+				do_action( 'mwb_etmfw_after_general_settings_form' );
 			?>
 		</div>
 	</section>

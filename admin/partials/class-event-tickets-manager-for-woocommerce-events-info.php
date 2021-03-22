@@ -41,14 +41,15 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 	public function get_columns() {
 
 		$columns = array(
-			'ticket'      		=> __( 'Ticket', 'wp-chatbot-builder' ),
-			'order'    			=> __( 'Order', 'wp-chatbot-builder' ),
-			'user'    			=> __( 'User', 'wp-chatbot-builder' ),
-			'venue'  			=> __( 'Venue', 'wp-chatbot-builder' ),
-			'purchase_date'   	=> __( 'Purchase Date', 'wp-chatbot-builder' ),
-			'schedule'   		=> __( 'Schedule', 'wp-chatbot-builder' ),
+			'cb'             	=> '<input type="checkbox" />',
+			'ticket'            => __( 'Ticket', 'wp-chatbot-builder' ),
+			'order'             => __( 'Order', 'wp-chatbot-builder' ),
+			'user'              => __( 'User', 'wp-chatbot-builder' ),
+			'venue'             => __( 'Venue', 'wp-chatbot-builder' ),
+			'purchase_date'     => __( 'Purchase Date', 'wp-chatbot-builder' ),
+			'schedule'          => __( 'Schedule', 'wp-chatbot-builder' ),
 			'check_in_status'   => __( 'Check In Status', 'wp-chatbot-builder' ),
-			'action'   			=> __( 'Action', 'wp-chatbot-builder' ),
+			'action'            => __( 'Action', 'wp-chatbot-builder' ),
 		);
 		return $columns;
 	}
@@ -87,6 +88,63 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 	}
 
 	/**
+	 * This function is used for the add the checkbox.
+	 *
+	 * @name column_cb.
+	 * @since      1.0.0
+	 * @return array
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 * @param array $item array of the items.
+	 */
+	public function column_cb( $item ) {
+		return sprintf(
+			'<input type="checkbox" name="mwb_etmfw_event_ids[]" value="%s" />',
+			$item['id']
+		);
+	}
+
+	/**
+	 * Perform admin bulk action setting for event table.
+	 *
+	 * @name process_bulk_action.
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 */
+	public function process_bulk_action() {
+		if ( 'bulk-delete' === $this->current_action() ) {
+			if ( isset( $_POST['mwb-etmfw-events'] ) ) {
+				$mwb_event_nonce = sanitize_text_field( wp_unslash( $_POST['mwb-etmfw-events'] ) );
+				if ( wp_verify_nonce( $mwb_event_nonce, 'mwb-etmfw-events' ) ) {
+					if ( isset( $_POST['mwb_etmfw_event_ids'] ) && ! empty( $_POST['mwb_etmfw_event_ids'] ) ) {
+						$all_id = map_deep( wp_unslash( $_POST['mwb_etmfw_event_ids'] ), 'sanitize_text_field' );
+						foreach ( $all_id as $key => $value ) {
+							wp_delete_post($value,true);
+						}
+					}
+				}
+			}
+		}
+		do_action( 'mwb_wpr_process_bulk_reset_option', $this->current_action(), $_POST );
+	}
+
+	/**
+	 * Returns an associative array containing the bulk action
+	 *
+	 * @name get_bulk_actions.
+	 * @since      1.0.0
+	 * @return array
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 */
+	public function get_bulk_actions() {
+		$actions = array(
+			'bulk-delete' => __( 'Delete', 'event-tickets-manager-for-woocommerce' ),
+		);
+		return apply_filters( 'mwb_etmfw_perform_bulk_option', $actions );
+	}
+
+	/**
 	 * Returns an associative array containing the bulk action for sorting.
 	 *
 	 * @name get_sortable_columns.
@@ -97,7 +155,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 	 */
 	public function get_sortable_columns() {
 		$sortable_columns = array(
-			'order'   		=> array( 'order', false ),
+			'order'         => array( 'order', false ),
 			'purchase_date' => array( 'purchase_date', false ),
 		);
 		return $sortable_columns;
@@ -122,6 +180,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 		$data               = $this->example_data;
 
 		$current_page = $this->get_pagenum();
+		$this->process_bulk_action();
 		$total_items = count( $data );
 		$data = array_slice( $data, ( ( $current_page - 1 ) * $per_page ), $per_page );
 		$this->items = $data;
@@ -146,15 +205,17 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 	public function get_attendees_data() {
 		$event_attendees_details = array();
 		$order_statuses = array(
-			'wc-processing' => __( 'Processing', 'Order status', 'woocommerce' ),
-			'wc-completed'  => __( 'Completed', 'Order status', 'woocommerce' ),
+			'wc-processing' => __( 'Processing', 'event-tickets-manager-for-woocommerce' ),
+			'wc-completed'  => __( 'Completed', 'event-tickets-manager-for-woocommerce' ),
 		);
 
-		$shop_orders = new WP_Query( array(
-	 		'post_type'         => 'shop_order',
-		    'post_status'       =>  array_keys( $order_statuses ),
-		    'posts_per_page'    => -1,
-		) );
+		$shop_orders = new WP_Query(
+			array(
+				'post_type'         => 'shop_order',
+				'post_status'       => array_keys( $order_statuses ),
+				'posts_per_page'    => -1,
+			)
+		);
 		if ( isset( $shop_orders ) && ! empty( $shop_orders ) ) {
 			if ( isset( $shop_orders->posts ) && ! empty( $shop_orders->posts ) ) {
 				foreach ( $shop_orders->posts as $shop_order ) {
@@ -162,7 +223,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 					$order = wc_get_order( $order_id );
 					foreach ( $order->get_items() as $item_id => $item ) {
 						$product = $item->get_product();
-						if( 'event_ticket_manager' === $product->get_type() ){
+						if ( 'event_ticket_manager' === $product->get_type() ) {
 							if ( ! empty( $product ) ) {
 								$pro_id = $product->get_id();
 							}
@@ -172,29 +233,36 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 							$ticket = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
 							$venue = isset( $mwb_etmfw_product_array['etmfw_event_venue'] ) ? $mwb_etmfw_product_array['etmfw_event_venue'] : '';
 							$order_date = $order->get_date_created()->date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) );
-							$order_url = $order->get_view_order_url();
-							$user_id = ( 0 != $order->get_user_id() ) ? '#'.$order->get_user_id() : 'Guest';
+							$user_id = ( 0 != $order->get_user_id() ) ? '#' . $order->get_user_id() : 'Guest';
 							$checkin_status = 'Pending';
 							$generated_tickets = get_post_meta( $pro_id, 'mwb_etmfw_generated_tickets', true );
-							if( !empty( $generated_tickets ) ){
+							if ( ! empty( $generated_tickets ) ) {
 								foreach ( $generated_tickets as $key => $value ) {
-									if( $ticket == $value['ticket']){
+									if ( $ticket == $value['ticket'] ) {
 										$checkin_status = $value['status'];
-										if( 'checked_in' === $checkin_status ) : $checkin_status = 'Checked In'; endif;
+										if ( 'checked_in' === $checkin_status ) :
+											$checkin_status = 'Checked In';
+									endif;
 									}
 								}
 							}
-
+							$updated_meta_pdf = get_post_meta( $order_id, 'mwb_etmfw_order_meta_updated', true );
+							if ( '' === $updated_meta_pdf ) {
+								$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_URL . '/events_pdf/events' . $order_id . $ticket . '.pdf';
+							} else {
+								$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_URL . '/events_pdf/events' . $order_id . $ticket . '-new.pdf';
+							}
 
 							$event_attendees_details[] = array(
-								'ticket'      		=> $item->get_name().'#'.$ticket,
-								'order'    			=> '<a href="' . admin_url( 'post.php?post='.$order_id.'&action=edit' ) . '">#'.$order_id.'</a>',
-								'user'    			=> $user_id,
-								'venue'  			=> $venue,
-								'purchase_date'  	=> $order_date,
-								'schedule'   		=> mwb_etmfw_get_date_format( $start ).'-'.mwb_etmfw_get_date_format( $end ),
+								'id'          		=> $order_id,
+								'ticket'            => $item->get_name() . '#' . $ticket,
+								'order'             => '<a href="' . admin_url( 'post.php?post=' . $order_id . '&action=edit' ) . '">#' . $order_id . '</a>',
+								'user'              => $user_id,
+								'venue'             => $venue,
+								'purchase_date'     => $order_date,
+								'schedule'          => mwb_etmfw_get_date_format( $start ) . '-' . mwb_etmfw_get_date_format( $end ),
 								'check_in_status'   => $checkin_status,
-								'action'   			=> '<a href="'.$order_url.'" target="_blank">View Ticket</a>',
+								'action'            => '<a href="' . $upload_dir_path . '" target="_blank">View Ticket Pdf</a>',
 							);
 						}
 					}
@@ -203,4 +271,4 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 		}
 		return $event_attendees_details;
 	}
-}?>
+}

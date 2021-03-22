@@ -10,6 +10,7 @@
  * @package    Makewebbetter_Onboarding
  * @subpackage Makewebbetter_Onboarding/admin/onboarding
  */
+
 global $etmfw_mwb_etmfw_obj;
 $etmfw_onboarding_form_fields = apply_filters( 'mwb_etmfw_on_boarding_form_fields', array() );
 ?>
@@ -27,7 +28,7 @@ $etmfw_onboarding_form_fields = apply_filters( 'mwb_etmfw_on_boarding_form_field
 					<p class="mwb-etmfw-on-boarding-desc"><?php esc_html_e( 'We love making new friends! Subscribe below and we promise to keep you up-to-date with our latest new plugins, updates, awesome deals and a few special offers.', 'event-tickets-manager-for-woocommerce' ); ?></p>
 
 					<form action="#" method="post" class="mwb-etmfw-on-boarding-form">
-						<?php 
+						<?php
 						$etmfw_onboarding_html = $etmfw_mwb_etmfw_obj->mwb_etmfw_plug_generate_html( $etmfw_onboarding_form_fields );
 						echo esc_html( $etmfw_onboarding_html );
 						?>

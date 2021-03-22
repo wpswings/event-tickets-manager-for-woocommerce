@@ -34,8 +34,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Check if woocommerce is activated.
-if ( in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))){
-	
+if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+
 	/**
 	 * Define plugin constants.
 	 *
@@ -51,9 +51,9 @@ if ( in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 		$wp_upload = wp_upload_dir();
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR', $wp_upload['basedir'] );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_URL', $wp_upload['baseurl'] );
-		event_tickets_manager_for_woocommerce_constants( 'CLIENT_ID', get_option( 'mwb_etmfw_google_client_id','' ) );
-		event_tickets_manager_for_woocommerce_constants( 'CLIENT_SECRET', get_option( 'mwb_etmfw_google_client_secret','' ) );
-		event_tickets_manager_for_woocommerce_constants( 'CLIENT_REDIRECT_URL', get_option( 'mwb_etmfw_google_redirect_url','' ) );
+		event_tickets_manager_for_woocommerce_constants( 'CLIENT_ID', get_option( 'mwb_etmfw_google_client_id', '' ) );
+		event_tickets_manager_for_woocommerce_constants( 'CLIENT_SECRET', get_option( 'mwb_etmfw_google_client_secret', '' ) );
+		event_tickets_manager_for_woocommerce_constants( 'CLIENT_REDIRECT_URL', get_option( 'mwb_etmfw_google_redirect_url', '' ) );
 
 	}
 
@@ -115,10 +115,14 @@ if ( in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 		mwb_etmfw_delete_checkin_page();
 	}
 
+	/**
+	 * Delete checkin page created when plugin is deactivated.
+	 */
 	function mwb_etmfw_delete_checkin_page() {
 		$checkin_pageid = get_option( 'event_checkin_page_created', false );
-		if ( $checkin_pageid )
-		wp_delete_post( $checkin_pageid );
+		if ( $checkin_pageid ) {
+			wp_delete_post( $checkin_pageid );
+		}
 	}
 
 	register_activation_hook( __FILE__, 'activate_event_tickets_manager_for_woocommerce' );
@@ -225,8 +229,11 @@ if ( in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 		return $ticket_number;
 	}
 
-	function mwb_etmfw_get_date_format( $date ){
-		return date_i18n(get_option('date_format') . ' ' . get_option('time_format'), strtotime($date));// get format from WordPress settings.
+	/**
+	 * Return wordpress date time format.
+	 */
+	function mwb_etmfw_get_date_format( $date ) {
+		return date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime( $date ) );// get format from WordPress settings.
 	}
 
 	/**
@@ -252,20 +259,22 @@ if ( in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 		}
 	}
 
+	/**
+	 * Function to register event widget.
+	 */
 	function mwb_etmfw_register_widget() {
 		register_widget( 'event_tickets_manager_for_woocommerce_widget' );
 	}
 	add_action( 'widgets_init', 'mwb_etmfw_register_widget' );
+
 	require plugin_dir_path( __FILE__ ) . 'includes/class-event-tickets-manager-for-woocommerce-widget.php';
-
-
 } else {
 
 	/**
 	 * Show warning message fif woocommerce if not activated.
 	 */
 	function mwb_etmfw_plugin_error_notice() {
-	
+
 		unset( $_GET['activate'] );
 		?>
 		  <div class="error notice is-dismissible">

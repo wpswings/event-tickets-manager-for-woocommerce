@@ -18,9 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @hooked WC_Emails::email_header() Output the email header
  */
-//do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 
-<?php
 $template = '<table class="mwb-wuc__email-template" style=" border: 1px solid #000000 ;width: 100%!important; max-width: 600px; text-align: left; font-size: 20px;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center">
 	<tbody>
 		<tr>
@@ -65,12 +63,12 @@ $template = '<table class="mwb-wuc__email-template" style=" border: 1px solid #0
 	</tbody>
 </table>';
 
-$template = str_replace( '[EVENTNAME]',  $email_content['event'] , $template );
-$template = str_replace( '[TICKET]',  $email_content['ticket'] , $template );
-$template = str_replace( '[PURCHASER]',  $email_content['purchaser'] , $template );
-$template = str_replace( '[VENUE]',  $email_content['venue'] , $template );
-$template = str_replace( '[TIME]',  $email_content['time'] , $template );
-$template = str_replace( '[FEATUREDIMAGE]',  $email_content['featuredimage'] , $template );
+$template = str_replace( '[EVENTNAME]', $email_content['event'], $template );
+$template = str_replace( '[TICKET]', $email_content['ticket'], $template );
+$template = str_replace( '[PURCHASER]', $email_content['purchaser'], $template );
+$template = str_replace( '[VENUE]', $email_content['venue'], $template );
+$template = str_replace( '[TIME]', $email_content['time'], $template );
+$template = str_replace( '[FEATUREDIMAGE]', $email_content['featuredimage'], $template );
 echo wp_kses_post( html_entity_decode( $template ) ); // PHPCS:Ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 /**
