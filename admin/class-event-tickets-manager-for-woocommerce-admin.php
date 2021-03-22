@@ -353,6 +353,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 						'class' => 'etmfw-text-class',
 						'id' => 'mwb_etmfw_mail_setting_upload_logo',
 						'value' => $mwb_etmfw_default_site_logo,
+						'placeholder' => __( '', 'event-tickets-manager-for-woocommerce' ),
 					),
 					array(
 						'type'  => 'button',
