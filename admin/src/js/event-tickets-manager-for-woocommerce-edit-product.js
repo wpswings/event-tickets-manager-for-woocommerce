@@ -57,7 +57,10 @@
 		}
 		$("#etmfw_start_date_time, #etmfw_end_date_time").datetimepicker({ format: 'Y-m-d g:i A', minDate: 0, minTime: 0, step: 5, onShow: AdjustMinTime, onSelectDate: AdjustMinTime });
 		
-		$(document).find('.mwb_etmfw_add_fields_button').click( function(){
+		$(document).on(
+			'click',
+			'.mwb_etmfw_add_fields_button',
+			function(){
 			var fieldsetId = $(document).find('.mwb_etmfw_field_table').find('.mwb_etmfw_field_wrap').last().attr('data-id');
 			fieldsetId = fieldsetId?fieldsetId.replace(/[^0-9]/gi, ''):0;
 			let mainId = Number(fieldsetId) + 1;
@@ -68,6 +71,16 @@
 		$(document).on("click", ".mwb_etmfw_remove_row_btn", function(e){
 			e.preventDefault();
 			$(this).parents(".mwb_etmfw_field_wrap").remove();
+		});
+
+		$("select#product-type").change(function()
+        {
+			var selected_product_type =  $(this).val();
+			if( selected_product_type != 'event_ticket_manager') {
+				$('#etmfw_start_date_time').prop('required',false);
+				$('#etmfw_end_date_time').prop('required',false);
+				$('#etmfw_event_venue').prop('required',false);
+			}
 		});
 	});
 

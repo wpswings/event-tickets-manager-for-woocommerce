@@ -42,14 +42,14 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 
 		$columns = array(
 			'cb'             	=> '<input type="checkbox" />',
-			'ticket'            => __( 'Ticket', 'wp-chatbot-builder' ),
-			'order'             => __( 'Order', 'wp-chatbot-builder' ),
-			'user'              => __( 'User', 'wp-chatbot-builder' ),
-			'venue'             => __( 'Venue', 'wp-chatbot-builder' ),
-			'purchase_date'     => __( 'Purchase Date', 'wp-chatbot-builder' ),
-			'schedule'          => __( 'Schedule', 'wp-chatbot-builder' ),
-			'check_in_status'   => __( 'Check In Status', 'wp-chatbot-builder' ),
-			'action'            => __( 'Action', 'wp-chatbot-builder' ),
+			'ticket'            => __( 'Ticket', 'event-tickets-manager-for-woocommerce' ),
+			'order'             => __( 'Order', 'event-tickets-manager-for-woocommerce' ),
+			'user'              => __( 'User', 'event-tickets-manager-for-woocommerce' ),
+			'venue'             => __( 'Venue', 'event-tickets-manager-for-woocommerce' ),
+			'purchase_date'     => __( 'Purchase Date', 'event-tickets-manager-for-woocommerce' ),
+			'schedule'          => __( 'Schedule', 'event-tickets-manager-for-woocommerce' ),
+			'check_in_status'   => __( 'Check In Status', 'event-tickets-manager-for-woocommerce' ),
+			'action'            => __( 'Action', 'event-tickets-manager-for-woocommerce' ),
 		);
 		return $columns;
 	}
@@ -120,6 +120,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 						$all_id = map_deep( wp_unslash( $_POST['mwb_etmfw_event_ids'] ), 'sanitize_text_field' );
 						foreach ( $all_id as $key => $value ) {
 							wp_delete_post($value,true);
+							header('Location: '.$_SERVER['REQUEST_URI']);
 						}
 					}
 				}
@@ -268,6 +269,19 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 					}
 				}
 			}
+		}
+		$filtered_data = array();
+		if ( isset( $_REQUEST['s'] ) ) {
+			$data           = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
+			foreach ($event_attendees_details as $key => $value) {
+				foreach ( array_values( $value ) as $data_value) {
+					if( stripos ($data_value, $data ) !== false ){
+					    $filtered_data[] = $value;
+					    break;
+					}
+				}
+			}
+			return $filtered_data;
 		}
 		return $event_attendees_details;
 	}

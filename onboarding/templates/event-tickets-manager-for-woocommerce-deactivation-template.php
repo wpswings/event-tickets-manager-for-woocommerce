@@ -32,7 +32,7 @@ $etmfw_onboarding_form_deactivate = apply_filters( 'mwb_etmfw_deactivation_form_
 					<h3 class="mwb-etmfw-on-boarding-heading mdc-dialog__title"></h3>
 					<p class="mwb-etmfw-on-boarding-desc"><?php esc_html_e( 'May we have a little info about why you are deactivating?', 'event-tickets-manager-for-woocommerce' ); ?></p>
 					<form action="#" method="post" class="mwb-etmfw-on-boarding-form">
-						<?php
+						<?php 
 						$etmfw_onboarding_deactive_html = $etmfw_mwb_etmfw_obj->mwb_etmfw_plug_generate_html( $etmfw_onboarding_form_deactivate );
 						echo esc_html( $etmfw_onboarding_deactive_html );
 						?>

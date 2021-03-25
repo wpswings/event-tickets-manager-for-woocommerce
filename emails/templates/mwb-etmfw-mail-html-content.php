@@ -50,17 +50,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 										</tbody>
 									</table>
 								</td>
-								<td>
+								<td style="background: #000000;">
 									<table style="table-layout: auto; width: 100%;">
 										<tbody>
 											<tr>
-												<td style="text-align: center;">
+												<td style="text-align: center;color: #ffffff;">
 													<h3>Your Ticket</h3>
 												</td>
 											</tr>
 											<tr>
 												<td>
-													<h3 style="margin: 0;text-align: center;">[TICKET]</h3>
+													<h3 style="margin: 0;text-align: center;color: #ffffff;">[TICKET]</h3>
 												</td>
 											</tr>
 										</tbody>

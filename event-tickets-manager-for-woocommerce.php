@@ -16,7 +16,7 @@
  * Plugin URI:        https://makewebbetter.com/product/event-tickets-manager-for-woocommerce/
  * Description:       Event Tickets Manager for WooCommerce allows you to manage, sell and assign tickets easily.
  * Version:           1.0.0
- * Author:            makewebbetter
+ * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
  * Text Domain:       event-tickets-manager-for-woocommerce
  * Domain Path:       /languages
@@ -93,7 +93,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			);
 		}
 		update_option( 'mwb_all_plugins_active', $mwb_etmfw_active_plugin );
-		mwb_etmfw_create_checkin_page();
 	}
 
 	/**
@@ -112,7 +111,32 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			}
 		}
 		update_option( 'mwb_all_plugins_active', $mwb_etmfw_deactive_plugin );
-		mwb_etmfw_delete_checkin_page();
+	}
+
+	register_activation_hook( __FILE__, 'activate_event_tickets_manager_for_woocommerce' );
+	register_deactivation_hook( __FILE__, 'deactivate_event_tickets_manager_for_woocommerce' );
+
+	/**
+	 * Function to create check in page template.
+	 */
+	function mwb_etmfw_create_checkin_page() {
+		/* ===== ====== Create the Check Gift Card Page ====== ======*/
+		if ( ! get_option( 'event_checkin_page_created', false ) ) {
+
+			$checkin_content = '[mwb_etmfw_event_checkin_page]';
+
+			$checkin_page = array(
+				'post_author'    => get_current_user_id(),
+				'post_name'      => __( 'Event Check In', 'event-tickets-manager-for-woocommerce' ),
+				'post_title'     => __( 'Event Check In', 'event-tickets-manager-for-woocommerce' ),
+				'post_type'      => 'page',
+				'post_status'    => 'publish',
+				'post_content'   => $checkin_content,
+			);
+			$page_id = wp_insert_post( $checkin_page );
+			update_option( 'event_checkin_page_created', $page_id );
+			/* ===== ====== End of Create the Gift Card Page ====== ======*/
+		}
 	}
 
 	/**
@@ -122,11 +146,12 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		$checkin_pageid = get_option( 'event_checkin_page_created', false );
 		if ( $checkin_pageid ) {
 			wp_delete_post( $checkin_pageid );
+			delete_option( 'event_checkin_page_created' );
 		}
 	}
 
-	register_activation_hook( __FILE__, 'activate_event_tickets_manager_for_woocommerce' );
-	register_deactivation_hook( __FILE__, 'deactivate_event_tickets_manager_for_woocommerce' );
+	register_activation_hook( __FILE__, 'mwb_etmfw_create_checkin_page' );
+	register_deactivation_hook( __FILE__, 'mwb_etmfw_delete_checkin_page' );
 
 	/**
 	 * The core plugin class that is used to define internationalization,
@@ -234,29 +259,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 */
 	function mwb_etmfw_get_date_format( $date ) {
 		return date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime( $date ) );// get format from WordPress settings.
-	}
-
-	/**
-	 * Function to create check in page template.
-	 */
-	function mwb_etmfw_create_checkin_page() {
-		/* ===== ====== Create the Check Gift Card Page ====== ======*/
-		if ( ! get_option( 'event_checkin_page_created', false ) ) {
-
-			$checkin_content = '[mwb_etmfw_event_checkin_page]';
-
-			$checkin_page = array(
-				'post_author'    => get_current_user_id(),
-				'post_name'      => __( 'Event Check In', 'event-tickets-manager-for-woocommerce' ),
-				'post_title'     => __( 'Event Check In', 'event-tickets-manager-for-woocommerce' ),
-				'post_type'      => 'page',
-				'post_status'    => 'publish',
-				'post_content'   => $checkin_content,
-			);
-			$page_id = wp_insert_post( $checkin_page );
-			update_option( 'event_checkin_page_created', $page_id );
-			/* ===== ====== End of Create the Gift Card Page ====== ======*/
-		}
 	}
 
 	/**

@@ -35,6 +35,7 @@
 			'#mwb_etmfw_checkin_button',
 			function(e){
 				e.preventDefault();
+				$("#mwb_etmfw_checkin_loader").show();
 				var for_event = $('#mwb_etmfw_event_selected').val();
 				var ticket_num = $('#mwb_etmfw_imput_ticket').val();
 				if (for_event == null || for_event == "" || ticket_num == null || ticket_num == "" ) {
@@ -55,6 +56,7 @@
 						data: data,
 						success: function(response)
 						{
+							$("#mwb_etmfw_checkin_loader").hide();
 							$("#mwb_etmfw_error_message").html(response.message);
 						}
 					}

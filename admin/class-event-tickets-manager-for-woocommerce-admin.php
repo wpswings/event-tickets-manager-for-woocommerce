@@ -216,7 +216,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 
 		$etmfw_settings_general = array(
 			array(
-				'title' => __( 'Enable plugin', 'event-tickets-manager-for-woocommerce' ),
+				'title' => __( 'Enable / Disable', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'radio-switch',
 				'description'  => __( 'Enable plugin to start the functionality.', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'mwb_etmfw_enable_plugin',
@@ -262,27 +262,27 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		$etmfw_settings_integrations = array(
 			array(
 				'title' => __( 'Google API Key', 'event-tickets-manager-for-woocommerce' ),
-				'type'  => 'password',
-				'description'  => __( 'To get your API key, visit here <a target="_blank" href="http://www.gmapswidget.com/documentation/generate-google-maps-api-key/">here</a>', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'text',
+				'description'  => __( 'To get your API key, visit <a target="_blank" href="http://www.gmapswidget.com/documentation/generate-google-maps-api-key/">here</a>', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'mwb_etmfw_google_maps_api_key',
 				'value' => get_option( 'mwb_etmfw_google_maps_api_key', '' ),
-				'class' => 'etmfw-password-class',
+				'class' => 'etmfw-text-class',
 				'placeholder' => __( 'Google API Key', 'event-tickets-manager-for-woocommerce' ),
 			),
 			array(
 				'title' => __( 'Client ID', 'event-tickets-manager-for-woocommerce' ),
-				'type'  => 'password',
-				'description'  => __( 'To get your Client ID, visit here <a target="_blank" href="https://console.developers.google.com/apis/credentials">here</a>', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'text',
+				'description'  => __( 'To get your Client ID, visit <a target="_blank" href="https://console.developers.google.com/apis/credentials">here</a>', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'mwb_etmfw_google_client_id',
 				'value' => get_option( 'mwb_etmfw_google_client_id', '' ),
-				'class' => 'etmfw-password-class',
+				'class' => 'etmfw-text-class',
 				'placeholder' => __( 'Client ID', 'event-tickets-manager-for-woocommerce' ),
 			),
 
 			array(
 				'title' => __( 'Client Secret Key', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'password',
-				'description'  => __( 'To get your Client Secret key, visit here <a target="_blank" href="https://console.developers.google.com/apis/credentials">here</a>', 'event-tickets-manager-for-woocommerce' ),
+				'description'  => __( 'To get your Client Secret key, visit <a target="_blank" href="https://console.developers.google.com/apis/credentials">here</a>', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'mwb_etmfw_google_client_secret',
 				'value' => get_option( 'mwb_etmfw_google_client_secret', '' ),
 				'class' => 'etmfw-password-class',
@@ -291,7 +291,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			array(
 				'title' => __( 'Redirect Url', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'text',
-				'description'  => __( 'To get your redirect url, visit here <a target="_blank" href="https://console.developers.google.com/apis/credentials">here</a>', 'event-tickets-manager-for-woocommerce' ),
+				'description'  => __( 'To get your redirect url, visit <a target="_blank" href="https://console.developers.google.com/apis/credentials">here</a>', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'mwb_etmfw_google_redirect_url',
 				'value' => get_option( 'mwb_etmfw_google_redirect_url', '' ),
 				'class' => 'etmfw-text-class',
@@ -583,7 +583,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				return;
 			}
 		}
-		$typeselected = '';
+		
 		$mwb_etmfw_product_array = get_post_meta( $product_id, 'mwb_etmfw_product_array', true );
 		$mwb_etmfw_field_data = isset( $mwb_etmfw_product_array['mwb_etmfw_field_data'] ) && ! empty( $mwb_etmfw_product_array['mwb_etmfw_field_data'] ) ? $mwb_etmfw_product_array['mwb_etmfw_field_data'] : array();
 
@@ -698,13 +698,14 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 													<?php
 													$mwb_etmfw_field_array = $this->mwb_etmfw_event_fields();
 													foreach ( $mwb_etmfw_field_array as $key => $value ) :
+														$typeselected = '';
 														?>
 														<?php
 														if ( $key === $row_value['type'] ) :
 															$typeselected = "selected='selected'";
-															?>
-															<option value="<?php echo esc_attr( $key ); ?>"<?php echo esc_attr( $typeselected ); ?>><?php echo esc_attr( $value ); ?></option>
-														<?php endif; ?>
+														endif; ?>
+														?>
+														<option value="<?php echo esc_attr( $key ); ?>"<?php echo esc_attr( $typeselected ); ?>><?php echo esc_attr( $value ); ?></option>
 													<?php endforeach; ?> 
 												</select>
 											</td>
@@ -855,5 +856,48 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			</form>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Display tickets on order item meta.
+	 *
+	 * @since    1.0.0
+	 */
+	public function mwb_etmfw_after_order_itemmeta(  $item_id, $item, $_product ){
+		if ( ! current_user_can( 'edit_shop_orders' ) ) {
+			return;
+		}
+		$mwb_etmfw_enable = get_option( 'mwb_etmfw_enable_plugin', false );
+		if ( $mwb_etmfw_enable ) {
+			if ( isset( $_GET['post'] ) ) {
+				$order_id = sanitize_text_field( wp_unslash( $_GET['post'] ) );
+				$order = new WC_Order( $order_id );
+				$order_status = $order->get_status();
+				if ( 'completed' == $order_status || 'processing' == $order_status ) {
+					if ( null != $_product ) {
+						$product_id = $_product->get_id();
+						if ( isset( $product_id ) && ! empty( $product_id ) ) {
+							$product_types = wp_get_object_terms( $product_id, 'product_type' );
+
+							if ( isset( $product_types[0] ) ) {
+								$product_type = $product_types[0]->slug;
+								if ( 'event_ticket_manager' == $product_type ) {
+									$ticket = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+
+									if ( isset( $ticket ) && ! empty( $ticket ) ) {
+										?>
+										<p style="margin:0;"><b><?php esc_html_e( 'Ticket', 'event-tickets-manager-for-woocommerce' ); ?> :</b>
+											<span style="background: rgb(0, 115, 170) none repeat scroll 0% 0%; color: white; padding: 1px 5px 1px 6px; font-weight: bolder; margin-left: 10px;"><?php echo esc_attr( $ticket ); ?></span>
+										</p>
+										<?php
+									}
+									do_action( 'mwb_etmfw_after_order_itemmeta', $item_id, $item, $_product );
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }

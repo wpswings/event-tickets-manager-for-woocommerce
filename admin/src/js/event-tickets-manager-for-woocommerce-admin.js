@@ -44,7 +44,10 @@
             return new MDCSwitch(el);
         });
 
-        $('.mwb-password-hidden').click(function() {
+        $( document ).on(
+			'click',
+			'.mwb-password-hidden',
+			function(){
             if ($('.mwb-form__password').attr('type') == 'text') {
                 $('.mwb-form__password').attr('type', 'password');
             } else {
@@ -53,58 +56,59 @@
         });
 
         var imageurl = $( "#mwb_etmfw_mail_setting_upload_logo" ).val();
-			if (imageurl != null && imageurl != "") {
-				$( "#mwb_etmfw_mail_setting_upload_image" ).attr( "src",imageurl );
-				$( "#mwb_etmfw_mail_setting_remove_logo" ).show();
+		if (imageurl != null && imageurl != "") {
+			$( "#mwb_etmfw_mail_setting_upload_image" ).attr( "src",imageurl );
+			$( "#mwb_etmfw_mail_setting_remove_logo" ).show();
+		} else{
+			$( "#mwb_etmfw_mail_setting_remove_logo" ).hide();
+		}
 
-			} else{
+		$( document ).on(
+			'click',
+			'.mwb_etmfw_mail_setting_remove_logo_span',
+			function(){
 				$( "#mwb_etmfw_mail_setting_remove_logo" ).hide();
+				$( "#mwb_etmfw_mail_setting_upload_logo" ).val( "" );
 			}
-			$( ".mwb_etmfw_mail_setting_remove_logo_span" ).click(
-				function(){
-					$( "#mwb_etmfw_mail_setting_remove_logo" ).hide();
-					$( "#mwb_etmfw_mail_setting_upload_logo" ).val( "" );
-				}
-			);
-			var imageurl = $( "#mwb_etmfw_mail_setting_upload_logo" ).val();
-			if (imageurl != null && imageurl != "") {
-				$( "#mwb_etmfw_mail_setting_upload_image" ).attr( "src",imageurl );
-				$( "#mwb_etmfw_mail_setting_remove_logo" ).show();
-
+		);
+			
+		$( document ).on(
+			'click',
+			'#mwb_etmfw_mail_setting',
+			function(){
+				$( "#mwb_etmfw_mail_setting_wrapper" ).slideToggle();
 			}
-			$( "#mwb_etmfw_mail_setting" ).click(
-				function(){
-					$( "#mwb_etmfw_mail_setting_wrapper" ).slideToggle();
-				}
-			);
+		);
 
-			$( '#mwb_etmfw_mail_setting_upload_logo_button' ).click(
-				function(e){
-					e.preventDefault();
-					var imageurl = $( "#mwb_etmfw_mail_setting_upload_logo" ).val();
-					tb_show( '', 'media-upload.php?TB_iframe=true' );
+		$( document ).on(
+			'click',
+			'#mwb_etmfw_mail_setting_upload_logo_button',
+			function(e){
+				e.preventDefault();
+				var imageurl = $( "#mwb_etmfw_mail_setting_upload_logo" ).val();
+				tb_show( '', 'media-upload.php?TB_iframe=true' );
 
-					window.send_to_editor = function(html)
-					{
-							var imageurl = $( html ).attr( 'href' );
+				window.send_to_editor = function(html)
+				{
+						var imageurl = $( html ).attr( 'href' );
 
-						if (typeof imageurl == 'undefined') {
-							imageurl = $( html ).attr( 'src' );
-						}
-							var last_index = imageurl.lastIndexOf( '/' );
-							var url_last_part = imageurl.substr( last_index + 1 );
-						if ( url_last_part == '' ) {
+					if (typeof imageurl == 'undefined') {
+						imageurl = $( html ).attr( 'src' );
+					}
+						var last_index = imageurl.lastIndexOf( '/' );
+						var url_last_part = imageurl.substr( last_index + 1 );
+					if ( url_last_part == '' ) {
 
-							imageurl = $( html ).children( "img" ).attr( "src" );
-						}
-							$( "#mwb_etmfw_mail_setting_upload_logo" ).val( imageurl );
-							$( "#mwb_etmfw_mail_setting_upload_image" ).attr( "src",imageurl );
-							$( "#mwb_etmfw_mail_setting_remove_logo" ).show();
-							tb_remove();
-					};
-					return false;
-				}
-			);
+						imageurl = $( html ).children( "img" ).attr( "src" );
+					}
+						$( "#mwb_etmfw_mail_setting_upload_logo" ).val( imageurl );
+						$( "#mwb_etmfw_mail_setting_upload_image" ).attr( "src",imageurl );
+						$( "#mwb_etmfw_mail_setting_remove_logo" ).show();
+						tb_remove();
+				};
+				return false;
+			}
+		);
 
 	});
 

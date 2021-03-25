@@ -29,7 +29,9 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 	jQuery( document ).ready( function($){
-	 	$("#mwb_etmfw_save_edit_ticket_info_btn").click( 
+		$( document ).on(
+			'click',
+			'#mwb_etmfw_save_edit_ticket_info_btn',
 	 		function(e){
 	 			e.preventDefault();
 	 			$( '#mwb_etmfw_edit_info_loader' ).css('display','inline-block');
@@ -39,8 +41,14 @@
 	 				$( '.mwb-edit-form-group' ).each(
 						function() {
 							var label = $( this ).attr('data-id');
+							var fieldType = $( this ).find('#mwb_etmfw_'+label).attr('type');
+							if( fieldType == 'radio'){
+								var radio_value = $( this ).find( 'input[name="mwb_etmfw_'+label+'"]:checked' ).val();
+								modifiedValues[ label ] = radio_value;
+							} else{
+								modifiedValues[ label ] = $('#mwb_etmfw_'+label).val();
+							}
 							order_id = $(document).find('#mwb_etmfw_edit_info_order').val();
-							modifiedValues[ label ] = $('#mwb_etmfw_'+label).val();
 						}
 					);
 	 			}
@@ -66,5 +74,40 @@
 			}
 		);
 	});
+
+	
+	jQuery(window).load( function(){
+		var event_view = etmfw_public_param.event_view;
+		if( event_view == 'calendar') {
+			var data = {
+				action:'mwb_etmfw_get_calendar_events',
+				mwb_nonce:etmfw_public_param.mwb_etmfw_public_nonce
+
+			};
+			$.ajax({
+		        type: 'POST',
+		        url: etmfw_public_param.ajaxurl,
+		        data: data,
+		        dataType: 'json',
+		        success: function(response) {
+		        	var calendarEl = document.getElementById('calendar');
+				    var calendar = new FullCalendar.Calendar(calendarEl, {
+				        initialView: 'dayGridMonth',
+				        initialDate: '2021-03-07',
+				        headerToolbar: {
+				          left: 'prev,next today',
+				          center: 'title',
+				          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+				        },
+				        events: response.result
+				    });
+			      	calendar.render();
+		        },
+		        error: function(response) {
+		           
+		        }
+		    });
+		}
+	})
 
 })( jQuery );
