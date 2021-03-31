@@ -693,7 +693,6 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 		);
 	
 		$response = $this->mwb_etmfw_hic_post( $url, $form_data, $headers );
-
 		if ( 200 == $response['status_code'] ) {
 			$result = json_decode( $response['response'], true );
 			$result['success'] = true;
@@ -713,32 +712,36 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 * @param   array  $headers    data that must be included in header for request.
 	 */
 	private function mwb_etmfw_hic_post( $endpoint, $post_params, $headers ) {
-		$url      = $this->mwb_isfw_base_url . $endpoint;
-		$request  = array(
+		$url      = $this->mwb_etmfw_base_url . $endpoint;
+		$request = array(
+			'httpversion' => '1.0',
+			'sslverify'   => false,
 			'method'      => 'POST',
 			'timeout'     => 45,
-			'redirection' => 5,
-			'httpversion' => '1.0',
-			'blocking'    => true,
 			'headers'     => $headers,
 			'body'        => $post_params,
 			'cookies'     => array(),
 		);
+
 		$response = wp_remote_post( $url, $request );
+
 		if ( is_wp_error( $response ) ) {
+
 			$status_code = 500;
-			$response    = esc_html__( 'Unexpected Error Occured', 'invoice-system-for-woocommerce' );
-			$curl_errors = $response;
+			$response    = esc_html__( 'Unexpected Error Occured', 'subscriptions-for-woocommerce' );
+			$errors      = $response;
+
 		} else {
-			$response    = wp_remote_retrieve_body( $response );
 			$status_code = wp_remote_retrieve_response_code( $response );
-			$curl_errors = $response;
+			$response    = wp_remote_retrieve_body( $response );
+			$errors      = $response;
 		}
 		return array(
 			'status_code' => $status_code,
 			'response'    => $response,
-			'errors'      => $curl_errors,
+			'errors'      => $errors,
 		);
+		
 	}
 
 

@@ -29,8 +29,14 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 
+	 $(window).load(function(){
+	 	if( $(document).find('.mwb_etmfw_field_table').length > 0 ) {
+	 		$(document).find( '.mwb_etmfw_field_table tbody.mwb_etmfw_field_body' ).sortable();
+	 	}
+	 }); 
+
 	$(document).ready(function() {
-		
+
         //for General tab.
 		$('.options_group.pricing').addClass('show_if_event_ticket_manager').show();
         //for Inventory tab.

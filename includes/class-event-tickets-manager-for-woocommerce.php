@@ -200,6 +200,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'save_post', $etmfw_plugin_admin, 'mwb_etmfw_save_product_data' );
 		$this->loader->add_action( 'admin_menu', $etmfw_plugin_admin, 'mwb_etmfw_event_menu' );
 		$this->loader->add_action( 'woocommerce_after_order_itemmeta', $etmfw_plugin_admin, 'mwb_etmfw_after_order_itemmeta', 10, 3 );
+		$this->loader->add_filter( 'plugin_row_meta', $etmfw_plugin_admin, 'mwb_etmfw_plugin_row_meta', 10, 2 );
 
 	}
 
@@ -222,7 +223,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_filter( 'woocommerce_add_cart_item_data', $etmfw_plugin_public, 'mwb_etmfw_cart_item_data', 10, 3 );
 		$this->loader->add_filter( 'woocommerce_get_item_data', $etmfw_plugin_public, 'mwb_etmfw_get_cart_item_data', 10, 2 );
 		$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $etmfw_plugin_public, 'mwb_etmfw_create_order_line_item', 10, 3 );
-		$this->loader->add_action( 'woocommerce_order_status_changed', $etmfw_plugin_public, 'mwb_etmfw_process_event_order', 10, 3 );
+		$this->loader->add_action( 'woocommerce_order_status_changed', $etmfw_plugin_public, 'mwb_etmfw_event_status_changed', 10, 3 );
 		$this->loader->add_filter( 'woocommerce_email_attachments', $etmfw_plugin_public, 'mwb_etmfw_attach_pdf_to_emails', 10, 4 );
 		$this->loader->add_action( 'woocommerce_order_details_before_order_table', $etmfw_plugin_public, 'mwb_etmfw_view_ticket_button', 10 );
 		$this->loader->add_action( 'init', $etmfw_plugin_public, 'mwb_etmfw_add_eventcheckin_shortcode' );
@@ -232,6 +233,8 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_nopriv_mwb_etmfw_edit_user_info', $etmfw_plugin_public, 'mwb_etmfw_edit_user_info_for_event' );
 		$this->loader->add_action( 'wp_ajax_mwb_etmfw_get_calendar_events', $etmfw_plugin_public, 'mwb_etmfw_get_calendar_widget_data' );
 		$this->loader->add_action( 'wp_ajax_nopriv_mwb_etmfw_get_calendar_events', $etmfw_plugin_public, 'mwb_etmfw_get_calendar_widget_data' );
+		$this->loader->add_action( 'woocommerce_available_payment_gateways', $etmfw_plugin_public, 'mwb_etmfw_unset_cod_payment_gateway_for_event' );
+		$this->loader->add_filter( 'woocommerce_is_purchasable', $etmfw_plugin_public, 'mwb_etmfw_handle_expired_events', 10, 2 );
 
 	}
 

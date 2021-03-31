@@ -54,9 +54,6 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 			$this->template_base  = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/';
 			$this->placeholders   = array(
 				'{site_title}'       => $this->get_blogname(),
-				'{email_content}' => '',
-				'{order_date}'   => '',
-				'{order_number}' => '',
 			);
 
 			// Call parent constructor
@@ -80,7 +77,7 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 		 * @return string
 		 */
 		public function get_default_heading() {
-			return __( 'New Order: #{order_number}', 'event-tickets-manager-for-woocommerce' );
+			return __( 'Event order received.', 'event-tickets-manager-for-woocommerce' );
 		}
 
 		/**
@@ -97,13 +94,9 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 
 			if ( is_a( $order, 'WC_Order' ) ) {
 				$this->object                         = $order;
-				$this->placeholders['{order_date}']   = wc_format_datetime( $this->object->get_date_created() );
-				$this->placeholders['{order_number}'] = $this->object->get_order_number();
 				$this->email_content = $email_content;
 				$this->mwb_etmfw_email_subject = $mwb_etmfw_email_subject;
 				$this->recipient = $user_email;
-				$this->placeholders['{email_content}'] = $email_content;
-
 				$email_already_sent = $order->get_meta( '_new_order_email_sent' );
 			}
 

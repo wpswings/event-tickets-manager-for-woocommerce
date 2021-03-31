@@ -100,10 +100,10 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 
 	public function mwb_generate_list_view( $select ){
 		global $product;
-		$current_timestamp = current_time( 'timestamp' );
 		$mwb_etmfw_product_array = get_post_meta( $product->get_id(), 'mwb_etmfw_product_array', true );
 		$start_date = isset( $mwb_etmfw_product_array['event_start_date_time'] ) ? $mwb_etmfw_product_array['event_start_date_time'] : '';
 		$end_date = isset( $mwb_etmfw_product_array['event_end_date_time'] ) ? $mwb_etmfw_product_array['event_end_date_time'] : '';
+		$current_timestamp = current_time( 'timestamp' );
 		$end_date_timestamp = strtotime( $end_date );
 		$start_date_timestamp = strtotime( date('Y-m-d', strtotime( $start_date ) ) );
 		$current_timestamp = strtotime( date('Y-m-d', $current_timestamp ) );
@@ -125,7 +125,7 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 				break;
 			
 			case 'future':
-				if ( $start_date_timestamp > $current_timestamp ) {
+				if ( $end_date_timestamp > $current_timestamp ) {
 					?>
 					<li>
 						<a href="<?php echo esc_url( get_permalink( $product->get_id() ) ); ?>" title="<?php echo esc_attr( $product->get_title() ); ?>">

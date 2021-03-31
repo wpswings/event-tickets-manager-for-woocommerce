@@ -117,7 +117,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		if ( isset( $screen->id ) && 'product' == $screen->id ) {
 			// Date Time Picker Library.
 			wp_enqueue_script( 'mwb-etmfw-date-time', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/date-time/datetimepicker.min.js', array( 'jquery' ), time(), false );
-			wp_register_script( $this->plugin_name . 'admin-edit-product-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/js/event-tickets-manager-for-woocommerce-edit-product.js', array( 'jquery', 'mwb-etmfw-date-time' ), $this->version, false );
+			wp_register_script( $this->plugin_name . 'admin-edit-product-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/js/event-tickets-manager-for-woocommerce-edit-product.js', array( 'jquery', 'mwb-etmfw-date-time', 'jquery-ui-sortable' ), $this->version, false );
 
 			wp_localize_script(
 				$this->plugin_name . 'admin-edit-product-js',
@@ -396,13 +396,13 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'title' => __( 'User Guide', 'event-tickets-manager-for-woocommerce' ),
 				'description' => __( 'View the detailed guides and documentation to set up your plugin.', 'event-tickets-manager-for-woocommerce' ),
 				'link-text' => __( 'VIEW', 'event-tickets-manager-for-woocommerce' ),
-				'link' => '',
+				'link' => 'https://docs.makewebbetter.com/event-tickets-manager-for-woocommerce/?utm_source=org&utm_medium=plugin&utm_campaign=mwb_event_ticket',
 			),
 			array(
 				'title' => __( 'Free Support', 'event-tickets-manager-for-woocommerce' ),
 				'description' => __( 'Please submit a ticket , our team will respond within 24 hours.', 'event-tickets-manager-for-woocommerce' ),
 				'link-text' => __( 'SUBMIT', 'event-tickets-manager-for-woocommerce' ),
-				'link' => 'https://makewebbetter.com/submit-query/',
+				'link' => 'https://makewebbetter.com/submit-query/?utm_source=org&utm_medium=plugin&utm_campaign=mwb_event_ticket',
 			),
 		);
 
@@ -595,9 +595,10 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					'id'            => 'etmfw_start_date_time',
 					'wrapper_class' => 'show_if_event_ticket_manager',
 					'label'         => __( 'Start Date/ Time', 'event-tickets-manager-for-woocommerce' ),
-					'desc_tip'      => false,
 					'value'         => isset( $mwb_etmfw_product_array['event_start_date_time'] ) ? $mwb_etmfw_product_array['event_start_date_time'] : '',
 					'custom_attributes' => array( 'required' => 'required' ),
+					'desc_tip'    => true,
+					'description' => __( 'Enter the date and time when event will start.', 'event-tickets-manager-for-woocommerce' ),
 				)
 			);
 
@@ -606,9 +607,10 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					'id'            => 'etmfw_end_date_time',
 					'wrapper_class' => 'show_if_event_ticket_manager',
 					'label'         => __( 'End Date/ Time', 'event-tickets-manager-for-woocommerce' ),
-					'desc_tip'      => false,
 					'value'         => isset( $mwb_etmfw_product_array['event_end_date_time'] ) ? $mwb_etmfw_product_array['event_end_date_time'] : '',
 					'custom_attributes' => array( 'required' => 'required' ),
+					'desc_tip'    => true,
+					'description' => __( 'Enter the date and time when event will end.', 'event-tickets-manager-for-woocommerce' ),
 				)
 			);
 
@@ -617,9 +619,10 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					'id'            => 'etmfw_event_venue',
 					'wrapper_class' => 'show_if_event_ticket_manager',
 					'label'         => __( 'Venue', 'event-tickets-manager-for-woocommerce' ),
-					'desc_tip'      => false,
 					'value'         => isset( $mwb_etmfw_product_array['etmfw_event_venue'] ) ? $mwb_etmfw_product_array['etmfw_event_venue'] : '',
 					'custom_attributes' => array( 'required' => 'required' ),
+					'desc_tip'    => true,
+					'description' => __( 'Enter the place of event where event will', 'event-tickets-manager-for-woocommerce' ),
 				)
 			);
 
@@ -651,7 +654,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 								<th class="etmfw_field_actions"><?php esc_html_e( 'Actions', 'event-tickets-manager-for-woocommerce' ); ?></th>
 							</tr>
 							</thead>
-							<tbody class="ui-sortable mwb_etmfw_field_body" style="">
+							<tbody class="mwb_etmfw_field_body">
 								<?php if ( empty( $mwb_etmfw_field_data ) ) : ?>
 									<tr class="mwb_etmfw_field_wrap" data-id="0">
 										<td class="drag-icon">
@@ -861,6 +864,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	/**
 	 * Display tickets on order item meta.
 	 *
+	 * @param string $item_id Event Id.
+	 * @param object $item.
+	 * @param object $_product.
 	 * @since    1.0.0
 	 */
 	public function mwb_etmfw_after_order_itemmeta(  $item_id, $item, $_product ){
@@ -899,5 +905,27 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				}
 			}
 		}
+	}
+
+	/**
+	 * This is used to add row meta on plugin activation.
+	 *
+	 * @since 1.0.0
+	 * @name mwb_etmfw_plugin_row_meta
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @param mixed $links Contains links.
+	 * @param mixed $file Contains main file.
+	 * @link https://www.makewebbetter.com/
+	 */
+	public function mwb_etmfw_plugin_row_meta( $links, $file ){
+		if ( strpos( $file, 'event-tickets-manager-for-woocommerce/event-tickets-manager-for-woocommerce.php' ) !== false ) {
+			$new_links = array(
+				'documentation' => '<a href="https://docs.makewebbetter.com/event-tickets-manager-for-woocommerce/?utm_source=org&utm_medium=plugin&utm_campaign=mwb_event_ticket" target="_blank">Documentation</a>',
+				'support' => '<a href="https://makewebbetter.com/contact-us/?utm_source=org&utm_medium=plugin&utm_campaign=mwb_event_ticket" target="_blank">Support</a>',
+			);
+
+			$links = array_merge( $links, $new_links );
+		}
+		return $links;
 	}
 }
