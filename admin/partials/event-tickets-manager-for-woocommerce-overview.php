@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<li><?php esc_html_e( 'Export list of attendees in CSV, or PDF format.', 'event-tickets-manager-for-woocommerce' ); ?></li>
 			<li><?php esc_html_e( 'Show upcoming events through a calendar on your online store.', 'event-tickets-manager-for-woocommerce' ); ?></li>
 			<li><?php esc_html_e( 'Manage the stock of tickets.', 'event-tickets-manager-for-woocommerce' ); ?></li>
-			<?php do_action( 'mwb_etmfw_extent_plugin_feature_info');?>
+			<?php do_action( 'mwb_etmfw_extent_plugin_feature_info' ); ?>
 		</ol>
 	</div>
 	<div class="mwb_etmfw_video_wrapper">

@@ -40,6 +40,7 @@
 				var ticket_num = $('#mwb_etmfw_imput_ticket').val();
 				if (for_event == null || for_event == "" || ticket_num == null || ticket_num == "" ) {
 					$("#mwb_etmfw_error_message").html("Fields required.");
+					$("#mwb_etmfw_error_message").addClass("mwb_check_in_error");
 					return false;
 				}
 				var data = {
@@ -58,6 +59,11 @@
 						{
 							$("#mwb_etmfw_checkin_loader").hide();
 							$("#mwb_etmfw_error_message").html(response.message);
+							if( response.result ){
+								$("#mwb_etmfw_error_message").addClass("mwb_check_in_success");
+							} else{
+								$("#mwb_etmfw_error_message").addClass("mwb_check_in_error");
+							}
 						}
 					}
 				);

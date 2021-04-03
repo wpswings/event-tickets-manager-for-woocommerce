@@ -583,7 +583,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				return;
 			}
 		}
-		
+
 		$mwb_etmfw_product_array = get_post_meta( $product_id, 'mwb_etmfw_product_array', true );
 		$mwb_etmfw_field_data = isset( $mwb_etmfw_product_array['mwb_etmfw_field_data'] ) && ! empty( $mwb_etmfw_product_array['mwb_etmfw_field_data'] ) ? $mwb_etmfw_product_array['mwb_etmfw_field_data'] : array();
 
@@ -706,7 +706,8 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 														<?php
 														if ( $key === $row_value['type'] ) :
 															$typeselected = "selected='selected'";
-														endif; ?>
+														endif;
+														?>
 														?>
 														<option value="<?php echo esc_attr( $key ); ?>"<?php echo esc_attr( $typeselected ); ?>><?php echo esc_attr( $value ); ?></option>
 													<?php endforeach; ?> 
@@ -764,7 +765,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					$event_coordinates = $this->mwb_etmfw_get_coordinates( $event_venue );
 					$mwb_etmfw_product_array['etmfw_event_venue'] = $event_venue;
 					$mwb_etmfw_product_array['etmfw_event_venue_coordinates'] = $event_coordinates;
-					$mwb_etmfw_field_data = !empty( $_POST['etmfw_fields'] ) ? map_deep( wp_unslash( $_POST['etmfw_fields'] ), 'sanitize_text_field' ) : array();
+					$mwb_etmfw_field_data = ! empty( $_POST['etmfw_fields'] ) ? map_deep( wp_unslash( $_POST['etmfw_fields'] ), 'sanitize_text_field' ) : array();
 					$mwb_etmfw_field_data_array = array();
 					if ( is_array( $mwb_etmfw_field_data ) && ! empty( $mwb_etmfw_field_data ) ) {
 						if ( '' !== $mwb_etmfw_field_data[0]['_label'] ) {
@@ -864,12 +865,12 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	/**
 	 * Display tickets on order item meta.
 	 *
-	 * @param string $item_id Event Id.
-	 * @param object $item.
-	 * @param object $_product.
+	 * @param string $item_id Event Item Id.
+	 * @param object $item Event Order Item.
+	 * @param object $_product Product Object.
 	 * @since    1.0.0
 	 */
-	public function mwb_etmfw_after_order_itemmeta(  $item_id, $item, $_product ){
+	public function mwb_etmfw_after_order_itemmeta( $item_id, $item, $_product ) {
 		if ( ! current_user_can( 'edit_shop_orders' ) ) {
 			return;
 		}
@@ -917,7 +918,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	 * @param mixed $file Contains main file.
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_etmfw_plugin_row_meta( $links, $file ){
+	public function mwb_etmfw_plugin_row_meta( $links, $file ) {
 		if ( strpos( $file, 'event-tickets-manager-for-woocommerce/event-tickets-manager-for-woocommerce.php' ) !== false ) {
 			$new_links = array(
 				'documentation' => '<a href="https://docs.makewebbetter.com/event-tickets-manager-for-woocommerce/?utm_source=org&utm_medium=plugin&utm_campaign=mwb_event_ticket" target="_blank">Documentation</a>',

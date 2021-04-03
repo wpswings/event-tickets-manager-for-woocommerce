@@ -256,6 +256,13 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
 	/**
 	 * Return wordpress date time format.
+	 *
+	 * @since 1.0.0
+	 * @name mwb_etmfw_get_date_format
+	 * @param string $date Date Passed.
+	 * @return string $date WP formated Date.
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_etmfw_get_date_format( $date ) {
 		return date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime( $date ) );// get format from WordPress settings.

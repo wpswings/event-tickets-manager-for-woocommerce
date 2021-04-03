@@ -27,7 +27,7 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 		 * Email Content to send in mail.
 		 *
 		 * @since    1.0.0
-		 * @access   public 
+		 * @access   public
 		 * @var      string    $email_content    Email content in mail.
 		 */
 		public $email_content;
@@ -36,7 +36,7 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 		 * Email subject for mail.
 		 *
 		 * @since    1.0.0
-		 * @access   public 
+		 * @access   public
 		 * @var      string    $mwb_etmfw_email_subject    Email subject for mail.
 		 */
 		public $mwb_etmfw_email_subject;
@@ -56,7 +56,7 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 				'{site_title}'       => $this->get_blogname(),
 			);
 
-			// Call parent constructor
+			// Call parent constructor.
 			parent::__construct();
 		}
 
@@ -84,10 +84,10 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 		 * Trigger the sending of this email.
 		 *
 		 * @since      1.0.8
-		 * @param string $user_email.
-		 * @param string $email_content.
-		 * @param string $mwb_etmfw_email_subject.
-		 * @param object $order.
+		 * @param string $user_email User Email.
+		 * @param string $email_content Email content.
+		 * @param string $mwb_etmfw_email_subject Email Subject.
+		 * @param object $order Order Object.
 		 */
 		public function trigger( $user_email, $email_content, $mwb_etmfw_email_subject, $order ) {
 			$this->setup_locale();

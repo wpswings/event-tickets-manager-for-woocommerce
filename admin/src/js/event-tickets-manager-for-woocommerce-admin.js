@@ -59,6 +59,7 @@
 		if (imageurl != null && imageurl != "") {
 			$( "#mwb_etmfw_mail_setting_upload_image" ).attr( "src",imageurl );
 			$( "#mwb_etmfw_mail_setting_remove_logo" ).show();
+			$( "#mwb_etmfw_mail_setting_upload_logo_button" ).hide();
 		} else{
 			$( "#mwb_etmfw_mail_setting_remove_logo" ).hide();
 		}
@@ -69,6 +70,7 @@
 			function(){
 				$( "#mwb_etmfw_mail_setting_remove_logo" ).hide();
 				$( "#mwb_etmfw_mail_setting_upload_logo" ).val( "" );
+				$( "#mwb_etmfw_mail_setting_upload_logo_button" ).show();
 			}
 		);
 			
@@ -104,6 +106,7 @@
 						$( "#mwb_etmfw_mail_setting_upload_logo" ).val( imageurl );
 						$( "#mwb_etmfw_mail_setting_upload_image" ).attr( "src",imageurl );
 						$( "#mwb_etmfw_mail_setting_remove_logo" ).show();
+						$( "#mwb_etmfw_mail_setting_upload_logo_button" ).hide();
 						tb_remove();
 				};
 				return false;

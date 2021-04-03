@@ -537,15 +537,15 @@ class Event_Tickets_Manager_For_Woocommerce {
 	public function mwb_etmfw_plug_generate_html( $etmfw_components = array() ) {
 		if ( is_array( $etmfw_components ) && ! empty( $etmfw_components ) ) {
 			foreach ( $etmfw_components as $etmfw_component ) {
-				if ( ! empty( $etmfw_component['type'] ) &&  ! empty( $etmfw_component['id'] ) ) {
+				if ( ! empty( $etmfw_component['type'] ) && ! empty( $etmfw_component['id'] ) ) {
 					switch ( $etmfw_component['type'] ) {
 
 						case 'hidden':
 						case 'number':
 						case 'email':
 						case 'text':
-						?>
-						<div class="mwb-form-group mwb-etmfw-<?php echo esc_attr($etmfw_component['type']); ?>">
+							?>
+						<div class="mwb-form-group mwb-etmfw-<?php echo esc_attr( $etmfw_component['type'] ); ?>">
 							<div class="mwb-form-group__label">
 								<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
 							</div>
@@ -574,11 +574,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 								</div>
 							</div>
 						</div>
-						<?php
-						break;
+							<?php
+							break;
 
 						case 'password':
-						?>
+							?>
 						<div class="mwb-form-group">
 							<div class="mwb-form-group__label">
 								<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
@@ -606,11 +606,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 								</div>
 							</div>
 						</div>
-						<?php
-						break;
+							<?php
+							break;
 
 						case 'textarea':
-						?>
+							?>
 						<div class="mwb-form-group">
 							<div class="mwb-form-group__label">
 								<label class="mwb-form-label" for="<?php echo esc_attr( $etmfw_component['id'] ); ?>"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
@@ -632,12 +632,12 @@ class Event_Tickets_Manager_For_Woocommerce {
 							</div>
 						</div>
 
-						<?php
-						break;
+							<?php
+							break;
 
 						case 'select':
 						case 'multiselect':
-						?>
+							?>
 						<div class="mwb-form-group">
 							<div class="mwb-form-group__label">
 								<label class="mwb-form-label" for="<?php echo esc_attr( $etmfw_component['id'] ); ?>"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
@@ -668,11 +668,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 							</div>
 						</div>
 
-						<?php
-						break;
+							<?php
+							break;
 
 						case 'checkbox':
-						?>
+							?>
 						<div class="mwb-form-group">
 							<div class="mwb-form-group__label">
 								<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
@@ -700,11 +700,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 								</div>
 							</div>
 						</div>
-						<?php
-						break;
+							<?php
+							break;
 
 						case 'radio':
-						?>
+							?>
 						<div class="mwb-form-group">
 							<div class="mwb-form-group__label">
 								<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
@@ -737,11 +737,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 								</div>
 							</div>
 						</div>
-						<?php
-						break;
+							<?php
+							break;
 
 						case 'radio-switch':
-						?>
+							?>
 
 						<div class="mwb-form-group">
 							<div class="mwb-form-group__label">
@@ -753,7 +753,15 @@ class Event_Tickets_Manager_For_Woocommerce {
 										<div class="mdc-switch__track"></div>
 										<div class="mdc-switch__thumb-underlay">
 											<div class="mdc-switch__thumb"></div>
-											<input name="<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : esc_html( $etmfw_component['id'] ) ); ?>" type="checkbox" id="<?php echo esc_html( $etmfw_component['id'] ); ?>" value="on" class="mdc-switch__native-control <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>" role="switch" aria-checked="<?php if ( 'on' == $etmfw_component['value'] ) echo 'true'; else echo 'false'; ?>"
+											<input name="<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : esc_html( $etmfw_component['id'] ) ); ?>" type="checkbox" id="<?php echo esc_html( $etmfw_component['id'] ); ?>" value="on" class="mdc-switch__native-control <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>" role="switch" aria-checked="
+																	<?php
+																	if ( 'on' == $etmfw_component['value'] ) {
+																		echo 'true';
+																	} else {
+																		echo 'false';
+																	}
+																	?>
+											"
 											<?php checked( $etmfw_component['value'], 'on' ); ?>
 											>
 										</div>
@@ -764,13 +772,12 @@ class Event_Tickets_Manager_For_Woocommerce {
 								</div>
 							</div>
 						</div>
-						<?php
-						break;
+							<?php
+							break;
 
 						case 'button':
-						?>
+							?>
 						<div class="mwb-form-group">
-							<div class="mwb-form-group__label"></div>
 							<div class="mwb-form-group__control">
 								<button class="mdc-button mdc-button--raised" name= "<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : esc_html( $etmfw_component['id'] ) ); ?>"
 									id="<?php echo esc_attr( $etmfw_component['id'] ); ?>"> <span class="mdc-button__ripple"></span>
@@ -779,8 +786,8 @@ class Event_Tickets_Manager_For_Woocommerce {
 							</div>
 						</div>
 
-						<?php
-						break;
+							<?php
+							break;
 
 						case 'multi':
 							?>
@@ -836,7 +843,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 										id="<?php echo esc_attr( $etmfw_component['id'] ); ?>"
 										type="<?php echo esc_attr( $etmfw_component['type'] ); ?>"
 										value="<?php echo ( isset( $etmfw_component['value'] ) ? esc_attr( $etmfw_component['value'] ) : '' ); ?>"
-										<?php echo esc_html( ( 'date' === $etmfw_component['type'] ) ? 'max='. date( 'Y-m-d', strtotime( date( "Y-m-d", mktime() ) . " + 365 day" ) ) .' ' . 'min=' . date( "Y-m-d" ) . '' : '' ); ?>
+										<?php echo esc_html( ( 'date' === $etmfw_component['type'] ) ? 'max=' . gmdate( 'Y-m-d', strtotime( gmdate( 'Y-m-d', mktime() ) . ' + 365 day' ) ) . ' ' . 'min=' . gmdate( 'Y-m-d' ) . '' : '' ); ?>
 										>
 									</label>
 									<div class="mdc-text-field-helper-line">
@@ -845,10 +852,10 @@ class Event_Tickets_Manager_For_Woocommerce {
 								</div>
 							</div>
 							<?php
-						break;
+							break;
 
 						case 'submit':
-						?>
+							?>
 						<tr valign="top">
 							<td scope="row">
 								<input type="submit" class="button button-primary" 
@@ -859,11 +866,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 								/>
 							</td>
 						</tr>
-						<?php
-						break;
+							<?php
+							break;
 
 						case 'wp_editor':
-						?>
+							?>
 					<div class="mwb-form-group">
 						<div class="mwb-form-group__label">
 							<label for="" class="mwb-form-label"><?php echo esc_html( $etmfw_component['title'] ); ?></label>
@@ -890,11 +897,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 							</div>
 						</div>
 					</div>
-						<?php
-						break;
+							<?php
+							break;
 
-					case 'textWithButton':
-						?>
+						case 'textWithButton':
+							?>
 					<div class="mwb-form-group">
 						<div class="mwb-form-group__label">
 							<label for="" class="mwb-form-label"><?php echo esc_html( $etmfw_component['title'] ); ?></label>
@@ -920,11 +927,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 							</div>
 						</div>
 					</div>
-						<?php
-						break;
+							<?php
+							break;
 
 						default:
-						break;
+							break;
 					}
 				}
 			}
@@ -935,7 +942,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 	 * Generate Text Input Html.
 	 *
 	 * @since    1.0.0
-	 * @param    Array 	$value.
+	 * @param    Array $value Contain html field values.
 	 */
 	public function mwb_etmfw_generate_text_html( $value ) {
 		?>
@@ -962,7 +969,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 	 * Generate Button html.
 	 *
 	 * @since    1.0.0
-	 * @param    Array 	$value.
+	 * @param    Array $value Contain html field values.
 	 */
 	public function mwb_etmfw_generate_button_html( $value ) {
 		?>
@@ -982,7 +989,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 	 * Generate ShowBox Html.
 	 *
 	 * @since    1.0.0
-	 * @param    Array 	$value.
+	 * @param    Array $value Contain html field values.
 	 */
 	public function mwb_etmfw_generate_showbox( $value ) {
 		?>

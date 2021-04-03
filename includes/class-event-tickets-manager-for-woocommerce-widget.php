@@ -48,18 +48,20 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 
 	/**
 	 * Set up event widget data for the plugin.
-	 *
+	 * 
+	 * @param array $args Arguments.
+	 * @param array $instance Instance.
 	 * @since    1.0.0
 	 */
 	public function widget( $args, $instance ) {
 		extract( $args );
-		// Check the widget options
+		// Check the widget options.
 		$title    = isset( $instance['title'] ) ? apply_filters( 'widget_title', $instance['title'] ) : '';
 		$select   = isset( $instance['select'] ) ? $instance['select'] : '';
 		$radio = ! empty( $instance['radio'] ) ? $instance['radio'] : 'list';
-		// WordPress core before_widget hook (always include )
+		// WordPress core before_widget hook (always include ).
 		echo wp_kses_post( $before_widget );
-		if( 'calendar' === $radio ){
+		if ( 'calendar' === $radio ) {
 			echo '<div id="calendar"></div>';
 		} else {
 			$query_args = array(
@@ -77,7 +79,7 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 
 			$query_data = new WP_Query( $query_args );
 			if ( $query_data->have_posts() ) {
-				
+
 				if ( $title ) {
 					echo wp_kses_post( $before_title . $title . $after_title );
 				}
@@ -87,27 +89,37 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 				while ( $query_data->have_posts() ) {
 					$query_data->the_post();
 					$this->mwb_generate_list_view( $select );
-				}?>
+				}
+				?>
 				</ul>
 				<?php
-				
+
 			}
 			wp_reset_postdata();
 		}
-		// WordPress core after_widget hook (always include )
+		// WordPress core after_widget hook (always include ).
 		echo wp_kses_post( $after_widget );
 	}
 
-	public function mwb_generate_list_view( $select ){
+	/**
+	 * Creates list view.
+	 *
+	 * @since 1.0.0
+	 * @name mwb_generate_list_view().
+	 * @param string $select selected view.
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 */
+	public function mwb_generate_list_view( $select ) {
 		global $product;
 		$mwb_etmfw_product_array = get_post_meta( $product->get_id(), 'mwb_etmfw_product_array', true );
 		$start_date = isset( $mwb_etmfw_product_array['event_start_date_time'] ) ? $mwb_etmfw_product_array['event_start_date_time'] : '';
 		$end_date = isset( $mwb_etmfw_product_array['event_end_date_time'] ) ? $mwb_etmfw_product_array['event_end_date_time'] : '';
 		$current_timestamp = current_time( 'timestamp' );
 		$end_date_timestamp = strtotime( $end_date );
-		$start_date_timestamp = strtotime( date('Y-m-d', strtotime( $start_date ) ) );
-		$current_timestamp = strtotime( date('Y-m-d', $current_timestamp ) );
-		switch ($select) {
+		$start_date_timestamp = strtotime( gmdate( 'Y-m-d', strtotime( $start_date ) ) );
+		$current_timestamp = strtotime( gmdate( 'Y-m-d', $current_timestamp ) );
+		switch ( $select ) {
 			case 'all':
 				?>
 				<li>
@@ -123,7 +135,7 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 				</li>
 				<?php
 				break;
-			
+
 			case 'future':
 				if ( $end_date_timestamp > $current_timestamp ) {
 					?>
@@ -161,7 +173,7 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 				break;
 
 			default:
-				# code...
+				// code...
 				break;
 		}
 	}
@@ -169,55 +181,65 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 	/**
 	 * Create input form to get widget data.
 	 *
+	 * @name form().
+	 * @param array $instance Instance.
 	 * @since    1.0.0
 	 */
 	public function form( $instance ) {
 		// Set widget defaults.
 		$defaults = array(
 			'title'     => '',
-			'radio' 	=> '',
+			'radio'     => '',
 			'select'    => '',
 		);
-		
+
 		// Parse current settings with defaults.
-		extract( wp_parse_args( ( array ) $instance, $defaults ) ); ?>
+		extract( wp_parse_args( (array) $instance, $defaults ) );
+		$setting_title_id   = $this->get_field_id( 'title' );
+		$setting_title_name = $this->get_field_name( 'title' );
+		$setting_radio_id   = $this->get_field_id( 'radio' );
+		$setting_radio_name = $this->get_field_name( 'radio' );
+		$setting_select_id  = $this->get_field_id( 'select' );
+		$setting_select_name = $this->get_field_name( 'select' );
 
-		<?php // Widget Title. ?>
+		?>
+
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Widget Title', 'event-tickets-manager-for-woocommerce' ); ?></label>
-			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
+			<label for="<?php echo esc_attr( $setting_title_id ); ?>"><?php esc_html_e( 'Widget Title', 'event-tickets-manager-for-woocommerce' ); ?></label>
+			<input class="widefat" id="<?php echo esc_attr( $setting_title_id ); ?>" name="<?php echo esc_attr( $setting_title_name ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
 		</p>
 
-		<?php // Widget View. ?>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'radio' ) ); ?>"><?php _e( 'Event View', 'event-tickets-manager-for-woocommerce' ); ?></label><br>
-			<input id="<?php echo esc_attr( $this->get_field_id( 'radio' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'radio' ) ); ?>" type="radio" value="list" <?php echo esc_html( 'list' === $radio ) ? 'checked' : ''; ?> />
-			<label for="<?php echo esc_attr( $this->get_field_id( 'radio' ) ); ?>"><?php _e( 'List', 'event-tickets-manager-for-woocommerce' ); ?></label>
+			<label for="<?php echo esc_attr( $setting_radio_id ); ?>"><?php esc_html_e( 'Event View', 'event-tickets-manager-for-woocommerce' ); ?></label><br>
+			<input id="<?php echo esc_attr( $setting_radio_id ); ?>" name="<?php echo esc_attr( $setting_radio_name ); ?>" type="radio" value="list" <?php echo esc_html( 'list' === $radio ) ? 'checked' : ''; ?> />
+			<label for="<?php echo esc_attr( $setting_radio_id ); ?>"><?php esc_html_e( 'List', 'event-tickets-manager-for-woocommerce' ); ?></label>
 
-			<input id="<?php echo esc_attr( $this->get_field_id( 'radio' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'radio' ) ); ?>" type="radio" value="calendar" <?php echo esc_html( 'calendar' === $radio ) ? 'checked' : ''; ?> />
-			<label for="<?php echo esc_attr( $this->get_field_id( 'radio' ) ); ?>"><?php _e( 'Calendar', 'event-tickets-manager-for-woocommerce' ); ?></label>
+			<input id="<?php echo esc_attr( $setting_radio_id ); ?>" name="<?php echo esc_attr( $setting_radio_name ); ?>" type="radio" value="calendar" <?php echo esc_html( 'calendar' === $radio ) ? 'checked' : ''; ?> />
+			<label for="<?php echo esc_attr( $setting_radio_id ); ?>"><?php esc_html_e( 'Calendar', 'event-tickets-manager-for-woocommerce' ); ?></label>
 		</p>
 
-		<?php // Filter event by duration ?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'select' ); ?>"><?php _e( 'Scope of the Event', 'event-tickets-manager-for-woocommerce' ); ?></label>
-			<select name="<?php echo $this->get_field_name( 'select' ); ?>" id="<?php echo $this->get_field_id( 'select' ); ?>" class="widefat">
+			<label for="<?php echo esc_attr( $setting_select_id); ?>"><?php esc_html_e( 'Scope of the Event', 'event-tickets-manager-for-woocommerce' ); ?></label>
+			<select name="<?php echo esc_attr( $setting_select_name ); ?>" id="<?php echo esc_attr( $setting_select_id ); ?>" class="widefat">
 			<?php
 			$scope_options = $this->mwb_etmfw_get_scopes();
 			foreach ( $scope_options as $key => $name ) {
-				echo '<option value="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" '. selected( $select, $key, false ) . '>'. $name . '</option>';
+				echo '<option value="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" ' . selected( $select, $key, false ) . '>' . esc_html( $name ) . '</option>';
 
-			} ?>
+			}
+			?>
 			</select>
 		</p>
 
-	<?php
+		<?php
 	}
 
 	/**
 	 * Update widget information when modification is done.
 	 *
 	 * @since    1.0.0
+	 * @param array $new_instance Widget Instance Array.
+	 * @param array $old_instance Old Widget Instance Array.
 	 */
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
@@ -234,12 +256,12 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_etmfw_get_scopes(){
+	public function mwb_etmfw_get_scopes() {
 		$scopes = array(
-			'all' 		=> __('All events','events-manager'),
-			'future' 	=> __('Future events','events-manager'),
-			'past' 		=> __('Past events','events-manager'),
+			'all'       => __( 'All events', 'events-manager' ),
+			'future'    => __( 'Future events', 'events-manager' ),
+			'past'      => __( 'Past events', 'events-manager' ),
 		);
-		return apply_filters('mwb_etmfw_get_scopes',$scopes);
+		return apply_filters( 'mwb_etmfw_get_scopes', $scopes );
 	}
 }

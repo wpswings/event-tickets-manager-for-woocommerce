@@ -2,3 +2,77 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+ .woocommerce .cart-collaterals .cart_totals, .woocommerce-page .cart-collaterals .cart_totals {
+ 	float: none!important;
+
+ }
+
+ .mwb_etmfw_events_section,
+ .mwb_etmfw_input_ticket_section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+ .mwb_etmfw_events_section label,
+ .mwb_etmfw_input_ticket_section label {
+    flex: 0 0 25%;
+    max-width: 25%;
+}
+
+select#mwb_etmfw_event_selected {
+	flex: 0 0 75%;
+	max-width: 75%;
+}
+
+input#mwb_etmfw_imput_ticket {
+	flex: 0 0 75%;
+	max-width: 75%;
+	margin: 0;
+}
+
+.mwb_etmfw--loader-btn-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.mwb_etmfw_checkin_button_section {
+    flex: 0 0 85%;
+    max-width: 85%;
+}
+
+.mwb_etmfw_checkin_button_section {
+    flex: 0 0 15%;
+    max-width: 15%;
+}
+
+.mwb_check_in_error {/* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
+    background: #e2401c;
+    padding: 16px 20px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.mwb_check_in_success {/* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
+    background: #1a6f1a;
+    padding: 16px 20px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+ @media only screen and (max-width: 768px) {
+ 	.product-remove {
+ 		display: none!important;
+ 	}
+
+ 	input#coupon_code {
+ 		margin-bottom: 20px;
+ 	}
+ }

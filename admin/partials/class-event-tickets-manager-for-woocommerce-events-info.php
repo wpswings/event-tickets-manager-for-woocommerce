@@ -41,7 +41,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 	public function get_columns() {
 
 		$columns = array(
-			'cb'             	=> '<input type="checkbox" />',
+			'cb'                => '<input type="checkbox" />',
 			'event'             => __( 'Event', 'event-tickets-manager-for-woocommerce' ),
 			'ticket'            => __( 'Ticket', 'event-tickets-manager-for-woocommerce' ),
 			'order'             => __( 'Order', 'event-tickets-manager-for-woocommerce' ),
@@ -122,8 +122,9 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 					if ( isset( $_POST['mwb_etmfw_event_ids'] ) && ! empty( $_POST['mwb_etmfw_event_ids'] ) ) {
 						$all_id = map_deep( wp_unslash( $_POST['mwb_etmfw_event_ids'] ), 'sanitize_text_field' );
 						foreach ( $all_id as $key => $value ) {
-							wp_trash_post($value,true);
-							header('Location: '.$_SERVER['REQUEST_URI']);
+							wp_trash_post( $value, true );
+							$mwb_reload_url = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) :'';
+							header( 'Location: ' . $mwb_reload_url );
 						}
 					}
 				}
@@ -212,7 +213,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 						$product = $item->get_product();
 						if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
 							$ticket = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
-							if( '' !== $ticket ){
+							if ( '' !== $ticket ) {
 								if ( ! empty( $product ) ) {
 									$pro_id = $product->get_id();
 								}
@@ -242,7 +243,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 								}
 
 								$event_attendees_details[] = array(
-									'id'          		=> $order_id,
+									'id'                => $order_id,
 									'event'            => $item->get_name(),
 									'ticket'            => $ticket,
 									'order'             => '<a href="' . admin_url( 'post.php?post=' . $order_id . '&action=edit' ) . '">#' . $order_id . '</a>',
@@ -262,11 +263,11 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 		$filtered_data = array();
 		if ( isset( $_REQUEST['s'] ) ) {
 			$data           = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
-			foreach ($event_attendees_details as $key => $value) {
-				foreach ( array_values( $value ) as $data_value) {
-					if( stripos ($data_value, $data ) !== false ){
-					    $filtered_data[] = $value;
-					    break;
+			foreach ( $event_attendees_details as $key => $value ) {
+				foreach ( array_values( $value ) as $data_value ) {
+					if ( stripos( $data_value, $data ) !== false ) {
+						$filtered_data[] = $value;
+						break;
 					}
 				}
 			}
