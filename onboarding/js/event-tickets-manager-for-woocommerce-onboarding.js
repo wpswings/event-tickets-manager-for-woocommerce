@@ -14,8 +14,8 @@ jQuery(document).ready(function($) {
     });
 
     var dialog = "";
-    if( $('.mdc-dialog').length > 0 ){
-        dialog = mdc.dialog.MDCDialog.attachTo(document.querySelector('.mdc-dialog'));
+    if( $('.mwb-etmfw-on-boarding-dialog').length > 0 ){
+        dialog = mdc.dialog.MDCDialog.attachTo(document.querySelector('.mwb-etmfw-on-boarding-dialog'));
     }
 
     /*if device is mobile*/
@@ -60,7 +60,7 @@ jQuery(document).ready(function($) {
     });
 
     /* Skip and deactivate. */
-    jQuery(document).on('click', '.mwb-deactivation-no_thanks', function(e) {
+    jQuery(document).on('click', '.mwb-etmfw-deactivation-no_thanks', function(e) {
 
         window.location.replace(deactivate_url);
         mwb_etmfw_hide_onboard_popup();

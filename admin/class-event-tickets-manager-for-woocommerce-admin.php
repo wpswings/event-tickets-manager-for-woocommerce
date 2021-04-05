@@ -79,7 +79,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		if ( isset( $screen->id ) && 'product' == $screen->id ) {
 			// Date Time Picker Library.
 			wp_enqueue_style( 'mwb-etmfw-date-time-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/date-time/datetimepicker.min.css', array(), time(), 'all' );
-			wp_enqueue_style( $this->plugin_name . '-admin-edit-product', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/event-tickets-manager-for-woocommerce-admin-edit-product.scss', array(), $this->version, 'all' );
+			wp_enqueue_style( $this->plugin_name . '-admin-edit-product', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/event-tickets-manager-for-woocommerce-admin-edit-product.css', array(), $this->version, 'all' );
 		}
 	}
 
@@ -121,9 +121,10 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 
 			wp_localize_script(
 				$this->plugin_name . 'admin-edit-product-js',
-				'etmfw_admin_param',
+				'etmfw_edit_prod_param',
 				array(
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
+					'mwb_etmfw_edit_prod_nonce' => wp_create_nonce( 'mwb-etmfw-verify-edit-prod-nonce' ),
 				)
 			);
 
@@ -626,15 +627,47 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				)
 			);
 
-			woocommerce_wp_checkbox(
+			?>
+			<div class="mwb_etmfw_error_message_div">
+				<div id="mwb_etmfw_error_msg"></div>
+			</div>
+			<?php
+
+			woocommerce_wp_text_input(
 				array(
-					'id' => 'etmfw_display_map',
+					'id'            => 'etmfw_event_venue_lat',
 					'wrapper_class' => 'show_if_event_ticket_manager',
-					'label' => __( 'Display event venue on google map on product page', 'giftware' ),
-					'value' => isset( $mwb_etmfw_product_array['etmfw_display_map'] ) ? $mwb_etmfw_product_array['etmfw_display_map'] : true,
+					'label'         => __( 'Location Latitude', 'event-tickets-manager-for-woocommerce' ),
+					'value'         => isset( $mwb_etmfw_product_array['etmfw_event_venue_lat'] ) ? $mwb_etmfw_product_array['etmfw_event_venue_lat'] : '',
+					'custom_attributes' => array( 'readonly' => 'readonly' ),
+					'desc_tip'    => true,
+					'description' => __( 'Latitude of the event goegraphic location.', 'event-tickets-manager-for-woocommerce' ),
 				)
 			);
 
+			woocommerce_wp_text_input(
+				array(
+					'id'            => 'etmfw_event_venue_lng',
+					'wrapper_class' => 'show_if_event_ticket_manager',
+					'label'         => __( 'Location Longitude', 'event-tickets-manager-for-woocommerce' ),
+					'value'         => isset( $mwb_etmfw_product_array['etmfw_event_venue_lng'] ) ? $mwb_etmfw_product_array['etmfw_event_venue_lng'] : '',
+					'custom_attributes' => array( 'readonly' => 'readonly' ),
+					'desc_tip'    => true,
+					'description' => __( 'Longitude of the event goegraphic location ', 'event-tickets-manager-for-woocommerce' ),
+				)
+			);
+
+			if( 'on' === get_option('mwb_etmfw_enabe_location_site', 'off' ) ){
+				woocommerce_wp_checkbox(
+					array(
+						'id' => 'etmfw_display_map',
+						'wrapper_class' => 'show_if_event_ticket_manager',
+						'label' => __( 'Display event on google map', 'giftware' ),
+						'value' => isset( $mwb_etmfw_product_array['etmfw_display_map'] ) ? $mwb_etmfw_product_array['etmfw_display_map'] : true,
+					)
+				);
+
+			}
 			do_action( 'mwb_etmfw_edit_product_settings' );
 			?>
 			<div id="mwb_etmfw_add_fields_wrapper">
@@ -762,9 +795,11 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					$mwb_etmfw_product_array['event_start_date_time'] = isset( $_POST['etmfw_start_date_time'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_start_date_time'] ) ) : '';
 					$mwb_etmfw_product_array['event_end_date_time'] = isset( $_POST['etmfw_end_date_time'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_end_date_time'] ) ) : '';
 					$event_venue = isset( $_POST['etmfw_event_venue'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_event_venue'] ) ) : '';
-					$event_coordinates = $this->mwb_etmfw_get_coordinates( $event_venue );
+					$event_lat = isset( $_POST['etmfw_event_venue_lat'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_event_venue_lat'] ) ) : '';
+					$event_lng = isset( $_POST['etmfw_event_venue_lng'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_event_venue_lng'] ) ) : '';
 					$mwb_etmfw_product_array['etmfw_event_venue'] = $event_venue;
-					$mwb_etmfw_product_array['etmfw_event_venue_coordinates'] = $event_coordinates;
+					$mwb_etmfw_product_array['etmfw_event_venue_lat'] = $event_lat;
+					$mwb_etmfw_product_array['etmfw_event_venue_lng'] = $event_lng;
 					$mwb_etmfw_field_data = ! empty( $_POST['etmfw_fields'] ) ? map_deep( wp_unslash( $_POST['etmfw_fields'] ), 'sanitize_text_field' ) : array();
 					$mwb_etmfw_field_data_array = array();
 					if ( is_array( $mwb_etmfw_field_data ) && ! empty( $mwb_etmfw_field_data ) ) {
@@ -808,19 +843,6 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		return apply_filters( 'mwb_etmfw_extend_event_fields', $field_array );
 	}
 
-	/**
-	 * Return location latitute and longitute information.
-	 *
-	 * @since    1.0.0
-	 * @param string $event_venue Event Venue.
-	 * @return array $event_coordinates.
-	 */
-	public function mwb_etmfw_get_coordinates( $event_venue ) {
-		$event_coordinates = array();
-		$api_key = 'AIzaSyCW_52b_zBroMrtqV849iQYidYpt1QGqNw';
-		$url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . $event_venue . '&key=' . $api_key;
-		return $event_coordinates;
-	}
 
 	/**
 	 * Add a events submenu inside the Woocommerce Menu Page
@@ -928,5 +950,50 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			$links = array_merge( $links, $new_links );
 		}
 		return $links;
+	}
+
+	/**
+	 * Get latitude and longitude of the event location.
+	 *
+	 * @since 1.0.0
+	 * @name mwb_etmfw_get_event_geocode_value
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 */
+	public function mwb_etmfw_get_event_geocode_value(){
+		$response['result'] = false;
+		$response['message'] = '';
+		if ( isset( $_POST['mwb_edit_nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mwb_edit_nonce'] ) ), 'mwb-etmfw-verify-edit-prod-nonce' ) ) {
+			return;
+		}
+
+		$api_key = get_option( 'mwb_etmfw_google_maps_api_key', '' );
+		$event_venue = isset( $_POST['venue'] ) ? sanitize_text_field( wp_unslash( $_POST['venue'] ) ) : '';
+		if( '' !== $api_key && '' !== $event_venue ){
+			$url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . $event_venue . '&key=' . $api_key;
+			$args = array(
+				'timeout' => 10,
+				'headers' => array(
+					'Content-Type' => 'application/json; charset=utf-8',
+				),
+			);
+			$get_response = wp_remote_get( $url, $args );
+			if ( is_wp_error( $get_response ) ) { 
+				$response['message'] = $get_response->get_error_message();
+			} else {
+				$get_response = json_decode( wp_remote_retrieve_body( $get_response ) );
+				if( 'OK' == $get_response->status ) {
+					$response['result'] = true;
+					$response['message'] = array(
+						'lat' => $get_response->results[0]->geometry->location->lat,
+						'lng' => $get_response->results[0]->geometry->location->lng
+					);
+				} else{
+					$response['message'] = $get_response->error_message;
+				}
+			}	
+		}
+		echo json_encode( $response );
+		wp_die();
 	}
 }

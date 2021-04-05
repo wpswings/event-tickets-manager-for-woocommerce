@@ -149,6 +149,40 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								</div>
 								<?php do_action( 'mwb_etmfw_before_event_general_info', $product_id ); ?>	
 							</div>
+							<?php 
+							$display_map = isset( $mwb_etmfw_product_array['etmfw_display_map'] ) ? $mwb_etmfw_product_array['etmfw_display_map'] : 'no';
+							$location_site = get_option( 'mwb_etmfw_enabe_location_site', 'off' );
+							if( 'yes' === $display_map && 'on' === $location_site ){
+								?>
+								<div class="mwb_etmfw_event_map_wrapper">
+									<?php
+									$event_lat = isset( $mwb_etmfw_product_array['etmfw_event_venue_lat'] ) ? $mwb_etmfw_product_array['etmfw_event_venue_lat'] : '';
+									$event_lng = isset( $mwb_etmfw_product_array['etmfw_event_venue_lng'] ) ? $mwb_etmfw_product_array['etmfw_event_venue_lng'] : '';
+									?>
+									<input type="hidden" id="etmfw_event_lat" value="<?php echo esc_attr($event_lat);?>">
+									<input type="hidden" id="etmfw_event_lng" value="<?php echo esc_attr($event_lng);?>">
+									<script>
+								    function initMap() {
+								      	let event_lat = parseInt( document.getElementById('etmfw_event_lat').value );
+										let event_lng = parseInt( document.getElementById('etmfw_event_lng').value );
+										const myLatLng = { lat: event_lat, lng: event_lng };
+									  	const map = new google.maps.Map(document.getElementById("mwb_etmfw_event_map"), {
+										    zoom: 4,
+										    center: myLatLng,
+										  });
+									  	new google.maps.Marker({
+										    position: myLatLng,
+										    map,
+										    title: "Event!",
+										});
+									}
+								    </script>
+									<div id="mwb_etmfw_event_map" style="width:60%;height:350px;"></div>
+									<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQBojxrcx0oR3T3jxYDkef-60BpqCOq1g&callback=initMap&libraries=&v=weekly" async></script>
+								</div>
+								<?php
+							}
+							?>
 							<div class="mwb_etmfw_addition_info_section">
 								<?php do_action( 'mwb_etmfw_before_more_info', $product_id ); ?>
 								<?php $this->mwb_etmfw_generate_addional_fields( $product_id, $event_field_array ); ?>

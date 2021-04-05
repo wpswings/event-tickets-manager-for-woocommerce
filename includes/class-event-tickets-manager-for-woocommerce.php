@@ -201,6 +201,8 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'admin_menu', $etmfw_plugin_admin, 'mwb_etmfw_event_menu' );
 		$this->loader->add_action( 'woocommerce_after_order_itemmeta', $etmfw_plugin_admin, 'mwb_etmfw_after_order_itemmeta', 10, 3 );
 		$this->loader->add_filter( 'plugin_row_meta', $etmfw_plugin_admin, 'mwb_etmfw_plugin_row_meta', 10, 2 );
+		$this->loader->add_action( 'wp_ajax_mwb_etmfw_get_event_geocode', $etmfw_plugin_admin, 'mwb_etmfw_get_event_geocode_value' );
+		$this->loader->add_action( 'wp_ajax_nopriv_mwb_etmfw_get_event_geocode', $etmfw_plugin_admin, 'mwb_etmfw_get_event_geocode_value' );
 
 	}
 

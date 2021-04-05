@@ -79,14 +79,45 @@
 			$(this).parents(".mwb_etmfw_field_wrap").remove();
 		});
 
-		$("select#product-type").change(function()
-        {
+		$(document).on("change", "select#product-type", function(){
 			var selected_product_type =  $(this).val();
 			if( selected_product_type != 'event_ticket_manager') {
 				$('#etmfw_start_date_time').prop('required',false);
 				$('#etmfw_end_date_time').prop('required',false);
 				$('#etmfw_event_venue').prop('required',false);
 			}
+		});
+
+		$(document).on("keyup", "#etmfw_event_venue", function(){
+			let input = $(this).val();
+			if( input.length > 2 ){
+				var data = {
+					action:'mwb_etmfw_get_event_geocode',
+					mwb_edit_nonce:etmfw_edit_prod_param.mwb_etmfw_edit_prod_nonce,
+					venue:input,
+				};
+				$.ajax(
+					{
+						dataType: 'json',
+						url: etmfw_edit_prod_param.ajaxurl,
+						type: "POST",
+						data: data,
+						success: function(response)
+						{
+							if( response.result ){
+								let lat = response.message['lat'];
+								let lng = response.message['lng'];
+								$(document).find('#etmfw_event_venue_lat').val( lat );
+								$(document).find('#etmfw_event_venue_lng').val( lng );
+							} else{
+								let error_msg = response.message;
+								$(document).find('#mwb_etmfw_error_msg').html( error_msg );
+							}
+						}
+					}
+				);
+			}
+			
 		});
 	});
 
