@@ -31,6 +31,46 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php do_action( 'mwb_etmfw_extent_plugin_feature_info' ); ?>
 		</ol>
 	</div>
+	<div class="mwb_etmfw_plugin_benefit">
+		<h5 class="mwb_etmfw_plugin_benefit_heading"><?php esc_html_e( 'Plugin Benefits', 'event-tickets-manager-for-woocommerce' ); ?></h5>
+		<ol type="1">
+			<li>
+				<div class="mwb_etmfw_benefit_heading"><?php esc_html_e( 'Calendar Widget', 'event-tickets-manager-for-woocommerce' ); ?></div>
+				<div class="mwb_etmfw_benefit_content"><?php esc_html_e( 'The plugin comes with a calendar widget to portray the upcoming events on your store to your customers.', 'event-tickets-manager-for-woocommerce' ); ?></div>
+			</li>
+			<li>
+				<div class="mwb_etmfw_benefit_heading"><?php esc_html_e( 'Download Tickets As PDF', 'event-tickets-manager-for-woocommerce' ); ?></div>
+				<div class="mwb_etmfw_benefit_content"><?php esc_html_e( 'The plugin allows the customers to download the tickets for offline use. Also, when a customer buys an event from your store the pdf is sent to the customer via email.', 'event-tickets-manager-for-woocommerce' ); ?></div>
+			</li>
+			<li>
+				<div class="mwb_etmfw_benefit_heading"><?php esc_html_e( 'Display Location', 'event-tickets-manager-for-woocommerce' ); ?></div>
+				<div class="mwb_etmfw_benefit_content"><?php esc_html_e( 'The Events Manager For WooCommerce plugin lets you display the location of your offline events with the help of Google Maps.', 'event-tickets-manager-for-woocommerce' ); ?></div>
+			</li>			
+			<?php do_action( 'mwb_etmfw_extent_plugin_feature_info' ); ?>
+		</ol>
+	</div>
+	<div class="mwb_etmfw_plugin_premium">
+		<h5 class="mwb_etmfw_plugin_premium_heading"><?php esc_html_e( 'Elite Features of Premium Version - Coming Soon', 'event-tickets-manager-for-woocommerce' ); ?></h5>
+		<ol type="1">
+			<li>
+				<div class="mwb_etmfw_premium_heading"><?php esc_html_e( 'Promote Online Events', 'event-tickets-manager-for-woocommerce' ); ?></div>
+				<div class="mwb_etmfw_premium_content"><?php esc_html_e( 'Promote your online webinars and other premium online events from your WooCommerce store with the help of our plugin.', 'event-tickets-manager-for-woocommerce' ); ?></div>
+			</li>
+			<li>
+				<div class="mwb_etmfw_premium_heading"><?php esc_html_e( 'Buy Multiple Tickets For Single Event', 'event-tickets-manager-for-woocommerce' ); ?></div>
+				<div class="mwb_etmfw_premium_content"><?php esc_html_e( 'The customers will be able to buy multiple tickets for a single event in your store.', 'event-tickets-manager-for-woocommerce' ); ?></div>
+			</li>
+			<li>
+				<div class="mwb_etmfw_premium_heading"><?php esc_html_e( 'APIs To Verify Tickets', 'event-tickets-manager-for-woocommerce' ); ?></div>
+				<div class="mwb_etmfw_premium_content"><?php esc_html_e( 'APIs that allow the admin to log in on mobile apps (android/iOS) and scan QR codes at physical events to verify the ticket.', 'event-tickets-manager-for-woocommerce' ); ?></div>
+			</li>
+			<li>
+				<div class="mwb_etmfw_premium_heading"><?php esc_html_e( 'Allow Attendees To Pass The Ticket', 'event-tickets-manager-for-woocommerce' ); ?></div>
+				<div class="mwb_etmfw_premium_content"><?php esc_html_e( 'The customers can pass the ticket they’ve bought to their friends or family if they are not able to visit your event.', 'event-tickets-manager-for-woocommerce' ); ?></div>
+			</li>			
+			<?php do_action( 'mwb_etmfw_extent_plugin_feature_info' ); ?>
+		</ol>
+	</div>
 	<div class="mwb_etmfw_video_wrapper">
 		<iframe height="411" src="https://www.youtube.com/embed/YgPLO8HDGtc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 	</div>

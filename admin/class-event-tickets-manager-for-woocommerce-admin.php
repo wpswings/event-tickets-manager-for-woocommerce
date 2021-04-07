@@ -270,34 +270,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'class' => 'etmfw-text-class',
 				'placeholder' => __( 'Google API Key', 'event-tickets-manager-for-woocommerce' ),
 			),
-			array(
-				'title' => __( 'Client ID', 'event-tickets-manager-for-woocommerce' ),
-				'type'  => 'text',
-				'description'  => __( 'To get your Client ID, visit <a target="_blank" href="https://console.developers.google.com/apis/credentials">here</a>', 'event-tickets-manager-for-woocommerce' ),
-				'id'    => 'mwb_etmfw_google_client_id',
-				'value' => get_option( 'mwb_etmfw_google_client_id', '' ),
-				'class' => 'etmfw-text-class',
-				'placeholder' => __( 'Client ID', 'event-tickets-manager-for-woocommerce' ),
-			),
-
-			array(
-				'title' => __( 'Client Secret Key', 'event-tickets-manager-for-woocommerce' ),
-				'type'  => 'password',
-				'description'  => __( 'To get your Client Secret key, visit <a target="_blank" href="https://console.developers.google.com/apis/credentials">here</a>', 'event-tickets-manager-for-woocommerce' ),
-				'id'    => 'mwb_etmfw_google_client_secret',
-				'value' => get_option( 'mwb_etmfw_google_client_secret', '' ),
-				'class' => 'etmfw-password-class',
-				'placeholder' => __( 'Client Secret Key', 'event-tickets-manager-for-woocommerce' ),
-			),
-			array(
-				'title' => __( 'Redirect Url', 'event-tickets-manager-for-woocommerce' ),
-				'type'  => 'text',
-				'description'  => __( 'To get your redirect url, visit <a target="_blank" href="https://console.developers.google.com/apis/credentials">here</a>', 'event-tickets-manager-for-woocommerce' ),
-				'id'    => 'mwb_etmfw_google_redirect_url',
-				'value' => get_option( 'mwb_etmfw_google_redirect_url', '' ),
-				'class' => 'etmfw-text-class',
-				'placeholder' => __( 'Redirect Url', 'event-tickets-manager-for-woocommerce' ),
-			),
+	
 			array(
 				'type'  => 'button',
 				'id'    => 'mwb_etmfw_save_integrations_settings',

@@ -781,71 +781,83 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_etmfw_view_ticket_button( $order ) {
+	public function mwb_etmfw_view_ticket_button( $item_id, $item, $order ) {
 		$order_id = $order->get_id();
 		$order_status = $order->get_status();
 		if ( 'completed' == $order_status || 'processing' == $order_status ) {
-			foreach ( $order->get_items() as $item_id => $item ) {
-				$_product = apply_filters( 'woocommerce_order_item_product', $product = $item->get_product(), $item );
-				if ( isset( $_product ) && ! empty( $_product ) ) {
-					$product_id = $_product->get_id();
-				}
-				if ( isset( $product_id ) && ! empty( $product_id ) ) {
-					$product_types = wp_get_object_terms( $product_id, 'product_type' );
-					if ( isset( $product_types[0] ) ) {
-						$product_type = $product_types[0]->slug;
-						$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
-						if ( '' !== $ticket_number && 'event_ticket_manager' == $product_type ) {
-							$updated_meta_pdf = get_post_meta( $order_id, 'mwb_etmfw_order_meta_updated', true );
-							if ( '' === $updated_meta_pdf ) {
-								$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_URL . '/events_pdf/events' . $order_id . $ticket_number . '.pdf';
-							} else {
-								$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_URL . '/events_pdf/events' . $order_id . $ticket_number . '-new.pdf';
-							}
-
+			$_product = apply_filters( 'mwb_etmfw_woo_order_item_product', $product = $item->get_product(), $item );
+			if ( isset( $_product ) && ! empty( $_product ) ) {
+				$product_id = $_product->get_id();
+			}
+			if ( isset( $product_id ) && ! empty( $product_id ) ) {
+				$product_types = wp_get_object_terms( $product_id, 'product_type' );
+				if ( isset( $product_types[0] ) ) {
+					$product_type = $product_types[0]->slug;
+					$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+					if ( '' !== $ticket_number && 'event_ticket_manager' == $product_type ) {
+						$updated_meta_pdf = get_post_meta( $order_id, 'mwb_etmfw_order_meta_updated', true );
+						if ( '' === $updated_meta_pdf ) {
+							$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_URL . '/events_pdf/events' . $order_id . $ticket_number . '.pdf';
+						} else {
+							$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_URL . '/events_pdf/events' . $order_id . $ticket_number . '-new.pdf';
+						}
+						$event_name = $_product->get_name();
+						$mwb_etmfw_product_array = get_post_meta( $product_id, 'mwb_etmfw_product_array', true );
+						$start_date = isset( $mwb_etmfw_product_array['event_start_date_time'] ) ? $mwb_etmfw_product_array['event_start_date_time'] : '';
+						$end_date = isset( $mwb_etmfw_product_array['event_end_date_time'] ) ? $mwb_etmfw_product_array['event_end_date_time'] : '';
+						$event_venue = isset( $mwb_etmfw_product_array['etmfw_event_venue'] ) ? $mwb_etmfw_product_array['etmfw_event_venue'] : '';
+						$pro_short_desc = $_product->get_short_description();
+					
+						$start_date = str_replace( array( '-' , ':' ),'', gmdate( "Y-m-d\TG:i", strtotime($start_date) ) );
+						$end_date = str_replace( array( '-' , ':' ),'', gmdate( "Y-m-d\TG:i", strtotime( $end_date ) ) );
+						
+						$calendar_url = "https://calendar.google.com/calendar/r/eventedit?text=".$event_name."&dates=".$start_date."/".$end_date."&details=".$pro_short_desc."&location=".$event_venue;
+						
+						?>
+						<div class="mwb_etmfw_view_ticket_section">
+							<a href="<?php echo esc_attr( $upload_dir_path ); ?>" class="mwb_view_ticket_pdf" target="_blank"><?php esc_html_e( 'View', 'event-tickets-manager-for-woocommerce' ); ?></a>
+						</div>
+						<div class="mwb_etmfw_calendar_section">
+							<a href="<?php echo esc_attr( $calendar_url ); ?>" class="mwb_etmfw_add_event_calendar" target="_blank"><?php esc_html_e( 'Add Event to Google Calendar', 'event-tickets-manager-for-woocommerce' ); ?></a>
+						</div>
+						<?php
+						$item_meta_data = $item->get_meta_data();
+						if ( ! empty( $item_meta_data ) ) {
 							?>
-							<div class="mwb_etmfw_view_ticket_section">
-								<a href="<?php echo esc_attr( $upload_dir_path ); ?>" class="mwb_view_ticket_pdf" target="_blank"><?php esc_html_e( 'View Ticket', 'event-tickets-manager-for-woocommerce' ); ?><i class="fas fa-file-view_ticket mwb_etmfw_view_ticket_pdf"></i></a>
+							<div class="mwb_etmfw_edit_ticket_section">
+								<span id="mwb_etmfw_edit_ticket">
+									<?php esc_html_e( 'Edit Ticket Information', 'event-tickets-manager-for-woocommerce' ); ?>
+								</span>
+								<form id="mwb_etmfw_edit_ticket_form">
+									<input type="hidden" id="mwb_etmfw_edit_info_order" value="<?php echo esc_attr( $order_id ); ?>">
+									<?php
+									foreach ( $item_meta_data as $key => $value ) {
+										if ( isset( $value->key ) && ! empty( $value->value ) ) {
+											$mwb_etmfw_mail_template_data[ $value->key ] = $value->value;
+										}
+									}
+									
+									$mwb_etmfw_field_data = isset( $mwb_etmfw_product_array['mwb_etmfw_field_data'] ) && ! empty( $mwb_etmfw_product_array['mwb_etmfw_field_data'] ) ? $mwb_etmfw_product_array['mwb_etmfw_field_data'] : array();
+
+									foreach ( $mwb_etmfw_mail_template_data as $label_key => $user_data_value ) {
+										foreach ( $mwb_etmfw_field_data as $key => $html_value ) {
+											if ( 0 === strcasecmp( $html_value['label'], $label_key ) ) {
+												$this->generate_edit_ticket_inputs( $html_value, $user_data_value );
+											}
+										}
+									}
+									?>
+									<input type="submit" class="button button-primary" 
+										name="mwb_etmfw_save_edit_ticket_info_btn"
+										id="mwb_etmfw_save_edit_ticket_info_btn"
+										value="<?php esc_attr_e( 'Save Changes', 'event-tickets-manager-for-woocommerce' ); ?>"
+										/>
+										<div style="display: none;" class="mwb_etmfw_loader" id="mwb_etmfw_edit_info_loader">
+											<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/loading.gif' ); ?>">
+										</div>
+								</form>
 							</div>
 							<?php
-							$item_meta_data = $item->get_meta_data();
-							if ( ! empty( $item_meta_data ) ) {
-								?>
-								<div class="mwb_etmfw_edit_ticket_section">
-									<span id="mwb_etmfw_edit_ticket">
-										<?php esc_html_e( 'Edit Ticket Information', 'event-tickets-manager-for-woocommerce' ); ?>
-									</span>
-									<form id="mwb_etmfw_edit_ticket_form">
-										<input type="hidden" id="mwb_etmfw_edit_info_order" value="<?php echo esc_attr( $order_id ); ?>">
-										<?php
-										foreach ( $item_meta_data as $key => $value ) {
-											if ( isset( $value->key ) && ! empty( $value->value ) ) {
-												$mwb_etmfw_mail_template_data[ $value->key ] = $value->value;
-											}
-										}
-										$mwb_etmfw_product_array = get_post_meta( $product_id, 'mwb_etmfw_product_array', true );
-										$mwb_etmfw_field_data = isset( $mwb_etmfw_product_array['mwb_etmfw_field_data'] ) && ! empty( $mwb_etmfw_product_array['mwb_etmfw_field_data'] ) ? $mwb_etmfw_product_array['mwb_etmfw_field_data'] : array();
-
-										foreach ( $mwb_etmfw_mail_template_data as $label_key => $user_data_value ) {
-											foreach ( $mwb_etmfw_field_data as $key => $html_value ) {
-												if ( 0 === strcasecmp( $html_value['label'], $label_key ) ) {
-													$this->generate_edit_ticket_inputs( $html_value, $user_data_value );
-												}
-											}
-										}
-										?>
-										<input type="submit" class="button button-primary" 
-											name="mwb_etmfw_save_edit_ticket_info_btn"
-											id="mwb_etmfw_save_edit_ticket_info_btn"
-											value="<?php esc_attr_e( 'Save Changes', 'event-tickets-manager-for-woocommerce' ); ?>"
-											/>
-											<div style="display: none;" class="mwb_etmfw_loader" id="mwb_etmfw_edit_info_loader">
-												<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/loading.gif' ); ?>">
-											</div>
-									</form>
-								</div>
-								<?php
-							}
 						}
 					}
 				}
