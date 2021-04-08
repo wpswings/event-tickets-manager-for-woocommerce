@@ -45,28 +45,29 @@
         $('#inventory_product_data ._sold_individually_field').parent().addClass('show_if_event_ticket_manager').show();
         $('#inventory_product_data ._sold_individually_field').addClass('show_if_event_ticket_manager').show();
 		
-		// Selected time should not be less than current time
-		function AdjustMinTime(ct) {
-			var dtob = new Date(),
-		  		current_date = dtob.getDate(),
-		  		current_month = dtob.getMonth() + 1,
-		  		current_year = dtob.getFullYear();
-		  			
-			var full_date = current_year + '-' +
-							( current_month < 10 ? '0' + current_month : current_month ) + '-' + 
-				  			( current_date < 10 ? '0' + current_date : current_date );
+		$('#etmfw_start_date_time').datetimepicker({
+			format:'Y-m-d g:i A',
+			minDate: new Date(),
+			onChangeDateTime:function () {
+			check();
+			},
 
-			if(ct.dateFormat('Y-m-d') == full_date)
-				this.setOptions({ minTime: 0 });
-			else 
-				this.setOptions({ minTime: false });
+		});
+
+		function check(){
+
+			var startDate = $('#etmfw_start_date_time').val(); 
+			var startTime = startDate.split(" ");
+			console.log(startDate);
+			$('#etmfw_end_date_time').datetimepicker({
+			format:'Y-m-d g:i A',
+			startDate: startDate,
+			minDate : startDate,
+			minTime : startTime[1],
+			});
 		}
-		$("#etmfw_start_date_time, #etmfw_end_date_time").datetimepicker({ format: 'Y-m-d g:i A', minDate: 0, minTime: 0, step: 5, onShow: AdjustMinTime, onSelectDate: AdjustMinTime });
-		
-		$(document).on(
-			'click',
-			'.mwb_etmfw_add_fields_button',
-			function(){
+
+		$(document).on( 'click', '.mwb_etmfw_add_fields_button', function(){
 			var fieldsetId = $(document).find('.mwb_etmfw_field_table').find('.mwb_etmfw_field_wrap').last().attr('data-id');
 			fieldsetId = fieldsetId?fieldsetId.replace(/[^0-9]/gi, ''):0;
 			let mainId = Number(fieldsetId) + 1;

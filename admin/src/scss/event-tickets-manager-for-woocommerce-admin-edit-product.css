@@ -7,3 +7,11 @@ div#mwb_etmfw_error_msg {
     color: #e01e1e;
     font-weight: 500;
 }
+
+tr.mwb_etmfw_field_wrap.ui-sortable-handle:nth-child(2n+1) {
+	background: #ffffff;
+}
+
+tr.mwb_etmfw_field_wrap.ui-sortable-handle:nth-child(2n) {
+	background: #f3f5f6;
+}

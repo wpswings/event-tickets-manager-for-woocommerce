@@ -60,7 +60,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @since    1.0.0
 	 */
 	public function etmfw_public_enqueue_styles() {
-		// wp_enqueue_style( 'mwb-etmfw-fullcalendar-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/fullcalendar/fullcalendar.min.css', array(), $this->version, 'all' );
 		$event_view = get_option( 'mwb_etmfw_event_view', 'list' );
 		if ( 'calendar' === $event_view ) {
 			wp_enqueue_style( 'mwb-etmfw-fullcalendar-css', 'https://cdn.jsdelivr.net/npm/fullcalendar@5.5.1/main.min.css', array(), time(), 'all' );
@@ -79,9 +78,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$event_view = get_option( 'mwb_etmfw_event_view', 'list' );
 		if ( 'calendar' === $event_view ) {
 			wp_enqueue_script( 'mwb-etmfw-fullcalendar-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/fullcalendar/fullcalendar.min.js', array( 'jquery' ), $this->version, false );
+			wp_register_script( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-public.js', array( 'jquery', 'mwb-etmfw-fullcalendar-js' ), $this->version, false );
+		} else{
+			wp_register_script( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-public.js', array( 'jquery' ), $this->version, false );
 		}
-
-		wp_register_script( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-public.js', array( 'jquery', 'mwb-etmfw-fullcalendar-js' ), $this->version, false );
 		$public_param_data = array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'event_view' => $event_view,
@@ -720,6 +720,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			$additinal_info = '<table border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;"><tbody><tr><td style="padding: 20px 0 10px;"><h2 style="margin: 0;font-weight: bold;">Details :-</h2></td></tr>';
 			foreach ( $item_meta_data as $key => $value ) {
 				if ( isset( $value->key ) && ! empty( $value->value ) ) {
+					if( '_reduced_stock' === $value->key ){
+						continue;
+					}
 					$additinal_info .= '<tr><td style="padding: 10px 0;"><p style="margin: 0;">' . $value->key . ' - ' . $value->value . '</p></td></tr>';
 				}
 			}
@@ -822,7 +825,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						</div>
 						<?php
 						$item_meta_data = $item->get_meta_data();
-						if ( ! empty( $item_meta_data ) ) {
+						$mwb_etmfw_field_data = isset( $mwb_etmfw_product_array['mwb_etmfw_field_data'] ) && ! empty( $mwb_etmfw_product_array['mwb_etmfw_field_data'] ) ? $mwb_etmfw_product_array['mwb_etmfw_field_data'] : array();
+						if ( ! empty( $item_meta_data ) && !empty( $mwb_etmfw_field_data ) ) {
 							?>
 							<div class="mwb_etmfw_edit_ticket_section">
 								<span id="mwb_etmfw_edit_ticket">
@@ -837,8 +841,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 										}
 									}
 									
-									$mwb_etmfw_field_data = isset( $mwb_etmfw_product_array['mwb_etmfw_field_data'] ) && ! empty( $mwb_etmfw_product_array['mwb_etmfw_field_data'] ) ? $mwb_etmfw_product_array['mwb_etmfw_field_data'] : array();
-
 									foreach ( $mwb_etmfw_mail_template_data as $label_key => $user_data_value ) {
 										foreach ( $mwb_etmfw_field_data as $key => $html_value ) {
 											if ( 0 === strcasecmp( $html_value['label'], $label_key ) ) {
@@ -1247,11 +1249,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_check_product_is_event( $product ) {
-		$mwb_is_subscription = false;
+		$mwb_is_event = false;
 		if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
-			$mwb_is_subscription = true;
+			$mwb_is_event = true;
 		}
-		return $mwb_is_subscription;
+		return $mwb_is_event;
 	}
 
 	/**

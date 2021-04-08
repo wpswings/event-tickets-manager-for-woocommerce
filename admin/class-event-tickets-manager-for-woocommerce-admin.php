@@ -78,7 +78,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		}
 		if ( isset( $screen->id ) && 'product' == $screen->id ) {
 			// Date Time Picker Library.
-			wp_enqueue_style( 'mwb-etmfw-date-time-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/date-time/datetimepicker.min.css', array(), time(), 'all' );
+			wp_enqueue_style( 'mwb-etmfw-date-time-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/jquery.datetimepicker.css', array(), time(), 'all' );
 			wp_enqueue_style( $this->plugin_name . '-admin-edit-product', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/event-tickets-manager-for-woocommerce-admin-edit-product.css', array(), $this->version, 'all' );
 		}
 	}
@@ -116,7 +116,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		}
 		if ( isset( $screen->id ) && 'product' == $screen->id ) {
 			// Date Time Picker Library.
-			wp_enqueue_script( 'mwb-etmfw-date-time', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/date-time/datetimepicker.min.js', array( 'jquery' ), time(), false );
+			wp_enqueue_script( 'mwb-etmfw-date-time', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/build/jquery.datetimepicker.full.js', array( 'jquery' ), time(), false );
 			wp_register_script( $this->plugin_name . 'admin-edit-product-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/js/event-tickets-manager-for-woocommerce-edit-product.js', array( 'jquery', 'mwb-etmfw-date-time', 'jquery-ui-sortable' ), $this->version, false );
 
 			wp_localize_script(
@@ -264,7 +264,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			array(
 				'title' => __( 'Google API Key', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'text',
-				'description'  => __( 'To get your API key, visit <a target="_blank" href="http://www.gmapswidget.com/documentation/generate-google-maps-api-key/">here</a>', 'event-tickets-manager-for-woocommerce' ),
+				'description'  => __( 'To get your API key, visit <a target="_blank" href="http://www.gmapswidget.com/documentation/generate-google-maps-api-key/">here</a>, Make sure to enable <a target="_blank" href="https://console.cloud.google.com/apis/library">Maps JavaScript API</a> and <a target="_blank" href="https://console.cloud.google.com/apis/library">Geocoding API</a> in order to get Google Maps functionality.', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'mwb_etmfw_google_maps_api_key',
 				'value' => get_option( 'mwb_etmfw_google_maps_api_key', '' ),
 				'class' => 'etmfw-text-class',
@@ -327,7 +327,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 						'class' => 'etmfw-text-class',
 						'id' => 'mwb_etmfw_mail_setting_upload_logo',
 						'value' => $mwb_etmfw_default_site_logo,
-						'placeholder' => __( '', 'event-tickets-manager-for-woocommerce' ),
+						'placeholder' => __( 'Upload Logo', 'event-tickets-manager-for-woocommerce' ),
 					),
 					array(
 						'type'  => 'button',
@@ -596,7 +596,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					'value'         => isset( $mwb_etmfw_product_array['etmfw_event_venue'] ) ? $mwb_etmfw_product_array['etmfw_event_venue'] : '',
 					'custom_attributes' => array( 'required' => 'required' ),
 					'desc_tip'    => true,
-					'description' => __( 'Enter the place of event where event will', 'event-tickets-manager-for-woocommerce' ),
+					'description' => __( 'Enter the accurate full address of event where it will be held to get best google result. Ex: Dharmapuri, Forest Colony, Tajganj, Agra, Uttar Pradesh 282001, India', 'event-tickets-manager-for-woocommerce' ),
 				)
 			);
 
