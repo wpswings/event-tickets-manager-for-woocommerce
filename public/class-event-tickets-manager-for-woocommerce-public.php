@@ -90,6 +90,13 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		wp_localize_script( $this->plugin_name, 'etmfw_public_param', $public_param_data );
 		wp_enqueue_script( $this->plugin_name );
 
+		if( is_product() ){
+			$mwb_google_api_key = get_option('mwb_etmfw_google_maps_api_key', '' );
+			wp_register_script('mwb_etmfw_google_map', 'https://maps.googleapis.com/maps/api/js?&key='.$mwb_google_api_key.'&callback=initMap&libraries=&v=weekly', array(), '', true);
+			wp_enqueue_script( 'mwb_etmfw_google_map' );
+		}
+		
+
 		global $wp_query;
 		$checkin_page_id = get_option( 'event_checkin_page_created', '' );
 		if ( '' !== $checkin_page_id ) {
@@ -162,23 +169,23 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 									<input type="hidden" id="etmfw_event_lat" value="<?php echo esc_attr($event_lat);?>">
 									<input type="hidden" id="etmfw_event_lng" value="<?php echo esc_attr($event_lng);?>">
 									<script>
-								    function initMap() {
-								      	let event_lat = parseInt( document.getElementById('etmfw_event_lat').value );
-										let event_lng = parseInt( document.getElementById('etmfw_event_lng').value );
-										const myLatLng = { lat: event_lat, lng: event_lng };
-									  	const map = new google.maps.Map(document.getElementById("mwb_etmfw_event_map"), {
-										    zoom: 4,
-										    center: myLatLng,
-										  });
-									  	new google.maps.Marker({
-										    position: myLatLng,
-										    map,
-										    title: "Event!",
-										});
-									}
+										function initMap() {
+									      	let event_lat = parseInt( document.getElementById('etmfw_event_lat').value );
+											let event_lng = parseInt( document.getElementById('etmfw_event_lng').value );
+											const myLatLng = { lat: event_lat, lng: event_lng };
+										  	const map = new google.maps.Map(document.getElementById("mwb_etmfw_event_map"), {
+											    zoom: 4,
+											    center: myLatLng,
+											  });
+										  	new google.maps.Marker({
+											    position: myLatLng,
+											    map,
+											    title: "Event!",
+											});
+										}
+								    
 								    </script>
 									<div id="mwb_etmfw_event_map" style="width:60%;height:350px;"></div>
-									<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQBojxrcx0oR3T3jxYDkef-60BpqCOq1g&callback=initMap&libraries=&v=weekly" async></script>
 								</div>
 								<?php
 							}
@@ -780,7 +787,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_etmfw_view_ticket_button()
-	 * @param object $order Order.
+	 * @param string $item_id Item Id.
+	 * @param object $item Item.
+	 * @param object $order Order Object.
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */

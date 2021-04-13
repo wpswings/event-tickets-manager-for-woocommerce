@@ -481,7 +481,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 
 			rand() => array(
 				'id' => 'mwb-etmfw-deactivation-reason-text',
-				'title' => esc_html__( 'Let us know why you are deactivating ' . self::$mwb_etmfw_plugin_name_label . ' so we can improve the plugin', 'event-tickets-manager-for-woocommerce' ),
+				'title' => __( 'Let us know why you are deactivating ', 'event-tickets-manager-for-woocommerce' ) . self::$mwb_etmfw_plugin_name_label . __( ' so we can improve the plugin.', 'event-tickets-manager-for-woocommerce' ),
 				'type' => 'textarea',
 				'description' => '',
 				'name' => 'deactivation_reason_text',
