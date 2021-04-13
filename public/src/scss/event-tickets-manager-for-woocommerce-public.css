@@ -134,3 +134,27 @@ form.mwb_etmfw_show_ticket_form {
         margin-bottom: 20px;
     }
  }
+
+ @media only screen and (max-width: 540px) {
+    .mwb_etmfw_view_ticket_section,
+    .mwb_etmfw_calendar_section {
+        display: block;
+        text-align: center;
+    }
+
+    a.mwb_etmfw_add_event_calendar,
+    a.mwb_view_ticket_pdf {
+        display: block;
+    }
+
+    .fc-toolbar-chunk {
+        display: flex;
+        margin-bottom: 10px;
+    }
+
+    .fc .fc-toolbar {
+        display: block;
+    }
+
+
+}

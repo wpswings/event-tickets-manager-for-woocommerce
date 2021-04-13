@@ -62,7 +62,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	public function etmfw_public_enqueue_styles() {
 		$event_view = get_option( 'mwb_etmfw_event_view', 'list' );
 		if ( 'calendar' === $event_view ) {
-			wp_enqueue_style( 'mwb-etmfw-fullcalendar-css', 'https://cdn.jsdelivr.net/npm/fullcalendar@5.5.1/main.min.css', array(), time(), 'all' );
+			wp_enqueue_style( 'mwb-etmfw-fullcalendar-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/fullcalendar/lib/main.min.css', array(), time(), 'all' );
 		}
 
 		wp_enqueue_style( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/scss/event-tickets-manager-for-woocommerce-public.css', array(), $this->version, 'all' );
@@ -826,40 +826,53 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						<?php
 						$item_meta_data = $item->get_meta_data();
 						$mwb_etmfw_field_data = isset( $mwb_etmfw_product_array['mwb_etmfw_field_data'] ) && ! empty( $mwb_etmfw_product_array['mwb_etmfw_field_data'] ) ? $mwb_etmfw_product_array['mwb_etmfw_field_data'] : array();
+						$mwb_etmfw_flag = false;
 						if ( ! empty( $item_meta_data ) && !empty( $mwb_etmfw_field_data ) ) {
-							?>
-							<div class="mwb_etmfw_edit_ticket_section">
-								<span id="mwb_etmfw_edit_ticket">
-									<?php esc_html_e( 'Edit Ticket Information', 'event-tickets-manager-for-woocommerce' ); ?>
-								</span>
-								<form id="mwb_etmfw_edit_ticket_form">
-									<input type="hidden" id="mwb_etmfw_edit_info_order" value="<?php echo esc_attr( $order_id ); ?>">
-									<?php
-									foreach ( $item_meta_data as $key => $value ) {
-										if ( isset( $value->key ) && ! empty( $value->value ) ) {
-											$mwb_etmfw_mail_template_data[ $value->key ] = $value->value;
-										}
+							foreach ( $item_meta_data as $key => $value ) {
+								if ( isset( $value->key ) && ! empty( $value->value ) ) {
+									$mwb_etmfw_mail_template_data[ $value->key ] = $value->value;
+								}
+							}
+							foreach ( $mwb_etmfw_mail_template_data as $label_key => $user_data_value ) {
+								foreach ( $mwb_etmfw_field_data as $key => $html_value ) {
+									if ( 0 === strcasecmp( $html_value['label'], $label_key ) ) {
+										$mwb_etmfw_flag = true;
 									}
-									
-									foreach ( $mwb_etmfw_mail_template_data as $label_key => $user_data_value ) {
-										foreach ( $mwb_etmfw_field_data as $key => $html_value ) {
-											if ( 0 === strcasecmp( $html_value['label'], $label_key ) ) {
-												$this->generate_edit_ticket_inputs( $html_value, $user_data_value );
-											}
-										}
-									}
+								}
+							}
+							if ( is_wc_endpoint_url( 'order-received' ) || is_wc_endpoint_url( 'view-order' )) {
+								if( $mwb_etmfw_flag ) {
 									?>
-									<input type="submit" class="button button-primary" 
-										name="mwb_etmfw_save_edit_ticket_info_btn"
-										id="mwb_etmfw_save_edit_ticket_info_btn"
-										value="<?php esc_attr_e( 'Save Changes', 'event-tickets-manager-for-woocommerce' ); ?>"
-										/>
-										<div style="display: none;" class="mwb_etmfw_loader" id="mwb_etmfw_edit_info_loader">
-											<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/loading.gif' ); ?>">
-										</div>
-								</form>
-							</div>
-							<?php
+									<div class="mwb_etmfw_edit_ticket_section">
+										<span id="mwb_etmfw_edit_ticket">
+											<?php esc_html_e( 'Edit Ticket Information', 'event-tickets-manager-for-woocommerce' ); ?>
+										</span>
+										<form id="mwb_etmfw_edit_ticket_form">
+											<input type="hidden" id="mwb_etmfw_edit_info_order" value="<?php echo esc_attr( $order_id ); ?>">
+											<?php
+											
+											
+											foreach ( $mwb_etmfw_mail_template_data as $label_key => $user_data_value ) {
+												foreach ( $mwb_etmfw_field_data as $key => $html_value ) {
+													if ( 0 === strcasecmp( $html_value['label'], $label_key ) ) {
+														$this->generate_edit_ticket_inputs( $html_value, $user_data_value );
+													}
+												}
+											}
+											?>
+											<input type="submit" class="button button-primary" 
+												name="mwb_etmfw_save_edit_ticket_info_btn"
+												id="mwb_etmfw_save_edit_ticket_info_btn"
+												value="<?php esc_attr_e( 'Save Changes', 'event-tickets-manager-for-woocommerce' ); ?>"
+												/>
+												<div style="display: none;" class="mwb_etmfw_loader" id="mwb_etmfw_edit_info_loader">
+													<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/loading.gif' ); ?>">
+												</div>
+										</form>
+									</div>
+									<?php
+								}
+							}
 						}
 					}
 				}

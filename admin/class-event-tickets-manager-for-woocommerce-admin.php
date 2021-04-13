@@ -916,8 +916,8 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	public function mwb_etmfw_plugin_row_meta( $links, $file ) {
 		if ( strpos( $file, 'event-tickets-manager-for-woocommerce/event-tickets-manager-for-woocommerce.php' ) !== false ) {
 			$new_links = array(
-				'documentation' => '<a href="https://docs.makewebbetter.com/event-tickets-manager-for-woocommerce/?utm_source=org&utm_medium=plugin&utm_campaign=mwb_event_ticket" target="_blank">Documentation</a>',
-				'support' => '<a href="https://makewebbetter.com/contact-us/?utm_source=org&utm_medium=plugin&utm_campaign=mwb_event_ticket" target="_blank">Support</a>',
+				'documentation' => '<a href="https://docs.makewebbetter.com/event-tickets-manager-for-woocommerce/?utm_source=org&utm_medium=plugin&utm_campaign=mwb_event_ticket" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Documentation.svg" style="width: 20px;padding-right: 5px;">Documentation</a>',
+				'support' => '<a href="https://makewebbetter.com/contact-us/?utm_source=org&utm_medium=plugin&utm_campaign=mwb_event_ticket" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Support.svg" style="width: 20px;padding-right: 5px;">Support</a>',
 			);
 
 			$links = array_merge( $links, $new_links );
