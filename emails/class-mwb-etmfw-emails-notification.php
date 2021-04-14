@@ -3,7 +3,7 @@
  * This file is used to include email template.
  *
  * @link       https://makewebbetter.com/
- * @since      1.0.8
+ * @since      1.0.0
  *
  * @package    event-tickets-manager-for-woocommerce
  */
@@ -63,7 +63,7 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 		/**
 		 * Get email subject.
 		 *
-		 * @since      1.0.8
+		 * @since      1.0.0
 		 * @return string
 		 */
 		public function get_default_subject() {
@@ -73,7 +73,7 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 		/**
 		 * Get email heading.
 		 *
-		 * @since      1.0.8
+		 * @since      1.0.0
 		 * @return string
 		 */
 		public function get_default_heading() {
@@ -83,7 +83,7 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 		/**
 		 * Trigger the sending of this email.
 		 *
-		 * @since      1.0.8
+		 * @since      1.0.0
 		 * @param string $user_email User Email.
 		 * @param string $email_content Email content.
 		 * @param string $mwb_etmfw_email_subject Email Subject.
@@ -109,7 +109,7 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 		/**
 		 * Get content html.
 		 *
-		 * @since      1.0.8
+		 * @since      1.0.0
 		 * @access public
 		 * @return string
 		 */
@@ -131,7 +131,7 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 		/**
 		 * Get content plain.
 		 *
-		 * @since      1.0.8
+		 * @since      1.0.0
 		 * @access public
 		 * @return string
 		 */
@@ -153,7 +153,7 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 		/**
 		 * Initialise settings form fields.
 		 *
-		 * @since      1.0.8
+		 * @since      1.0.0
 		 */
 		public function init_form_fields() {
 			$this->form_fields = array(

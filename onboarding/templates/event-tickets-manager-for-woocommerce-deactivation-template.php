@@ -7,8 +7,8 @@
  * @link       https://makewebbetter.com
  * @since      1.0.0
  *
- * @package    Makewebbetter_Onboarding
- * @subpackage Makewebbetter_Onboarding/admin/onboarding
+ * @package     Event_Tickets_Manager_For_Woocommerce
+ * @subpackage  Event_Tickets_Manager_For_Woocommerce/onboarding/templates
  */
 
 global $pagenow, $etmfw_mwb_etmfw_obj;

@@ -123,7 +123,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 						$all_id = map_deep( wp_unslash( $_POST['mwb_etmfw_event_ids'] ), 'sanitize_text_field' );
 						foreach ( $all_id as $key => $value ) {
 							wp_trash_post( $value, true );
-							$mwb_reload_url = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) :'';
+							$mwb_reload_url = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
 							header( 'Location: ' . $mwb_reload_url );
 						}
 					}

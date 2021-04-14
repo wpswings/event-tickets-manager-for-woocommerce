@@ -55,6 +55,17 @@ div#mwb_etmfw_edit_info_loader img {
     position: relative;
     top: 5px;
 }
+#mwb_etmfw_edit_info_loader{
+    display: none;
+}
+#mwb_etmfw_checkin_loader{
+    display: none;
+}
+#mwb_etmfw_event_map{
+    width: 60%;
+    height: 350px;
+    margin-bottom: 10px;
+}
 .mwb_check_in_error {/* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
     background: #e2401c;
     padding: 16px 20px;

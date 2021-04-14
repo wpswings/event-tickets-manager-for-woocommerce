@@ -29,7 +29,10 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 	 $(document).ready(function(){
-	 	$("#mwb_etmfw_edit_ticket").click(function(){
+	 	$( document ).on(
+	 		'click',
+	 		'#mwb_etmfw_edit_ticket',
+	 		function(){
 	 		$("#mwb_etmfw_edit_ticket_form").toggleClass("mwb_etmfw_show_ticket_form");
 	 	});
 	 });

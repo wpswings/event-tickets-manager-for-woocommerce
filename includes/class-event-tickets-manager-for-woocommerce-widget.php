@@ -48,7 +48,7 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 
 	/**
 	 * Set up event widget data for the plugin.
-	 * 
+	 *
 	 * @param array $args Arguments.
 	 * @param array $instance Instance.
 	 * @since    1.0.0
@@ -219,7 +219,7 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 		</p>
 
 		<p>
-			<label for="<?php echo esc_attr( $setting_select_id); ?>"><?php esc_html_e( 'Scope of the Event', 'event-tickets-manager-for-woocommerce' ); ?></label>
+			<label for="<?php echo esc_attr( $setting_select_id ); ?>"><?php esc_html_e( 'Scope of the Event', 'event-tickets-manager-for-woocommerce' ); ?></label>
 			<select name="<?php echo esc_attr( $setting_select_name ); ?>" id="<?php echo esc_attr( $setting_select_id ); ?>" class="widefat">
 			<?php
 			$scope_options = $this->mwb_etmfw_get_scopes();

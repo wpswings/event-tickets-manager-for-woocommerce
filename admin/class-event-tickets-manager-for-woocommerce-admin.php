@@ -270,7 +270,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'class' => 'etmfw-text-class',
 				'placeholder' => __( 'Google API Key', 'event-tickets-manager-for-woocommerce' ),
 			),
-	
+
 			array(
 				'type'  => 'button',
 				'id'    => 'mwb_etmfw_save_integrations_settings',
@@ -630,7 +630,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				)
 			);
 
-			if( 'on' === get_option('mwb_etmfw_enabe_location_site', 'off' ) ){
+			if ( 'on' === get_option( 'mwb_etmfw_enabe_location_site', 'off' ) ) {
 				woocommerce_wp_checkbox(
 					array(
 						'id' => 'etmfw_display_map',
@@ -933,7 +933,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_etmfw_get_event_geocode_value(){
+	public function mwb_etmfw_get_event_geocode_value() {
 		$response['result'] = false;
 		$response['message'] = '';
 		if ( isset( $_POST['mwb_edit_nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mwb_edit_nonce'] ) ), 'mwb-etmfw-verify-edit-prod-nonce' ) ) {
@@ -942,7 +942,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 
 		$api_key = get_option( 'mwb_etmfw_google_maps_api_key', '' );
 		$event_venue = isset( $_POST['venue'] ) ? sanitize_text_field( wp_unslash( $_POST['venue'] ) ) : '';
-		if( '' !== $api_key && '' !== $event_venue ){
+		if ( '' !== $api_key && '' !== $event_venue ) {
 			$url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . $event_venue . '&key=' . $api_key;
 			$args = array(
 				'timeout' => 10,
@@ -951,20 +951,20 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				),
 			);
 			$get_response = wp_remote_get( $url, $args );
-			if ( is_wp_error( $get_response ) ) { 
+			if ( is_wp_error( $get_response ) ) {
 				$response['message'] = $get_response->get_error_message();
 			} else {
 				$get_response = json_decode( wp_remote_retrieve_body( $get_response ) );
-				if( 'OK' == $get_response->status ) {
+				if ( 'OK' == $get_response->status ) {
 					$response['result'] = true;
 					$response['message'] = array(
 						'lat' => $get_response->results[0]->geometry->location->lat,
-						'lng' => $get_response->results[0]->geometry->location->lng
+						'lng' => $get_response->results[0]->geometry->location->lng,
 					);
-				} else{
+				} else {
 					$response['message'] = $get_response->error_message;
 				}
-			}	
+			}
 		}
 		echo json_encode( $response );
 		wp_die();

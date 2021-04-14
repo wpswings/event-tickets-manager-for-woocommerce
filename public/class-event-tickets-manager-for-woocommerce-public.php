@@ -79,7 +79,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		if ( 'calendar' === $event_view ) {
 			wp_enqueue_script( 'mwb-etmfw-fullcalendar-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/fullcalendar/fullcalendar.min.js', array( 'jquery' ), $this->version, false );
 			wp_register_script( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-public.js', array( 'jquery', 'mwb-etmfw-fullcalendar-js' ), $this->version, false );
-		} else{
+		} else {
 			wp_register_script( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-public.js', array( 'jquery' ), $this->version, false );
 		}
 		$public_param_data = array(
@@ -95,7 +95,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			wp_register_script('mwb_etmfw_google_map', 'https://maps.googleapis.com/maps/api/js?&key='.$mwb_google_api_key.'&callback=initMap&libraries=&v=weekly', array(), '', true);
 			wp_enqueue_script( 'mwb_etmfw_google_map' );
 		}
-		
 
 		global $wp_query;
 		$checkin_page_id = get_option( 'event_checkin_page_created', '' );
@@ -156,36 +155,35 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								</div>
 								<?php do_action( 'mwb_etmfw_before_event_general_info', $product_id ); ?>	
 							</div>
-							<?php 
+							<?php
 							$display_map = isset( $mwb_etmfw_product_array['etmfw_display_map'] ) ? $mwb_etmfw_product_array['etmfw_display_map'] : 'no';
 							$location_site = get_option( 'mwb_etmfw_enabe_location_site', 'off' );
-							if( 'yes' === $display_map && 'on' === $location_site ){
+							if ( 'yes' === $display_map && 'on' === $location_site ) {
 								?>
 								<div class="mwb_etmfw_event_map_wrapper">
 									<?php
 									$event_lat = isset( $mwb_etmfw_product_array['etmfw_event_venue_lat'] ) ? $mwb_etmfw_product_array['etmfw_event_venue_lat'] : '';
 									$event_lng = isset( $mwb_etmfw_product_array['etmfw_event_venue_lng'] ) ? $mwb_etmfw_product_array['etmfw_event_venue_lng'] : '';
 									?>
-									<input type="hidden" id="etmfw_event_lat" value="<?php echo esc_attr($event_lat);?>">
-									<input type="hidden" id="etmfw_event_lng" value="<?php echo esc_attr($event_lng);?>">
+									<input type="hidden" id="etmfw_event_lat" value="<?php echo esc_attr( $event_lat ); ?>">
+									<input type="hidden" id="etmfw_event_lng" value="<?php echo esc_attr( $event_lng ); ?>">
 									<script>
-										function initMap() {
-									      	let event_lat = parseInt( document.getElementById('etmfw_event_lat').value );
-											let event_lng = parseInt( document.getElementById('etmfw_event_lng').value );
-											const myLatLng = { lat: event_lat, lng: event_lng };
-										  	const map = new google.maps.Map(document.getElementById("mwb_etmfw_event_map"), {
-											    zoom: 4,
-											    center: myLatLng,
-											  });
-										  	new google.maps.Marker({
-											    position: myLatLng,
-											    map,
-											    title: "Event!",
-											});
-										}
-								    
-								    </script>
-									<div id="mwb_etmfw_event_map" style="width:60%;height:350px;"></div>
+									function initMap() {
+										  let event_lat = parseInt( document.getElementById('etmfw_event_lat').value );
+										let event_lng = parseInt( document.getElementById('etmfw_event_lng').value );
+										const myLatLng = { lat: event_lat, lng: event_lng };
+										  const map = new google.maps.Map(document.getElementById("mwb_etmfw_event_map"), {
+											zoom: 4,
+											center: myLatLng,
+										  });
+										  new google.maps.Marker({
+											position: myLatLng,
+											map,
+											title: "Event!",
+										});
+									}
+									</script>
+									<div id="mwb_etmfw_event_map"></div>
 								</div>
 								<?php
 							}
@@ -490,7 +488,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @since 1.0.0
 	 * @name mwb_etmfw_create_order_line_item().
 	 * @param object $item Order Item.
-	 * @param string    $cart_key cart unique key.
+	 * @param string $cart_key cart unique key.
 	 * @param array  $values cart values.
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
@@ -517,7 +515,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_etmfw_event_status_changed()
-	 * @param string    $order_id Order Id.
+	 * @param string $order_id Order Id.
 	 * @param string $old_status Old Status.
 	 * @param string $new_status New Status.
 	 * @author makewebbetter<ticket@makewebbetter.com>
@@ -727,7 +725,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			$additinal_info = '<table border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;"><tbody><tr><td style="padding: 20px 0 10px;"><h2 style="margin: 0;font-weight: bold;">Details :-</h2></td></tr>';
 			foreach ( $item_meta_data as $key => $value ) {
 				if ( isset( $value->key ) && ! empty( $value->value ) ) {
-					if( '_reduced_stock' === $value->key ){
+					if ( '_reduced_stock' === $value->key ) {
 						continue;
 					}
 					$additinal_info .= '<tr><td style="padding: 10px 0;"><p style="margin: 0;">' . $value->key . ' - ' . $value->value . '</p></td></tr>';
@@ -819,12 +817,12 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						$end_date = isset( $mwb_etmfw_product_array['event_end_date_time'] ) ? $mwb_etmfw_product_array['event_end_date_time'] : '';
 						$event_venue = isset( $mwb_etmfw_product_array['etmfw_event_venue'] ) ? $mwb_etmfw_product_array['etmfw_event_venue'] : '';
 						$pro_short_desc = $_product->get_short_description();
-					
-						$start_date = str_replace( array( '-' , ':' ),'', gmdate( "Y-m-d\TG:i", strtotime($start_date) ) );
-						$end_date = str_replace( array( '-' , ':' ),'', gmdate( "Y-m-d\TG:i", strtotime( $end_date ) ) );
-						
-						$calendar_url = "https://calendar.google.com/calendar/r/eventedit?text=".$event_name."&dates=".$start_date."/".$end_date."&details=".$pro_short_desc."&location=".$event_venue;
-						
+
+						$start_date = str_replace( array( '-', ':' ), '', gmdate( 'Y-m-d\TG:i', strtotime( $start_date ) ) );
+						$end_date = str_replace( array( '-', ':' ), '', gmdate( 'Y-m-d\TG:i', strtotime( $end_date ) ) );
+
+						$calendar_url = 'https://calendar.google.com/calendar/r/eventedit?text=' . $event_name . '&dates=' . $start_date . '/' . $end_date . '&details=' . $pro_short_desc . '&location=' . $event_venue;
+
 						?>
 						<div class="mwb_etmfw_view_ticket_section">
 							<a href="<?php echo esc_attr( $upload_dir_path ); ?>" class="mwb_view_ticket_pdf" target="_blank"><?php esc_html_e( 'View', 'event-tickets-manager-for-woocommerce' ); ?></a>
@@ -836,7 +834,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						$item_meta_data = $item->get_meta_data();
 						$mwb_etmfw_field_data = isset( $mwb_etmfw_product_array['mwb_etmfw_field_data'] ) && ! empty( $mwb_etmfw_product_array['mwb_etmfw_field_data'] ) ? $mwb_etmfw_product_array['mwb_etmfw_field_data'] : array();
 						$mwb_etmfw_flag = false;
-						if ( ! empty( $item_meta_data ) && !empty( $mwb_etmfw_field_data ) ) {
+						if ( ! empty( $item_meta_data ) && ! empty( $mwb_etmfw_field_data ) ) {
 							foreach ( $item_meta_data as $key => $value ) {
 								if ( isset( $value->key ) && ! empty( $value->value ) ) {
 									$mwb_etmfw_mail_template_data[ $value->key ] = $value->value;
@@ -849,8 +847,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 									}
 								}
 							}
-							if ( is_wc_endpoint_url( 'order-received' ) || is_wc_endpoint_url( 'view-order' )) {
-								if( $mwb_etmfw_flag ) {
+							if ( is_wc_endpoint_url( 'order-received' ) || is_wc_endpoint_url( 'view-order' ) ) {
+								if ( $mwb_etmfw_flag ) {
 									?>
 									<div class="mwb_etmfw_edit_ticket_section">
 										<span id="mwb_etmfw_edit_ticket">
@@ -859,8 +857,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 										<form id="mwb_etmfw_edit_ticket_form">
 											<input type="hidden" id="mwb_etmfw_edit_info_order" value="<?php echo esc_attr( $order_id ); ?>">
 											<?php
-											
-											
+
 											foreach ( $mwb_etmfw_mail_template_data as $label_key => $user_data_value ) {
 												foreach ( $mwb_etmfw_field_data as $key => $html_value ) {
 													if ( 0 === strcasecmp( $html_value['label'], $label_key ) ) {
@@ -874,7 +871,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 												id="mwb_etmfw_save_edit_ticket_info_btn"
 												value="<?php esc_attr_e( 'Save Changes', 'event-tickets-manager-for-woocommerce' ); ?>"
 												/>
-												<div style="display: none;" class="mwb_etmfw_loader" id="mwb_etmfw_edit_info_loader">
+												<div class="mwb_etmfw_loader" id="mwb_etmfw_edit_info_loader">
 													<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/loading.gif' ); ?>">
 												</div>
 										</form>
@@ -1031,7 +1028,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				<div class="mwb_etmfw_checkin_button_section">
 					<input type="submit" name="mwb_etmfw_checkin_button" id="mwb_etmfw_checkin_button" value="' . __( 'Check In', 'event-tickets-manager-for-woocommerce' ) . '">
 				</div>
-				<div style="display: none;" class="mwb_etmfw_loader" id="mwb_etmfw_checkin_loader">
+				<div class="mwb_etmfw_loader" id="mwb_etmfw_checkin_loader">
 					<img src="' . esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/loading.gif' ) . '">
 				</div>
 			</div>

@@ -4,9 +4,9 @@
  *
  * This template can be overridden by copying it to yourtheme/woocommerce/emails/mwb-wpr-email-notification-template.php.
  *
- * @package    points-and-rewards-for-wooCommerce
- * @author  makewebbetter<ticket@makewebbetter.com>
- * @since      1.0.8
+ * @package    event-tickets-manager-for-woocommerce
+ * @author 	   makewebbetter<ticket@makewebbetter.com>
+ * @since      1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
