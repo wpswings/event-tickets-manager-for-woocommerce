@@ -49,7 +49,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 			'venue'             => __( 'Venue', 'event-tickets-manager-for-woocommerce' ),
 			'purchase_date'     => __( 'Purchase Date', 'event-tickets-manager-for-woocommerce' ),
 			'schedule'          => __( 'Schedule', 'event-tickets-manager-for-woocommerce' ),
-			'check_in_status'   => __( 'Check In Status', 'event-tickets-manager-for-woocommerce' ),
+			'check_in_status'   => __( 'Check-In Status', 'event-tickets-manager-for-woocommerce' ),
 			'action'            => __( 'Action', 'event-tickets-manager-for-woocommerce' ),
 		);
 		return $columns;

@@ -54,7 +54,9 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 	 * @since    1.0.0
 	 */
 	public function widget( $args, $instance ) {
+		// @codingStandardsIgnoreStart.
 		extract( $args );
+		// @codingStandardsIgnoreEnd.
 		// Check the widget options.
 		$title    = isset( $instance['title'] ) ? apply_filters( 'widget_title', $instance['title'] ) : '';
 		$select   = isset( $instance['select'] ) ? $instance['select'] : '';
@@ -194,7 +196,9 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 		);
 
 		// Parse current settings with defaults.
+		// @codingStandardsIgnoreStart.
 		extract( wp_parse_args( (array) $instance, $defaults ) );
+		// @codingStandardsIgnoreEnd.
 		$setting_title_id   = $this->get_field_id( 'title' );
 		$setting_title_name = $this->get_field_name( 'title' );
 		$setting_radio_id   = $this->get_field_id( 'radio' );

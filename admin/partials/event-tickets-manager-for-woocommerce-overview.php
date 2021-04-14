@@ -45,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</li>
 		<li><?php esc_html_e( 'Show upcoming events through a calendar on your online store.', 'event-tickets-manager-for-woocommerce' ); ?></li>
 		<li><?php esc_html_e( 'Manage the stock of tickets.', 'event-tickets-manager-for-woocommerce' ); ?></li>
-		<li><?php esc_html_e( 'Display offline event’s location on google map.', 'event-tickets-manager-for-woocommerce' ); ?>
+		<li><?php esc_html_e( 'Display offline events location on google map.', 'event-tickets-manager-for-woocommerce' ); ?>
 	</li>
 	<?php do_action( 'mwb_etmfw_extent_plugin_feature_info' ); ?>
 </ol>
@@ -97,7 +97,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<li>
 			<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/img5.png' ); ?>">	
 			<div class="mwb_etmfw_premium_heading"><?php esc_html_e( 'Allow Attendees To Pass The Ticket', 'event-tickets-manager-for-woocommerce' ); ?></div>
-			<div class="mwb_etmfw_premium_content"><?php esc_html_e( 'The customers can pass the ticket they’ve bought to their friends or family if they are not able to visit your event.', 'event-tickets-manager-for-woocommerce' ); ?></div>
+			<div class="mwb_etmfw_premium_content"><?php esc_html_e( 'The customers can pass the ticket they have bought to their friends or family if they are not able to visit your event.', 'event-tickets-manager-for-woocommerce' ); ?></div>
 		</li>
 		<li>
 			<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/img12.png' ); ?>">	

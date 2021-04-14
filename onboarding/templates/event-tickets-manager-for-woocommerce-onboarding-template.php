@@ -9,6 +9,7 @@
  *
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/onboarding/templates
+ *
  */
 global $etmfw_mwb_etmfw_obj;
 $etmfw_onboarding_form_fields = apply_filters( 'mwb_etmfw_on_boarding_form_fields', array() );
@@ -23,7 +24,7 @@ $etmfw_onboarding_form_fields = apply_filters( 'mwb_etmfw_on_boarding_form_field
 						<a href="#"><span class="etmfw-close-form material-icons mwb-etmfw-close-icon mdc-dialog__button" data-mdc-dialog-action="close">clear</span></a>
 					</div>
 
-					<h3 class="mwb-etmfw-on-boarding-heading mdc-dialog__title"><?php esc_html_e( 'Welcome to MakeWebBetter', 'event-tickets-manager-for-woocommerce' ); ?> </h3>
+					<h3 class="mwb-etmfw-on-boarding-heading mdc-dialog__title"><?php esc_html_e( 'Welcome to ', 'event-tickets-manager-for-woocommerce' ); ?><?php echo esc_html('MakeWebBetter');?></h3>
 					<p class="mwb-etmfw-on-boarding-desc"><?php esc_html_e( 'We love making new friends! Subscribe below and we promise to keep you up-to-date with our latest new plugins, updates, awesome deals and a few special offers.', 'event-tickets-manager-for-woocommerce' ); ?></p>
 
 					<form action="#" method="post" class="mwb-etmfw-on-boarding-form">

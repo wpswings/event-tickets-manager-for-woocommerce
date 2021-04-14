@@ -141,7 +141,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	public function etmfw_options_page() {
 		global $submenu;
 		if ( empty( $GLOBALS['admin_page_hooks']['mwb-plugins'] ) ) {
-			add_menu_page( __( 'MakeWebBetter', 'event-tickets-manager-for-woocommerce' ), __( 'MakeWebBetter', 'event-tickets-manager-for-woocommerce' ), 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/mwb-logo.png', 15 );
+			add_menu_page( 'MakeWebBetter', 'MakeWebBetter', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/mwb-logo.png', 15 );
 			$etmfw_menus = apply_filters( 'mwb_add_plugins_menus_array', array() );
 			if ( is_array( $etmfw_menus ) && ! empty( $etmfw_menus ) ) {
 				foreach ( $etmfw_menus as $etmfw_key => $etmfw_value ) {
@@ -343,7 +343,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					),
 				),
 				'class' => 'mwb_etmfw_mail_setting_upload_logo_box',
-				'description' => __( 'Upload the image which is used as logo on your Email Template.', 'event-tickets-manager-for-woocommerce' ),
+				'description' => __( 'Upload the image which is used as a logo on your Email Template.', 'event-tickets-manager-for-woocommerce' ),
 			),
 
 			array(
@@ -374,7 +374,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			),
 			array(
 				'title' => __( 'Free Support', 'event-tickets-manager-for-woocommerce' ),
-				'description' => __( 'Please submit a ticket , our team will respond within 24 hours.', 'event-tickets-manager-for-woocommerce' ),
+				'description' => __( 'Please submit a ticket, our team will respond within 24 hours.', 'event-tickets-manager-for-woocommerce' ),
 				'link-text' => __( 'SUBMIT', 'event-tickets-manager-for-woocommerce' ),
 				'link' => 'https://makewebbetter.com/submit-query/?utm_source=org&utm_medium=plugin&utm_campaign=mwb_event_ticket',
 			),
@@ -572,7 +572,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					'value'         => isset( $mwb_etmfw_product_array['event_start_date_time'] ) ? $mwb_etmfw_product_array['event_start_date_time'] : '',
 					'custom_attributes' => array( 'required' => 'required' ),
 					'desc_tip'    => true,
-					'description' => __( 'Enter the date and time when event will start.', 'event-tickets-manager-for-woocommerce' ),
+					'description' => __( 'Enter the date and time when the event will start.', 'event-tickets-manager-for-woocommerce' ),
 				)
 			);
 
@@ -584,7 +584,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					'value'         => isset( $mwb_etmfw_product_array['event_end_date_time'] ) ? $mwb_etmfw_product_array['event_end_date_time'] : '',
 					'custom_attributes' => array( 'required' => 'required' ),
 					'desc_tip'    => true,
-					'description' => __( 'Enter the date and time when event will end.', 'event-tickets-manager-for-woocommerce' ),
+					'description' => __( 'Enter the date and time when the event will end.', 'event-tickets-manager-for-woocommerce' ),
 				)
 			);
 
@@ -614,7 +614,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					'value'         => isset( $mwb_etmfw_product_array['etmfw_event_venue_lat'] ) ? $mwb_etmfw_product_array['etmfw_event_venue_lat'] : '',
 					'custom_attributes' => array( 'readonly' => 'readonly' ),
 					'desc_tip'    => true,
-					'description' => __( 'Latitude of the event goegraphic location.', 'event-tickets-manager-for-woocommerce' ),
+					'description' => __( 'Latitude of the event geographic location.', 'event-tickets-manager-for-woocommerce' ),
 				)
 			);
 
@@ -626,7 +626,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					'value'         => isset( $mwb_etmfw_product_array['etmfw_event_venue_lng'] ) ? $mwb_etmfw_product_array['etmfw_event_venue_lng'] : '',
 					'custom_attributes' => array( 'readonly' => 'readonly' ),
 					'desc_tip'    => true,
-					'description' => __( 'Longitude of the event goegraphic location ', 'event-tickets-manager-for-woocommerce' ),
+					'description' => __( 'Longitude of the event geographic location ', 'event-tickets-manager-for-woocommerce' ),
 				)
 			);
 
@@ -635,7 +635,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					array(
 						'id' => 'etmfw_display_map',
 						'wrapper_class' => 'show_if_event_ticket_manager',
-						'label' => __( 'Display event on google map', 'giftware' ),
+						'label' => __( 'Display event on google map', 'event-tickets-manager-for-woocommerce' ),
 						'value' => isset( $mwb_etmfw_product_array['etmfw_display_map'] ) ? $mwb_etmfw_product_array['etmfw_display_map'] : true,
 					)
 				);

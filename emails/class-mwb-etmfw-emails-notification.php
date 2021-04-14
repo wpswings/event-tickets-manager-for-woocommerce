@@ -48,7 +48,7 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 			$this->id             = 'mwb_etmfw_email_notification';
 			$this->title          = __( 'Event order email', 'event-tickets-manager-for-woocommerce' );
 			$this->customer_email = true;
-			$this->description    = __( 'This emal send to the customer on every event.', 'event-tickets-manager-for-woocommerce' );
+			$this->description    = __( 'This email send to the customer at every event.', 'event-tickets-manager-for-woocommerce' );
 			$this->template_html  = 'mwb-etmfw-email-notification-template.php';
 			$this->template_plain = 'plain/mwb-etmfw-email-notification-template.php';
 			$this->template_base  = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/';

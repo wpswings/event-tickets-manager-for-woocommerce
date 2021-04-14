@@ -90,9 +90,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		wp_localize_script( $this->plugin_name, 'etmfw_public_param', $public_param_data );
 		wp_enqueue_script( $this->plugin_name );
 
-		if( is_product() ){
-			$mwb_google_api_key = get_option('mwb_etmfw_google_maps_api_key', '' );
-			wp_register_script('mwb_etmfw_google_map', 'https://maps.googleapis.com/maps/api/js?&key='.$mwb_google_api_key.'&callback=initMap&libraries=&v=weekly', array(), '', true);
+		if ( is_product() ) {
+			$mwb_google_api_key = get_option( 'mwb_etmfw_google_maps_api_key', '' );
+			wp_register_script( 'mwb_etmfw_google_map', 'https://maps.googleapis.com/maps/api/js?&key=' . $mwb_google_api_key . '&callback=initMap&libraries=&v=weekly', $this->version, '', true );
 			wp_enqueue_script( 'mwb_etmfw_google_map' );
 		}
 
@@ -143,7 +143,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								<input type="hidden" name="mwb_etmfw_event_start" value=<?php echo esc_html( $start_date ); ?>>
 								<input type="hidden" name="mwb_etmfw_event_finish" value=<?php echo esc_html( $end_date ); ?>>	
 								<div class="mwb_etmwf_event_date">
-									<span class="mwb_etmfw_date_label"><?php esc_html_e( 'Date : ', 'event-tickets-manager-for-woocommerce' ); ?></span>
+									<span class="mwb_etmfw_date_label"><?php esc_html_e( 'Date: ', 'event-tickets-manager-for-woocommerce' ); ?></span>
 									<span><?php echo esc_html( mwb_etmfw_get_date_format( $start_date ), 'event-tickets-manager-for-woocommerce' ); ?></span>
 									<span><?php echo esc_html( ' to ', 'event-tickets-manager-for-woocommerce' ); ?></span>
 									<span><?php echo esc_html( mwb_etmfw_get_date_format( $end_date ), 'event-tickets-manager-for-woocommerce' ); ?></span>

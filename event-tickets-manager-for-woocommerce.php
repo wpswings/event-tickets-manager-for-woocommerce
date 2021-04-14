@@ -20,10 +20,10 @@
  * Author URI:        https://makewebbetter.com/
  * Text Domain:       event-tickets-manager-for-woocommerce
  * Domain Path:       /languages
- *
+ * Tested up to:      5.7
  * Requires at least: 4.6
  * Tested up to:      4.9.5
- *
+ * WC tested up to:   5.1.0
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
  */
