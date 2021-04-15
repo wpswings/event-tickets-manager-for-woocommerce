@@ -9,7 +9,6 @@
  *
  * @package     Event_Tickets_Manager_For_Woocommerce
  * @subpackage  Event_Tickets_Manager_For_Woocommerce/onboarding/templates
- *
  */
 
 global $pagenow, $etmfw_mwb_etmfw_obj;

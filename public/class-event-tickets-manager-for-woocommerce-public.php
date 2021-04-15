@@ -92,7 +92,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 		if ( is_product() ) {
 			$mwb_google_api_key = get_option( 'mwb_etmfw_google_maps_api_key', '' );
-			wp_register_script( 'mwb_etmfw_google_map', 'https://maps.googleapis.com/maps/api/js?&key=' . $mwb_google_api_key . '&callback=initMap&libraries=&v=weekly', $this->version, '', true );
+			wp_register_script( 'mwb_etmfw_google_map', 'https://maps.googleapis.com/maps/api/js?&key=' . $mwb_google_api_key . '&callback=initMap&libraries=&v=weekly', array(), $this->version, true );
 			wp_enqueue_script( 'mwb_etmfw_google_map' );
 		}
 

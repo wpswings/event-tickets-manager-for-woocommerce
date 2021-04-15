@@ -54,9 +54,6 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 	 * @since    1.0.0
 	 */
 	public function widget( $args, $instance ) {
-		// @codingStandardsIgnoreStart.
-		extract( $args );
-		// @codingStandardsIgnoreEnd.
 		// Check the widget options.
 		$title    = isset( $instance['title'] ) ? apply_filters( 'widget_title', $instance['title'] ) : '';
 		$select   = isset( $instance['select'] ) ? $instance['select'] : '';
@@ -188,17 +185,7 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 	 * @since    1.0.0
 	 */
 	public function form( $instance ) {
-		// Set widget defaults.
-		$defaults = array(
-			'title'     => '',
-			'radio'     => '',
-			'select'    => '',
-		);
 
-		// Parse current settings with defaults.
-		// @codingStandardsIgnoreStart.
-		extract( wp_parse_args( (array) $instance, $defaults ) );
-		// @codingStandardsIgnoreEnd.
 		$setting_title_id   = $this->get_field_id( 'title' );
 		$setting_title_name = $this->get_field_name( 'title' );
 		$setting_radio_id   = $this->get_field_id( 'radio' );
@@ -206,19 +193,22 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 		$setting_select_id  = $this->get_field_id( 'select' );
 		$setting_select_name = $this->get_field_name( 'select' );
 
+		$title_val   = isset( $instance['title'] ) ? wp_strip_all_tags( $instance['title'] ) : 'New title';
+		$radio_val   = isset( $instance['radio'] ) ? wp_strip_all_tags( $instance['radio'] ) : 'list';
+		$select_val  = isset( $instance['select'] ) ? wp_strip_all_tags( $instance['select'] ) : '';
 		?>
 
 		<p>
 			<label for="<?php echo esc_attr( $setting_title_id ); ?>"><?php esc_html_e( 'Widget Title', 'event-tickets-manager-for-woocommerce' ); ?></label>
-			<input class="widefat" id="<?php echo esc_attr( $setting_title_id ); ?>" name="<?php echo esc_attr( $setting_title_name ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
+			<input class="widefat" id="<?php echo esc_attr( $setting_title_id ); ?>" name="<?php echo esc_attr( $setting_title_name ); ?>" type="text" value="<?php echo esc_attr( $title_val ); ?>" />
 		</p>
 
 		<p>
 			<label for="<?php echo esc_attr( $setting_radio_id ); ?>"><?php esc_html_e( 'Event View', 'event-tickets-manager-for-woocommerce' ); ?></label><br>
-			<input id="<?php echo esc_attr( $setting_radio_id ); ?>" name="<?php echo esc_attr( $setting_radio_name ); ?>" type="radio" value="list" <?php echo esc_html( 'list' === $radio ) ? 'checked' : ''; ?> />
+			<input id="<?php echo esc_attr( $setting_radio_id ); ?>" name="<?php echo esc_attr( $setting_radio_name ); ?>" type="radio" value="list" <?php echo esc_html( 'list' === $radio_val ) ? 'checked' : ''; ?> />
 			<label for="<?php echo esc_attr( $setting_radio_id ); ?>"><?php esc_html_e( 'List', 'event-tickets-manager-for-woocommerce' ); ?></label>
 
-			<input id="<?php echo esc_attr( $setting_radio_id ); ?>" name="<?php echo esc_attr( $setting_radio_name ); ?>" type="radio" value="calendar" <?php echo esc_html( 'calendar' === $radio ) ? 'checked' : ''; ?> />
+			<input id="<?php echo esc_attr( $setting_radio_id ); ?>" name="<?php echo esc_attr( $setting_radio_name ); ?>" type="radio" value="calendar" <?php echo esc_html( 'calendar' === $radio_val ) ? 'checked' : ''; ?> />
 			<label for="<?php echo esc_attr( $setting_radio_id ); ?>"><?php esc_html_e( 'Calendar', 'event-tickets-manager-for-woocommerce' ); ?></label>
 		</p>
 
@@ -228,7 +218,7 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 			<?php
 			$scope_options = $this->mwb_etmfw_get_scopes();
 			foreach ( $scope_options as $key => $name ) {
-				echo '<option value="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" ' . selected( $select, $key, false ) . '>' . esc_html( $name ) . '</option>';
+				echo '<option value="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" ' . selected( $select_val, $key, false ) . '>' . esc_html( $name ) . '</option>';
 
 			}
 			?>
