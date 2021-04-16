@@ -517,10 +517,6 @@ h5.mwb_etmfw_plugin_premium_heading {
     margin-bottom: 16px;
 }
 
-.mwb_etmfw_video_wrapper iframe {
-    width: 100%;
-}
-
 td.drag-icon {
     cursor: grab;
 }
@@ -598,8 +594,8 @@ label.mdc-text-field.mdc-text-field--outlined {
 }
 
 .mwb_emtfw_list_video_wrapper ol {
-    flex: 0 0 calc(47% - 60px);
-    max-width: calc(47% - 60px);
+    flex: 0 0 calc(60% - 60px);
+    max-width: calc(60% - 60px);
     margin-right: 20px;
 }
 

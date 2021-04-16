@@ -58,8 +58,7 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 		$title    = isset( $instance['title'] ) ? apply_filters( 'widget_title', $instance['title'] ) : '';
 		$select   = isset( $instance['select'] ) ? $instance['select'] : '';
 		$radio = ! empty( $instance['radio'] ) ? $instance['radio'] : 'list';
-		// WordPress core before_widget hook (always include ).
-		echo wp_kses_post( $before_widget );
+		
 		if ( 'calendar' === $radio ) {
 			echo '<div id="calendar"></div>';
 		} else {
@@ -80,7 +79,7 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 			if ( $query_data->have_posts() ) {
 
 				if ( $title ) {
-					echo wp_kses_post( $before_title . $title . $after_title );
+					echo wp_kses_post( $title );
 				}
 				?>
 				<ul class="product_list_widget">
@@ -96,8 +95,6 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 			}
 			wp_reset_postdata();
 		}
-		// WordPress core after_widget hook (always include ).
-		echo wp_kses_post( $after_widget );
 	}
 
 	/**

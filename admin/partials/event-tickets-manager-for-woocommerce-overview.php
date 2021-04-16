@@ -49,9 +49,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</li>
 	<?php do_action( 'mwb_etmfw_extent_plugin_feature_info' ); ?>
 </ol>
-<div class="mwb_etmfw_video_wrapper">
-	<iframe height="411" src="https://www.youtube.com/embed/YgPLO8HDGtc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
 </div>
 </div>
 <div class="mwb_etmfw_plugin_benefit">
