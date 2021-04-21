@@ -15,3 +15,6 @@ tr.mwb_etmfw_field_wrap.ui-sortable-handle:nth-child(2n+1) {
 tr.mwb_etmfw_field_wrap.ui-sortable-handle:nth-child(2n) {
 	background: #f3f5f6;
 }
+td.check_in_status.column-check_in_status {
+    text-align: center;
+}

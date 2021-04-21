@@ -9,6 +9,8 @@
  * @subpackage Event_Tickets_Manager_For_Woocommerce/public
  */
 
+use Dompdf\Dompdf;
+
 /**
  * The public-facing functionality of the plugin.
  *
@@ -62,7 +64,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	public function etmfw_public_enqueue_styles() {
 		$event_view = get_option( 'mwb_etmfw_event_view', 'list' );
 		if ( 'calendar' === $event_view ) {
-			wp_enqueue_style( 'mwb-etmfw-fullcalendar-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/fullcalendar/lib/main.min.css', array(), time(), 'all' );
+			wp_enqueue_style( 'mwb-etmfw-fullcalendar-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/fullcalendar/main.min.css', array(), time(), 'all' );
 		}
 
 		wp_enqueue_style( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/scss/event-tickets-manager-for-woocommerce-public.css', array(), $this->version, 'all' );
@@ -759,19 +761,21 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_generate_ticket_pdf( $mwb_ticket_content, $order, $order_id, $ticket_number ) {
+		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'package/lib/dompdf/vendor/autoload.php';
+		$dompdf = new Dompdf( array( 'enable_remote' => true ) );
 
-		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'package/lib/dompdf/autoload.inc.php';
-		$dompdf = new Dompdf\Dompdf( array( 'enable_remote' => true ) );
-		$dompdf->setPaper( 'A4', 'landscape' );
 		$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
 		if ( ! is_dir( $upload_dir_path ) ) {
 			wp_mkdir_p( $upload_dir_path );
 			chmod( $upload_dir_path, 0775 );
 		}
-		$dompdf->load_html( $mwb_ticket_content );
+		$dompdf->loadHtml( $mwb_ticket_content );
+		$dompdf->setPaper( 'A4', 'landscape' );
+		@ob_end_clean(); // phpcs:ignore
 		$dompdf->render();
 		$dompdf->set_option( 'isRemoteEnabled', true );
 		$output = $dompdf->output();
+
 		$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';
 		if ( file_exists( $generated_ticket_pdf ) ) {
 			$generated_pdf = file_put_contents( $upload_dir_path . '/events' . $order_id . $ticket_number . '-new.pdf', $output );

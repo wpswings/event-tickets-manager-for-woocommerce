@@ -62,10 +62,8 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	public function etmfw_admin_enqueue_styles( $hook ) {
 		$screen = get_current_screen();
 		if ( isset( $screen->id ) && 'makewebbetter_page_event_tickets_manager_for_woocommerce_menu' == $screen->id ) {
-
 			wp_enqueue_style( 'thickbox' );
 			wp_enqueue_style( 'mwb-etmfw-select2-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/event-tickets-manager-for-woocommerce-select2.css', array(), time(), 'all' );
-
 			wp_enqueue_style( 'mwb-etmfw-meterial-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.css', array(), time(), 'all' );
 			wp_enqueue_style( 'mwb-etmfw-meterial-css2', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.css', array(), time(), 'all' );
 			wp_enqueue_style( 'mwb-etmfw-meterial-lite', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.css', array(), time(), 'all' );
@@ -76,7 +74,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 
 			wp_enqueue_style( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/event-tickets-manager-for-woocommerce-admin.scss', array(), $this->version, 'all' );
 		}
-		if ( isset( $screen->id ) && 'product' == $screen->id ) {
+		if ( isset( $screen->id ) && ( 'product' == $screen->id || 'woocommerce_page_mwb-etmfw-events-info' == $screen->id ) ) {
 			// Date Time Picker Library.
 			wp_enqueue_style( 'mwb-etmfw-date-time-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/jquery.datetimepicker.css', array(), time(), 'all' );
 			wp_enqueue_style( $this->plugin_name . '-admin-edit-product', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/event-tickets-manager-for-woocommerce-admin-edit-product.css', array(), $this->version, 'all' );
@@ -116,7 +114,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		}
 		if ( isset( $screen->id ) && 'product' == $screen->id ) {
 			// Date Time Picker Library.
-			wp_enqueue_script( 'mwb-etmfw-date-time', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/build/jquery.datetimepicker.full.js', array( 'jquery' ), time(), false );
+			wp_enqueue_script( 'mwb-etmfw-date-time', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/jquery.datetimepicker.full.js', array( 'jquery' ), time(), false );
 			wp_register_script( $this->plugin_name . 'admin-edit-product-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/js/event-tickets-manager-for-woocommerce-edit-product.js', array( 'jquery', 'mwb-etmfw-date-time', 'jquery-ui-sortable' ), $this->version, false );
 
 			wp_localize_script(

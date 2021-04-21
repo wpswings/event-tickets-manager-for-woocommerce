@@ -58,7 +58,7 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 		$title    = isset( $instance['title'] ) ? apply_filters( 'widget_title', $instance['title'] ) : '';
 		$select   = isset( $instance['select'] ) ? $instance['select'] : '';
 		$radio = ! empty( $instance['radio'] ) ? $instance['radio'] : 'list';
-		
+
 		if ( 'calendar' === $radio ) {
 			echo '<div id="calendar"></div>';
 		} else {
