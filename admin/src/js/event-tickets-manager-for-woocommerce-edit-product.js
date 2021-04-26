@@ -46,7 +46,9 @@
         $('#inventory_product_data ._sold_individually_field').addClass('show_if_event_ticket_manager').show();
 		
 		$('#etmfw_start_date_time').datetimepicker({
-			format:'Y-m-d g:i A',
+			format:'Y-m-d g:i a',
+			step: 30,
+			validateOnBlur: false,
 			minDate: new Date(),
 			onChangeDateTime:function () {
 			check();
@@ -58,13 +60,24 @@
 
 			var startDate = $('#etmfw_start_date_time').val(); 
 			var startTime = startDate.split(" ");
-			console.log(startDate);
+			
 			$('#etmfw_end_date_time').datetimepicker({
-			format:'Y-m-d g:i A',
+			format:'Y-m-d g:i a',
+			step: 30,
+			validateOnBlur: false,
 			startDate: startDate,
 			minDate : startDate,
 			minTime : startTime[1],
 			});
+		}
+
+		if( $('#etmfw_end_date_time').val() != '' ){
+			$('#etmfw_end_date_time').datetimepicker({
+			format:'Y-m-d g:i a',
+			step: 30,
+			validateOnBlur: false,
+			minDate: new Date(),
+		});
 		}
 
 		$(document).on( 'click', '.mwb_etmfw_add_fields_button', function(){
@@ -92,6 +105,7 @@
 		$(document).on("keyup", "#etmfw_event_venue", function(){
 			let input = $(this).val();
 			if( input.length > 2 ){
+				$(document).find("#mwb_etmfw_location_loader").show();
 				var data = {
 					action:'mwb_etmfw_get_event_geocode',
 					mwb_edit_nonce:etmfw_edit_prod_param.mwb_etmfw_edit_prod_nonce,
@@ -114,6 +128,7 @@
 								let error_msg = response.message;
 								$(document).find('#mwb_etmfw_error_msg').html( error_msg );
 							}
+							$(document).find("#mwb_etmfw_location_loader").hide();
 						}
 					}
 				);

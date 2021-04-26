@@ -8,9 +8,7 @@
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/public
  */
-
 use Dompdf\Dompdf;
-
 /**
  * The public-facing functionality of the plugin.
  *
@@ -143,15 +141,17 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 							<div class="mwb_etmfw_event_info_section">
 								<?php do_action( 'mwb_etmfw_before_event_general_info', $product_id ); ?>
 								<input type="hidden" name="mwb_etmfw_event_start" value=<?php echo esc_html( $start_date ); ?>>
-								<input type="hidden" name="mwb_etmfw_event_finish" value=<?php echo esc_html( $end_date ); ?>>	
-								<div class="mwb_etmwf_event_date">
-									<span class="mwb_etmfw_date_label"><?php esc_html_e( 'Date: ', 'event-tickets-manager-for-woocommerce' ); ?></span>
-									<span><?php echo esc_html( mwb_etmfw_get_date_format( $start_date ), 'event-tickets-manager-for-woocommerce' ); ?></span>
-									<span><?php echo esc_html( ' to ', 'event-tickets-manager-for-woocommerce' ); ?></span>
-									<span><?php echo esc_html( mwb_etmfw_get_date_format( $end_date ), 'event-tickets-manager-for-woocommerce' ); ?></span>
+								<input type="hidden" name="mwb_etmfw_event_finish" value=<?php echo esc_html( $end_date ); ?>>
+								<div id="mwb_etmwf_event_date" class="mwb_etmfw_event_general_info">
+									<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/calendar_icone.svg' ); ?>" height="20px" width="20px">
+									<span class="mwb_etmfw_date_label"><?php echo esc_html( mwb_etmfw_get_only_date_format( $start_date ), 'event-tickets-manager-for-woocommerce' ); ?><span><?php echo esc_html(" - ");?></span><?php echo esc_html( mwb_etmfw_get_only_date_format( $end_date ), 'event-tickets-manager-for-woocommerce' ); ?></span>
+								</div>	
+								<div id="mwb_etmwf_event_time" class="mwb_etmfw_event_general_info">
+									<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/clock.svg' ); ?>" height="20px" width="20px">
+									<span class="mwb_etmfw_date_label"><?php echo esc_html( mwb_etmfw_get_only_time_format( $start_date ), 'event-tickets-manager-for-woocommerce' ); ?><span><?php echo esc_html(" - ");?></span><?php echo esc_html( mwb_etmfw_get_only_time_format( $end_date ), 'event-tickets-manager-for-woocommerce' ); ?></span>
 								</div>
-								<div class="mwb_etmwf_venue">
-									<span><?php esc_html_e( 'Venue : ', 'event-tickets-manager-for-woocommerce' ); ?></span>
+								<div id="mwb_etmwf_event_venue" class="mwb_etmfw_event_general_info">
+									<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/map_pin.svg' ); ?>" height="20px" width="20px">
 									<span><?php echo esc_html( $event_venue, 'event-tickets-manager-for-woocommerce' ); ?></span>
 									<input type="hidden" name="mwb_etmfw_event_venue" value=<?php echo esc_html( $event_venue ); ?>>	
 								</div>
@@ -761,21 +761,23 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_generate_ticket_pdf( $mwb_ticket_content, $order, $order_id, $ticket_number ) {
+		//require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'package/lib/dompdf/autoload.inc.php';
 		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'package/lib/dompdf/vendor/autoload.php';
 		$dompdf = new Dompdf( array( 'enable_remote' => true ) );
-
+		$dompdf->setPaper( 'A4', 'landscape' );
 		$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
 		if ( ! is_dir( $upload_dir_path ) ) {
 			wp_mkdir_p( $upload_dir_path );
 			chmod( $upload_dir_path, 0775 );
 		}
+		
 		$dompdf->loadHtml( $mwb_ticket_content );
-		$dompdf->setPaper( 'A4', 'landscape' );
 		@ob_end_clean(); // phpcs:ignore
 		$dompdf->render();
+		// $dompdf->load_html( $mwb_ticket_content );
+		// $dompdf->render();
 		$dompdf->set_option( 'isRemoteEnabled', true );
 		$output = $dompdf->output();
-
 		$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';
 		if ( file_exists( $generated_ticket_pdf ) ) {
 			$generated_pdf = file_put_contents( $upload_dir_path . '/events' . $order_id . $ticket_number . '-new.pdf', $output );
@@ -821,18 +823,18 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						$end_date = isset( $mwb_etmfw_product_array['event_end_date_time'] ) ? $mwb_etmfw_product_array['event_end_date_time'] : '';
 						$event_venue = isset( $mwb_etmfw_product_array['etmfw_event_venue'] ) ? $mwb_etmfw_product_array['etmfw_event_venue'] : '';
 						$pro_short_desc = $_product->get_short_description();
+						$start_timestamp = strtotime( $start_date );
+						$end_timestamp = strtotime( $end_date );
+						$gmt_offset_seconds = $this->mwb_etmfw_get_gmt_offset_seconds( $start_timestamp ); 
 
-						$start_date = str_replace( array( '-', ':' ), '', gmdate( 'Y-m-d\TG:i', strtotime( $start_date ) ) );
-						$end_date = str_replace( array( '-', ':' ), '', gmdate( 'Y-m-d\TG:i', strtotime( $end_date ) ) );
-
-						$calendar_url = 'https://calendar.google.com/calendar/r/eventedit?text=' . $event_name . '&dates=' . $start_date . '/' . $end_date . '&details=' . $pro_short_desc . '&location=' . $event_venue;
+						$calendar_url = 'https://calendar.google.com/calendar/r/eventedit?text=' . $event_name . '&dates='. gmdate('Ymd\\THi00\\Z', ( $start_timestamp - $gmt_offset_seconds ) ) . '/' . gmdate('Ymd\\THi00\\Z', ( $end_timestamp- $gmt_offset_seconds ) ) . '&details=' . $pro_short_desc . '&location=' . $event_venue;
 
 						?>
 						<div class="mwb_etmfw_view_ticket_section">
 							<a href="<?php echo esc_attr( $upload_dir_path ); ?>" class="mwb_view_ticket_pdf" target="_blank"><?php esc_html_e( 'View', 'event-tickets-manager-for-woocommerce' ); ?></a>
 						</div>
 						<div class="mwb_etmfw_calendar_section">
-							<a href="<?php echo esc_attr( $calendar_url ); ?>" class="mwb_etmfw_add_event_calendar" target="_blank"><?php esc_html_e( 'Add Event to Google Calendar', 'event-tickets-manager-for-woocommerce' ); ?></a>
+							<a href="<?php echo esc_attr( $calendar_url ); ?>" class="mwb_etmfw_add_event_calendar" target="_blank"><?php esc_html_e( '+ Add to Google Calendar', 'event-tickets-manager-for-woocommerce' ); ?></a>
 						</div>
 						<?php
 						$item_meta_data = $item->get_meta_data();
@@ -1300,4 +1302,130 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		}
 		return $purchasable;
 	}
+
+	/**
+     * Get GMT offset based on seconds
+     * 
+     * @param $date
+     * @param mixed $event
+     * @return string
+     */
+    public function mwb_etmfw_get_gmt_offset_seconds($date = NULL)
+    {
+        if($date)
+        {
+            $timezone = new DateTimeZone($this->mwb_etmfw_get_timezone());
+
+            // Convert to Date
+            if(is_numeric($date)) $date = date('Y-m-d', $date);
+
+            $target = new DateTime($date, $timezone);
+            return $timezone->getOffset($target);
+        }
+        else
+        {
+            $gmt_offset = get_option('gmt_offset');
+            $seconds = $gmt_offset * HOUR_IN_SECONDS;
+
+            return (substr($gmt_offset, 0, 1) == '-' ? '' : '+').$seconds;
+        }
+    }
+
+    /**
+     * Get default timezone of WordPress
+     * 
+     * @param mixed $event
+     * @return string
+     */
+    public function mwb_etmfw_get_timezone($event = NULL)
+    {
+        $timezone_string = get_option('timezone_string');
+        $gmt_offset = get_option('gmt_offset');
+        
+        if(trim($timezone_string) == '' and trim($gmt_offset)) $timezone_string = $this->mwb_etmfw_get_timezone_by_offset($gmt_offset);
+        elseif(trim($timezone_string) == '' and trim($gmt_offset) == '0')
+        {
+            $timezone_string = 'UTC';
+        }
+        
+        return $timezone_string;
+    }
+
+     /**
+     * Get timezone by offset.
+     * 
+     * @param mixed $offset
+     * @return string
+     */
+    public function mwb_etmfw_get_timezone_by_offset($offset)
+    {
+        $seconds = $offset*3600;
+
+        $timezone = timezone_name_from_abbr('', $seconds, 0);
+        if($timezone === false)
+        {
+            $timezones = array(
+                '-12' => 'Pacific/Auckland',
+                '-11.5' => 'Pacific/Auckland', // Approx
+                '-11' => 'Pacific/Apia',
+                '-10.5' => 'Pacific/Apia', // Approx
+                '-10' => 'Pacific/Honolulu',
+                '-9.5' => 'Pacific/Honolulu', // Approx
+                '-9' => 'America/Anchorage',
+                '-8.5' => 'America/Anchorage', // Approx
+                '-8' => 'America/Los_Angeles',
+                '-7.5' => 'America/Los_Angeles', // Approx
+                '-7' => 'America/Denver',
+                '-6.5' => 'America/Denver', // Approx
+                '-6' => 'America/Chicago',
+                '-5.5' => 'America/Chicago', // Approx
+                '-5' => 'America/New_York',
+                '-4.5' => 'America/New_York', // Approx
+                '-4' => 'America/Halifax',
+                '-3.5' => 'America/Halifax', // Approx
+                '-3' => 'America/Sao_Paulo',
+                '-2.5' => 'America/Sao_Paulo', // Approx
+                '-2' => 'America/Sao_Paulo',
+                '-1.5' => 'Atlantic/Azores', // Approx
+                '-1' => 'Atlantic/Azores',
+                '-0.5' => 'UTC', // Approx
+                '0' => 'UTC',
+                '0.5' => 'UTC', // Approx
+                '1' => 'Europe/Paris',
+                '1.5' => 'Europe/Paris', // Approx
+                '2' => 'Europe/Helsinki',
+                '2.5' => 'Europe/Helsinki', // Approx
+                '3' => 'Europe/Moscow',
+                '3.5' => 'Europe/Moscow', // Approx
+                '4' => 'Asia/Dubai',
+                '4.5' => 'Asia/Tehran',
+                '5' => 'Asia/Karachi',
+                '5.5' => 'Asia/Kolkata',
+                '5.75' => 'Asia/Katmandu',
+                '6' => 'Asia/Yekaterinburg',
+                '6.5' => 'Asia/Yekaterinburg', // Approx
+                '7' => 'Asia/Krasnoyarsk',
+                '7.5' => 'Asia/Krasnoyarsk', // Approx
+                '8' => 'Asia/Shanghai',
+                '8.5' => 'Asia/Shanghai', // Approx
+                '8.75' => 'Asia/Tokyo', // Approx
+                '9' => 'Asia/Tokyo',
+                '9.5' => 'Asia/Tokyo', // Approx
+                '10' => 'Australia/Melbourne',
+                '10.5' => 'Australia/Adelaide',
+                '11' => 'Australia/Melbourne', // Approx
+                '11.5' => 'Pacific/Auckland', // Approx
+                '12' => 'Pacific/Auckland',
+                '12.75' => 'Pacific/Apia', // Approx
+                '13' => 'Pacific/Apia',
+                '13.75' => 'Pacific/Honolulu', // Approx
+                '14' => 'Pacific/Honolulu',
+            );
+
+            $timezone = isset($timezones[$offset]) ? $timezones[$offset] : NULL;
+        }
+
+        return $timezone;
+    }
+
 }

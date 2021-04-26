@@ -47,6 +47,7 @@ input#mwb_etmfw_imput_ticket {
 div#mwb_etmfw_checkin_loader img {
     width: 25px;
     height: auto;
+    margin-left: 50px;
 }
 
 div#mwb_etmfw_edit_info_loader img {
@@ -134,6 +135,22 @@ form#mwb_etmfw_edit_ticket_form {
 
 form.mwb_etmfw_show_ticket_form {
     display: block !important;
+}
+div#mwb_etmwf_event_date img {
+    display: inline-block;
+    margin-right: 5px;
+}
+div#mwb_etmwf_event_time img {
+    display: inline-block;
+    margin-right: 5px;
+}
+div#mwb_etmwf_event_venue img {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+div#mwb_etmfw_event_map {
+    margin: 10px 0px;
 }
 
  @media only screen and (max-width: 768px) {
