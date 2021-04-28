@@ -279,7 +279,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_etmfw_get_only_date_format( $date ) {
-		return date_i18n( get_option( 'date_format' ) , strtotime( $date ) );// get format from WordPress settings.
+		return date_i18n( get_option( 'date_format' ), strtotime( $date ) );// get format from WordPress settings.
 	}
 
 	/**
@@ -293,7 +293,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_etmfw_get_only_time_format( $date ) {
-		return date_i18n( get_option( 'time_format' ) , strtotime( $date ) );// get format from WordPress settings.
+		return date_i18n( get_option( 'time_format' ), strtotime( $date ) );// get format from WordPress settings.
 	}
 
 	/**

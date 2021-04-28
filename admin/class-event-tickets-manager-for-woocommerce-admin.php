@@ -150,7 +150,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	}
 
 	/**
-	 * Removing default submenu of parent menu in backend dashboard
+	 * Removing default submenu of parent menu in backend dashboard.
 	 *
 	 * @since   1.0.0
 	 */
@@ -600,7 +600,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 
 			?>
 			<div id="mwb_etmfw_location_loader">
-				<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/loading.gif' );?>">
+				<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/loading.gif' ); ?>">
 			</div>
 			<div class="mwb_etmfw_error_message_div">
 				<div id="mwb_etmfw_error_msg"></div>
@@ -745,7 +745,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			<?php
 			wp_nonce_field( 'mwb_etmfw_lite_nonce', 'mwb_etmfw_product_nonce_field' );
 			do_action( 'mwb_etmfw_event_type_field', $product_id );
-		}
+	}
 
 	/**
 	 * Save all the setting on product edit page for a particular product.
@@ -966,10 +966,11 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					$response['message'] = $get_response->error_message;
 				}
 			}
-		} else{
-			$response['message'] = sprintf( 
-				__( 'Please add Google API key %s to display event location on google map.','event-tickets-manager-for-woocommerce'),
-				'<a href="'. esc_url( 'http://makewebbetter.local/wp-admin/admin.php?page=event_tickets_manager_for_woocommerce_menu&etmfw_tab=event-tickets-manager-for-woocommerce-integrations' ) . '" target="_blank">here</a>'
+		} else {
+			/* translators: %s: Google API key setting link */
+			$response['message'] = sprintf(
+				esc_html__( 'Please add Google API key %s to display event location on google map.', 'event-tickets-manager-for-woocommerce' ),
+				'<a href="'. admin_url( 'admin.php?page=event_tickets_manager_for_woocommerce_menu&etmfw_tab=event-tickets-manager-for-woocommerce-integrations' ) . '" target="_blank">here</a>'
 			);
 		}
 		echo json_encode( $response );

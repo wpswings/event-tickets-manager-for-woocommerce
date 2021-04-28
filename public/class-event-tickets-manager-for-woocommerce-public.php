@@ -8,6 +8,7 @@
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/public
  */
+
 use Dompdf\Dompdf;
 /**
  * The public-facing functionality of the plugin.
@@ -94,7 +95,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			$mwb_etmfw_product_type = $this->mwb_etmfw_get_product_type();
 			$mwb_etmfw_if_expired   = $this->mwb_etmfw_check_if_event_is_expired();
 			$mwb_etmfw_show_map     = $this->mwb_etmfw_show_google_map_on_product_page();
-			if( 'event_ticket_manager' === $mwb_etmfw_product_type && ! $mwb_etmfw_if_expired && $mwb_etmfw_show_map ) {
+			if ( 'event_ticket_manager' === $mwb_etmfw_product_type && ! $mwb_etmfw_if_expired && $mwb_etmfw_show_map ) {
 				$mwb_google_api_key = get_option( 'mwb_etmfw_google_maps_api_key', '' );
 				wp_register_script( 'mwb_etmfw_google_map', 'https://maps.googleapis.com/maps/api/js?&key=' . $mwb_google_api_key . '&callback=initMap&libraries=&v=weekly', array(), $this->version, true );
 				wp_enqueue_script( 'mwb_etmfw_google_map' );
@@ -149,11 +150,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								<input type="hidden" name="mwb_etmfw_event_finish" value=<?php echo esc_html( $end_date ); ?>>
 								<div id="mwb_etmwf_event_date" class="mwb_etmfw_event_general_info">
 									<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/calendar_icone.svg' ); ?>" height="20px" width="20px">
-									<span class="mwb_etmfw_date_label"><?php echo esc_html( mwb_etmfw_get_only_date_format( $start_date ), 'event-tickets-manager-for-woocommerce' ); ?><span><?php echo esc_html(" - ");?></span><?php echo esc_html( mwb_etmfw_get_only_date_format( $end_date ), 'event-tickets-manager-for-woocommerce' ); ?></span>
+									<span class="mwb_etmfw_date_label"><?php echo esc_html( mwb_etmfw_get_only_date_format( $start_date ), 'event-tickets-manager-for-woocommerce' ); ?><span><?php echo esc_html( ' - ' ); ?></span><?php echo esc_html( mwb_etmfw_get_only_date_format( $end_date ), 'event-tickets-manager-for-woocommerce' ); ?></span>
 								</div>	
 								<div id="mwb_etmwf_event_time" class="mwb_etmfw_event_general_info">
 									<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/clock.svg' ); ?>" height="20px" width="20px">
-									<span class="mwb_etmfw_date_label"><?php echo esc_html( mwb_etmfw_get_only_time_format( $start_date ), 'event-tickets-manager-for-woocommerce' ); ?><span><?php echo esc_html(" - ");?></span><?php echo esc_html( mwb_etmfw_get_only_time_format( $end_date ), 'event-tickets-manager-for-woocommerce' ); ?></span>
+									<span class="mwb_etmfw_date_label"><?php echo esc_html( mwb_etmfw_get_only_time_format( $start_date ), 'event-tickets-manager-for-woocommerce' ); ?><span><?php echo esc_html( ' - ' ); ?></span><?php echo esc_html( mwb_etmfw_get_only_time_format( $end_date ), 'event-tickets-manager-for-woocommerce' ); ?></span>
 								</div>
 								<div id="mwb_etmwf_event_venue" class="mwb_etmfw_event_general_info">
 									<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/map_pin.svg' ); ?>" height="20px" width="20px">
@@ -767,7 +768,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_generate_ticket_pdf( $mwb_ticket_content, $order, $order_id, $ticket_number ) {
-		//require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'package/lib/dompdf/autoload.inc.php';
 		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'package/lib/dompdf/vendor/autoload.php';
 		$dompdf = new Dompdf( array( 'enable_remote' => true ) );
 		$dompdf->setPaper( 'A4', 'landscape' );
@@ -776,12 +776,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			wp_mkdir_p( $upload_dir_path );
 			chmod( $upload_dir_path, 0775 );
 		}
-		
 		$dompdf->loadHtml( $mwb_ticket_content );
 		@ob_end_clean(); // phpcs:ignore
 		$dompdf->render();
-		// $dompdf->load_html( $mwb_ticket_content );
-		// $dompdf->render();
 		$dompdf->set_option( 'isRemoteEnabled', true );
 		$output = $dompdf->output();
 		$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';
@@ -831,9 +828,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						$pro_short_desc = $_product->get_short_description();
 						$start_timestamp = strtotime( $start_date );
 						$end_timestamp = strtotime( $end_date );
-						$gmt_offset_seconds = $this->mwb_etmfw_get_gmt_offset_seconds( $start_timestamp ); 
+						$gmt_offset_seconds = $this->mwb_etmfw_get_gmt_offset_seconds( $start_timestamp );
 
-						$calendar_url = 'https://calendar.google.com/calendar/r/eventedit?text=' . $event_name . '&dates='. gmdate('Ymd\\THi00\\Z', ( $start_timestamp - $gmt_offset_seconds ) ) . '/' . gmdate('Ymd\\THi00\\Z', ( $end_timestamp- $gmt_offset_seconds ) ) . '&details=' . $pro_short_desc . '&location=' . $event_venue;
+						$calendar_url = 'https://calendar.google.com/calendar/r/eventedit?text=' . $event_name . '&dates=' . gmdate( 'Ymd\\THi00\\Z', ( $start_timestamp - $gmt_offset_seconds ) ) . '/' . gmdate( 'Ymd\\THi00\\Z', ( $end_timestamp - $gmt_offset_seconds ) ) . '&details=' . $pro_short_desc . '&location=' . $event_venue;
 
 						?>
 						<div class="mwb_etmfw_view_ticket_section">
@@ -1310,143 +1307,137 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	}
 
 	/**
-     * Get GMT offset based on seconds
-     * 
-     * @param $date
-     * @param mixed $event
-     * @return string
-     */
-    public function mwb_etmfw_get_gmt_offset_seconds($date = NULL)
-    {
-        if($date)
-        {
-            $timezone = new DateTimeZone($this->mwb_etmfw_get_timezone());
+	 * Get GMT offset based on seconds.
+	 *
+	 * @param string $date Event Start Date.
+	 * @return string.
+	 */
+	public function mwb_etmfw_get_gmt_offset_seconds( $date = null ) {
+		if ( $date ) {
+			$timezone = new DateTimeZone( $this->mwb_etmfw_get_timezone() );
 
-            // Convert to Date
-            if(is_numeric($date)) $date = date('Y-m-d', $date);
+			// Convert to Date.
+			if ( is_numeric( $date ) ) {
+				$date = gmdate( 'Y-m-d', $date );
+			}
 
-            $target = new DateTime($date, $timezone);
-            return $timezone->getOffset($target);
-        }
-        else
-        {
-            $gmt_offset = get_option('gmt_offset');
-            $seconds = $gmt_offset * HOUR_IN_SECONDS;
+			$target = new DateTime( $date, $timezone );
+			return $timezone->getOffset( $target );
+		} else {
+			$gmt_offset = get_option( 'gmt_offset' );
+			$seconds = $gmt_offset * HOUR_IN_SECONDS;
 
-            return (substr($gmt_offset, 0, 1) == '-' ? '' : '+').$seconds;
-        }
-    }
+			return ( substr( $gmt_offset, 0, 1 ) == '-' ? '' : '+' ) . $seconds;
+		}
+	}
 
-    /**
-     * Get default timezone of WordPress
-     * 
-     * @param mixed $event
-     * @return string
-     */
-    public function mwb_etmfw_get_timezone($event = NULL)
-    {
-        $timezone_string = get_option('timezone_string');
-        $gmt_offset = get_option('gmt_offset');
-        
-        if(trim($timezone_string) == '' and trim($gmt_offset)) $timezone_string = $this->mwb_etmfw_get_timezone_by_offset($gmt_offset);
-        elseif(trim($timezone_string) == '' and trim($gmt_offset) == '0')
-        {
-            $timezone_string = 'UTC';
-        }
-        
-        return $timezone_string;
-    }
+	/**
+	 * Get default timezone of WordPress.
+	 *
+	 * @param mixed $event Event Date.
+	 * @return string.
+	 */
+	public function mwb_etmfw_get_timezone( $event = null ) {
+		$timezone_string = get_option( 'timezone_string' );
+		$gmt_offset = get_option( 'gmt_offset' );
 
-    /**
-     * Get timezone by offset.
-     * 
-     * @param mixed $offset
-     * @return string
-     */
-    public function mwb_etmfw_get_timezone_by_offset($offset)
-    {
-        $seconds = $offset*3600;
+		if ( trim( $timezone_string ) == '' && trim( $gmt_offset ) ) {
+			$timezone_string = $this->mwb_etmfw_get_timezone_by_offset( $gmt_offset );
+		} elseif ( trim( $timezone_string ) == '' && trim( $gmt_offset ) == '0' ) {
+			$timezone_string = 'UTC';
+		}
 
-        $timezone = timezone_name_from_abbr('', $seconds, 0);
-        if($timezone === false)
-        {
-            $timezones = array(
-                '-12' => 'Pacific/Auckland',
-                '-11.5' => 'Pacific/Auckland', // Approx
-                '-11' => 'Pacific/Apia',
-                '-10.5' => 'Pacific/Apia', // Approx
-                '-10' => 'Pacific/Honolulu',
-                '-9.5' => 'Pacific/Honolulu', // Approx
-                '-9' => 'America/Anchorage',
-                '-8.5' => 'America/Anchorage', // Approx
-                '-8' => 'America/Los_Angeles',
-                '-7.5' => 'America/Los_Angeles', // Approx
-                '-7' => 'America/Denver',
-                '-6.5' => 'America/Denver', // Approx
-                '-6' => 'America/Chicago',
-                '-5.5' => 'America/Chicago', // Approx
-                '-5' => 'America/New_York',
-                '-4.5' => 'America/New_York', // Approx
-                '-4' => 'America/Halifax',
-                '-3.5' => 'America/Halifax', // Approx
-                '-3' => 'America/Sao_Paulo',
-                '-2.5' => 'America/Sao_Paulo', // Approx
-                '-2' => 'America/Sao_Paulo',
-                '-1.5' => 'Atlantic/Azores', // Approx
-                '-1' => 'Atlantic/Azores',
-                '-0.5' => 'UTC', // Approx
-                '0' => 'UTC',
-                '0.5' => 'UTC', // Approx
-                '1' => 'Europe/Paris',
-                '1.5' => 'Europe/Paris', // Approx
-                '2' => 'Europe/Helsinki',
-                '2.5' => 'Europe/Helsinki', // Approx
-                '3' => 'Europe/Moscow',
-                '3.5' => 'Europe/Moscow', // Approx
-                '4' => 'Asia/Dubai',
-                '4.5' => 'Asia/Tehran',
-                '5' => 'Asia/Karachi',
-                '5.5' => 'Asia/Kolkata',
-                '5.75' => 'Asia/Katmandu',
-                '6' => 'Asia/Yekaterinburg',
-                '6.5' => 'Asia/Yekaterinburg', // Approx
-                '7' => 'Asia/Krasnoyarsk',
-                '7.5' => 'Asia/Krasnoyarsk', // Approx
-                '8' => 'Asia/Shanghai',
-                '8.5' => 'Asia/Shanghai', // Approx
-                '8.75' => 'Asia/Tokyo', // Approx
-                '9' => 'Asia/Tokyo',
-                '9.5' => 'Asia/Tokyo', // Approx
-                '10' => 'Australia/Melbourne',
-                '10.5' => 'Australia/Adelaide',
-                '11' => 'Australia/Melbourne', // Approx
-                '11.5' => 'Pacific/Auckland', // Approx
-                '12' => 'Pacific/Auckland',
-                '12.75' => 'Pacific/Apia', // Approx
-                '13' => 'Pacific/Apia',
-                '13.75' => 'Pacific/Honolulu', // Approx
-                '14' => 'Pacific/Honolulu',
-            );
+		return $timezone_string;
+	}
 
-            $timezone = isset($timezones[$offset]) ? $timezones[$offset] : NULL;
-        }
+	/**
+	 * Get timezone by offset.
+	 *
+	 * @param mixed $offset Time offset.
+	 * @return string.
+	 */
+	public function mwb_etmfw_get_timezone_by_offset( $offset ) {
+		$seconds = $offset * 3600;
 
-        return $timezone;
-    }
+		$timezone = timezone_name_from_abbr( '', $seconds, 0 );
+		if ( false === $timezone ) {
+			$timezones = array(
+				'-12' => 'Pacific/Auckland',
+				'-11.5' => 'Pacific/Auckland', // Approx.
+				'-11' => 'Pacific/Apia',
+				'-10.5' => 'Pacific/Apia', // Approx.
+				'-10' => 'Pacific/Honolulu',
+				'-9.5' => 'Pacific/Honolulu', // Approx.
+				'-9' => 'America/Anchorage',
+				'-8.5' => 'America/Anchorage', // Approx.
+				'-8' => 'America/Los_Angeles',
+				'-7.5' => 'America/Los_Angeles', // Approx.
+				'-7' => 'America/Denver',
+				'-6.5' => 'America/Denver', // Approx.
+				'-6' => 'America/Chicago',
+				'-5.5' => 'America/Chicago', // Approx.
+				'-5' => 'America/New_York',
+				'-4.5' => 'America/New_York', // Approx.
+				'-4' => 'America/Halifax',
+				'-3.5' => 'America/Halifax', // Approx.
+				'-3' => 'America/Sao_Paulo',
+				'-2.5' => 'America/Sao_Paulo', // Approx.
+				'-2' => 'America/Sao_Paulo',
+				'-1.5' => 'Atlantic/Azores', // Approx.
+				'-1' => 'Atlantic/Azores',
+				'-0.5' => 'UTC', // Approx.
+				'0' => 'UTC',
+				'0.5' => 'UTC', // Approx.
+				'1' => 'Europe/Paris',
+				'1.5' => 'Europe/Paris', // Approx.
+				'2' => 'Europe/Helsinki',
+				'2.5' => 'Europe/Helsinki', // Approx.
+				'3' => 'Europe/Moscow',
+				'3.5' => 'Europe/Moscow', // Approx.
+				'4' => 'Asia/Dubai',
+				'4.5' => 'Asia/Tehran',
+				'5' => 'Asia/Karachi',
+				'5.5' => 'Asia/Kolkata',
+				'5.75' => 'Asia/Katmandu',
+				'6' => 'Asia/Yekaterinburg',
+				'6.5' => 'Asia/Yekaterinburg', // Approx.
+				'7' => 'Asia/Krasnoyarsk',
+				'7.5' => 'Asia/Krasnoyarsk', // Approx.
+				'8' => 'Asia/Shanghai',
+				'8.5' => 'Asia/Shanghai', // Approx.
+				'8.75' => 'Asia/Tokyo', // Approx.
+				'9' => 'Asia/Tokyo',
+				'9.5' => 'Asia/Tokyo', // Approx.
+				'10' => 'Australia/Melbourne',
+				'10.5' => 'Australia/Adelaide',
+				'11' => 'Australia/Melbourne', // Approx.
+				'11.5' => 'Pacific/Auckland', // Approx.
+				'12' => 'Pacific/Auckland',
+				'12.75' => 'Pacific/Apia', // Approx.
+				'13' => 'Pacific/Apia',
+				'13.75' => 'Pacific/Honolulu', // Approx.
+				'14' => 'Pacific/Honolulu',
+			);
 
-    /**
-     * Get product type.
-     * 
-     * @since 1.0.0
+			$timezone = isset( $timezones[ $offset ] ) ? $timezones[ $offset ] : null;
+		}
+
+		return $timezone;
+	}
+
+	/**
+	 * Get product type.
+	 *
+	 * @since 1.0.0
 	 * @name mwb_etmfw_get_product_type().
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
-     * @return string $product_type Product type.
-     */
-    public function mwb_etmfw_get_product_type(){
-    	global $post;
-    	if( isset($post) && !empty( $post ) ){
-    		$product = wc_get_product( $post->ID);
+	 * @return string $product_type Product type.
+	 */
+	public function mwb_etmfw_get_product_type() {
+		global $post;
+		if ( isset( $post ) && ! empty( $post ) ) {
+			$product = wc_get_product( $post->ID );
 			if ( isset( $product ) && ! empty( $product ) ) {
 				$product_id = $product->get_id();
 				if ( isset( $product_id ) && ! empty( $product_id ) ) {
@@ -1455,25 +1446,25 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					return $product_type;
 				}
 			}
-    	}
-    }
+		}
+	}
 
-    /**
-     * Check if event is expired.
-     * 
-     * @since 1.0.0
+	/**
+	 * Check if event is expired.
+	 *
+	 * @since 1.0.0
 	 * @name mwb_etmfw_check_if_event_is_expired().
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
-     * @return boolean $mwb_etmfw_if_expired If event is expired.
-     */
-    public function mwb_etmfw_check_if_event_is_expired(){
-    	$mwb_etmfw_if_expired = false;
-    	global $post;
-    	if( isset($post) && !empty( $post ) ){
-    		$product = wc_get_product( $post->ID);
+	 * @return boolean $mwb_etmfw_if_expired If event is expired.
+	 */
+	public function mwb_etmfw_check_if_event_is_expired() {
+		$mwb_etmfw_if_expired = false;
+		global $post;
+		if ( isset( $post ) && ! empty( $post ) ) {
+			$product = wc_get_product( $post->ID );
 			if ( isset( $product ) && ! empty( $product ) ) {
-		    	if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
+				if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
 					$product_id = $product->get_id();
 					$mwb_etmfw_product_array = get_post_meta( $product_id, 'mwb_etmfw_product_array', true );
 					$end_date = isset( $mwb_etmfw_product_array['event_end_date_time'] ) ? $mwb_etmfw_product_array['event_end_date_time'] : '';
@@ -1486,34 +1477,35 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			}
 		}
 		return $mwb_etmfw_if_expired;
-    }
+	}
 
-    /**
-     * Show google map on single product page.
-     * 
-     * @since 1.0.0
+	/**
+	 * Show google map on single product page.
+	 *
+	 * @since 1.0.0
 	 * @name mwb_etmfw_show_google_map_on_product_page().
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
-     * @return boolean $if_show_map display map.
-     */
-    public function mwb_etmfw_show_google_map_on_product_page(){
-    	$if_show_map = false;
-    	global $post;
-    	if( isset($post) && !empty( $post ) ){
-    		$product = wc_get_product( $post->ID);
+	 * @return boolean $if_show_map display map.
+	 */
+	public function mwb_etmfw_show_google_map_on_product_page() {
+		$if_show_map = false;
+		global $post;
+		if ( isset( $post ) && ! empty( $post ) ) {
+			$product = wc_get_product( $post->ID );
 			if ( isset( $product ) && ! empty( $product ) ) {
-		    	if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
+				if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
 					$product_id = $product->get_id();
 					$mwb_etmfw_product_array = get_post_meta( $product_id, 'mwb_etmfw_product_array', true );
 					$display_map = isset( $mwb_etmfw_product_array['etmfw_display_map'] ) ? $mwb_etmfw_product_array['etmfw_display_map'] : 'no';
 					$location_site = get_option( 'mwb_etmfw_enabe_location_site', 'off' );
 					$map_api_key = get_option( 'mwb_etmfw_google_maps_api_key', '' );
-					if ( 'yes' === $display_map && 'on' === $location_site && '' !== $map_api_key )
-					$if_show_map = true;	
+					if ( 'yes' === $display_map && 'on' === $location_site && '' !== $map_api_key ) {
+						$if_show_map = true;
+					}
 				}
 			}
 		}
 		return $if_show_map;
-    }
+	}
 }
