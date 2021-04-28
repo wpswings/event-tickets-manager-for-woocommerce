@@ -114,6 +114,7 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 12. Schedule sale price 
 13. Upload Event  Logo
 14. Events
+15. Event check-in page
 
 
 == Frequently Asked Questions ==
@@ -154,4 +155,6 @@ Please visit the MakeWebBetter [**knowledge base**](https://support.makewebbette
 == Upgrade Notice ==
 = 1.0.0 - Released on 22 April 2021 =  
 * First version
+
+
 

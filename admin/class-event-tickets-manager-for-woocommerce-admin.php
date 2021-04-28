@@ -917,8 +917,8 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	public function mwb_etmfw_plugin_row_meta( $links, $file ) {
 		if ( strpos( $file, 'event-tickets-manager-for-woocommerce/event-tickets-manager-for-woocommerce.php' ) !== false ) {
 			$new_links = array(
-				'documentation' => '<a href="https://docs.makewebbetter.com/event-tickets-manager-for-woocommerce/?utm_source=org&utm_medium=plugin&utm_campaign=mwb_event_ticket" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Documentation.svg" style="width: 20px;padding-right: 5px;">Documentation</a>',
-				'support' => '<a href="https://makewebbetter.com/contact-us/?utm_source=org&utm_medium=plugin&utm_campaign=mwb_event_ticket" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Support.svg" style="width: 20px;padding-right: 5px;">Support</a>',
+				'documentation' => '<a href="https://docs.makewebbetter.com/event-tickets-manager-for-woocommerce/?utm_source=MWB-event-org&utm_medium=MWB-org-backend &utm_campaign=MWB-event-doc" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Documentation.svg" style="width: 20px;padding-right: 5px;">Documentation</a>',
+				'support' => '<a href="https://makewebbetter.com/submit-query/?utm_source=MWB-event-org&utm_medium=MWB-org-backend &utm_campaign=MWB-event-support" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Support.svg" style="width: 20px;padding-right: 5px;">Support</a>',
 			);
 
 			$links = array_merge( $links, $new_links );
@@ -966,6 +966,11 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					$response['message'] = $get_response->error_message;
 				}
 			}
+		} else{
+			$response['message'] = sprintf( 
+				__( 'Please add Google API key %s to display event location on google map.','event-tickets-manager-for-woocommerce'),
+				'<a href="'. esc_url( 'http://makewebbetter.local/wp-admin/admin.php?page=event_tickets_manager_for_woocommerce_menu&etmfw_tab=event-tickets-manager-for-woocommerce-integrations' ) . '" target="_blank">here</a>'
+			);
 		}
 		echo json_encode( $response );
 		wp_die();

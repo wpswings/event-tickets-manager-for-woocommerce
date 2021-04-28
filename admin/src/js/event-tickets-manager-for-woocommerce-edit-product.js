@@ -42,8 +42,6 @@
         //for Inventory tab.
         $('.inventory_options').addClass('show_if_event_ticket_manager').show();
         $('#inventory_product_data ._manage_stock_field').addClass('show_if_event_ticket_manager').show();
-        $('#inventory_product_data ._sold_individually_field').parent().addClass('show_if_event_ticket_manager').show();
-        $('#inventory_product_data ._sold_individually_field').addClass('show_if_event_ticket_manager').show();
 		
 		$('#etmfw_start_date_time').datetimepicker({
 			format:'Y-m-d g:i a',
@@ -124,6 +122,7 @@
 								let lng = response.message['lng'];
 								$(document).find('#etmfw_event_venue_lat').val( lat );
 								$(document).find('#etmfw_event_venue_lng').val( lng );
+								$(document).find('#mwb_etmfw_error_msg').html('');
 							} else{
 								let error_msg = response.message;
 								$(document).find('#mwb_etmfw_error_msg').html( error_msg );

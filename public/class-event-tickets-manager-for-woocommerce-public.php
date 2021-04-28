@@ -91,9 +91,14 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		wp_enqueue_script( $this->plugin_name );
 
 		if ( is_product() ) {
-			$mwb_google_api_key = get_option( 'mwb_etmfw_google_maps_api_key', '' );
-			wp_register_script( 'mwb_etmfw_google_map', 'https://maps.googleapis.com/maps/api/js?&key=' . $mwb_google_api_key . '&callback=initMap&libraries=&v=weekly', array(), $this->version, true );
-			wp_enqueue_script( 'mwb_etmfw_google_map' );
+			$mwb_etmfw_product_type = $this->mwb_etmfw_get_product_type();
+			$mwb_etmfw_if_expired   = $this->mwb_etmfw_check_if_event_is_expired();
+			$mwb_etmfw_show_map     = $this->mwb_etmfw_show_google_map_on_product_page();
+			if( 'event_ticket_manager' === $mwb_etmfw_product_type && ! $mwb_etmfw_if_expired && $mwb_etmfw_show_map ) {
+				$mwb_google_api_key = get_option( 'mwb_etmfw_google_maps_api_key', '' );
+				wp_register_script( 'mwb_etmfw_google_map', 'https://maps.googleapis.com/maps/api/js?&key=' . $mwb_google_api_key . '&callback=initMap&libraries=&v=weekly', array(), $this->version, true );
+				wp_enqueue_script( 'mwb_etmfw_google_map' );
+			}
 		}
 
 		global $wp_query;
@@ -160,7 +165,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 							<?php
 							$display_map = isset( $mwb_etmfw_product_array['etmfw_display_map'] ) ? $mwb_etmfw_product_array['etmfw_display_map'] : 'no';
 							$location_site = get_option( 'mwb_etmfw_enabe_location_site', 'off' );
-							if ( 'yes' === $display_map && 'on' === $location_site ) {
+							$map_api_key = get_option( 'mwb_etmfw_google_maps_api_key', '' );
+							if ( 'yes' === $display_map && 'on' === $location_site && '' !== $map_api_key ) {
 								?>
 								<div class="mwb_etmfw_event_map_wrapper">
 									<?php
@@ -381,9 +387,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 */
 	public function mwb_etmfw_allow_single_quantity( $allow_qty, $product ) {
 		if ( $product->is_type( 'event_ticket_manager' ) ) {
-			$allow_qty = apply_filters( 'mwb_etmfw_increase_event_product_quantity', true );
+			$allow_qty = true;
 		}
-		return $allow_qty;
+		return apply_filters( 'mwb_etmfw_increase_event_product_quantity', $allow_qty, $product );
 	}
 
 	/**
@@ -722,8 +728,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$start = isset( $mwb_etmfw_product_array['event_start_date_time'] ) ? $mwb_etmfw_product_array['event_start_date_time'] : '';
 		$end = isset( $mwb_etmfw_product_array['event_end_date_time'] ) ? $mwb_etmfw_product_array['event_end_date_time'] : '';
 		$venue = isset( $mwb_etmfw_product_array['etmfw_event_venue'] ) ? $mwb_etmfw_product_array['etmfw_event_venue'] : '';
-
-		if ( ! empty( $item_meta_data ) ) {
+		$mwb_etmfw_stock_status = get_post_meta( $product_id, '_manage_stock', true );
+		if ( ! empty( $item_meta_data ) && ( ( 'yes' === $mwb_etmfw_stock_status && 1 < count( $item_meta_data ) ) || ( 'no' === $mwb_etmfw_stock_status && 0 < count( $item_meta_data ) ) ) ) {
 			$additinal_info = '<table border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;"><tbody><tr><td style="padding: 20px 0 10px;"><h2 style="margin: 0;font-weight: bold;">Details :-</h2></td></tr>';
 			foreach ( $item_meta_data as $key => $value ) {
 				if ( isset( $value->key ) && ! empty( $value->value ) ) {
@@ -1351,7 +1357,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
         return $timezone_string;
     }
 
-     /**
+    /**
      * Get timezone by offset.
      * 
      * @param mixed $offset
@@ -1428,4 +1434,86 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
         return $timezone;
     }
 
+    /**
+     * Get product type.
+     * 
+     * @since 1.0.0
+	 * @name mwb_etmfw_get_product_type().
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+     * @return string $product_type Product type.
+     */
+    public function mwb_etmfw_get_product_type(){
+    	global $post;
+    	if( isset($post) && !empty( $post ) ){
+    		$product = wc_get_product( $post->ID);
+			if ( isset( $product ) && ! empty( $product ) ) {
+				$product_id = $product->get_id();
+				if ( isset( $product_id ) && ! empty( $product_id ) ) {
+					$product_types = wp_get_object_terms( $product_id, 'product_type' );
+					$product_type = $product_types[0]->slug;
+					return $product_type;
+				}
+			}
+    	}
+    }
+
+    /**
+     * Check if event is expired.
+     * 
+     * @since 1.0.0
+	 * @name mwb_etmfw_check_if_event_is_expired().
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+     * @return boolean $mwb_etmfw_if_expired If event is expired.
+     */
+    public function mwb_etmfw_check_if_event_is_expired(){
+    	$mwb_etmfw_if_expired = false;
+    	global $post;
+    	if( isset($post) && !empty( $post ) ){
+    		$product = wc_get_product( $post->ID);
+			if ( isset( $product ) && ! empty( $product ) ) {
+		    	if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
+					$product_id = $product->get_id();
+					$mwb_etmfw_product_array = get_post_meta( $product_id, 'mwb_etmfw_product_array', true );
+					$end_date = isset( $mwb_etmfw_product_array['event_end_date_time'] ) ? $mwb_etmfw_product_array['event_end_date_time'] : '';
+					$current_timestamp = current_time( 'timestamp' );
+					$end_date_timestamp = strtotime( $end_date );
+					if ( $end_date_timestamp < $current_timestamp ) {
+						$mwb_etmfw_if_expired = true;
+					}
+				}
+			}
+		}
+		return $mwb_etmfw_if_expired;
+    }
+
+    /**
+     * Show google map on single product page.
+     * 
+     * @since 1.0.0
+	 * @name mwb_etmfw_show_google_map_on_product_page().
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+     * @return boolean $if_show_map display map.
+     */
+    public function mwb_etmfw_show_google_map_on_product_page(){
+    	$if_show_map = false;
+    	global $post;
+    	if( isset($post) && !empty( $post ) ){
+    		$product = wc_get_product( $post->ID);
+			if ( isset( $product ) && ! empty( $product ) ) {
+		    	if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
+					$product_id = $product->get_id();
+					$mwb_etmfw_product_array = get_post_meta( $product_id, 'mwb_etmfw_product_array', true );
+					$display_map = isset( $mwb_etmfw_product_array['etmfw_display_map'] ) ? $mwb_etmfw_product_array['etmfw_display_map'] : 'no';
+					$location_site = get_option( 'mwb_etmfw_enabe_location_site', 'off' );
+					$map_api_key = get_option( 'mwb_etmfw_google_maps_api_key', '' );
+					if ( 'yes' === $display_map && 'on' === $location_site && '' !== $map_api_key )
+					$if_show_map = true;	
+				}
+			}
+		}
+		return $if_show_map;
+    }
 }
