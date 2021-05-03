@@ -15,9 +15,9 @@
  * Plugin Name:       Event Tickets Manager for WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/
  * Description:       Event Tickets Manager for WooCommerce allows you to manage, sell and assign tickets easily.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            MakeWebBetter
- * Author URI:        https://makewebbetter.com/
+ * Author URI:          https://makewebbetter.com/?utm_source=MWB-event-org&utm_medium=MWB-org-backend &utm_campaign=MWB-event-site   
  * Text Domain:       event-tickets-manager-for-woocommerce
  * Domain Path:       /languages
  * Requires at least: 4.6

@@ -18,12 +18,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="mwb_etmfw_table_wrapper mwb_etmfw_overview-wrapper">
 	<div class="mwb_etmfw_overview_reach-us">
 		<div class=mwb_etmfw_overview_doc>
-			<a href="https://docs.makewebbetter.com/event-tickets-manager-for-woocommerce/?utm_source=org&utm_medium=plugin&utm_campaign=mwb_event_ticket">
+			<a href="https://docs.makewebbetter.com/event-tickets-manager-for-woocommerce/?utm_source=MWB-event-org&utm_medium=MWB-org-backend&utm_campaign=MWB-event-doc">
 			<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Documentation.svg' ); ?>">
 		</a>
 		</div>
 		<div class=mwb_etmfw_overview_support>
-			<a href="https://makewebbetter.com/submit-query/?utm_source=org&utm_medium=plugin&utm_campaign=mwb_event_ticket">
+			<a href="https://makewebbetter.com/submit-query/?utm_source=MWB-event-org&utm_medium=MWB-org-backend&utm_campaign=MWB-event-support">
 			<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Support.svg' ); ?>">
 		</a>
 		</div>

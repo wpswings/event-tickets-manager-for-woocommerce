@@ -148,12 +148,12 @@ Please visit the MakeWebBetter [**knowledge base**](https://support.makewebbette
 
 
 == Changelog ==
-= 1.0.0 - Released on 22 April 2021 =
+= 1.0.0 - Released on 30 April 2021 =
 * First version
 
 
 == Upgrade Notice ==
-= 1.0.0 - Released on 22 April 2021 =  
+= 1.0.0 - Released on 30 April 2021 =  
 * First version
 
 

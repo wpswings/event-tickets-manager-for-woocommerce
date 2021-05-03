@@ -135,7 +135,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				if ( isset( $product_id ) && ! empty( $product_id ) ) {
 					$product_types = wp_get_object_terms( $product_id, 'product_type' );
 					$product_type = $product_types[0]->slug;
-					wp_nonce_field( 'mwb_etmfw_single_nonce', 'mwb_etmfw_single_nonce_field' );
 					if ( 'event_ticket_manager' === $product_type ) {
 						$mwb_etmfw_product_array = get_post_meta( $product_id, 'mwb_etmfw_product_array', true );
 						$start_date = isset( $mwb_etmfw_product_array['event_start_date_time'] ) ? $mwb_etmfw_product_array['event_start_date_time'] : '';
@@ -406,32 +405,28 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_cart_item_data( $the_cart_data, $product_id, $variation_id ) {
+		// phpcs:disable WordPress.Security.NonceVerification.Missing
 		$mwb_etmfw_enable = get_option( 'mwb_etmfw_enable_plugin', false );
 		if ( $mwb_etmfw_enable ) {
 			$product_types = wp_get_object_terms( $product_id, 'product_type' );
 			if ( isset( $product_types[0] ) ) {
 				$product_type = $product_types[0]->slug;
 				if ( 'event_ticket_manager' == $product_type ) {
-					$mwb_field_nonce = isset( $_POST['mwb_etmfw_single_nonce_field'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['mwb_etmfw_single_nonce_field'] ) ) ) : '';
-					if ( ! isset( $mwb_field_nonce ) || ! wp_verify_nonce( $mwb_field_nonce, 'mwb_etmfw_single_nonce' ) ) {
-						echo esc_html__( 'Sorry, your nonce did not verify.', 'event-tickets-manager-for-woocommerce' );
-						exit;
-					} else {
-						$cart_values = ! empty( $_POST ) ? map_deep( wp_unslash( $_POST ), 'sanitize_text_field' ) : array();
-						foreach ( $cart_values as $key => $value ) {
-							if ( false !== strpos( $key, 'mwb_etmfw_' ) && 'mwb_etmfw_single_nonce_field' !== $key ) {
-								if ( isset( $key ) && ! empty( $value ) ) {
-									$item_meta['mwb_etmfw_field_info'][ $key ] = isset( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : '';
-								}
+					$cart_values = ! empty( $_POST ) ? map_deep( wp_unslash( $_POST ), 'sanitize_text_field' ) : array();
+					foreach ( $cart_values as $key => $value ) {
+						if ( false !== strpos( $key, 'mwb_etmfw_' ) && 'mwb_etmfw_single_nonce_field' !== $key ) {
+							if ( isset( $key ) && ! empty( $value ) ) {
+								$item_meta['mwb_etmfw_field_info'][ $key ] = isset( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : '';
 							}
 						}
-						$item_meta = apply_filters( 'mwb_etmfw_add_cart_item_data', $item_meta, $the_cart_data, $product_id, $variation_id );
-						$the_cart_data['product_meta'] = array( 'meta_data' => $item_meta );
 					}
+					$item_meta = apply_filters( 'mwb_etmfw_add_cart_item_data', $item_meta, $the_cart_data, $product_id, $variation_id );
+					$the_cart_data['product_meta'] = array( 'meta_data' => $item_meta );
 				}
 			}
 		}
 		return $the_cart_data;
+		// phpcs:enable WordPress.Security.NonceVerification.Missing
 	}
 
 	/**

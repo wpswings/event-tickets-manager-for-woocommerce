@@ -368,13 +368,13 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'title' => __( 'User Guide', 'event-tickets-manager-for-woocommerce' ),
 				'description' => __( 'View the detailed guides and documentation to set up your plugin.', 'event-tickets-manager-for-woocommerce' ),
 				'link-text' => __( 'VIEW', 'event-tickets-manager-for-woocommerce' ),
-				'link' => 'https://docs.makewebbetter.com/event-tickets-manager-for-woocommerce/?utm_source=org&utm_medium=plugin&utm_campaign=mwb_event_ticket',
+				'link' => 'https://docs.makewebbetter.com/event-tickets-manager-for-woocommerce/?utm_source=MWB-event-org&utm_medium=MWB-org-backend&utm_campaign=MWB-event-doc',
 			),
 			array(
 				'title' => __( 'Free Support', 'event-tickets-manager-for-woocommerce' ),
 				'description' => __( 'Please submit a ticket, our team will respond within 24 hours.', 'event-tickets-manager-for-woocommerce' ),
 				'link-text' => __( 'SUBMIT', 'event-tickets-manager-for-woocommerce' ),
-				'link' => 'https://makewebbetter.com/submit-query/?utm_source=org&utm_medium=plugin&utm_campaign=mwb_event_ticket',
+				'link' => 'https://makewebbetter.com/submit-query/?utm_source=MWB-event-org&utm_medium=MWB-org-backend&utm_campaign=MWB-event-support',
 			),
 		);
 
@@ -917,6 +917,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	public function mwb_etmfw_plugin_row_meta( $links, $file ) {
 		if ( strpos( $file, 'event-tickets-manager-for-woocommerce/event-tickets-manager-for-woocommerce.php' ) !== false ) {
 			$new_links = array(
+				'demo' => '<a href="https://demo.makewebbetter.com/event-tickets-manager-for-woocommerce/?utm_source=MWB-event-org&utm_medium=MWB-org-backend-&utm_campaign=MWB-event-doc" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/demo_img.svg" style="width: 20px;padding-right: 5px;">Demo</a>',
 				'documentation' => '<a href="https://docs.makewebbetter.com/event-tickets-manager-for-woocommerce/?utm_source=MWB-event-org&utm_medium=MWB-org-backend &utm_campaign=MWB-event-doc" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Documentation.svg" style="width: 20px;padding-right: 5px;">Documentation</a>',
 				'support' => '<a href="https://makewebbetter.com/submit-query/?utm_source=MWB-event-org&utm_medium=MWB-org-backend &utm_campaign=MWB-event-support" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Support.svg" style="width: 20px;padding-right: 5px;">Support</a>',
 			);
