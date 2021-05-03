@@ -53,7 +53,7 @@ $etmfw_php_details = is_array( $etmfw_default_status['php'] ) && ! empty( $etmfw
 				<table class="mwb-etmfw-table mdc-data-table__table mwb-table" id="mwb-etmfw-sys">
 					<thead>
 						<tr>
-							<th class="mdc-data-table__header-cell"><?php esc_html_e( 'Sysytem Variables', 'event-tickets-manager-for-woocommerce' ); ?></th>
+							<th class="mdc-data-table__header-cell"><?php esc_html_e( 'System Variables', 'event-tickets-manager-for-woocommerce' ); ?></th>
 							<th class="mdc-data-table__header-cell"><?php esc_html_e( 'System Values', 'event-tickets-manager-for-woocommerce' ); ?></th>
 						</tr>
 					</thead>

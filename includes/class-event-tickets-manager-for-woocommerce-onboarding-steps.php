@@ -110,8 +110,8 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	public function __construct() {
 		self::$mwb_etmfw_store_name = get_bloginfo( 'name' );
 		self::$mwb_etmfw_store_url = home_url();
-		self::$mwb_etmfw_plugin_name = 'event-tickets-manager-for-woocommerce';
-		self::$mwb_etmfw_plugin_name_label = 'MWB STANDARD PLUGIN';
+		self::$mwb_etmfw_plugin_name = 'Event Tickets Manager for WooCommerce';
+		self::$mwb_etmfw_plugin_name_label = 'Event Tickets Manager for WooCommerce';
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_etmfw_onboarding_enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_etmfw_onboarding_enqueue_scripts' ) );
@@ -170,7 +170,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 		if ( $this->mwb_etmfw_valid_page_screen_check() || $is_valid ) {
 			// comment the line of code Only when your plugin doesn't uses the Select2.
 			wp_enqueue_style( 'mwb-etmfw-onboarding-select2-style', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/event-tickets-manager-for-woocommerce-select2.css', array(), time(), 'all' );
-			
+
 			wp_enqueue_style( 'mwb-etmfw-meterial-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.css', array(), time(), 'all' );
 			wp_enqueue_style( 'mwb-etmfw-meterial-css2', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.css', array(), time(), 'all' );
 			wp_enqueue_style( 'mwb-etmfw-meterial-lite', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.css', array(), time(), 'all' );
@@ -253,7 +253,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 */
 	public function mwb_etmfw_skip_onboarding_popup() {
 
-	 $get_skipped_timstamp = update_option( 'mwb_etmfw_onboarding_data_skipped', time() );
+		$get_skipped_timstamp = update_option( 'mwb_etmfw_onboarding_data_skipped', time() );
 		echo json_encode( 'true' );
 		wp_die();
 	}
@@ -300,7 +300,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 				'title' => esc_html__( 'What is your monthly revenue?', 'event-tickets-manager-for-woocommerce' ),
 				'type' => 'radio',
 				'description' => '',
-				'name' => 'etmfw_monthly_revenue_',
+				'name' => 'monthly_revenue_',
 				'value' => '',
 				'multiple' => 'no',
 				'placeholder' => '',
@@ -318,7 +318,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 				'id' => 'mwb_etmfw_industry_type',
 				'title' => esc_html__( 'What industry defines your business?', 'event-tickets-manager-for-woocommerce' ),
 				'type' => 'select',
-				'name' => 'etmfw_industry_type_',
+				'name' => 'industry_type_',
 				'value' => '',
 				'description' => '',
 				'multiple' => 'yes',
@@ -356,7 +356,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 				'title' => esc_html__( 'What is the best email address to contact you?', 'event-tickets-manager-for-woocommerce' ),
 				'type' => 'email',
 				'description' => '',
-				'name' => 'etmfw-email',
+				'name' => 'email',
 				'placeholder' => esc_html__( 'Email', 'event-tickets-manager-for-woocommerce' ),
 				'value' => $current_user_email,
 				'required' => 'yes',
@@ -368,7 +368,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 				'title' => esc_html__( 'What is your contact number?', 'event-tickets-manager-for-woocommerce' ),
 				'type' => 'text',
 				'description' => '',
-				'name' => 'etmfw-phone',
+				'name' => 'phone',
 				'value' => '',
 				'placeholder' => esc_html__( 'Contact Number', 'event-tickets-manager-for-woocommerce' ),
 				'required' => 'yes',
@@ -380,7 +380,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 				'title' => '',
 				'description' => '',
 				'type' => 'hidden',
-				'name' => 'etmfw-company',
+				'name' => 'company',
 				'placeholder' => '',
 				'value' => self::$mwb_etmfw_store_name,
 				'required' => '',
@@ -392,7 +392,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 				'title' => '',
 				'description' => '',
 				'type' => 'hidden',
-				'name' => 'etmfw-website',
+				'name' => 'website',
 				'placeholder' => '',
 				'value' => self::$mwb_etmfw_store_url,
 				'required' => '',
@@ -417,7 +417,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 				'description' => '',
 				'type' => 'hidden',
 				'placeholder' => '',
-				'name' => 'etmfw_org_plugin_name',
+				'name' => 'org_plugin_name',
 				'value' => self::$mwb_etmfw_plugin_name,
 				'required' => '',
 				'class' => '',
@@ -439,9 +439,6 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 		if ( ! empty( $current_user ) ) {
 			$current_user_email = $current_user->user_email ? $current_user->user_email : '';
 		}
-
-		$store_name = get_bloginfo( 'name ' );
-		$store_url = get_home_url();
 
 		/**
 		 * Do not repeat id index.
@@ -467,7 +464,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 				'description' => '',
 				'type' => 'radio',
 				'placeholder' => '',
-				'name' => 'mwb_etmfw_plugin_deactivation_reason',
+				'name' => 'plugin_deactivation_reason',
 				'value' => '',
 				'multiple' => 'no',
 				'required' => 'yes',
@@ -484,10 +481,10 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 
 			rand() => array(
 				'id' => 'mwb-etmfw-deactivation-reason-text',
-				'title' => esc_html__( 'Let us know why you are deactivating ' . self::$mwb_etmfw_plugin_name_label . ' so we can improve the plugin', 'event-tickets-manager-for-woocommerce' ),
+				'title' => __( 'Let us know why you are deactivating ', 'event-tickets-manager-for-woocommerce' ) . self::$mwb_etmfw_plugin_name_label . __( ' so we can improve the plugin.', 'event-tickets-manager-for-woocommerce' ),
 				'type' => 'textarea',
 				'description' => '',
-				'name' => 'etmfw_deactivation_reason_text',
+				'name' => 'deactivation_reason_text',
 				'placeholder' => esc_html__( 'Reason', 'event-tickets-manager-for-woocommerce' ),
 				'value' => '',
 				'required' => '',
@@ -499,7 +496,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 				'title' => '',
 				'description' => '',
 				'type' => 'hidden',
-				'name' => 'etmfw_email',
+				'name' => 'email',
 				'placeholder' => '',
 				'value' => $current_user_email,
 				'required' => '',
@@ -512,7 +509,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 				'description' => '',
 				'type' => 'hidden',
 				'placeholder' => '',
-				'name' => 'etmfw_company',
+				'name' => 'company',
 				'value' => self::$mwb_etmfw_store_name,
 				'required' => '',
 				'class' => '',
@@ -523,7 +520,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 				'title' => '',
 				'description' => '',
 				'type' => 'hidden',
-				'name' => 'etmfw_website',
+				'name' => 'website',
 				'placeholder' => '',
 				'value' => self::$mwb_etmfw_store_url,
 				'required' => '',
@@ -536,8 +533,8 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 				'description' => '',
 				'type' => 'hidden',
 				'placeholder' => '',
-				'name' => 'etmfw_org_plugin_name',
-				'value' => '',
+				'name' => 'org_plugin_name',
+				'value' => self::$mwb_etmfw_plugin_name,
 				'required' => '',
 				'class' => '',
 			),
@@ -602,7 +599,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 				array_filter(
 					$formatted_data,
 					function( $item ) {
-						return isset( $item['name'] ) && 'mwb_etmfw_plugin_deactivation_reason' == $item['name'];
+						return isset( $item['name'] ) && 'plugin_deactivation_reason' == $item['name'];
 					}
 				)
 			);
@@ -617,7 +614,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 
 				unset( $formatted_data['mwb-etmfw-show-counter'] );
 
-				$this->mwb_etmfw_handle_form_submission_for_hubspot( $formatted_data, $action_type );
+				$result = $this->mwb_etmfw_handle_form_submission_for_hubspot( $formatted_data, $action_type );
 			}
 		} catch ( Exception $e ) {
 
@@ -681,62 +678,29 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 		$url = 'submissions/v3/integration/submit/' . self::$mwb_etmfw_portal_id . '/' . $form_id;
 
 		$headers = array(
-			'Content-Type: application/json',
+			'Content-Type' => 'application/json',
 		);
 
 		$form_data = json_encode(
 			array(
 				'fields' => $form_data,
 				'context'  => array(
-					'pageUri' => self::$store_url,
-					'pageName' => self::$store_name,
+					'pageUri' => self::$mwb_etmfw_store_url,
+					'pageName' => self::$mwb_etmfw_store_name,
 					'ipAddress' => $this->mwb_etmfw_get_client_ip(),
 				),
 			)
 		);
 
 		$response = $this->mwb_etmfw_hic_post( $url, $form_data, $headers );
-
 		if ( 200 == $response['status_code'] ) {
 			$result = json_decode( $response['response'], true );
 			$result['success'] = true;
 		} else {
-
 			$result = $response;
 		}
 
 		return $result;
-	}
-
-
-	/**
-	 * Handle Hubspot GET api calls.
-	 *
-	 * @since    1.0.0
-	 * @param   string $endpoint   Url where the form data posted.
-	 * @param   array  $headers    data that must be included in header for request.
-	 */
-	private function mwb_etmfw_hic_get( $endpoint, $headers ) {
-
-		$url = $this->mwb_etmfw_base_url . $endpoint;
-
-		$ch = @curl_init();
-		@curl_setopt( $ch, CURLOPT_POST, false );
-		@curl_setopt( $ch, CURLOPT_URL, $url );
-		@curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
-		@curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
-		$response = @curl_exec( $ch );
-		$status_code = @curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-		$curl_errors = curl_error( $ch );
-		@curl_close( $ch );
-
-		return array(
-			'status_code' => $status_code,
-			'response' => $response,
-			'errors' => $curl_errors,
-		);
 	}
 
 	/**
@@ -748,27 +712,36 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 * @param   array  $headers    data that must be included in header for request.
 	 */
 	private function mwb_etmfw_hic_post( $endpoint, $post_params, $headers ) {
+		$url      = $this->mwb_etmfw_base_url . $endpoint;
+		$request = array(
+			'httpversion' => '1.0',
+			'sslverify'   => false,
+			'method'      => 'POST',
+			'timeout'     => 45,
+			'headers'     => $headers,
+			'body'        => $post_params,
+			'cookies'     => array(),
+		);
 
-		$url = $this->mwb_etmfw_base_url . $endpoint;
+		$response = wp_remote_post( $url, $request );
 
-		$ch = @curl_init();
-		@curl_setopt( $ch, CURLOPT_POST, true );
-		@curl_setopt( $ch, CURLOPT_URL, $url );
-		@curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_params );
-		@curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
-		@curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
-		$response = @curl_exec( $ch );
-		$status_code = @curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-		$curl_errors = curl_error( $ch );
-		@curl_close( $ch );
+		if ( is_wp_error( $response ) ) {
 
+			$status_code = 500;
+			$response    = esc_html__( 'Unexpected Error Occured', 'subscriptions-for-woocommerce' );
+			$errors      = $response;
+
+		} else {
+			$status_code = wp_remote_retrieve_response_code( $response );
+			$response    = wp_remote_retrieve_body( $response );
+			$errors      = $response;
+		}
 		return array(
 			'status_code' => $status_code,
-			'response' => $response,
-			'errors' => $curl_errors,
+			'response'    => $response,
+			'errors'      => $errors,
 		);
+
 	}
 
 

@@ -1,112 +1,160 @@
 === Event Tickets Manager for WooCommerce ===
-Contributors: makewebbetter
-Tags: comments, spam
+Contributors: MakeWebBetter
+Donate link: https://makewebbetter.com/
+Tags: events, tickets, events plugin, event management, event manager, 
 Requires at least: 4.6
-Tested up to: 4.9.5
+Tested up to:  5.7.1
+WC requires at least: 4.0.0
+WC tested up to:  5.2.2
 Stable tag: 1.0.0
+Requires PHP: 7.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+
+Event Tickets Manager for WooCommerce is an extension that allows you to create event management and ticketing websites.
+
 
 == Description ==
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+**WITH THE HELP OF EVENT MANAGER FOR WOOCOMMERCE PLUGIN, YOU CAN ADD EVENT AS PRODUCT ON WOOCOMMERCE STORE**
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+**Event Tickets Manager for WooCommerce** is a complete solution for merchants that want to add event-based products to their WooCommerce store. Now you don’t have to pay commissions to your third-party services to manage event registration and ticket sales. You can manage the entire process from your WooCommerce store and be your own boss. The Event Tickets Manager for WooCommerce is an all-in-one solution for business owners that want to:
 
-A few notes about the sections above:
+* Create events as products on their WooCommerce store.
+* Sell event tickets without depending on external service providers.
+* Develop event management and ticketing website. 
 
-*   "Contributors" is a comma separated list of people who have contributed for this plugin
-*   "Tags" is a comma separated list of tags that apply to the plugin
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
-higher versions... this is just the highest one you've verified.
-*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
-stable.
 
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
-if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
-for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
-is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
-your in-development version, without having that information incorrectly disclosed about the current stable version
-that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
+==  WITH EVENT TICKETS MANAGER FOR WOOCOMMERCE PLUGIN, YOU CAN: ==
 
-    If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
-you put the stable version, in order to eliminate any doubt.
+ * Add events as a WooCommerce product type on your online store.
+ * Manage the stock of tickets as admin.
+ * Show the event location to customers at the front end.
+ * Sent the tickets as PDF to customers in an email.
+ * Track check-in status of attendees
+ * Allow the customers to print the tickets from the Order details page for offline use.
+ * An interactive widget to let the customer see past, future or all events.
+ * You can collect additional information from the user if needed at the time of checkout
+
+
+
+
+== WHAT IS INCLUDED IN FREE EVENT TICKETS MANAGER FOR WOOCOMMERCE PLUGIN == 
+
+**1)** **Ticket Stock Management**
+The ticket stock represents nothing but the number of seats available in your event. The merchant can manage the stock of the tickets from the admin panel. You can also see how many tickets are sold and track if you are running out of stock. 
+
+
+**2)** **Set Location For Events With Google Map**
+Provide a high-level view of your offline events by showing the exact location of events to the user in the frontend. The plugin is integrated with Google Maps that lets WooCommerce store owners show the live location of the events on the store.
+
+
+**3)** **Download Tickets As PDF**
+The WooCommerce Events Ticket Manager allows the customer to download the tickets as PDF for offline use. When customers buy tickets for an event from your WooCommerce store they send an email with a pdf attachment of the ticket. The customers can also download the ticket from the **My Account tab.** 
+
+
+**4)** **Events Calendar**
+
+The plugin comes with a calendar widget that shows your customers a list of events ( past, upcoming or all ). With the help of this widget on the sidebar, it makes it easy for customers to spot the scheduled events.
+
+
+**5)** **WPML Multilingual Support**
+The plugin comes with WPML multilingual support, so as to say, the WooCommerce extension will work in your local language. You can also use the Loco Translate Plugin to translate the string in your local language.
+
+[**Free demo of Event Tickets Manager for WooCommerce**](https://demo.makewebbetter.com/event-tickets-manager-for-woocommerce/?utm_source=MWB-event-org&utm_medium=MWB-org-page&utm_campaign=MWB-event-org)
+
+Visit [**Event Tickets Managers for WooCommerce Documentation**](https://docs.makewebbetter.com/event-tickets-manager-for-WooCommerce/?utm_source=MWB-event-org&utm_medium=MWB-org-page&utm_campaign=MWB-event-org) and learn more about the features and working of the plugin.
+
+
+
+== WHAT PREMIUM VERSION OF EVENT TICKETS FOR WOOCOMMERCE OFFERS [COMING SOON]  == 
+ 
+   * Bulk import of events
+   * Allow customers to buy multiple tickets for a single event.
+   * Custom branding options with multiple layout options for ticket PDFs.
+   * QR code inclusion on tickets.
+   * Bulk import of attendees for any event.
+   * Allow the attendee to transfer the ticket to another attendee.
+   * Ability to host virtual events. You can embed an online webinar link.
+   * APIs to match tickets so that admin can log in on mobile apps (android/iOS) and scan QR codes at physical events of attendees.
+   * Send custom emails/SMS to all attendees.
+
+
+
+== SUPPORT ==
+If you need support or have questions, kindly use our online chat window [**here**](https://makewebbetter.com/?utm_source=MWB-event-org&utm_medium=MWB-org-page&utm_campaign=MWB-event-org) or connect with us then [**Generate a ticket**](https://makewebbetter.com/submit-query/?utm_source=MWB-event-org&utm_medium=MWB-org-page&utm_campaign=MWB-event-org)
+
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
+= Automatic installation =
+Automatic installation is the easiest option as WordPress handles the file transfers itself and you don't need to leave your web browser. To do an automatic install of the plugin, log in to your WordPress dashboard, navigate to the Plugins menu, and click Add New.
 
-e.g.
+In the search field type **" Event Tickets Manager for WooCommerce"** and click Search Plugins. Once you've found our Event Tickets Manager for WooCommerce plugin you can view details about it such as the point release, rating, and description. Most importantly, of course, you can install it by simply clicking **"Install Now"**.
 
-1. Upload the `event-tickets-manager-for-woocommerce` folder to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
+= Manual installation =
+The manual installation method involves downloading our Event Tickets Manager for WooCommerce and uploading it to your web server via your favorite FTP application. The WordPress codex contains [**instructions on how to do this here**](https://wordpress.org/support/article/managing-plugins/#manual-plugin-installation).
+
+= Updating =
+Automatic updates should work like a charm; as always though, ensure you backup your site just in case.
+
+== Screenshots ==
+1.  General Settings
+2.  Ticket Setting
+3.  Integration Setting 
+4.  Product Type 
+5.  Add Custom fields
+6.  Event Details
+7.  Order Details
+8.  Ticket PDF
+9.  Calendar Details
+10. Edit Ticket Information 
+11. Email ticket Information 
+12. Schedule sale price 
+13. Upload Event  Logo
+14. Events
+15. Event check-in page
+
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
+= Can we display the event location on the tickets and product page? =
+Yes, the Event Tickets Manager for WooCommerce Provides the exact location of events to the user on the product page and tickets as the plugin is integrated with Google Maps.
 
-An answer to that question.
+= How are the Tickets sent to the customer with the Event ticket manager plugin? =
+Tickets will be sent to the customer via email with the pdf attachment
 
-= What about foo bar? =
+= Can The Customer Download Tickets for offline use? =
+Yes, with the help of the Event Tickets Manager plugin customers can download the tickets in PDF format. Also when the customer purchases an event the downloadable PDF file is mailed to the customer.
 
-Answer to foo bar dilemma.
+= How many payment gateways do the Event Tickets Manager for WooCommerce plugin supports? = 
+The event ticket manager supports all the WooCommerce payment gateway for Example PayPal, Stripe, Direct bank transfer, Check payment.
 
-== Screenshots ==
+= Can we translate the plugin text and string into other languages in the Event tickets plugin? =
+Yes, Since the Event tickets manager supports WPML you can translate the strings and text of our extension into other languages
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+
+= How can we track the check-ins for any event? =
+In order to track the check-ins for your event trace the following path:
+Dashboard>>WooCommerce>>Events.
+
+= My question is not listed =
+Please visit the MakeWebBetter [**knowledge base**](https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/event-tickets-manager-for-woocommerce-kb/?utm_source=MWB-event-org&utm_medium=MWB-org-page&utm_campaign=MWB-event-org) for more detailed [**documentation**](https://docs.makewebbetter.com/event-tickets-manager-for-WooCommerce/?utm_source=MWB-event-org&utm_medium=MWB-org-page&utm_campaign=MWB-event-org) and [**support**](https://makewebbetter.com/submit-query/?utm_source=MWB-event-org&utm_medium=MWB-org-page&utm_campaign=MWB-event-org)
+
+ 
+
+
+
 
 == Changelog ==
+= 1.0.0 - Released on 22 April 2021 =
+* First version
 
-= 1.0 =
-* A change since the previous version.
-* Another change.
-
-= 0.5 =
-* List versions from most recent at top to oldest at bottom.
 
 == Upgrade Notice ==
+= 1.0.0 - Released on 22 April 2021 =  
+* First version
 
-= 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
 
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
 
-== Arbitrary section ==
-
-You may provide arbitrary sections, in the same format as the ones above.  This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation."  Arbitrary sections will be shown below the built-in sections outlined above.
-
-== A brief Markdown Example ==
-
-Ordered list:
-
-1. Some feature
-1. Another feature
-1. Something else about the plugin
-
-Unordered list:
-
-* something
-* something else
-* third thing
-
-Here's a link to [WordPress](http://wordpress.org/ "Your favorite software") and one to [Markdown's Syntax Documentation][markdown syntax].
-Titles are optional, naturally.
-
-[markdown syntax]: http://daringfireball.net/projects/markdown/syntax
-            "Markdown is what the parser uses to process much of the readme file"
-
-Markdown uses email style notation for blockquotes and I've been told:
-> Asterisks for *emphasis*. Double it up  for **strong**.
-
-`<?php code(); // goes in backticks ?>`

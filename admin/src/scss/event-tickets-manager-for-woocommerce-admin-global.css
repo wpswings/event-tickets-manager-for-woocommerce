@@ -262,15 +262,14 @@ select {
 }
 
 .mwb-form-group__label {
-    flex: 0 0 100%;
-    max-width: 200px;
+    flex: 0 0 20%;
+    max-width: 20%;
     padding: 0 15px;
 }
 
 .mwb-form-group__control {
-    flex: 0 0 100%;
-    max-width: calc(100% - 200px);
-    padding: 0 15px;
+    flex: 0 0 60%;
+    max-width: 60%;
 }
 
 .mwb-form-label {
@@ -412,4 +411,280 @@ select {
     display: block;
     font-size: 1.17em;
     font-weight: bold;
+}
+
+/* BUG FIXES*/
+
+form.mwb-etmfw-integration-section-form .mwb-form-group__control {
+    flex: 0 0 100%;
+    max-width: 570px;
+}
+
+form.mwb-etmfw-integration-section-form .mwb-form-group__control label.mdc-text-field.mdc-text-field--outlined {
+    width: 100%;
+}
+
+form.mwb-etmfw-gen-section-form .mdc-switch {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+form.mwb-etmfw-gen-section-form .mdc-switch .mdc-switch__thumb-underlay.mdc-ripple-upgraded {
+    margin-top: 2px;
+}
+
+form.mwb-etmfw-gen-section-form .mdc-switch .mdc-text-field-helper-line {
+    margin-left: 20px;
+}
+
+@media only screen and (max-width: 960px)
+{
+    .mwb-errorr-8 {
+        margin-left: 45px;
+    }
+}
+
+@media only screen and (max-width: 782px) {
+    .mwb-errorr-8 {
+        margin-left: 10px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .mwb-etmfw-gen-section-form .mwb-form-group__label {
+        flex: 0 0 100%;
+        max-width: 100%;
+        padding: 0;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    form.mwb-etmfw-gen-section-form .mdc-switch {
+        display: block;
+    }
+
+    form.mwb-etmfw-gen-section-form .mdc-switch .mdc-text-field-helper-line {
+        margin-left: 0px;
+        margin-top: 10px;
+    }
+
+    form.mwb-etmfw-gen-section-form .mdc-switch .mdc-switch__thumb-underlay.mdc-ripple-upgraded {
+        margin-top: 0px;
+    }
+
+    .mwb-header-title {
+        font-size: 16px;
+    }
+}
+
+.mwb-etmfw-email-template-section-form .mdc-button {
+    padding: 12px 24px !important;
+}
+
+h4.mwb_etmfw_overview_heading,
+h5.mwb_etmfw_plugin_benefit_heading {
+    font-size: 32px;
+    line-height: 40px;
+    margin-bottom: 10px;
+    color: #0a2d49;
+    font-weight: 600;
+}
+
+.mwb_etmfw_overview_content p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+.mwb_etmfw_overview_content {
+    margin-bottom: 50px;
+}
+
+h5.mwb_etmfw_overview_heading,
+h5.mwb_etmfw_plugin_premium_heading {
+    font-size: 24px;
+    line-height: 40px;
+    margin-bottom: 10px;
+    color: #0a2d49;
+    font-weight: 600;
+}
+
+.mwb_etmfw_plugin_can_do {
+    margin-bottom: 50px;
+}
+
+.mwb_etmfw_plugin_can_do li {
+    font-size: 18px;
+    margin-bottom: 16px;
+}
+
+td.drag-icon {
+    cursor: grab;
+}
+
+img#mwb_etmfw_mail_setting_upload_image {
+    object-fit: contain;
+    width: 100px;
+    height: 100%;
+    display: block;
+}
+
+span.mwb_etmfw_mail_setting_remove_logo {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: -125px;
+    height: 100%;
+}
+
+span.mwb_etmfw_mail_setting_remove_logo_span {
+    margin-left: 10px;
+    color: #000000;
+    font-weight: bold;
+}
+
+label.mdc-text-field.mdc-text-field--outlined {
+    display: flex;
+}
+
+.mwb_etmfw_plugin_benefit ol,
+.mwb_etmfw_plugin_premium ol {
+    list-style: none;
+    padding: 0;
+    margin-left: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.mwb_etmfw_benefit_heading,
+.mwb_etmfw_premium_heading {
+    color: #0a2d49;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.mwb_etmfw_plugin_benefit ol li,
+.mwb_etmfw_plugin_premium ol li {
+    flex: 0 0 calc(33.33% - 20px);
+    max-width: calc(33.33% - 20px);
+    margin-right: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(10, 45, 73, 0.3);
+    border-radius: 10px;
+    padding: 15px;
+    line-height: 1.6;
+}
+
+.mwb_etmfw_plugin_benefit ol li:nth-child(3n),
+.mwb_etmfw_plugin_premium ol li:nth-child(3n) {
+    margin-right: 0;
+}
+
+.mwb_etmfw_plugin_benefit ol li img,
+.mwb_etmfw_plugin_premium ol li img {
+    width: 80px;
+    height: auto;
+}
+
+.mwb_emtfw_list_video_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.mwb_emtfw_list_video_wrapper ol {
+    flex: 0 0 calc(60% - 60px);
+    max-width: calc(60% - 60px);
+    margin-right: 20px;
+}
+
+.mwb_emtfw_list_video_wrapper .mwb_etmfw_video_wrapper {
+    flex: 0 0 53%;
+    max-width: 53%;
+}
+
+.mwb_etmfw_overview_banner-img {
+    margin-bottom: 40px;
+}
+
+.mwb_etmfw_overview_banner-img img {
+    width: 100%;
+}
+
+.mwb_etmfw_overview_reach-us {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.mwb_etmfw_overview_doc,
+.mwb_etmfw_overview_support {
+    flex: 0 0 50px;
+    max-width: 50px;
+}
+
+
+
+button#mwb_etmfw_mail_setting_upload_logo_button {
+    position: absolute;
+    right: -170px;
+}
+
+@media only screen and (max-width: 992px) {
+    .mwb_etmfw_plugin_benefit ol li,
+    .mwb_etmfw_plugin_premium ol li {
+        flex: 0 0 calc(50% - 20px);
+        max-width: calc(50% - 20px);
+    }
+
+    .mwb_etmfw_plugin_benefit ol li:nth-child(3n),
+    .mwb_etmfw_plugin_premium ol li:nth-child(3n) {
+        margin-right: 20px;
+    }
+
+    .mwb_etmfw_plugin_benefit ol li:nth-child(2n),
+    .mwb_etmfw_plugin_premium ol li:nth-child(2n) {
+        margin-right: 0;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .mwb_emtfw_list_video_wrapper ol {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .mwb-etmfw-email-template-section-form .mwb-form-group:nth-child(3) .mwb-form-group__control {
+        max-width: 50%;
+        flex: 0 0 50%;
+    }
+
+    .mwb-etmfw-email-template-section-form .mwb-form-group__control {
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+}
+
+@media only screen and (max-width: 540px) {
+    .mwb_etmfw_plugin_benefit ol li,
+    .mwb_etmfw_plugin_premium ol li {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-right: 0;
+    }
+
+    span.mwb_etmfw_mail_setting_remove_logo {
+        right: -100px;
+    }
+
+    img#mwb_etmfw_mail_setting_upload_image {
+        width: 70px;
+    }
+
+    button#mwb_etmfw_mail_setting_upload_logo_button {
+        position: absolute;
+        right: -113px;
+        max-width: 100px;
+    }
 }

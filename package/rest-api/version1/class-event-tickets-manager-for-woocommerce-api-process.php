@@ -20,8 +20,8 @@ if ( ! class_exists( 'Event_Tickets_Manager_For_Woocommerce_Api_Process' ) ) {
 	 * This is used to define the functions and data manipulation for custom endpoints.
 	 *
 	 * @since      1.0.0
-	 * @package    Hydroshop_Api_Management
-	 * @subpackage Hydroshop_Api_Management/includes
+	 * @package    Event_Tickets_Manager_For_Woocommerce
+	 * @subpackage Event_Tickets_Manager_For_Woocommerce/includes
 	 * @author     MakeWebBetter <makewebbetter.com>
 	 */
 	class Event_Tickets_Manager_For_Woocommerce_Api_Process {

@@ -2,3 +2,187 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+ .woocommerce .cart-collaterals .cart_totals, .woocommerce-page .cart-collaterals .cart_totals {
+    float: none!important;
+
+ }
+
+ .mwb_etmfw_events_section,
+ .mwb_etmfw_input_ticket_section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+ .mwb_etmfw_events_section label,
+ .mwb_etmfw_input_ticket_section label {
+    flex: 0 0 25%;
+    max-width: 25%;
+}
+
+select#mwb_etmfw_event_selected {
+    flex: 0 0 75%;
+    max-width: 75%;
+}
+
+input#mwb_etmfw_imput_ticket {
+    flex: 0 0 75%;
+    max-width: 75%;
+    margin: 0;
+}
+
+.mwb_etmfw--loader-btn-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.mwb_etmfw_checkin_button_section {
+    flex: 0 0 15%;
+    max-width: 15%;
+}
+
+div#mwb_etmfw_checkin_loader img {
+    width: 25px;
+    height: auto;
+    margin-left: 50px;
+}
+
+div#mwb_etmfw_edit_info_loader img {
+   width: 25px;
+    height: auto;
+    position: relative;
+    top: 5px;
+}
+#mwb_etmfw_edit_info_loader{
+    display: none;
+}
+#mwb_etmfw_checkin_loader{
+    display: none;
+}
+#mwb_etmfw_event_map{
+    width: 60%;
+    height: 350px;
+    margin-bottom: 10px;
+}
+.mwb_check_in_error {/* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
+    background: #e2401c;
+    padding: 16px 20px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.mwb_check_in_success {/* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
+    background: #1a6f1a;
+    padding: 16px 20px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.mwb_etmfw_addition_info_section input {
+    width: 99%!important;
+}
+
+.mwb_etmfw_view_ticket_section, 
+.mwb_etmfw_calendar_section {
+    display: inline-block;
+    margin: 5px 0;
+}
+
+.mwb_etmfw_view_ticket_section {
+    margin-right: 5px;
+}
+
+.mwb_etmfw_view_ticket_section a, 
+.mwb_etmfw_calendar_section a {
+    padding: 7px 25px;
+    border: 2px solid #28303d;
+}
+
+.mwb_etmfw_view_ticket_section a:hover, 
+.mwb_etmfw_calendar_section a:hover {
+    background: #ffffff!important;
+    color: #28303d!important;
+}
+
+span#mwb_etmfw_edit_ticket {
+    font-size: 20px;
+    font-weight: 400;
+    display: block;
+    margin: 10px 0;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#mwb_etmfw_edit_ticket_form input {
+    width: 50%;
+}
+
+input#mwb_etmfw_save_edit_ticket_info_btn {
+    margin-top: 15px;
+    width: auto;
+}
+
+form#mwb_etmfw_edit_ticket_form {
+    display: none;
+}
+
+form.mwb_etmfw_show_ticket_form {
+    display: block !important;
+}
+div#mwb_etmwf_event_date img {
+    display: inline-block;
+    margin-right: 5px;
+}
+div#mwb_etmwf_event_time img {
+    display: inline-block;
+    margin-right: 5px;
+}
+div#mwb_etmwf_event_venue img {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+div#mwb_etmfw_event_map {
+    margin: 10px 0px;
+}
+
+ @media only screen and (max-width: 768px) {
+    .product-remove {
+        display: none!important;
+    }
+
+    input#coupon_code {
+        margin-bottom: 20px;
+    }
+ }
+
+ @media only screen and (max-width: 540px) {
+    .mwb_etmfw_view_ticket_section,
+    .mwb_etmfw_calendar_section {
+        display: block;
+        text-align: center;
+    }
+
+    a.mwb_etmfw_add_event_calendar,
+    a.mwb_view_ticket_pdf {
+        display: block;
+    }
+
+    .fc-toolbar-chunk {
+        display: flex;
+        margin-bottom: 10px;
+    }
+
+    .fc .fc-toolbar {
+        display: block;
+    }
+
+
+}
