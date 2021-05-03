@@ -90,11 +90,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->event_tickets_manager_for_woocommerce_locale();
 		if ( is_admin() ) {
 			$this->event_tickets_manager_for_woocommerce_admin_hooks();
-		} else {
-			$this->event_tickets_manager_for_woocommerce_public_hooks();
 		}
+		$this->event_tickets_manager_for_woocommerce_public_hooks();
 
 		$this->event_tickets_manager_for_woocommerce_api_hooks();
+		$this->event_tickets_manager_for_woocommerce_mail_hooks();
 
 	}
 
@@ -134,19 +134,17 @@ class Event_Tickets_Manager_For_Woocommerce {
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-event-tickets-manager-for-woocommerce-admin.php';
 
 			// The class responsible for on-boarding steps for plugin.
-			if ( is_dir(  plugin_dir_path( dirname( __FILE__ ) ) . '.onboarding' ) && ! class_exists( 'Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps' ) ) {
+			if ( is_dir( plugin_dir_path( dirname( __FILE__ ) ) . 'onboarding' ) && ! class_exists( 'Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps' ) ) {
 				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-event-tickets-manager-for-woocommerce-onboarding-steps.php';
 			}
 
 			if ( class_exists( 'Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps' ) ) {
 				$etmfw_onboard_steps = new Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps();
 			}
-		} else {
-
-			// The class responsible for defining all actions that occur in the public-facing side of the site.
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-event-tickets-manager-for-woocommerce-public.php';
-
 		}
+
+		// The class responsible for defining all actions that occur in the public-facing side of the site.
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-event-tickets-manager-for-woocommerce-public.php';
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'package/rest-api/class-event-tickets-manager-for-woocommerce-rest-api.php';
 
@@ -191,12 +189,20 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		// All admin actions and filters after License Validation goes here.
 		$this->loader->add_filter( 'mwb_add_plugins_menus_array', $etmfw_plugin_admin, 'etmfw_admin_submenu_page', 15 );
-		$this->loader->add_filter( 'etmfw_template_settings_array', $etmfw_plugin_admin, 'etmfw_admin_template_settings_page', 10 );
-		$this->loader->add_filter( 'etmfw_general_settings_array', $etmfw_plugin_admin, 'etmfw_admin_general_settings_page', 10 );
-		$this->loader->add_filter( 'etmfw_supprot_tab_settings_array', $etmfw_plugin_admin, 'etmfw_admin_support_settings_page', 10 );
-
-		// Saving tab settings.
-		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'etmfw_admin_save_tab_settings' );
+		$this->loader->add_filter( 'mwb_etmfw_general_settings_array', $etmfw_plugin_admin, 'mwb_etmfw_admin_general_settings_page', 10 );
+		$this->loader->add_filter( 'mwb_etmfw_integration_settings_array', $etmfw_plugin_admin, 'mwb_etmfw_admin_integration_settings_page', 10 );
+		$this->loader->add_filter( 'mwb_etmfw_email_template_settings_array', $etmfw_plugin_admin, 'mwb_etmfw_admin_email_template_settings_page', 10 );
+		$this->loader->add_filter( 'mwb_etmfw_supprot_tab_settings_array', $etmfw_plugin_admin, 'mwb_etmfw_admin_support_settings_page', 10 );
+		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'mwb_etmfw_admin_save_tab_settings' );
+		$this->loader->add_filter( 'product_type_selector', $etmfw_plugin_admin, 'mwb_etmfw_event_ticket_product' );
+		$this->loader->add_filter( 'woocommerce_product_data_tabs', $etmfw_plugin_admin, 'mwb_etmfw_event_ticket_tab' );
+		$this->loader->add_action( 'woocommerce_product_data_panels', $etmfw_plugin_admin, 'mwb_etmfw_event_tab_content' );
+		$this->loader->add_action( 'save_post', $etmfw_plugin_admin, 'mwb_etmfw_save_product_data' );
+		$this->loader->add_action( 'admin_menu', $etmfw_plugin_admin, 'mwb_etmfw_event_menu' );
+		$this->loader->add_action( 'woocommerce_after_order_itemmeta', $etmfw_plugin_admin, 'mwb_etmfw_after_order_itemmeta', 10, 3 );
+		$this->loader->add_filter( 'plugin_row_meta', $etmfw_plugin_admin, 'mwb_etmfw_plugin_row_meta', 10, 2 );
+		$this->loader->add_action( 'wp_ajax_mwb_etmfw_get_event_geocode', $etmfw_plugin_admin, 'mwb_etmfw_get_event_geocode_value' );
+		$this->loader->add_action( 'wp_ajax_nopriv_mwb_etmfw_get_event_geocode', $etmfw_plugin_admin, 'mwb_etmfw_get_event_geocode_value' );
 
 	}
 
@@ -211,8 +217,26 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		$etmfw_plugin_public = new Event_Tickets_Manager_For_Woocommerce_Public( $this->etmfw_get_plugin_name(), $this->etmfw_get_version() );
 
+		add_action( 'woocommerce_event_ticket_manager_add_to_cart', 'woocommerce_simple_add_to_cart', 30 );
 		$this->loader->add_action( 'wp_enqueue_scripts', $etmfw_plugin_public, 'etmfw_public_enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $etmfw_plugin_public, 'etmfw_public_enqueue_scripts' );
+		$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $etmfw_plugin_public, 'mwb_etmfw_before_add_to_cart_button_html' );
+		$this->loader->add_filter( 'woocommerce_is_sold_individually', $etmfw_plugin_public, 'mwb_etmfw_allow_single_quantity', 10, 2 );
+		$this->loader->add_filter( 'woocommerce_add_cart_item_data', $etmfw_plugin_public, 'mwb_etmfw_cart_item_data', 10, 3 );
+		$this->loader->add_filter( 'woocommerce_get_item_data', $etmfw_plugin_public, 'mwb_etmfw_get_cart_item_data', 10, 2 );
+		$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $etmfw_plugin_public, 'mwb_etmfw_create_order_line_item', 10, 3 );
+		$this->loader->add_action( 'woocommerce_order_status_changed', $etmfw_plugin_public, 'mwb_etmfw_event_status_changed', 10, 3 );
+		$this->loader->add_filter( 'woocommerce_email_attachments', $etmfw_plugin_public, 'mwb_etmfw_attach_pdf_to_emails', 10, 4 );
+		$this->loader->add_action( 'woocommerce_order_item_meta_end', $etmfw_plugin_public, 'mwb_etmfw_view_ticket_button', 10, 3 );
+		$this->loader->add_action( 'init', $etmfw_plugin_public, 'mwb_etmfw_add_eventcheckin_shortcode' );
+		$this->loader->add_action( 'wp_ajax_mwb_etmfw_make_user_checkin', $etmfw_plugin_public, 'mwb_etmfw_make_user_checkin_for_event' );
+		$this->loader->add_action( 'wp_ajax_nopriv_mwb_etmfw_make_user_checkin', $etmfw_plugin_public, 'mwb_etmfw_make_user_checkin_for_event' );
+		$this->loader->add_action( 'wp_ajax_mwb_etmfw_edit_user_info', $etmfw_plugin_public, 'mwb_etmfw_edit_user_info_for_event' );
+		$this->loader->add_action( 'wp_ajax_nopriv_mwb_etmfw_edit_user_info', $etmfw_plugin_public, 'mwb_etmfw_edit_user_info_for_event' );
+		$this->loader->add_action( 'wp_ajax_mwb_etmfw_get_calendar_events', $etmfw_plugin_public, 'mwb_etmfw_get_calendar_widget_data' );
+		$this->loader->add_action( 'wp_ajax_nopriv_mwb_etmfw_get_calendar_events', $etmfw_plugin_public, 'mwb_etmfw_get_calendar_widget_data' );
+		$this->loader->add_action( 'woocommerce_available_payment_gateways', $etmfw_plugin_public, 'mwb_etmfw_unset_cod_payment_gateway_for_event' );
+		$this->loader->add_filter( 'woocommerce_is_purchasable', $etmfw_plugin_public, 'mwb_etmfw_handle_expired_events', 10, 2 );
 
 	}
 
@@ -230,6 +254,28 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		$this->loader->add_action( 'rest_api_init', $etmfw_plugin_api, 'mwb_etmfw_add_endpoint' );
 
+	}
+
+	/**
+	 * Register all of the hooks related to the mail functionality
+	 * of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function event_tickets_manager_for_woocommerce_mail_hooks() {
+		add_filter( 'woocommerce_email_classes', array( $this, 'mwb_etmfw_woocommerce_email_classes' ) );
+	}
+
+	/**
+	 * Initialization function to include mail template.
+	 *
+	 * @param array $emails email templates.
+	 * @since    1.0.0
+	 */
+	public function mwb_etmfw_woocommerce_email_classes( $emails ) {
+		$emails['mwb_etmfw_email_notification'] = include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/class-mwb-etmfw-emails-notification.php';
+		return $emails;
 	}
 
 
@@ -293,19 +339,27 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		$etmfw_default_tabs = array();
 
+		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-overview'] = array(
+			'title'       => esc_html__( 'Overview', 'event-tickets-manager-for-woocommerce' ),
+			'name'        => 'event-tickets-manager-for-woocommerce-overview',
+		);
 		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-general'] = array(
 			'title'       => esc_html__( 'General Setting', 'event-tickets-manager-for-woocommerce' ),
 			'name'        => 'event-tickets-manager-for-woocommerce-general',
+		);
+		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-email-template'] = array(
+			'title'       => esc_html__( 'Ticket Setting', 'event-tickets-manager-for-woocommerce' ),
+			'name'        => 'event-tickets-manager-for-woocommerce-email-template',
+		);
+		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-integrations'] = array(
+			'title'       => esc_html__( 'Integrations', 'event-tickets-manager-for-woocommerce' ),
+			'name'        => 'event-tickets-manager-for-woocommerce-integrations',
 		);
 		$etmfw_default_tabs = apply_filters( 'mwb_etmfw_plugin_standard_admin_settings_tabs', $etmfw_default_tabs );
 
 		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-system-status'] = array(
 			'title'       => esc_html__( 'System Status', 'event-tickets-manager-for-woocommerce' ),
 			'name'        => 'event-tickets-manager-for-woocommerce-system-status',
-		);
-		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-template'] = array(
-			'title'       => esc_html__( 'Templates', 'event-tickets-manager-for-woocommerce' ),
-			'name'        => 'event-tickets-manager-for-woocommerce-template',
 		);
 
 		return $etmfw_default_tabs;
@@ -347,19 +401,19 @@ class Event_Tickets_Manager_For_Woocommerce {
 		switch ( $type ) {
 
 			case 'update':
-			$etmfw_classes .= 'updated is-dismissible';
-			break;
+				$etmfw_classes .= 'updated is-dismissible';
+				break;
 
 			case 'update-nag':
-			$etmfw_classes .= 'update-nag is-dismissible';
-			break;
+				$etmfw_classes .= 'update-nag is-dismissible';
+				break;
 
 			case 'success':
-			$etmfw_classes .= 'notice-success is-dismissible';
-			break;
+				$etmfw_classes .= 'notice-success is-dismissible';
+				break;
 
 			default:
-			$etmfw_classes .= 'notice-error is-dismissible';
+				$etmfw_classes .= 'notice-error is-dismissible';
 		}
 
 		$etmfw_notice  = '<div class="' . esc_attr( $etmfw_classes ) . ' mwb-errorr-8">';
@@ -485,265 +539,468 @@ class Event_Tickets_Manager_For_Woocommerce {
 	public function mwb_etmfw_plug_generate_html( $etmfw_components = array() ) {
 		if ( is_array( $etmfw_components ) && ! empty( $etmfw_components ) ) {
 			foreach ( $etmfw_components as $etmfw_component ) {
-				switch ( $etmfw_component['type'] ) {
+				if ( ! empty( $etmfw_component['type'] ) && ! empty( $etmfw_component['id'] ) ) {
+					switch ( $etmfw_component['type'] ) {
 
-					case 'hidden':
-					case 'number':
-					case 'email':
-					case 'text':
-					?>
-					<div class="mwb-form-group mwb-etmfw-<?php echo esc_attr($etmfw_component['type']); ?>">
-						<div class="mwb-form-group__label">
-							<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mwb-form-label"><?php echo esc_html( $etmfw_component['title'] ); // WPCS: XSS ok. ?></label>
-						</div>
-						<div class="mwb-form-group__control">
-							<label class="mdc-text-field mdc-text-field--outlined">
-								<span class="mdc-notched-outline">
-									<span class="mdc-notched-outline__leading"></span>
-									<span class="mdc-notched-outline__notch">
-										<?php if ( 'number' != $etmfw_component['type'] ) { ?>
-											<span class="mdc-floating-label" id="my-label-id" style=""><?php echo esc_attr( $etmfw_component['placeholder'] ); ?></span>
-										<?php } ?>
+						case 'hidden':
+						case 'number':
+						case 'email':
+						case 'text':
+							?>
+						<div class="mwb-form-group mwb-etmfw-<?php echo esc_attr( $etmfw_component['type'] ); ?>">
+							<div class="mwb-form-group__label">
+								<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+							</div>
+							<div class="mwb-form-group__control">
+								<label class="mdc-text-field mdc-text-field--outlined">
+									<span class="mdc-notched-outline">
+										<span class="mdc-notched-outline__leading"></span>
+										<span class="mdc-notched-outline__notch">
+											<?php if ( 'number' != $etmfw_component['type'] ) { ?>
+												<span class="mdc-floating-label" id="my-label-id" style=""><?php echo ( isset( $etmfw_component['placeholder'] ) ? esc_attr( $etmfw_component['placeholder'] ) : '' ); ?></span>
+											<?php } ?>
+										</span>
+										<span class="mdc-notched-outline__trailing"></span>
 									</span>
-									<span class="mdc-notched-outline__trailing"></span>
-								</span>
-								<input 
-								class="mdc-text-field__input <?php echo esc_attr( $etmfw_component['class'] ); ?>" 
-								name="<?php echo esc_attr( $etmfw_component['id'] ); ?>"
-								id="<?php echo esc_attr( $etmfw_component['id'] ); ?>"
-								type="<?php echo esc_attr( $etmfw_component['type'] ); ?>"
-								value="<?php echo esc_attr( $etmfw_component['value'] ); ?>"
-								placeholder="<?php echo esc_attr( $etmfw_component['placeholder'] ); ?>"
-								>
-							</label>
-							<div class="mdc-text-field-helper-line">
-								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo esc_attr( $etmfw_component['description'] ); ?></div>
+									<input
+									class="mdc-text-field__input <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>" 
+									name="<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : esc_html( $etmfw_component['id'] ) ); ?>"
+									id="<?php echo esc_attr( $etmfw_component['id'] ); ?>"
+									type="<?php echo esc_attr( $etmfw_component['type'] ); ?>"
+									value="<?php echo ( isset( $etmfw_component['value'] ) ? esc_attr( $etmfw_component['value'] ) : '' ); ?>"
+									placeholder="<?php echo ( isset( $etmfw_component['placeholder'] ) ? esc_attr( $etmfw_component['placeholder'] ) : '' ); ?>"
+									>
+								</label>
+								<div class="mdc-text-field-helper-line">
+									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></div>
+								</div>
 							</div>
 						</div>
-					</div>
-					<?php
-					break;
+							<?php
+							break;
 
-					case 'password':
-					?>
-					<div class="mwb-form-group">
-						<div class="mwb-form-group__label">
-							<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mwb-form-label"><?php echo esc_html( $etmfw_component['title'] ); // WPCS: XSS ok. ?></label>
-						</div>
-						<div class="mwb-form-group__control">
-							<label class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-trailing-icon">
-								<span class="mdc-notched-outline">
-									<span class="mdc-notched-outline__leading"></span>
-									<span class="mdc-notched-outline__notch">
+						case 'password':
+							?>
+						<div class="mwb-form-group">
+							<div class="mwb-form-group__label">
+								<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+							</div>
+							<div class="mwb-form-group__control">
+								<label class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-trailing-icon">
+									<span class="mdc-notched-outline">
+										<span class="mdc-notched-outline__leading"></span>
+										<span class="mdc-notched-outline__notch">
+										</span>
+										<span class="mdc-notched-outline__trailing"></span>
 									</span>
-									<span class="mdc-notched-outline__trailing"></span>
-								</span>
-								<input 
-								class="mdc-text-field__input <?php echo esc_attr( $etmfw_component['class'] ); ?> mwb-form__password" 
-								name="<?php echo esc_attr( $etmfw_component['id'] ); ?>"
-								id="<?php echo esc_attr( $etmfw_component['id'] ); ?>"
-								type="<?php echo esc_attr( $etmfw_component['type'] ); ?>"
-								value="<?php echo esc_attr( $etmfw_component['value'] ); ?>"
-								placeholder="<?php echo esc_attr( $etmfw_component['placeholder'] ); ?>"
-								>
-								<i class="material-icons mdc-text-field__icon mdc-text-field__icon--trailing mwb-password-hidden" tabindex="0" role="button">visibility</i>
-							</label>
-							<div class="mdc-text-field-helper-line">
-								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo esc_attr( $etmfw_component['description'] ); ?></div>
+									<input 
+									class="mdc-text-field__input <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?> mwb-form__password" 
+									name="<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : esc_html( $etmfw_component['id'] ) ); ?>"
+									id="<?php echo esc_attr( $etmfw_component['id'] ); ?>"
+									type="<?php echo esc_attr( $etmfw_component['type'] ); ?>"
+									value="<?php echo ( isset( $etmfw_component['value'] ) ? esc_attr( $etmfw_component['value'] ) : '' ); ?>"
+									placeholder="<?php echo ( isset( $etmfw_component['placeholder'] ) ? esc_attr( $etmfw_component['placeholder'] ) : '' ); ?>"
+									>
+									<i class="material-icons mdc-text-field__icon mdc-text-field__icon--trailing mwb-password-hidden" tabindex="0" role="button">visibility</i>
+								</label>
+								<div class="mdc-text-field-helper-line">
+									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></div>
+								</div>
 							</div>
 						</div>
-					</div>
-					<?php
-					break;
+							<?php
+							break;
 
-					case 'textarea':
-					?>
-					<div class="mwb-form-group">
-						<div class="mwb-form-group__label">
-							<label class="mwb-form-label" for="<?php echo esc_attr( $etmfw_component['id'] ); ?>"><?php echo esc_attr( $etmfw_component['title'] ); ?></label>
-						</div>
-						<div class="mwb-form-group__control">
-							<label class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea"  	for="text-field-hero-input">
-								<span class="mdc-notched-outline">
-									<span class="mdc-notched-outline__leading"></span>
-									<span class="mdc-notched-outline__notch">
-										<span class="mdc-floating-label"><?php echo esc_attr( $etmfw_component['placeholder'] ); ?></span>
+						case 'textarea':
+							?>
+						<div class="mwb-form-group">
+							<div class="mwb-form-group__label">
+								<label class="mwb-form-label" for="<?php echo esc_attr( $etmfw_component['id'] ); ?>"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+							</div>
+							<div class="mwb-form-group__control">
+								<label class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea"  	for="text-field-hero-input">
+									<span class="mdc-notched-outline">
+										<span class="mdc-notched-outline__leading"></span>
+										<span class="mdc-notched-outline__notch">
+											<span class="mdc-floating-label"><?php echo ( isset( $etmfw_component['placeholder'] ) ? esc_attr( $etmfw_component['placeholder'] ) : '' ); ?></span>
+										</span>
+										<span class="mdc-notched-outline__trailing"></span>
 									</span>
-									<span class="mdc-notched-outline__trailing"></span>
-								</span>
-								<span class="mdc-text-field__resizer">
-									<textarea class="mdc-text-field__input <?php echo esc_attr( $etmfw_component['class'] ); ?>" rows="2" cols="25" aria-label="Label" name="<?php echo esc_attr( $etmfw_component['id'] ); ?>" id="<?php echo esc_attr( $etmfw_component['id'] ); ?>" placeholder="<?php echo esc_attr( $etmfw_component['placeholder'] ); ?>"><?php echo esc_textarea( $etmfw_component['value'] ); // WPCS: XSS ok. ?></textarea>
-								</span>
-							</label>
+									<span class="mdc-text-field__resizer">
+										<textarea class="mdc-text-field__input <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>" rows="2" cols="25" aria-label="Label" name="<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : esc_html( $etmfw_component['id'] ) ); ?>" id="<?php echo esc_attr( $etmfw_component['id'] ); ?>" placeholder="<?php echo ( isset( $etmfw_component['placeholder'] ) ? esc_attr( $etmfw_component['placeholder'] ) : '' ); ?>"><?php echo ( isset( $etmfw_component['value'] ) ? esc_textarea( $etmfw_component['value'] ) : '' ); // WPCS: XSS ok. ?></textarea>
+									</span>
+								</label>
 
+							</div>
 						</div>
-					</div>
 
-					<?php
-					break;
+							<?php
+							break;
 
-					case 'select':
-					case 'multiselect':
-					?>
-					<div class="mwb-form-group">
-						<div class="mwb-form-group__label">
-							<label class="mwb-form-label" for="<?php echo esc_attr( $etmfw_component['id'] ); ?>"><?php echo esc_html( $etmfw_component['title'] ); ?></label>
-						</div>
-						<div class="mwb-form-group__control">
-							<div class="mwb-form-select">
-								<select name="<?php echo esc_attr( $etmfw_component['id'] ); ?><?php echo ( 'multiselect' === $etmfw_component['type'] ) ? '[]' : ''; ?>" id="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mdl-textfield__input <?php echo esc_attr( $etmfw_component['class'] ); ?>" <?php echo 'multiselect' === $etmfw_component['type'] ? 'multiple="multiple"' : ''; ?> >
-									<?php
-									foreach ( $etmfw_component['options'] as $etmfw_key => $etmfw_val ) {
-										?>
-										<option value="<?php echo esc_attr( $etmfw_key ); ?>"
-											<?php
-											if ( is_array( $etmfw_component['value'] ) ) {
-												selected( in_array( (string) $etmfw_key, $etmfw_component['value'], true ), true );
-											} else {
-												selected( $etmfw_component['value'], (string) $etmfw_key );
-											}
+						case 'select':
+						case 'multiselect':
+							?>
+						<div class="mwb-form-group">
+							<div class="mwb-form-group__label">
+								<label class="mwb-form-label" for="<?php echo esc_attr( $etmfw_component['id'] ); ?>"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+							</div>
+							<div class="mwb-form-group__control">
+								<div class="mwb-form-select">
+									<select id="<?php echo esc_attr( $etmfw_component['id'] ); ?>" name="<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : '' ); ?><?php echo ( 'multiselect' === $etmfw_component['type'] ) ? '[]' : ''; ?>" id="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mdl-textfield__input <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>" <?php echo 'multiselect' === $etmfw_component['type'] ? 'multiple="multiple"' : ''; ?> >
+										<?php
+										foreach ( $etmfw_component['options'] as $etmfw_key => $etmfw_val ) {
 											?>
-											>
-											<?php echo esc_html( $etmfw_val ); ?>
-										</option>
+											<option value="<?php echo esc_attr( $etmfw_key ); ?>"
+												<?php
+												if ( is_array( $etmfw_component['value'] ) ) {
+													selected( in_array( (string) $etmfw_key, $etmfw_component['value'], true ), true );
+												} else {
+													selected( $etmfw_component['value'], (string) $etmfw_key );
+												}
+												?>
+												>
+												<?php echo esc_html( $etmfw_val ); ?>
+											</option>
+											<?php
+										}
+										?>
+									</select>
+									<label class="mdl-textfield__label" for="octane"><?php echo esc_html( $etmfw_component['description'] ); ?><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></label>
+								</div>
+							</div>
+						</div>
+
+							<?php
+							break;
+
+						case 'checkbox':
+							?>
+						<div class="mwb-form-group">
+							<div class="mwb-form-group__label">
+								<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+							</div>
+							<div class="mwb-form-group__control mwb-pl-4">
+								<div class="mdc-form-field">
+									<div class="mdc-checkbox">
+										<input 
+										name="<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : esc_html( $etmfw_component['id'] ) ); ?>"
+										id="<?php echo esc_attr( $etmfw_component['id'] ); ?>"
+										type="checkbox"
+										class="mdc-checkbox__native-control <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>"
+										value="<?php echo ( isset( $etmfw_component['value'] ) ? esc_attr( $etmfw_component['value'] ) : '' ); ?>"
+										<?php checked( $etmfw_component['value'], '1' ); ?>
+										/>
+										<div class="mdc-checkbox__background">
+											<svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+												<path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+											</svg>
+											<div class="mdc-checkbox__mixedmark"></div>
+										</div>
+										<div class="mdc-checkbox__ripple"></div>
+									</div>
+									<label for="checkbox-1"><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></label>
+								</div>
+							</div>
+						</div>
+							<?php
+							break;
+
+						case 'radio':
+							?>
+						<div class="mwb-form-group">
+							<div class="mwb-form-group__label">
+								<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+							</div>
+							<div class="mwb-form-group__control mwb-pl-4">
+								<div class="mwb-flex-col">
+									<?php
+									foreach ( $etmfw_component['options'] as $etmfw_radio_key => $etmfw_radio_val ) {
+										?>
+										<div class="mdc-form-field">
+											<div class="mdc-radio">
+												<input
+												name="<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : esc_html( $etmfw_component['id'] ) ); ?>"
+												value="<?php echo esc_attr( $etmfw_radio_key ); ?>"
+												type="radio"
+												class="mdc-radio__native-control <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>"
+												<?php checked( $etmfw_radio_key, $etmfw_component['value'] ); ?>
+												>
+												<div class="mdc-radio__background">
+													<div class="mdc-radio__outer-circle"></div>
+													<div class="mdc-radio__inner-circle"></div>
+												</div>
+												<div class="mdc-radio__ripple"></div>
+											</div>
+											<label for="radio-1"><?php echo esc_html( $etmfw_radio_val ); ?></label>
+										</div>	
 										<?php
 									}
 									?>
-								</select>
-								<label class="mdl-textfield__label" for="octane"><?php echo esc_html( $etmfw_component['description'] ); ?></label>
-							</div>
-						</div>
-					</div>
-
-					<?php
-					break;
-
-					case 'checkbox':
-					?>
-					<div class="mwb-form-group">
-						<div class="mwb-form-group__label">
-							<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mwb-form-label"><?php echo esc_html( $etmfw_component['title'] ); ?></label>
-						</div>
-						<div class="mwb-form-group__control mwb-pl-4">
-							<div class="mdc-form-field">
-								<div class="mdc-checkbox">
-									<input 
-									name="<?php echo esc_attr( $etmfw_component['id'] ); ?>"
-									id="<?php echo esc_attr( $etmfw_component['id'] ); ?>"
-									type="checkbox"
-									class="mdc-checkbox__native-control <?php echo esc_attr( isset( $etmfw_component['class'] ) ? $etmfw_component['class'] : '' ); ?>"
-									value="<?php echo esc_attr( $etmfw_component['value'] ); ?>"
-									<?php checked( $etmfw_component['value'], '1' ); ?>
-									/>
-									<div class="mdc-checkbox__background">
-										<svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-											<path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
-										</svg>
-										<div class="mdc-checkbox__mixedmark"></div>
-									</div>
-									<div class="mdc-checkbox__ripple"></div>
 								</div>
-								<label for="checkbox-1"><?php echo esc_html( $etmfw_component['description'] ); // WPCS: XSS ok. ?></label>
 							</div>
 						</div>
-					</div>
-					<?php
-					break;
+							<?php
+							break;
 
-					case 'radio':
-					?>
-					<div class="mwb-form-group">
-						<div class="mwb-form-group__label">
-							<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mwb-form-label"><?php echo esc_html( $etmfw_component['title'] ); ?></label>
-						</div>
-						<div class="mwb-form-group__control mwb-pl-4">
-							<div class="mwb-flex-col">
-								<?php
-								foreach ( $etmfw_component['options'] as $etmfw_radio_key => $etmfw_radio_val ) {
-									?>
-									<div class="mdc-form-field">
-										<div class="mdc-radio">
-											<input
-											name="<?php echo esc_attr( $etmfw_component['id'] ); ?>"
-											value="<?php echo esc_attr( $etmfw_radio_key ); ?>"
-											type="radio"
-											class="mdc-radio__native-control <?php echo esc_attr( $etmfw_component['class'] ); ?>"
-											<?php checked( $etmfw_radio_key, $etmfw_component['value'] ); ?>
+						case 'radio-switch':
+							?>
+
+						<div class="mwb-form-group">
+							<div class="mwb-form-group__label">
+								<label for="" class="mwb-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+							</div>
+							<div class="mwb-form-group__control">
+								<div>
+									<div class="mdc-switch">
+										<div class="mdc-switch__track"></div>
+										<div class="mdc-switch__thumb-underlay">
+											<div class="mdc-switch__thumb"></div>
+											<input name="<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : esc_html( $etmfw_component['id'] ) ); ?>" type="checkbox" id="<?php echo esc_html( $etmfw_component['id'] ); ?>" value="on" class="mdc-switch__native-control <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>" role="switch" aria-checked="
+																	<?php
+																	if ( 'on' == $etmfw_component['value'] ) {
+																		echo 'true';
+																	} else {
+																		echo 'false';
+																	}
+																	?>
+											"
+											<?php checked( $etmfw_component['value'], 'on' ); ?>
 											>
-											<div class="mdc-radio__background">
-												<div class="mdc-radio__outer-circle"></div>
-												<div class="mdc-radio__inner-circle"></div>
-											</div>
-											<div class="mdc-radio__ripple"></div>
 										</div>
-										<label for="radio-1"><?php echo esc_html( $etmfw_radio_val ); ?></label>
-									</div>	
-									<?php
-								}
-								?>
+										<div class="mdc-text-field-helper-line">
+											<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
-					<?php
-					break;
+							<?php
+							break;
 
-					case 'radio-switch':
-					?>
+						case 'button':
+							?>
+						<div class="mwb-form-group">
+							<div class="mwb-form-group__control">
+								<button class="mdc-button mdc-button--raised" name= "<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : esc_html( $etmfw_component['id'] ) ); ?>"
+									id="<?php echo esc_attr( $etmfw_component['id'] ); ?>"> <span class="mdc-button__ripple"></span>
+									<span class="mdc-button__label <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>"><?php echo ( isset( $etmfw_component['button_text'] ) ? esc_html( $etmfw_component['button_text'] ) : '' ); ?></span>
+								</button>
+							</div>
+						</div>
 
+							<?php
+							break;
+
+						case 'multi':
+							?>
+							<div class="mwb-form-group mwb-isfw-<?php echo esc_attr( $etmfw_component['type'] ); ?>">
+								<div class="mwb-form-group__label">
+									<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+									</div>
+									<div class="mwb-form-group__control">
+									<?php
+									foreach ( $etmfw_component['value'] as $component ) {
+										?>
+											<label class="mdc-text-field mdc-text-field--outlined">
+												<span class="mdc-notched-outline">
+													<span class="mdc-notched-outline__leading"></span>
+													<span class="mdc-notched-outline__notch">
+														<?php if ( 'number' != $component['type'] ) { ?>
+															<span class="mdc-floating-label" id="my-label-id" style=""><?php echo ( isset( $etmfw_component['placeholder'] ) ? esc_attr( $etmfw_component['placeholder'] ) : '' ); ?></span>
+														<?php } ?>
+													</span>
+													<span class="mdc-notched-outline__trailing"></span>
+												</span>
+												<input 
+												class="mdc-text-field__input <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>" 
+												name="<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : esc_html( $etmfw_component['id'] ) ); ?>"
+												id="<?php echo esc_attr( $component['id'] ); ?>"
+												type="<?php echo esc_attr( $component['type'] ); ?>"
+												value="<?php echo ( isset( $etmfw_component['value'] ) ? esc_attr( $etmfw_component['value'] ) : '' ); ?>"
+												placeholder="<?php echo ( isset( $etmfw_component['placeholder'] ) ? esc_attr( $etmfw_component['placeholder'] ) : '' ); ?>"
+												<?php echo esc_attr( ( 'number' === $component['type'] ) ? 'max=10 min=0' : '' ); ?>
+												>
+											</label>
+								<?php } ?>
+									<div class="mdc-text-field-helper-line">
+										<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></div>
+									</div>
+								</div>
+							</div>
+								<?php
+							break;
+						case 'color':
+						case 'date':
+						case 'file':
+							?>
+							<div class="mwb-form-group mwb-isfw-<?php echo esc_attr( $etmfw_component['type'] ); ?>">
+								<div class="mwb-form-group__label">
+									<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+								</div>
+								<div class="mwb-form-group__control">
+									<label class="mdc-text-field mdc-text-field--outlined">
+										<input 
+										class="<?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>" 
+										name="<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : esc_html( $etmfw_component['id'] ) ); ?>"
+										id="<?php echo esc_attr( $etmfw_component['id'] ); ?>"
+										type="<?php echo esc_attr( $etmfw_component['type'] ); ?>"
+										value="<?php echo ( isset( $etmfw_component['value'] ) ? esc_attr( $etmfw_component['value'] ) : '' ); ?>"
+										<?php echo esc_html( ( 'date' === $t_component['type'] ) ? 'max=' . gmdate( 'Y-m-d', strtotime( gmdate( 'Y-m-d', mktime() ) . ' + 365 day' ) ) . ' ' . 'min=' . gmdate( 'Y-m-d' ) . '' : '' ); ?>
+										>
+									</label>
+									<div class="mdc-text-field-helper-line">
+										<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></div>
+									</div>
+								</div>
+							</div>
+							<?php
+							break;
+
+						case 'submit':
+							?>
+						<tr valign="top">
+							<td scope="row">
+								<input type="submit" class="button button-primary" 
+								name="<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : esc_html( $etmfw_component['id'] ) ); ?>"
+								id="<?php echo esc_attr( $etmfw_component['id'] ); ?>"
+								class="<?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>"
+								value="<?php echo esc_attr( $etmfw_component['button_text'] ); ?>"
+								/>
+							</td>
+						</tr>
+							<?php
+							break;
+
+						case 'wp_editor':
+							?>
 					<div class="mwb-form-group">
 						<div class="mwb-form-group__label">
 							<label for="" class="mwb-form-label"><?php echo esc_html( $etmfw_component['title'] ); ?></label>
 						</div>
 						<div class="mwb-form-group__control">
-							<div>
-								<div class="mdc-switch">
-									<div class="mdc-switch__track"></div>
-									<div class="mdc-switch__thumb-underlay">
-										<div class="mdc-switch__thumb"></div>
-										<input name="<?php echo esc_html( $etmfw_component['id'] ); ?>" type="checkbox" id="basic-switch" value="on" class="mdc-switch__native-control" role="switch" aria-checked="<?php if ( 'on' == $etmfw_component['value'] ) echo 'true'; else echo 'false'; ?>"
-										<?php checked( $etmfw_component['value'], 'on' ); ?>
-										>
-									</div>
-								</div>
+							<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>">
+								<?php
+								$content = stripcslashes( $etmfw_component['value'] );
+								$editor_id = $etmfw_component['id'];
+								$settings = array(
+									'media_buttons'    => false,
+									'drag_drop_upload' => true,
+									'dfw'              => true,
+									'teeny'            => true,
+									'editor_height'    => 200,
+									'editor_class'       => 'mwb_etmfw_new_woo_ver_style_textarea',
+									'textarea_name'    => esc_attr( $etmfw_component['id'] ),
+								);
+								wp_editor( $content, $editor_id, $settings );
+								?>
+							</label>
+							<div class="mdc-text-field-helper-line">
+								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( $etmfw_component['description'] ); ?></div>
 							</div>
 						</div>
 					</div>
-					<?php
-					break;
+							<?php
+							break;
 
-					case 'button':
-					?>
+						case 'textWithButton':
+							?>
 					<div class="mwb-form-group">
-						<div class="mwb-form-group__label"></div>
+						<div class="mwb-form-group__label">
+							<label for="" class="mwb-form-label"><?php echo esc_html( $etmfw_component['title'] ); ?></label>
+						</div>
 						<div class="mwb-form-group__control">
-							<button class="mdc-button mdc-button--raised" name="<?php echo esc_attr( $etmfw_component['id'] ); ?>"
-								id="<?php echo esc_attr( $etmfw_component['id'] ); ?>"> <span class="mdc-button__ripple"></span>
-								<span class="mdc-button__label"><?php echo esc_attr( $etmfw_component['button_text'] ); ?></span>
-							</button>
+							<label class="mdc-text-field mdc-text-field--outlined">
+							<?php
+							if ( isset( $etmfw_component['custom_attribute'] ) && ! empty( $etmfw_component['custom_attribute'] ) && is_array( $etmfw_component['custom_attribute'] ) ) {
+								foreach ( $etmfw_component['custom_attribute'] as $key => $val ) {
+									if ( 'text' == $val['type'] ) {
+										$this->mwb_etmfw_generate_text_html( $val );
+									} elseif ( 'button' == $val['type'] ) {
+										$this->mwb_etmfw_generate_button_html( $val );
+									} elseif ( 'paragraph' == $val['type'] ) {
+										$this->mwb_etmfw_generate_showbox( $val );
+									}
+								}
+							}
+							?>
+							</label>
+							<div class="mdc-text-field-helper-line">
+								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( $etmfw_component['description'] ); ?></div>
+							</div>
 						</div>
 					</div>
+							<?php
+							break;
 
-					<?php
-					break;
-
-					case 'submit':
-					?>
-					<tr valign="top">
-						<td scope="row">
-							<input type="submit" class="button button-primary" 
-							name="<?php echo esc_attr( $etmfw_component['id'] ); ?>"
-							id="<?php echo esc_attr( $etmfw_component['id'] ); ?>"
-							value="<?php echo esc_attr( $etmfw_component['button_text'] ); ?>"
-							/>
-						</td>
-					</tr>
-					<?php
-					break;
-
-					default:
-					break;
+						default:
+							break;
+					}
 				}
 			}
 		}
+	}
+
+	/**
+	 * Generate Text Input Html.
+	 *
+	 * @since    1.0.0
+	 * @param    Array $value Contain html field values.
+	 */
+	public function mwb_etmfw_generate_text_html( $value ) {
+		?>
+		<span class="mdc-notched-outline">
+			<span class="mdc-notched-outline__leading"></span>
+			<span class="mdc-notched-outline__notch">
+				<?php if ( 'number' != $value['type'] ) { ?>
+					<span class="mdc-floating-label" id="my-label-id" style=""><?php echo esc_attr( $value['placeholder'] ); ?></span>
+				<?php } ?>
+			</span>
+			<span class="mdc-notched-outline__trailing"></span>
+		</span>
+		<input 
+		class="mdc-text-field__input <?php echo esc_attr( $value['class'] ); ?>" 
+		name="<?php echo esc_attr( $value['id'] ); ?>"
+		id="<?php echo esc_attr( $value['id'] ); ?>"
+		type="<?php echo esc_attr( $value['type'] ); ?>"
+		value="<?php echo esc_attr( $value['value'] ); ?>"
+		>
+		<?php
+	}
+
+	/**
+	 * Generate Button html.
+	 *
+	 * @since    1.0.0
+	 * @param    Array $value Contain html field values.
+	 */
+	public function mwb_etmfw_generate_button_html( $value ) {
+		?>
+		<div class="mwb-form-group">
+			<div class="mwb-form-group__label"></div>
+			<div class="mwb-form-group__control">
+				<button class="mdc-button mdc-button--raised" name="<?php echo esc_attr( $value['id'] ); ?>"
+					id="<?php echo esc_attr( $value['id'] ); ?>"> <span class="mdc-button__ripple"></span>
+					<span class="mdc-button__label"><?php echo esc_attr( $value['button_text'] ); ?></span>
+				</button>
+			</div>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Generate ShowBox Html.
+	 *
+	 * @since    1.0.0
+	 * @param    Array $value Contain html field values.
+	 */
+	public function mwb_etmfw_generate_showbox( $value ) {
+		?>
+		<p id="<?php echo esc_attr( array_key_exists( 'id', $value ) ? $value['id'] : '' ); ?>">
+			<span class="<?php echo esc_attr( array_key_exists( 'id', $value ) ? $value['id'] : '' ); ?>">
+				<img src="" width="150px" height="150px" id="<?php echo esc_attr( array_key_exists( 'imgId', $value ) ? $value['imgId'] : '' ); ?>">
+				<span class="<?php echo esc_attr( array_key_exists( 'spanX', $value ) ? $value['spanX'] : '' ); ?>">X</span>
+			</span>
+		</p>
+		<?php
 	}
 }

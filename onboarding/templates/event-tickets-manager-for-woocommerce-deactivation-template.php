@@ -7,8 +7,8 @@
  * @link       https://makewebbetter.com
  * @since      1.0.0
  *
- * @package    Makewebbetter_Onboarding
- * @subpackage Makewebbetter_Onboarding/admin/onboarding
+ * @package     Event_Tickets_Manager_For_Woocommerce
+ * @subpackage  Event_Tickets_Manager_For_Woocommerce/onboarding/templates
  */
 
 global $pagenow, $etmfw_mwb_etmfw_obj;
@@ -19,7 +19,7 @@ if ( empty( $pagenow ) || 'plugins.php' != $pagenow ) {
 $etmfw_onboarding_form_deactivate = apply_filters( 'mwb_etmfw_deactivation_form_fields', array() );
 ?>
 <?php if ( ! empty( $etmfw_onboarding_form_deactivate ) ) : ?>
-	<div class="mdc-dialog mdc-dialog--scrollable">
+	<div class="mdc-dialog mdc-dialog--scrollable mwb-etmfw-on-boarding-dialog">
 		<div class="mwb-etmfw-on-boarding-wrapper-background mdc-dialog__container">
 			<div class="mwb-etmfw-on-boarding-wrapper mdc-dialog__surface" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title" aria-describedby="my-dialog-content">
 				<div class="mdc-dialog__content">
@@ -32,7 +32,7 @@ $etmfw_onboarding_form_deactivate = apply_filters( 'mwb_etmfw_deactivation_form_
 					<h3 class="mwb-etmfw-on-boarding-heading mdc-dialog__title"></h3>
 					<p class="mwb-etmfw-on-boarding-desc"><?php esc_html_e( 'May we have a little info about why you are deactivating?', 'event-tickets-manager-for-woocommerce' ); ?></p>
 					<form action="#" method="post" class="mwb-etmfw-on-boarding-form">
-						<?php 
+						<?php
 						$etmfw_onboarding_deactive_html = $etmfw_mwb_etmfw_obj->mwb_etmfw_plug_generate_html( $etmfw_onboarding_form_deactivate );
 						echo esc_html( $etmfw_onboarding_deactive_html );
 						?>
@@ -41,7 +41,7 @@ $etmfw_onboarding_form_deactivate = apply_filters( 'mwb_etmfw_deactivation_form_
 								<input type="submit" class="mwb-etmfw-on-boarding-submit mwb-on-boarding-verify mdc-button mdc-button--raised" value="Send Us">
 							</div>
 							<div class="mwb-etmfw-on-boarding-form-no_thanks">
-								<a href="#" class="mwb-deactivation-no_thanks mdc-button"><?php esc_html_e( 'Skip and Deactivate Now', 'event-tickets-manager-for-woocommerce' ); ?></a>
+								<a href="#" class="mwb-etmfw-deactivation-no_thanks mdc-button"><?php esc_html_e( 'Skip and Deactivate Now', 'event-tickets-manager-for-woocommerce' ); ?></a>
 							</div>
 						</div>
 					</form>
