@@ -971,7 +971,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			/* translators: %s: Google API key setting link */
 			$response['message'] = sprintf(
 				esc_html__( 'Please add Google API key %s to display event location on google map.', 'event-tickets-manager-for-woocommerce' ),
-				'<a href="'. admin_url( 'admin.php?page=event_tickets_manager_for_woocommerce_menu&etmfw_tab=event-tickets-manager-for-woocommerce-integrations' ) . '" target="_blank">here</a>'
+				'<a href="' . admin_url( 'admin.php?page=event_tickets_manager_for_woocommerce_menu&etmfw_tab=event-tickets-manager-for-woocommerce-integrations' ) . '" target="_blank">here</a>'
 			);
 		}
 		echo json_encode( $response );
