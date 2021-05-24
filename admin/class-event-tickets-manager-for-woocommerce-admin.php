@@ -642,7 +642,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				);
 
 			}
-			do_action( 'mwb_etmfw_edit_product_settings' );
+			do_action( 'mwb_etmfw_edit_product_settings', $product_id );
 			?>
 			<div id="mwb_etmfw_add_fields_wrapper">
 				<div class="mwb_etmfw_add_fields_title">
@@ -843,6 +843,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			<h1><?php echo esc_html( 'Events', 'event-tickets-manager-for-woocommerce' ); ?></h1>
 			<form method="post">
 				<?php
+				do_action( 'mwb_etmfw_support_csv');
 				$current_page = isset( $_REQUEST['page'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) : '';
 				?>
 				<input type="hidden" name="page" value="<?php echo esc_attr( $current_page ); ?>">
