@@ -19,6 +19,8 @@ $etmfw_email_template_settings = apply_filters( 'mwb_etmfw_email_template_settin
 ?>
 <!--  template file for admin settings. -->
 <form action="" method="POST" class="mwb-etmfw-email-template-section-form">
+<input type="hidden" name="mwb_event_nonce" value="<?php echo esc_html( wp_create_nonce( 'mwb_event_nonce' ) ); ?>">
+
 	<div class="etmfw-secion-wrap">
 		<?php
 		$etmfw_email_template_html = $etmfw_mwb_etmfw_obj->mwb_etmfw_plug_generate_html( $etmfw_email_template_settings );

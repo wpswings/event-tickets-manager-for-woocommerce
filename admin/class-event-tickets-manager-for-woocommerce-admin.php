@@ -239,16 +239,16 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
 				),
 			),
-
-			array(
+		);
+		$etmfw_settings_general = apply_filters( 'mwb_etmfw_extent_general_settings_array', $etmfw_settings_general );
+		$etmfw_settings_general[] = array(
 				'type'  => 'button',
 				'id'    => 'mwb_etmfw_save_general_settings',
 				'button_text' => __( 'Save', 'event-tickets-manager-for-woocommerce' ),
 				'class' => 'etmfw-button-class',
-			),
 		);
 
-		return apply_filters( 'mwb_etmfw_extent_general_settings_array', $etmfw_settings_general );
+		return $etmfw_settings_general;
 	}
 
 	/**
@@ -268,16 +268,16 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'class' => 'etmfw-text-class',
 				'placeholder' => __( 'Google API Key', 'event-tickets-manager-for-woocommerce' ),
 			),
-
-			array(
-				'type'  => 'button',
-				'id'    => 'mwb_etmfw_save_integrations_settings',
-				'button_text' => __( 'Save', 'event-tickets-manager-for-woocommerce' ),
-				'class' => 'etmfw-button-class',
-			),
+		);
+		$etmfw_settings_integrations = apply_filters( 'mwb_etmfw_extent_integration_settings_array', $etmfw_settings_integrations );
+		$etmfw_settings_integrations[] = array(
+			'type'  => 'button',
+			'id'    => 'mwb_etmfw_save_integrations_settings',
+			'button_text' => __( 'Save', 'event-tickets-manager-for-woocommerce' ),
+			'class' => 'etmfw-button-class',
 		);
 
-		return apply_filters( 'mwb_etmfw_extent_integration_settings_array', $etmfw_settings_integrations );
+		return $etmfw_settings_integrations;
 	}
 
 	/**
@@ -343,16 +343,16 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'class' => 'mwb_etmfw_mail_setting_upload_logo_box',
 				'description' => __( 'Upload the image which is used as a logo on your Email Template.', 'event-tickets-manager-for-woocommerce' ),
 			),
-
-			array(
-				'type'  => 'button',
-				'id'    => 'mwb_etmfw_save_email_template_settings',
-				'button_text' => __( 'Save', 'event-tickets-manager-for-woocommerce' ),
-				'class' => 'etmfw-button-class',
-			),
+		);
+		$etmfw_email_template_settings = apply_filters( 'mwb_etmfw_extent_email_template_settings_array', $etmfw_email_template_settings );
+		$etmfw_email_template_settings[] = array(
+			'type'  => 'button',
+			'id'    => 'mwb_etmfw_save_email_template_settings',
+			'button_text' => __( 'Save', 'event-tickets-manager-for-woocommerce' ),
+			'class' => 'etmfw-button-class',
 		);
 
-		return apply_filters( 'mwb_etmfw_extent_email_template_settings_array', $etmfw_email_template_settings );
+		return $etmfw_email_template_settings;
 	}
 
 	/**
@@ -387,113 +387,69 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	 * @since 1.0.0
 	 */
 	public function mwb_etmfw_admin_save_tab_settings() {
-		global $etmfw_mwb_etmfw_obj;
-		if ( isset( $_POST['mwb_etmfw_save_general_settings'] ) && isset( $_POST['mwb-etmfw-general-nonce-field'] ) ) {
-			$mwb_etmfw_general_nonce = sanitize_text_field( wp_unslash( $_POST['mwb-etmfw-general-nonce-field'] ) );
-			if ( wp_verify_nonce( $mwb_etmfw_general_nonce, 'mwb-etmfw-general-nonce' ) ) {
-				$mwb_etmfw_gen_flag = false;
-				$etmfw_genaral_settings = apply_filters( 'mwb_etmfw_general_settings_array', array() );
-				$etmfw_button_index = array_search( 'submit', array_column( $etmfw_genaral_settings, 'type' ) );
-				if ( isset( $etmfw_button_index ) && ( null == $etmfw_button_index || '' == $etmfw_button_index ) ) {
-					$etmfw_button_index = array_search( 'button', array_column( $etmfw_genaral_settings, 'type' ) );
-				}
-				if ( isset( $etmfw_button_index ) && '' !== $etmfw_button_index ) {
-					unset( $etmfw_genaral_settings[ $etmfw_button_index ] );
-					if ( is_array( $etmfw_genaral_settings ) && ! empty( $etmfw_genaral_settings ) ) {
-						foreach ( $etmfw_genaral_settings as $etmfw_genaral_setting ) {
-							if ( isset( $etmfw_genaral_setting['id'] ) && '' !== $etmfw_genaral_setting['id'] ) {
-								if ( isset( $_POST[ $etmfw_genaral_setting['id'] ] ) && ! empty( $_POST[ $etmfw_genaral_setting['id'] ] ) ) {
-									$posted_value = sanitize_text_field( wp_unslash( $_POST[ $etmfw_genaral_setting['id'] ] ) );
-									update_option( $etmfw_genaral_setting['id'], $posted_value );
+
+		global $etmfw_mwb_etmfw_obj, $error_notice;
+		$etmfw_post_check = false;
+
+		if( wp_doing_ajax() ) {
+			return;
+		}
+		if ( ! isset( $_POST['mwb_event_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mwb_event_nonce'] ) ), 'mwb_event_nonce' ) ) {
+			return;
+		}
+		if ( isset( $_POST['mwb_etmfw_save_general_settings'] ) ) {
+			$etmfw_genaral_settings = apply_filters( 'mwb_etmfw_general_settings_array', array() );
+			$etmfw_post_check       = true;
+		} elseif ( isset( $_POST['mwb_etmfw_save_email_template_settings'] ) ) {
+			$etmfw_genaral_settings = apply_filters( 'mwb_etmfw_email_template_settings_array', array() );
+			$etmfw_post_check       = true;
+		} elseif ( isset( $_POST['mwb_etmfw_save_integrations_settings'] ) ) {
+			$etmfw_genaral_settings =  apply_filters( 'mwb_etmfw_integration_settings_array', array() );
+			$etmfw_post_check       = true;
+		}
+
+		if ( $etmfw_post_check ) {
+			$mwb_etmfw_gen_flag = false;
+			$etmfw_button_index = array_search( 'submit', array_column( $etmfw_genaral_settings, 'type' ) );
+			if ( isset( $etmfw_button_index ) && ( null == $etmfw_button_index || '' == $etmfw_button_index ) ) {
+				$etmfw_button_index = array_search( 'button', array_column( $etmfw_genaral_settings, 'type' ) );
+			}
+			if ( isset( $etmfw_button_index ) && '' !== $etmfw_button_index ) {
+				unset( $etmfw_genaral_settings[ $etmfw_button_index ] );
+				if ( is_array( $etmfw_genaral_settings ) && ! empty( $etmfw_genaral_settings ) ) {
+					foreach ( $etmfw_genaral_settings as $etmfw_genaral_setting ) {
+						if ( isset( $etmfw_genaral_setting['id'] ) && '' !== $etmfw_genaral_setting['id'] ) {
+							if ( 'multi' === $etmfw_genaral_setting['type'] ) {
+								$etmfw_general_settings_sub_arr = $etmfw_genaral_setting['value'];
+								$settings_general_arr = array();
+								foreach ( $etmfw_general_settings_sub_arr as $etmfw_genaral_sub_setting ) {
+									if ( isset( $_POST[ $etmfw_genaral_sub_setting['id'] ] ) ) {
+										$value                  = sanitize_text_field( wp_unslash( $_POST[ $etmfw_genaral_sub_setting['id'] ] ) );
+										$settings_general_arr[] = $value;
+									}
+								}
+								update_option( $etmfw_genaral_setting['id'], $settings_general_arr );
+							} else {
+								if ( isset( $_POST[ $etmfw_genaral_setting['id'] ] ) ) {
+									update_option( $etmfw_genaral_setting['id'], is_array( $_POST[ $etmfw_genaral_setting['id'] ] ) ? map_deep( wp_unslash( $_POST[ $etmfw_genaral_setting['id'] ] ), 'sanitize_text_field' ) : wp_kses_post( wp_unslash( $_POST[ $etmfw_genaral_setting['id'] ] ) ) );
 								} else {
 									update_option( $etmfw_genaral_setting['id'], '' );
 								}
-							} else {
-								$mwb_etmfw_gen_flag = true;
 							}
+						} else {
+							$mwb_etmfw_gen_flag = true;
 						}
 					}
-					if ( $mwb_etmfw_gen_flag ) {
-						$mwb_etmfw_error_text = esc_html__( 'Id of some field is missing', 'event-tickets-manager-for-woocommerce' );
+				}
+				if ( $mwb_etmfw_gen_flag ) {
+					$mwb_etmfw_error_text = esc_html__( 'Id of some field is missing', 'event-tickets-manager-for-woocommerce' );
 						$etmfw_mwb_etmfw_obj->mwb_etmfw_plug_admin_notice( $mwb_etmfw_error_text, 'error' );
-					} else {
-						$mwb_etmfw_error_text = esc_html__( 'Settings saved !', 'event-tickets-manager-for-woocommerce' );
-						$etmfw_mwb_etmfw_obj->mwb_etmfw_plug_admin_notice( $mwb_etmfw_error_text, 'success' );
-					}
+				} else {
+					$error_notice = false;
+					do_action( 'mwb_etmfw_save_admin_global_settings', $_POST );
 				}
 			}
 		}
-		if ( isset( $_POST['mwb_etmfw_save_integrations_settings'] ) && isset( $_POST['mwb-etmfw-integration-nonce-field'] ) ) {
-			$mwb_etmfw_integration_nonce = sanitize_text_field( wp_unslash( $_POST['mwb-etmfw-integration-nonce-field'] ) );
-			if ( wp_verify_nonce( $mwb_etmfw_integration_nonce, 'mwb-etmfw-integration-nonce' ) ) {
-				$mwb_etmfw_integration_flag = false;
-				$etmfw_integration_settings = apply_filters( 'mwb_etmfw_integration_settings_array', array() );
-				$etmfw_button_index = array_search( 'submit', array_column( $etmfw_integration_settings, 'type' ) );
-				if ( isset( $etmfw_button_index ) && ( null == $etmfw_button_index || '' == $etmfw_button_index ) ) {
-					$etmfw_button_index = array_search( 'button', array_column( $etmfw_integration_settings, 'type' ) );
-				}
-				if ( isset( $etmfw_button_index ) && '' !== $etmfw_button_index ) {
-					unset( $etmfw_integration_settings[ $etmfw_button_index ] );
-					if ( is_array( $etmfw_integration_settings ) && ! empty( $etmfw_integration_settings ) ) {
-						foreach ( $etmfw_integration_settings as $etmfw_integration_setting ) {
-							if ( isset( $etmfw_integration_setting['id'] ) && '' !== $etmfw_integration_setting['id'] ) {
-								if ( isset( $_POST[ $etmfw_integration_setting['id'] ] ) && ! empty( $_POST[ $etmfw_integration_setting['id'] ] ) ) {
-									$posted_value = sanitize_text_field( wp_unslash( $_POST[ $etmfw_integration_setting['id'] ] ) );
-									update_option( $etmfw_integration_setting['id'], $posted_value );
-								} else {
-									update_option( $etmfw_integration_setting['id'], '' );
-								}
-							} else {
-								$mwb_etmfw_integration_flag = true;
-							}
-						}
-					}
-					if ( $mwb_etmfw_integration_flag ) {
-						$mwb_etmfw_error_text = esc_html__( 'Id of some field is missing', 'event-tickets-manager-for-woocommerce' );
-						$etmfw_mwb_etmfw_obj->mwb_etmfw_plug_admin_notice( $mwb_etmfw_error_text, 'error' );
-					} else {
-						$mwb_etmfw_error_text = esc_html__( 'Settings saved !', 'event-tickets-manager-for-woocommerce' );
-						$etmfw_mwb_etmfw_obj->mwb_etmfw_plug_admin_notice( $mwb_etmfw_error_text, 'success' );
-					}
-				}
-			}
-		}
-		if ( isset( $_POST['mwb_etmfw_save_email_template_settings'] ) && isset( $_POST['mwb-etmfw-email-template-nonce-field'] ) ) {
-			$mwb_etmfw_email_template_nonce = sanitize_text_field( wp_unslash( $_POST['mwb-etmfw-email-template-nonce-field'] ) );
-			if ( wp_verify_nonce( $mwb_etmfw_email_template_nonce, 'mwb-etmfw-email-template-nonce' ) ) {
-				$mwb_etmfw_email_template_flag = false;
-				$etmfw_email_template_settings = apply_filters( 'mwb_etmfw_email_template_settings_array', array() );
-				$etmfw_button_index = array_search( 'submit', array_column( $etmfw_email_template_settings, 'type' ) );
-				if ( isset( $etmfw_button_index ) && ( null == $etmfw_button_index || '' == $etmfw_button_index ) ) {
-					$etmfw_button_index = array_search( 'button', array_column( $etmfw_email_template_settings, 'type' ) );
-				}
-				if ( isset( $etmfw_button_index ) && '' !== $etmfw_button_index ) {
-					unset( $etmfw_email_template_settings[ $etmfw_button_index ] );
-					if ( is_array( $etmfw_email_template_settings ) && ! empty( $etmfw_email_template_settings ) ) {
-						foreach ( $etmfw_email_template_settings as $etmfw_email_template_setting ) {
-							if ( isset( $etmfw_email_template_setting['id'] ) && '' !== $etmfw_email_template_setting['id'] ) {
-								if ( isset( $_POST[ $etmfw_email_template_setting['id'] ] ) && ! empty( $_POST[ $etmfw_email_template_setting['id'] ] ) ) {
-									$posted_value = map_deep( wp_unslash( $_POST[ $etmfw_email_template_setting['id'] ] ), 'sanitize_text_field' );
-									update_option( $etmfw_email_template_setting['id'], $posted_value );
-								} else {
-									update_option( $etmfw_email_template_setting['id'], '' );
-								}
-							} else {
-								$mwb_etmfw_email_template_flag = true;
-							}
-						}
-					}
-					if ( $mwb_etmfw_email_template_flag ) {
-						$mwb_etmfw_error_text = esc_html__( 'Id of some field is missing', 'event-tickets-manager-for-woocommerce' );
-						$etmfw_mwb_etmfw_obj->mwb_etmfw_plug_admin_notice( $mwb_etmfw_error_text, 'error' );
-					} else {
-						$mwb_etmfw_error_text = esc_html__( 'Settings saved !', 'event-tickets-manager-for-woocommerce' );
-						$etmfw_mwb_etmfw_obj->mwb_etmfw_plug_admin_notice( $mwb_etmfw_error_text, 'success' );
-					}
-				}
-			}
-		}
-		do_action( 'mwb_etmfw_save_admin_global_settings', $_POST );
 	}
 
 	/**

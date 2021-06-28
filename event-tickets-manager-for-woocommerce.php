@@ -175,6 +175,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		$etmfw_plugin_standard = new Event_Tickets_Manager_For_Woocommerce();
 		$etmfw_plugin_standard->etmfw_run();
 		$GLOBALS['etmfw_mwb_etmfw_obj'] = $etmfw_plugin_standard;
+		$GLOBALS['error_notice'] = true;
 
 	}
 	run_event_tickets_manager_for_woocommerce();

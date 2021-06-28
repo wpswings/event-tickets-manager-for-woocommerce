@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit(); // Exit if accessed directly.
 }
 
-global $etmfw_mwb_etmfw_obj;
+global $etmfw_mwb_etmfw_obj, $error_notice;
 $etmfw_active_tab   = isset( $_GET['etmfw_tab'] ) ? sanitize_key( $_GET['etmfw_tab'] ) : 'event-tickets-manager-for-woocommerce-overview';
 $etmfw_default_tabs = $etmfw_mwb_etmfw_obj->mwb_etmfw_plug_default_tabs();
 ?>
@@ -26,7 +26,12 @@ $etmfw_default_tabs = $etmfw_mwb_etmfw_obj->mwb_etmfw_plug_default_tabs();
 		<a href="<?php echo esc_url( admin_url( 'admin.php?page=event_tickets_manager_for_woocommerce_menu' ) . '&etmfw_tab=' . esc_attr( 'event-tickets-manager-for-woocommerce-support' ) ); ?>" class="mwb-link"><?php esc_html_e( 'Support', 'event-tickets-manager-for-woocommerce' ); ?></a>
 	</div>
 </header>
-
+<?php
+if ( ! $error_notice ) {
+	$mwb_etmfw_error_text = esc_html__( 'Settings saved !', 'event-tickets-manager-for-woocommerce' );
+	$etmfw_mwb_etmfw_obj->mwb_etmfw_plug_admin_notice( $mwb_etmfw_error_text, 'success' );
+}
+?>
 <main class="mwb-main mwb-bg-white mwb-r-8">
 	<nav class="mwb-navbar">
 		<ul class="mwb-navbar__items">

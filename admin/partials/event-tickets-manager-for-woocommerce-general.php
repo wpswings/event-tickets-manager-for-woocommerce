@@ -19,11 +19,11 @@ $etmfw_genaral_settings = apply_filters( 'mwb_etmfw_general_settings_array', arr
 ?>
 <!--  template file for admin settings. -->
 <form action="" method="POST" class="mwb-etmfw-gen-section-form">
+<input type="hidden" name="mwb_event_nonce" value="<?php echo esc_html( wp_create_nonce( 'mwb_event_nonce' ) ); ?>">
 	<div class="etmfw-secion-wrap">
 		<?php
 		$etmfw_general_html = $etmfw_mwb_etmfw_obj->mwb_etmfw_plug_generate_html( $etmfw_genaral_settings );
 		echo esc_html( $etmfw_general_html );
-		wp_nonce_field( 'mwb-etmfw-general-nonce', 'mwb-etmfw-general-nonce-field' );
 		?>
 	</div>
 </form>

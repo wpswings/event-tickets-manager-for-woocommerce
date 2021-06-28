@@ -177,14 +177,14 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 									<input type="hidden" id="etmfw_event_lng" value="<?php echo esc_attr( $event_lng ); ?>">
 									<script>
 									function initMap() {
-										  let event_lat = parseInt( document.getElementById('etmfw_event_lat').value );
+										let event_lat = parseInt( document.getElementById('etmfw_event_lat').value );
 										let event_lng = parseInt( document.getElementById('etmfw_event_lng').value );
 										const myLatLng = { lat: event_lat, lng: event_lng };
-										  const map = new google.maps.Map(document.getElementById("mwb_etmfw_event_map"), {
+										const map = new google.maps.Map(document.getElementById("mwb_etmfw_event_map"), {
 											zoom: 4,
 											center: myLatLng,
-										  });
-										  new google.maps.Marker({
+										});
+										new google.maps.Marker({
 											position: myLatLng,
 											map,
 											title: "Event!",
