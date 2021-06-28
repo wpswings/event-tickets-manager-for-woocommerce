@@ -746,8 +746,8 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					$mwb_etmfw_product_array['mwb_etmfw_field_data'] = $mwb_etmfw_field_data_array;
 					$etmfw_display_map = isset( $_POST['etmfw_display_map'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_display_map'] ) ) : 'no';
 					$mwb_etmfw_product_array['etmfw_display_map'] = $etmfw_display_map;
-					do_action( 'mwb_etmfw_product_pricing', $mwb_etmfw_product_array );
-					$mwb_etmfw_product_array = apply_filters( 'mwb_etmfw_product_pricing', $mwb_etmfw_product_array );
+					// do_action( 'mwb_etmfw_product_pricing', $mwb_etmfw_product_array );
+					$mwb_etmfw_product_array = apply_filters( 'mwb_etmfw_product_pricing', $mwb_etmfw_product_array, $_POST );
 					update_post_meta( $product_id, 'mwb_etmfw_product_array', $mwb_etmfw_product_array );
 					do_action( 'mwb_etmfw_event_product_type_save_fields', $product_id );
 				}
