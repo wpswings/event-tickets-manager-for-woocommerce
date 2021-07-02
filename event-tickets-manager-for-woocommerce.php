@@ -306,6 +306,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	add_action( 'widgets_init', 'mwb_etmfw_register_widget' );
 
 	require plugin_dir_path( __FILE__ ) . 'includes/class-event-tickets-manager-for-woocommerce-widget.php';
+
 } else {
 
 	/**
@@ -315,9 +316,9 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
 		unset( $_GET['activate'] );
 		?>
-		  <div class="error notice is-dismissible">
-			 <p><?php esc_html_e( 'Woocommerce is not activated, Please activate Woocommerce first to install Event Tickets Manager for WooCommerce', 'event-tickets-manager-for-woocommerce' ); ?></p>
-		   </div>
+		<div class="error notice is-dismissible">
+			<p><?php esc_html_e( 'Woocommerce is not activated, Please activate Woocommerce first to install Event Tickets Manager for WooCommerce', 'event-tickets-manager-for-woocommerce' ); ?></p>
+		</div>
 		<?php
 	}
 	add_action( 'admin_notices', 'mwb_etmfw_plugin_error_notice' );
@@ -333,5 +334,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 * Register the action with WordPress.
 	 */
 	add_action( 'admin_init', 'mwb_etmfw_plugin_deactivate' );
+
 }
 

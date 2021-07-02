@@ -250,7 +250,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								<input type="text" name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" <?php echo esc_html( $required ); ?>>
 							</div>
 						</div>
-						
+
 							<?php
 							break;
 
@@ -267,7 +267,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								</label>
 							</div>
 							<div class="mwb-form-group__control">
-								<input type="email" name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" <?php echo esc_html( $required ); ?> >
+								<input type="email" name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>[]" <?php echo esc_html( $required ); ?> >
 							</div>
 						</div>
 							<?php
@@ -414,9 +414,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				if ( 'event_ticket_manager' == $product_type ) {
 					$cart_values = ! empty( $_POST ) ? map_deep( wp_unslash( $_POST ), 'sanitize_text_field' ) : array();
 					foreach ( $cart_values as $key => $value ) {
+						// echo '<pre>'; print_r( $key ); echo '</pre><br/>';
+						// echo '<pre>'; print_r( $value ); echo '</pre>';
 						if ( false !== strpos( $key, 'mwb_etmfw_' ) && 'mwb_etmfw_single_nonce_field' !== $key ) {
 							if ( isset( $key ) && ! empty( $value ) ) {
-								$item_meta['mwb_etmfw_field_info'][ $key ] = isset( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : '';
+								$item_meta['mwb_etmfw_field_info'][ $key ] = $value;
 							}
 						}
 					}
@@ -425,6 +427,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				}
 			}
 		}
+		// echo '<pre>'; print_r( $the_cart_data ); echo '</pre>';
 		return $the_cart_data;
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 	}
@@ -445,13 +448,23 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		if ( $mwb_etmfw_enable ) {
 			if ( isset( $existing_item_meta ['product_meta']['meta_data'] ) ) {
 				foreach ( $existing_item_meta['product_meta'] ['meta_data'] as $key => $val ) {
+					// echo '<pre>'; print_r( $existing_item_meta ); echo '</pre>';
 					if ( 'mwb_etmfw_field_info' == $key ) {
 						if ( ! empty( $val ) ) {
 							$info_array = $this->mwb_etmfw_generate_key_value_pair( $val );
 							foreach ( $info_array as $info_key => $info_value ) {
+								if ( is_array( $info_value ) ) {
+									foreach ( $info_value as $val ) {
+										$item_meta [] = array(
+											'name'  => esc_html( $info_key ),
+											'value' => $val,
+										);
+									}
+									continue;
+								}
 								$item_meta [] = array(
 									'name'  => esc_html( $info_key ),
-									'value' => stripslashes( $info_value ),
+									'value' => $info_value,
 								);
 							}
 						}
@@ -529,8 +542,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$mwb_etmfw_enable = get_option( 'mwb_etmfw_enable_plugin', false );
 		if ( $mwb_etmfw_enable ) {
 			if ( $old_status != $new_status ) {
-				if ( 'completed' == $new_status || 'processing' == $new_status ) {
+				if ( 'completed' == $new_status ) {
 					$this->mwb_etmfw_process_event_order( $order_id, $old_status, $new_status );
+					do_action( 'mwb_etmfw_send_sms_ticket', $order_id );
 				}
 			}
 		}
@@ -681,7 +695,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		if ( 'mwb_etmfw_email_notification' == $email_id ) {
 			if ( is_a( $order, 'WC_Order' ) ) {
 				$order_status  = $order->get_status();
-				if ( 'processing' === $order_status || 'completed' === $order_status ) {
+				if ( 'completed' === $order_status ) {
 					$order_id = $order->get_id();
 					foreach ( $order->get_items() as $item_id => $item ) {
 						$product = $item->get_product();
@@ -798,7 +812,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	public function mwb_etmfw_view_ticket_button( $item_id, $item, $order ) {
 		$order_id = $order->get_id();
 		$order_status = $order->get_status();
-		if ( 'completed' == $order_status || 'processing' == $order_status ) {
+		if ( 'completed' == $order_status ) {
 			$_product = apply_filters( 'mwb_etmfw_woo_order_item_product', $product = $item->get_product(), $item );
 			if ( isset( $_product ) && ! empty( $_product ) ) {
 				$product_id = $_product->get_id();
