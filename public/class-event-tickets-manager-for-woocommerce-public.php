@@ -444,14 +444,18 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_get_cart_item_data( $item_meta, $existing_item_meta ) {
+
 		$mwb_etmfw_enable = get_option( 'mwb_etmfw_enable_plugin', false );
 		if ( $mwb_etmfw_enable ) {
 			if ( isset( $existing_item_meta ['product_meta']['meta_data'] ) ) {
+				if( ! isset( $existing_item_meta['mwb_wet_mail_count'] ) ) {
+					$existing_item_meta['mwb_wet_mail_count'] = 0;
+				}
+				$index_val = $existing_item_meta['mwb_wet_mail_count'];
 				foreach ( $existing_item_meta['product_meta'] ['meta_data'] as $key => $val ) {
-					// echo '<pre>'; print_r( $existing_item_meta ); echo '</pre>';
 					if ( 'mwb_etmfw_field_info' == $key ) {
 						if ( ! empty( $val ) ) {
-							$info_array = $this->mwb_etmfw_generate_key_value_pair( $val );
+							$info_array = $this->mwb_etmfw_generate_key_value_pair( $val, $index_val );
 							foreach ( $info_array as $info_key => $info_value ) {
 								if ( is_array( $info_value ) ) {
 									foreach ( $info_value as $val ) {
@@ -486,14 +490,14 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_etmfw_generate_key_value_pair( $field_post ) {
+	public function mwb_etmfw_generate_key_value_pair( $field_post, $index_val ) {
 		$field_array = array();
 		$label = '';
 		$discard_keys = array( 'mwb_etmfw_event_start', 'mwb_etmfw_event_finish', 'mwb_etmfw_event_venue' );
 		foreach ( $field_post as $key => $value ) {
 			if ( strpos( $key, 'mwb_etmfw_' ) !== false && ! in_array( $key, $discard_keys ) ) {
 				$key = ucwords( str_replace( '_', ' ', substr( $key, 10 ) ) );
-				$field_array[ $key ] = $value;
+				$field_array[ $key ] = $value[ $index_val ];
 			}
 		}
 		return $field_array;
@@ -511,15 +515,20 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_create_order_line_item( $item, $cart_key, $values ) {
+
+		// echo '<pre>'; print_r( WC()->session ); echo '</pre>';
+		// die;
 		$mwb_etmfw_enable = get_option( 'mwb_etmfw_enable_plugin', false );
 		if ( $mwb_etmfw_enable ) {
 			if ( isset( $values ['product_meta'] ) ) {
 				foreach ( $values ['product_meta'] ['meta_data'] as $key => $val ) {
 					if ( 'mwb_etmfw_field_info' == $key && $val ) {
-						$info_array = $this->mwb_etmfw_generate_key_value_pair( $val );
+						$info_array = $this->mwb_etmfw_generate_key_value_pair( $val, 1 );
 						foreach ( $info_array as $info_key => $info_value ) {
 							$item->add_meta_data( $info_key, $info_value );
 						}
+						update_option( 'order_key', wp_json_encode( $info_key ) );
+						update_option( 'cart_key', wp_json_encode( $item ) );
 						do_action( 'mwb_etmfw_checkout_create_order_line_item', $item, $key, $val );
 					}
 				}
@@ -569,52 +578,52 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			$product = $item->get_product();
 			if ( isset( $product ) && $product->is_type( 'event_ticket_manager' ) ) {
 				$item_quantity = wc_get_order_item_meta( $item_id, '_qty', true );
-				$product_id = $product->get_id();
-				$item_meta_data = $item->get_meta_data();
-				$mwb_etmfw_mail_template_data = array(
-					'product_id' => $product_id,
-					'item_id'   => $item_id,
-					'order_id'   => $order_id,
-					'product_name' => $product->get_name(),
-				);
-				foreach ( $item_meta_data as $key => $value ) {
-					if ( isset( $value->key ) && ! empty( $value->value ) ) {
-						$mwb_etmfw_mail_template_data[ $value->key ] = $value->value;
+				for ( $i = 1; $i <= $item_quantity; $i++ ) {
+					$product_id = $product->get_id();
+					$item_meta_data = $item->get_meta_data();
+					$mwb_etmfw_mail_template_data = array(
+						'product_id' => $product_id,
+						'item_id'   => $item_id,
+						'order_id'   => $order_id,
+						'product_name' => $product->get_name(),
+					);
+					foreach ( $item_meta_data as $key => $value ) {
+						if ( isset( $value->key ) && ! empty( $value->value ) ) {
+							$mwb_etmfw_mail_template_data[ $value->key ] = $value->value;
+						}
 					}
-				}
-				$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
-				if ( '' === $ticket_number ) {
-					$ticket_number = mwb_etmfw_ticket_generator();
-					update_post_meta( $order_id, "event_ticket#$order_id#$item_id", $ticket_number );
-					$mwb_ticket_content = $this->mwb_etmfw_get_html_content( $item_meta_data, $order, $order_id, $ticket_number, $product_id );
-					$this->mwb_etmfw_generate_ticket_pdf( $mwb_ticket_content, $order, $order_id, $ticket_number );
-				}
-
-				if ( isset( $ticket_number ) ) {
-					$mwb_etmfw_mail_template_data['ticket_number'] = $ticket_number;
-					$generated_tickets = get_post_meta( $product_id, 'mwb_etmfw_generated_tickets', true );
-					if ( empty( $generated_tickets ) ) {
-						$generated_tickets = array();
-						$generated_tickets[] = array(
-							'ticket' => $ticket_number,
-							'status' => 'pending',
-							'order_id' => $order_id,
-							'item_id' => $item_id,
-						);
-						update_post_meta( $product_id, 'mwb_etmfw_generated_tickets', $generated_tickets );
-					} else {
-						$generated_tickets[] = array(
-							'ticket' => $ticket_number,
-							'status' => 'pending',
-							'order_id' => $order_id,
-							'item_id' => $item_id,
-						);
-						update_post_meta( $product_id, 'mwb_etmfw_generated_tickets', $generated_tickets );
+					$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+					if ( '' === $ticket_number ) {
+						$ticket_number = mwb_etmfw_ticket_generator();
+						update_post_meta( $order_id, "event_ticket#$order_id#$item_id", $ticket_number );
+						$mwb_ticket_content = $this->mwb_etmfw_get_html_content( $item_meta_data, $order, $order_id, $ticket_number, $product_id );
+						$this->mwb_etmfw_generate_ticket_pdf( $mwb_ticket_content, $order, $order_id, $ticket_number );
 					}
+					if ( isset( $ticket_number ) ) {
+						$mwb_etmfw_mail_template_data['ticket_number'] = $ticket_number;
+						$generated_tickets = get_post_meta( $product_id, 'mwb_etmfw_generated_tickets', true );
+						if ( empty( $generated_tickets ) ) {
+							$generated_tickets = array();
+							$generated_tickets[] = array(
+								'ticket' => $ticket_number,
+								'status' => 'pending',
+								'order_id' => $order_id,
+								'item_id' => $item_id,
+							);
+							update_post_meta( $product_id, 'mwb_etmfw_generated_tickets', $generated_tickets );
+						} else {
+							$generated_tickets[] = array(
+								'ticket' => $ticket_number,
+								'status' => 'pending',
+								'order_id' => $order_id,
+								'item_id' => $item_id,
+							);
+							update_post_meta( $product_id, 'mwb_etmfw_generated_tickets', $generated_tickets );
+						}
+					}
+					$mwb_etmfw_mail_template_data = apply_filters( 'mwb_etmfw_common_arr_data', $mwb_etmfw_mail_template_data, $item );
+					$this->mwb_etmfw_send_ticket_mail( $order, $mwb_etmfw_mail_template_data );
 				}
-
-				$mwb_etmfw_mail_template_data = apply_filters( 'mwb_etmfw_common_arr_data', $mwb_etmfw_mail_template_data, $item );
-				$this->mwb_etmfw_send_ticket_mail( $order, $mwb_etmfw_mail_template_data );
 				do_action( 'mwb_etmfw_action_on_order_status_changed', $order_id, $old_status, $new_status );
 			}
 		}
