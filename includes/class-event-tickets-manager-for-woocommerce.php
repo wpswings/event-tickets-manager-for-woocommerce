@@ -222,7 +222,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'wp_enqueue_scripts', $etmfw_plugin_public, 'etmfw_public_enqueue_scripts' );
 		$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $etmfw_plugin_public, 'mwb_etmfw_before_add_to_cart_button_html' );
 		$this->loader->add_filter( 'woocommerce_is_sold_individually', $etmfw_plugin_public, 'mwb_etmfw_allow_single_quantity', 10, 2 );
-		$this->loader->add_filter( 'woocommerce_add_cart_item_data', $etmfw_plugin_public, 'mwb_etmfw_cart_item_data', 10, 3 );
+		$this->loader->add_filter( 'woocommerce_add_to_cart', $etmfw_plugin_public, 'mwb_etmfw_cart_item_data', 10, 6 );
 		$this->loader->add_filter( 'woocommerce_get_item_data', $etmfw_plugin_public, 'mwb_etmfw_get_cart_item_data', 10, 2 );
 		$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $etmfw_plugin_public, 'mwb_etmfw_create_order_line_item', 10, 3 );
 		$this->loader->add_action( 'woocommerce_order_status_changed', $etmfw_plugin_public, 'mwb_etmfw_event_status_changed', 10, 3 );
