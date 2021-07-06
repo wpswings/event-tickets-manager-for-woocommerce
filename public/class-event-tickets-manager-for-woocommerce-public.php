@@ -529,7 +529,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$mwb_etmfw_enable = get_option( 'mwb_etmfw_enable_plugin', false );
 		if ( $mwb_etmfw_enable ) {
 			if ( $old_status != $new_status ) {
-				if ( 'completed' == $new_status || 'processing' == $new_status ) {
+				if ( 'completed' == $new_status ) {
 					$this->mwb_etmfw_process_event_order( $order_id, $old_status, $new_status );
 				}
 			}
@@ -681,7 +681,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		if ( 'mwb_etmfw_email_notification' == $email_id ) {
 			if ( is_a( $order, 'WC_Order' ) ) {
 				$order_status  = $order->get_status();
-				if ( 'processing' === $order_status || 'completed' === $order_status ) {
+				if ( 'completed' === $order_status ) {
 					$order_id = $order->get_id();
 					foreach ( $order->get_items() as $item_id => $item ) {
 						$product = $item->get_product();
@@ -798,7 +798,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	public function mwb_etmfw_view_ticket_button( $item_id, $item, $order ) {
 		$order_id = $order->get_id();
 		$order_status = $order->get_status();
-		if ( 'completed' == $order_status || 'processing' == $order_status ) {
+		if ( 'completed' == $order_status ) {
 			$_product = apply_filters( 'mwb_etmfw_woo_order_item_product', $product = $item->get_product(), $item );
 			if ( isset( $_product ) && ! empty( $_product ) ) {
 				$product_id = $_product->get_id();
