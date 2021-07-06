@@ -177,14 +177,14 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 									<input type="hidden" id="etmfw_event_lng" value="<?php echo esc_attr( $event_lng ); ?>">
 									<script>
 									function initMap() {
-										let event_lat = parseInt( document.getElementById('etmfw_event_lat').value );
+										  let event_lat = parseInt( document.getElementById('etmfw_event_lat').value );
 										let event_lng = parseInt( document.getElementById('etmfw_event_lng').value );
 										const myLatLng = { lat: event_lat, lng: event_lng };
-										const map = new google.maps.Map(document.getElementById("mwb_etmfw_event_map"), {
+										  const map = new google.maps.Map(document.getElementById("mwb_etmfw_event_map"), {
 											zoom: 4,
 											center: myLatLng,
-										});
-										new google.maps.Marker({
+										  });
+										  new google.maps.Marker({
 											position: myLatLng,
 											map,
 											title: "Event!",
@@ -201,7 +201,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								<?php $this->mwb_etmfw_generate_addional_fields( $product_id, $event_field_array ); ?>
 								<?php do_action( 'mwb_etmfw_after_more_info', $product_id ); ?>
 							</div>
-							<div class="mwb_etmfw_add_extra"></div>
 						</div>
 						<?php
 					}
@@ -248,10 +247,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								</label>
 							</div>
 							<div class="mwb-form-group__control">
-								<input type="text" name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>"[] <?php echo esc_html( $required ); ?>>
+								<input type="text" name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" <?php echo esc_html( $required ); ?>>
 							</div>
 						</div>
-
+						
 							<?php
 							break;
 
@@ -268,7 +267,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								</label>
 							</div>
 							<div class="mwb-form-group__control">
-								<input type="email" name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>[]" <?php echo esc_html( $required ); ?> >
+								<input type="email" name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" <?php echo esc_html( $required ); ?> >
 							</div>
 						</div>
 							<?php
@@ -287,7 +286,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								</label>
 							</div>
 							<div class="mwb-form-group__control">
-								<textarea name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>"[] <?php echo esc_html( $required ); ?>></textarea>
+								<textarea name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" <?php echo esc_html( $required ); ?>></textarea>
 							</div>
 						</div>
 
@@ -405,23 +404,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_etmfw_cart_item_data( $cart_item_key, $product_id, $quantity, $variation_id, $variation, $the_cart_data ) {
-
-	
-			// if ( $quantity == 1 ) {
-			// 	echo $quantity;
-			// 	return;
-			// }
-			// WC()->cart->set_quantity( $cart_item_key, 1 );
-			// WC()->cart->remove_cart_item( $cart_item_key );
-			// // $emails = $cart_item_data['product_meta']['meta_data']['mwb_etmfw_field_info']['mwb_etmfw_email_id'];
-			// $emails = $_POST['mwb_etmfw_email_id'];
-			// for ( $i = 1; $i <= $quantity; $i++ ) {
-			// 	$cart_item_data['unique_key'] = md5( microtime() . rand() . uniqid() );
-			// 	$cart_item_data['product_meta']['meta_data']['mwb_etmfw_field_info']['mwb_etmfw_email_id'] = $emails[ $i -1 ];
-			// 	WC()->cart->add_to_cart( $product_id, 1, $variation_id, $variation, $cart_item_data );
-			// 	// echo '<pre>'; print_r( $cart_item_data ); echo '</pre>';
-			// }
+	public function mwb_etmfw_cart_item_data( $the_cart_data, $product_id, $variation_id ) {
 		// phpcs:disable WordPress.Security.NonceVerification.Missing
 		$mwb_etmfw_enable = get_option( 'mwb_etmfw_enable_plugin', false );
 		if ( $mwb_etmfw_enable ) {
@@ -433,26 +416,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					foreach ( $cart_values as $key => $value ) {
 						if ( false !== strpos( $key, 'mwb_etmfw_' ) && 'mwb_etmfw_single_nonce_field' !== $key ) {
 							if ( isset( $key ) && ! empty( $value ) ) {
-								if ( $quantity == 1 ) {
-									// echo '<pre>'; print_r( $_POST ); echo '</pre>';
-									// var_dump( $_POST['mwb_etmfw_email_id'] );
-									$item_meta['mwb_etmfw_field_info'][ $key ] = isset( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : '';
-									var_dump( $item_meta['mwb_etmfw_field_info'][ $key ] );
-									// print_r( $key );
-									// echo '<pre>'; print_r( $item_meta['mwb_etmfw_field_info'][ $key ] ); echo '</pre>';
-									// if ( is_array(  $key  ) ) {
-										// foreach (  $key  as $k => $val ) {
-										// 	$item_meta['mwb_etmfw_field_info'][ $key ] = $val;
-										// }
-									// }
-								} else {
-									$item_meta['mwb_etmfw_field_info'][ $key ] = isset( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : '';
-									if ( is_array( $item_meta['mwb_etmfw_field_info'][ $key ] ) ) {
-										foreach ( $item_meta['mwb_etmfw_field_info'][ $key ] as $k => $val ) {
-											$item_meta['mwb_etmfw_field_info'][ $key ] = $val;
-										}
-									}
-								}
+								$item_meta['mwb_etmfw_field_info'][ $key ] = isset( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : '';
 							}
 						}
 					}
@@ -461,9 +425,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				}
 			}
 		}
-		// echo '<pre>'; print_r( $the_cart_data ); echo '</pre>';
-		die;
-		// return $the_cart_data;
+		return $the_cart_data;
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 	}
 
