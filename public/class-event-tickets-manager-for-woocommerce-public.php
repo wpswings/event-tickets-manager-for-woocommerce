@@ -626,6 +626,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		}
 		$mwb_etmfw_email_subject = str_replace( '[SITENAME]', get_bloginfo(), $mwb_etmfw_email_subject );
 		$email_status = $mailer_obj->trigger( $user_email, $mwb_etmfw_email_discription, $mwb_etmfw_email_subject, $order );
+		do_action( 'mwb_etmfw_send_sms_ticket', $mwb_etmfw_mail_template_data );
 	}
 
 	/**

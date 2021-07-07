@@ -222,7 +222,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'wp_enqueue_scripts', $etmfw_plugin_public, 'etmfw_public_enqueue_scripts' );
 		$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $etmfw_plugin_public, 'mwb_etmfw_before_add_to_cart_button_html' );
 		$this->loader->add_filter( 'woocommerce_is_sold_individually', $etmfw_plugin_public, 'mwb_etmfw_allow_single_quantity', 10, 2 );
-		$this->loader->add_filter( 'woocommerce_add_to_cart', $etmfw_plugin_public, 'mwb_etmfw_cart_item_data', 10, 6 );
+		$this->loader->add_filter( 'woocommerce_add_cart_item_data', $etmfw_plugin_public, 'mwb_etmfw_cart_item_data', 10, 3 );
 		$this->loader->add_filter( 'woocommerce_get_item_data', $etmfw_plugin_public, 'mwb_etmfw_get_cart_item_data', 10, 2 );
 		$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $etmfw_plugin_public, 'mwb_etmfw_create_order_line_item', 10, 3 );
 		$this->loader->add_action( 'woocommerce_order_status_changed', $etmfw_plugin_public, 'mwb_etmfw_event_status_changed', 10, 3 );
@@ -629,7 +629,9 @@ class Event_Tickets_Manager_For_Woocommerce {
 									<span class="mdc-text-field__resizer">
 										<textarea class="mdc-text-field__input <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>" rows="2" cols="25" aria-label="Label" name="<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : esc_html( $etmfw_component['id'] ) ); ?>" id="<?php echo esc_attr( $etmfw_component['id'] ); ?>" placeholder="<?php echo ( isset( $etmfw_component['placeholder'] ) ? esc_attr( $etmfw_component['placeholder'] ) : '' ); ?>"><?php echo ( isset( $etmfw_component['value'] ) ? esc_textarea( $etmfw_component['value'] ) : '' ); // WPCS: XSS ok. ?></textarea>
 									</span>
+
 								</label>
+									<label class="mdl-textfield__label" for="octane"><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></label>
 
 							</div>
 						</div>
