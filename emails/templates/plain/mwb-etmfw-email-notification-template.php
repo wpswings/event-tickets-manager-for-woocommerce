@@ -48,6 +48,9 @@ $template = '<table class="mwb-wuc__email-template" style=" border: 1px solid #0
 								<p style="font-size: 16px;">[VENUE]</p>							
 								<p style="font-size: 16px;">[TIME]</p>
 							</td>
+							<td style="text-align: right;">
+								[QRCODE]
+							</td>	
 						</tr>						
 					</tbody>
 				</table>
@@ -61,6 +64,11 @@ $template = str_replace( '[PURCHASER]', $email_content['purchaser'], $template )
 $template = str_replace( '[VENUE]', $email_content['venue'], $template );
 $template = str_replace( '[TIME]', $email_content['time'], $template );
 $template = str_replace( '[FEATUREDIMAGE]', $email_content['featuredimage'], $template );
+$qr_code  = isset( $email_content['qrcode'] ) ? $email_content['qrcode'] : '';
+$template = str_replace( '[QRCODE]', $qr_code, $template );
+
+
+
 
 echo wp_kses_post( html_entity_decode( $template ) ); // PHPCS:Ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 

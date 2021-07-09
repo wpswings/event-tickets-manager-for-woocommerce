@@ -521,9 +521,6 @@ class Event_Tickets_Manager_For_Woocommerce {
 		// Get the PHP maximum execution time.
 		$etmfw_system_status['php_max_execution_time'] = function_exists( 'ini_get' ) ? ini_get( 'max_execution_time' ) : __( 'N/A (ini_get function does not exist)', 'event-tickets-manager-for-woocommerce' );
 
-		// Get outgoing IP address.
-		$etmfw_system_status['outgoing_ip'] = function_exists( 'file_get_contents' ) ? file_get_contents( 'http://ipecho.net/plain' ) : __( 'N/A (file_get_contents function does not exist)', 'event-tickets-manager-for-woocommerce' );
-
 		$etmfw_system_data['php'] = $etmfw_system_status;
 		$etmfw_system_data['wp'] = $etmfw_wordpress_status;
 
