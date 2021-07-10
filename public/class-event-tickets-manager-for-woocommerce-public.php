@@ -640,6 +640,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_generate_ticket_info_in_mail( $mwb_etmfw_mail_template_data ) {
+		$product_id = null;
 		if ( ! empty( $mwb_etmfw_mail_template_data ) ) {
 			$order = wc_get_order( $mwb_etmfw_mail_template_data['order_id'] );
 			$product_id = $mwb_etmfw_mail_template_data['product_id'];
@@ -660,7 +661,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$template_html['venue'] = $venue;
 		$template_html['time'] = mwb_etmfw_get_date_format( $start ) . '-' . mwb_etmfw_get_date_format( $end );
 		$template_html['featuredimage'] = '<img src="' . $image . '" style="margin-right: 20px;" alt="image"/>';
-		return apply_filters( 'mwb_etmfw_ticket_info', $template_html );
+		return apply_filters( 'mwb_etmfw_ticket_info', $template_html, $product_id );
 
 	}
 
