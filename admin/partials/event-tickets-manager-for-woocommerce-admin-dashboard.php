@@ -17,14 +17,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $etmfw_mwb_etmfw_obj, $error_notice;
-$etmfw_active_tab   = isset( $_GET['etmfw_tab'] ) ? sanitize_key( $_GET['etmfw_tab'] ) : 'event-tickets-manager-for-woocommerce-overview';
+$etmfw_active_tab   = isset( $_GET['etmfw_tab'] ) ? sanitize_key( $_GET['etmfw_tab'] ) : 'event-tickets-manager-for-woocommerce-general';
 $etmfw_default_tabs = $etmfw_mwb_etmfw_obj->mwb_etmfw_plug_default_tabs();
 ?>
 <header>
 	<div class="mwb-header-container mwb-bg-white mwb-r-8">
 		<h1 class="mwb-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', $etmfw_mwb_etmfw_obj->etmfw_get_plugin_name() ) ) ); ?></h1>
-		<a href="<?php echo esc_url( admin_url( 'admin.php?page=event_tickets_manager_for_woocommerce_menu' ) . '&etmfw_tab=' . esc_attr( 'event-tickets-manager-for-woocommerce-support' ) ); ?>" class="mwb-link"><?php esc_html_e( 'Support', 'event-tickets-manager-for-woocommerce' ); ?></a>
+		
+		<a href="https://docs.makewebbetter.com/event-tickets-manager-for-woocommerce/?utm_source=MWB-event-org&utm_medium=MWB-org-backend&utm_campaign=MWB-event-doc" target="_blank" class="mwb-link"><?php esc_html_e('Documentation', 'event-tickets-manager-for-woocommerce'); ?></a>
+		<span>|</span>
+		<a href="https://makewebbetter.com/submit-query/?utm_source=MWB-event-org&utm_medium=MWB-org-backend&utm_campaign=MWB-event-support" target="_blank" class="mwb-link"><?php esc_html_e('Support', 'event-tickets-manager-for-woocommerce'); ?></a>
 	</div>
+	
 </header>
 <?php
 if ( ! $error_notice ) {

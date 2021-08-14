@@ -192,7 +192,6 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_filter( 'mwb_etmfw_general_settings_array', $etmfw_plugin_admin, 'mwb_etmfw_admin_general_settings_page', 10 );
 		$this->loader->add_filter( 'mwb_etmfw_integration_settings_array', $etmfw_plugin_admin, 'mwb_etmfw_admin_integration_settings_page', 10 );
 		$this->loader->add_filter( 'mwb_etmfw_email_template_settings_array', $etmfw_plugin_admin, 'mwb_etmfw_admin_email_template_settings_page', 10 );
-		$this->loader->add_filter( 'mwb_etmfw_supprot_tab_settings_array', $etmfw_plugin_admin, 'mwb_etmfw_admin_support_settings_page', 10 );
 		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'mwb_etmfw_admin_save_tab_settings' );
 		$this->loader->add_filter( 'product_type_selector', $etmfw_plugin_admin, 'mwb_etmfw_event_ticket_product' );
 		$this->loader->add_filter( 'woocommerce_product_data_tabs', $etmfw_plugin_admin, 'mwb_etmfw_event_ticket_tab' );

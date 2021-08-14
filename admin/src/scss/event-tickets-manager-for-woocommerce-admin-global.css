@@ -216,15 +216,15 @@ select {
 }
 
 .mwb-header-title {
-    font-family: 'NunitoSans-ExtraBold';
+    font-family: "NunitoSans-ExtraBold";
     font-style: normal;
     font-weight: 800;
     font-size: 20px;
     line-height: 24px;
     letter-spacing: 0.3px;
-    color: var(--mdc-theme-primary);
+    color: #2196f3;
     flex: 0 0 100%;
-    max-width: calc(100% - 100px);
+    max-width: calc(100% - 200px);
 }
 
 .mwb-navbar {

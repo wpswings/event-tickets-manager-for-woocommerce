@@ -32,6 +32,12 @@ input#mwb_etmfw_imput_ticket {
     max-width: 75%;
     margin: 0;
 }
+input#mwb_etmfw_chckin_email {
+    flex: 0 0 75%;
+    max-width: 75%;
+    margin: 0;
+}
+
 
 .mwb_etmfw--loader-btn-wrapper {
     display: flex;

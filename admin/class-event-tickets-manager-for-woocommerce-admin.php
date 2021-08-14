@@ -325,7 +325,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 						'class' => 'etmfw-text-class',
 						'id' => 'mwb_etmfw_mail_setting_upload_logo',
 						'value' => $mwb_etmfw_default_site_logo,
-						'placeholder' => __( 'Upload Logo', 'event-tickets-manager-for-woocommerce' ),
+						'placeholder' => __( '', 'event-tickets-manager-for-woocommerce' ),
 					),
 					array(
 						'type'  => 'button',
@@ -353,32 +353,6 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		);
 
 		return $etmfw_email_template_settings;
-	}
-
-	/**
-	 * Event Tickets Manager for WooCommerce support page tabs.
-	 *
-	 * @since    1.0.0
-	 * @param    Array $mwb_etmfw_support Settings fields.
-	 * @return   Array  $mwb_etmfw_support
-	 */
-	public function mwb_etmfw_admin_support_settings_page( $mwb_etmfw_support ) {
-		$mwb_etmfw_support = array(
-			array(
-				'title' => __( 'User Guide', 'event-tickets-manager-for-woocommerce' ),
-				'description' => __( 'View the detailed guides and documentation to set up your plugin.', 'event-tickets-manager-for-woocommerce' ),
-				'link-text' => __( 'VIEW', 'event-tickets-manager-for-woocommerce' ),
-				'link' => 'https://docs.makewebbetter.com/event-tickets-manager-for-woocommerce/?utm_source=MWB-event-org&utm_medium=MWB-org-backend&utm_campaign=MWB-event-doc',
-			),
-			array(
-				'title' => __( 'Free Support', 'event-tickets-manager-for-woocommerce' ),
-				'description' => __( 'Please submit a ticket, our team will respond within 24 hours.', 'event-tickets-manager-for-woocommerce' ),
-				'link-text' => __( 'SUBMIT', 'event-tickets-manager-for-woocommerce' ),
-				'link' => 'https://makewebbetter.com/submit-query/?utm_source=MWB-event-org&utm_medium=MWB-org-backend&utm_campaign=MWB-event-support',
-			),
-		);
-
-		return apply_filters( 'mwb_etmfw_add_support_content', $mwb_etmfw_support );
 	}
 
 	/**
