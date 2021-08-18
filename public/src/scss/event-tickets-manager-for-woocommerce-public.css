@@ -155,6 +155,38 @@ div#mwb_etmwf_event_venue img {
     margin-right: 5px;
 }
 
+.fc-header-toolbar.fc-toolbar {
+    display: block;
+}
+
+.fc-toolbar-chunk {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mwb_etmfw_addition_info_section #mwb_etmfw_radio {
+    width: auto !important;
+    margin-bottom: 3px;
+}
+
+form.cart {
+    flex-direction: column;
+    align-content: flex-start;
+}
+
+.woocommerce .woocommerce-error {
+    background-color: unset !important;
+}
+
+.woocommerce .woocommerce-error li {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+}
 div#mwb_etmfw_event_map {
     margin: 10px 0px;
 }
