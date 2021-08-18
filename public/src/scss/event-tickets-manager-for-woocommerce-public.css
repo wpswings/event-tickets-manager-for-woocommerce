@@ -155,8 +155,61 @@ div#mwb_etmwf_event_venue img {
     margin-right: 5px;
 }
 
+.fc-header-toolbar.fc-toolbar {
+    display: block;
+}
+
+.fc-toolbar-chunk {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mwb-form-group__control input[type=checkbox], 
+.mwb-form-group__control input[type=radio] {
+    width: auto !important;
+    margin-bottom: 3px;
+}
+
+form.cart {
+    flex-direction: column;
+    align-content: flex-start;
+}
+
+.woocommerce .woocommerce-error {
+    background-color: unset !important;
+}
+
+.woocommerce .woocommerce-error li {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+}
 div#mwb_etmfw_event_map {
     margin: 10px 0px;
+}
+
+.fc-daygrid.fc-dayGridMonth-view.fc-view,
+.fc-timegrid.fc-timeGridDay-view.fc-view,
+.fc-timegrid.fc-timeGridWeek-view.fc-view {
+    overscroll-behavior-x: auto;
+    overflow: scroll;
+    width: 100%;
+}
+
+.fc-scrollgrid.fc-scrollgrid-liquid {
+    table-layout: auto;
+}
+
+.fc-view-harness.fc-view-harness-active {
+    height: 250px !important;
+}
+
+.fc-day {
+    width: 40px;
 }
 
  @media only screen and (max-width: 768px) {

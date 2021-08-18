@@ -441,6 +441,11 @@ form.mwb-etmfw-gen-section-form .mdc-switch .mdc-text-field-helper-line {
         max-width: 100%;
         padding: 0;
     }
+    .mwb-form-group__label {
+        flex: 100%;
+        max-width: 100%;
+        padding: 15px;
+    }
 }
 
 @media only screen and (max-width: 480px) {
@@ -651,8 +656,20 @@ button#mwb_etmfw_mail_setting_upload_logo_button {
     }
 
     .mwb-etmfw-email-template-section-form .mwb-form-group:nth-child(3) .mwb-form-group__control {
-        max-width: 50%;
-        flex: 0 0 50%;
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+
+    button#mwb_etmfw_mail_setting_upload_logo_button {
+        position: absolute;
+        right: 0;
+        bottom: -110px;
+    }
+
+    span.mwb_etmfw_mail_setting_remove_logo {
+        right: 0;
+        top: auto;
+        bottom: -100px;
     }
 
     .mwb-etmfw-email-template-section-form .mwb-form-group__control {
@@ -670,7 +687,7 @@ button#mwb_etmfw_mail_setting_upload_logo_button {
     }
 
     span.mwb_etmfw_mail_setting_remove_logo {
-        right: -100px;
+        right: 0;
     }
 
     img#mwb_etmfw_mail_setting_upload_image {
@@ -679,7 +696,7 @@ button#mwb_etmfw_mail_setting_upload_logo_button {
 
     button#mwb_etmfw_mail_setting_upload_logo_button {
         position: absolute;
-        right: -113px;
-        max-width: 100px;
+        right: 0;
+        max-width: 100%;
     }
 }
