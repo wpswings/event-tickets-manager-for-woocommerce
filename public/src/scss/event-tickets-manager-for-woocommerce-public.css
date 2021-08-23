@@ -47,7 +47,7 @@ input#mwb_etmfw_chckin_email {
 
 .mwb_etmfw_checkin_button_section {
     flex: 0 0 15%;
-    max-width: 15%;
+    max-width: 115px;
 }
 
 div#mwb_etmfw_checkin_loader img {
@@ -93,6 +93,20 @@ div#mwb_etmfw_edit_info_loader img {
 
 .mwb_etmfw_addition_info_section input {
     width: 99%!important;
+    max-width: 99%!important;
+}
+
+.mwb-form-group__control label {
+    margin-top: 8px;
+    margin-left: 5px;
+    margin-bottom: 8px;
+    line-height: 1;
+}
+
+.mwb-form-group__control div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .mwb_etmfw_view_ticket_section, 
