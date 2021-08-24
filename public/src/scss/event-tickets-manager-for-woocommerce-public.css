@@ -259,3 +259,7 @@ div#mwb_etmfw_event_map {
 
 
 }
+.etmfw_expiration_message{
+    color: red;
+    font-size: 25px;
+}

@@ -1529,4 +1529,19 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		}
 		return $if_show_map;
 	}
+	/**
+	 * Function name mwb_etmfw_show_expired_message.
+	 * this function is used to show event expiration message
+	 *
+	 * @since 1.0.2
+	 * @return void
+	 */
+	public function mwb_etmfw_show_expired_message() {
+		$mwb_etmfw_if_expired   = $this->mwb_etmfw_check_if_event_is_expired();
+		if ( $mwb_etmfw_if_expired ) {?>
+			<div class="etmfw_expiration_message">
+				<?php esc_html_e( 'This event has been expired', 'event-tickets-manager-for-woocommerce' ); ?>
+			</div>
+		<?php }
+	}
 }
