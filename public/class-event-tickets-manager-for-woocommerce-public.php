@@ -111,6 +111,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$param_data = array(
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'mwb_etmfw_nonce' => wp_create_nonce( 'mwb-etmfw-verify-checkin-nonce' ),
+					'mwb_etmfw_require_text' => __( 'Please Fill All the Required (*) Fields', 'event-ticket-manager-for-woocommerce' ),
+					'mwb_etmfw_email_text'   => __( 'Please enter correct email', 'event-ticket-manager-for-woocommerce' )
+
 				);
 				wp_localize_script( $this->plugin_name . '-checkin-page', 'etmfw_checkin_param', $param_data );
 				wp_enqueue_script( $this->plugin_name . '-checkin-page' );
@@ -630,7 +633,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		}
 		$mwb_etmfw_email_subject = str_replace( '[SITENAME]', get_bloginfo(), $mwb_etmfw_email_subject );
 		$email_status = $mailer_obj->trigger( $user_email, $mwb_etmfw_email_discription, $mwb_etmfw_email_subject, $order );
-		// do_action( 'mwb_etmfw_send_sms_ticket', $mwb_etmfw_mail_template_data );
 	}
 
 	/**
@@ -1032,11 +1034,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 			$html .= '</div>
 			<div class="mwb_etmfw_input_ticket_section">
-				<label>' . __( 'Ticket Number', 'event-tickets-manager-for-woocommerce' ) . '</label>
+				<label>' . __( 'Ticket Number *', 'event-tickets-manager-for-woocommerce' ) . '</label>
 				<input type="text" name="mwb_etmfw_imput_ticket" id="mwb_etmfw_imput_ticket">
 			</div>
 			<div class="mwb_etmfw_input_ticket_section">
-				<label>' . __( 'Enter Email', 'event-tickets-manager-for-woocommerce' ) . '</label>
+				<label>' . __( 'Enter Email *', 'event-tickets-manager-for-woocommerce' ) . '</label>
 				<input type="email" name="mwb_etmfw_chckin_email" id="mwb_etmfw_chckin_email">
 			</div>
 

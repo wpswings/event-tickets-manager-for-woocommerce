@@ -40,13 +40,13 @@
 				var ticket_num = $('#mwb_etmfw_imput_ticket').val();
 				var user_email =  $('#mwb_etmfw_chckin_email').val();
 				if (for_event == null || for_event == "" || ticket_num == null || ticket_num == "" || user_email == null || user_email == "" ) {
-					$("#mwb_etmfw_error_message").html("Fields required.");
+					$("#mwb_etmfw_error_message").html(etmfw_checkin_param.mwb_etmfw_require_text);
 					$("#mwb_etmfw_error_message").addClass("mwb_check_in_error");
 					return false;
 				}
 				var pat = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(user_email);
 				if ( ! pat) {
-					$('#mwb_etmfw_error_message').html("Please Enter Email in the correct format.");
+					$('#mwb_etmfw_error_message').html(etmfw_checkin_param.mwb_etmfw_email_text);
 					$('#mwb_etmfw_chckin_email').focus();
 					$('#mwb_etmfw_chckin_email').css("border", "2px solid red");
 					return;
