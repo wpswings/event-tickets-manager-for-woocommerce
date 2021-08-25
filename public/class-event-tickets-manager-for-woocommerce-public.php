@@ -145,68 +145,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						$end_date = isset( $mwb_etmfw_product_array['event_end_date_time'] ) ? $mwb_etmfw_product_array['event_end_date_time'] : '';
 						$event_venue = isset( $mwb_etmfw_product_array['etmfw_event_venue'] ) ? $mwb_etmfw_product_array['etmfw_event_venue'] : '';
 						$event_field_array = isset( $mwb_etmfw_product_array['mwb_etmfw_field_data'] ) ? $mwb_etmfw_product_array['mwb_etmfw_field_data'] : '';
-						?>
-						<div class="mwb_etmfw_product_wrapper">
-							<div class="mwb_etmfw_event_info_section">
-								<?php do_action( 'mwb_etmfw_before_event_general_info', $product_id ); ?>
-								<input type="hidden" name="mwb_etmfw_event_start" value=<?php echo esc_html( $start_date ); ?>>
-								<input type="hidden" name="mwb_etmfw_event_finish" value=<?php echo esc_html( $end_date ); ?>>
-								<div id="mwb_etmwf_event_date" class="mwb_etmfw_event_general_info">
-									<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/calendar_icone.svg' ); ?>" height="20px" width="20px">
-									<span class="mwb_etmfw_date_label"><?php echo esc_html( mwb_etmfw_get_only_date_format( $start_date ), 'event-tickets-manager-for-woocommerce' ); ?><span><?php echo esc_html( ' - ' ); ?></span><?php echo esc_html( mwb_etmfw_get_only_date_format( $end_date ), 'event-tickets-manager-for-woocommerce' ); ?></span>
-								</div>
-								<div id="mwb_etmwf_event_time" class="mwb_etmfw_event_general_info">
-									<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/clock.svg' ); ?>" height="20px" width="20px">
-									<span class="mwb_etmfw_date_label"><?php echo esc_html( mwb_etmfw_get_only_time_format( $start_date ), 'event-tickets-manager-for-woocommerce' ); ?><span><?php echo esc_html( ' - ' ); ?></span><?php echo esc_html( mwb_etmfw_get_only_time_format( $end_date ), 'event-tickets-manager-for-woocommerce' ); ?></span>
-								</div>
-								<div id="mwb_etmwf_event_venue" class="mwb_etmfw_event_general_info">
-									<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/map_pin.svg' ); ?>" height="20px" width="20px">
-									<span><?php echo esc_html( $event_venue, 'event-tickets-manager-for-woocommerce' ); ?></span>
-									<input type="hidden" name="mwb_etmfw_event_venue" value=<?php echo esc_html( $event_venue ); ?>>
-								</div>
-								<?php do_action( 'mwb_etmfw_before_event_general_info', $product_id ); ?>
-							</div>
-							<?php
-							$display_map = isset( $mwb_etmfw_product_array['etmfw_display_map'] ) ? $mwb_etmfw_product_array['etmfw_display_map'] : 'no';
-							$location_site = get_option( 'mwb_etmfw_enabe_location_site', 'off' );
-							$map_api_key = get_option( 'mwb_etmfw_google_maps_api_key', '' );
-							if ( 'yes' === $display_map && 'on' === $location_site && '' !== $map_api_key ) {
-								?>
-								<div class="mwb_etmfw_event_map_wrapper">
-									<?php
-									$event_lat = isset( $mwb_etmfw_product_array['etmfw_event_venue_lat'] ) ? $mwb_etmfw_product_array['etmfw_event_venue_lat'] : '';
-									$event_lng = isset( $mwb_etmfw_product_array['etmfw_event_venue_lng'] ) ? $mwb_etmfw_product_array['etmfw_event_venue_lng'] : '';
-									?>
-									<input type="hidden" id="etmfw_event_lat" value="<?php echo esc_attr( $event_lat ); ?>">
-									<input type="hidden" id="etmfw_event_lng" value="<?php echo esc_attr( $event_lng ); ?>">
-									<script>
-									function initMap() {
-										  let event_lat = parseInt( document.getElementById('etmfw_event_lat').value );
-										let event_lng = parseInt( document.getElementById('etmfw_event_lng').value );
-										const myLatLng = { lat: event_lat, lng: event_lng };
-										  const map = new google.maps.Map(document.getElementById("mwb_etmfw_event_map"), {
-											zoom: 4,
-											center: myLatLng,
-										  });
-										  new google.maps.Marker({
-											position: myLatLng,
-											map,
-											title: "Event!",
-										});
-									}
-									</script>
-									<div id="mwb_etmfw_event_map"></div>
-								</div>
-								<?php
-							}
-							?>
-							<div class="mwb_etmfw_addition_info_section">
-								<?php do_action( 'mwb_etmfw_before_more_info', $product_id ); ?>
-								<?php $this->mwb_etmfw_generate_addional_fields( $product_id, $event_field_array ); ?>
-								<?php do_action( 'mwb_etmfw_after_more_info', $product_id ); ?>
-							</div>
-						</div>
-						<?php
+						require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'templates/frontend/event-tickets-manager-for-woocommerce-before-atc-html.php';
 					}
 				}
 			}
@@ -234,146 +173,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					$mandatory = false;
 					$required = '';
 				}
-				?>
-				<p>
-					<?php
-					switch ( $value['type'] ) {
-						case 'text':
-							?>
-						<div class="mwb-form-group">
-							<div class="mwb-form-group__label">
-								<label class="mwb_etmfw_field_label"><?php echo esc_html( $value['label'], 'event-tickets-manager-for-woocommerce' ); ?>
-									<?php if ( $mandatory ) : ?>
-										<span class="mwb_etmfw_mandatory_fields">
-											<?php esc_html_e( '*', 'event-tickets-manager-for-woocommerce' ); ?>
-										</span>
-									<?php endif; ?>
-								</label>
-							</div>
-							<div class="mwb-form-group__control">
-								<input type="text" name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" <?php echo esc_html( $required ); ?>>
-							</div>
-						</div>
+				require EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'templates/frontend/event-tickets-manager-for-woocommerce-additional-field-html.php';
 
-							<?php
-							break;
-
-						case 'email':
-							?>
-						<div class="mwb-form-group">
-							<div class="mwb-form-group__label">
-								<label class="mwb_etmfw_field_label"><?php echo esc_html( $value['label'], 'event-tickets-manager-for-woocommerce' ); ?>
-									<?php if ( $mandatory ) : ?>
-										<span class="mwb_etmfw_mandatory_fields">
-											<?php esc_html_e( '*', 'event-tickets-manager-for-woocommerce' ); ?>
-										</span>
-									<?php endif; ?>
-								</label>
-							</div>
-							<div class="mwb-form-group__control">
-								<input type="email" name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" <?php echo esc_html( $required ); ?> >
-							</div>
-						</div>
-							<?php
-							break;
-
-						case 'textarea':
-							?>
-						<div class="mwb-form-group">
-							<div class="mwb-form-group__label">
-								<label class="mwb_etmfw_field_label"><?php echo esc_html( $value['label'], 'event-tickets-manager-for-woocommerce' ); ?>
-									<?php if ( $mandatory ) : ?>
-										<span class="mwb_etmfw_mandatory_fields">
-											<?php esc_html_e( '*', 'event-tickets-manager-for-woocommerce' ); ?>
-										</span>
-									<?php endif; ?>
-								</label>
-							</div>
-							<div class="mwb-form-group__control">
-								<textarea name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" <?php echo esc_html( $required ); ?>></textarea>
-							</div>
-						</div>
-
-
-							<?php
-							break;
-
-						case 'number':
-							?>
-
-						<div class="mwb-form-group">
-							<div class="mwb-form-group__label">
-								<label class="mwb_etmfw_field_label"><?php echo esc_html( $value['label'], 'event-tickets-manager-for-woocommerce' ); ?>
-									<?php if ( $mandatory ) : ?>
-										<span class="mwb_etmfw_mandatory_fields">
-											<?php esc_html_e( '*', 'event-tickets-manager-for-woocommerce' ); ?>
-										</span>
-									<?php endif; ?>
-								</label>
-							</div>
-							<div class="mwb-form-group__control">
-								<input type="number" name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" <?php echo esc_html( $required ); ?>>
-							</div>
-						</div>
-
-							<?php
-							break;
-
-						case 'date':
-							?>
-						<div class="mwb-form-group">
-							<div class="mwb-form-group__label">
-								<label class="mwb_etmfw_field_label"><?php echo esc_html( $value['label'], 'event-tickets-manager-for-woocommerce' ); ?>
-									<?php if ( $mandatory ) : ?>
-										<span class="mwb_etmfw_mandatory_fields">
-											<?php esc_html_e( '*', 'event-tickets-manager-for-woocommerce' ); ?>
-										</span>
-									<?php endif; ?>
-								</label>
-							</div>
-							<div class="mwb-form-group__control">
-								<input type="date" name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" <?php echo esc_html( $required ); ?>>
-							</div>
-						</div>
-
-
-							<?php
-							break;
-
-						case 'yes-no':
-							?>
-						<div class="mwb-form-group">
-							<div class="mwb-form-group__label">
-								<label class="mwb_etmfw_field_label"><?php echo esc_html( $value['label'], 'event-tickets-manager-for-woocommerce' ); ?>
-									<?php if ( $mandatory ) : ?>
-										<span class="mwb_etmfw_mandatory_fields">
-											<?php esc_html_e( '*', 'event-tickets-manager-for-woocommerce' ); ?>
-										</span>
-									<?php endif; ?>
-								</label>
-							</div>
-							<div class="mwb-form-group__control">
-								<div>
-									<input type="radio" id="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" value="yes" <?php echo esc_html( $required ); ?>>
-									<label for="yes"><?php esc_html_e( 'Yes', 'event-tickets-manager-for-woocommerce' ); ?></label>
-								</div>
-								<div>
-									<input type="radio" id="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" value="no">
-									<label for="no"><?php esc_html_e( 'No', 'event-tickets-manager-for-woocommerce' ); ?></label>
-								</div>
-							</div>
-						</div>
-							<?php
-							break;
-
-						default:
-							do_action( 'mwb_etmfw_after_input_fields', $value, $required );
-							break;
-					}
-					do_action( 'mwb_etmfw_after_input_fields', $value );
-					?>
-				</p>
-				<?php
 			}
 		}
 	}
@@ -918,69 +719,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			$required = '';
 		}
 		$html_value_label = strtolower( str_replace( ' ', '_', $html_value['label'] ) );
-		switch ( $html_value['type'] ) {
-			case 'hidden':
-			case 'number':
-			case 'email':
-			case 'text':
-			case 'date':
-				?>
-				<input type="hidden" value="<?php echo esc_attr( $html_value_label ); ?>">
-				<div class="mwb-edit-form-group" data-id="<?php echo esc_attr( $html_value_label ); ?>">
-					<div class="mwb-edit-form-group__label">
-						<label class="mwb_etmfe_input_label" for="<?php echo esc_attr( $html_value_label ); ?>"><?php echo esc_html( $html_value['label'] ); ?></label>
-						<?php if ( $mandatory ) : ?>
-							<span class="mwb_etmfw_mandatory_fields">
-								<?php esc_html_e( '*', 'event-tickets-manager-for-woocommerce' ); ?>
-							</span>
-						<?php endif; ?>
-					</div>
-					<div class="mwb-edit-form-group__control">
-						<input type="<?php echo esc_html( $html_value['type'] ); ?>" value="<?php echo esc_html( $user_data_value ); ?>" id="mwb_etmfw_<?php echo esc_html( $html_value_label ); ?>" <?php echo esc_html( $required ); ?>>
-					</div>
-				</div>
-				<?php
-				break;
-
-			case 'textarea':
-				?>
-				<div class="mwb-edit-form-group" data-id="<?php echo esc_attr( $html_value_label ); ?>">
-					<label class="mwb_etmfe_input_label" for="<?php echo esc_attr( $html_value_label ); ?>"><?php echo esc_html( $html_value['label'] ); ?></label>
-					<?php if ( $mandatory ) : ?>
-							<span class="mwb_etmfw_mandatory_fields">
-								<?php esc_html_e( '*', 'event-tickets-manager-for-woocommerce' ); ?>
-							</span>
-						<?php endif; ?>
-					<textarea class="" rows="2" cols="25" id="mwb_etmfw_<?php echo esc_attr( $html_value_label ); ?>" id="<?php echo esc_attr( $html_value_label ); ?>" <?php echo esc_html( $required ); ?>><?php echo esc_textarea( $user_data_value ); // WPCS: XSS ok. ?></textarea>
-				</div>
-				<?php
-				break;
-			case 'yes-no':
-				?>
-				<div class="mwb-edit-form-group" data-id="<?php echo esc_attr( $html_value_label ); ?>">
-					<label class="mwb_etmfe_input_label" for="<?php echo esc_attr( $html_value_label ); ?>"><?php echo esc_html( $html_value['label'] ); ?></label>
-					<?php if ( $mandatory ) : ?>
-							<span class="mwb_etmfw_mandatory_fields">
-								<?php esc_html_e( '*', 'event-tickets-manager-for-woocommerce' ); ?>
-							</span>
-						<?php endif; ?>
-					<div>
-						<input type="radio" id="mwb_etmfw_<?php echo esc_attr( $html_value_label ); ?>" name="mwb_etmfw_<?php echo esc_attr( $html_value_label ); ?>" value="yes" <?php echo esc_html( 'yes' === $user_data_value ) ? 'checked' : ''; ?> <?php echo esc_html( $required ); ?>>
-						<label for="yes"><?php esc_html_e( 'Yes', 'event-tickets-manager-for-woocommerce' ); ?></label>
-					</div>
-					<div>
-						<input type="radio" id="mwb_etmfw_<?php echo esc_attr( $html_value_label ); ?>" name="mwb_etmfw_<?php echo esc_attr( $html_value_label ); ?>" value="no" <?php echo esc_html( 'no' === $user_data_value ) ? 'checked' : ''; ?>>
-						<label for="no"><?php esc_html_e( 'No', 'event-tickets-manager-for-woocommerce' ); ?></label>
-					</div>
-				</div>
-				<?php
-				break;
-
-				do_action( 'mwb_etmfw_edit_ticket_info_field', $html_value, $user_data_value );
-
-			default:
-				break;
-		}
+		require EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'templates/frontend/event-tickets-manager-for-woocommerce-view-ticket-html.php';
 
 	}
 
@@ -1529,6 +1268,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		}
 		return $if_show_map;
 	}
+
 	/**
 	 * Function name mwb_etmfw_show_expired_message.
 	 * this function is used to show event expiration message
@@ -1538,10 +1278,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 */
 	public function mwb_etmfw_show_expired_message() {
 		$mwb_etmfw_if_expired   = $this->mwb_etmfw_check_if_event_is_expired();
-		if ( $mwb_etmfw_if_expired ) {?>
-			<div class="etmfw_expiration_message">
-				<?php esc_html_e( 'This event has been expired', 'event-tickets-manager-for-woocommerce' ); ?>
-			</div>
-		<?php }
+		if ( $mwb_etmfw_if_expired ) {
+			require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'templates/frontend/event-tickets-manager-for-woocommerce-event-expired-html.php';
+
+		}
 	}
 }

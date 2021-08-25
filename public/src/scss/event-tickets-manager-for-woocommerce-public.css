@@ -226,7 +226,16 @@ div#mwb_etmfw_event_map {
     width: 40px;
 }
 
- @media only screen and (max-width: 768px) {
+.mwb-edit-form-group div {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.mwb-edit-form-group div #mwb_etmfw_radio {
+    width: auto;
+}
+
+@media only screen and (max-width: 768px) {
     .product-remove {
         display: none!important;
     }
