@@ -844,7 +844,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 										id="<?php echo esc_attr( $etmfw_component['id'] ); ?>"
 										type="<?php echo esc_attr( $etmfw_component['type'] ); ?>"
 										value="<?php echo ( isset( $etmfw_component['value'] ) ? esc_attr( $etmfw_component['value'] ) : '' ); ?>"
-										<?php echo esc_html( ( 'date' === $t_component['type'] ) ? 'max=' . gmdate( 'Y-m-d', strtotime( gmdate( 'Y-m-d', mktime() ) . ' + 365 day' ) ) . ' ' . 'min=' . gmdate( 'Y-m-d' ) . '' : '' ); ?>
+										<?php echo esc_html( ( 'date' === $t_component['type'] ) ? 'max=' . gmdate( 'Y-m-d', strtotime( gmdate( 'Y-m-d', mktime() ) . ' + 365 day' ) ) . 'min=' . gmdate( 'Y-m-d' ) : '' ); ?>
 										>
 									</label>
 									<div class="mdc-text-field-helper-line">

@@ -4,7 +4,7 @@
  *
  * This template can be overridden by copying it to yourtheme/woocommerce/emails/plain/mwb-wpr-email-notification-template.php.
  *
- * @package    event-tickets-manager-for-woocommerce
+ * @package    Event_Tickets_Manager_For_Woocommerce
  * @author     makewebbetter<ticket@makewebbetter.com>
  * @since      1.0.0
  */
@@ -12,6 +12,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+// Inline style used for sending in email.
 $template = '<table class="mwb-wuc__email-template" style=" border: 1px solid #000000 ;width: 100%!important; max-width: 600px; text-align: left; font-size: 20px;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center">
 	<tbody>
 		<tr>

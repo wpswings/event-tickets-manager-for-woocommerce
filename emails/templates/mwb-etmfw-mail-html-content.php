@@ -8,6 +8,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+// Inline style used for sending in email.
 ?>
 <!DOCTYPE html>
 <html>

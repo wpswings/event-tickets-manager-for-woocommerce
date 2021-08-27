@@ -45,6 +45,7 @@
 			?>
 			<input type="hidden" id="etmfw_event_lat" value="<?php echo esc_attr( $event_lat ); ?>">
 			<input type="hidden" id="etmfw_event_lng" value="<?php echo esc_attr( $event_lng ); ?>">
+			<?php // script used for display map. ?>
 			<script>
 			function initMap() {
 					let event_lat = parseInt( document.getElementById('etmfw_event_lat').value );

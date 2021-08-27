@@ -5,15 +5,15 @@
  * @link       https://makewebbetter.com
  * @since      1.0.0
  *
- * @package     event_tickets_manager_for_woocommerce
- * @subpackage  event_tickets_manager_for_woocommerce/includes
+ * @package     Event_Tickets_Manager_For_Woocommerce
+ * @subpackage  Event_Tickets_Manager_For_Woocommerce/includes
  */
 
 /**
  * The Onboarding-specific functionality of the plugin admin side.
  *
- * @package     event_tickets_manager_for_woocommerce
- * @subpackage  event_tickets_manager_for_woocommerce/includes
+ * @package     Event_Tickets_Manager_For_Woocommerce
+ * @subpackage  Event_Tickets_Manager_For_Woocommerce/includes
  * @author      makewebbetter <webmaster@makewebbetter.com>
  */
 if ( ! defined( 'ABSPATH' ) ) {
@@ -728,7 +728,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 		if ( is_wp_error( $response ) ) {
 
 			$status_code = 500;
-			$response    = esc_html__( 'Unexpected Error Occured', 'subscriptions-for-woocommerce' );
+			$response    = esc_html__( 'Unexpected Error Occured', 'event-tickets-manager-for-woocommerce' );
 			$errors      = $response;
 
 		} else {

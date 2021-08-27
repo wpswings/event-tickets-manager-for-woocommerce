@@ -84,7 +84,6 @@
 						 data: data,
 						 dataType: 'json',
 						 success: function(response) {
-							//  console.log(response)
 							 $( '#mwb_etmfw_edit_info_loader' ).css('display','none');	
 							 window.location.reload();
 						 },

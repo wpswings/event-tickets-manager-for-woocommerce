@@ -112,7 +112,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'mwb_etmfw_nonce' => wp_create_nonce( 'mwb-etmfw-verify-checkin-nonce' ),
 					'mwb_etmfw_require_text' => __( 'Please Fill All the Required (*) Fields', 'event-ticket-manager-for-woocommerce' ),
-					'mwb_etmfw_email_text'   => __( 'Please enter correct email', 'event-ticket-manager-for-woocommerce' )
+					'mwb_etmfw_email_text'   => __( 'Please enter correct email', 'event-ticket-manager-for-woocommerce' ),
 
 				);
 				wp_localize_script( $this->plugin_name . '-checkin-page', 'etmfw_checkin_param', $param_data );
@@ -467,6 +467,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$template_html['purchaser'] = $order->get_billing_first_name();
 		$template_html['venue'] = $venue;
 		$template_html['time'] = mwb_etmfw_get_date_format( $start ) . '-' . mwb_etmfw_get_date_format( $end );
+		// Inline style used for sending in email.
 		$template_html['featuredimage'] = '<img src="' . $image . '" style="margin-right: 20px;" alt="image"/>';
 		return apply_filters( 'mwb_etmfw_ticket_info', $template_html, $product_id );
 
@@ -675,7 +676,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 												foreach ( $mwb_etmfw_field_data as $key => $html_value ) {
 													if ( 0 === strcasecmp( $html_value['label'], $label_key ) ) {
 														$this->generate_edit_ticket_inputs( $html_value, $user_data_value );
-														echo '<span id=mwb_etmfw_error_' . $html_value['label'] . '></span>';
+														echo '<span id=mwb_etmfw_error_' . wp_kses_post( $html_value['label'] ) . '></span>';
 													}
 												}
 											}

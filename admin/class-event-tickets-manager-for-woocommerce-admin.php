@@ -325,7 +325,6 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 						'class' => 'etmfw-text-class',
 						'id' => 'mwb_etmfw_mail_setting_upload_logo',
 						'value' => $mwb_etmfw_default_site_logo,
-						'placeholder' => __( '', 'event-tickets-manager-for-woocommerce' ),
 					),
 					array(
 						'type'  => 'button',
@@ -365,7 +364,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		global $etmfw_mwb_etmfw_obj, $error_notice;
 		$etmfw_post_check = false;
 
-		if( wp_doing_ajax() ) {
+		if ( wp_doing_ajax() ) {
 			return;
 		}
 		if ( ! isset( $_POST['mwb_event_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mwb_event_nonce'] ) ), 'mwb_event_nonce' ) ) {
@@ -378,7 +377,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			$etmfw_genaral_settings = apply_filters( 'mwb_etmfw_email_template_settings_array', array() );
 			$etmfw_post_check       = true;
 		} elseif ( isset( $_POST['mwb_etmfw_save_integrations_settings'] ) ) {
-			$etmfw_genaral_settings =  apply_filters( 'mwb_etmfw_integration_settings_array', array() );
+			$etmfw_genaral_settings = apply_filters( 'mwb_etmfw_integration_settings_array', array() );
 			$etmfw_post_check       = true;
 		}
 
@@ -587,7 +586,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			$product = wc_get_product( $product_id );
 			if ( isset( $product ) && is_object( $product ) ) {
 				if ( $product->get_type() == 'event_ticket_manager' ) {
-					if ( isset( $_POST['mwb_etmfw_product_nonce_field'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mwb_etmfw_product_nonce_field'] ) ), 'mwb_etmfw_lite_nonce' ) ) {
+					if ( ! isset( $_POST['mwb_etmfw_product_nonce_field'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mwb_etmfw_product_nonce_field'] ) ), 'mwb_etmfw_lite_nonce' ) ) {
 						return;
 					}
 					$mwb_etmfw_product_array = array();
@@ -713,6 +712,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 									$ticket = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
 
 									if ( isset( $ticket ) && ! empty( $ticket ) ) {
+										// Inline Style used for ticket infrormation.
 										?>
 										<p style="margin:0;"><b><?php esc_html_e( 'Ticket', 'event-tickets-manager-for-woocommerce' ); ?> :</b>
 											<span style="background: rgb(0, 115, 170) none repeat scroll 0% 0%; color: white; padding: 1px 5px 1px 6px; font-weight: bolder; margin-left: 10px;"><?php echo esc_attr( $ticket ); ?></span>
@@ -763,7 +763,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	public function mwb_etmfw_get_event_geocode_value() {
 		$response['result'] = false;
 		$response['message'] = '';
-		if ( isset( $_POST['mwb_edit_nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mwb_edit_nonce'] ) ), 'mwb-etmfw-verify-edit-prod-nonce' ) ) {
+		if ( ! isset( $_POST['mwb_edit_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mwb_edit_nonce'] ) ), 'mwb-etmfw-verify-edit-prod-nonce' ) ) {
 			return;
 		}
 
@@ -793,8 +793,8 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				}
 			}
 		} else {
-			/* translators: %s: Google API key setting link */
 			$response['message'] = sprintf(
+				/* translators: %s: Google API key setting link */
 				esc_html__( 'Please add Google API key %s to display event location on google map.', 'event-tickets-manager-for-woocommerce' ),
 				'<a href="' . admin_url( 'admin.php?page=event_tickets_manager_for_woocommerce_menu&etmfw_tab=event-tickets-manager-for-woocommerce-integrations' ) . '" target="_blank">here</a>'
 			);
