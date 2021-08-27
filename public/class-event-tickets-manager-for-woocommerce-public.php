@@ -111,8 +111,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$param_data = array(
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'mwb_etmfw_nonce' => wp_create_nonce( 'mwb-etmfw-verify-checkin-nonce' ),
-					'mwb_etmfw_require_text' => __( 'Please Fill All the Required (*) Fields', 'event-ticket-manager-for-woocommerce' ),
-					'mwb_etmfw_email_text'   => __( 'Please enter correct email', 'event-ticket-manager-for-woocommerce' ),
+					'mwb_etmfw_require_text' => __( 'Please Fill All the Required (*) Fields', 'event-tickets-manager-for-woocommerce' ),
+					'mwb_etmfw_email_text'   => __( 'Please enter correct email', 'event-tickets-manager-for-woocommerce' ),
 
 				);
 				wp_localize_script( $this->plugin_name . '-checkin-page', 'etmfw_checkin_param', $param_data );

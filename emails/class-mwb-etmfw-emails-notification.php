@@ -5,7 +5,7 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    event-tickets-manager-for-woocommerce
+ * @package    Event_Tickets_Manager_For_Woocommerce
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
