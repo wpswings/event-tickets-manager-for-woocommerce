@@ -16,7 +16,7 @@
 	<div class="mwb_etmfw_event_info_section">
 		<?php do_action( 'mwb_etmfw_before_event_general_info', $product_id ); ?>
 		<input type="hidden" name="mwb_etmfw_event_start" value=<?php echo esc_html( $start_date ); ?>>
-		<input type="hidden" name="mwb_etwmfw_atc_nonce" value=<?php echo esc_html( wp_create_nonce( 'mwb_etwmfw_atc_nonce' ) );  ?>>
+		<input type="hidden" name="mwb_etwmfw_atc_nonce" value=<?php echo esc_html( wp_create_nonce( 'mwb_etwmfw_atc_nonce' ) ); ?>>
 
 		<input type="hidden" name="mwb_etmfw_event_finish" value=<?php echo esc_html( $end_date ); ?>>
 		<div id="mwb_etmwf_event_date" class="mwb_etmfw_event_general_info">
