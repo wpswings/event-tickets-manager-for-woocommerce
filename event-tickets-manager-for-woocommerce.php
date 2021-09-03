@@ -1,4 +1,4 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * The plugin bootstrap file
  *
@@ -15,15 +15,15 @@
  * Plugin Name:       Event Tickets Manager for WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/
  * Description:       Event Tickets Manager for WooCommerce allows you to manage, sell and assign tickets easily.
- * Version:           1.0.0
+ * Version:           1.0.2
  * Author:            MakeWebBetter
- * Author URI:        https://makewebbetter.com/
+ * Author URI:          https://makewebbetter.com/?utm_source=MWB-event-org&utm_medium=MWB-org-backend &utm_campaign=MWB-event-site
  * Text Domain:       event-tickets-manager-for-woocommerce
  * Domain Path:       /languages
  * Requires at least: 4.6
- * Tested up to:      5.7.1
+ * Tested up to:      5.8
  * WC requires at least: 4.0
- * WC tested up to:   5.2.2
+ * WC tested up to:   5.6.0
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
  */
@@ -43,7 +43,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 */
 	function define_event_tickets_manager_for_woocommerce_constants() {
 
-		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION', '1.0.0' );
+		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION', '1.0.2' );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_SERVER_URL', 'https://makewebbetter.com' );
@@ -175,6 +175,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		$etmfw_plugin_standard = new Event_Tickets_Manager_For_Woocommerce();
 		$etmfw_plugin_standard->etmfw_run();
 		$GLOBALS['etmfw_mwb_etmfw_obj'] = $etmfw_plugin_standard;
+		$GLOBALS['error_notice'] = true;
 
 	}
 	run_event_tickets_manager_for_woocommerce();
@@ -305,6 +306,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	add_action( 'widgets_init', 'mwb_etmfw_register_widget' );
 
 	require plugin_dir_path( __FILE__ ) . 'includes/class-event-tickets-manager-for-woocommerce-widget.php';
+
 } else {
 
 	/**
@@ -314,9 +316,9 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
 		unset( $_GET['activate'] );
 		?>
-		  <div class="error notice is-dismissible">
-			 <p><?php esc_html_e( 'Woocommerce is not activated, Please activate Woocommerce first to install Event Tickets Manager for WooCommerce', 'event-tickets-manager-for-woocommerce' ); ?></p>
-		   </div>
+		<div class="error notice is-dismissible">
+			<p><?php esc_html_e( 'Woocommerce is not activated, Please activate Woocommerce first to install Event Tickets Manager for WooCommerce', 'event-tickets-manager-for-woocommerce' ); ?></p>
+		</div>
 		<?php
 	}
 	add_action( 'admin_notices', 'mwb_etmfw_plugin_error_notice' );
@@ -332,5 +334,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 * Register the action with WordPress.
 	 */
 	add_action( 'admin_init', 'mwb_etmfw_plugin_deactivate' );
+
 }
 

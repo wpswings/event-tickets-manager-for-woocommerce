@@ -193,7 +193,6 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 	public function get_attendees_data() {
 		$event_attendees_details = array();
 		$order_statuses = array(
-			'wc-processing' => __( 'Processing', 'event-tickets-manager-for-woocommerce' ),
 			'wc-completed'  => __( 'Completed', 'event-tickets-manager-for-woocommerce' ),
 		);
 
@@ -263,6 +262,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 				}
 			}
 		}
+		$event_attendees_details = apply_filters( 'mwb_etmfw_unfiltered_events_data', $event_attendees_details );
 		$filtered_data = array();
 		if ( isset( $_REQUEST['s'] ) && '' !== $_REQUEST['s'] ) {
 			$data           = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
@@ -276,6 +276,6 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 			}
 			return $filtered_data;
 		}
-		return $event_attendees_details;
+		return apply_filters( 'mwb_etmfw_filtered_events_data', $event_attendees_details );
 	}
 }

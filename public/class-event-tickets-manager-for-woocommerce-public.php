@@ -87,6 +87,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'event_view' => $event_view,
 			'mwb_etmfw_public_nonce' => wp_create_nonce( 'mwb-etmfw-verify-public-nonce' ),
+			'is_required' => __( ' Is Required', 'event-tickets-manager-for-woocommerce' ),
 		);
 		wp_localize_script( $this->plugin_name, 'etmfw_public_param', $public_param_data );
 		wp_enqueue_script( $this->plugin_name );
@@ -110,6 +111,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$param_data = array(
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'mwb_etmfw_nonce' => wp_create_nonce( 'mwb-etmfw-verify-checkin-nonce' ),
+					'mwb_etmfw_require_text' => __( 'Please Fill All the Required (*) Fields', 'event-tickets-manager-for-woocommerce' ),
+					'mwb_etmfw_email_text'   => __( 'Please enter correct email', 'event-tickets-manager-for-woocommerce' ),
+
 				);
 				wp_localize_script( $this->plugin_name . '-checkin-page', 'etmfw_checkin_param', $param_data );
 				wp_enqueue_script( $this->plugin_name . '-checkin-page' );
@@ -135,75 +139,13 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				if ( isset( $product_id ) && ! empty( $product_id ) ) {
 					$product_types = wp_get_object_terms( $product_id, 'product_type' );
 					$product_type = $product_types[0]->slug;
-					wp_nonce_field( 'mwb_etmfw_single_nonce', 'mwb_etmfw_single_nonce_field' );
 					if ( 'event_ticket_manager' === $product_type ) {
 						$mwb_etmfw_product_array = get_post_meta( $product_id, 'mwb_etmfw_product_array', true );
 						$start_date = isset( $mwb_etmfw_product_array['event_start_date_time'] ) ? $mwb_etmfw_product_array['event_start_date_time'] : '';
 						$end_date = isset( $mwb_etmfw_product_array['event_end_date_time'] ) ? $mwb_etmfw_product_array['event_end_date_time'] : '';
 						$event_venue = isset( $mwb_etmfw_product_array['etmfw_event_venue'] ) ? $mwb_etmfw_product_array['etmfw_event_venue'] : '';
 						$event_field_array = isset( $mwb_etmfw_product_array['mwb_etmfw_field_data'] ) ? $mwb_etmfw_product_array['mwb_etmfw_field_data'] : '';
-						?>
-						<div class="mwb_etmfw_product_wrapper">								
-							<div class="mwb_etmfw_event_info_section">
-								<?php do_action( 'mwb_etmfw_before_event_general_info', $product_id ); ?>
-								<input type="hidden" name="mwb_etmfw_event_start" value=<?php echo esc_html( $start_date ); ?>>
-								<input type="hidden" name="mwb_etmfw_event_finish" value=<?php echo esc_html( $end_date ); ?>>
-								<div id="mwb_etmwf_event_date" class="mwb_etmfw_event_general_info">
-									<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/calendar_icone.svg' ); ?>" height="20px" width="20px">
-									<span class="mwb_etmfw_date_label"><?php echo esc_html( mwb_etmfw_get_only_date_format( $start_date ), 'event-tickets-manager-for-woocommerce' ); ?><span><?php echo esc_html( ' - ' ); ?></span><?php echo esc_html( mwb_etmfw_get_only_date_format( $end_date ), 'event-tickets-manager-for-woocommerce' ); ?></span>
-								</div>	
-								<div id="mwb_etmwf_event_time" class="mwb_etmfw_event_general_info">
-									<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/clock.svg' ); ?>" height="20px" width="20px">
-									<span class="mwb_etmfw_date_label"><?php echo esc_html( mwb_etmfw_get_only_time_format( $start_date ), 'event-tickets-manager-for-woocommerce' ); ?><span><?php echo esc_html( ' - ' ); ?></span><?php echo esc_html( mwb_etmfw_get_only_time_format( $end_date ), 'event-tickets-manager-for-woocommerce' ); ?></span>
-								</div>
-								<div id="mwb_etmwf_event_venue" class="mwb_etmfw_event_general_info">
-									<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/map_pin.svg' ); ?>" height="20px" width="20px">
-									<span><?php echo esc_html( $event_venue, 'event-tickets-manager-for-woocommerce' ); ?></span>
-									<input type="hidden" name="mwb_etmfw_event_venue" value=<?php echo esc_html( $event_venue ); ?>>	
-								</div>
-								<?php do_action( 'mwb_etmfw_before_event_general_info', $product_id ); ?>	
-							</div>
-							<?php
-							$display_map = isset( $mwb_etmfw_product_array['etmfw_display_map'] ) ? $mwb_etmfw_product_array['etmfw_display_map'] : 'no';
-							$location_site = get_option( 'mwb_etmfw_enabe_location_site', 'off' );
-							$map_api_key = get_option( 'mwb_etmfw_google_maps_api_key', '' );
-							if ( 'yes' === $display_map && 'on' === $location_site && '' !== $map_api_key ) {
-								?>
-								<div class="mwb_etmfw_event_map_wrapper">
-									<?php
-									$event_lat = isset( $mwb_etmfw_product_array['etmfw_event_venue_lat'] ) ? $mwb_etmfw_product_array['etmfw_event_venue_lat'] : '';
-									$event_lng = isset( $mwb_etmfw_product_array['etmfw_event_venue_lng'] ) ? $mwb_etmfw_product_array['etmfw_event_venue_lng'] : '';
-									?>
-									<input type="hidden" id="etmfw_event_lat" value="<?php echo esc_attr( $event_lat ); ?>">
-									<input type="hidden" id="etmfw_event_lng" value="<?php echo esc_attr( $event_lng ); ?>">
-									<script>
-									function initMap() {
-										  let event_lat = parseInt( document.getElementById('etmfw_event_lat').value );
-										let event_lng = parseInt( document.getElementById('etmfw_event_lng').value );
-										const myLatLng = { lat: event_lat, lng: event_lng };
-										  const map = new google.maps.Map(document.getElementById("mwb_etmfw_event_map"), {
-											zoom: 4,
-											center: myLatLng,
-										  });
-										  new google.maps.Marker({
-											position: myLatLng,
-											map,
-											title: "Event!",
-										});
-									}
-									</script>
-									<div id="mwb_etmfw_event_map"></div>
-								</div>
-								<?php
-							}
-							?>
-							<div class="mwb_etmfw_addition_info_section">
-								<?php do_action( 'mwb_etmfw_before_more_info', $product_id ); ?>
-								<?php $this->mwb_etmfw_generate_addional_fields( $product_id, $event_field_array ); ?>
-								<?php do_action( 'mwb_etmfw_after_more_info', $product_id ); ?>
-							</div>
-						</div>
-						<?php
+						require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'templates/frontend/event-tickets-manager-for-woocommerce-before-atc-html.php';
 					}
 				}
 			}
@@ -231,146 +173,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					$mandatory = false;
 					$required = '';
 				}
-				?>
-				<p>
-					<?php
-					switch ( $value['type'] ) {
-						case 'text':
-							?>
-						<div class="mwb-form-group">
-							<div class="mwb-form-group__label">
-								<label class="mwb_etmfw_field_label"><?php echo esc_html( $value['label'], 'event-tickets-manager-for-woocommerce' ); ?>
-									<?php if ( $mandatory ) : ?>	
-										<span class="mwb_etmfw_mandatory_fields">						
-											<?php esc_html_e( '*', 'event-tickets-manager-for-woocommerce' ); ?>
-										</span>
-									<?php endif; ?>
-								</label>
-							</div>
-							<div class="mwb-form-group__control">
-								<input type="text" name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" <?php echo esc_html( $required ); ?>>
-							</div>
-						</div>
-						
-							<?php
-							break;
+				require EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'templates/frontend/event-tickets-manager-for-woocommerce-additional-field-html.php';
 
-						case 'email':
-							?>
-						<div class="mwb-form-group">
-							<div class="mwb-form-group__label">
-								<label class="mwb_etmfw_field_label"><?php echo esc_html( $value['label'], 'event-tickets-manager-for-woocommerce' ); ?>
-									<?php if ( $mandatory ) : ?>	
-										<span class="mwb_etmfw_mandatory_fields">						
-											<?php esc_html_e( '*', 'event-tickets-manager-for-woocommerce' ); ?>
-										</span>
-									<?php endif; ?>
-								</label>
-							</div>
-							<div class="mwb-form-group__control">
-								<input type="email" name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" <?php echo esc_html( $required ); ?> >
-							</div>
-						</div>
-							<?php
-							break;
-
-						case 'textarea':
-							?>
-						<div class="mwb-form-group">
-							<div class="mwb-form-group__label">
-								<label class="mwb_etmfw_field_label"><?php echo esc_html( $value['label'], 'event-tickets-manager-for-woocommerce' ); ?>
-									<?php if ( $mandatory ) : ?>	
-										<span class="mwb_etmfw_mandatory_fields">						
-											<?php esc_html_e( '*', 'event-tickets-manager-for-woocommerce' ); ?>
-										</span>
-									<?php endif; ?>
-								</label>
-							</div>
-							<div class="mwb-form-group__control">
-								<textarea name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" <?php echo esc_html( $required ); ?>></textarea>
-							</div>
-						</div>
-
-
-							<?php
-							break;
-
-						case 'number':
-							?>
-
-						<div class="mwb-form-group">
-							<div class="mwb-form-group__label">
-								<label class="mwb_etmfw_field_label"><?php echo esc_html( $value['label'], 'event-tickets-manager-for-woocommerce' ); ?>
-									<?php if ( $mandatory ) : ?>	
-										<span class="mwb_etmfw_mandatory_fields">						
-											<?php esc_html_e( '*', 'event-tickets-manager-for-woocommerce' ); ?>
-										</span>
-									<?php endif; ?>
-								</label>
-							</div>
-							<div class="mwb-form-group__control">
-								<input type="number" name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" <?php echo esc_html( $required ); ?>>
-							</div>
-						</div>
-
-							<?php
-							break;
-
-						case 'date':
-							?>
-						<div class="mwb-form-group">
-							<div class="mwb-form-group__label">
-								<label class="mwb_etmfw_field_label"><?php echo esc_html( $value['label'], 'event-tickets-manager-for-woocommerce' ); ?>
-									<?php if ( $mandatory ) : ?>	
-										<span class="mwb_etmfw_mandatory_fields">						
-											<?php esc_html_e( '*', 'event-tickets-manager-for-woocommerce' ); ?>
-										</span>
-									<?php endif; ?>
-								</label>
-							</div>
-							<div class="mwb-form-group__control">
-								<input type="date" name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" <?php echo esc_html( $required ); ?>>
-							</div>
-						</div>
-
-
-							<?php
-							break;
-
-						case 'yes-no':
-							?>
-						<div class="mwb-form-group">
-							<div class="mwb-form-group__label">
-								<label class="mwb_etmfw_field_label"><?php echo esc_html( $value['label'], 'event-tickets-manager-for-woocommerce' ); ?>
-									<?php if ( $mandatory ) : ?>	
-										<span class="mwb_etmfw_mandatory_fields">						
-											<?php esc_html_e( '*', 'event-tickets-manager-for-woocommerce' ); ?>
-										</span>
-									<?php endif; ?>
-								</label>
-							</div>
-							<div class="mwb-form-group__control">
-								<div>
-									<input type="radio" id="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" value="yes" <?php echo esc_html( $required ); ?>>
-									<label for="yes"><?php esc_html_e( 'Yes', 'event-tickets-manager-for-woocommerce' ); ?></label>
-								</div>
-								<div>
-									<input type="radio" id="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" name="mwb_etmfw_<?php echo esc_attr( $field_label ); ?>" value="no">
-									<label for="no"><?php esc_html_e( 'No', 'event-tickets-manager-for-woocommerce' ); ?></label>
-								</div>
-							</div>
-						</div>
-							<?php
-							break;
-
-						default:
-							do_action( 'mwb_etmfw_after_input_fields', $value, $required );
-							break;
-					}
-					do_action( 'mwb_etmfw_after_input_fields', $value );
-					?>
-				</p>
-				<?php
 			}
 		}
 	}
@@ -406,32 +210,32 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_cart_item_data( $the_cart_data, $product_id, $variation_id ) {
+
+		if ( ! isset( $_POST['mwb_etwmfw_atc_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mwb_etwmfw_atc_nonce'] ) ), 'mwb_etwmfw_atc_nonce' ) ) {
+			return;
+		}
 		$mwb_etmfw_enable = get_option( 'mwb_etmfw_enable_plugin', false );
 		if ( $mwb_etmfw_enable ) {
 			$product_types = wp_get_object_terms( $product_id, 'product_type' );
 			if ( isset( $product_types[0] ) ) {
 				$product_type = $product_types[0]->slug;
 				if ( 'event_ticket_manager' == $product_type ) {
-					$mwb_field_nonce = isset( $_POST['mwb_etmfw_single_nonce_field'] ) ? stripcslashes( sanitize_text_field( wp_unslash( $_POST['mwb_etmfw_single_nonce_field'] ) ) ) : '';
-					if ( ! isset( $mwb_field_nonce ) || ! wp_verify_nonce( $mwb_field_nonce, 'mwb_etmfw_single_nonce' ) ) {
-						echo esc_html__( 'Sorry, your nonce did not verify.', 'event-tickets-manager-for-woocommerce' );
-						exit;
-					} else {
-						$cart_values = ! empty( $_POST ) ? map_deep( wp_unslash( $_POST ), 'sanitize_text_field' ) : array();
-						foreach ( $cart_values as $key => $value ) {
-							if ( false !== strpos( $key, 'mwb_etmfw_' ) && 'mwb_etmfw_single_nonce_field' !== $key ) {
-								if ( isset( $key ) && ! empty( $value ) ) {
-									$item_meta['mwb_etmfw_field_info'][ $key ] = isset( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : '';
-								}
+
+					$cart_values = ! empty( $_POST ) ? map_deep( wp_unslash( $_POST ), 'sanitize_text_field' ) : array();
+					foreach ( $cart_values as $key => $value ) {
+						if ( false !== strpos( $key, 'mwb_etmfw_' ) && 'mwb_etmfw_single_nonce_field' !== $key ) {
+							if ( isset( $key ) && ! empty( $value ) ) {
+								$item_meta['mwb_etmfw_field_info'][ $key ] = isset( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : '';
 							}
 						}
-						$item_meta = apply_filters( 'mwb_etmfw_add_cart_item_data', $item_meta, $the_cart_data, $product_id, $variation_id );
-						$the_cart_data['product_meta'] = array( 'meta_data' => $item_meta );
 					}
+					$item_meta = apply_filters( 'mwb_etmfw_add_cart_item_data', $item_meta, $the_cart_data, $product_id, $variation_id );
+					$the_cart_data['product_meta'] = array( 'meta_data' => $item_meta );
 				}
 			}
 		}
 		return $the_cart_data;
+
 	}
 
 	/**
@@ -534,7 +338,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$mwb_etmfw_enable = get_option( 'mwb_etmfw_enable_plugin', false );
 		if ( $mwb_etmfw_enable ) {
 			if ( $old_status != $new_status ) {
-				if ( 'completed' == $new_status || 'processing' == $new_status ) {
+				if ( 'completed' == $new_status ) {
 					$this->mwb_etmfw_process_event_order( $order_id, $old_status, $new_status );
 				}
 			}
@@ -555,6 +359,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 */
 	public function mwb_etmfw_process_event_order( $order_id, $old_status, $new_status ) {
 		$order = wc_get_order( $order_id );
+		$billing_email = $order->get_billing_email();
 		$mwb_etmfw_mail_template_data = array();
 		foreach ( $order->get_items() as $item_id => $item ) {
 			$product = $item->get_product();
@@ -591,6 +396,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 							'status' => 'pending',
 							'order_id' => $order_id,
 							'item_id' => $item_id,
+							'email'   => $billing_email,
 						);
 						update_post_meta( $product_id, 'mwb_etmfw_generated_tickets', $generated_tickets );
 					} else {
@@ -599,6 +405,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 							'status' => 'pending',
 							'order_id' => $order_id,
 							'item_id' => $item_id,
+							'email'   => $billing_email,
 						);
 						update_post_meta( $product_id, 'mwb_etmfw_generated_tickets', $generated_tickets );
 					}
@@ -644,6 +451,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_generate_ticket_info_in_mail( $mwb_etmfw_mail_template_data ) {
+		$product_id = null;
 		if ( ! empty( $mwb_etmfw_mail_template_data ) ) {
 			$order = wc_get_order( $mwb_etmfw_mail_template_data['order_id'] );
 			$product_id = $mwb_etmfw_mail_template_data['product_id'];
@@ -663,8 +471,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$template_html['purchaser'] = $order->get_billing_first_name();
 		$template_html['venue'] = $venue;
 		$template_html['time'] = mwb_etmfw_get_date_format( $start ) . '-' . mwb_etmfw_get_date_format( $end );
+		// Inline style used for sending in email.
 		$template_html['featuredimage'] = '<img src="' . $image . '" style="margin-right: 20px;" alt="image"/>';
-		return apply_filters( 'mwb_etmfw_ticket_info', $template_html );
+		return apply_filters( 'mwb_etmfw_ticket_info', $template_html, $product_id );
 
 	}
 
@@ -686,7 +495,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		if ( 'mwb_etmfw_email_notification' == $email_id ) {
 			if ( is_a( $order, 'WC_Order' ) ) {
 				$order_status  = $order->get_status();
-				if ( 'processing' === $order_status || 'completed' === $order_status ) {
+				if ( 'completed' === $order_status ) {
 					$order_id = $order->get_id();
 					foreach ( $order->get_items() as $item_id => $item ) {
 						$product = $item->get_product();
@@ -803,7 +612,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	public function mwb_etmfw_view_ticket_button( $item_id, $item, $order ) {
 		$order_id = $order->get_id();
 		$order_status = $order->get_status();
-		if ( 'completed' == $order_status || 'processing' == $order_status ) {
+		if ( 'completed' == $order_status ) {
 			$_product = apply_filters( 'mwb_etmfw_woo_order_item_product', $product = $item->get_product(), $item );
 			if ( isset( $_product ) && ! empty( $_product ) ) {
 				$product_id = $_product->get_id();
@@ -871,11 +680,12 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 												foreach ( $mwb_etmfw_field_data as $key => $html_value ) {
 													if ( 0 === strcasecmp( $html_value['label'], $label_key ) ) {
 														$this->generate_edit_ticket_inputs( $html_value, $user_data_value );
+														echo '<span id=mwb_etmfw_error_' . wp_kses_post( $html_value['label'] ) . '></span>';
 													}
 												}
 											}
 											?>
-											<input type="submit" class="button button-primary" 
+											<input type="submit" class="button button-primary"
 												name="mwb_etmfw_save_edit_ticket_info_btn"
 												id="mwb_etmfw_save_edit_ticket_info_btn"
 												value="<?php esc_attr_e( 'Save Changes', 'event-tickets-manager-for-woocommerce' ); ?>"
@@ -914,69 +724,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			$required = '';
 		}
 		$html_value_label = strtolower( str_replace( ' ', '_', $html_value['label'] ) );
-		switch ( $html_value['type'] ) {
-			case 'hidden':
-			case 'number':
-			case 'email':
-			case 'text':
-			case 'date':
-				?>
-				<input type="hidden" value="<?php echo esc_attr( $html_value_label ); ?>">
-				<div class="mwb-edit-form-group" data-id="<?php echo esc_attr( $html_value_label ); ?>">
-					<div class="mwb-edit-form-group__label">
-						<label class="mwb_etmfe_input_label" for="<?php echo esc_attr( $html_value_label ); ?>"><?php echo esc_html( $html_value['label'] ); ?></label>
-						<?php if ( $mandatory ) : ?>	
-							<span class="mwb_etmfw_mandatory_fields">						
-								<?php esc_html_e( '*', 'event-tickets-manager-for-woocommerce' ); ?>
-							</span>
-						<?php endif; ?>
-					</div>
-					<div class="mwb-edit-form-group__control">
-						<input type="<?php echo esc_html( $html_value['type'] ); ?>" value="<?php echo esc_html( $user_data_value ); ?>" id="mwb_etmfw_<?php echo esc_html( $html_value_label ); ?>" <?php echo esc_html( $required ); ?>>
-					</div>
-				</div>
-				<?php
-				break;
-
-			case 'textarea':
-				?>
-				<div class="mwb-edit-form-group" data-id="<?php echo esc_attr( $html_value_label ); ?>">
-					<label class="mwb_etmfe_input_label" for="<?php echo esc_attr( $html_value_label ); ?>"><?php echo esc_html( $html_value['label'] ); ?></label>
-					<?php if ( $mandatory ) : ?>	
-							<span class="mwb_etmfw_mandatory_fields">						
-								<?php esc_html_e( '*', 'event-tickets-manager-for-woocommerce' ); ?>
-							</span>
-						<?php endif; ?>
-					<textarea class="" rows="2" cols="25" id="mwb_etmfw_<?php echo esc_attr( $html_value_label ); ?>" id="<?php echo esc_attr( $html_value_label ); ?>" <?php echo esc_html( $required ); ?>><?php echo esc_textarea( $user_data_value ); // WPCS: XSS ok. ?></textarea>
-				</div>
-				<?php
-				break;
-			case 'yes-no':
-				?>
-				<div class="mwb-edit-form-group" data-id="<?php echo esc_attr( $html_value_label ); ?>">
-					<label class="mwb_etmfe_input_label" for="<?php echo esc_attr( $html_value_label ); ?>"><?php echo esc_html( $html_value['label'] ); ?></label>
-					<?php if ( $mandatory ) : ?>	
-							<span class="mwb_etmfw_mandatory_fields">						
-								<?php esc_html_e( '*', 'event-tickets-manager-for-woocommerce' ); ?>
-							</span>
-						<?php endif; ?>
-					<div>
-						<input type="radio" id="mwb_etmfw_<?php echo esc_attr( $html_value_label ); ?>" name="mwb_etmfw_<?php echo esc_attr( $html_value_label ); ?>" value="yes" <?php echo esc_html( 'yes' === $user_data_value ) ? 'checked' : ''; ?> <?php echo esc_html( $required ); ?>>
-						<label for="yes"><?php esc_html_e( 'Yes', 'event-tickets-manager-for-woocommerce' ); ?></label>
-					</div>
-					<div>
-						<input type="radio" id="mwb_etmfw_<?php echo esc_attr( $html_value_label ); ?>" name="mwb_etmfw_<?php echo esc_attr( $html_value_label ); ?>" value="no" <?php echo esc_html( 'no' === $user_data_value ) ? 'checked' : ''; ?>>
-						<label for="no"><?php esc_html_e( 'No', 'event-tickets-manager-for-woocommerce' ); ?></label>
-					</div>
-				</div>
-				<?php
-				break;
-
-				do_action( 'mwb_etmfw_edit_ticket_info_field', $html_value, $user_data_value );
-
-			default:
-				break;
-		}
+		require EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'templates/frontend/event-tickets-manager-for-woocommerce-view-ticket-html.php';
 
 	}
 
@@ -1028,12 +776,18 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			}
 		}
 
-			$html .= '</div>			
+			$html .= '</div>
 			<div class="mwb_etmfw_input_ticket_section">
-				<label>' . __( 'Ticket Number', 'event-tickets-manager-for-woocommerce' ) . '</label>
+				<label>' . __( 'Ticket Number *', 'event-tickets-manager-for-woocommerce' ) . '</label>
 				<input type="text" name="mwb_etmfw_imput_ticket" id="mwb_etmfw_imput_ticket">
 			</div>
-			<div class="mwb_etmfw--loader-btn-wrapper">	
+			<div class="mwb_etmfw_input_ticket_section">
+				<label>' . __( 'Enter Email *', 'event-tickets-manager-for-woocommerce' ) . '</label>
+				<input type="email" name="mwb_etmfw_chckin_email" id="mwb_etmfw_chckin_email">
+			</div>
+
+
+			<div class="mwb_etmfw--loader-btn-wrapper">
 				<div class="mwb_etmfw_checkin_button_section">
 					<input type="submit" name="mwb_etmfw_checkin_button" id="mwb_etmfw_checkin_button" value="' . __( 'Check In', 'event-tickets-manager-for-woocommerce' ) . '">
 				</div>
@@ -1041,8 +795,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					<img src="' . esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/loading.gif' ) . '">
 				</div>
 			</div>
-			</form>			
+			</form>
 		</div>';
+		do_action( 'mwb_etmfw_transfer_ticket_hook' );
 		return $html;
 	}
 
@@ -1055,15 +810,17 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_make_user_checkin_for_event() {
-		if ( isset( $_REQUEST['mwb_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['mwb_nonce'] ) ), 'mwb-etmfw-verify-checkin-nonce' ) ) { // WPCS: input var ok, sanitization ok.
-			$response['result'] = false;
-			$response['message'] = 'No tickets found for the event.';
-			$product_id = isset( $_REQUEST['for_event'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['for_event'] ) ) : '';
-			$ticket_num = isset( $_REQUEST['ticket_num'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['ticket_num'] ) ) : '';
-			$generated_tickets = get_post_meta( $product_id, 'mwb_etmfw_generated_tickets', true );
-			if ( ! empty( $generated_tickets ) ) {
-				foreach ( $generated_tickets as $key => $value ) {
-					if ( $ticket_num == $value['ticket'] ) {
+		check_ajax_referer( 'mwb-etmfw-verify-checkin-nonce', 'mwb_nonce' );
+		$response['result'] = false;
+		$response['message'] = 'No tickets found for the event.';
+		$product_id = isset( $_REQUEST['for_event'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['for_event'] ) ) : '';
+		$ticket_num = isset( $_REQUEST['ticket_num'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['ticket_num'] ) ) : '';
+		$user_email = isset( $_REQUEST['user_email'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['user_email'] ) ) : '';
+		$generated_tickets = get_post_meta( $product_id, 'mwb_etmfw_generated_tickets', true );
+		if ( ! empty( $generated_tickets ) ) {
+			foreach ( $generated_tickets as $key => $value ) {
+				if ( $ticket_num == $value['ticket'] ) {
+					if ( $user_email === $value['email'] ) {
 						if ( 'pending' === $value['status'] ) {
 							$post = get_post( $value['order_id'] );
 							if ( 'trash' !== $post->post_status ) {
@@ -1091,12 +848,16 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						} else {
 							$response['message'] = __( 'User has already checked in for the event.', 'event-tickets-manager-for-woocommerce' );
 						}
+					} else {
+						$response['message'] = __( 'Please Enter the correct email.', 'event-tickets-manager-for-woocommerce' );
+
 					}
 				}
 			}
-			echo json_encode( $response );
-			wp_die();
 		}
+		echo json_encode( $response );
+		wp_die();
+
 	}
 
 	/**
@@ -1108,14 +869,17 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_edit_user_info_for_event() {
-		if ( isset( $_REQUEST['mwb_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['mwb_nonce'] ) ), 'mwb-etmfw-verify-public-nonce' ) ) { // WPCS: input var ok, sanitization ok.
-			$response['result'] = false;
-			$posted_value = ! empty( $_REQUEST['form_value'] ) ? map_deep( wp_unslash( $_REQUEST['form_value'] ), 'sanitize_text_field' ) : array();
-			$order_id = isset( $_REQUEST['order_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['order_id'] ) ) : '';
-			$order = wc_get_order( $order_id );
-			foreach ( $order->get_items() as $item_id => $item ) {
-				$product = $item->get_product();
-				if ( isset( $product ) && $product->is_type( 'event_ticket_manager' ) ) {
+		check_ajax_referer( 'mwb-etmfw-verify-public-nonce', 'mwb_nonce' );
+
+		$response['result'] = false;
+		$posted_value = ! empty( $_REQUEST['form_value'] ) ? map_deep( wp_unslash( $_REQUEST['form_value'] ), 'sanitize_text_field' ) : array();
+		$order_id = isset( $_REQUEST['order_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['order_id'] ) ) : '';
+		$order = wc_get_order( $order_id );
+		foreach ( $order->get_items() as $item_id => $item ) {
+			$product = $item->get_product();
+			if ( isset( $product ) && $product->is_type( 'event_ticket_manager' ) ) {
+				if ( count( $posted_value ) > 0 ) {
+
 					foreach ( $posted_value as $key => $value ) {
 						$key = ucwords( str_replace( '_', ' ', $key ) );
 						$item->update_meta_data( $key, $value );
@@ -1130,9 +894,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					}
 				}
 			}
-			echo json_encode( $response );
-			wp_die();
 		}
+		echo json_encode( $response );
+		wp_die();
+
 	}
 
 	/**
@@ -1144,32 +909,32 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_get_calendar_widget_data() {
-		if ( isset( $_REQUEST['mwb_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['mwb_nonce'] ) ), 'mwb-etmfw-verify-public-nonce' ) ) { // WPCS: input var ok, sanitization ok.
-			$calendar_data = array();
-			$filter_duration = get_option( 'mwb_etmfw_display_duration', 'all' );
-			$query_args = array(
-				'post_type'      => 'product',
-				'post_status'    => 'publish',
-				'posts_per_page'    => -1,
-				'tax_query'      => array(
-					array(
-						'taxonomy' => 'product_type',
-						'field'    => 'slug',
-						'terms'    => 'event_ticket_manager',
-					),
+		check_ajax_referer( 'mwb-etmfw-verify-public-nonce', 'mwb_nonce' );
+
+		$calendar_data = array();
+		$filter_duration = get_option( 'mwb_etmfw_display_duration', 'all' );
+		$query_args = array(
+			'post_type'      => 'product',
+			'post_status'    => 'publish',
+			'posts_per_page'    => -1,
+			'tax_query'      => array(
+				array(
+					'taxonomy' => 'product_type',
+					'field'    => 'slug',
+					'terms'    => 'event_ticket_manager',
 				),
-			);
+			),
+		);
 
-			$query_data = new WP_Query( $query_args );
-			if ( $query_data->have_posts() ) {
-				while ( $query_data->have_posts() ) {
-					$query_data->the_post();
-					$calendar_data[] = $this->mwb_generate_list_view( $filter_duration, $calendar_data );
-				}
+		$query_data = new WP_Query( $query_args );
+		if ( $query_data->have_posts() ) {
+			while ( $query_data->have_posts() ) {
+				$query_data->the_post();
+				$calendar_data[] = $this->mwb_generate_list_view( $filter_duration, $calendar_data );
 			}
-
-			wp_reset_postdata();
 		}
+
+		wp_reset_postdata();
 		$response['result'] = $calendar_data;
 		echo json_encode( $response );
 		wp_die();
@@ -1507,5 +1272,20 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			}
 		}
 		return $if_show_map;
+	}
+
+	/**
+	 * Function name mwb_etmfw_show_expired_message.
+	 * this function is used to show event expiration message
+	 *
+	 * @since 1.0.2
+	 * @return void
+	 */
+	public function mwb_etmfw_show_expired_message() {
+		$mwb_etmfw_if_expired   = $this->mwb_etmfw_check_if_event_is_expired();
+		if ( $mwb_etmfw_if_expired ) {
+			require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'templates/frontend/event-tickets-manager-for-woocommerce-event-expired-html.php';
+
+		}
 	}
 }

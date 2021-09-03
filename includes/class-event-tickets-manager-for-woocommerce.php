@@ -192,7 +192,6 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_filter( 'mwb_etmfw_general_settings_array', $etmfw_plugin_admin, 'mwb_etmfw_admin_general_settings_page', 10 );
 		$this->loader->add_filter( 'mwb_etmfw_integration_settings_array', $etmfw_plugin_admin, 'mwb_etmfw_admin_integration_settings_page', 10 );
 		$this->loader->add_filter( 'mwb_etmfw_email_template_settings_array', $etmfw_plugin_admin, 'mwb_etmfw_admin_email_template_settings_page', 10 );
-		$this->loader->add_filter( 'mwb_etmfw_supprot_tab_settings_array', $etmfw_plugin_admin, 'mwb_etmfw_admin_support_settings_page', 10 );
 		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'mwb_etmfw_admin_save_tab_settings' );
 		$this->loader->add_filter( 'product_type_selector', $etmfw_plugin_admin, 'mwb_etmfw_event_ticket_product' );
 		$this->loader->add_filter( 'woocommerce_product_data_tabs', $etmfw_plugin_admin, 'mwb_etmfw_event_ticket_tab' );
@@ -237,6 +236,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_nopriv_mwb_etmfw_get_calendar_events', $etmfw_plugin_public, 'mwb_etmfw_get_calendar_widget_data' );
 		$this->loader->add_action( 'woocommerce_available_payment_gateways', $etmfw_plugin_public, 'mwb_etmfw_unset_cod_payment_gateway_for_event' );
 		$this->loader->add_filter( 'woocommerce_is_purchasable', $etmfw_plugin_public, 'mwb_etmfw_handle_expired_events', 10, 2 );
+		$this->loader->add_action( 'woocommerce_product_meta_start', $etmfw_plugin_public, 'mwb_etmfw_show_expired_message' );
 
 	}
 
@@ -521,9 +521,6 @@ class Event_Tickets_Manager_For_Woocommerce {
 		// Get the PHP maximum execution time.
 		$etmfw_system_status['php_max_execution_time'] = function_exists( 'ini_get' ) ? ini_get( 'max_execution_time' ) : __( 'N/A (ini_get function does not exist)', 'event-tickets-manager-for-woocommerce' );
 
-		// Get outgoing IP address.
-		$etmfw_system_status['outgoing_ip'] = function_exists( 'file_get_contents' ) ? file_get_contents( 'http://ipecho.net/plain' ) : __( 'N/A (file_get_contents function does not exist)', 'event-tickets-manager-for-woocommerce' );
-
 		$etmfw_system_data['php'] = $etmfw_system_status;
 		$etmfw_system_data['wp'] = $etmfw_wordpress_status;
 
@@ -629,7 +626,9 @@ class Event_Tickets_Manager_For_Woocommerce {
 									<span class="mdc-text-field__resizer">
 										<textarea class="mdc-text-field__input <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>" rows="2" cols="25" aria-label="Label" name="<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : esc_html( $etmfw_component['id'] ) ); ?>" id="<?php echo esc_attr( $etmfw_component['id'] ); ?>" placeholder="<?php echo ( isset( $etmfw_component['placeholder'] ) ? esc_attr( $etmfw_component['placeholder'] ) : '' ); ?>"><?php echo ( isset( $etmfw_component['value'] ) ? esc_textarea( $etmfw_component['value'] ) : '' ); // WPCS: XSS ok. ?></textarea>
 									</span>
+
 								</label>
+									<label class="mdl-textfield__label" for="octane"><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></label>
 
 							</div>
 						</div>
@@ -845,7 +844,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 										id="<?php echo esc_attr( $etmfw_component['id'] ); ?>"
 										type="<?php echo esc_attr( $etmfw_component['type'] ); ?>"
 										value="<?php echo ( isset( $etmfw_component['value'] ) ? esc_attr( $etmfw_component['value'] ) : '' ); ?>"
-										<?php echo esc_html( ( 'date' === $t_component['type'] ) ? 'max=' . gmdate( 'Y-m-d', strtotime( gmdate( 'Y-m-d', mktime() ) . ' + 365 day' ) ) . ' ' . 'min=' . gmdate( 'Y-m-d' ) . '' : '' ); ?>
+										<?php echo esc_html( ( 'date' === $t_component['type'] ) ? 'max=' . gmdate( 'Y-m-d', strtotime( gmdate( 'Y-m-d', mktime() ) . ' + 365 day' ) ) . 'min=' . gmdate( 'Y-m-d' ) : '' ); ?>
 										>
 									</label>
 									<div class="mdc-text-field-helper-line">
@@ -952,7 +951,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 			<span class="mdc-notched-outline__leading"></span>
 			<span class="mdc-notched-outline__notch">
 				<?php if ( 'number' != $value['type'] ) { ?>
-					<span class="mdc-floating-label" id="my-label-id" style=""><?php echo esc_attr( $value['placeholder'] ); ?></span>
+					<span class="mdc-floating-label" id="my-label-id" style=""><?php echo esc_attr( isset( $value['placeholder'] ) ? $value['placeholder'] : '' ); ?></span>
 				<?php } ?>
 			</span>
 			<span class="mdc-notched-outline__trailing"></span>

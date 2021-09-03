@@ -4,7 +4,7 @@
  *
  * This template can be overridden by copying it to yourtheme/woocommerce/emails/plain/mwb-wpr-email-notification-template.php.
  *
- * @package    event-tickets-manager-for-woocommerce
+ * @package    Event_Tickets_Manager_For_Woocommerce
  * @author     makewebbetter<ticket@makewebbetter.com>
  * @since      1.0.0
  */
@@ -12,6 +12,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+// Inline style used for sending in email.
 $template = '<table class="mwb-wuc__email-template" style=" border: 1px solid #000000 ;width: 100%!important; max-width: 600px; text-align: left; font-size: 20px;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center">
 	<tbody>
 		<tr>
@@ -48,6 +49,9 @@ $template = '<table class="mwb-wuc__email-template" style=" border: 1px solid #0
 								<p style="font-size: 16px;">[VENUE]</p>							
 								<p style="font-size: 16px;">[TIME]</p>
 							</td>
+							<td style="text-align: right;">
+								[QRCODE]
+							</td>	
 						</tr>						
 					</tbody>
 				</table>
@@ -61,6 +65,11 @@ $template = str_replace( '[PURCHASER]', $email_content['purchaser'], $template )
 $template = str_replace( '[VENUE]', $email_content['venue'], $template );
 $template = str_replace( '[TIME]', $email_content['time'], $template );
 $template = str_replace( '[FEATUREDIMAGE]', $email_content['featuredimage'], $template );
+$qr_code  = isset( $email_content['qrcode'] ) ? $email_content['qrcode'] : '';
+$template = str_replace( '[QRCODE]', $qr_code, $template );
+
+
+
 
 echo wp_kses_post( html_entity_decode( $template ) ); // PHPCS:Ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 

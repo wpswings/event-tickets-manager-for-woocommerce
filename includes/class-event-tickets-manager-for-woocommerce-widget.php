@@ -249,9 +249,9 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 	 */
 	public function mwb_etmfw_get_scopes() {
 		$scopes = array(
-			'all'       => __( 'All events', 'events-manager' ),
-			'future'    => __( 'Future events', 'events-manager' ),
-			'past'      => __( 'Past events', 'events-manager' ),
+			'all'       => __( 'All events', 'event-tickets-manager-for-woocommerce' ),
+			'future'    => __( 'Future events', 'event-tickets-manager-for-woocommerce' ),
+			'past'      => __( 'Past events', 'event-tickets-manager-for-woocommerce' ),
 		);
 		return apply_filters( 'mwb_etmfw_get_scopes', $scopes );
 	}

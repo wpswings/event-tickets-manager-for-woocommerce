@@ -37,11 +37,12 @@
 	 	});
 	 });
 	 jQuery( document ).ready( function($){
-	 	
 	 	$( document ).on(
 	 		'click',
 	 		'#mwb_etmfw_save_edit_ticket_info_btn',
 	 		function(e){
+	 			var check_validation = false;
+
 	 			e.preventDefault();
 	 			$( '#mwb_etmfw_edit_info_loader' ).css('display','inline-block');
 	 			var modifiedValues = {};
@@ -51,6 +52,14 @@
 	 					function() {
 	 						var label = $( this ).attr('data-id');
 	 						var fieldType = $( this ).find('#mwb_etmfw_'+label).attr('type');
+	 						var check_required = $( this ).find('#mwb_etmfw_'+label).attr('required');
+							if( check_required && ( '' == $('#mwb_etmfw_'+label).val() ) ) {
+								$("#mwb_etmfw_error_" + label).html( label + etmfw_public_param.is_required);
+								$('#mwb_etmfw_'+label).css( 'border','2px solid red');
+								check_validation = true;
+								return;
+							}
+							$('#mwb_etmfw_'+label).css('border', '');
 	 						if( fieldType == 'radio'){
 	 							var radio_value = $( this ).find( 'input[name="mwb_etmfw_'+label+'"]:checked' ).val();
 	 							modifiedValues[ label ] = radio_value;
@@ -59,27 +68,30 @@
 	 						}
 	 						order_id = $(document).find('#mwb_etmfw_edit_info_order').val();
 	 					}
-	 					);
+					);
 	 			}
-	 			var data = {
-	 				action:'mwb_etmfw_edit_user_info',
-	 				form_value : modifiedValues, 
-	 				order_id:order_id,
-	 				mwb_nonce:etmfw_public_param.mwb_etmfw_public_nonce
-	 			};
-	 			$.ajax({
-	 				type: 'POST',
-	 				url: etmfw_public_param.ajaxurl,
-	 				data: data,
-	 				dataType: 'json',
-	 				success: function(response) {
-	 					$( '#mwb_etmfw_edit_info_loader' ).css('display','none');	
-	 					window.location.reload();
-	 				},
-	 				error: function(response) {
+				 if( ! check_validation ) {
 
-	 				}
-	 			});
+					 var data = {
+						 action:'mwb_etmfw_edit_user_info',
+						 form_value : modifiedValues, 
+						 order_id:order_id,
+						 mwb_nonce:etmfw_public_param.mwb_etmfw_public_nonce
+					 };
+					 $.ajax({
+						 type: 'POST',
+						 url: etmfw_public_param.ajaxurl,
+						 data: data,
+						 dataType: 'json',
+						 success: function(response) {
+							 $( '#mwb_etmfw_edit_info_loader' ).css('display','none');	
+							 window.location.reload();
+						 },
+						 error: function(response) {
+	
+						 }
+					 });
+				 }
 	 		}
 	 		);
 	 });
@@ -118,5 +130,20 @@
 	 		});
 	 	}
 	 })
-
+	
+	
 	})( jQuery );
+	function initMap() {
+		let event_lat = parseInt( document.getElementById('etmfw_event_lat').value );
+		let event_lng = parseInt( document.getElementById('etmfw_event_lng').value );
+		const myLatLng = { lat: event_lat, lng: event_lng };
+			const map = new google.maps.Map(document.getElementById("mwb_etmfw_event_map"), {
+			zoom: 4,
+			center: myLatLng,
+			});
+			new google.maps.Marker({
+			position: myLatLng,
+			map,
+			title: "Event!",
+		});
+	}
