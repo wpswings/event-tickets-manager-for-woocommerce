@@ -210,13 +210,17 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_cart_item_data( $the_cart_data, $product_id, $variation_id ) {
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
+
+		if ( ! isset( $_POST['mwb_etwmfw_atc_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mwb_etwmfw_atc_nonce'] ) ), 'mwb_etwmfw_atc_nonce' ) ) {
+			return;
+		}
 		$mwb_etmfw_enable = get_option( 'mwb_etmfw_enable_plugin', false );
 		if ( $mwb_etmfw_enable ) {
 			$product_types = wp_get_object_terms( $product_id, 'product_type' );
 			if ( isset( $product_types[0] ) ) {
 				$product_type = $product_types[0]->slug;
 				if ( 'event_ticket_manager' == $product_type ) {
+
 					$cart_values = ! empty( $_POST ) ? map_deep( wp_unslash( $_POST ), 'sanitize_text_field' ) : array();
 					foreach ( $cart_values as $key => $value ) {
 						if ( false !== strpos( $key, 'mwb_etmfw_' ) && 'mwb_etmfw_single_nonce_field' !== $key ) {
@@ -231,7 +235,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			}
 		}
 		return $the_cart_data;
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+
 	}
 
 	/**
