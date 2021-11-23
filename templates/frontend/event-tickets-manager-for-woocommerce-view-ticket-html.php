@@ -22,7 +22,7 @@ switch ( $html_value['type'] ) {
 		<div class="mwb-edit-form-group" data-id="<?php echo esc_attr( $html_value_label ); ?>">
 			<div class="mwb-edit-form-group__label">
 				<label class="mwb_etmfe_input_label" for="<?php echo esc_attr( $html_value_label ); ?>"><?php echo esc_html( $html_value['label'] ); ?></label>
-				<?php if ( $mandatory ) : ?>
+				<?php if ( true === $mandatory ) : ?>
 					<span class="mwb_etmfw_mandatory_fields">
 						<?php esc_html_e( '*', 'event-tickets-manager-for-woocommerce' ); ?>
 					</span>

@@ -951,7 +951,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 			<span class="mdc-notched-outline__leading"></span>
 			<span class="mdc-notched-outline__notch">
 				<?php if ( 'number' != $value['type'] ) { ?>
-					<span class="mdc-floating-label" id="my-label-id" style=""><?php echo esc_attr( isset( $value['placeholder'] ) ? $value['placeholder'] : '' ); ?></span>
+					<span class="" id="my-label-id" style=""><?php echo esc_attr( isset( $value['placeholder'] ) ? $value['placeholder'] : '' ); ?></span>
 				<?php } ?>
 			</span>
 			<span class="mdc-notched-outline__trailing"></span>
