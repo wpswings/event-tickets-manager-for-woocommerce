@@ -1,29 +1,28 @@
-=== Event Tickets Manager for WooCommerce ===
+=== Event Tickets Manager for WooCommerce - Ticket Stock Management, Download Tickets As PDF, Events Calendar,Event Check-in Using Emails, Edit Your Ticket Content  ===
 Contributors: MakeWebBetter
 Donate link: https://makewebbetter.com/
 Tags: events, tickets, events plugin, event management, event manager, 
 Requires at least: 4.6
-Tested up to:  5.8
+Tested up to:  5.8.2
 WC requires at least: 4.0.0
-WC tested up to:  5.6
-Stable tag: 1.0.2
+WC tested up to:  5.9.0
+Stable tag: 1.0.3
 Requires PHP: 7.2 or Higher
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-
 Event Tickets Manager for WooCommerce is an extension that allows you to create event management and ticketing websites.
-
 
 == Description ==
 
-**EVENT TICKETS MANAGER IS AN ALL-IN-ONE SOLUTION THAT ALLOWS YOU TO SELL THE TICKETS TO YOUR EVENTS WITH THE  HELP OF A WOOCOMMERCE STORE. NOW YOU CAN ADD EVENTS AS A  PRODUCT IN JUST A FEW CLICKS.**
+**EVENT TICKETS MANAGER IS AN ALL-IN-ONE SOLUTION THAT ALLOWS YOU TO CREATE AN EVENT AND TICKETING WEBSITE. NOW YOU CAN EASILY SELL AND MANAGE YOUR EVENTS ON A WOOCOMMERCE STORE WITH THE HELP OF THIS EVENT TICKETS  PLUGIN.**
 
 **Events Tickets Manager For WooCommerce** is a complete solution for merchants that want to add event-based products to their WooCommerce store. Now you don’t have to pay commissions to your third-party services to manage event registration and ticket sales. You can manage the entire process from your WooCommerce store and be your own boss.
 
 * Create event management and ticketing websites.
 * Sell event tickets without depending on external service providers
 * Develop event management and ticketing websites. 
+* Invite the audience to your gig with the WooCommerce event tickets.
 
 [youtube https://www.youtube.com/watch?v=hf2gImcoqqk&w=560&h=315&rel=0]
 
@@ -40,12 +39,13 @@ Event Tickets Manager for WooCommerce is an extension that allows you to create 
 * You can collect additional information from the user if needed at the time of checkout.
 * Create event management and ticketing system with WooCommerce.
 * Allow the customers to validate their check-ins using emails.
+* The best part is you can fully automate your event and ticketing website.
 
 
 == PLUGIN MEETS YOUR REQUIREMENT, SO ==
 [Download Now](https://downloads.wordpress.org/plugins/event-tickets-manager-for-woocommerce.zip)
 
-
+ [**Event Tickets Managers for WooCommerce Documentation**](https://docs.makewebbetter.com/event-tickets-manager-for-WooCommerce/?utm_source=MWB-event-org&utm_medium=MWB-org-page&utm_campaign=MWB-event-org) 
 == WHAT IS INCLUDED IN FREE EVENT TICKETS MANAGER FOR WOOCOMMERCE PLUGIN == 
 
 **1)** **Ticket Stock Management**
@@ -70,7 +70,7 @@ The plugin gives the merchants an easy-to-use editor to update the content of th
 The users have to use the email address on which they received the ticket. By entering the email addresses users can validate their check-in for the events they are planning to participate in.
 
 **7)** **WPML Multilingual Support**
-The plugin comes with WPML multilingual support, so as to say, the WooCommerce extension will work in your local language. You can also use the Loco Translate Plugin to translate the string in your local language.
+The plugin comes with [WPML](https://wpml.org/purchase/) multilingual support, so as to say, the WooCommerce extension will work in your local language. You can also use the Loco Translate Plugin to translate the string in your local language.
 
 Thus, making this plugin one of the best online ticketing solutions for eCommerce websites.
 
@@ -136,6 +136,9 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 
 == Frequently Asked Questions ==
 
+= How do you display the interactive calendar widget? =
+You can search for a widget and there you will get the option of Event Ticket Manager widget simply add it. And there you will get the settings also to list view for event or calendar view you can choose it according to your need.
+
 = Can we display the event location on the tickets and product page? =
 Yes, the Event Tickets Manager for WooCommerce Provides the exact location of events to the user on the product page and tickets as the plugin is integrated with Google Maps.
 
@@ -162,26 +165,27 @@ Please visit the MakeWebBetter [**knowledge base**](https://support.makewebbette
 
 == Changelog ==
 
+= 1.0.3 - Released on 27 Nov 2021 =
 
+* New: Compatibility with WooCommerce 5.9.0
+* New: Compatibility with WordPress 5.8.2
 
 = 1.0.2 - Released on 31 August 2021  =
 * Fix: UI Issues
 * New: Event Check-In validation using email
-* New: Wpml compatibility added
+* New: WPML compatibility added
 * New: Compatibility with WooCommerce 5.6.0 and WordPress 5.8
-
 
 = 1.0.1 - Released on 08 June 2021 =  
 * Tweak: Dashboard update
-
 
 = 1.0.0 - Released on 29 April 2021 =
 * First version
 
 == Upgrade Notice == 
 
-= 1.0.2 - Released on 31 August 2021 =
-* Fix: UI Issues
-* New: Event Check-In validation using email
-* New: Wpml compatibility added
-* New: Compatibility with WooCommerce 5.6.0 and WordPress 5.8
+= 1.0.3 - Released on 27 Nov 2021 =
+
+* New: Compatibility with WooCommerce 5.9.0
+* New: Compatibility with WordPress 5.8.2
+
