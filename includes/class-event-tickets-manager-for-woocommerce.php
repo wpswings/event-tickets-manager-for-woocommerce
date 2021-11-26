@@ -81,7 +81,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 			$this->version = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '1.0.0';
+			$this->version = '1.0.3';
 		}
 
 		$this->plugin_name = 'event-tickets-manager-for-woocommerce';
