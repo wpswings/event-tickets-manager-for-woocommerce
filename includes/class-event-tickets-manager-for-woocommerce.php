@@ -81,7 +81,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 			$this->version = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '1.0.0';
+			$this->version = '1.0.3';
 		}
 
 		$this->plugin_name = 'event-tickets-manager-for-woocommerce';
@@ -951,7 +951,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 			<span class="mdc-notched-outline__leading"></span>
 			<span class="mdc-notched-outline__notch">
 				<?php if ( 'number' != $value['type'] ) { ?>
-					<span class="mdc-floating-label" id="my-label-id" style=""><?php echo esc_attr( isset( $value['placeholder'] ) ? $value['placeholder'] : '' ); ?></span>
+					<span class="" id="my-label-id" style=""><?php echo esc_attr( isset( $value['placeholder'] ) ? $value['placeholder'] : '' ); ?></span>
 				<?php } ?>
 			</span>
 			<span class="mdc-notched-outline__trailing"></span>
