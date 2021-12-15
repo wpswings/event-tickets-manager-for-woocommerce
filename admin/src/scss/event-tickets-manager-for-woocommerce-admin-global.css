@@ -700,3 +700,81 @@ button#mwb_etmfw_mail_setting_upload_logo_button {
         max-width: 100%;
     }
 }
+.mwb-navbar {
+    padding: 0 32px;
+    border-bottom: 1px solid rgba(63, 71, 86, 0.25);
+  }
+  .mwb-navbar .mwb-navbar__items {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .mwb-navbar .mwb-navbar__items li {
+    margin-right: 32px;
+    margin-bottom: 0;
+  }
+  .mwb-navbar .mwb-navbar__items li a {
+    padding: 18px 0;
+    color: #000000;
+  }
+  
+  /*=====   Tabs Section CSS Ends  ======*/
+  /*============================================
+  =           License Section CSS          =
+  =============================================*/
+  .mwb-wetm-wrap {
+    border-radius: 10px;
+    border: 1px solid #dddddd;
+    box-shadow: 0px 4px 10px #EFEFEF;
+    margin: 0 auto;
+    max-width: 600px;
+    padding: 10px 20px;
+  }
+  .mwb-wetm-wrap h2 {
+    color: #163062;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    line-height: 150%;
+    margin: 10px 0;
+    text-align: left;
+  }
+  .mwb-wetm-wrap .mwb_wetm_license_text > p {
+    margin: 10px 0;
+  }
+  .mwb-wetm-wrap .mwb_wetm_license_text #mwb_wetm_license_form .mwb-wetm-form-table input#mwb_wetm_license_key {
+    width: 100%;
+    transition: 0.3s ease;
+    height: 50px;
+    font-size: 14px;
+  }
+  .mwb-wetm-wrap .mwb_wetm_license_text #mwb_wetm_license_form .mwb-wetm-form-table input#mwb_wetm_license_key:hover {
+    border-color: #000000;
+  }
+  .mwb-wetm-wrap .mwb_wetm_license_text #mwb_wetm_license_form .mwb-wetm-form-table input#mwb_wetm_license_key:focus {
+    border-color: #2196f3;
+    outline: none;
+    box-shadow: none;
+  }
+  .mwb-wetm-wrap .mwb_wetm_license_text #mwb_wetm_license_form #mwb_wetm_license_activation_status {
+    padding: 0 10px;
+    font-weight: 600;
+  }
+  .mwb-wetm-wrap .mwb_wetm_license_text #mwb_wetm_license_form button {
+    background-color: #163062;
+    text-transform: uppercase;
+    width: 100%;
+    height: 40px;
+    letter-spacing: 1.5px;
+    border: 1px solid #163062;
+    transition: 0.5s ease;
+    font-weight: 600;
+  }
+  .mwb-wetm-wrap .mwb_wetm_license_text #mwb_wetm_license_form button:hover {
+    color: #163062;
+    background-color: #ffffff;
+  }
+  .mwb-wetm-wrap .mwb_wetm_license_text #mwb_wetm_license_form button:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  

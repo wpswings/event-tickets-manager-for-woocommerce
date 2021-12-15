@@ -20,17 +20,19 @@ global $etmfw_mwb_etmfw_obj, $error_notice;
 $etmfw_active_tab   = isset( $_GET['etmfw_tab'] ) ? sanitize_key( $_GET['etmfw_tab'] ) : 'event-tickets-manager-for-woocommerce-general';
 $etmfw_default_tabs = $etmfw_mwb_etmfw_obj->mwb_etmfw_plug_default_tabs();
 ?>
+
 <header>
 	<div class="mwb-header-container mwb-bg-white mwb-r-8">
 		<h1 class="mwb-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', $etmfw_mwb_etmfw_obj->etmfw_get_plugin_name() ) ) ); ?></h1>
-		
+
 		<a href="https://docs.makewebbetter.com/event-tickets-manager-for-woocommerce/?utm_source=MWB-event-org&utm_medium=MWB-org-backend&utm_campaign=MWB-event-doc" target="_blank" class="mwb-link"><?php esc_html_e( 'Documentation', 'event-tickets-manager-for-woocommerce' ); ?></a>
 		<span>|</span>
 		<a href="https://makewebbetter.com/submit-query/?utm_source=MWB-event-org&utm_medium=MWB-org-backend&utm_campaign=MWB-event-support" target="_blank" class="mwb-link"><?php esc_html_e( 'Support', 'event-tickets-manager-for-woocommerce' ); ?></a>
 	</div>
-	
 </header>
+
 <?php
+do_action( 'mwb_etmfw_licensed_tab_section' );
 if ( ! $error_notice ) {
 	$mwb_etmfw_error_text = esc_html__( 'Settings saved !', 'event-tickets-manager-for-woocommerce' );
 	$etmfw_mwb_etmfw_obj->mwb_etmfw_plug_admin_notice( $mwb_etmfw_error_text, 'success' );
@@ -68,11 +70,11 @@ if ( ! $error_notice ) {
 			if ( empty( $etmfw_active_tab ) ) {
 				$etmfw_active_tab = 'mwb_etmfw_plug_general';
 			}
+					// look for the path based on the tab id in the admin templates.
+					$etmfw_tab_content_path = 'admin/partials/' . $etmfw_active_tab . '.php';
 
-						// look for the path based on the tab id in the admin templates.
-				$etmfw_tab_content_path = 'admin/partials/' . $etmfw_active_tab . '.php';
-
-				$etmfw_mwb_etmfw_obj->mwb_etmfw_plug_load_template( $etmfw_tab_content_path );
+					$etmfw_tab_content_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/' . $etmfw_active_tab . '.php';
+					$etmfw_mwb_etmfw_obj->mwb_etmfw_plug_load_template( $etmfw_tab_content_path, $etmfw_active_tab );
 
 				do_action( 'mwb_etmfw_after_general_settings_form' );
 			?>

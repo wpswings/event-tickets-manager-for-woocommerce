@@ -372,9 +372,9 @@ class Event_Tickets_Manager_For_Woocommerce {
 	 * @param string $path path file for inclusion.
 	 * @param array  $params parameters to pass to the file for access.
 	 */
-	public function mwb_etmfw_plug_load_template( $path, $params = array() ) {
+	public function mwb_etmfw_plug_load_template( $path, $file_name ) {
 
-		$etmfw_file_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . $path;
+		$etmfw_file_path = apply_filters( 'mwb_etmfw_pro_tab_template_html', $path, $file_name );
 
 		if ( file_exists( $etmfw_file_path ) ) {
 
