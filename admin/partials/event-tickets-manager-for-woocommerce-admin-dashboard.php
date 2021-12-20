@@ -66,7 +66,7 @@ if ( ! $error_notice ) {
 		<div>
 			<?php
 				do_action( 'mwb_etmfw_before_general_settings_form' );
-						// if submenu is directly clicked on woocommerce.
+				// if submenu is directly clicked on woocommerce.
 			if ( empty( $etmfw_active_tab ) ) {
 				$etmfw_active_tab = 'mwb_etmfw_plug_general';
 			}
