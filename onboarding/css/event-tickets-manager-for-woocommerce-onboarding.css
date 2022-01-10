@@ -464,6 +464,9 @@ input#s2id_autogen1 {
         margin: 0 20px 0 0px !important;
     }
 }
-
+.mwb-info-img {
+    width: 20px;
+    padding-right: 5px;
+    }
 
 /*=====  End of MEDIA QUERIES  ======*/
