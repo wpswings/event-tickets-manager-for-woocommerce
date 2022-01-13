@@ -23,7 +23,7 @@
  * @since      1.0.0
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/package/rest-api/version1
- * @author     makewebbetter <webmaster@makewebbetter.com>
+ * @author     WPSwings <webmaster@WPSwings.com>
  */
 class Event_Tickets_Manager_For_Woocommerce_Rest_Api {
 

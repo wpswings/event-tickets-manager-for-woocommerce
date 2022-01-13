@@ -22,6 +22,24 @@ $etmfw_default_tabs = $etmfw_mwb_etmfw_obj->mwb_etmfw_plug_default_tabs();
 ?>
 
 <header>
+<tr class="plugin-update-tr active notice-warning notice-alt">
+	<td colspan="4" class="plugin-update colspanchange">
+		<div class="notice notice-success inline update-message notice-alt">
+			<div class='wps-notice-title wps-notice-section'>
+				<p><strong>IMPORTANT NOTICE:</strong></p>
+			</div>
+			<div class='wps-notice-content wps-notice-section'>
+				<p>From this update [here] onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
+				Please connect with us for all setup, support, and update related queries without hesitation.</p>
+			</div>
+		</div>
+	</td>
+</tr>
+<style>
+	.wps-notice-section > p:before {
+		content: none;
+	}
+</style>
 	<div class="mwb-header-container mwb-bg-white mwb-r-8">
 		<h1 class="mwb-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', $etmfw_mwb_etmfw_obj->etmfw_get_plugin_name() ) ) ); ?></h1>
 

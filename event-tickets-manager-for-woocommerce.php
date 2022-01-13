@@ -15,15 +15,15 @@
  * Plugin Name:       Event Tickets Manager for WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/
  * Description:       Event Tickets Manager for WooCommerce allows you to manage, sell and assign tickets easily.
- * Version:           1.0.3
- * Author:            MakeWebBetter
+ * Version:           1.0.4
+ * Author:            WP Swings
  * Author URI:          https://makewebbetter.com/?utm_source=MWB-event-org&utm_medium=MWB-org-backend &utm_campaign=MWB-event-site
  * Text Domain:       event-tickets-manager-for-woocommerce
  * Domain Path:       /languages
  * Requires at least: 4.6
  * Tested up to:      5.8.3
  * WC requires at least: 4.0
- * WC tested up to:   6.0.0
+ * WC tested up to:   6.1.0
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
  */
@@ -205,7 +205,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 *
 	 * @since 1.0.0
 	 * @name mwb_wgc_register_gift_card_product_type
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_wgc_register_event_ticket_manager_product_type() {
@@ -213,7 +213,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 * Set the giftcard product type.
 		 *
 		 * @since 1.0.0
-		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @author WPSwings<ticket@WPSwings.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		class WC_Product_Event_Ticket_Manager extends WC_Product {
@@ -236,7 +236,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 * @name mwb_etmfw_ticket_generator
 	 * @param int $length length of ticket number.
 	 * @return string $ticket_number.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_etmfw_ticket_generator( $length = 5 ) {
@@ -261,7 +261,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 * @name mwb_etmfw_get_date_format
 	 * @param string $date Date Passed.
 	 * @return string $date WP formated Date.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_etmfw_get_date_format( $date ) {
@@ -275,7 +275,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 * @name mwb_etmfw_get_only_date_format
 	 * @param string $date Date Passed.
 	 * @return string $date WP formated Date.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_etmfw_get_only_date_format( $date ) {
@@ -289,7 +289,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 * @name mwb_etmfw_get_only_time_format
 	 * @param string $date Date Passed.
 	 * @return string $date WP formated Date.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_etmfw_get_only_time_format( $date ) {
@@ -334,5 +334,37 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 */
 	add_action( 'admin_init', 'mwb_etmfw_plugin_deactivate' );
 
+}
+
+add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'event_upgrade_notice', 0, 3 );
+/**
+ * Displays notice to WPSWings.
+ *
+ * @param string $plugin_file Path to the plugin file relative to the plugins directory.
+ * @param array $plugin_data An array of plugin data.
+ * @param string $status Status filter currently applied to the plugin list.
+ */
+function event_upgrade_notice( $plugin_file, $plugin_data, $status ) {
+
+	?>
+<tr class="plugin-update-tr active notice-warning notice-alt">
+	<td colspan="4" class="plugin-update colspanchange">
+		<div class="notice notice-success inline update-message notice-alt">
+			<div class='wps-notice-title wps-notice-section'>
+				<p><strong>IMPORTANT NOTICE:</strong></p>
+			</div>
+			<div class='wps-notice-content wps-notice-section'>
+				<p>From this update [here] onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
+				Please connect with us for all setup, support, and update related queries without hesitation.</p>
+			</div>
+		</div>
+	</td>
+</tr>
+<style>
+	.wps-notice-section > p:before {
+		content: none;
+	}
+</style>
+	<?php
 }
 

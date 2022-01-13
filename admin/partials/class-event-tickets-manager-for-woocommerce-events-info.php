@@ -19,7 +19,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
  * @name Event_Tickets_Manager_For_Woocommerce_Events_Info
  * @since      1.0.0
  * @package    Event_Tickets_Manager_For_Woocommerce
- * @author makewebbetter<webmaster@makewebbetter.com>
+ * @author WPSwings<webmaster@WPSwings.com>
  * @link https://www.makewebbetter.com/
  */
 class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
@@ -35,7 +35,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 	 *
 	 * @name get_columns.
 	 * @since      1.0.0
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author WPSwings<webmaster@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function get_columns() {
@@ -60,7 +60,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 	 *
 	 * @name column_default.
 	 * @since      1.0.0
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author WPSwings<webmaster@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 * @param array  $item  array of the items.
 	 * @param string $column_name name of the colmn.
@@ -96,7 +96,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 	 * @name column_cb.
 	 * @since      1.0.0
 	 * @return array
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 * @param array $item array of the items.
 	 */
@@ -111,7 +111,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 	 * Perform admin bulk action setting for event table.
 	 *
 	 * @name process_bulk_action.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function process_bulk_action() {
@@ -139,7 +139,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 	 * @name get_bulk_actions.
 	 * @since      1.0.0
 	 * @return array
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function get_bulk_actions() {
@@ -155,7 +155,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 	 *
 	 * @name prepare_items.
 	 * @since      1.0.0
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author WPSwings<webmaster@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function prepare_items() {
@@ -187,7 +187,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 	 * @name get_attendees_data.
 	 * @since      1.0.0
 	 * @return array
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author WPSwings<webmaster@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function get_attendees_data() {

@@ -17,7 +17,7 @@
  *
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/admin
- * @author     makewebbetter <webmaster@makewebbetter.com>
+ * @author     WPSwings <webmaster@WPSwings.com>
  */
 class Event_Tickets_Manager_For_Woocommerce_Admin {
 
@@ -432,7 +432,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	 * @name mwb_etmfw_event_ticket_product()
 	 * @param array $types product types.
 	 * @return $types.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_event_ticket_product( $types ) {
@@ -450,7 +450,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	 * @name mwb_etmfw_event_ticket_tab()
 	 * @param array $tabs event tab.
 	 * @return $tabs.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_event_ticket_tab( $tabs ) {
@@ -646,7 +646,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_etmfw_event_menu()
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author WPSwings<webmaster@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_event_menu() {
@@ -734,7 +734,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_etmfw_plugin_row_meta
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @param mixed $links Contains links.
 	 * @param mixed $file Contains main file.
 	 * @link https://www.makewebbetter.com/
@@ -757,7 +757,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_etmfw_get_event_geocode_value
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_get_event_geocode_value() {

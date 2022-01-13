@@ -19,7 +19,7 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 	 *
 	 * @package    Event_Tickets_Manager_For_Woocommerce
 	 * @subpackage Event_Tickets_Manager_For_Woocommerce/emails
-	 * @author     makewebbetter <webmaster@makewebbetter.com>
+	 * @author     WPSwings <webmaster@WPSwings.com>
 	 */
 	class Mwb_Etmfw_Emails_Notification extends WC_Email {
 

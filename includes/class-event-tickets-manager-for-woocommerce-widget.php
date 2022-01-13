@@ -24,7 +24,7 @@
  * @since      1.0.0
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/includes
- * @author     makewebbetter <webmaster@makewebbetter.com>
+ * @author     WPSwings <webmaster@WPSwings.com>
  */
 class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 
@@ -103,7 +103,7 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 	 * @since 1.0.0
 	 * @name mwb_generate_list_view().
 	 * @param string $select selected view.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_generate_list_view( $select ) {

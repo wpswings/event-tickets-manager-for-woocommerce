@@ -19,7 +19,7 @@ use Dompdf\Dompdf;
  *
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/public
- * @author     makewebbetter <webmaster@makewebbetter.com>
+ * @author     WPSwings <webmaster@WPSwings.com>
  */
 class Event_Tickets_Manager_For_Woocommerce_Public {
 
@@ -127,7 +127,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @since 1.0.0
 	 * @name mwb_etmfw_before_add_to_cart_button_html()
 	 * @param object $event_product  Event Project Object.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_before_add_to_cart_button_html( $event_product ) {
@@ -159,7 +159,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @name mwb_etmfw_generate_addional_fields()
 	 * @param int   $product_id  Project Id.
 	 * @param array $event_field_array  Html Field Array.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_generate_addional_fields( $product_id, $event_field_array ) {
@@ -187,7 +187,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @param boolean $allow_qty default false.
 	 * @param object  $product Product Object.
 	 * @return boolean $allow_qty default true.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_allow_single_quantity( $allow_qty, $product ) {
@@ -206,7 +206,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @param int   $product_id Product Id.
 	 * @param int   $variation_id Variation Id.
 	 * @return array $the_cart_data Holds cart content.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_cart_item_data( $the_cart_data, $product_id, $variation_id ) {
@@ -246,7 +246,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @param array $item_meta holds cart item meta data.
 	 * @param array $existing_item_meta Existing Item Meta.
 	 * @return array $item_meta holds updated cart item meta data values.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_get_cart_item_data( $item_meta, $existing_item_meta ) {
@@ -279,7 +279,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @name mwb_etmfw_generate_key_value_pair()
 	 * @param array $field_post User Additional Info Values.
 	 * @return array $field_post User Additional Info Values.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_generate_key_value_pair( $field_post ) {
@@ -303,7 +303,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @param object $item Order Item.
 	 * @param string $cart_key cart unique key.
 	 * @param array  $values cart values.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_create_order_line_item( $item, $cart_key, $values ) {
@@ -331,7 +331,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @param string $order_id Order Id.
 	 * @param string $old_status Old Status.
 	 * @param string $new_status New Status.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_event_status_changed( $order_id, $old_status, $new_status ) {
@@ -354,7 +354,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @param string $order_id Order Id.
 	 * @param string $old_status Old Status.
 	 * @param string $new_status New Status.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_process_event_order( $order_id, $old_status, $new_status ) {
@@ -427,7 +427,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @name mwb_etmfw_send_ticket_mail()
 	 * @param object $order Order.
 	 * @param array  $mwb_etmfw_mail_template_data Mail Template data.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_send_ticket_mail( $order, $mwb_etmfw_mail_template_data ) {
@@ -450,7 +450,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @name mwb_etmfw_generate_ticket_info_in_mail()
 	 * @param array $mwb_etmfw_mail_template_data Mail Template Data.
 	 * @return array $template_html Template Html.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_generate_ticket_info_in_mail( $mwb_etmfw_mail_template_data ) {
@@ -490,7 +490,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @param object $order Order Object.
 	 * @param string $email email.
 	 * @return array $attachments email attachments.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_attach_pdf_to_emails( $attachments, $email_id, $order, $email ) {
@@ -527,7 +527,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @param string $ticket_number Ticket Number.
 	 * @param int    $product_id Product Id.
 	 * @return string $mwb_ticket_details Ticket Details.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_get_html_content( $item_meta_data, $order, $order_id, $ticket_number, $product_id ) {
@@ -576,7 +576,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @param object $order Order Object.
 	 * @param int    $order_id Order Id.
 	 * @param string $ticket_number Ticket Number.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_generate_ticket_pdf( $mwb_ticket_content, $order, $order_id, $ticket_number ) {
@@ -609,7 +609,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @param string $item_id Item Id.
 	 * @param object $item Item.
 	 * @param object $order Order Object.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_view_ticket_button( $item_id, $item, $order ) {
@@ -715,7 +715,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @name generate_edit_ticket_inputs()
 	 * @param array  $html_value Html Values.
 	 * @param string $user_data_value User data Values.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function generate_edit_ticket_inputs( $html_value, $user_data_value ) {
@@ -735,7 +735,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * This is function is used to create shortcode to check event check in.
 	 *
 	 * @name mwb_etmfw_add_eventcheckin_shortcode
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author WPSwings<webmaster@WPSwings.com>
 	 * @link http://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_add_eventcheckin_shortcode() {
@@ -746,7 +746,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * This is function is used to display event check in page.
 	 *
 	 * @name mwb_etmfw_create_event_checkin_page
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author WPSwings<webmaster@WPSwings.com>
 	 * @link http://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_create_event_checkin_page() {
@@ -809,7 +809,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_etmfw_make_user_checkin_for_event().
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_make_user_checkin_for_event() {
@@ -868,7 +868,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_etmfw_edit_user_info_for_event().
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_edit_user_info_for_event() {
@@ -908,7 +908,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_etmfw_get_calendar_widget_data().
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_get_calendar_widget_data() {
@@ -949,7 +949,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @since 1.0.0
 	 * @name mwb_generate_list_view().
 	 * @param string $filter_duration Duration on the basis of filter.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_generate_list_view( $filter_duration ) {
@@ -1008,7 +1008,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @since 1.0.0
 	 * @name mwb_etmfw_unset_cod_payment_gateway_for_event().
 	 * @param array $available_gateways Available payment gateways.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_unset_cod_payment_gateway_for_event( $available_gateways ) {
@@ -1041,7 +1041,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @since 1.0.0
 	 * @name mwb_etmfw_check_product_is_event().
 	 * @param object $product Product.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_etmfw_check_product_is_event( $product ) {
@@ -1198,7 +1198,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_etmfw_get_product_type().
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 * @return string $product_type Product type.
 	 */
@@ -1222,7 +1222,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_etmfw_check_if_event_is_expired().
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 * @return boolean $mwb_etmfw_if_expired If event is expired.
 	 */
@@ -1252,7 +1252,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_etmfw_show_google_map_on_product_page().
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WPSwings<ticket@WPSwings.com>
 	 * @link https://www.makewebbetter.com/
 	 * @return boolean $if_show_map display map.
 	 */

@@ -22,7 +22,7 @@ if ( ! class_exists( 'Event_Tickets_Manager_For_Woocommerce_Api_Process' ) ) {
 	 * @since      1.0.0
 	 * @package    Event_Tickets_Manager_For_Woocommerce
 	 * @subpackage Event_Tickets_Manager_For_Woocommerce/includes
-	 * @author     MakeWebBetter <makewebbetter.com>
+	 * @author     WPSwings <WPSwings.com>
 	 */
 	class Event_Tickets_Manager_For_Woocommerce_Api_Process {
 

@@ -24,7 +24,7 @@
  * @since      1.0.0
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/includes
- * @author     makewebbetter <webmaster@makewebbetter.com>
+ * @author     WPSwings <webmaster@WPSwings.com>
  */
 class Event_Tickets_Manager_For_Woocommerce {
 
