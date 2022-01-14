@@ -61,7 +61,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	 */
 	public function etmfw_admin_enqueue_styles( $hook ) {
 		$screen = get_current_screen();
-		if ( isset( $screen->id ) && 'makewebbetter_page_event_tickets_manager_for_woocommerce_menu' == $screen->id ) {
+		if ( isset( $screen->id ) && 'wp-swings_page_event_tickets_manager_for_woocommerce_menu' == $screen->id ) {
 			wp_enqueue_style( 'thickbox' );
 			wp_enqueue_style( 'mwb-etmfw-select2-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/event-tickets-manager-for-woocommerce-select2.css', array(), time(), 'all' );
 			wp_enqueue_style( 'mwb-etmfw-meterial-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.css', array(), time(), 'all' );
@@ -90,7 +90,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	public function etmfw_admin_enqueue_scripts( $hook ) {
 
 		$screen = get_current_screen();
-		if ( isset( $screen->id ) && 'makewebbetter_page_event_tickets_manager_for_woocommerce_menu' == $screen->id ) {
+		if ( isset( $screen->id ) && 'wp-swings_page_event_tickets_manager_for_woocommerce_menu' == $screen->id ) {
 			wp_enqueue_script( 'thickbox' );
 			wp_enqueue_script( 'mwb-etmfw-select2', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/event-tickets-manager-for-woocommerce-select2.js', array( 'jquery' ), time(), false );
 
@@ -139,7 +139,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	public function etmfw_options_page() {
 		global $submenu;
 		if ( empty( $GLOBALS['admin_page_hooks']['mwb-plugins'] ) ) {
-			add_menu_page( 'MakeWebBetter', 'MakeWebBetter', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/mwb-logo.png', 15 );
+			add_menu_page( 'WP Swings', 'WP Swings', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/mwb-logo.png', 15 );
 			$etmfw_menus = apply_filters( 'mwb_add_plugins_menus_array', array() );
 			if ( is_array( $etmfw_menus ) && ! empty( $etmfw_menus ) ) {
 				foreach ( $etmfw_menus as $etmfw_key => $etmfw_value ) {
