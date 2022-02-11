@@ -31,52 +31,52 @@
 	 $(document).ready(function(){
 	 	$( document ).on(
 	 		'click',
-	 		'#mwb_etmfw_edit_ticket',
+	 		'#wps_etmfw_edit_ticket',
 	 		function(){
-	 		$("#mwb_etmfw_edit_ticket_form").toggleClass("mwb_etmfw_show_ticket_form");
+	 		$("#wps_etmfw_edit_ticket_form").toggleClass("wps_etmfw_show_ticket_form");
 	 	});
 	 });
 	 jQuery( document ).ready( function($){
 	 	$( document ).on(
 	 		'click',
-	 		'#mwb_etmfw_save_edit_ticket_info_btn',
+	 		'#wps_etmfw_save_edit_ticket_info_btn',
 	 		function(e){
 	 			var check_validation = false;
 
 	 			e.preventDefault();
-	 			$( '#mwb_etmfw_edit_info_loader' ).css('display','inline-block');
+	 			$( '#wps_etmfw_edit_info_loader' ).css('display','inline-block');
 	 			var modifiedValues = {};
 	 			var order_id = '';
-	 			if( $(document).find('.mwb-edit-form-group').length > 0 ){
-	 				$( '.mwb-edit-form-group' ).each(
+	 			if( $(document).find('.wps-edit-form-group').length > 0 ){
+	 				$( '.wps-edit-form-group' ).each(
 	 					function() {
 	 						var label = $( this ).attr('data-id');
-	 						var fieldType = $( this ).find('#mwb_etmfw_'+label).attr('type');
-	 						var check_required = $( this ).find('#mwb_etmfw_'+label).attr('required');
-							if( check_required && ( '' == $('#mwb_etmfw_'+label).val() ) ) {
-								$("#mwb_etmfw_error_" + label).html( label + etmfw_public_param.is_required);
-								$('#mwb_etmfw_'+label).css( 'border','2px solid red');
+	 						var fieldType = $( this ).find('#wps_etmfw_'+label).attr('type');
+	 						var check_required = $( this ).find('#wps_etmfw_'+label).attr('required');
+							if( check_required && ( '' == $('#wps_etmfw_'+label).val() ) ) {
+								$("#wps_etmfw_error_" + label).html( label + etmfw_public_param.is_required);
+								$('#wps_etmfw_'+label).css( 'border','2px solid red');
 								check_validation = true;
 								return;
 							}
-							$('#mwb_etmfw_'+label).css('border', '');
+							$('#wps_etmfw_'+label).css('border', '');
 	 						if( fieldType == 'radio'){
-	 							var radio_value = $( this ).find( 'input[name="mwb_etmfw_'+label+'"]:checked' ).val();
+	 							var radio_value = $( this ).find( 'input[name="wps_etmfw_'+label+'"]:checked' ).val();
 	 							modifiedValues[ label ] = radio_value;
 	 						} else{
-	 							modifiedValues[ label ] = $('#mwb_etmfw_'+label).val();
+	 							modifiedValues[ label ] = $('#wps_etmfw_'+label).val();
 	 						}
-	 						order_id = $(document).find('#mwb_etmfw_edit_info_order').val();
+	 						order_id = $(document).find('#wps_etmfw_edit_info_order').val();
 	 					}
 					);
 	 			}
 				 if( ! check_validation ) {
 
 					 var data = {
-						 action:'mwb_etmfw_edit_user_info',
+						 action:'wps_etmfw_edit_user_info',
 						 form_value : modifiedValues, 
 						 order_id:order_id,
-						 mwb_nonce:etmfw_public_param.mwb_etmfw_public_nonce
+						 wps_nonce:etmfw_public_param.wps_etmfw_public_nonce
 					 };
 					 $.ajax({
 						 type: 'POST',
@@ -84,7 +84,7 @@
 						 data: data,
 						 dataType: 'json',
 						 success: function(response) {
-							 $( '#mwb_etmfw_edit_info_loader' ).css('display','none');	
+							 $( '#wps_etmfw_edit_info_loader' ).css('display','none');	
 							 window.location.reload();
 						 },
 						 error: function(response) {
@@ -101,8 +101,8 @@
 	 	var event_view = etmfw_public_param.event_view;
 	 	if( event_view == 'calendar') {
 	 		var data = {
-	 			action:'mwb_etmfw_get_calendar_events',
-	 			mwb_nonce:etmfw_public_param.mwb_etmfw_public_nonce
+	 			action:'wps_etmfw_get_calendar_events',
+	 			wps_nonce:etmfw_public_param.wps_etmfw_public_nonce
 
 	 		};
 	 		$.ajax({
@@ -137,7 +137,7 @@
 		let event_lat = parseInt( document.getElementById('etmfw_event_lat').value );
 		let event_lng = parseInt( document.getElementById('etmfw_event_lng').value );
 		const myLatLng = { lat: event_lat, lng: event_lng };
-			const map = new google.maps.Map(document.getElementById("mwb_etmfw_event_map"), {
+			const map = new google.maps.Map(document.getElementById("wps_etmfw_event_map"), {
 			zoom: 4,
 			center: myLatLng,
 			});

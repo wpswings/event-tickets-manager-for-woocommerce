@@ -4,7 +4,7 @@
  *
  * This file is used to markup the html for system status.
  *
- * @link       https://makewebbetter.com/
+ * @link       https://wpswings.com/
  * @since      1.0.0
  *
  * @package    Event_Tickets_Manager_For_Woocommerce
@@ -15,16 +15,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 // Template for showing information about system status.
-global $etmfw_mwb_etmfw_obj;
-$etmfw_default_status = $etmfw_mwb_etmfw_obj->mwb_etmfw_plug_system_status();
+global $etmfw_wps_etmfw_obj;
+$etmfw_default_status = $etmfw_wps_etmfw_obj->wps_etmfw_plug_system_status();
 $etmfw_wordpress_details = is_array( $etmfw_default_status['wp'] ) && ! empty( $etmfw_default_status['wp'] ) ? $etmfw_default_status['wp'] : array();
 $etmfw_php_details = is_array( $etmfw_default_status['php'] ) && ! empty( $etmfw_default_status['php'] ) ? $etmfw_default_status['php'] : array();
 ?>
-<div class="mwb-etmfw-table-wrap">
-	<div class="mwb-col-wrap">
-		<div id="mwb-etmfw-table-inner-container" class="table-responsive mdc-data-table">
+<div class="wps-etmfw-table-wrap">
+	<div class="wps-col-wrap">
+		<div id="wps-etmfw-table-inner-container" class="table-responsive mdc-data-table">
 			<div class="mdc-data-table__table-container">
-				<table class="mwb-etmfw-table mdc-data-table__table mwb-table" id="mwb-etmfw-wp">
+				<table class="wps-etmfw-table mdc-data-table__table wps-table" id="wps-etmfw-wp">
 					<thead>
 						<tr>
 							<th class="mdc-data-table__header-cell"><?php esc_html_e( 'WP Variables', 'event-tickets-manager-for-woocommerce' ); ?></th>
@@ -47,10 +47,10 @@ $etmfw_php_details = is_array( $etmfw_default_status['php'] ) && ! empty( $etmfw
 			</div>
 		</div>
 	</div>
-	<div class="mwb-col-wrap">
-		<div id="mwb-etmfw-table-inner-container" class="table-responsive mdc-data-table">
+	<div class="wps-col-wrap">
+		<div id="wps-etmfw-table-inner-container" class="table-responsive mdc-data-table">
 			<div class="mdc-data-table__table-container">
-				<table class="mwb-etmfw-table mdc-data-table__table mwb-table" id="mwb-etmfw-sys">
+				<table class="wps-etmfw-table mdc-data-table__table wps-table" id="wps-etmfw-sys">
 					<thead>
 						<tr>
 							<th class="mdc-data-table__header-cell"><?php esc_html_e( 'System Variables', 'event-tickets-manager-for-woocommerce' ); ?></th>

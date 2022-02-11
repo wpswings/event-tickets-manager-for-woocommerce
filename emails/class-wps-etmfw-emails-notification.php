@@ -2,7 +2,7 @@
 /**
  * This file is used to include email template.
  *
- * @link       https://makewebbetter.com/
+ * @link       https://wpswings.com/
  * @since      1.0.0
  *
  * @package    Event_Tickets_Manager_For_Woocommerce
@@ -19,7 +19,7 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 	 *
 	 * @package    Event_Tickets_Manager_For_Woocommerce
 	 * @subpackage Event_Tickets_Manager_For_Woocommerce/emails
-	 * @author     WPSwings <webmaster@WPSwings.com>
+	 * @author     WPSwings <webmaster@wpswings.com>
 	 */
 	class Mwb_Etmfw_Emails_Notification extends WC_Email {
 
@@ -37,20 +37,20 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 		 *
 		 * @since    1.0.0
 		 * @access   public
-		 * @var      string    $mwb_etmfw_email_subject    Email subject for mail.
+		 * @var      string    $wps_etmfw_email_subject    Email subject for mail.
 		 */
-		public $mwb_etmfw_email_subject;
+		public $wps_etmfw_email_subject;
 
 		/**
 		 * Initialize the class and set its properties.
 		 */
 		public function __construct() {
-			$this->id             = 'mwb_etmfw_email_notification';
+			$this->id             = 'wps_etmfw_email_notification';
 			$this->title          = __( 'Event order email', 'event-tickets-manager-for-woocommerce' );
 			$this->customer_email = true;
 			$this->description    = __( 'This email send to the customer at every event.', 'event-tickets-manager-for-woocommerce' );
-			$this->template_html  = 'mwb-etmfw-email-notification-template.php';
-			$this->template_plain = 'plain/mwb-etmfw-email-notification-template.php';
+			$this->template_html  = 'wps-etmfw-email-notification-template.php';
+			$this->template_plain = 'plain/wps-etmfw-email-notification-template.php';
 			$this->template_base  = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/';
 			$this->placeholders   = array(
 				'{site_title}'       => $this->get_blogname(),
@@ -67,7 +67,7 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 		 * @return string
 		 */
 		public function get_default_subject() {
-			return $this->mwb_etmfw_email_subject;
+			return $this->wps_etmfw_email_subject;
 		}
 
 		/**
@@ -86,16 +86,16 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 		 * @since      1.0.0
 		 * @param string $user_email User Email.
 		 * @param string $email_content Email content.
-		 * @param string $mwb_etmfw_email_subject Email Subject.
+		 * @param string $wps_etmfw_email_subject Email Subject.
 		 * @param object $order Order Object.
 		 */
-		public function trigger( $user_email, $email_content, $mwb_etmfw_email_subject, $order ) {
+		public function trigger( $user_email, $email_content, $wps_etmfw_email_subject, $order ) {
 			$this->setup_locale();
 
 			if ( is_a( $order, 'WC_Order' ) ) {
 				$this->object                         = $order;
 				$this->email_content = $email_content;
-				$this->mwb_etmfw_email_subject = $mwb_etmfw_email_subject;
+				$this->wps_etmfw_email_subject = $wps_etmfw_email_subject;
 				$this->recipient = $user_email;
 				$email_already_sent = $order->get_meta( '_new_order_email_sent' );
 			}

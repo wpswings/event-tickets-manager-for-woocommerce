@@ -1727,7 +1727,7 @@ class Stylesheet
     }
 
     /**
-     * dumps the entire stylesheet as a string
+     * duetmfw the entire stylesheet as a string
      *
      * Generates a string of each selector and associated style in the
      * Stylesheet.  Useful for debugging.

@@ -4,7 +4,7 @@
  *
  * This file is used to markup the admin-facing aspects of the plugin.
  *
- * @link       https://makewebbetter.com/
+ * @link       https://wpswings.com/
  * @since      1.0.0
  *
  * @package    Event_Tickets_Manager_For_Woocommerce
@@ -16,9 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit(); // Exit if accessed directly.
 }
 
-global $etmfw_mwb_etmfw_obj, $error_notice;
+global $etmfw_wps_etmfw_obj, $error_notice;
 $etmfw_active_tab   = isset( $_GET['etmfw_tab'] ) ? sanitize_key( $_GET['etmfw_tab'] ) : 'event-tickets-manager-for-woocommerce-general';
-$etmfw_default_tabs = $etmfw_mwb_etmfw_obj->mwb_etmfw_plug_default_tabs();
+$etmfw_default_tabs = $etmfw_wps_etmfw_obj->wps_etmfw_plug_default_tabs();
 ?>
 
 <header>
@@ -29,7 +29,7 @@ $etmfw_default_tabs = $etmfw_mwb_etmfw_obj->mwb_etmfw_plug_default_tabs();
 				<p><strong>IMPORTANT NOTICE:</strong></p>
 			</div>
 			<div class='wps-notice-content wps-notice-section'>
-				<p>From this update [here] onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
+				<p>From this update <strong>Version 1.0.4</strong> onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
 				Please connect with us for all setup, support, and update related queries without hesitation.</p>
 			</div>
 		</div>
@@ -40,31 +40,31 @@ $etmfw_default_tabs = $etmfw_mwb_etmfw_obj->mwb_etmfw_plug_default_tabs();
 		content: none;
 	}
 </style>
-	<div class="mwb-header-container mwb-bg-white mwb-r-8">
-		<h1 class="mwb-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', $etmfw_mwb_etmfw_obj->etmfw_get_plugin_name() ) ) ); ?></h1>
+	<div class="wps-header-container wps-bg-white wps-r-8">
+		<h1 class="wps-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', $etmfw_wps_etmfw_obj->etmfw_get_plugin_name() ) ) ); ?></h1>
 
-		<a href="https://docs.makewebbetter.com/event-tickets-manager-for-woocommerce/?utm_source=MWB-event-org&utm_medium=MWB-org-backend&utm_campaign=MWB-event-doc" target="_blank" class="mwb-link"><?php esc_html_e( 'Documentation', 'event-tickets-manager-for-woocommerce' ); ?></a>
+		<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-org-backend&utm_campaign=documentation" target="_blank" class="wps-link"><?php esc_html_e( 'Documentation', 'event-tickets-manager-for-woocommerce' ); ?></a>
 		<span>|</span>
-		<a href="https://makewebbetter.com/submit-query/?utm_source=MWB-event-org&utm_medium=MWB-org-backend&utm_campaign=MWB-event-support" target="_blank" class="mwb-link"><?php esc_html_e( 'Support', 'event-tickets-manager-for-woocommerce' ); ?></a>
+		<a href="https://wpswings.com/submit-query/?utm_source=wpswings-events-support&utm_medium=events-org-backend&utm_campaign=support" target="_blank" class="wps-link"><?php esc_html_e( 'Support', 'event-tickets-manager-for-woocommerce' ); ?></a>
 	</div>
 </header>
 
 <?php
-do_action( 'mwb_etmfw_licensed_tab_section' );
+do_action( 'wps_etmfw_licensed_tab_section' );
 if ( ! $error_notice ) {
-	$mwb_etmfw_error_text = esc_html__( 'Settings saved !', 'event-tickets-manager-for-woocommerce' );
-	$etmfw_mwb_etmfw_obj->mwb_etmfw_plug_admin_notice( $mwb_etmfw_error_text, 'success' );
+	$wps_etmfw_error_text = esc_html__( 'Settings saved !', 'event-tickets-manager-for-woocommerce' );
+	$etmfw_wps_etmfw_obj->wps_etmfw_plug_admin_notice( $wps_etmfw_error_text, 'success' );
 }
 ?>
-<main class="mwb-main mwb-bg-white mwb-r-8">
-	<nav class="mwb-navbar">
-		<ul class="mwb-navbar__items">
+<main class="wps-main wps-bg-white wps-r-8">
+	<nav class="wps-navbar">
+		<ul class="wps-navbar__items">
 			<?php
 			if ( is_array( $etmfw_default_tabs ) && ! empty( $etmfw_default_tabs ) ) {
 
 				foreach ( $etmfw_default_tabs as $etmfw_tab_key => $etmfw_default_tabs ) {
 
-					$etmfw_tab_classes = 'mwb-link ';
+					$etmfw_tab_classes = 'wps-link ';
 
 					if ( ! empty( $etmfw_active_tab ) && $etmfw_active_tab === $etmfw_tab_key ) {
 						$etmfw_tab_classes .= 'active';
@@ -80,21 +80,21 @@ if ( ! $error_notice ) {
 		</ul>
 	</nav>
 
-	<section class="mwb-section">
+	<section class="wps-section">
 		<div>
 			<?php
-				do_action( 'mwb_etmfw_before_general_settings_form' );
+				do_action( 'wps_etmfw_before_general_settings_form' );
 				// if submenu is directly clicked on woocommerce.
 			if ( empty( $etmfw_active_tab ) ) {
-				$etmfw_active_tab = 'mwb_etmfw_plug_general';
+				$etmfw_active_tab = 'wps_etmfw_plug_general';
 			}
 					// look for the path based on the tab id in the admin templates.
 					$etmfw_tab_content_path = 'admin/partials/' . $etmfw_active_tab . '.php';
 
 					$etmfw_tab_content_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/' . $etmfw_active_tab . '.php';
-					$etmfw_mwb_etmfw_obj->mwb_etmfw_plug_load_template( $etmfw_tab_content_path, $etmfw_active_tab );
+					$etmfw_wps_etmfw_obj->wps_etmfw_plug_load_template( $etmfw_tab_content_path, $etmfw_active_tab );
 
-				do_action( 'mwb_etmfw_after_general_settings_form' );
+				do_action( 'wps_etmfw_after_general_settings_form' );
 			?>
 		</div>
 	</section>

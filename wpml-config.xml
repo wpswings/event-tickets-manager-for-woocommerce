@@ -1,7 +1,7 @@
 <wpml-config>
 <admin-texts>
-<key name="mwb_etmfw_email_subject"></key>
-<key name="mwb_etmfw_email_body_content"></key>
+<key name="wps_etmfw_email_subject"></key>
+<key name="wps_etmfw_email_body_content"></key>
 </admin-texts>
 
 </wpml-config>
