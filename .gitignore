@@ -3,6 +3,10 @@ node_modules/*
 vendor
 vendor/*
 .history
+.composer.json
+.composer.json/
+.composer.lock
+.composer.lock/
 # ignore compiled files
 *.com
 *.class

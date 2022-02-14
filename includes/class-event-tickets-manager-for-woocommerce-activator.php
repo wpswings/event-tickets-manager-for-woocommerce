@@ -70,7 +70,7 @@ class Event_Tickets_Manager_For_Woocommerce_Activator {
 					}
 
 					update_post_meta( $product_id, $new_key, $value );
-					// delete_post_meta( $product_id, $new_key );
+					
 				}
 			}
 		}
@@ -115,7 +115,7 @@ class Event_Tickets_Manager_For_Woocommerce_Activator {
 
 			$new_value = get_option( $key, $value );
 			update_option( $new_key, $new_value );
-			// delete_post_meta( $key );
+			
 		}
 	}
 
