@@ -8,7 +8,7 @@
  * @since      1.0.0
  *
  * @package    Event_Tickets_Manager_For_Woocommerce
- * @subpackage Event_Tickets_Manager_For_Woocommerce/package/rest-api/version1
+ * @subpackage Event_Tickets_Manager_For_Woocommerce/package/rest-api
  */
 
 /**
@@ -22,7 +22,7 @@
  *
  * @since      1.0.0
  * @package    Event_Tickets_Manager_For_Woocommerce
- * @subpackage Event_Tickets_Manager_For_Woocommerce/package/rest-api/version1
+ * @subpackage Event_Tickets_Manager_For_Woocommerce/package/rest-api
  * @author     WPSwings <webmaster@wpswings.com>
  */
 class Event_Tickets_Manager_For_Woocommerce_Rest_Api {

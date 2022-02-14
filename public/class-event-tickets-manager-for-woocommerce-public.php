@@ -996,7 +996,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				break;
 
 			default:
-				// code...
 				break;
 		}
 		return $event_array;

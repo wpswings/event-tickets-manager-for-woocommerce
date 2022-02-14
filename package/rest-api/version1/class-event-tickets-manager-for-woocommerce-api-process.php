@@ -6,7 +6,7 @@
  * @since      1.0.0
  *
  * @package    Event_Tickets_Manager_For_Woocommerce
- * @subpackage Event_Tickets_Manager_For_Woocommerce/includes
+ * @subpackage Event_Tickets_Manager_For_Woocommerce/package/rest-api/version1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,7 +21,7 @@ if ( ! class_exists( 'Event_Tickets_Manager_For_Woocommerce_Api_Process' ) ) {
 	 *
 	 * @since      1.0.0
 	 * @package    Event_Tickets_Manager_For_Woocommerce
-	 * @subpackage Event_Tickets_Manager_For_Woocommerce/includes
+	 * @subpackage Event_Tickets_Manager_For_Woocommerce/package/rest-api/version1
 	 * @author     WPSwings <WPSwings.com>
 	 */
 	class Event_Tickets_Manager_For_Woocommerce_Api_Process {

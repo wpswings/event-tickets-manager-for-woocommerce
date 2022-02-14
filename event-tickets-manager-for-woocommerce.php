@@ -7,25 +7,25 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              https://wpswings.com/
- * @since             1.0.0
- * @package           Event_Tickets_Manager_For_Woocommerce
+ * @link                 https://wpswings.com/
+ * @since                1.0.0
+ * @package              Event_Tickets_Manager_For_Woocommerce
  *
  * @wordpress-plugin
- * Plugin Name:       Event Tickets Manager for WooCommerce
- * Plugin URI:        https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/
- * Description:       Event Tickets Manager for WooCommerce allows you to manage, sell and assign tickets easily.
- * Version:           1.0.4
- * Author:            WP Swings
- * Author URI:        https://wpswings.com/?utm_source=wpswings-events-official&utm_medium=events-org-backend&utm_campaign=official
- * Text Domain:       event-tickets-manager-for-woocommerce
- * Domain Path:       /languages
- * Requires at least: 4.6
- * Tested up to:      5.9
+ * Plugin Name:          Event Tickets Manager for WooCommerce
+ * Plugin URI:           https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/
+ * Description:          Event Tickets Manager for WooCommerce allows you to manage, sell and assign tickets easily.
+ * Version:              1.0.4
+ * Author:               WP Swings
+ * Author URI:           https://wpswings.com/?utm_source=wpswings-events-official&utm_medium=events-org-backend&utm_campaign=official
+ * Text Domain:          event-tickets-manager-for-woocommerce
+ * Domain Path:          /languages
+ * Requires at least:    4.6
+ * Tested up to:         5.9
  * WC requires at least: 4.0
- * WC tested up to:   6.1.1
- * License:           GNU General Public License v3.0
- * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
+ * WC tested up to:      6.2.0
+ * License:              GNU General Public License v3.0
+ * License URI:          http://www.gnu.org/licenses/gpl-3.0.html
  */
 
 // If this file is called directly, abort.

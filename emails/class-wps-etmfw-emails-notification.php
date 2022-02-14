@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
+if ( ! class_exists( 'Wps_Etmfw_Emails_Notification' ) ) {
 
 	/**
 	 * Woocommerce Custom Email template to send event mails.
@@ -21,7 +21,7 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 	 * @subpackage Event_Tickets_Manager_For_Woocommerce/emails
 	 * @author     WPSwings <webmaster@wpswings.com>
 	 */
-	class Mwb_Etmfw_Emails_Notification extends WC_Email {
+	class Wps_Etmfw_Emails_Notification extends WC_Email {
 
 		/**
 		 * Email Content to send in mail.
@@ -185,4 +185,4 @@ if ( ! class_exists( 'Mwb_Etmfw_Emails_Notification' ) ) {
 		}
 	}
 }
-return new Mwb_Etmfw_Emails_Notification();
+return new Wps_Etmfw_Emails_Notification();
