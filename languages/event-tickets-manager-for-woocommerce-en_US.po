@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Tickets Manager for WooCommerce 1.0.3\n"
-"POT-Creation-Date: 2022-01-31 15:04+0530\n"
-"PO-Revision-Date: 2022-01-31 15:05+0530\n"
+"POT-Creation-Date: 2022-02-15 20:15+0530\n"
+"PO-Revision-Date: 2022-02-15 20:15+0530\n"
 "Last-Translator: \n"
 "Language-Team: wpswings\n"
 "Language: en_US\n"
@@ -390,40 +390,40 @@ msgstr ""
 msgid "System Values"
 msgstr ""
 
-#: emails/class-wps-etmfw-emails-notification.php:49
+#: emails/class-wps-etmfw-emails-notification.php:50
 msgid "Event order email"
 msgstr ""
 
-#: emails/class-wps-etmfw-emails-notification.php:51
+#: emails/class-wps-etmfw-emails-notification.php:52
 msgid "This email send to the customer at every event."
 msgstr ""
 
-#: emails/class-wps-etmfw-emails-notification.php:80
+#: emails/class-wps-etmfw-emails-notification.php:81
 msgid "Event order received."
 msgstr ""
 
-#: emails/class-wps-etmfw-emails-notification.php:161
+#: emails/class-wps-etmfw-emails-notification.php:162
 msgid "Enable/Disable"
 msgstr ""
 
-#: emails/class-wps-etmfw-emails-notification.php:163
+#: emails/class-wps-etmfw-emails-notification.php:164
 msgid "Enable this email notification"
 msgstr ""
 
-#: emails/class-wps-etmfw-emails-notification.php:167
+#: emails/class-wps-etmfw-emails-notification.php:168
 msgid "Email heading"
 msgstr ""
 
-#: emails/class-wps-etmfw-emails-notification.php:171
+#: emails/class-wps-etmfw-emails-notification.php:172
 #, php-format
 msgid "Available placeholders: %s"
 msgstr ""
 
-#: emails/class-wps-etmfw-emails-notification.php:176
+#: emails/class-wps-etmfw-emails-notification.php:177
 msgid "Email type"
 msgstr ""
 
-#: emails/class-wps-etmfw-emails-notification.php:178
+#: emails/class-wps-etmfw-emails-notification.php:179
 msgid "Choose which format of email to send."
 msgstr ""
 
