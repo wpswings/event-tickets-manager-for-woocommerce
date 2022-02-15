@@ -5,6 +5,7 @@
  * This template can be overridden by copying it to yourtheme/woocommerce/emails/wps-wpr-email-notification-template.php.
  *
  * @package    Event_Tickets_Manager_For_Woocommerce
+ * @subpackage Event_Tickets_Manager_For_Woocommerce/emails/templates
  * @author     WPSwings<ticket@wpswings.com>
  * @since      1.0.0
  */

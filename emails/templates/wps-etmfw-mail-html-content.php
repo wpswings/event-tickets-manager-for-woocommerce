@@ -3,6 +3,7 @@
  * Exit if accessed directly
  *
  * @package    Event_Tickets_Manager_For_Woocommerce
+ * @subpackage Event_Tickets_Manager_For_Woocommerce/emails/templates
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
