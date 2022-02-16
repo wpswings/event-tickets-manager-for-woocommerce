@@ -8,7 +8,7 @@ Tags: events, tickets, events plugin, event management, event manager,
 Requires at least: 4.6
 Tested up to:  5.9
 WC requires at least: 4.0
-WC tested up to:  6.1.1
+WC tested up to:  6.2.0
 Stable tag: 1.0.4
 Requires PHP: 7.2 or Higher
 License: GNU General Public License v3.0
@@ -178,9 +178,12 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
-= 1.0.4 - Released on 22 January 2022 =
-* New: Notice display of current version for [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=events-git-page&utm_campaign=official).
-* Fix: Minor Bug fixes
+= 1.0.4 - Released on 16 February 2022 =
+* New: Change author from MakeWebBetter to WP Swings
+* New: Notice display of current version for [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=events-org-page&utm_campaign=official).
+* New: Codebase migration
+* New: Database migration 
+* Fix: Bug fix and Enhancement
 * New: Compatible with latest WP and WC
 
 
@@ -203,9 +206,12 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Upgrade Notice == 
 
-= 1.0.4 - Released on 22 January 2022 =
-* New: Notice display of current version for [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=events-git-page&utm_campaign=official).
-* Fix: Minor Bug fixes
+= 1.0.4 - Released on 16 February 2022 =
+* New: Change author from MakeWebBetter to WP Swings
+* New: Notice display of current version for [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=events-org-page&utm_campaign=official).
+* New: Codebase migration
+* New: Database migration 
+* Fix: Bug fix and Enhancement
 * New: Compatible with latest WP and WC
 
 
