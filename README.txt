@@ -30,7 +30,7 @@ Event Tickets Manager for WooCommerce is an extension that allows you to create 
 
 >**IMPORTANT NOTICE:**
 
->_**From this update Version 1.0.4 onwards, the Events  plugin and its support will be handled by [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=events-org-page&utm_campaign=official).**_
+>_**From this update Version 1.0.4 onwards, the Event Tickets Manager For WooCommerce  plugin and its support will be handled by [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=events-org-page&utm_campaign=official).**_
 
 >_**WP Swings is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end. Please [**Connect with us**](https://wpswings.com/contact-us/?utm_source=wpswings-events-contactus&utm_medium=events-org-page&utm_campaign=contactus) for all setup, support, and update related queries without hesitation.**_
 
@@ -133,7 +133,7 @@ If you need support or have questions, kindly use our online chat window [**here
 = Automatic installation =
 Automatic installation is the easiest option as WordPress handles the file transfers itself and you don't need to leave your web browser. To do an automatic install of the plugin, log in to your WordPress dashboard, navigate to the Plugins menu, and click Add New.
 
-In the search field type **" Event Tickets Manager for WooCommerce"** and click Search Plugins. Once you've found our Event Tickets Manager for WooCommerce plugin you can view details about it such as the point release, rating, and description. Most importantly, of course, you can install it by simply clicking **"Install Now"**.
+In the search field type **"Event Tickets Manager for WooCommerce"** and click Search Plugins. Once you've found our Event Tickets Manager for WooCommerce plugin you can view details about it such as the point release, rating, and description. Most importantly, of course, you can install it by simply clicking **"Install Now"**.
 
 = Manual installation =
 The manual installation method involves downloading our Event Tickets Manager for WooCommerce and uploading it to your web server via your favorite FTP application. The WordPress codex contains [**instructions on how to do this here**](https://wordpress.org/support/article/managing-plugins/#manual-plugin-installation).
@@ -191,7 +191,7 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
-= 1.0.4 - Released on 16 February  2022 =
+= 1.0.4 - Released on 17 February  2022 =
 * New: Change author from MakeWebBetter to WP Swings
 * New: Notice display of current version for [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=events-org-page&utm_campaign=official).
 * New: Codebase migration
@@ -219,10 +219,11 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Upgrade Notice == 
 
-= 1.0.4 - Released on 16 February 2022 =
-* New: Change author from MakeWebBetter to WP Swings
+= 1.0.4 - Released on 17 February 2022 =
+*  New: Change author from MakeWebBetter to WP Swings
 * New: Notice display of current version for [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=events-org-page&utm_campaign=official).
 * New: Codebase migration
 * New: Database migration 
 * Fix: Bug fix and Enhancement
 * New: Compatible with latest WP and WC
+
