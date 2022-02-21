@@ -360,7 +360,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	 * @since 1.0.0
 	 */
 	public function wps_etmfw_admin_save_tab_settings() {
-
+		
 		global $etmfw_wps_etmfw_obj, $error_notice;
 		$etmfw_post_check = false;
 
@@ -370,6 +370,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		if ( ! isset( $_POST['wps_event_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_event_nonce'] ) ), 'wps_event_nonce' ) ) {
 			return;
 		}
+		
 		if ( isset( $_POST['wps_etmfw_save_general_settings'] ) ) {
 			$etmfw_genaral_settings = apply_filters( 'wps_etmfw_general_settings_array', array() );
 			$etmfw_post_check       = true;
@@ -380,8 +381,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			$etmfw_genaral_settings = apply_filters( 'wps_etmfw_integration_settings_array', array() );
 			$etmfw_post_check       = true;
 		}
-
+		
 		if ( $etmfw_post_check ) {
+			
 			$wps_etmfw_gen_flag = false;
 			$etmfw_button_index = array_search( 'submit', array_column( $etmfw_genaral_settings, 'type' ) );
 			if ( isset( $etmfw_button_index ) && ( null == $etmfw_button_index || '' == $etmfw_button_index ) ) {
@@ -422,6 +424,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					do_action( 'wps_etmfw_save_admin_global_settings', $_POST );
 				}
 			}
+			
+			do_action( 'wps_etmfw_generate_access_token_unlimited_time' );
+			
 		}
 	}
 
@@ -617,6 +622,8 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					$wps_etmfw_product_array = apply_filters( 'wps_etmfw_product_pricing', $wps_etmfw_product_array, $_POST );
 					update_post_meta( $product_id, 'wps_etmfw_product_array', $wps_etmfw_product_array );
 					do_action( 'wps_etmfw_event_product_type_save_fields', $product_id );
+
+					do_action( 'wps_etmfw_share_event_on_fb', $product_id );
 				}
 			}
 		}
