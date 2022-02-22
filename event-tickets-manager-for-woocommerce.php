@@ -1,4 +1,4 @@
-<?php //phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+<?php
 /**
  * The plugin bootstrap file
  *
@@ -7,25 +7,25 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              https://makewebbetter.com/
- * @since             1.0.0
- * @package           Event_Tickets_Manager_For_Woocommerce
+ * @link                 https://wpswings.com/
+ * @since                1.0.0
+ * @package              Event_Tickets_Manager_For_Woocommerce
  *
  * @wordpress-plugin
- * Plugin Name:       Event Tickets Manager for WooCommerce
- * Plugin URI:        https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/
- * Description:       Event Tickets Manager for WooCommerce allows you to manage, sell and assign tickets easily.
- * Version:           1.0.3
- * Author:            MakeWebBetter
- * Author URI:          https://makewebbetter.com/?utm_source=MWB-event-org&utm_medium=MWB-org-backend &utm_campaign=MWB-event-site
- * Text Domain:       event-tickets-manager-for-woocommerce
- * Domain Path:       /languages
- * Requires at least: 4.6
- * Tested up to:      5.8.2
+ * Plugin Name:          Event Tickets Manager for WooCommerce
+ * Plugin URI:           https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/
+ * Description:          Event Tickets Manager for WooCommerce allows you to manage, sell and assign tickets easily.
+ * Version:              1.0.4
+ * Author:               WP Swings
+ * Author URI:           https://wpswings.com/?utm_source=wpswings-events-official&utm_medium=events-org-backend&utm_campaign=official
+ * Text Domain:          event-tickets-manager-for-woocommerce
+ * Domain Path:          /languages
+ * Requires at least:    4.6
+ * Tested up to:         5.9
  * WC requires at least: 4.0
- * WC tested up to:   5.9.0
- * License:           GNU General Public License v3.0
- * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
+ * WC tested up to:      6.2.0
+ * License:              GNU General Public License v3.0
+ * License URI:          http://www.gnu.org/licenses/gpl-3.0.html
  */
 
 // If this file is called directly, abort.
@@ -43,17 +43,17 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 */
 	function define_event_tickets_manager_for_woocommerce_constants() {
 
-		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION', '1.0.3' );
+		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION', '1.0.4' );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
-		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_SERVER_URL', 'https://makewebbetter.com' );
+		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com' );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_ITEM_REFERENCE', 'Event Tickets Manager for WooCommerce' );
 		$wp_upload = wp_upload_dir();
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR', $wp_upload['basedir'] );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_URL', $wp_upload['baseurl'] );
-		event_tickets_manager_for_woocommerce_constants( 'CLIENT_ID', get_option( 'mwb_etmfw_google_client_id', '' ) );
-		event_tickets_manager_for_woocommerce_constants( 'CLIENT_SECRET', get_option( 'mwb_etmfw_google_client_secret', '' ) );
-		event_tickets_manager_for_woocommerce_constants( 'CLIENT_REDIRECT_URL', get_option( 'mwb_etmfw_google_redirect_url', '' ) );
+		event_tickets_manager_for_woocommerce_constants( 'CLIENT_ID', get_option( 'wps_etmfw_google_client_id', '' ) );
+		event_tickets_manager_for_woocommerce_constants( 'CLIENT_SECRET', get_option( 'wps_etmfw_google_client_secret', '' ) );
+		event_tickets_manager_for_woocommerce_constants( 'CLIENT_REDIRECT_URL', get_option( 'wps_etmfw_google_redirect_url', '' ) );
 
 	}
 
@@ -79,20 +79,20 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	function activate_event_tickets_manager_for_woocommerce() {
 		require_once plugin_dir_path( __FILE__ ) . 'includes/class-event-tickets-manager-for-woocommerce-activator.php';
 		Event_Tickets_Manager_For_Woocommerce_Activator::event_tickets_manager_for_woocommerce_activate();
-		$mwb_etmfw_active_plugin = get_option( 'mwb_all_plugins_active', false );
-		if ( is_array( $mwb_etmfw_active_plugin ) && ! empty( $mwb_etmfw_active_plugin ) ) {
-			$mwb_etmfw_active_plugin['event-tickets-manager-for-woocommerce'] = array(
+		$wps_etmfw_active_plugin = get_option( 'wps_all_plugins_active', false );
+		if ( is_array( $wps_etmfw_active_plugin ) && ! empty( $wps_etmfw_active_plugin ) ) {
+			$wps_etmfw_active_plugin['event-tickets-manager-for-woocommerce'] = array(
 				'plugin_name' => __( 'Event Tickets Manager for WooCommerce', 'event-tickets-manager-for-woocommerce' ),
 				'active' => '1',
 			);
 		} else {
-			$mwb_etmfw_active_plugin = array();
-			$mwb_etmfw_active_plugin['event-tickets-manager-for-woocommerce'] = array(
+			$wps_etmfw_active_plugin = array();
+			$wps_etmfw_active_plugin['event-tickets-manager-for-woocommerce'] = array(
 				'plugin_name' => __( 'Event Tickets Manager for WooCommerce', 'event-tickets-manager-for-woocommerce' ),
 				'active' => '1',
 			);
 		}
-		update_option( 'mwb_all_plugins_active', $mwb_etmfw_active_plugin );
+		update_option( 'wps_all_plugins_active', $wps_etmfw_active_plugin );
 	}
 
 	/**
@@ -102,15 +102,15 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	function deactivate_event_tickets_manager_for_woocommerce() {
 		require_once plugin_dir_path( __FILE__ ) . 'includes/class-event-tickets-manager-for-woocommerce-deactivator.php';
 		Event_Tickets_Manager_For_Woocommerce_Deactivator::event_tickets_manager_for_woocommerce_deactivate();
-		$mwb_etmfw_deactive_plugin = get_option( 'mwb_all_plugins_active', false );
-		if ( is_array( $mwb_etmfw_deactive_plugin ) && ! empty( $mwb_etmfw_deactive_plugin ) ) {
-			foreach ( $mwb_etmfw_deactive_plugin as $mwb_etmfw_deactive_key => $mwb_etmfw_deactive ) {
-				if ( 'event-tickets-manager-for-woocommerce' === $mwb_etmfw_deactive_key ) {
-					$mwb_etmfw_deactive_plugin[ $mwb_etmfw_deactive_key ]['active'] = '0';
+		$wps_etmfw_deactive_plugin = get_option( 'wps_all_plugins_active', false );
+		if ( is_array( $wps_etmfw_deactive_plugin ) && ! empty( $wps_etmfw_deactive_plugin ) ) {
+			foreach ( $wps_etmfw_deactive_plugin as $wps_etmfw_deactive_key => $wps_etmfw_deactive ) {
+				if ( 'event-tickets-manager-for-woocommerce' === $wps_etmfw_deactive_key ) {
+					$wps_etmfw_deactive_plugin[ $wps_etmfw_deactive_key ]['active'] = '0';
 				}
 			}
 		}
-		update_option( 'mwb_all_plugins_active', $mwb_etmfw_deactive_plugin );
+		update_option( 'wps_all_plugins_active', $wps_etmfw_deactive_plugin );
 	}
 
 	register_activation_hook( __FILE__, 'activate_event_tickets_manager_for_woocommerce' );
@@ -119,11 +119,11 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	/**
 	 * Function to create check in page template.
 	 */
-	function mwb_etmfw_create_checkin_page() {
+	function wps_etmfw_create_checkin_page() {
 		/* ===== ====== Create the Check Gift Card Page ====== ======*/
 		if ( ! get_option( 'event_checkin_page_created', false ) ) {
 
-			$checkin_content = '[mwb_etmfw_event_checkin_page]';
+			$checkin_content = '[wps_etmfw_event_checkin_page]';
 
 			$checkin_page = array(
 				'post_author'    => get_current_user_id(),
@@ -142,7 +142,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	/**
 	 * Delete checkin page created when plugin is deactivated.
 	 */
-	function mwb_etmfw_delete_checkin_page() {
+	function wps_etmfw_delete_checkin_page() {
 		$checkin_pageid = get_option( 'event_checkin_page_created', false );
 		if ( $checkin_pageid ) {
 			wp_delete_post( $checkin_pageid );
@@ -150,8 +150,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		}
 	}
 
-	register_activation_hook( __FILE__, 'mwb_etmfw_create_checkin_page' );
-	register_deactivation_hook( __FILE__, 'mwb_etmfw_delete_checkin_page' );
+	register_activation_hook( __FILE__, 'wps_etmfw_create_checkin_page' );
+	register_deactivation_hook( __FILE__, 'wps_etmfw_delete_checkin_page' );
 
 	/**
 	 * The core plugin class that is used to define internationalization,
@@ -171,9 +171,9 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 */
 	function run_event_tickets_manager_for_woocommerce() {
 		define_event_tickets_manager_for_woocommerce_constants();
-		$etmfw_plugin_standard = new Event_Tickets_Manager_For_Woocommerce();
-		$etmfw_plugin_standard->etmfw_run();
-		$GLOBALS['etmfw_mwb_etmfw_obj'] = $etmfw_plugin_standard;
+		$etmfw_etmfw_plugin_standard = new Event_Tickets_Manager_For_Woocommerce();
+		$etmfw_etmfw_plugin_standard->etmfw_run();
+		$GLOBALS['etmfw_wps_etmfw_obj'] = $etmfw_etmfw_plugin_standard;
 		$GLOBALS['error_notice'] = true;
 
 	}
@@ -198,23 +198,23 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	}
 
 	// on plugin load.
-	add_action( 'plugins_loaded', 'mwb_wgc_register_event_ticket_manager_product_type' );
+	add_action( 'plugins_loaded', 'wps_wgc_register_event_ticket_manager_product_type' );
 
 	/**
 	 * Saving the Product Type by creating the Instance of this.
 	 *
 	 * @since 1.0.0
-	 * @name mwb_wgc_register_gift_card_product_type
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @name wps_wgc_register_gift_card_product_type
+	 * @author WPSwings<ticket@wpswings.com>
+	 * @link https://wpswings.com/
 	 */
-	function mwb_wgc_register_event_ticket_manager_product_type() {
+	function wps_wgc_register_event_ticket_manager_product_type() {
 		/**
 		 * Set the giftcard product type.
 		 *
 		 * @since 1.0.0
-		 * @author makewebbetter<ticket@makewebbetter.com>
-		 * @link https://www.makewebbetter.com/
+		 * @author WPSwings<ticket@wpswings.com>
+		 * @link https://wpswings.com/
 		 */
 		class WC_Product_Event_Ticket_Manager extends WC_Product {
 			/**
@@ -233,13 +233,13 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 * Generate the Dynamic number for Tickets.
 	 *
 	 * @since 1.0.0
-	 * @name mwb_etmfw_ticket_generator
+	 * @name wps_etmfw_ticket_generator
 	 * @param int $length length of ticket number.
 	 * @return string $ticket_number.
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @author WPSwings<ticket@wpswings.com>
+	 * @link https://wpswings.com/
 	 */
-	function mwb_etmfw_ticket_generator( $length = 5 ) {
+	function wps_etmfw_ticket_generator( $length = 5 ) {
 		$ticket_number = '';
 		$alphabets = range( 'A', 'Z' );
 		$numbers = range( '0', '9' );
@@ -248,9 +248,9 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			$key = array_rand( $final_array );
 			$ticket_number .= $final_array[ $key ];
 		}
-		$ticket_prefix = apply_filters( 'mwb_etmfw_event_ticket_prefix', '' );
+		$ticket_prefix = apply_filters( 'wps_etmfw_event_ticket_prefix', '' );
 		$ticket_number = $ticket_prefix . $ticket_number;
-		$ticket_number = apply_filters( 'mwb_wgm_custom_coupon', $ticket_number );
+		$ticket_number = apply_filters( 'wps_wgm_custom_coupon', $ticket_number );
 		return $ticket_number;
 	}
 
@@ -258,13 +258,13 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 * Return wordpress date time format.
 	 *
 	 * @since 1.0.0
-	 * @name mwb_etmfw_get_date_format
+	 * @name wps_etmfw_get_date_format
 	 * @param string $date Date Passed.
 	 * @return string $date WP formated Date.
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @author WPSwings<ticket@wpswings.com>
+	 * @link https://wpswings.com/
 	 */
-	function mwb_etmfw_get_date_format( $date ) {
+	function wps_etmfw_get_date_format( $date ) {
 		return date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime( $date ) );// get format from WordPress settings.
 	}
 
@@ -272,13 +272,13 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 * Return wordpress date format.
 	 *
 	 * @since 1.0.0
-	 * @name mwb_etmfw_get_only_date_format
+	 * @name wps_etmfw_get_only_date_format
 	 * @param string $date Date Passed.
 	 * @return string $date WP formated Date.
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @author WPSwings<ticket@wpswings.com>
+	 * @link https://wpswings.com/
 	 */
-	function mwb_etmfw_get_only_date_format( $date ) {
+	function wps_etmfw_get_only_date_format( $date ) {
 		return date_i18n( get_option( 'date_format' ), strtotime( $date ) );// get format from WordPress settings.
 	}
 
@@ -286,32 +286,32 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 * Return wordpress time format.
 	 *
 	 * @since 1.0.0
-	 * @name mwb_etmfw_get_only_time_format
+	 * @name wps_etmfw_get_only_time_format
 	 * @param string $date Date Passed.
 	 * @return string $date WP formated Date.
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @author WPSwings<ticket@wpswings.com>
+	 * @link https://wpswings.com/
 	 */
-	function mwb_etmfw_get_only_time_format( $date ) {
+	function wps_etmfw_get_only_time_format( $date ) {
 		return date_i18n( get_option( 'time_format' ), strtotime( $date ) );// get format from WordPress settings.
 	}
 
 	/**
 	 * Function to register event widget.
 	 */
-	function mwb_etmfw_register_widget() {
+	function wps_etmfw_register_widget() {
 		register_widget( 'event_tickets_manager_for_woocommerce_widget' );
 	}
-	add_action( 'widgets_init', 'mwb_etmfw_register_widget' );
+	add_action( 'widgets_init', 'wps_etmfw_register_widget' );
 
 	require plugin_dir_path( __FILE__ ) . 'includes/class-event-tickets-manager-for-woocommerce-widget.php';
 
 } else {
 
 	/**
-	 * Show warning message fif woocommerce if not activated.
+	 * Show warning message if woocommerce if not activated.
 	 */
-	function mwb_etmfw_plugin_error_notice() {
+	function wps_etmfw_plugin_error_notice() {
 
 		unset( $_GET['activate'] );
 		?>
@@ -320,19 +320,52 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		</div>
 		<?php
 	}
-	add_action( 'admin_notices', 'mwb_etmfw_plugin_error_notice' );
+	add_action( 'admin_notices', 'wps_etmfw_plugin_error_notice' );
 
 	/**
 	 * Deactivate plugin is woocommerce if not activated.
 	 */
-	function mwb_etmfw_plugin_deactivate() {
+	function wps_etmfw_plugin_deactivate() {
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 	}
 
 	/**
 	 * Register the action with WordPress.
 	 */
-	add_action( 'admin_init', 'mwb_etmfw_plugin_deactivate' );
+	add_action( 'admin_init', 'wps_etmfw_plugin_deactivate' );
 
+}
+
+add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'event_upgrade_notice', 0, 3 );
+
+/**
+ * Displays notice to WPSWings.
+ *
+ * @param string $plugin_file Path to the plugin file relative to the plugins directory.
+ * @param array  $plugin_data An array of plugin data.
+ * @param string $status Status filter currently applied to the plugin list.
+ */
+function event_upgrade_notice( $plugin_file, $plugin_data, $status ) {
+
+	?>
+<tr class="plugin-update-tr active notice-warning notice-alt">
+	<td colspan="4" class="plugin-update colspanchange">
+		<div class="notice notice-success inline update-message notice-alt">
+			<div class='wps-notice-title wps-notice-section'>
+				<p><strong>IMPORTANT NOTICE:</strong></p>
+			</div>
+			<div class='wps-notice-content wps-notice-section'>
+				<p>From this update <strong>Version 1.0.4</strong> onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
+				Please connect with us for all setup, support, and update related queries without hesitation.</p>
+			</div>
+		</div>
+	</td>
+</tr>
+<style>
+	.wps-notice-section > p:before {
+		content: none;
+	}
+</style>
+	<?php
 }
 

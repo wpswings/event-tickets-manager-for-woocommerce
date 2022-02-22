@@ -2,10 +2,11 @@
 /**
  * Points and rewards email
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/emails/mwb-wpr-email-notification-template.php.
+ * This template can be overridden by copying it to yourtheme/woocommerce/emails/wps-wpr-email-notification-template.php.
  *
  * @package    Event_Tickets_Manager_For_Woocommerce
- * @author     makewebbetter<ticket@makewebbetter.com>
+ * @subpackage Event_Tickets_Manager_For_Woocommerce/emails/templates
+ * @author     WPSwings<ticket@wpswings.com>
  * @since      1.0.0
  */
 
@@ -19,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @hooked WC_Emails::email_header() Output the email header
  */
 // Inline style used for sending in email.
-$template = '<table class="mwb-wuc__email-template" style=" border: 1px solid #000000 ;width: 100%!important; max-width: 600px; text-align: left; font-size: 20px;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center">
+$template = '<table class="wps-wuc__email-template" style=" border: 1px solid #000000 ;width: 100%!important; max-width: 600px; text-align: left; font-size: 20px;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center">
 	<tbody>
 		<tr>
 			<td style="background: #fff;">

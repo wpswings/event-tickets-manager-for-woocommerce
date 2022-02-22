@@ -5,7 +5,7 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       https://makewebbetter.com/
+ * @link       https://wpswings.com/
  * @since      1.0.0
  *
  * @package    Event_Tickets_Manager_For_Woocommerce
@@ -24,7 +24,7 @@
  * @since      1.0.0
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/includes
- * @author     makewebbetter <webmaster@makewebbetter.com>
+ * @author     WPSwings <webmaster@wpswings.com>
  */
 class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 
@@ -86,7 +86,7 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 				<?php
 				while ( $query_data->have_posts() ) {
 					$query_data->the_post();
-					$this->mwb_generate_list_view( $select );
+					$this->wps_generate_list_view( $select );
 				}
 				?>
 				</ul>
@@ -101,16 +101,16 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 	 * Creates list view.
 	 *
 	 * @since 1.0.0
-	 * @name mwb_generate_list_view().
+	 * @name wps_generate_list_view().
 	 * @param string $select selected view.
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @author WPSwings<ticket@wpswings.com>
+	 * @link https://wpswings.com/
 	 */
-	public function mwb_generate_list_view( $select ) {
+	public function wps_generate_list_view( $select ) {
 		global $product;
-		$mwb_etmfw_product_array = get_post_meta( $product->get_id(), 'mwb_etmfw_product_array', true );
-		$start_date = isset( $mwb_etmfw_product_array['event_start_date_time'] ) ? $mwb_etmfw_product_array['event_start_date_time'] : '';
-		$end_date = isset( $mwb_etmfw_product_array['event_end_date_time'] ) ? $mwb_etmfw_product_array['event_end_date_time'] : '';
+		$wps_etmfw_product_array = get_post_meta( $product->get_id(), 'wps_etmfw_product_array', true );
+		$start_date = isset( $wps_etmfw_product_array['event_start_date_time'] ) ? $wps_etmfw_product_array['event_start_date_time'] : '';
+		$end_date = isset( $wps_etmfw_product_array['event_end_date_time'] ) ? $wps_etmfw_product_array['event_end_date_time'] : '';
 		$current_timestamp = current_time( 'timestamp' );
 		$end_date_timestamp = strtotime( $end_date );
 		$start_date_timestamp = strtotime( gmdate( 'Y-m-d', strtotime( $start_date ) ) );
@@ -124,9 +124,9 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 						<?php echo esc_html( $product->get_title() ); ?>
 					</a>
 					<?php
-						echo esc_html( mwb_etmfw_get_date_format( $start_date ) );
+						echo esc_html( wps_etmfw_get_date_format( $start_date ) );
 						echo esc_html( ' To ' );
-						echo esc_html( mwb_etmfw_get_date_format( $end_date ) );
+						echo esc_html( wps_etmfw_get_date_format( $end_date ) );
 					?>
 				</li>
 				<?php
@@ -141,9 +141,9 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 							<?php echo esc_html( $product->get_title() ); ?>
 						</a>
 						<?php
-							echo esc_html( mwb_etmfw_get_date_format( $start_date ) );
+							echo esc_html( wps_etmfw_get_date_format( $start_date ) );
 							echo esc_html( ' To ' );
-							echo esc_html( mwb_etmfw_get_date_format( $end_date ) );
+							echo esc_html( wps_etmfw_get_date_format( $end_date ) );
 						?>
 					</li>
 					<?php
@@ -159,9 +159,9 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 							<?php echo esc_html( $product->get_title() ); ?>
 						</a>
 						<?php
-							echo esc_html( mwb_etmfw_get_date_format( $start_date ) );
+							echo esc_html( wps_etmfw_get_date_format( $start_date ) );
 							echo esc_html( ' To ' );
-							echo esc_html( mwb_etmfw_get_date_format( $end_date ) );
+							echo esc_html( wps_etmfw_get_date_format( $end_date ) );
 						?>
 					</li>
 					<?php
@@ -213,7 +213,7 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 			<label for="<?php echo esc_attr( $setting_select_id ); ?>"><?php esc_html_e( 'Scope of the Event', 'event-tickets-manager-for-woocommerce' ); ?></label>
 			<select name="<?php echo esc_attr( $setting_select_name ); ?>" id="<?php echo esc_attr( $setting_select_id ); ?>" class="widefat">
 			<?php
-			$scope_options = $this->mwb_etmfw_get_scopes();
+			$scope_options = $this->wps_etmfw_get_scopes();
 			foreach ( $scope_options as $key => $name ) {
 				echo '<option value="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" ' . selected( $select_val, $key, false ) . '>' . esc_html( $name ) . '</option>';
 
@@ -237,8 +237,8 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 		$instance['title']    = isset( $new_instance['title'] ) ? wp_strip_all_tags( $new_instance['title'] ) : '';
 		$instance['radio'] = isset( $new_instance['radio'] ) ? wp_strip_all_tags( $new_instance['radio'] ) : 'list';
 		$instance['select']   = isset( $new_instance['select'] ) ? wp_strip_all_tags( $new_instance['select'] ) : '';
-		update_option( 'mwb_etmfw_display_duration', $instance['select'] );
-		update_option( 'mwb_etmfw_event_view', $instance['radio'] );
+		update_option( 'wps_etmfw_display_duration', $instance['select'] );
+		update_option( 'wps_etmfw_event_view', $instance['radio'] );
 		return $instance;
 	}
 
@@ -247,12 +247,12 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_etmfw_get_scopes() {
+	public function wps_etmfw_get_scopes() {
 		$scopes = array(
 			'all'       => __( 'All events', 'event-tickets-manager-for-woocommerce' ),
 			'future'    => __( 'Future events', 'event-tickets-manager-for-woocommerce' ),
 			'past'      => __( 'Past events', 'event-tickets-manager-for-woocommerce' ),
 		);
-		return apply_filters( 'mwb_etmfw_get_scopes', $scopes );
+		return apply_filters( 'wps_etmfw_get_scopes', $scopes );
 	}
 }

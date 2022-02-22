@@ -4,11 +4,11 @@
  *
  * A class definition that includes api's endpoints and functions used across the plugin
  *
- * @link       https://makewebbetter.com/
+ * @link       https://wpswings.com/
  * @since      1.0.0
  *
  * @package    Event_Tickets_Manager_For_Woocommerce
- * @subpackage Event_Tickets_Manager_For_Woocommerce/package/rest-api/version1
+ * @subpackage Event_Tickets_Manager_For_Woocommerce/package/rest-api
  */
 
 /**
@@ -22,8 +22,8 @@
  *
  * @since      1.0.0
  * @package    Event_Tickets_Manager_For_Woocommerce
- * @subpackage Event_Tickets_Manager_For_Woocommerce/package/rest-api/version1
- * @author     makewebbetter <webmaster@makewebbetter.com>
+ * @subpackage Event_Tickets_Manager_For_Woocommerce/package/rest-api
+ * @author     WPSwings <webmaster@wpswings.com>
  */
 class Event_Tickets_Manager_For_Woocommerce_Rest_Api {
 
@@ -72,14 +72,14 @@ class Event_Tickets_Manager_For_Woocommerce_Rest_Api {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	public function mwb_etmfw_add_endpoint() {
+	public function wps_etmfw_add_endpoint() {
 		register_rest_route(
 			'etmfw-route/v1',
 			'/etmfw-dummy-data/',
 			array(
 				'methods'  => WP_REST_Server::CREATABLE,
-				'callback' => array( $this, 'mwb_etmfw_default_callback' ),
-				'permission_callback' => array( $this, 'mwb_etmfw_default_permission_check' ),
+				'callback' => array( $this, 'wps_etmfw_default_callback' ),
+				'permission_callback' => array( $this, 'wps_etmfw_default_permission_check' ),
 			)
 		);
 	}
@@ -92,7 +92,7 @@ class Event_Tickets_Manager_For_Woocommerce_Rest_Api {
 	 * @return  Array   $result   return rest response to server from where the endpoint hits.
 	 * @since    1.0.0
 	 */
-	public function mwb_etmfw_default_permission_check( $request ) {
+	public function wps_etmfw_default_permission_check( $request ) {
 
 		// Add rest api validation for each request.
 		$result = true;
@@ -104,20 +104,20 @@ class Event_Tickets_Manager_For_Woocommerce_Rest_Api {
 	 * Begins execution of api endpoint.
 	 *
 	 * @param   Array $request    All information related with the api request containing in this array.
-	 * @return  Array   $mwb_etmfw_response   return rest response to server from where the endpoint hits.
+	 * @return  Array   $wps_etmfw_response   return rest response to server from where the endpoint hits.
 	 * @since    1.0.0
 	 */
-	public function mwb_etmfw_default_callback( $request ) {
+	public function wps_etmfw_default_callback( $request ) {
 
 		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'package/rest-api/version1/class-event-tickets-manager-for-woocommerce-api-process.php';
-		$mwb_etmfw_api_obj = new Event_Tickets_Manager_For_Woocommerce_Api_Process();
-		$mwb_etmfw_resultsdata = $mwb_etmfw_api_obj->mwb_etmfw_default_process( $request );
-		if ( is_array( $mwb_etmfw_resultsdata ) && isset( $mwb_etmfw_resultsdata['status'] ) && 200 == $mwb_etmfw_resultsdata['status'] ) {
-			unset( $mwb_etmfw_resultsdata['status'] );
-			$mwb_etmfw_response = new WP_REST_Response( $mwb_etmfw_resultsdata, 200 );
+		$wps_etmfw_api_obj = new Event_Tickets_Manager_For_Woocommerce_Api_Process();
+		$wps_etmfw_resultsdata = $wps_etmfw_api_obj->wps_etmfw_default_process( $request );
+		if ( is_array( $wps_etmfw_resultsdata ) && isset( $wps_etmfw_resultsdata['status'] ) && 200 == $wps_etmfw_resultsdata['status'] ) {
+			unset( $wps_etmfw_resultsdata['status'] );
+			$wps_etmfw_response = new WP_REST_Response( $wps_etmfw_resultsdata, 200 );
 		} else {
-			$mwb_etmfw_response = new WP_Error( $mwb_etmfw_resultsdata );
+			$wps_etmfw_response = new WP_Error( $wps_etmfw_resultsdata );
 		}
-		return $mwb_etmfw_response;
+		return $wps_etmfw_response;
 	}
 }

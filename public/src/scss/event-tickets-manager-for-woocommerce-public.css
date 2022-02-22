@@ -8,72 +8,72 @@
 
  }
 
- .mwb_etmfw_events_section,
- .mwb_etmfw_input_ticket_section {
+ .wps_etmfw_events_section,
+ .wps_etmfw_input_ticket_section {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     margin-bottom: 10px;
 }
 
- .mwb_etmfw_events_section label,
- .mwb_etmfw_input_ticket_section label {
+ .wps_etmfw_events_section label,
+ .wps_etmfw_input_ticket_section label {
     flex: 0 0 25%;
     max-width: 25%;
 }
 
-select#mwb_etmfw_event_selected {
+select#wps_etmfw_event_selected {
     flex: 0 0 75%;
     max-width: 75%;
 }
 
-input#mwb_etmfw_imput_ticket {
-    flex: 0 0 75%;
-    max-width: 75%;
-    margin: 0;
-}
-input#mwb_etmfw_chckin_email {
+input#wps_etmfw_imput_ticket {
     flex: 0 0 75%;
     max-width: 75%;
     margin: 0;
 }
+input#wps_etmfw_chckin_email {
+    flex: 0 0 75%;
+    max-width: 75%;
+    margin: 0;
+}
 
 
-.mwb_etmfw--loader-btn-wrapper {
+.wps_etmfw--loader-btn-wrapper {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
 }
 
-.mwb_etmfw_checkin_button_section {
+.wps_etmfw_checkin_button_section {
     flex: 0 0 15%;
     max-width: 115px;
 }
 
-div#mwb_etmfw_checkin_loader img {
+div#wps_etmfw_checkin_loader img {
     width: 25px;
     height: auto;
     margin-left: 50px;
 }
 
-div#mwb_etmfw_edit_info_loader img {
+div#wps_etmfw_edit_info_loader img {
    width: 25px;
     height: auto;
     position: relative;
     top: 5px;
 }
-#mwb_etmfw_edit_info_loader{
+#wps_etmfw_edit_info_loader{
     display: none;
 }
-#mwb_etmfw_checkin_loader{
+#wps_etmfw_checkin_loader{
     display: none;
 }
-#mwb_etmfw_event_map{
+#wps_etmfw_event_map{
     width: 60%;
     height: 350px;
     margin-bottom: 10px;
 }
-.mwb_check_in_error {/* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
+.wps_check_in_error {/* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
     background: #e2401c;
     padding: 16px 20px;
     color: #ffffff;
@@ -82,7 +82,7 @@ div#mwb_etmfw_edit_info_loader img {
     margin: 20px 0;
 }
 
-.mwb_check_in_success {/* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
+.wps_check_in_success {/* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
     background: #1a6f1a;
     padding: 16px 20px;
     color: #ffffff;
@@ -91,47 +91,47 @@ div#mwb_etmfw_edit_info_loader img {
     margin: 20px 0;
 }
 
-.mwb_etmfw_addition_info_section input {
+.wps_etmfw_addition_info_section input {
     width: 99%!important;
     max-width: 99%!important;
 }
 
-.mwb-form-group__control label {
+.wps-form-group__control label {
     margin-top: 8px;
     margin-left: 5px;
     margin-bottom: 8px;
     line-height: 1;
 }
 
-.mwb-form-group__control div {
+.wps-form-group__control div {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
 }
 
-.mwb_etmfw_view_ticket_section, 
-.mwb_etmfw_calendar_section {
+.wps_etmfw_view_ticket_section, 
+.wps_etmfw_calendar_section {
     display: inline-block;
     margin: 5px 0;
 }
 
-.mwb_etmfw_view_ticket_section {
+.wps_etmfw_view_ticket_section {
     margin-right: 5px;
 }
 
-.mwb_etmfw_view_ticket_section a, 
-.mwb_etmfw_calendar_section a {
+.wps_etmfw_view_ticket_section a, 
+.wps_etmfw_calendar_section a {
     padding: 7px 25px;
     border: 2px solid #28303d;
 }
 
-.mwb_etmfw_view_ticket_section a:hover, 
-.mwb_etmfw_calendar_section a:hover {
+.wps_etmfw_view_ticket_section a:hover, 
+.wps_etmfw_calendar_section a:hover {
     background: #ffffff!important;
     color: #28303d!important;
 }
 
-span#mwb_etmfw_edit_ticket {
+span#wps_etmfw_edit_ticket {
     font-size: 20px;
     font-weight: 400;
     display: block;
@@ -140,31 +140,31 @@ span#mwb_etmfw_edit_ticket {
     cursor: pointer;
 }
 
-#mwb_etmfw_edit_ticket_form input {
+#wps_etmfw_edit_ticket_form input {
     width: 50%;
 }
 
-input#mwb_etmfw_save_edit_ticket_info_btn {
+input#wps_etmfw_save_edit_ticket_info_btn {
     margin-top: 15px;
     width: auto;
 }
 
-form#mwb_etmfw_edit_ticket_form {
+form#wps_etmfw_edit_ticket_form {
     display: none;
 }
 
-form.mwb_etmfw_show_ticket_form {
+form.wps_etmfw_show_ticket_form {
     display: block !important;
 }
-div#mwb_etmwf_event_date img {
+div#wps_etmwf_event_date img {
     display: inline-block;
     margin-right: 5px;
 }
-div#mwb_etmwf_event_time img {
+div#wps_etmwf_event_time img {
     display: inline-block;
     margin-right: 5px;
 }
-div#mwb_etmwf_event_venue img {
+div#wps_etmwf_event_venue img {
     display: inline-block;
     margin-right: 5px;
 }
@@ -180,8 +180,8 @@ div#mwb_etmwf_event_venue img {
     align-items: center;
 }
 
-.mwb-form-group__control input[type=checkbox], 
-.mwb-form-group__control input[type=radio] {
+.wps-form-group__control input[type=checkbox], 
+.wps-form-group__control input[type=radio] {
     width: auto !important;
     margin-bottom: 3px;
 }
@@ -191,18 +191,20 @@ form.cart {
     align-content: flex-start;
 }
 
-.woocommerce .woocommerce-error {
-    background-color: unset !important;
-}
 
-.woocommerce .woocommerce-error li {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    align-items: center;
+.woocommerce-message, .woocommerce-info, .woocommerce-error, .woocommerce-noreviews, p.no-comments {
+    margin-bottom: 2.617924em;
+    background-color: #0f834d;
+    margin-left: 0;
+    border-radius: 2px;
+    color: #fff;
+    clear: both;
+    border-left: 0.6180469716em solid rgba(0,0,0,.15);
+    padding: 1em 2em 1em 3.5em
+;   position: relative;
+    list-style: none outside;
 }
-div#mwb_etmfw_event_map {
+div#wps_etmfw_event_map {
     margin: 10px 0px;
 }
 
@@ -226,12 +228,12 @@ div#mwb_etmfw_event_map {
     width: 40px;
 }
 
-.mwb-edit-form-group div {
+.wps-edit-form-group div {
     display: flex;
     flex-wrap: wrap;
 }
 
-.mwb-edit-form-group div #mwb_etmfw_radio {
+.wps-edit-form-group div #wps_etmfw_radio {
     width: auto;
 }
 
@@ -246,14 +248,14 @@ div#mwb_etmfw_event_map {
  }
 
  @media only screen and (max-width: 540px) {
-    .mwb_etmfw_view_ticket_section,
-    .mwb_etmfw_calendar_section {
+    .wps_etmfw_view_ticket_section,
+    .wps_etmfw_calendar_section {
         display: block;
         text-align: center;
     }
 
-    a.mwb_etmfw_add_event_calendar,
-    a.mwb_view_ticket_pdf {
+    a.wps_etmfw_add_event_calendar,
+    a.wps_view_ticket_pdf {
         display: block;
     }
 

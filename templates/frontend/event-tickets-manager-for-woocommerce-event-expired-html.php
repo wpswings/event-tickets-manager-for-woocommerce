@@ -4,7 +4,7 @@
  *
  * This file is used to show dynamic fields at the frontend.
  *
- * @link       https://makewebbetter.com/
+ * @link       https://wpswings.com/
  * @since      1.0.0
  *
  * @package    Event_Tickets_Manager_For_Woocommerce

@@ -2,11 +2,11 @@
 /**
  * Fired during plugin activation
  *
- * @link       https://makewebbetter.com/
+ * @link       https://wpswings.com/
  * @since      1.0.0
  *
  * @package    Event_Tickets_Manager_For_Woocommerce
- * @subpackage Event_Tickets_Manager_For_Woocommerce/includes
+ * @subpackage Event_Tickets_Manager_For_Woocommerce/package/rest-api/version1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,8 +21,8 @@ if ( ! class_exists( 'Event_Tickets_Manager_For_Woocommerce_Api_Process' ) ) {
 	 *
 	 * @since      1.0.0
 	 * @package    Event_Tickets_Manager_For_Woocommerce
-	 * @subpackage Event_Tickets_Manager_For_Woocommerce/includes
-	 * @author     MakeWebBetter <makewebbetter.com>
+	 * @subpackage Event_Tickets_Manager_For_Woocommerce/package/rest-api/version1
+	 * @author     WPSwings <WPSwings.com>
 	 */
 	class Event_Tickets_Manager_For_Woocommerce_Api_Process {
 
@@ -40,16 +40,16 @@ if ( ! class_exists( 'Event_Tickets_Manager_For_Woocommerce_Api_Process' ) ) {
 		 *
 		 * @since    1.0.0
 		 * @param   Array $etmfw_request  data of requesting headers and other information.
-		 * @return  Array $mwb_etmfw_rest_response    returns processed data and status of operations.
+		 * @return  Array $wps_etmfw_rest_response    returns processed data and status of operations.
 		 */
-		public function mwb_etmfw_default_process( $etmfw_request ) {
-			$mwb_etmfw_rest_response = array();
+		public function wps_etmfw_default_process( $etmfw_request ) {
+			$wps_etmfw_rest_response = array();
 
 			// Write your custom code here.
 
-			$mwb_etmfw_rest_response['status'] = 200;
-			$mwb_etmfw_rest_response['data'] = $etmfw_request->get_headers();
-			return $mwb_etmfw_rest_response;
+			$wps_etmfw_rest_response['status'] = 200;
+			$wps_etmfw_rest_response['data'] = $etmfw_request->get_headers();
+			return $wps_etmfw_rest_response;
 		}
 	}
 }

@@ -5,7 +5,7 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       https://makewebbetter.com/
+ * @link       https://wpswings.com/
  * @since      1.0.0
  *
  * @package    Event_Tickets_Manager_For_Woocommerce
@@ -24,7 +24,7 @@
  * @since      1.0.0
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/includes
- * @author     makewebbetter <webmaster@makewebbetter.com>
+ * @author     WPSwings <webmaster@wpswings.com>
  */
 class Event_Tickets_Manager_For_Woocommerce {
 
@@ -81,7 +81,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 			$this->version = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '1.0.3';
+			$this->version = '1.0.4';
 		}
 
 		$this->plugin_name = 'event-tickets-manager-for-woocommerce';
@@ -185,23 +185,23 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		// Add settings menu for Event Tickets Manager for WooCommerce.
 		$this->loader->add_action( 'admin_menu', $etmfw_plugin_admin, 'etmfw_options_page' );
-		$this->loader->add_action( 'admin_menu', $etmfw_plugin_admin, 'mwb_etmfw_remove_default_submenu', 50 );
+		$this->loader->add_action( 'admin_menu', $etmfw_plugin_admin, 'wps_etmfw_remove_default_submenu', 50 );
 
 		// All admin actions and filters after License Validation goes here.
-		$this->loader->add_filter( 'mwb_add_plugins_menus_array', $etmfw_plugin_admin, 'etmfw_admin_submenu_page', 15 );
-		$this->loader->add_filter( 'mwb_etmfw_general_settings_array', $etmfw_plugin_admin, 'mwb_etmfw_admin_general_settings_page', 10 );
-		$this->loader->add_filter( 'mwb_etmfw_integration_settings_array', $etmfw_plugin_admin, 'mwb_etmfw_admin_integration_settings_page', 10 );
-		$this->loader->add_filter( 'mwb_etmfw_email_template_settings_array', $etmfw_plugin_admin, 'mwb_etmfw_admin_email_template_settings_page', 10 );
-		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'mwb_etmfw_admin_save_tab_settings' );
-		$this->loader->add_filter( 'product_type_selector', $etmfw_plugin_admin, 'mwb_etmfw_event_ticket_product' );
-		$this->loader->add_filter( 'woocommerce_product_data_tabs', $etmfw_plugin_admin, 'mwb_etmfw_event_ticket_tab' );
-		$this->loader->add_action( 'woocommerce_product_data_panels', $etmfw_plugin_admin, 'mwb_etmfw_event_tab_content' );
-		$this->loader->add_action( 'save_post', $etmfw_plugin_admin, 'mwb_etmfw_save_product_data' );
-		$this->loader->add_action( 'admin_menu', $etmfw_plugin_admin, 'mwb_etmfw_event_menu' );
-		$this->loader->add_action( 'woocommerce_after_order_itemmeta', $etmfw_plugin_admin, 'mwb_etmfw_after_order_itemmeta', 10, 3 );
-		$this->loader->add_filter( 'plugin_row_meta', $etmfw_plugin_admin, 'mwb_etmfw_plugin_row_meta', 10, 2 );
-		$this->loader->add_action( 'wp_ajax_mwb_etmfw_get_event_geocode', $etmfw_plugin_admin, 'mwb_etmfw_get_event_geocode_value' );
-		$this->loader->add_action( 'wp_ajax_nopriv_mwb_etmfw_get_event_geocode', $etmfw_plugin_admin, 'mwb_etmfw_get_event_geocode_value' );
+		$this->loader->add_filter( 'wps_add_plugins_menus_array', $etmfw_plugin_admin, 'etmfw_admin_submenu_page', 15 );
+		$this->loader->add_filter( 'wps_etmfw_general_settings_array', $etmfw_plugin_admin, 'wps_etmfw_admin_general_settings_page', 10 );
+		$this->loader->add_filter( 'wps_etmfw_integration_settings_array', $etmfw_plugin_admin, 'wps_etmfw_admin_integration_settings_page', 10 );
+		$this->loader->add_filter( 'wps_etmfw_email_template_settings_array', $etmfw_plugin_admin, 'wps_etmfw_admin_email_template_settings_page', 10 );
+		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'wps_etmfw_admin_save_tab_settings' );
+		$this->loader->add_filter( 'product_type_selector', $etmfw_plugin_admin, 'wps_etmfw_event_ticket_product' );
+		$this->loader->add_filter( 'woocommerce_product_data_tabs', $etmfw_plugin_admin, 'wps_etmfw_event_ticket_tab' );
+		$this->loader->add_action( 'woocommerce_product_data_panels', $etmfw_plugin_admin, 'wps_etmfw_event_tab_content' );
+		$this->loader->add_action( 'save_post', $etmfw_plugin_admin, 'wps_etmfw_save_product_data' );
+		$this->loader->add_action( 'admin_menu', $etmfw_plugin_admin, 'wps_etmfw_event_menu' );
+		$this->loader->add_action( 'woocommerce_after_order_itemmeta', $etmfw_plugin_admin, 'wps_etmfw_after_order_itemmeta', 10, 3 );
+		$this->loader->add_filter( 'plugin_row_meta', $etmfw_plugin_admin, 'wps_etmfw_plugin_row_meta', 10, 2 );
+		$this->loader->add_action( 'wp_ajax_wps_etmfw_get_event_geocode', $etmfw_plugin_admin, 'wps_etmfw_get_event_geocode_value' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_get_event_geocode', $etmfw_plugin_admin, 'wps_etmfw_get_event_geocode_value' );
 
 	}
 
@@ -219,24 +219,24 @@ class Event_Tickets_Manager_For_Woocommerce {
 		add_action( 'woocommerce_event_ticket_manager_add_to_cart', 'woocommerce_simple_add_to_cart', 30 );
 		$this->loader->add_action( 'wp_enqueue_scripts', $etmfw_plugin_public, 'etmfw_public_enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $etmfw_plugin_public, 'etmfw_public_enqueue_scripts' );
-		$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $etmfw_plugin_public, 'mwb_etmfw_before_add_to_cart_button_html' );
-		$this->loader->add_filter( 'woocommerce_is_sold_individually', $etmfw_plugin_public, 'mwb_etmfw_allow_single_quantity', 10, 2 );
-		$this->loader->add_filter( 'woocommerce_add_cart_item_data', $etmfw_plugin_public, 'mwb_etmfw_cart_item_data', 10, 3 );
-		$this->loader->add_filter( 'woocommerce_get_item_data', $etmfw_plugin_public, 'mwb_etmfw_get_cart_item_data', 10, 2 );
-		$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $etmfw_plugin_public, 'mwb_etmfw_create_order_line_item', 10, 3 );
-		$this->loader->add_action( 'woocommerce_order_status_changed', $etmfw_plugin_public, 'mwb_etmfw_event_status_changed', 10, 3 );
-		$this->loader->add_filter( 'woocommerce_email_attachments', $etmfw_plugin_public, 'mwb_etmfw_attach_pdf_to_emails', 10, 4 );
-		$this->loader->add_action( 'woocommerce_order_item_meta_end', $etmfw_plugin_public, 'mwb_etmfw_view_ticket_button', 10, 3 );
-		$this->loader->add_action( 'init', $etmfw_plugin_public, 'mwb_etmfw_add_eventcheckin_shortcode' );
-		$this->loader->add_action( 'wp_ajax_mwb_etmfw_make_user_checkin', $etmfw_plugin_public, 'mwb_etmfw_make_user_checkin_for_event' );
-		$this->loader->add_action( 'wp_ajax_nopriv_mwb_etmfw_make_user_checkin', $etmfw_plugin_public, 'mwb_etmfw_make_user_checkin_for_event' );
-		$this->loader->add_action( 'wp_ajax_mwb_etmfw_edit_user_info', $etmfw_plugin_public, 'mwb_etmfw_edit_user_info_for_event' );
-		$this->loader->add_action( 'wp_ajax_nopriv_mwb_etmfw_edit_user_info', $etmfw_plugin_public, 'mwb_etmfw_edit_user_info_for_event' );
-		$this->loader->add_action( 'wp_ajax_mwb_etmfw_get_calendar_events', $etmfw_plugin_public, 'mwb_etmfw_get_calendar_widget_data' );
-		$this->loader->add_action( 'wp_ajax_nopriv_mwb_etmfw_get_calendar_events', $etmfw_plugin_public, 'mwb_etmfw_get_calendar_widget_data' );
-		$this->loader->add_action( 'woocommerce_available_payment_gateways', $etmfw_plugin_public, 'mwb_etmfw_unset_cod_payment_gateway_for_event' );
-		$this->loader->add_filter( 'woocommerce_is_purchasable', $etmfw_plugin_public, 'mwb_etmfw_handle_expired_events', 10, 2 );
-		$this->loader->add_action( 'woocommerce_product_meta_start', $etmfw_plugin_public, 'mwb_etmfw_show_expired_message' );
+		$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $etmfw_plugin_public, 'wps_etmfw_before_add_to_cart_button_html' );
+		$this->loader->add_filter( 'woocommerce_is_sold_individually', $etmfw_plugin_public, 'wps_etmfw_allow_single_quantity', 10, 2 );
+		$this->loader->add_filter( 'woocommerce_add_cart_item_data', $etmfw_plugin_public, 'wps_etmfw_cart_item_data', 10, 3 );
+		$this->loader->add_filter( 'woocommerce_get_item_data', $etmfw_plugin_public, 'wps_etmfw_get_cart_item_data', 10, 2 );
+		$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $etmfw_plugin_public, 'wps_etmfw_create_order_line_item', 10, 3 );
+		$this->loader->add_action( 'woocommerce_order_status_changed', $etmfw_plugin_public, 'wps_etmfw_event_status_changed', 10, 3 );
+		$this->loader->add_filter( 'woocommerce_email_attachments', $etmfw_plugin_public, 'wps_etmfw_attach_pdf_to_emails', 10, 4 );
+		$this->loader->add_action( 'woocommerce_order_item_meta_end', $etmfw_plugin_public, 'wps_etmfw_view_ticket_button', 10, 3 );
+		$this->loader->add_action( 'init', $etmfw_plugin_public, 'wps_etmfw_add_eventcheckin_shortcode' );
+		$this->loader->add_action( 'wp_ajax_wps_etmfw_make_user_checkin', $etmfw_plugin_public, 'wps_etmfw_make_user_checkin_for_event' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_make_user_checkin', $etmfw_plugin_public, 'wps_etmfw_make_user_checkin_for_event' );
+		$this->loader->add_action( 'wp_ajax_wps_etmfw_edit_user_info', $etmfw_plugin_public, 'wps_etmfw_edit_user_info_for_event' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_edit_user_info', $etmfw_plugin_public, 'wps_etmfw_edit_user_info_for_event' );
+		$this->loader->add_action( 'wp_ajax_wps_etmfw_get_calendar_events', $etmfw_plugin_public, 'wps_etmfw_get_calendar_widget_data' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_get_calendar_events', $etmfw_plugin_public, 'wps_etmfw_get_calendar_widget_data' );
+		$this->loader->add_action( 'woocommerce_available_payment_gateways', $etmfw_plugin_public, 'wps_etmfw_unset_cod_payment_gateway_for_event' );
+		$this->loader->add_filter( 'woocommerce_is_purchasable', $etmfw_plugin_public, 'wps_etmfw_handle_expired_events', 10, 2 );
+		$this->loader->add_action( 'woocommerce_product_meta_start', $etmfw_plugin_public, 'wps_etmfw_show_expired_message' );
 
 	}
 
@@ -252,7 +252,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		$etmfw_plugin_api = new Event_Tickets_Manager_For_Woocommerce_Rest_Api( $this->etmfw_get_plugin_name(), $this->etmfw_get_version() );
 
-		$this->loader->add_action( 'rest_api_init', $etmfw_plugin_api, 'mwb_etmfw_add_endpoint' );
+		$this->loader->add_action( 'rest_api_init', $etmfw_plugin_api, 'wps_etmfw_add_endpoint' );
 
 	}
 
@@ -264,7 +264,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 	 * @access   private
 	 */
 	private function event_tickets_manager_for_woocommerce_mail_hooks() {
-		add_filter( 'woocommerce_email_classes', array( $this, 'mwb_etmfw_woocommerce_email_classes' ) );
+		add_filter( 'woocommerce_email_classes', array( $this, 'wps_etmfw_woocommerce_email_classes' ) );
 	}
 
 	/**
@@ -273,8 +273,8 @@ class Event_Tickets_Manager_For_Woocommerce {
 	 * @param array $emails email templates.
 	 * @since    1.0.0
 	 */
-	public function mwb_etmfw_woocommerce_email_classes( $emails ) {
-		$emails['mwb_etmfw_email_notification'] = include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/class-mwb-etmfw-emails-notification.php';
+	public function wps_etmfw_woocommerce_email_classes( $emails ) {
+		$emails['wps_etmfw_email_notification'] = include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/class-wps-etmfw-emails-notification.php';
 		return $emails;
 	}
 
@@ -331,11 +331,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 	}
 
 	/**
-	 * Predefined default mwb_etmfw_plug tabs.
+	 * Predefined default wps_etmfw_plug tabs.
 	 *
 	 * @return  Array       An key=>value pair of Event Tickets Manager for WooCommerce tabs.
 	 */
-	public function mwb_etmfw_plug_default_tabs() {
+	public function wps_etmfw_plug_default_tabs() {
 
 		$etmfw_default_tabs = array();
 
@@ -355,7 +355,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 			'title'       => esc_html__( 'Integrations', 'event-tickets-manager-for-woocommerce' ),
 			'name'        => 'event-tickets-manager-for-woocommerce-integrations',
 		);
-		$etmfw_default_tabs = apply_filters( 'mwb_etmfw_plugin_standard_admin_settings_tabs', $etmfw_default_tabs );
+		$etmfw_default_tabs = apply_filters( 'wps_etmfw_etmfw_plugin_standard_admin_settings_tabs', $etmfw_default_tabs );
 
 		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-system-status'] = array(
 			'title'       => esc_html__( 'System Status', 'event-tickets-manager-for-woocommerce' ),
@@ -370,11 +370,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 	 *
 	 * @since   1.0.0
 	 * @param string $path path file for inclusion.
-	 * @param array  $params parameters to pass to the file for access.
+	 * @param array  $file_name to pass to the file for access.
 	 */
-	public function mwb_etmfw_plug_load_template( $path, $params = array() ) {
+	public function wps_etmfw_plug_load_template( $path, $file_name ) {
 
-		$etmfw_file_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . $path;
+		$etmfw_file_path = apply_filters( 'wps_etmfw_pro_tab_template_html', $path, $file_name );
 
 		if ( file_exists( $etmfw_file_path ) ) {
 
@@ -383,7 +383,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 			/* translators: %s: file path */
 			$etmfw_notice = sprintf( esc_html__( 'Unable to locate file at location "%s". Some features may not work properly in this plugin. Please contact us!', 'event-tickets-manager-for-woocommerce' ), $etmfw_file_path );
-			$this->mwb_etmfw_plug_admin_notice( $etmfw_notice, 'error' );
+			$this->wps_etmfw_plug_admin_notice( $etmfw_notice, 'error' );
 		}
 	}
 
@@ -394,7 +394,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 	 * @param  string $type       notice type, accepted values - error/update/update-nag.
 	 * @since  1.0.0
 	 */
-	public static function mwb_etmfw_plug_admin_notice( $etmfw_message, $type = 'error' ) {
+	public static function wps_etmfw_plug_admin_notice( $etmfw_message, $type = 'error' ) {
 
 		$etmfw_classes = 'notice ';
 
@@ -416,7 +416,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 				$etmfw_classes .= 'notice-error is-dismissible';
 		}
 
-		$etmfw_notice  = '<div class="' . esc_attr( $etmfw_classes ) . ' mwb-errorr-8">';
+		$etmfw_notice  = '<div class="' . esc_attr( $etmfw_classes ) . ' wps-errorr-8">';
 		$etmfw_notice .= '<p>' . esc_html( $etmfw_message ) . '</p>';
 		$etmfw_notice .= '</div>';
 
@@ -430,7 +430,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 	 * @return  Array $etmfw_system_data       returns array of all wordpress and server related information.
 	 * @since  1.0.0
 	 */
-	public function mwb_etmfw_plug_system_status() {
+	public function wps_etmfw_plug_system_status() {
 		global $wpdb;
 		$etmfw_system_status = array();
 		$etmfw_wordpress_status = array();
@@ -533,7 +533,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 	 * @param  string $etmfw_components    html to display.
 	 * @since  1.0.0
 	 */
-	public function mwb_etmfw_plug_generate_html( $etmfw_components = array() ) {
+	public function wps_etmfw_plug_generate_html( $etmfw_components = array() ) {
 		if ( is_array( $etmfw_components ) && ! empty( $etmfw_components ) ) {
 			foreach ( $etmfw_components as $etmfw_component ) {
 				if ( ! empty( $etmfw_component['type'] ) && ! empty( $etmfw_component['id'] ) ) {
@@ -544,11 +544,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 						case 'email':
 						case 'text':
 							?>
-						<div class="mwb-form-group mwb-etmfw-<?php echo esc_attr( $etmfw_component['type'] ); ?>">
-							<div class="mwb-form-group__label">
-								<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+						<div class="wps-form-group wps-etmfw-<?php echo esc_attr( $etmfw_component['type'] ); ?>">
+							<div class="wps-form-group__label">
+								<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="wps-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
 							</div>
-							<div class="mwb-form-group__control">
+							<div class="wps-form-group__control">
 								<label class="mdc-text-field mdc-text-field--outlined">
 									<span class="mdc-notched-outline">
 										<span class="mdc-notched-outline__leading"></span>
@@ -569,7 +569,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 									>
 								</label>
 								<div class="mdc-text-field-helper-line">
-									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></div>
+									<div class="mdc-text-field-helper-text--persistent wps-helper-text" id="" aria-hidden="true"><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></div>
 								</div>
 							</div>
 						</div>
@@ -578,11 +578,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 						case 'password':
 							?>
-						<div class="mwb-form-group">
-							<div class="mwb-form-group__label">
-								<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+						<div class="wps-form-group">
+							<div class="wps-form-group__label">
+								<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="wps-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
 							</div>
-							<div class="mwb-form-group__control">
+							<div class="wps-form-group__control">
 								<label class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-trailing-icon">
 									<span class="mdc-notched-outline">
 										<span class="mdc-notched-outline__leading"></span>
@@ -591,17 +591,17 @@ class Event_Tickets_Manager_For_Woocommerce {
 										<span class="mdc-notched-outline__trailing"></span>
 									</span>
 									<input 
-									class="mdc-text-field__input <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?> mwb-form__password" 
+									class="mdc-text-field__input <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?> wps-form__password" 
 									name="<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : esc_html( $etmfw_component['id'] ) ); ?>"
 									id="<?php echo esc_attr( $etmfw_component['id'] ); ?>"
 									type="<?php echo esc_attr( $etmfw_component['type'] ); ?>"
 									value="<?php echo ( isset( $etmfw_component['value'] ) ? esc_attr( $etmfw_component['value'] ) : '' ); ?>"
 									placeholder="<?php echo ( isset( $etmfw_component['placeholder'] ) ? esc_attr( $etmfw_component['placeholder'] ) : '' ); ?>"
 									>
-									<i class="material-icons mdc-text-field__icon mdc-text-field__icon--trailing mwb-password-hidden" tabindex="0" role="button">visibility</i>
+									<i class="material-icons mdc-text-field__icon mdc-text-field__icon--trailing wps-password-hidden" tabindex="0" role="button">visibility</i>
 								</label>
 								<div class="mdc-text-field-helper-line">
-									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></div>
+									<div class="mdc-text-field-helper-text--persistent wps-helper-text" id="" aria-hidden="true"><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></div>
 								</div>
 							</div>
 						</div>
@@ -610,11 +610,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 						case 'textarea':
 							?>
-						<div class="mwb-form-group">
-							<div class="mwb-form-group__label">
-								<label class="mwb-form-label" for="<?php echo esc_attr( $etmfw_component['id'] ); ?>"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+						<div class="wps-form-group">
+							<div class="wps-form-group__label">
+								<label class="wps-form-label" for="<?php echo esc_attr( $etmfw_component['id'] ); ?>"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
 							</div>
-							<div class="mwb-form-group__control">
+							<div class="wps-form-group__control">
 								<label class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea"  	for="text-field-hero-input">
 									<span class="mdc-notched-outline">
 										<span class="mdc-notched-outline__leading"></span>
@@ -639,12 +639,12 @@ class Event_Tickets_Manager_For_Woocommerce {
 						case 'select':
 						case 'multiselect':
 							?>
-						<div class="mwb-form-group">
-							<div class="mwb-form-group__label">
-								<label class="mwb-form-label" for="<?php echo esc_attr( $etmfw_component['id'] ); ?>"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+						<div class="wps-form-group">
+							<div class="wps-form-group__label">
+								<label class="wps-form-label" for="<?php echo esc_attr( $etmfw_component['id'] ); ?>"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
 							</div>
-							<div class="mwb-form-group__control">
-								<div class="mwb-form-select">
+							<div class="wps-form-group__control">
+								<div class="wps-form-select">
 									<select id="<?php echo esc_attr( $etmfw_component['id'] ); ?>" name="<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : '' ); ?><?php echo ( 'multiselect' === $etmfw_component['type'] ) ? '[]' : ''; ?>" id="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mdl-textfield__input <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>" <?php echo 'multiselect' === $etmfw_component['type'] ? 'multiple="multiple"' : ''; ?> >
 										<?php
 										foreach ( $etmfw_component['options'] as $etmfw_key => $etmfw_val ) {
@@ -674,11 +674,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 						case 'checkbox':
 							?>
-						<div class="mwb-form-group">
-							<div class="mwb-form-group__label">
-								<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+						<div class="wps-form-group">
+							<div class="wps-form-group__label">
+								<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="wps-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
 							</div>
-							<div class="mwb-form-group__control mwb-pl-4">
+							<div class="wps-form-group__control wps-pl-4">
 								<div class="mdc-form-field">
 									<div class="mdc-checkbox">
 										<input 
@@ -706,12 +706,12 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 						case 'radio':
 							?>
-						<div class="mwb-form-group">
-							<div class="mwb-form-group__label">
-								<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+						<div class="wps-form-group">
+							<div class="wps-form-group__label">
+								<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="wps-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
 							</div>
-							<div class="mwb-form-group__control mwb-pl-4">
-								<div class="mwb-flex-col">
+							<div class="wps-form-group__control wps-pl-4">
+								<div class="wps-flex-col">
 									<?php
 									foreach ( $etmfw_component['options'] as $etmfw_radio_key => $etmfw_radio_val ) {
 										?>
@@ -744,11 +744,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 						case 'radio-switch':
 							?>
 
-						<div class="mwb-form-group">
-							<div class="mwb-form-group__label">
-								<label for="" class="mwb-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+						<div class="wps-form-group">
+							<div class="wps-form-group__label">
+								<label for="" class="wps-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
 							</div>
-							<div class="mwb-form-group__control">
+							<div class="wps-form-group__control">
 								<div>
 									<div class="mdc-switch">
 										<div class="mdc-switch__track"></div>
@@ -767,7 +767,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 											>
 										</div>
 										<div class="mdc-text-field-helper-line">
-											<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></div>
+											<div class="mdc-text-field-helper-text--persistent wps-helper-text" id="" aria-hidden="true"><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></div>
 										</div>
 									</div>
 								</div>
@@ -778,8 +778,8 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 						case 'button':
 							?>
-						<div class="mwb-form-group">
-							<div class="mwb-form-group__control">
+						<div class="wps-form-group">
+							<div class="wps-form-group__control">
 								<button class="mdc-button mdc-button--raised" name= "<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : esc_html( $etmfw_component['id'] ) ); ?>"
 									id="<?php echo esc_attr( $etmfw_component['id'] ); ?>"> <span class="mdc-button__ripple"></span>
 									<span class="mdc-button__label <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>"><?php echo ( isset( $etmfw_component['button_text'] ) ? esc_html( $etmfw_component['button_text'] ) : '' ); ?></span>
@@ -792,11 +792,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 						case 'multi':
 							?>
-							<div class="mwb-form-group mwb-isfw-<?php echo esc_attr( $etmfw_component['type'] ); ?>">
-								<div class="mwb-form-group__label">
-									<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+							<div class="wps-form-group wps-isfw-<?php echo esc_attr( $etmfw_component['type'] ); ?>">
+								<div class="wps-form-group__label">
+									<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="wps-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
 									</div>
-									<div class="mwb-form-group__control">
+									<div class="wps-form-group__control">
 									<?php
 									foreach ( $etmfw_component['value'] as $component ) {
 										?>
@@ -822,7 +822,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 											</label>
 								<?php } ?>
 									<div class="mdc-text-field-helper-line">
-										<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></div>
+										<div class="mdc-text-field-helper-text--persistent wps-helper-text" id="" aria-hidden="true"><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></div>
 									</div>
 								</div>
 							</div>
@@ -832,11 +832,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 						case 'date':
 						case 'file':
 							?>
-							<div class="mwb-form-group mwb-isfw-<?php echo esc_attr( $etmfw_component['type'] ); ?>">
-								<div class="mwb-form-group__label">
-									<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+							<div class="wps-form-group wps-isfw-<?php echo esc_attr( $etmfw_component['type'] ); ?>">
+								<div class="wps-form-group__label">
+									<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="wps-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
 								</div>
-								<div class="mwb-form-group__control">
+								<div class="wps-form-group__control">
 									<label class="mdc-text-field mdc-text-field--outlined">
 										<input 
 										class="<?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>" 
@@ -848,7 +848,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 										>
 									</label>
 									<div class="mdc-text-field-helper-line">
-										<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></div>
+										<div class="mdc-text-field-helper-text--persistent wps-helper-text" id="" aria-hidden="true"><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></div>
 									</div>
 								</div>
 							</div>
@@ -872,11 +872,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 						case 'wp_editor':
 							?>
-					<div class="mwb-form-group">
-						<div class="mwb-form-group__label">
-							<label for="" class="mwb-form-label"><?php echo esc_html( $etmfw_component['title'] ); ?></label>
+					<div class="wps-form-group">
+						<div class="wps-form-group__label">
+							<label for="" class="wps-form-label"><?php echo esc_html( $etmfw_component['title'] ); ?></label>
 						</div>
-						<div class="mwb-form-group__control">
+						<div class="wps-form-group__control">
 							<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>">
 								<?php
 								$content = stripcslashes( $etmfw_component['value'] );
@@ -887,14 +887,14 @@ class Event_Tickets_Manager_For_Woocommerce {
 									'dfw'              => true,
 									'teeny'            => true,
 									'editor_height'    => 200,
-									'editor_class'       => 'mwb_etmfw_new_woo_ver_style_textarea',
+									'editor_class'       => 'wps_etmfw_new_woo_ver_style_textarea',
 									'textarea_name'    => esc_attr( $etmfw_component['id'] ),
 								);
 								wp_editor( $content, $editor_id, $settings );
 								?>
 							</label>
 							<div class="mdc-text-field-helper-line">
-								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( $etmfw_component['description'] ); ?></div>
+								<div class="mdc-text-field-helper-text--persistent wps-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( $etmfw_component['description'] ); ?></div>
 							</div>
 						</div>
 					</div>
@@ -903,28 +903,28 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 						case 'textWithButton':
 							?>
-					<div class="mwb-form-group">
-						<div class="mwb-form-group__label">
-							<label for="" class="mwb-form-label"><?php echo esc_html( $etmfw_component['title'] ); ?></label>
+					<div class="wps-form-group">
+						<div class="wps-form-group__label">
+							<label for="" class="wps-form-label"><?php echo esc_html( $etmfw_component['title'] ); ?></label>
 						</div>
-						<div class="mwb-form-group__control">
+						<div class="wps-form-group__control">
 							<label class="mdc-text-field mdc-text-field--outlined">
 							<?php
 							if ( isset( $etmfw_component['custom_attribute'] ) && ! empty( $etmfw_component['custom_attribute'] ) && is_array( $etmfw_component['custom_attribute'] ) ) {
 								foreach ( $etmfw_component['custom_attribute'] as $key => $val ) {
 									if ( 'text' == $val['type'] ) {
-										$this->mwb_etmfw_generate_text_html( $val );
+										$this->wps_etmfw_generate_text_html( $val );
 									} elseif ( 'button' == $val['type'] ) {
-										$this->mwb_etmfw_generate_button_html( $val );
+										$this->wps_etmfw_generate_button_html( $val );
 									} elseif ( 'paragraph' == $val['type'] ) {
-										$this->mwb_etmfw_generate_showbox( $val );
+										$this->wps_etmfw_generate_showbox( $val );
 									}
 								}
 							}
 							?>
 							</label>
 							<div class="mdc-text-field-helper-line">
-								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( $etmfw_component['description'] ); ?></div>
+								<div class="mdc-text-field-helper-text--persistent wps-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( $etmfw_component['description'] ); ?></div>
 							</div>
 						</div>
 					</div>
@@ -945,7 +945,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 	 * @since    1.0.0
 	 * @param    Array $value Contain html field values.
 	 */
-	public function mwb_etmfw_generate_text_html( $value ) {
+	public function wps_etmfw_generate_text_html( $value ) {
 		?>
 		<span class="mdc-notched-outline">
 			<span class="mdc-notched-outline__leading"></span>
@@ -972,11 +972,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 	 * @since    1.0.0
 	 * @param    Array $value Contain html field values.
 	 */
-	public function mwb_etmfw_generate_button_html( $value ) {
+	public function wps_etmfw_generate_button_html( $value ) {
 		?>
-		<div class="mwb-form-group">
-			<div class="mwb-form-group__label"></div>
-			<div class="mwb-form-group__control">
+		<div class="wps-form-group">
+			<div class="wps-form-group__label"></div>
+			<div class="wps-form-group__control">
 				<button class="mdc-button mdc-button--raised" name="<?php echo esc_attr( $value['id'] ); ?>"
 					id="<?php echo esc_attr( $value['id'] ); ?>"> <span class="mdc-button__ripple"></span>
 					<span class="mdc-button__label"><?php echo esc_attr( $value['button_text'] ); ?></span>
@@ -992,7 +992,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 	 * @since    1.0.0
 	 * @param    Array $value Contain html field values.
 	 */
-	public function mwb_etmfw_generate_showbox( $value ) {
+	public function wps_etmfw_generate_showbox( $value ) {
 		?>
 		<p id="<?php echo esc_attr( array_key_exists( 'id', $value ) ? $value['id'] : '' ); ?>">
 			<span class="<?php echo esc_attr( array_key_exists( 'id', $value ) ? $value['id'] : '' ); ?>">

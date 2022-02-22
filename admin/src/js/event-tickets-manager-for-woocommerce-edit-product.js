@@ -30,8 +30,8 @@
 	 */
 
 	 $(window).load(function(){
-	 	if( $(document).find('.mwb_etmfw_field_table').length > 0 ) {
-	 		$(document).find( '.mwb_etmfw_field_table tbody.mwb_etmfw_field_body' ).sortable();
+	 	if( $(document).find('.wps_etmfw_field_table').length > 0 ) {
+	 		$(document).find( '.wps_etmfw_field_table tbody.wps_etmfw_field_body' ).sortable();
 	 	}
 	 }); 
 
@@ -78,17 +78,17 @@
 		});
 		}
 
-		$(document).on( 'click', '.mwb_etmfw_add_fields_button', function(){
-			var fieldsetId = $(document).find('.mwb_etmfw_field_table').find('.mwb_etmfw_field_wrap').last().attr('data-id');
+		$(document).on( 'click', '.wps_etmfw_add_fields_button', function(){
+			var fieldsetId = $(document).find('.wps_etmfw_field_table').find('.wps_etmfw_field_wrap').last().attr('data-id');
 			fieldsetId = fieldsetId?fieldsetId.replace(/[^0-9]/gi, ''):0;
 			let mainId = Number(fieldsetId) + 1;
-			var field_html = '<tr class="mwb_etmfw_field_wrap" data-id="'+mainId+'"><td class="drag-icon"><i class="dashicons dashicons-move"></i></td><td class="form-field mwb_etmfw_label_fields"><input type="text" class="mwb_etmfw_field_label" style="" name="etmfw_fields['+mainId+'][_label]" id="label_fields_'+mainId+'" value="" placeholder=""></td><td class="form-field mwb_etmfw_type_fields"><select id="type_fields_'+mainId+'" name="etmfw_fields['+mainId+'][_type]" class="mwb_etmfw_field_type"><option value="text">Text</option><option value="textarea">Textarea</option><option value="email" selected="selected">Email</option><option value="number">Number</option><option value="date">Date</option><option value="yes-no">Yes/No</option></select></td><td class="form-field mwb_etmfw_required_fields"><input type="checkbox" class="checkbox" style="" name="etmfw_fields['+mainId+'][_required]" id="required_fields_'+mainId+'"></td><td class="mwb_etmfw_remove_row"><input type="button" name="mwb_etmfw_remove_fields_button" class="mwb_etmfw_remove_row_btn" value="Remove"></td></tr>';
-			$(document).find('.mwb_etmfw_field_body').append( field_html );
+			var field_html = '<tr class="wps_etmfw_field_wrap" data-id="'+mainId+'"><td class="drag-icon"><i class="dashicons dashicons-move"></i></td><td class="form-field wps_etmfw_label_fields"><input type="text" class="wps_etmfw_field_label" style="" name="etmfw_fields['+mainId+'][_label]" id="label_fields_'+mainId+'" value="" placeholder=""></td><td class="form-field wps_etmfw_type_fields"><select id="type_fields_'+mainId+'" name="etmfw_fields['+mainId+'][_type]" class="wps_etmfw_field_type"><option value="text">Text</option><option value="textarea">Textarea</option><option value="email" selected="selected">Email</option><option value="number">Number</option><option value="date">Date</option><option value="yes-no">Yes/No</option></select></td><td class="form-field wps_etmfw_required_fields"><input type="checkbox" class="checkbox" style="" name="etmfw_fields['+mainId+'][_required]" id="required_fields_'+mainId+'"></td><td class="wps_etmfw_remove_row"><input type="button" name="wps_etmfw_remove_fields_button" class="wps_etmfw_remove_row_btn" value="Remove"></td></tr>';
+			$(document).find('.wps_etmfw_field_body').append( field_html );
 		});
 
-		$(document).on("click", ".mwb_etmfw_remove_row_btn", function(e){
+		$(document).on("click", ".wps_etmfw_remove_row_btn", function(e){
 			e.preventDefault();
-			$(this).parents(".mwb_etmfw_field_wrap").remove();
+			$(this).parents(".wps_etmfw_field_wrap").remove();
 		});
 
 		$(document).on("change", "select#product-type", function(){
@@ -103,10 +103,10 @@
 		$(document).on("keyup", "#etmfw_event_venue", function(){
 			let input = $(this).val();
 			if( input.length > 2 ){
-				$(document).find("#mwb_etmfw_location_loader").show();
+				$(document).find("#wps_etmfw_location_loader").show();
 				var data = {
-					action:'mwb_etmfw_get_event_geocode',
-					mwb_edit_nonce:etmfw_edit_prod_param.mwb_etmfw_edit_prod_nonce,
+					action:'wps_etmfw_get_event_geocode',
+					wps_edit_nonce:etmfw_edit_prod_param.wps_etmfw_edit_prod_nonce,
 					venue:input,
 				};
 				$.ajax(
@@ -122,12 +122,12 @@
 								let lng = response.message['lng'];
 								$(document).find('#etmfw_event_venue_lat').val( lat );
 								$(document).find('#etmfw_event_venue_lng').val( lng );
-								$(document).find('#mwb_etmfw_error_msg').html('');
+								$(document).find('#wps_etmfw_error_msg').html('');
 							} else{
 								let error_msg = response.message;
-								$(document).find('#mwb_etmfw_error_msg').html( error_msg );
+								$(document).find('#wps_etmfw_error_msg').html( error_msg );
 							}
-							$(document).find("#mwb_etmfw_location_loader").hide();
+							$(document).find("#wps_etmfw_location_loader").hide();
 						}
 					}
 				);

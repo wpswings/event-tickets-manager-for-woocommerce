@@ -3346,7 +3346,7 @@ class Style
     /**
      * Generate a string representation of the Style
      *
-     * This dumps the entire property array into a string via print_r.  Useful
+     * This duetmfw the entire property array into a string via print_r.  Useful
      * for debugging.
      *
      * @return string

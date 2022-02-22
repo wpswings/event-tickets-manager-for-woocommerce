@@ -4,7 +4,7 @@
  *
  * This file is used to markup the html field for integrations tab.
  *
- * @link       https://makewebbetter.com/
+ * @link       https://wpswings.com/
  * @since      1.0.0
  *
  * @package    Event_Tickets_Manager_For_Woocommerce
@@ -14,16 +14,16 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-global $etmfw_mwb_etmfw_obj;
-$etmfw_integration_settings = apply_filters( 'mwb_etmfw_integration_settings_array', array() );
+global $etmfw_wps_etmfw_obj;
+$etmfw_integration_settings = apply_filters( 'wps_etmfw_integration_settings_array', array() );
 ?>
 <!--  template file for admin settings. -->
-<form action="" method="POST" class="mwb-etmfw-integration-section-form">
-<input type="hidden" name="mwb_event_nonce" value="<?php echo esc_html( wp_create_nonce( 'mwb_event_nonce' ) ); ?>">
+<form action="" method="POST" class="wps-etmfw-integration-section-form">
+<input type="hidden" name="wps_event_nonce" value="<?php echo esc_html( wp_create_nonce( 'wps_event_nonce' ) ); ?>">
 
 	<div class="etmfw-secion-wrap">
 		<?php
-		$etmfw_integration_html = $etmfw_mwb_etmfw_obj->mwb_etmfw_plug_generate_html( $etmfw_integration_settings );
+		$etmfw_integration_html = $etmfw_wps_etmfw_obj->wps_etmfw_plug_generate_html( $etmfw_integration_settings );
 		echo esc_html( $etmfw_integration_html );
 		?>
 	</div>

@@ -2,15 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Tickets Manager for WooCommerce 1.0.3\n"
-"POT-Creation-Date: 2021-11-26 09:28+0530\n"
+"POT-Creation-Date: 2022-02-15 20:15+0530\n"
 "PO-Revision-Date: 2021-04-28 19:09+0530\n"
 "Last-Translator: \n"
-"Language-Team: MakeWebBetter\n"
+"Language-Team: wpswings\n"
 "Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 3.0\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -238,15 +238,15 @@ msgstr ""
 msgid "Completed"
 msgstr ""
 
-#: admin/partials/event-tickets-manager-for-woocommerce-admin-dashboard.php:27
+#: admin/partials/event-tickets-manager-for-woocommerce-admin-dashboard.php:46
 msgid "Documentation"
 msgstr ""
 
-#: admin/partials/event-tickets-manager-for-woocommerce-admin-dashboard.php:29
+#: admin/partials/event-tickets-manager-for-woocommerce-admin-dashboard.php:48
 msgid "Support"
 msgstr ""
 
-#: admin/partials/event-tickets-manager-for-woocommerce-admin-dashboard.php:35
+#: admin/partials/event-tickets-manager-for-woocommerce-admin-dashboard.php:55
 msgid "Settings saved !"
 msgstr ""
 
@@ -391,40 +391,40 @@ msgstr ""
 msgid "System Values"
 msgstr ""
 
-#: emails/class-mwb-etmfw-emails-notification.php:49
+#: emails/class-wps-etmfw-emails-notification.php:50
 msgid "Event order email"
 msgstr ""
 
-#: emails/class-mwb-etmfw-emails-notification.php:51
+#: emails/class-wps-etmfw-emails-notification.php:52
 msgid "This email send to the customer at every event."
 msgstr ""
 
-#: emails/class-mwb-etmfw-emails-notification.php:80
+#: emails/class-wps-etmfw-emails-notification.php:81
 msgid "Event order received."
 msgstr ""
 
-#: emails/class-mwb-etmfw-emails-notification.php:161
+#: emails/class-wps-etmfw-emails-notification.php:162
 msgid "Enable/Disable"
 msgstr ""
 
-#: emails/class-mwb-etmfw-emails-notification.php:163
+#: emails/class-wps-etmfw-emails-notification.php:164
 msgid "Enable this email notification"
 msgstr ""
 
-#: emails/class-mwb-etmfw-emails-notification.php:167
+#: emails/class-wps-etmfw-emails-notification.php:168
 msgid "Email heading"
 msgstr ""
 
-#: emails/class-mwb-etmfw-emails-notification.php:171
+#: emails/class-wps-etmfw-emails-notification.php:172
 #, php-format
 msgid "Available placeholders: %s"
 msgstr ""
 
-#: emails/class-mwb-etmfw-emails-notification.php:176
+#: emails/class-wps-etmfw-emails-notification.php:177
 msgid "Email type"
 msgstr ""
 
-#: emails/class-mwb-etmfw-emails-notification.php:178
+#: emails/class-wps-etmfw-emails-notification.php:179
 msgid "Choose which format of email to send."
 msgstr ""
 
@@ -479,7 +479,7 @@ msgstr ""
 msgid "Reason"
 msgstr ""
 
-#: includes/class-event-tickets-manager-for-woocommerce-onboarding-steps.php:731
+#: includes/class-event-tickets-manager-for-woocommerce-onboarding-steps.php:730
 msgid "Unexpected Error Occured"
 msgstr ""
 
@@ -628,6 +628,10 @@ msgstr ""
 msgid "Welcome to "
 msgstr ""
 
+#: onboarding/templates/event-tickets-manager-for-woocommerce-onboarding-template.php:27
+msgid "WP Swings"
+msgstr ""
+
 #: onboarding/templates/event-tickets-manager-for-woocommerce-onboarding-template.php:28
 msgid ""
 "We love making new friends! Subscribe below and we promise to keep you up-to-"
@@ -651,59 +655,59 @@ msgstr ""
 msgid "Please enter correct email"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:646
+#: public/class-event-tickets-manager-for-woocommerce-public.php:649
 msgid "View"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:649
+#: public/class-event-tickets-manager-for-woocommerce-public.php:652
 msgid "+ Add to Google Calendar"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:673
+#: public/class-event-tickets-manager-for-woocommerce-public.php:676
 msgid "Edit Ticket Information"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:691
+#: public/class-event-tickets-manager-for-woocommerce-public.php:694
 msgid "Save Changes"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:768
+#: public/class-event-tickets-manager-for-woocommerce-public.php:771
 msgid "For"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:781
+#: public/class-event-tickets-manager-for-woocommerce-public.php:784
 msgid "Ticket Number *"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:785
+#: public/class-event-tickets-manager-for-woocommerce-public.php:788
 msgid "Enter Email *"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:792
+#: public/class-event-tickets-manager-for-woocommerce-public.php:795
 msgid "Check In"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:838
+#: public/class-event-tickets-manager-for-woocommerce-public.php:841
 msgid "User checked in successfully."
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:840
+#: public/class-event-tickets-manager-for-woocommerce-public.php:843
 msgid "Event has not started yet."
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:843
+#: public/class-event-tickets-manager-for-woocommerce-public.php:846
 msgid "Event Expired!"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:846
+#: public/class-event-tickets-manager-for-woocommerce-public.php:849
 msgid "Order not exist."
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:849
+#: public/class-event-tickets-manager-for-woocommerce-public.php:852
 msgid "User has already checked in for the event."
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:852
+#: public/class-event-tickets-manager-for-woocommerce-public.php:855
 msgid "Please Enter the correct email."
 msgstr ""
 

@@ -4,7 +4,7 @@
  *
  * This file is used to markup the html field for email template tab.
  *
- * @link       https://makewebbetter.com/
+ * @link       https://wpswings.com/
  * @since      1.0.0
  *
  * @package    Event_Tickets_Manager_For_Woocommerce
@@ -14,18 +14,18 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-global $etmfw_mwb_etmfw_obj;
-$etmfw_email_template_settings = apply_filters( 'mwb_etmfw_email_template_settings_array', array() );
+global $etmfw_wps_etmfw_obj;
+$etmfw_email_template_settings = apply_filters( 'wps_etmfw_email_template_settings_array', array() );
 ?>
 <!--  template file for admin settings. -->
-<form action="" method="POST" class="mwb-etmfw-email-template-section-form">
-<input type="hidden" name="mwb_event_nonce" value="<?php echo esc_html( wp_create_nonce( 'mwb_event_nonce' ) ); ?>">
+<form action="" method="POST" class="wps-etmfw-email-template-section-form">
+<input type="hidden" name="wps_event_nonce" value="<?php echo esc_html( wp_create_nonce( 'wps_event_nonce' ) ); ?>">
 
 	<div class="etmfw-secion-wrap">
 		<?php
-		$etmfw_email_template_html = $etmfw_mwb_etmfw_obj->mwb_etmfw_plug_generate_html( $etmfw_email_template_settings );
+		$etmfw_email_template_html = $etmfw_wps_etmfw_obj->wps_etmfw_plug_generate_html( $etmfw_email_template_settings );
 		echo esc_html( $etmfw_email_template_html );
-		wp_nonce_field( 'mwb-etmfw-email-template-nonce', 'mwb-etmfw-email-template-nonce-field' );
+		wp_nonce_field( 'wps-etmfw-email-template-nonce', 'wps-etmfw-email-template-nonce-field' );
 		?>
 	</div>
 </form>

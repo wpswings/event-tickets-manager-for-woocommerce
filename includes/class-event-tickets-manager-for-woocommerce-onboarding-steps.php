@@ -2,7 +2,7 @@
 /**
  * The admin-specific on-boarding functionality of the plugin.
  *
- * @link       https://makewebbetter.com
+ * @link       https://wpswings.com/
  * @since      1.0.0
  *
  * @package     Event_Tickets_Manager_For_Woocommerce
@@ -14,7 +14,7 @@
  *
  * @package     Event_Tickets_Manager_For_Woocommerce
  * @subpackage  Event_Tickets_Manager_For_Woocommerce/includes
- * @author      makewebbetter <webmaster@makewebbetter.com>
+ * @author      WPSwings <webmaster@wpswings.com>
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -41,7 +41,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 * @since 1.0.0
 	 * @var string base url of API.
 	 */
-	private $mwb_etmfw_base_url = 'https://api.hsforms.com/';
+	private $wps_etmfw_base_url = 'https://api.hsforms.com/';
 
 	/**
 	 * Portal id of hubspot api for event-tickets-manager-for-woocommerce.
@@ -49,7 +49,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 * @since 1.0.0
 	 * @var string Portal id.
 	 */
-	private static $mwb_etmfw_portal_id = '6493626';
+	private static $wps_etmfw_portal_id = '25444144';
 
 	/**
 	 * Form id of hubspot api for event-tickets-manager-for-woocommerce.
@@ -57,7 +57,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 * @since 1.0.0
 	 * @var string Form id.
 	 */
-	private static $mwb_etmfw_onboarding_form_id = 'd94dcb10-c9c1-4155-a9ad-35354f2c3b52';
+	private static $wps_etmfw_onboarding_form_id = '2a2fe23c-0024-43f5-9473-cbfefdb06fe2';
 
 	/**
 	 * Form id of hubspot api for event-tickets-manager-for-woocommerce.
@@ -65,39 +65,39 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 * @since 1.0.0
 	 * @var string Form id.
 	 */
-	private static $mwb_etmfw_deactivation_form_id = '329ffc7a-0e8c-4e11-8b41-960815c31f8d';
+	private static $wps_etmfw_deactivation_form_id = '67feecaa-9a93-4fda-8f85-f73168da2672';
 
 	/**
 	 * Define some variables for event-tickets-manager-for-woocommerce.
 	 *
 	 * @since 1.0.0
-	 * @var string $mwb_etmfw_plugin_name plugin name.
+	 * @var string $wps_etmfw_plugin_name plugin name.
 	 */
-	private static $mwb_etmfw_plugin_name;
+	private static $wps_etmfw_plugin_name;
 
 	/**
 	 * Define some variables for event-tickets-manager-for-woocommerce.
 	 *
 	 * @since 1.0.0
-	 * @var string $mwb_etmfw_plugin_name_label plugin name text.
+	 * @var string $wps_etmfw_plugin_name_label plugin name text.
 	 */
-	private static $mwb_etmfw_plugin_name_label;
+	private static $wps_etmfw_plugin_name_label;
 
 	/**
 	 * Define some variables for event-tickets-manager-for-woocommerce.
 	 *
-	 * @var string $mwb_etmfw_store_name store name.
+	 * @var string $wps_etmfw_store_name store name.
 	 * @since 1.0.0
 	 */
-	private static $mwb_etmfw_store_name;
+	private static $wps_etmfw_store_name;
 
 	/**
 	 * Define some variables for event-tickets-manager-for-woocommerce.
 	 *
 	 * @since 1.0.0
-	 * @var string $mwb_etmfw_store_url store url.
+	 * @var string $wps_etmfw_store_url store url.
 	 */
-	private static $mwb_etmfw_store_url;
+	private static $wps_etmfw_store_url;
 
 	/**
 	 * Define the onboarding functionality of the plugin.
@@ -108,26 +108,26 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		self::$mwb_etmfw_store_name = get_bloginfo( 'name' );
-		self::$mwb_etmfw_store_url = home_url();
-		self::$mwb_etmfw_plugin_name = 'Event Tickets Manager for WooCommerce';
-		self::$mwb_etmfw_plugin_name_label = 'Event Tickets Manager for WooCommerce';
+		self::$wps_etmfw_store_name = get_bloginfo( 'name' );
+		self::$wps_etmfw_store_url = home_url();
+		self::$wps_etmfw_plugin_name = 'Event Tickets Manager for WooCommerce';
+		self::$wps_etmfw_plugin_name_label = 'Event Tickets Manager for WooCommerce';
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_etmfw_onboarding_enqueue_styles' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_etmfw_onboarding_enqueue_scripts' ) );
-		add_action( 'admin_footer', array( $this, 'mwb_etmfw_add_onboarding_popup_screen' ) );
-		add_action( 'admin_footer', array( $this, 'mwb_etmfw_add_deactivation_popup_screen' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'wps_etmfw_onboarding_enqueue_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'wps_etmfw_onboarding_enqueue_scripts' ) );
+		add_action( 'admin_footer', array( $this, 'wps_etmfw_add_onboarding_popup_screen' ) );
+		add_action( 'admin_footer', array( $this, 'wps_etmfw_add_deactivation_popup_screen' ) );
 
-		add_filter( 'mwb_etmfw_on_boarding_form_fields', array( $this, 'mwb_etmfw_add_on_boarding_form_fields' ) );
-		add_filter( 'mwb_etmfw_deactivation_form_fields', array( $this, 'mwb_etmfw_add_deactivation_form_fields' ) );
+		add_filter( 'wps_etmfw_on_boarding_form_fields', array( $this, 'wps_etmfw_add_on_boarding_form_fields' ) );
+		add_filter( 'wps_etmfw_deactivation_form_fields', array( $this, 'wps_etmfw_add_deactivation_form_fields' ) );
 
 		// Ajax to send data.
-		add_action( 'wp_ajax_mwb_etmfw_send_onboarding_data', array( $this, 'mwb_etmfw_send_onboarding_data' ) );
-		add_action( 'wp_ajax_nopriv_mwb_etmfw_send_onboarding_data', array( $this, 'mwb_etmfw_send_onboarding_data' ) );
+		add_action( 'wp_ajax_wps_etmfw_send_onboarding_data', array( $this, 'wps_etmfw_send_onboarding_data' ) );
+		add_action( 'wp_ajax_nopriv_wps_etmfw_send_onboarding_data', array( $this, 'wps_etmfw_send_onboarding_data' ) );
 
 		// Ajax to Skip popup.
-		add_action( 'wp_ajax_etmfw_skip_onboarding_popup', array( $this, 'mwb_etmfw_skip_onboarding_popup' ) );
-		add_action( 'wp_ajax_nopriv_etmfw_skip_onboarding_popup', array( $this, 'mwb_etmfw_skip_onboarding_popup' ) );
+		add_action( 'wp_ajax_etmfw_skip_onboarding_popup', array( $this, 'wps_etmfw_skip_onboarding_popup' ) );
+		add_action( 'wp_ajax_nopriv_etmfw_skip_onboarding_popup', array( $this, 'wps_etmfw_skip_onboarding_popup' ) );
 
 	}
 
@@ -154,29 +154,29 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 * This function is provided for demonstration purposes only.
 	 *
 	 * An instance of this class should be passed to the run() function
-	 * defined in Makewebbetter_Onboarding_Loader as all of the hooks are defined
+	 * defined in wpswings_Onboarding_Loader as all of the hooks are defined
 	 * in that particular class.
 	 *
-	 * The Makewebbetter_Onboarding_Loader will then create the relationship
+	 * The wpswings_Onboarding_Loader will then create the relationship
 	 * between the defined hooks and the functions defined in this
 	 * class.
 	 */
-	public function mwb_etmfw_onboarding_enqueue_styles() {
+	public function wps_etmfw_onboarding_enqueue_styles() {
 		global $pagenow;
 		$is_valid = false;
 		if ( ! $is_valid && 'plugins.php' == $pagenow ) {
 			$is_valid = true;
 		}
-		if ( $this->mwb_etmfw_valid_page_screen_check() || $is_valid ) {
+		if ( $this->wps_etmfw_valid_page_screen_check() || $is_valid ) {
 			// comment the line of code Only when your plugin doesn't uses the Select2.
-			wp_enqueue_style( 'mwb-etmfw-onboarding-select2-style', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/event-tickets-manager-for-woocommerce-select2.css', array(), time(), 'all' );
+			wp_enqueue_style( 'wps-etmfw-onboarding-select2-style', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/event-tickets-manager-for-woocommerce-select2.css', array(), time(), 'all' );
 
-			wp_enqueue_style( 'mwb-etmfw-meterial-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.css', array(), time(), 'all' );
-			wp_enqueue_style( 'mwb-etmfw-meterial-css2', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.css', array(), time(), 'all' );
-			wp_enqueue_style( 'mwb-etmfw-meterial-lite', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.css', array(), time(), 'all' );
-			wp_enqueue_style( 'mwb-etmfw-meterial-icons-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/icon.css', array(), time(), 'all' );
+			wp_enqueue_style( 'wps-etmfw-meterial-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.css', array(), time(), 'all' );
+			wp_enqueue_style( 'wps-etmfw-meterial-css2', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.css', array(), time(), 'all' );
+			wp_enqueue_style( 'wps-etmfw-meterial-lite', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.css', array(), time(), 'all' );
+			wp_enqueue_style( 'wps-etmfw-meterial-icons-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/icon.css', array(), time(), 'all' );
 
-			wp_enqueue_style( 'mwb-etmfw-onboarding-style', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'onboarding/css/event-tickets-manager-for-woocommerce-onboarding.css', array(), time(), 'all' );
+			wp_enqueue_style( 'wps-etmfw-onboarding-style', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'onboarding/css/event-tickets-manager-for-woocommerce-onboarding.css', array(), time(), 'all' );
 
 		}
 	}
@@ -185,38 +185,38 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 * This function is provided for demonstration purposes only.
 	 *
 	 * An instance of this class should be passed to the run() function
-	 * defined in Makewebbetter_Onboarding_Loader as all of the hooks are defined
+	 * defined in wpswings_Onboarding_Loader as all of the hooks are defined
 	 * in that particular class.
 	 *
-	 * The Makewebbetter_Onboarding_Loader will then create the relationship
+	 * The wpswings_Onboarding_Loader will then create the relationship
 	 * between the defined hooks and the functions defined in this
 	 * class.
 	 */
-	public function mwb_etmfw_onboarding_enqueue_scripts() {
+	public function wps_etmfw_onboarding_enqueue_scripts() {
 		global $pagenow;
 		$is_valid = false;
 		if ( ! $is_valid && 'plugins.php' == $pagenow ) {
 			$is_valid = true;
 		}
-		if ( $this->mwb_etmfw_valid_page_screen_check() || $is_valid ) {
+		if ( $this->wps_etmfw_valid_page_screen_check() || $is_valid ) {
 
-			wp_enqueue_script( 'mwb-etmfw-onboarding-select2-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/event-tickets-manager-for-woocommerce-select2.js', array( 'jquery' ), '1.0.0', false );
+			wp_enqueue_script( 'wps-etmfw-onboarding-select2-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/event-tickets-manager-for-woocommerce-select2.js', array( 'jquery' ), '1.0.0', false );
 
-			wp_enqueue_script( 'mwb-etmfw-metarial-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.js', array(), time(), false );
-			wp_enqueue_script( 'mwb-etmfw-metarial-js2', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.js', array(), time(), false );
-			wp_enqueue_script( 'mwb-etmfw-metarial-lite', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.js', array(), time(), false );
+			wp_enqueue_script( 'wps-etmfw-metarial-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.js', array(), time(), false );
+			wp_enqueue_script( 'wps-etmfw-metarial-js2', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.js', array(), time(), false );
+			wp_enqueue_script( 'wps-etmfw-metarial-lite', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.js', array(), time(), false );
 
-			wp_enqueue_script( 'mwb-etmfw-onboarding-scripts', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'onboarding/js/event-tickets-manager-for-woocommerce-onboarding.js', array( 'jquery', 'mwb-etmfw-onboarding-select2-js', 'mwb-etmfw-metarial-js', 'mwb-etmfw-metarial-js2', 'mwb-etmfw-metarial-lite' ), time(), true );
+			wp_enqueue_script( 'wps-etmfw-onboarding-scripts', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'onboarding/js/event-tickets-manager-for-woocommerce-onboarding.js', array( 'jquery', 'wps-etmfw-onboarding-select2-js', 'wps-etmfw-metarial-js', 'wps-etmfw-metarial-js2', 'wps-etmfw-metarial-lite' ), time(), true );
 
 			$etmfw_current_slug = ! empty( explode( '/', plugin_basename( __FILE__ ) ) ) ? explode( '/', plugin_basename( __FILE__ ) )[0] : '';
 			wp_localize_script(
-				'mwb-etmfw-onboarding-scripts',
-				'mwb_etmfw_onboarding',
+				'wps-etmfw-onboarding-scripts',
+				'wps_etmfw_onboarding',
 				array(
 					'ajaxurl'       => admin_url( 'admin-ajax.php' ),
-					'etmfw_auth_nonce'    => wp_create_nonce( 'mwb_etmfw_onboarding_nonce' ),
+					'etmfw_auth_nonce'    => wp_create_nonce( 'wps_etmfw_onboarding_nonce' ),
 					'etmfw_current_screen'    => $pagenow,
-					'etmfw_current_supported_slug'    => apply_filters( 'mwb_etmfw_deactivation_supported_slug', array( $etmfw_current_slug ) ),
+					'etmfw_current_supported_slug'    => apply_filters( 'wps_etmfw_deactivation_supported_slug', array( $etmfw_current_slug ) ),
 				)
 			);
 		}
@@ -227,8 +227,8 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_etmfw_add_onboarding_popup_screen() {
-		if ( $this->mwb_etmfw_valid_page_screen_check() && $this->mwb_etmfw_show_onboarding_popup_check() ) {
+	public function wps_etmfw_add_onboarding_popup_screen() {
+		if ( $this->wps_etmfw_valid_page_screen_check() && $this->wps_etmfw_show_onboarding_popup_check() ) {
 			require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'onboarding/templates/event-tickets-manager-for-woocommerce-onboarding-template.php';
 		}
 	}
@@ -238,7 +238,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_etmfw_add_deactivation_popup_screen() {
+	public function wps_etmfw_add_deactivation_popup_screen() {
 
 		global $pagenow;
 		if ( ! empty( $pagenow ) && 'plugins.php' == $pagenow ) {
@@ -251,9 +251,9 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_etmfw_skip_onboarding_popup() {
+	public function wps_etmfw_skip_onboarding_popup() {
 
-		$get_skipped_timstamp = update_option( 'mwb_etmfw_onboarding_data_skipped', time() );
+		$get_skipped_timstamp = update_option( 'wps_etmfw_onboarding_data_skipped', time() );
 		echo json_encode( 'true' );
 		wp_die();
 	}
@@ -264,7 +264,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_etmfw_add_on_boarding_form_fields() {
+	public function wps_etmfw_add_on_boarding_form_fields() {
 
 		$current_user = wp_get_current_user();
 		if ( ! empty( $current_user ) ) {
@@ -296,7 +296,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 			 */
 
 			rand() => array(
-				'id' => 'mwb-etmfw-monthly-revenue',
+				'id' => 'wps-etmfw-monthly-revenue',
 				'title' => esc_html__( 'What is your monthly revenue?', 'event-tickets-manager-for-woocommerce' ),
 				'type' => 'radio',
 				'description' => '',
@@ -315,7 +315,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 			),
 
 			rand() => array(
-				'id' => 'mwb_etmfw_industry_type',
+				'id' => 'wps_etmfw_industry_type',
 				'title' => esc_html__( 'What industry defines your business?', 'event-tickets-manager-for-woocommerce' ),
 				'type' => 'select',
 				'name' => 'industry_type_',
@@ -352,7 +352,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 			),
 
 			rand() => array(
-				'id' => 'mwb-etmfw-onboard-email',
+				'id' => 'wps-etmfw-onboard-email',
 				'title' => esc_html__( 'What is the best email address to contact you?', 'event-tickets-manager-for-woocommerce' ),
 				'type' => 'email',
 				'description' => '',
@@ -364,7 +364,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 			),
 
 			rand() => array(
-				'id' => 'mwb-etmfw-onboard-number',
+				'id' => 'wps-etmfw-onboard-number',
 				'title' => esc_html__( 'What is your contact number?', 'event-tickets-manager-for-woocommerce' ),
 				'type' => 'text',
 				'description' => '',
@@ -376,49 +376,49 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 			),
 
 			rand() => array(
-				'id' => 'mwb-etmfw-store-name',
+				'id' => 'wps-etmfw-store-name',
 				'title' => '',
 				'description' => '',
 				'type' => 'hidden',
 				'name' => 'company',
 				'placeholder' => '',
-				'value' => self::$mwb_etmfw_store_name,
+				'value' => self::$wps_etmfw_store_name,
 				'required' => '',
 				'class' => '',
 			),
 
 			rand() => array(
-				'id' => 'mwb-etmfw-store-url',
+				'id' => 'wps-etmfw-store-url',
 				'title' => '',
 				'description' => '',
 				'type' => 'hidden',
 				'name' => 'website',
 				'placeholder' => '',
-				'value' => self::$mwb_etmfw_store_url,
+				'value' => self::$wps_etmfw_store_url,
 				'required' => '',
 				'class' => '',
 			),
 
 			rand() => array(
-				'id' => 'mwb-etmfw-show-counter',
+				'id' => 'wps-etmfw-show-counter',
 				'title' => '',
 				'description' => '',
 				'type' => 'hidden',
 				'placeholder' => '',
-				'name' => 'mwb-etmfw-show-counter',
-				'value' => get_option( 'mwb_etmfw_onboarding_data_sent', 'not-sent' ),
+				'name' => 'wps-etmfw-show-counter',
+				'value' => get_option( 'wps_etmfw_onboarding_data_sent', 'not-sent' ),
 				'required' => '',
 				'class' => '',
 			),
 
 			rand() => array(
-				'id' => 'mwb-etmfw-plugin-name',
+				'id' => 'wps-etmfw-plugin-name',
 				'title' => '',
 				'description' => '',
 				'type' => 'hidden',
 				'placeholder' => '',
 				'name' => 'org_plugin_name',
-				'value' => self::$mwb_etmfw_plugin_name,
+				'value' => self::$wps_etmfw_plugin_name,
 				'required' => '',
 				'class' => '',
 			),
@@ -433,7 +433,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_etmfw_add_deactivation_form_fields() {
+	public function wps_etmfw_add_deactivation_form_fields() {
 
 		$current_user = wp_get_current_user();
 		if ( ! empty( $current_user ) ) {
@@ -459,7 +459,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 			 */
 
 			rand() => array(
-				'id' => 'mwb-etmfw-deactivation-reason',
+				'id' => 'wps-etmfw-deactivation-reason',
 				'title' => '',
 				'description' => '',
 				'type' => 'radio',
@@ -480,19 +480,19 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 			),
 
 			rand() => array(
-				'id' => 'mwb-etmfw-deactivation-reason-text',
-				'title' => __( 'Let us know why you are deactivating ', 'event-tickets-manager-for-woocommerce' ) . self::$mwb_etmfw_plugin_name_label . __( ' so we can improve the plugin.', 'event-tickets-manager-for-woocommerce' ),
+				'id' => 'wps-etmfw-deactivation-reason-text',
+				'title' => __( 'Let us know why you are deactivating ', 'event-tickets-manager-for-woocommerce' ) . self::$wps_etmfw_plugin_name_label . __( ' so we can improve the plugin.', 'event-tickets-manager-for-woocommerce' ),
 				'type' => 'textarea',
 				'description' => '',
 				'name' => 'deactivation_reason_text',
 				'placeholder' => esc_html__( 'Reason', 'event-tickets-manager-for-woocommerce' ),
 				'value' => '',
 				'required' => '',
-				'class' => 'mwb-keep-hidden',
+				'class' => 'wps-keep-hidden',
 			),
 
 			rand() => array(
-				'id' => 'mwb-etmfw-admin-email',
+				'id' => 'wps-etmfw-admin-email',
 				'title' => '',
 				'description' => '',
 				'type' => 'hidden',
@@ -504,37 +504,37 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 			),
 
 			rand() => array(
-				'id' => 'mwb-etmfw-store-name',
+				'id' => 'wps-etmfw-store-name',
 				'title' => '',
 				'description' => '',
 				'type' => 'hidden',
 				'placeholder' => '',
 				'name' => 'company',
-				'value' => self::$mwb_etmfw_store_name,
+				'value' => self::$wps_etmfw_store_name,
 				'required' => '',
 				'class' => '',
 			),
 
 			rand() => array(
-				'id' => 'mwb-etmfw-store-url',
+				'id' => 'wps-etmfw-store-url',
 				'title' => '',
 				'description' => '',
 				'type' => 'hidden',
 				'name' => 'website',
 				'placeholder' => '',
-				'value' => self::$mwb_etmfw_store_url,
+				'value' => self::$wps_etmfw_store_url,
 				'required' => '',
 				'class' => '',
 			),
 
 			rand() => array(
-				'id' => 'mwb-etmfw-plugin-name',
+				'id' => 'wps-etmfw-plugin-name',
 				'title' => '',
 				'description' => '',
 				'type' => 'hidden',
 				'placeholder' => '',
 				'name' => 'org_plugin_name',
-				'value' => self::$mwb_etmfw_plugin_name,
+				'value' => self::$wps_etmfw_plugin_name,
 				'required' => '',
 				'class' => '',
 			),
@@ -549,9 +549,9 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_etmfw_send_onboarding_data() {
+	public function wps_etmfw_send_onboarding_data() {
 
-		check_ajax_referer( 'mwb_etmfw_onboarding_nonce', 'nonce' );
+		check_ajax_referer( 'wps_etmfw_onboarding_nonce', 'nonce' );
 
 		$posted_data    = ! empty( $_POST['form_data'] ) ? map_deep( wp_unslash( $_POST['form_data'] ), 'sanitize_text_field' ) : '';
 		$form_data      = json_decode( $posted_data );
@@ -562,7 +562,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 
 			foreach ( $form_data as $key => $input ) {
 
-				if ( 'mwb-etmfw-show-counter' == $input->name ) {
+				if ( 'wps-etmfw-show-counter' == $input->name ) {
 					continue;
 				}
 
@@ -613,9 +613,9 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 
 			if ( ! empty( $formatted_data ) && is_array( $formatted_data ) ) {
 
-				unset( $formatted_data['mwb-etmfw-show-counter'] );
+				unset( $formatted_data['wps-etmfw-show-counter'] );
 
-				$result = $this->mwb_etmfw_handle_form_submission_for_hubspot( $formatted_data, $action_type );
+				$result = $this->wps_etmfw_handle_form_submission_for_hubspot( $formatted_data, $action_type );
 			}
 		} catch ( Exception $e ) {
 
@@ -624,7 +624,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 		}
 
 		if ( ! empty( $action_type ) && 'onboarding' == $action_type ) {
-			 $get_skipped_timstamp = update_option( 'mwb_etmfw_onboarding_data_sent', 'sent' );
+			 $get_skipped_timstamp = update_option( 'wps_etmfw_onboarding_data_sent', 'sent' );
 		}
 
 		echo json_encode( $formatted_data );
@@ -639,7 +639,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 * @param      string $action_type      Type of action.
 	 * @since    1.0.0
 	 */
-	protected function mwb_etmfw_handle_form_submission_for_hubspot( $submission = false, $action_type = 'onboarding' ) {
+	protected function wps_etmfw_handle_form_submission_for_hubspot( $submission = false, $action_type = 'onboarding' ) {
 
 		if ( 'onboarding' == $action_type ) {
 			array_push(
@@ -651,7 +651,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 			);
 		}
 
-		$result = $this->mwb_etmfw_hubwoo_submit_form( $submission, $action_type );
+		$result = $this->wps_etmfw_hubwoo_submit_form( $submission, $action_type );
 
 		if ( true == $result['success'] ) {
 			return true;
@@ -668,32 +668,30 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 * @param      string $action_type    type of action.
 	 * @since       1.0.0
 	 */
-	protected function mwb_etmfw_hubwoo_submit_form( $form_data = array(), $action_type = 'onboarding' ) {
+	protected function wps_etmfw_hubwoo_submit_form( $form_data = array(), $action_type = 'onboarding' ) {
 
 		if ( 'onboarding' == $action_type ) {
-			$form_id = self::$mwb_etmfw_onboarding_form_id;
+			$form_id = self::$wps_etmfw_onboarding_form_id;
 		} else {
-			$form_id = self::$mwb_etmfw_deactivation_form_id;
+			$form_id = self::$wps_etmfw_deactivation_form_id;
 		}
 
-		$url = 'submissions/v3/integration/submit/' . self::$mwb_etmfw_portal_id . '/' . $form_id;
+		$url = 'submissions/v3/integration/submit/' . self::$wps_etmfw_portal_id . '/' . $form_id;
 
-		$headers = array(
-			'Content-Type' => 'application/json',
-		);
+		$headers = 'Content-Type: application/json';
 
 		$form_data = json_encode(
 			array(
 				'fields' => $form_data,
 				'context'  => array(
-					'pageUri' => self::$mwb_etmfw_store_url,
-					'pageName' => self::$mwb_etmfw_store_name,
-					'ipAddress' => $this->mwb_etmfw_get_client_ip(),
+					'pageUri' => self::$wps_etmfw_store_url,
+					'pageName' => self::$wps_etmfw_store_name,
+					'ipAddress' => $this->wps_etmfw_get_client_ip(),
 				),
 			)
 		);
 
-		$response = $this->mwb_etmfw_hic_post( $url, $form_data, $headers );
+		$response = $this->wps_etmfw_hic_post( $url, $form_data, $headers );
 		if ( 200 == $response['status_code'] ) {
 			$result = json_decode( $response['response'], true );
 			$result['success'] = true;
@@ -712,8 +710,8 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 * @param   array  $post_params    form data that need to be send.
 	 * @param   array  $headers    data that must be included in header for request.
 	 */
-	private function mwb_etmfw_hic_post( $endpoint, $post_params, $headers ) {
-		$url      = $this->mwb_etmfw_base_url . $endpoint;
+	private function wps_etmfw_hic_post( $endpoint, $post_params, $headers ) {
+		$url      = $this->wps_etmfw_base_url . $endpoint;
 		$request = array(
 			'httpversion' => '1.0',
 			'sslverify'   => false,
@@ -751,7 +749,7 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_etmfw_get_client_ip() {
+	public function wps_etmfw_get_client_ip() {
 		$ipaddress = '';
 		if ( getenv( 'HTTP_CLIENT_IP' ) ) {
 			$ipaddress = getenv( 'HTTP_CLIENT_IP' );
@@ -776,14 +774,14 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_etmfw_valid_page_screen_check() {
-		$mwb_etmfw_screen = get_current_screen();
-		$mwb_etmfw_is_flag = false;
-		if ( isset( $mwb_etmfw_screen->id ) && 'makewebbetter_page_event_tickets_manager_for_woocommerce_menu' == $mwb_etmfw_screen->id ) {
-			$mwb_etmfw_is_flag = true;
+	public function wps_etmfw_valid_page_screen_check() {
+		$wps_etmfw_screen = get_current_screen();
+		$wps_etmfw_is_flag = false;
+		if ( isset( $wps_etmfw_screen->id ) && 'wp-swings_page_event_tickets_manager_for_woocommerce_menu' == $wps_etmfw_screen->id ) {
+			$wps_etmfw_is_flag = true;
 		}
 
-		return $mwb_etmfw_is_flag;
+		return $wps_etmfw_is_flag;
 	}
 
 	/**
@@ -791,25 +789,25 @@ class Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_etmfw_show_onboarding_popup_check() {
+	public function wps_etmfw_show_onboarding_popup_check() {
 
-		$mwb_etmfw_is_already_sent = get_option( 'mwb_etmfw_onboarding_data_sent', false );
+		$wps_etmfw_is_already_sent = get_option( 'wps_etmfw_onboarding_data_sent', false );
 
 		// Already submitted the data.
-		if ( ! empty( $mwb_etmfw_is_already_sent ) && 'sent' == $mwb_etmfw_is_already_sent ) {
+		if ( ! empty( $wps_etmfw_is_already_sent ) && 'sent' == $wps_etmfw_is_already_sent ) {
 			return false;
 		}
 
-		$mwb_etmfw_get_skipped_timstamp = get_option( 'mwb_etmfw_onboarding_data_skipped', false );
-		if ( ! empty( $mwb_etmfw_get_skipped_timstamp ) ) {
+		$wps_etmfw_get_skipped_timstamp = get_option( 'wps_etmfw_onboarding_data_skipped', false );
+		if ( ! empty( $wps_etmfw_get_skipped_timstamp ) ) {
 
-			$mwb_etmfw_next_show = strtotime( '+2 days', $mwb_etmfw_get_skipped_timstamp );
+			$wps_etmfw_next_show = strtotime( '+2 days', $wps_etmfw_get_skipped_timstamp );
 
-			$mwb_etmfw_current_time = time();
+			$wps_etmfw_current_time = time();
 
-			$mwb_etmfw_time_diff = $mwb_etmfw_next_show - $mwb_etmfw_current_time;
+			$wps_etmfw_time_diff = $wps_etmfw_next_show - $wps_etmfw_current_time;
 
-			if ( 0 < $mwb_etmfw_time_diff ) {
+			if ( 0 < $wps_etmfw_time_diff ) {
 				return false;
 			}
 		}
