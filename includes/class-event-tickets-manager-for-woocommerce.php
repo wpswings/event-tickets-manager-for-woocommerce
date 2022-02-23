@@ -789,6 +789,31 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 							<?php
 							break;
+						case 'generate_token':
+							?>
+							<h4><?php esc_html_e( 'Click to Generate token', 'event-tickets-manager-for-woocommerce') ?></h4>
+							<ol>
+								<li><?php esc_html_e( 'Select facebook App','event-tickets-manager-for-woocommerce')?></li>
+								<li><?php esc_html_e( 'Select Your facebook page where You want to share', 'event-tickets-manager-for-woocommerce')?></li>
+								<li><?php esc_html_e( 'Take Permissons', 'event-tickets-manager-for-woocommerce') ?>
+									<ol>
+										<li><?php esc_html_e( 'read_insights', 'event-tickets-manager-for-woocommerce')?></li>
+										<li><?php esc_html_e( 'pages_show_list', 'event-tickets-manager-for-woocommerce')?></li>
+										<li><?php esc_html_e( 'publish_to_groups', 'event-tickets-manager-for-woocommerce') ?></li>
+										<li><?php esc_html_e( 'pages_read_engagement', 'event-tickets-manager-for-woocommerce') ?></li>
+										<li><?php esc_html_e( 'pages_manage_posts', 'event-tickets-manager-for-woocommerce') ?></li>
+									</ol>
+								</li>
+							</ol>
+						<div class="wps-form-group">
+							<div >
+								<button class="mdc-button mdc-button--raised" ><a href="https://developers.facebook.com/tools/explorer" target="_blank"><?php esc_html_e('Click Here', 'event-tickets-manager-for-woocommerce') ?></a></button>
+							</div>
+						</div>
+						
+
+							<?php
+							break;
 
 						case 'multi':
 							?>
