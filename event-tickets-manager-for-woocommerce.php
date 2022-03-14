@@ -306,6 +306,24 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
 	require plugin_dir_path( __FILE__ ) . 'includes/class-event-tickets-manager-for-woocommerce-widget.php';
 
+	add_action( 'admin_init', 'wps_etmfw_migration_code' );
+
+	/**
+	 * Migration code
+	 */
+	function wps_etmfw_migration_code() {
+		$check = get_option( 'is_wps_etmfw_migration_done', 'not done' );
+		if( 'done' != $check ) {
+
+			include_once plugin_dir_path( __FILE__ ) . 'includes/class-event-tickets-manager-for-woocommerce-activator.php';
+			Event_Tickets_Manager_For_Woocommerce_Activator::upgrade_wp_etmfw_postmeta();
+			Event_Tickets_Manager_For_Woocommerce_Activator::upgrade_wp_etmfw_options();
+			Event_Tickets_Manager_For_Woocommerce_Activator::wpg_etmfw_replace_mwb_to_wps_in_shortcodes();
+		}
+		update_option( 'is_wps_etmfw_migration_done', 'done' );
+
+	}
+
 } else {
 
 	/**
