@@ -15,15 +15,15 @@
  * Plugin Name:          Event Tickets Manager for WooCommerce
  * Plugin URI:           https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/
  * Description:          Event Tickets Manager for WooCommerce allows you to manage, sell and assign tickets easily.
- * Version:              1.0.4
+ * Version:              1.0.5
  * Author:               WP Swings
  * Author URI:           https://wpswings.com/?utm_source=wpswings-events-official&utm_medium=events-org-backend&utm_campaign=official
  * Text Domain:          event-tickets-manager-for-woocommerce
  * Domain Path:          /languages
  * Requires at least:    4.6
- * Tested up to:         5.9
+ * Tested up to:         5.9.2
  * WC requires at least: 4.0
- * WC tested up to:      6.2.0
+ * WC tested up to:      6.3.1
  * License:              GNU General Public License v3.0
  * License URI:          http://www.gnu.org/licenses/gpl-3.0.html
  */
@@ -43,7 +43,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 */
 	function define_event_tickets_manager_for_woocommerce_constants() {
 
-		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION', '1.0.4' );
+		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION', '1.0.5' );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com' );
