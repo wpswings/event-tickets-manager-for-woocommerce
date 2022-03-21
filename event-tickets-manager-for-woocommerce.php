@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:          Event Tickets Manager for WooCommerce
  * Plugin URI:           https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/
- * Description:          Event Tickets Manager for WooCommerce allows you to manage, sell and assign tickets easily.
+ * Description:          Event Tickets Manager for WooCommerce allows you to manage, sell and assign tickets easily. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-events&utm_medium=events-org-backend&utm_campaign=official">Elevate your e-commerce store by exploring more on <strong>WP Swings</strong></a>
  * Version:              1.0.5
  * Author:               WP Swings
  * Author URI:           https://wpswings.com/?utm_source=wpswings-events-official&utm_medium=events-org-backend&utm_campaign=official
