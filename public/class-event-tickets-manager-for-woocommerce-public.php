@@ -431,7 +431,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_etmfw_send_ticket_mail( $order, $wps_etmfw_mail_template_data ) {
-		// $header = "From: rishabhsingh@makewebbetter.com\nMIME-Version: 1.0\nContent-Type: text/html; charset=utf-8\n";
+		
 		$user_email = $order->get_billing_email();
 		$mailer_obj = WC()->mailer()->emails['wps_etmfw_email_notification'];
 		$wps_etmfw_email_discription = $this->wps_etmfw_generate_ticket_info_in_mail( $wps_etmfw_mail_template_data );
@@ -473,6 +473,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$template_html['event'] = $wps_etmfw_mail_template_data['product_name'];
 		$template_html['ticket'] = $wps_etmfw_mail_template_data['ticket_number'];
 		$template_html['purchaser'] = $order->get_billing_first_name();
+		$template_html['email_body'] = get_option( 'wps_etmfw_email_body_content', '' );
 		$template_html['venue'] = $venue;
 		$template_html['time'] = wps_etmfw_get_date_format( $start ) . '-' . wps_etmfw_get_date_format( $end );
 		// Inline style used for sending in email.
