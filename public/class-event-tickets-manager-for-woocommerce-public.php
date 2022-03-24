@@ -431,6 +431,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_etmfw_send_ticket_mail( $order, $wps_etmfw_mail_template_data ) {
+		// $header = "From: rishabhsingh@makewebbetter.com\nMIME-Version: 1.0\nContent-Type: text/html; charset=utf-8\n";
 		$user_email = $order->get_billing_email();
 		$mailer_obj = WC()->mailer()->emails['wps_etmfw_email_notification'];
 		$wps_etmfw_email_discription = $this->wps_etmfw_generate_ticket_info_in_mail( $wps_etmfw_mail_template_data );
@@ -439,7 +440,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			$wps_etmfw_email_subject = 'Your ticket is here.';
 		}
 		$wps_etmfw_email_subject = str_replace( '[SITENAME]', get_bloginfo(), $wps_etmfw_email_subject );
-		$email_status = $mailer_obj->trigger( $user_email, $wps_etmfw_email_discription, $wps_etmfw_email_subject, $order );
+		$email_status = $mailer_obj->trigger( $user_email, $wps_etmfw_email_discription, $wps_etmfw_email_subject, $order);
 		do_action( 'wps_etmfw_send_sms_ticket', $wps_etmfw_mail_template_data );
 	}
 
@@ -475,7 +476,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$template_html['venue'] = $venue;
 		$template_html['time'] = wps_etmfw_get_date_format( $start ) . '-' . wps_etmfw_get_date_format( $end );
 		// Inline style used for sending in email.
-		$template_html['featuredimage'] = '<img src="' . $image . '" style="margin-right: 20px;" alt="image"/>';
+		$template_html['featuredimage'] = '<img src="' . $image . '" style="margin-right: 20px; " alt="image" />';
 		return apply_filters( 'wps_etmfw_ticket_info', $template_html, $product_id );
 
 	}
