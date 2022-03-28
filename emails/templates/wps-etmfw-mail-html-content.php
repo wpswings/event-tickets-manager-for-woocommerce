@@ -81,9 +81,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 							</tr>
 							<tr>
 								<td>
-									<p style="margin: 0;">
+									<div style="margin: 0;">
 										[EMAILBODYCONTENT]
-									</p>
+									</div>
 								</td>
 							</tr>
 						</tbody>
