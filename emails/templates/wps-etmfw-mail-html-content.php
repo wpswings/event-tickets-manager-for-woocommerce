@@ -77,15 +77,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<tr>
 								<td style="padding: 15px 0;">
 									<h4 style="margin: 0;">Note</h4>
-								</td>
-							</tr>
-							<tr>
-								<td>
 									<div style="margin: 0;">
 										[EMAILBODYCONTENT]
 									</div>
 								</td>
 							</tr>
+							
 						</tbody>
 					</table>
 				</td>
