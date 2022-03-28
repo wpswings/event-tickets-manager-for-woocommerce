@@ -717,14 +717,27 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 								$product_type = $product_types[0]->slug;
 								if ( 'event_ticket_manager' == $product_type ) {
 									$ticket = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+									if( is_array( $ticket ) && ! empty( $ticket ) ) {
+										for( $i=0;$i<count( $ticket );$i++ ) {
+											// Inline Style used for ticket infrormation.
+											?>
 
-									if ( isset( $ticket ) && ! empty( $ticket ) ) {
-										// Inline Style used for ticket infrormation.
-										?>
-										<p style="margin:0;"><b><?php esc_html_e( 'Ticket', 'event-tickets-manager-for-woocommerce' ); ?> :</b>
-											<span style="background: rgb(0, 115, 170) none repeat scroll 0% 0%; color: white; padding: 1px 5px 1px 6px; font-weight: bolder; margin-left: 10px;"><?php echo esc_attr( $ticket ); ?></span>
+										<p style="margin:0;"><b><?php esc_html_e( 'Ticket ', 'event-tickets-manager-for-woocommerce' ); echo esc_html( $i+1 );?> :</b>
+											<span style="background: rgb(0, 115, 170) none repeat scroll 0% 0%; color: white; padding: 1px 5px 1px 6px; font-weight: bolder; margin-left: 10px;"><?php echo esc_attr( $ticket[$i] ); ?></span>
 										</p>
 										<?php
+										}
+									
+									} else {
+
+										if ( isset( $ticket ) && ! empty( $ticket ) ) {
+											// Inline Style used for ticket infrormation.
+											?>
+											<p style="margin:0;"><b><?php esc_html_e( 'Ticket', 'event-tickets-manager-for-woocommerce' ); ?> :</b>
+												<span style="background: rgb(0, 115, 170) none repeat scroll 0% 0%; color: white; padding: 1px 5px 1px 6px; font-weight: bolder; margin-left: 10px;"><?php echo esc_attr( $ticket[$i] ); ?></span>
+											</p>
+											<?php
+										}
 									}
 									do_action( 'wps_etmfw_after_order_itemmeta', $item_id, $item, $_product );
 								}

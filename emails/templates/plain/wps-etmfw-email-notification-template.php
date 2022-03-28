@@ -30,11 +30,11 @@ $template = '<table class="wps-wuc__email-template" style=" border: 1px solid #0
 				<table style="width: 100%; padding: 15px;" border="0" cellspacing="0" cellpadding="0">
 					<tbody>
 						<tr style="font-size: 16px;">
-							<th style="width: 25%;">Ticket#</th>
+							
 							<th style="width: 25%;">Purchaser</th>
 						</tr>						
 						<tr style="font-size: 16px;">
-							<td>[TICKET]</td>
+							
 							<td>[PURCHASER]</td>
 						</tr>
 					</tbody>
