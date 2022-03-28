@@ -778,3 +778,11 @@ button#wps_etmfw_mail_setting_upload_logo_button {
     box-shadow: none;
   }
   
+
+  .generate-token{
+    margin-top: 15px !important;
+  }
+
+  .wps-etmfw-number .mdc-text-field {
+      max-width: 500px;
+  }
