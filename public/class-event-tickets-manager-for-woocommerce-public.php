@@ -400,24 +400,30 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						$generated_tickets = get_post_meta( $product_id, 'wps_etmfw_generated_tickets', true );
 						if ( empty( $generated_tickets ) ) {
 							$generated_tickets = array();
-							$generated_tickets[] = array(
-								'ticket' => $ticket_number,
-								'status' => 'pending',
-								'order_id' => $order_id,
-								'item_id' => $item_id,
-								'email'   => $billing_email,
-								'user'    => get_current_user_id(),
-							);
+							for( $i=0; $i<count( $ticket_number ); $i++ ) {
+
+								$generated_tickets[] = array(
+									'ticket' => $ticket_number[$i],
+									'status' => 'pending',
+									'order_id' => $order_id,
+									'item_id' => $item_id,
+									'email'   => $billing_email,
+									'user'    => get_current_user_id(),
+								);
+							}
 							update_post_meta( $product_id, 'wps_etmfw_generated_tickets', $generated_tickets );
 						} else {
-							$generated_tickets[] = array(
-								'ticket' => $ticket_number,
-								'status' => 'pending',
-								'order_id' => $order_id,
-								'item_id' => $item_id,
-								'email'   => $billing_email,
-								'user' => get_current_user_id(),
-							);
+							for( $i=0; $i<count( $ticket_number ); $i++ ) {
+
+								$generated_tickets[] = array(
+									'ticket' => $ticket_number[$i],
+									'status' => 'pending',
+									'order_id' => $order_id,
+									'item_id' => $item_id,
+									'email'   => $billing_email,
+									'user'    => get_current_user_id(),
+								);
+							}
 							update_post_meta( $product_id, 'wps_etmfw_generated_tickets', $generated_tickets );
 						}
 					}
@@ -967,78 +973,43 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$generated_tickets = get_post_meta( $product_id, 'wps_etmfw_generated_tickets', true );
 		if ( ! empty( $generated_tickets ) ) {
 			foreach ( $generated_tickets as $key => $value ) {
-				if( is_array( $value['ticket'] ) ) {
-					if( in_array( $ticket_num, $value['ticket'] ) ) {
-						if ( $user_email === $value['email'] ) {
-							if ( 'pending' === $value['status'] ) {
-								$post = get_post( $value['order_id'] );
-								if ( 'trash' !== $post->post_status ) {
-									$current_timestamp = current_time( 'timestamp' );
-									$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
-									$end_date = isset( $wps_etmfw_product_array['event_end_date_time'] ) ? $wps_etmfw_product_array['event_end_date_time'] : '';
-									$start_date = isset( $wps_etmfw_product_array['event_start_date_time'] ) ? $wps_etmfw_product_array['event_start_date_time'] : '';
-									$end_date_timestamp = strtotime( $end_date );
-									$start_date_timestamp = strtotime( $start_date );
-									if ( $end_date_timestamp > $current_timestamp ) {
-										if ( $current_timestamp > $start_date_timestamp ) {
-											$response['result'] = true;
-											$generated_tickets[ $key ]['status'] = 'checked_in';
-											update_post_meta( $product_id, 'wps_etmfw_generated_tickets', $generated_tickets );
-											$response['message'] = __( 'User checked in successfully.', 'event-tickets-manager-for-woocommerce' );
-										} else {
-											$response['message'] = __( 'Event has not started yet.', 'event-tickets-manager-for-woocommerce' );
-										}
+				if ( $ticket_num == $value['ticket'] ) {
+					if ( $user_email === $value['email'] ) {
+						if ( 'pending' === $value['status'] ) {
+							$post = get_post( $value['order_id'] );
+							if ( 'trash' !== $post->post_status ) {
+								$current_timestamp = current_time( 'timestamp' );
+								$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
+								$end_date = isset( $wps_etmfw_product_array['event_end_date_time'] ) ? $wps_etmfw_product_array['event_end_date_time'] : '';
+								$start_date = isset( $wps_etmfw_product_array['event_start_date_time'] ) ? $wps_etmfw_product_array['event_start_date_time'] : '';
+								$end_date_timestamp = strtotime( $end_date );
+								$start_date_timestamp = strtotime( $start_date );
+								if ( $end_date_timestamp > $current_timestamp ) {
+									if ( $current_timestamp > $start_date_timestamp ) {
+										$response['result'] = true;
+										$generated_tickets[ $key ]['status'] = 'checked_in';
+										update_post_meta( $product_id, 'wps_etmfw_generated_tickets', $generated_tickets );
+										$response['message'] = __( 'User checked in successfully.', 'event-tickets-manager-for-woocommerce' );
 									} else {
-										$response['message'] = __( 'Event Expired!', 'event-tickets-manager-for-woocommerce' );
+										$response['message'] = __( 'Event has not started yet.', 'event-tickets-manager-for-woocommerce' );
 									}
 								} else {
-									$response['message'] = __( 'Order not exist.', 'event-tickets-manager-for-woocommerce' );
+									$response['message'] = __( 'Event Expired!', 'event-tickets-manager-for-woocommerce' );
 								}
 							} else {
-								$response['message'] = __( 'User has already checked in for the event.', 'event-tickets-manager-for-woocommerce' );
+								$response['message'] = __( 'Order not exist.', 'event-tickets-manager-for-woocommerce' );
 							}
 						} else {
-							$response['message'] = __( 'Please Enter the correct email.', 'event-tickets-manager-for-woocommerce' );
-	
+							$response['message'] = __( 'User has already checked in for the event.', 'event-tickets-manager-for-woocommerce' );
 						}
-					}
-				}else {
+					} else {
+						$response['message'] = __( 'Please Enter the correct email.', 'event-tickets-manager-for-woocommerce' );
 
-					if ( $ticket_num == $value['ticket'] ) {
-						if ( $user_email === $value['email'] ) {
-							if ( 'pending' === $value['status'] ) {
-								$post = get_post( $value['order_id'] );
-								if ( 'trash' !== $post->post_status ) {
-									$current_timestamp = current_time( 'timestamp' );
-									$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
-									$end_date = isset( $wps_etmfw_product_array['event_end_date_time'] ) ? $wps_etmfw_product_array['event_end_date_time'] : '';
-									$start_date = isset( $wps_etmfw_product_array['event_start_date_time'] ) ? $wps_etmfw_product_array['event_start_date_time'] : '';
-									$end_date_timestamp = strtotime( $end_date );
-									$start_date_timestamp = strtotime( $start_date );
-									if ( $end_date_timestamp > $current_timestamp ) {
-										if ( $current_timestamp > $start_date_timestamp ) {
-											$response['result'] = true;
-											$generated_tickets[ $key ]['status'] = 'checked_in';
-											update_post_meta( $product_id, 'wps_etmfw_generated_tickets', $generated_tickets );
-											$response['message'] = __( 'User checked in successfully.', 'event-tickets-manager-for-woocommerce' );
-										} else {
-											$response['message'] = __( 'Event has not started yet.', 'event-tickets-manager-for-woocommerce' );
-										}
-									} else {
-										$response['message'] = __( 'Event Expired!', 'event-tickets-manager-for-woocommerce' );
-									}
-								} else {
-									$response['message'] = __( 'Order not exist.', 'event-tickets-manager-for-woocommerce' );
-								}
-							} else {
-								$response['message'] = __( 'User has already checked in for the event.', 'event-tickets-manager-for-woocommerce' );
-							}
-						} else {
-							$response['message'] = __( 'Please Enter the correct email.', 'event-tickets-manager-for-woocommerce' );
-	
-						}
 					}
 				}
+				
+
+				
 			}
 		}
 		echo json_encode( $response );
