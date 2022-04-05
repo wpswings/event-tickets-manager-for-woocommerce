@@ -360,7 +360,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	 * @since 1.0.0
 	 */
 	public function wps_etmfw_admin_save_tab_settings() {
-		
+
 		global $etmfw_wps_etmfw_obj, $error_notice;
 		$etmfw_post_check = false;
 
@@ -370,7 +370,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		if ( ! isset( $_POST['wps_event_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_event_nonce'] ) ), 'wps_event_nonce' ) ) {
 			return;
 		}
-		
+
 		if ( isset( $_POST['wps_etmfw_save_general_settings'] ) ) {
 			$etmfw_genaral_settings = apply_filters( 'wps_etmfw_general_settings_array', array() );
 			$etmfw_post_check       = true;
@@ -381,9 +381,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			$etmfw_genaral_settings = apply_filters( 'wps_etmfw_integration_settings_array', array() );
 			$etmfw_post_check       = true;
 		}
-		
+
 		if ( $etmfw_post_check ) {
-			
+
 			$wps_etmfw_gen_flag = false;
 			$etmfw_button_index = array_search( 'submit', array_column( $etmfw_genaral_settings, 'type' ) );
 			if ( isset( $etmfw_button_index ) && ( null == $etmfw_button_index || '' == $etmfw_button_index ) ) {
@@ -424,9 +424,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					do_action( 'wps_etmfw_save_admin_global_settings', $_POST );
 				}
 			}
-			
+
 			do_action( 'wps_etmfw_generate_access_token_unlimited_time' );
-			
+
 		}
 	}
 
@@ -717,17 +717,22 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 								$product_type = $product_types[0]->slug;
 								if ( 'event_ticket_manager' == $product_type ) {
 									$ticket = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
-									if( is_array( $ticket ) && ! empty( $ticket ) ) {
-										for( $i=0;$i<count( $ticket );$i++ ) {
+									if ( is_array( $ticket ) && ! empty( $ticket ) ) {
+										$length = count( $ticket );
+										for ( $i = 0;$i < $length;$i++ ) {
 											// Inline Style used for ticket infrormation.
 											?>
 
-										<p style="margin:0;"><b><?php esc_html_e( 'Ticket ', 'event-tickets-manager-for-woocommerce' ); echo esc_html( $i+1 );?> :</b>
-											<span style="background: rgb(0, 115, 170) none repeat scroll 0% 0%; color: white; padding: 1px 5px 1px 6px; font-weight: bolder; margin-left: 10px;"><?php echo esc_attr( $ticket[$i] ); ?></span>
+										<p style="margin:0;"><b>
+											<?php
+											esc_html_e( 'Ticket ', 'event-tickets-manager-for-woocommerce' );
+											echo esc_html( $i + 1 );
+											?>
+										 :</b>
+											<span style="background: rgb(0, 115, 170) none repeat scroll 0% 0%; color: white; padding: 1px 5px 1px 6px; font-weight: bolder; margin-left: 10px;"><?php echo esc_attr( $ticket[ $i ] ); ?></span>
 										</p>
-										<?php
+											<?php
 										}
-									
 									} else {
 
 										if ( isset( $ticket ) && ! empty( $ticket ) ) {

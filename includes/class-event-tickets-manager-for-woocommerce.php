@@ -222,8 +222,8 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $etmfw_plugin_public, 'wps_etmfw_before_add_to_cart_button_html' );
 
 		$active_plugins = (array) get_option( 'active_plugins', array() );
-		
-		if( ! empty( $active_plugins ) && ! in_array( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php', $active_plugins ) ) {
+
+		if ( ! empty( $active_plugins ) && ! in_array( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php', $active_plugins ) ) {
 
 			$this->loader->add_filter( 'woocommerce_is_sold_individually', $etmfw_plugin_public, 'wps_etmfw_allow_single_quantity', 10, 2 );
 		}
@@ -795,7 +795,6 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 							<?php
 							break;
-						
 
 						case 'multi':
 							?>

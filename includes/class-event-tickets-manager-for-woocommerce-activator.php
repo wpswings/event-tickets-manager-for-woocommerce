@@ -70,7 +70,7 @@ class Event_Tickets_Manager_For_Woocommerce_Activator {
 					}
 
 					update_post_meta( $product_id, $new_key, $value );
-					
+
 				}
 			}
 		}
@@ -97,7 +97,7 @@ class Event_Tickets_Manager_For_Woocommerce_Activator {
 					}
 
 					update_post_meta( $product_id, $new_key, $value );
-					
+
 				}
 			}
 		}
@@ -124,7 +124,7 @@ class Event_Tickets_Manager_For_Woocommerce_Activator {
 					}
 
 					update_post_meta( $product_id, $new_key, $value );
-					
+
 				}
 			}
 		}
@@ -148,16 +148,13 @@ class Event_Tickets_Manager_For_Woocommerce_Activator {
 			'mwb_etmfw_mail_setting_upload_logo' => '',
 			'mwb_etmfw_onboarding_data_skipped'  => '',
 			'mwb_etmfw_onboarding_data_sent'     => '',
-			'mwb_etmfw_display_duration'		 => '',
+			'mwb_etmfw_display_duration'         => '',
 			'mwb_etmfw_event_view'               => '',
 			'mwb_etmfw_google_client_id'         => '',
 			'mwb_etmfw_google_client_secret'     => '',
 			'mwb_etmfw_google_redirect_url'      => '',
 			'mwb_etmfw_radio_switch_demo'        => '',
 
-
-
-			
 		);
 
 		foreach ( $wp_options as $key => $value ) {
@@ -169,7 +166,7 @@ class Event_Tickets_Manager_For_Woocommerce_Activator {
 
 			$new_value = get_option( $key, $value );
 			update_option( $new_key, $new_value );
-			
+
 		}
 	}
 
