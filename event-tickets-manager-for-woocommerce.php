@@ -21,7 +21,7 @@
  * Text Domain:          event-tickets-manager-for-woocommerce
  * Domain Path:          /languages
  * Requires at least:    4.6
- * Tested up to:         5.9.2
+ * Tested up to:         5.9.3
  * WC requires at least: 4.0
  * WC tested up to:      6.3.1
  * License:              GNU General Public License v3.0
