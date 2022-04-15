@@ -201,7 +201,9 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'woocommerce_after_order_itemmeta', $etmfw_plugin_admin, 'wps_etmfw_after_order_itemmeta', 10, 3 );
 		$this->loader->add_filter( 'plugin_row_meta', $etmfw_plugin_admin, 'wps_etmfw_plugin_row_meta', 10, 2 );
 		$this->loader->add_action( 'wp_ajax_wps_etmfw_get_event_geocode', $etmfw_plugin_admin, 'wps_etmfw_get_event_geocode_value' );
-		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_get_event_geocode', $etmfw_plugin_admin, 'wps_etmfw_get_event_geocode_value' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_get_event_geocode', $etmfw_plugin_admin, 'wps_etommfw_get_event_geocode_value' );
+		// Custom product type.
+		$this->loader->add_action( 'plugins_loaded', $etmfw_plugin_admin, 'wps_wgc_register_event_ticket_manager_product_type' );
 
 	}
 

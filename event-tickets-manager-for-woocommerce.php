@@ -202,37 +202,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		return array_merge( $my_link, $links );
 	}
 
-	// on plugin load.
-	add_action( 'plugins_loaded', 'wps_wgc_register_event_ticket_manager_product_type' );
-
-	/**
-	 * Saving the Product Type by creating the Instance of this.
-	 *
-	 * @since 1.0.0
-	 * @name wps_wgc_register_gift_card_product_type
-	 * @author WPSwings<ticket@wpswings.com>
-	 * @link https://wpswings.com/
-	 */
-	function wps_wgc_register_event_ticket_manager_product_type() {
-		/**
-		 * Set the giftcard product type.
-		 *
-		 * @since 1.0.0
-		 * @author WPSwings<ticket@wpswings.com>
-		 * @link https://wpswings.com/
-		 */
-		class WC_Product_Event_Ticket_Manager extends WC_Product {
-			/**
-			 * Initialize simple product.
-			 *
-			 * @param mixed $product product.
-			 */
-			public function __construct( $product ) {
-				$this->product_type = 'event_ticket_manager';
-				parent::__construct( $product );
-			}
-		}
-	}
 
 	/**
 	 * Generate the Dynamic number for Tickets.
@@ -318,7 +287,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 */
 	function wps_etmfw_migration_code() {
 		$check = get_option( 'is_wps_etmfw_migration_done', 'not done' );
-		if( 'done' != $check ) {
+		if ( 'done' != $check ) {
 
 			include_once plugin_dir_path( __FILE__ ) . 'includes/class-event-tickets-manager-for-woocommerce-activator.php';
 			Event_Tickets_Manager_For_Woocommerce_Activator::upgrade_wp_etmfw_postmeta();
@@ -328,7 +297,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		update_option( 'is_wps_etmfw_migration_done', 'done' );
 
 	}
-
 } else {
 
 	/**

@@ -354,6 +354,16 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		return $etmfw_email_template_settings;
 	}
 
+
+	/**
+	 * Registering custom product type.
+	 *
+	 * @return void
+	 */
+	public function wps_wgc_register_event_ticket_manager_product_type() {
+		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'includes/class-wc-product-event-ticket-manager.php';
+	}
+
 	/**
 	 * Event Tickets Manager for WooCommerce save tab settings.
 	 *
