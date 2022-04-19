@@ -502,7 +502,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 
 		$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
 		$wps_etmfw_field_data = isset( $wps_etmfw_product_array['wps_etmfw_field_data'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_field_data'] ) ? $wps_etmfw_product_array['wps_etmfw_field_data'] : array();
-
+		
 		?>
 		<div id="wps_etmfw_event_data" class="panel woocommerce_options_panel">
 			<?php
@@ -604,7 +604,11 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					if ( ! isset( $_POST['wps_etmfw_product_nonce_field'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_etmfw_product_nonce_field'] ) ), 'wps_etmfw_lite_nonce' ) ) {
 						return;
 					}
+					$price = $product->get_price();
+					
+					
 					$wps_etmfw_product_array = array();
+					$wps_etmfw_product_array['etmfw_event_price'] = ! empty( $price ) ? $price : '' ;
 					$wps_etmfw_product_array['event_start_date_time'] = isset( $_POST['etmfw_start_date_time'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_start_date_time'] ) ) : '';
 					$wps_etmfw_product_array['event_end_date_time'] = isset( $_POST['etmfw_end_date_time'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_end_date_time'] ) ) : '';
 					$event_venue = isset( $_POST['etmfw_event_venue'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_event_venue'] ) ) : '';
@@ -626,6 +630,34 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 							}
 						}
 					}
+					$wps_etmfw_field_stock_price_data = ! empty( $_POST['etmfwp_fields'] ) ? map_deep( wp_unslash( $_POST['etmfwp_fields'] ), 'sanitize_text_field' ) : array();
+					$wps_etmfw_field_stock_price_data_array = array();
+					if ( is_array( $wps_etmfw_field_stock_price_data ) && ! empty( $wps_etmfw_field_stock_price_data ) ) {
+						if ( '' !== $wps_etmfw_field_stock_price_data[0]['_label'] ) {
+							foreach ( $wps_etmfw_field_stock_price_data as $key => $value ) {
+								$wps_etmfw_field_stock_price_data_array[] = array(
+									'label' => $value['_label'],
+									'type' => $value['_type'],
+									'price' => $value['_price'],
+								);
+							}
+						}
+					}
+					$wps_etmfw_field_days_price_data = ! empty( $_POST['etmfwpp_fields'] ) ? map_deep( wp_unslash( $_POST['etmfwpp_fields'] ), 'sanitize_text_field' ) : array();
+					$wps_etmfw_field_days_price_data_array = array();
+					if ( is_array( $wps_etmfw_field_days_price_data ) && ! empty( $wps_etmfw_field_days_price_data ) ) {
+						if ( '' !== $wps_etmfw_field_days_price_data[0]['_label'] ) {
+							foreach ( $wps_etmfw_field_days_price_data as $key => $value ) {
+								$wps_etmfw_field_days_price_data_array[] = array(
+									'label' => $value['_label'],
+									'type' => $value['_type'],
+									'price' => $value['_price'],
+								);
+							}
+						}
+					}
+					$wps_etmfw_product_array['wps_etmfw_field_days_price_data'] = $wps_etmfw_field_days_price_data_array;
+					$wps_etmfw_product_array['wps_etmfw_field_stock_price_data'] = $wps_etmfw_field_stock_price_data_array;
 					$wps_etmfw_product_array['wps_etmfw_field_data'] = $wps_etmfw_field_data_array;
 					$etmfw_display_map = isset( $_POST['etmfw_display_map'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_display_map'] ) ) : 'no';
 					$wps_etmfw_product_array['etmfw_display_map'] = $etmfw_display_map;
