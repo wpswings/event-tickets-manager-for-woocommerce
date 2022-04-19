@@ -30,11 +30,11 @@ $template = '<table class="wps-wuc__email-template" style=" border: 1px solid #0
 				<table style="width: 100%; padding: 15px;" border="0" cellspacing="0" cellpadding="0">
 					<tbody>
 						<tr style="font-size: 16px;">
-							<th style="width: 25%;">Ticket#</th>
+							
 							<th style="width: 25%;">Purchaser</th>
 						</tr>						
 						<tr style="font-size: 16px;">
-							<td>[TICKET]</td>
+							
 							<td>[PURCHASER]</td>
 						</tr>
 					</tbody>
@@ -47,6 +47,7 @@ $template = '<table class="wps-wuc__email-template" style=" border: 1px solid #0
 							</td>						
 							<td>
 								<h3 style="color: #000000; font-size: 26px; margin: 20px 0 0; text-align: left;">Check In For This Event</h3>
+									
 								<p style="font-size: 16px;">[VENUE]</p>							
 								<p style="font-size: 16px;">[TIME]</p>
 							</td>
@@ -63,6 +64,7 @@ $template = '<table class="wps-wuc__email-template" style=" border: 1px solid #0
 $template = str_replace( '[EVENTNAME]', $email_content['event'], $template );
 $template = str_replace( '[TICKET]', $email_content['ticket'], $template );
 $template = str_replace( '[PURCHASER]', $email_content['purchaser'], $template );
+$template = str_replace( '[EMAIL_BODY]', $email_content['email_body'], $template );
 $template = str_replace( '[VENUE]', $email_content['venue'], $template );
 $template = str_replace( '[TIME]', $email_content['time'], $template );
 $template = str_replace( '[FEATUREDIMAGE]', $email_content['featuredimage'], $template );

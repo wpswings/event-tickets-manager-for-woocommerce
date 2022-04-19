@@ -354,6 +354,16 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		return $etmfw_email_template_settings;
 	}
 
+
+	/**
+	 * Registering custom product type.
+	 *
+	 * @return void
+	 */
+	public function wps_wgc_register_event_ticket_manager_product_type() {
+		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'includes/class-wc-product-event-ticket-manager.php';
+	}
+
 	/**
 	 * Event Tickets Manager for WooCommerce save tab settings.
 	 *
@@ -370,6 +380,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		if ( ! isset( $_POST['wps_event_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_event_nonce'] ) ), 'wps_event_nonce' ) ) {
 			return;
 		}
+
 		if ( isset( $_POST['wps_etmfw_save_general_settings'] ) ) {
 			$etmfw_genaral_settings = apply_filters( 'wps_etmfw_general_settings_array', array() );
 			$etmfw_post_check       = true;
@@ -382,6 +393,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		}
 
 		if ( $etmfw_post_check ) {
+
 			$wps_etmfw_gen_flag = false;
 			$etmfw_button_index = array_search( 'submit', array_column( $etmfw_genaral_settings, 'type' ) );
 			if ( isset( $etmfw_button_index ) && ( null == $etmfw_button_index || '' == $etmfw_button_index ) ) {
@@ -422,6 +434,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					do_action( 'wps_etmfw_save_admin_global_settings', $_POST );
 				}
 			}
+
+			do_action( 'wps_etmfw_generate_access_token_unlimited_time' );
+
 		}
 	}
 
@@ -617,6 +632,8 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					$wps_etmfw_product_array = apply_filters( 'wps_etmfw_product_pricing', $wps_etmfw_product_array, $_POST );
 					update_post_meta( $product_id, 'wps_etmfw_product_array', $wps_etmfw_product_array );
 					do_action( 'wps_etmfw_event_product_type_save_fields', $product_id );
+
+					do_action( 'wps_etmfw_share_event_on_fb', $product_id );
 				}
 			}
 		}
@@ -710,14 +727,32 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 								$product_type = $product_types[0]->slug;
 								if ( 'event_ticket_manager' == $product_type ) {
 									$ticket = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+									if ( is_array( $ticket ) && ! empty( $ticket ) ) {
+										$length = count( $ticket );
+										for ( $i = 0;$i < $length;$i++ ) {
+											// Inline Style used for ticket infrormation.
+											?>
 
-									if ( isset( $ticket ) && ! empty( $ticket ) ) {
-										// Inline Style used for ticket infrormation.
-										?>
-										<p style="margin:0;"><b><?php esc_html_e( 'Ticket', 'event-tickets-manager-for-woocommerce' ); ?> :</b>
-											<span style="background: rgb(0, 115, 170) none repeat scroll 0% 0%; color: white; padding: 1px 5px 1px 6px; font-weight: bolder; margin-left: 10px;"><?php echo esc_attr( $ticket ); ?></span>
+										<p style="margin:0;"><b>
+											<?php
+											esc_html_e( 'Ticket ', 'event-tickets-manager-for-woocommerce' );
+											echo esc_html( $i + 1 );
+											?>
+										 :</b>
+											<span style="background: rgb(0, 115, 170) none repeat scroll 0% 0%; color: white; padding: 1px 5px 1px 6px; font-weight: bolder; margin-left: 10px;"><?php echo esc_attr( $ticket[ $i ] ); ?></span>
 										</p>
-										<?php
+											<?php
+										}
+									} else {
+
+										if ( isset( $ticket ) && ! empty( $ticket ) ) {
+											// Inline Style used for ticket infrormation.
+											?>
+											<p style="margin:0;"><b><?php esc_html_e( 'Ticket', 'event-tickets-manager-for-woocommerce' ); ?> :</b>
+												<span style="background: rgb(0, 115, 170) none repeat scroll 0% 0%; color: white; padding: 1px 5px 1px 6px; font-weight: bolder; margin-left: 10px;"><?php echo esc_attr( $ticket ); ?></span>
+											</p>
+											<?php
+										}
 									}
 									do_action( 'wps_etmfw_after_order_itemmeta', $item_id, $item, $_product );
 								}

@@ -14,16 +14,16 @@
  * @wordpress-plugin
  * Plugin Name:          Event Tickets Manager for WooCommerce
  * Plugin URI:           https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/
- * Description:          Event Tickets Manager for WooCommerce allows you to manage, sell and assign tickets easily.
- * Version:              1.0.4
+ * Description:          Event Tickets Manager for WooCommerce allows you to manage, sell and assign tickets easily. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-events&utm_medium=events-org-backend&utm_campaign=official">Elevate your e-commerce store by exploring more on <strong>WP Swings</strong></a>
+ * Version:              1.0.5
  * Author:               WP Swings
  * Author URI:           https://wpswings.com/?utm_source=wpswings-events-official&utm_medium=events-org-backend&utm_campaign=official
  * Text Domain:          event-tickets-manager-for-woocommerce
  * Domain Path:          /languages
  * Requires at least:    4.6
- * Tested up to:         5.9
+ * Tested up to:         5.9.3
  * WC requires at least: 4.0
- * WC tested up to:      6.2.0
+ * WC tested up to:      6.4.1
  * License:              GNU General Public License v3.0
  * License URI:          http://www.gnu.org/licenses/gpl-3.0.html
  */
@@ -43,7 +43,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 */
 	function define_event_tickets_manager_for_woocommerce_constants() {
 
-		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION', '1.0.4' );
+		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION', '1.0.5' );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com' );
@@ -194,40 +194,19 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		$my_link = array(
 			'<a href="' . admin_url( 'admin.php?page=event_tickets_manager_for_woocommerce_menu' ) . '">' . __( 'Settings', 'event-tickets-manager-for-woocommerce' ) . '</a>',
 		);
+		$etmfw_plugins = get_plugins();
+		if ( ! isset( $etmfw_plugins['event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php'] ) ) {
+
+			$my_link['goPro'] = '<a class="wps-wpr-go-pro" style="background: #05d5d8;
+			color: white;
+			font-weight: 700;
+			padding: 2px 5px;
+			border: 1px solid #05d5d8;
+			border-radius: 5px;" target="_blank" href="https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-pro&utm_medium=events-org-backend&utm_campaign=go-pro">' . esc_html__( 'GO PRO', 'event-tickets-manager-for-woocommerce' ) . '</a>';
+		}
 		return array_merge( $my_link, $links );
 	}
 
-	// on plugin load.
-	add_action( 'plugins_loaded', 'wps_wgc_register_event_ticket_manager_product_type' );
-
-	/**
-	 * Saving the Product Type by creating the Instance of this.
-	 *
-	 * @since 1.0.0
-	 * @name wps_wgc_register_gift_card_product_type
-	 * @author WPSwings<ticket@wpswings.com>
-	 * @link https://wpswings.com/
-	 */
-	function wps_wgc_register_event_ticket_manager_product_type() {
-		/**
-		 * Set the giftcard product type.
-		 *
-		 * @since 1.0.0
-		 * @author WPSwings<ticket@wpswings.com>
-		 * @link https://wpswings.com/
-		 */
-		class WC_Product_Event_Ticket_Manager extends WC_Product {
-			/**
-			 * Initialize simple product.
-			 *
-			 * @param mixed $product product.
-			 */
-			public function __construct( $product ) {
-				$this->product_type = 'event_ticket_manager';
-				parent::__construct( $product );
-			}
-		}
-	}
 
 	/**
 	 * Generate the Dynamic number for Tickets.
@@ -306,6 +285,23 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
 	require plugin_dir_path( __FILE__ ) . 'includes/class-event-tickets-manager-for-woocommerce-widget.php';
 
+	add_action( 'admin_init', 'wps_etmfw_migration_code' );
+
+	/**
+	 * Migration code
+	 */
+	function wps_etmfw_migration_code() {
+		$check = get_option( 'is_wps_etmfw_migration_done', 'not done' );
+		if ( 'done' != $check ) {
+
+			include_once plugin_dir_path( __FILE__ ) . 'includes/class-event-tickets-manager-for-woocommerce-activator.php';
+			Event_Tickets_Manager_For_Woocommerce_Activator::upgrade_wp_etmfw_postmeta();
+			Event_Tickets_Manager_For_Woocommerce_Activator::upgrade_wp_etmfw_options();
+			Event_Tickets_Manager_For_Woocommerce_Activator::wpg_etmfw_replace_mwb_to_wps_in_shortcodes();
+		}
+		update_option( 'is_wps_etmfw_migration_done', 'done' );
+
+	}
 } else {
 
 	/**

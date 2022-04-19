@@ -113,6 +113,18 @@
 			}
 		);
 
+		$(".wps-password-hidden").click(function() {
+			var cur_targetEl = $(this).siblings(".wps-form__password");
+			if (cur_targetEl.attr("type") == "text") {
+			  $(this).text('visibility');
+			  cur_targetEl.attr("type", "password");
+			} else {
+			  $(this).text('visibility_off');
+			  cur_targetEl.attr("type", "text");
+			}
+		  });
+		  
+
 	});
 
 	$(window).load(function(){

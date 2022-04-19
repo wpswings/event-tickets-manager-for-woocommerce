@@ -201,7 +201,9 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'woocommerce_after_order_itemmeta', $etmfw_plugin_admin, 'wps_etmfw_after_order_itemmeta', 10, 3 );
 		$this->loader->add_filter( 'plugin_row_meta', $etmfw_plugin_admin, 'wps_etmfw_plugin_row_meta', 10, 2 );
 		$this->loader->add_action( 'wp_ajax_wps_etmfw_get_event_geocode', $etmfw_plugin_admin, 'wps_etmfw_get_event_geocode_value' );
-		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_get_event_geocode', $etmfw_plugin_admin, 'wps_etmfw_get_event_geocode_value' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_get_event_geocode', $etmfw_plugin_admin, 'wps_etommfw_get_event_geocode_value' );
+		// Custom product type.
+		$this->loader->add_action( 'plugins_loaded', $etmfw_plugin_admin, 'wps_wgc_register_event_ticket_manager_product_type' );
 
 	}
 
@@ -220,7 +222,13 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'wp_enqueue_scripts', $etmfw_plugin_public, 'etmfw_public_enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $etmfw_plugin_public, 'etmfw_public_enqueue_scripts' );
 		$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $etmfw_plugin_public, 'wps_etmfw_before_add_to_cart_button_html' );
-		$this->loader->add_filter( 'woocommerce_is_sold_individually', $etmfw_plugin_public, 'wps_etmfw_allow_single_quantity', 10, 2 );
+
+		$active_plugins = (array) get_option( 'active_plugins', array() );
+
+		if ( ! empty( $active_plugins ) && ! in_array( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php', $active_plugins ) ) {
+
+			$this->loader->add_filter( 'woocommerce_is_sold_individually', $etmfw_plugin_public, 'wps_etmfw_allow_single_quantity', 10, 2 );
+		}
 		$this->loader->add_filter( 'woocommerce_add_cart_item_data', $etmfw_plugin_public, 'wps_etmfw_cart_item_data', 10, 3 );
 		$this->loader->add_filter( 'woocommerce_get_item_data', $etmfw_plugin_public, 'wps_etmfw_get_cart_item_data', 10, 2 );
 		$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $etmfw_plugin_public, 'wps_etmfw_create_order_line_item', 10, 3 );
