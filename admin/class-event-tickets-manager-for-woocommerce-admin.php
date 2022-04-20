@@ -502,7 +502,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 
 		$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
 		$wps_etmfw_field_data = isset( $wps_etmfw_product_array['wps_etmfw_field_data'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_field_data'] ) ? $wps_etmfw_product_array['wps_etmfw_field_data'] : array();
-		
+
 		?>
 		<div id="wps_etmfw_event_data" class="panel woocommerce_options_panel">
 			<?php
@@ -605,10 +605,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 						return;
 					}
 					$price = $product->get_price();
-					
-					
+
 					$wps_etmfw_product_array = array();
-					$wps_etmfw_product_array['etmfw_event_price'] = ! empty( $price ) ? $price : '' ;
+					$wps_etmfw_product_array['etmfw_event_price'] = ! empty( $price ) ? $price : '';
 					$wps_etmfw_product_array['event_start_date_time'] = isset( $_POST['etmfw_start_date_time'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_start_date_time'] ) ) : '';
 					$wps_etmfw_product_array['event_end_date_time'] = isset( $_POST['etmfw_end_date_time'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_end_date_time'] ) ) : '';
 					$event_venue = isset( $_POST['etmfw_event_venue'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_event_venue'] ) ) : '';
