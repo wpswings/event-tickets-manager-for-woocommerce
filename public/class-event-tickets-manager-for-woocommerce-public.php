@@ -191,7 +191,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_etmfw_allow_single_quantity( $allow_qty, $product ) {
+		
 		if ( $product->is_type( 'event_ticket_manager' ) ) {
+			
 			$allow_qty = true;
 		}
 		return apply_filters( 'wps_etmfw_increase_event_product_quantity', $allow_qty, $product );
@@ -1449,5 +1451,13 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'templates/frontend/event-tickets-manager-for-woocommerce-event-expired-html.php';
 
 		}
+	}
+	/**
+	 * Registering custom product type.
+	 *
+	 * @return void
+	 */
+	public function wps_wgc_register_event_ticket_manager_product_types() {
+		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'includes/class-wc-product-event-ticket-manager.php';
 	}
 }

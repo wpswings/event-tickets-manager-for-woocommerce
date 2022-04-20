@@ -226,7 +226,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$active_plugins = (array) get_option( 'active_plugins', array() );
 
 		if ( ! empty( $active_plugins ) && ! in_array( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php', $active_plugins ) ) {
-
+			
 			$this->loader->add_filter( 'woocommerce_is_sold_individually', $etmfw_plugin_public, 'wps_etmfw_allow_single_quantity', 10, 2 );
 		}
 		$this->loader->add_filter( 'woocommerce_add_cart_item_data', $etmfw_plugin_public, 'wps_etmfw_cart_item_data', 10, 3 );
@@ -246,6 +246,8 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_filter( 'woocommerce_is_purchasable', $etmfw_plugin_public, 'wps_etmfw_handle_expired_events', 10, 2 );
 		$this->loader->add_action( 'woocommerce_product_meta_start', $etmfw_plugin_public, 'wps_etmfw_show_expired_message' );
 
+		// Custom product type.
+		$this->loader->add_action( 'plugins_loaded', $etmfw_plugin_public, 'wps_wgc_register_event_ticket_manager_product_types' );
 	}
 
 
