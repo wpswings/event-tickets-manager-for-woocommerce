@@ -89,7 +89,7 @@ Visit [**Event Tickets Managers for WooCommerce Documentation**](https://docs.wp
 
 Check out [**Event Tickets Managers for WooCommerce Knowledge base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-kb&utm_medium=events-github-page&utm_campaign=kb)
 
-##LIVE  DEMO OF EVENTS TICKETS MANAGER PLUGIN 
+## LIVE  DEMO OF EVENTS TICKETS MANAGER PLUGIN 
 
 * [**Event Tickets Manager For WooCommerce Frontend demo**](https://demo.wpswings.com/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-demo&utm_medium=events-github-page&utm_campaign=frontend-demo)
 
