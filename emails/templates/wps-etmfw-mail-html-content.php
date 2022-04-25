@@ -76,10 +76,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<tbody>
 							<tr>
 								<td style="padding: 15px 0;">
+								<?php $body = get_option( 'wps_etmfw_email_body_content', '' );
+								if( '' != $body ) {?>
 									<h4 style="margin: 0;">Note</h4>
 									<div style="margin: 0;">
 										[EMAILBODYCONTENT]
 									</div>
+									<?php } ?>
 								</td>
 							</tr>
 							

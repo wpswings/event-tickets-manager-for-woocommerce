@@ -468,10 +468,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				}
 
 				$wps_etmfw_mail_template_data = apply_filters( 'wps_etmfw_common_arr_data', $wps_etmfw_mail_template_data, $item );
-				$this->wps_etmfw_send_ticket_mail( $order, $wps_etmfw_mail_template_data );
-				do_action( 'wps_etmfw_action_on_order_status_changed', $order_id, $old_status, $new_status );
 			}
 		}
+		$this->wps_etmfw_send_ticket_mail( $order, $wps_etmfw_mail_template_data );
+		do_action( 'wps_etmfw_action_on_order_status_changed', $order_id, $old_status, $new_status );
 	}
 
 	/**
@@ -550,17 +550,17 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_etmfw_attach_pdf_to_emails( $attachments, $email_id, $order, $email ) {
-
+		
 		if ( 'wps_etmfw_email_notification' == $email_id ) {
 			if ( is_a( $order, 'WC_Order' ) ) {
 				$order_status  = $order->get_status();
 				if ( 'completed' === $order_status ) {
 					$order_id = $order->get_id();
+					$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
 					foreach ( $order->get_items() as $item_id => $item ) {
 						$product = $item->get_product();
 						if ( isset( $product ) && $product->is_type( 'event_ticket_manager' ) ) {
 							$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
-							$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
 							if ( is_array( $ticket_number ) && ! empty( $ticket_number ) ) {
 								
 								foreach( $ticket_number as $key => $value ) {
@@ -569,8 +569,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 									$attachments[] = $generated_ticket_pdf;
 								}
 							} else {
+								
 								$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';
-									$attachments[] = $generated_ticket_pdf;
+								$attachments[] = $generated_ticket_pdf;
+								
 							}
 						}
 					}
