@@ -72,25 +72,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</tbody>
 					</table>
 					[ADDITIONALINFO]
-					<table border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;">
-						<tbody>
-							<tr>
-								<td style="padding: 15px 0;">
-								<?php $body = get_option( 'wps_etmfw_email_body_content', '' );
-								if( '' != $body ) {?>
-									<h4 style="margin: 0;">Note</h4>
-									<div style="margin: 0;">
-										[EMAILBODYCONTENT]
-									</div>
-									<?php } ?>
-								</td>
-							</tr>
-							
-						</tbody>
-					</table>
 				</td>
 			</tr>
 		</tbody>
 	</table>
+	<div  style="border: 1px solid black">
+	<?php $body = get_option( 'wps_etmfw_email_body_content', '' );
+								if( '' != $body ) {?>
+									<h4 style="margin: 0;">Note</h4>
+									<div style="padding: 20px;margin-right:20px;width:auto;text-align:left;vertical-align: middle;">
+										[EMAILBODYCONTENT]
+									</div>
+									<?php } ?>
+	</div>
 </body>
 </html>
