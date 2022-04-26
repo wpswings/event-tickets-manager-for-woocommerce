@@ -524,8 +524,13 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			}
 		}
 		$template_html = array();
-		$template_html['event'] = $wps_etmfw_mail_template_data['product_name'];
-		$template_html['ticket'] = $wps_etmfw_mail_template_data['ticket_number'];
+		if( key_exists( 'product_name', $wps_etmfw_mail_template_data ) ) {
+
+			$template_html['event'] = $wps_etmfw_mail_template_data['product_name'];
+		}
+		if( key_exists( 'product_name', $wps_etmfw_mail_template_data ) ) {
+			$template_html['ticket'] = $wps_etmfw_mail_template_data['ticket_number'];
+		}
 		$template_html['purchaser'] = $order->get_billing_first_name();
 		$template_html['email_body'] = get_option( 'wps_etmfw_email_body_content', '' );
 		$template_html['venue'] = $venue;
