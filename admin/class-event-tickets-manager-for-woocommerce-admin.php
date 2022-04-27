@@ -809,7 +809,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	public function wps_etmfw_plugin_row_meta( $links, $file ) {
 		if ( strpos( $file, 'event-tickets-manager-for-woocommerce/event-tickets-manager-for-woocommerce.php' ) !== false ) {
 			$new_links = array(
-				'demo' => '<a href="https://demo.wpswings.com/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-demo&utm_medium=events-org-backend&utm_campaign=demo" target="_blank"><i class="fas fa-laptop" style="margin-right:3px;"></i>Premium Demo</a>',
+				'demo' => '<a href="https://demo.wpswings.com/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-demo&utm_medium=events-org-backend&utm_campaign=demo" target="_blank"><i class="fas fa-laptop" style="margin-right:3px;"></i>Demo</a>',
 				'documentation' => '<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-org-backend&utm_campaign=documentation" target="_blank"><i class="far fa-file-alt" style="margin-right:3px;"></i>Documentation</a>',
 				'support' => '<a href="https://wpswings.com/submit-query/?utm_source=wpswings-events-support&utm_medium=events-org-backend&utm_campaign=support" target="_blank"><i class="fas fa-user-ninja" style="margin-right:3px;"></i>Support</a>',
 			);
