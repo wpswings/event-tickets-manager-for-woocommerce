@@ -531,7 +531,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		if( key_exists( 'product_name', $wps_etmfw_mail_template_data ) ) {
 			$template_html['ticket'] = $wps_etmfw_mail_template_data['ticket_number'];
 		}
-		$template_html['purchaser'] = $order->get_billing_first_name();
+		$template_html['purchaser'] = ! empty( $order->get_billing_first_name() ) ? $order->get_billing_first_name() : '';
 		$template_html['email_body'] = get_option( 'wps_etmfw_email_body_content', '' );
 		$template_html['venue'] = $venue;
 		$template_html['time'] = wps_etmfw_get_date_format( $start ) . '-' . wps_etmfw_get_date_format( $end );
