@@ -42,7 +42,7 @@
 		?>
 		<div class="wps_etmfw_event_map_wrapper">
 			
-			<iframe width="640" height="480" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.it/maps?q=<?php echo $event_venue; ?>&output=embed"></iframe>
+			<iframe width="640" height="480" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.it/maps?q=<?php echo esc_html( $event_venue ); ?>&output=embed"></iframe>
 		</div>
 		<?php
 	}
