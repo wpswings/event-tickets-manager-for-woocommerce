@@ -67,38 +67,19 @@ $template = '<table class="wps-wuc__email-template" style=" border: 1px solid #0
 		</tr>
 	</tbody>
 </table>';
-if ( array_key_exists( 'event', $email_content ) ) {
-
-	$template = str_replace( '[EVENTNAME]', $email_content['event'], $template );
-}
-if ( array_key_exists( 'ticket', $email_content ) ) {
-
-	$template = str_replace( '[TICKET]', $email_content['ticket'], $template );
-}
-if ( array_key_exists( 'purchaser', $email_content ) ) {
-
-	$template = str_replace( '[PURCHASER]', $email_content['purchaser'], $template );
-}
-if ( array_key_exists( 'email_body', $email_content ) ) {
-
-	$template = str_replace( '[EMAIL_BODY]', $email_content['email_body'], $template );
-}
-if ( array_key_exists( 'time', $email_content ) ) {
-
-	$template = str_replace( '[TIME]', $email_content['time'], $template );
-}
-if ( array_key_exists( 'featuredimage', $email_content ) ) {
-
-	$template = str_replace( '[FEATUREDIMAGE]', $email_content['featuredimage'], $template );
-}
-if ( array_key_exists( 'qrcode', $email_content ) ) {
-
-	$qr_code  = isset( $email_content['qrcode'] ) ? $email_content['qrcode'] : '';
-	$template = str_replace( '[QRCODE]', $qr_code, $template );
-}
-
-
+$template = str_replace( '[EVENTNAME]', $email_content['event'], $template );
+$template = str_replace( '[TICKET]', $email_content['ticket'], $template );
+$template = str_replace( '[PURCHASER]', $email_content['purchaser'], $template );
+$template = str_replace( '[EMAIL_BODY]', $email_content['email_body'], $template );
+$template = str_replace( '[VENUE]', $email_content['venue'], $template );
+$template = str_replace( '[TIME]', $email_content['time'], $template );
+$template = str_replace( '[FEATUREDIMAGE]', $email_content['featuredimage'], $template );
+$qr_code  = isset( $email_content['qrcode'] ) ? $email_content['qrcode'] : '';
+$template = str_replace( '[QRCODE]', $qr_code, $template );
 echo wp_kses_post( html_entity_decode( $template ) ); // PHPCS:Ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+
+
 
 /**
 * This hooks use for emaail footer
