@@ -226,7 +226,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$active_plugins = (array) get_option( 'active_plugins', array() );
 
 		if ( ! empty( $active_plugins ) && ! in_array( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php', $active_plugins ) ) {
-			
+
 			$this->loader->add_filter( 'woocommerce_is_sold_individually', $etmfw_plugin_public, 'wps_etmfw_allow_single_quantity', 10, 2 );
 		}
 		$this->loader->add_filter( 'woocommerce_add_cart_item_data', $etmfw_plugin_public, 'wps_etmfw_cart_item_data', 10, 3 );

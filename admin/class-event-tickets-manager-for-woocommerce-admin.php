@@ -630,7 +630,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 							}
 						}
 					}
-					
+
 					$wps_etmfw_field_stock_price_data = ! empty( $_POST['etmfwp_fields'] ) ? map_deep( wp_unslash( $_POST['etmfwp_fields'] ), 'sanitize_text_field' ) : array();
 					$wps_etmfw_field_stock_price_data_array = array();
 					if ( is_array( $wps_etmfw_field_stock_price_data ) && ! empty( $wps_etmfw_field_stock_price_data ) ) {

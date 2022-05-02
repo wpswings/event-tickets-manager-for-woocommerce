@@ -191,9 +191,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_etmfw_allow_single_quantity( $allow_qty, $product ) {
-		
+
 		if ( $product->is_type( 'event_ticket_manager' ) ) {
-			
+
 			$allow_qty = true;
 		}
 		return apply_filters( 'wps_etmfw_increase_event_product_quantity', $allow_qty, $product );
@@ -401,8 +401,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						$generated_tickets = get_post_meta( $product_id, 'wps_etmfw_generated_tickets', true );
 						if ( empty( $generated_tickets ) ) {
 							$generated_tickets = array();
-							
-							foreach( $ticket_number as $key => $value ) {
+
+							foreach ( $ticket_number as $key => $value ) {
 
 								$generated_tickets[] = array(
 									'ticket' => $value,
@@ -415,8 +415,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 							}
 							update_post_meta( $product_id, 'wps_etmfw_generated_tickets', $generated_tickets );
 						} else {
-							
-							foreach( $ticket_number as $key => $value ) {
+
+							foreach ( $ticket_number as $key => $value ) {
 
 								$generated_tickets[] = array(
 									'ticket' => $value,
@@ -524,14 +524,14 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			}
 		}
 		$template_html = array();
-		if( key_exists( 'product_name', $wps_etmfw_mail_template_data ) ) {
+		if ( key_exists( 'product_name', $wps_etmfw_mail_template_data ) ) {
 
 			$template_html['event'] = $wps_etmfw_mail_template_data['product_name'];
 		}
-		if( key_exists( 'product_name', $wps_etmfw_mail_template_data ) ) {
+		if ( key_exists( 'product_name', $wps_etmfw_mail_template_data ) ) {
 			$template_html['ticket'] = $wps_etmfw_mail_template_data['ticket_number'];
-		}  
-		if( ! empty($order ) ) {
+		}
+		if ( ! empty( $order ) ) {
 
 			$template_html['purchaser'] = ! empty( $order->get_billing_first_name() ) ? $order->get_billing_first_name() : '';
 		}
@@ -558,7 +558,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_etmfw_attach_pdf_to_emails( $attachments, $email_id, $order, $email ) {
-		
+
 		if ( 'wps_etmfw_email_notification' == $email_id ) {
 			if ( is_a( $order, 'WC_Order' ) ) {
 				$order_status  = $order->get_status();
@@ -570,17 +570,17 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						if ( isset( $product ) && $product->is_type( 'event_ticket_manager' ) ) {
 							$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
 							if ( is_array( $ticket_number ) && ! empty( $ticket_number ) ) {
-								
-								foreach( $ticket_number as $key => $value ) {
+
+								foreach ( $ticket_number as $key => $value ) {
 
 									$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $value . '.pdf';
 									$attachments[] = $generated_ticket_pdf;
 								}
 							} else {
-								
+
 								$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';
 								$attachments[] = $generated_ticket_pdf;
-								
+
 							}
 						}
 					}
@@ -703,8 +703,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					$product_type = $product_types[0]->slug;
 					$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
 					if ( is_array( $ticket_number ) ) {
-						
-						foreach( $ticket_number as $key => $value ) {
+
+						foreach ( $ticket_number as $key => $value ) {
 							if ( '' !== $value && 'event_ticket_manager' == $product_type ) {
 								$updated_meta_pdf = get_post_meta( $order_id, 'wps_etmfw_order_meta_updated', true );
 								if ( '' === $updated_meta_pdf ) {
@@ -1055,8 +1055,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						$item_meta_data = $item->get_meta_data();
 						$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
 						if ( is_array( $ticket_number ) && ! empty( $ticket_number ) ) {
-							
-							foreach( $ticket_number as $key => $value ) {
+
+							foreach ( $ticket_number as $key => $value ) {
 
 								$wps_ticket_content = $this->wps_etmfw_get_html_content( $item_meta_data, $order, $order_id, $value, $product_id );
 								$this->wps_etmfw_generate_ticket_pdf( $wps_ticket_content, $order, $order_id, $value );

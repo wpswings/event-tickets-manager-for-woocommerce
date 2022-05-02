@@ -297,7 +297,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			include_once plugin_dir_path( __FILE__ ) . 'includes/class-event-tickets-manager-for-woocommerce-activator.php';
 			Event_Tickets_Manager_For_Woocommerce_Activator::upgrade_wp_etmfw_postmeta();
 			Event_Tickets_Manager_For_Woocommerce_Activator::upgrade_wp_etmfw_options();
-			
+
 		}
 		update_option( 'is_wps_etmfw_migration_done', 'done' );
 
