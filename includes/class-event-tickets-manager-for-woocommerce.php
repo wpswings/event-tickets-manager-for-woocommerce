@@ -246,6 +246,8 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_filter( 'woocommerce_is_purchasable', $etmfw_plugin_public, 'wps_etmfw_handle_expired_events', 10, 2 );
 		$this->loader->add_action( 'woocommerce_product_meta_start', $etmfw_plugin_public, 'wps_etmfw_show_expired_message' );
 
+		// Custom product type.
+		$this->loader->add_action( 'plugins_loaded', $etmfw_plugin_public, 'wps_wgc_register_event_ticket_manager_product_types' );
 	}
 
 

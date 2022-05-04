@@ -41,13 +41,8 @@
 	if ( 'yes' === $display_map && 'on' === $location_site && '' !== $map_api_key ) {
 		?>
 		<div class="wps_etmfw_event_map_wrapper">
-			<?php
-			$event_lat = isset( $wps_etmfw_product_array['etmfw_event_venue_lat'] ) ? $wps_etmfw_product_array['etmfw_event_venue_lat'] : '';
-			$event_lng = isset( $wps_etmfw_product_array['etmfw_event_venue_lng'] ) ? $wps_etmfw_product_array['etmfw_event_venue_lng'] : '';
-			?>
-			<input type="hidden" id="etmfw_event_lat" value="<?php echo esc_attr( $event_lat ); ?>">
-			<input type="hidden" id="etmfw_event_lng" value="<?php echo esc_attr( $event_lng ); ?>">
-			<div id="wps_etmfw_event_map"></div>
+			
+			<iframe width="640" height="480" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.it/maps?q=<?php echo esc_html( $event_venue ); ?>&output=embed"></iframe>
 		</div>
 		<?php
 	}

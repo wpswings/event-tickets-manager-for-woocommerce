@@ -67,9 +67,7 @@ $template = '<table class="wps-wuc__email-template" style=" border: 1px solid #0
 		</tr>
 	</tbody>
 </table>';
-
 $template = str_replace( '[EVENTNAME]', $email_content['event'], $template );
-$template = str_replace( '[TICKET]', $email_content['ticket'], $template );
 $template = str_replace( '[PURCHASER]', $email_content['purchaser'], $template );
 $template = str_replace( '[EMAIL_BODY]', $email_content['email_body'], $template );
 $template = str_replace( '[VENUE]', $email_content['venue'], $template );
@@ -78,6 +76,9 @@ $template = str_replace( '[FEATUREDIMAGE]', $email_content['featuredimage'], $te
 $qr_code  = isset( $email_content['qrcode'] ) ? $email_content['qrcode'] : '';
 $template = str_replace( '[QRCODE]', $qr_code, $template );
 echo wp_kses_post( html_entity_decode( $template ) ); // PHPCS:Ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+
+
 
 /**
 * This hooks use for emaail footer

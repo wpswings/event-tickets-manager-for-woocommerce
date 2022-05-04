@@ -79,6 +79,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			wp_enqueue_style( 'wps-etmfw-date-time-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/jquery.datetimepicker.css', array(), time(), 'all' );
 			wp_enqueue_style( $this->plugin_name . '-admin-edit-product', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/event-tickets-manager-for-woocommerce-admin-edit-product.css', array(), $this->version, 'all' );
 		}
+		wp_enqueue_style( 'event-tickets-manager-for-woocommerce-admin-icon.css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/event-tickets-manager-for-woocommerce-admin-icon.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -604,7 +605,10 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					if ( ! isset( $_POST['wps_etmfw_product_nonce_field'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_etmfw_product_nonce_field'] ) ), 'wps_etmfw_lite_nonce' ) ) {
 						return;
 					}
+					$price = $product->get_price();
+
 					$wps_etmfw_product_array = array();
+					$wps_etmfw_product_array['etmfw_event_price'] = ! empty( $price ) ? $price : '';
 					$wps_etmfw_product_array['event_start_date_time'] = isset( $_POST['etmfw_start_date_time'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_start_date_time'] ) ) : '';
 					$wps_etmfw_product_array['event_end_date_time'] = isset( $_POST['etmfw_end_date_time'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_end_date_time'] ) ) : '';
 					$event_venue = isset( $_POST['etmfw_event_venue'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_event_venue'] ) ) : '';
@@ -626,6 +630,35 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 							}
 						}
 					}
+
+					$wps_etmfw_field_stock_price_data = ! empty( $_POST['etmfwp_fields'] ) ? map_deep( wp_unslash( $_POST['etmfwp_fields'] ), 'sanitize_text_field' ) : array();
+					$wps_etmfw_field_stock_price_data_array = array();
+					if ( is_array( $wps_etmfw_field_stock_price_data ) && ! empty( $wps_etmfw_field_stock_price_data ) ) {
+						if ( '' !== $wps_etmfw_field_stock_price_data[0]['_label'] ) {
+							foreach ( $wps_etmfw_field_stock_price_data as $key => $value ) {
+								$wps_etmfw_field_stock_price_data_array[] = array(
+									'label' => $value['_label'],
+									'type' => $value['_type'],
+									'price' => $value['_price'],
+								);
+							}
+						}
+					}
+					$wps_etmfw_field_days_price_data = ! empty( $_POST['etmfwpp_fields'] ) ? map_deep( wp_unslash( $_POST['etmfwpp_fields'] ), 'sanitize_text_field' ) : array();
+					$wps_etmfw_field_days_price_data_array = array();
+					if ( is_array( $wps_etmfw_field_days_price_data ) && ! empty( $wps_etmfw_field_days_price_data ) ) {
+						if ( '' !== $wps_etmfw_field_days_price_data[0]['_label'] ) {
+							foreach ( $wps_etmfw_field_days_price_data as $key => $value ) {
+								$wps_etmfw_field_days_price_data_array[] = array(
+									'label' => $value['_label'],
+									'type' => $value['_type'],
+									'price' => $value['_price'],
+								);
+							}
+						}
+					}
+					$wps_etmfw_product_array['wps_etmfw_field_days_price_data'] = $wps_etmfw_field_days_price_data_array;
+					$wps_etmfw_product_array['wps_etmfw_field_stock_price_data'] = $wps_etmfw_field_stock_price_data_array;
 					$wps_etmfw_product_array['wps_etmfw_field_data'] = $wps_etmfw_field_data_array;
 					$etmfw_display_map = isset( $_POST['etmfw_display_map'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_display_map'] ) ) : 'no';
 					$wps_etmfw_product_array['etmfw_display_map'] = $etmfw_display_map;
@@ -777,9 +810,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	public function wps_etmfw_plugin_row_meta( $links, $file ) {
 		if ( strpos( $file, 'event-tickets-manager-for-woocommerce/event-tickets-manager-for-woocommerce.php' ) !== false ) {
 			$new_links = array(
-				'demo' => '<a href="https://demo.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-demo&utm_medium=events-org-backend&utm_campaign=demo" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/demo_img.svg" style="width: 20px;padding-right: 5px;">Demo</a>',
-				'documentation' => '<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-org-backend&utm_campaign=documentation" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Documentation.svg" style="width: 20px;padding-right: 5px;">Documentation</a>',
-				'support' => '<a href="https://wpswings.com/submit-query/?utm_source=wpswings-events-support&utm_medium=events-org-backend&utm_campaign=support" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Support.svg" style="width: 20px;padding-right: 5px;">Support</a>',
+				'demo' => '<a href="https://demo.wpswings.com/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-demo&utm_medium=events-org-backend&utm_campaign=demo" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Demo.svg"  style="margin-right: 6px;margin-top: -3px;max-width: 15px;">Demo</a>',
+				'documentation' => '<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-org-backend&utm_campaign=documentation" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Documentation.svg" style="margin-right: 6px;margin-top: -3px;max-width: 15px;" >Documentation</a>',
+				'support' => '<a href="https://wpswings.com/submit-query/?utm_source=wpswings-events-support&utm_medium=events-org-backend&utm_campaign=support" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Support.svg" style="margin-right: 6px;margin-top: -3px;max-width: 15px;" >Support</a>',
 			);
 
 			$links = array_merge( $links, $new_links );
