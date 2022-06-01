@@ -657,6 +657,21 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 							}
 						}
 					}
+
+					$wps_etmfw_field_user_type_price_data = ! empty( $_POST['etmfwppp_fields'] ) ? map_deep( wp_unslash( $_POST['etmfwppp_fields'] ), 'sanitize_text_field' ) : array();
+					$wps_etmfw_field_days_user_type_data_array = array();
+					if ( is_array( $wps_etmfw_field_user_type_price_data ) && ! empty( $wps_etmfw_field_user_type_price_data ) ) {
+						if ( '' !== $wps_etmfw_field_user_type_price_data[0]['_label'] ) {
+							foreach ( $wps_etmfw_field_user_type_price_data as $key => $value ) {
+								$wps_etmfw_field_days_user_type_data_array[] = array(
+									'label' => $value['_label'],
+									'type' => $value['_type'],
+									'price' => $value['_price'],
+								);
+							}
+						}
+					}
+					$wps_etmfw_product_array['wps_etmfw_field_user_type_price_data'] = $wps_etmfw_field_days_user_type_data_array;
 					$wps_etmfw_product_array['wps_etmfw_field_days_price_data'] = $wps_etmfw_field_days_price_data_array;
 					$wps_etmfw_product_array['wps_etmfw_field_stock_price_data'] = $wps_etmfw_field_stock_price_data_array;
 					$wps_etmfw_product_array['wps_etmfw_field_data'] = $wps_etmfw_field_data_array;
@@ -745,12 +760,13 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			return;
 		}
 		$wps_etmfw_enable = get_option( 'wps_etmfw_enable_plugin', false );
+		$wps_etmfw_in_processing = get_option( 'wps_wet_enable_after_payment_done_ticket', false );
 		if ( $wps_etmfw_enable ) {
 			if ( isset( $_GET['post'] ) ) {
 				$order_id = sanitize_text_field( wp_unslash( $_GET['post'] ) );
 				$order = new WC_Order( $order_id );
 				$order_status = $order->get_status();
-				if ( 'completed' == $order_status ) {
+				if ( 'completed' == $order_status || ( 'processing' == $order_status && 'on' == $wps_etmfw_in_processing ) ) {
 					if ( null != $_product ) {
 						$product_id = $_product->get_id();
 						if ( isset( $product_id ) && ! empty( $product_id ) ) {

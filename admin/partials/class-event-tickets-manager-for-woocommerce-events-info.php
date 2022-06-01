@@ -194,6 +194,8 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 		$event_attendees_details = array();
 		$order_statuses = array(
 			'wc-completed'  => __( 'Completed', 'event-tickets-manager-for-woocommerce' ),
+			'wc-processing'  => __( 'Processing', 'event-tickets-manager-for-woocommerce' ),
+
 		);
 
 		$shop_orders = new WP_Query(
