@@ -728,11 +728,13 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								$calendar_url = 'https://calendar.google.com/calendar/r/eventedit?text=' . $event_name . '&dates=' . gmdate( 'Ymd\\THi00\\Z', ( $start_timestamp - $gmt_offset_seconds ) ) . '/' . gmdate( 'Ymd\\THi00\\Z', ( $end_timestamp - $gmt_offset_seconds ) ) . '&details=' . $pro_short_desc . '&location=' . $event_venue;
 
 								?>
+								<div class='wps_order_section_for_meta'>
 								<div class="wps_etmfw_view_ticket_section">
 									<a href="<?php echo esc_attr( $upload_dir_path ); ?>" class="wps_view_ticket_pdf" target="_blank"><?php esc_html_e( 'View', 'event-tickets-manager-for-woocommerce' ); ?></a>
 								</div>
 								<div class="wps_etmfw_calendar_section">
 									<a href="<?php echo esc_attr( $calendar_url ); ?>" class="wps_etmfw_add_event_calendar" target="_blank"><?php esc_html_e( '+ Add to Google Calendar', 'event-tickets-manager-for-woocommerce' ); ?></a>
+								</div>
 								</div>
 								<?php
 								$item_meta_data = $item->get_meta_data();

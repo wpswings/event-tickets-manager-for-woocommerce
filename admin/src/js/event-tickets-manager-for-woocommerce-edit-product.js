@@ -136,10 +136,13 @@
 		});
 
 		jQuery(document).on( 'change', '#product-type', function() {
-
-			$('#etmfw_start_date_time').attr('required','required');
-			$('#etmfw_end_date_time').attr('required','required');
-			$('#etmfw_event_venue').attr('required','required');
+			var product_type = $(this).val();
+			if( 'event_ticket_manager' == product_type ) {
+				
+				$('#etmfw_start_date_time').attr('required','required');
+				$('#etmfw_end_date_time').attr('required','required');
+				$('#etmfw_event_venue').attr('required','required');
+			} 
 		} );
 	});
 
