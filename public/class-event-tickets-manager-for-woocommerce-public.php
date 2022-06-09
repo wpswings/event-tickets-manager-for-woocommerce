@@ -341,7 +341,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$wps_etmfw_in_processing = get_option( 'wps_wet_enable_after_payment_done_ticket', false );
 		if ( $wps_etmfw_enable ) {
 			if ( $old_status != $new_status ) {
-				if ( 'completed' == $new_status || ( 'processing' == $new_status && 'on' == $wps_etmfw_in_processing )) {
+				if ( 'completed' == $new_status || ( 'processing' == $new_status && 'on' == $wps_etmfw_in_processing ) ) {
 					$this->wps_etmfw_process_event_order( $order_id, $old_status, $new_status );
 				}
 			}
@@ -564,7 +564,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		if ( 'wps_etmfw_email_notification' == $email_id ) {
 			if ( is_a( $order, 'WC_Order' ) ) {
 				$order_status  = $order->get_status();
-				if ( 'completed' === $order_status || ( 'processing' == $order_status && 'on' == $wps_etmfw_in_processing )) {
+				if ( 'completed' === $order_status || ( 'processing' == $order_status && 'on' == $wps_etmfw_in_processing ) ) {
 					$order_id = $order->get_id();
 					$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
 					foreach ( $order->get_items() as $item_id => $item ) {
