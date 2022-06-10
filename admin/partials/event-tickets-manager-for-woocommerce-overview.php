@@ -73,19 +73,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div class="wps_etmfw_premium_content"><?php esc_html_e( 'Promote your online webinars and other premium online events from your WooCommerce store with the help of our plugin.', 'event-tickets-manager-for-woocommerce' ); ?></div>
 			</li>
 			<li>
-				<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/img7.png' ); ?>">	
-				<div class="wps_etmfw_premium_heading"><?php esc_html_e( 'Buy Multiple Tickets For Single Event', 'event-tickets-manager-for-woocommerce' ); ?></div>
-				<div class="wps_etmfw_premium_content"><?php esc_html_e( 'The customers will be able to buy multiple tickets for a single event in your store.', 'event-tickets-manager-for-woocommerce' ); ?></div>
-			</li>
-			<li>
 				<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/img10.png' ); ?>">	
 				<div class="wps_etmfw_premium_heading"><?php esc_html_e( 'APIs To Verify Tickets', 'event-tickets-manager-for-woocommerce' ); ?></div>
 				<div class="wps_etmfw_premium_content"><?php esc_html_e( 'APIs that allow the admin to log in on mobile apps (android/iOS) and scan QR codes at physical events to verify the ticket.', 'event-tickets-manager-for-woocommerce' ); ?></div>
-			</li>
-			<li>
-				<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/img5.png' ); ?>">	
-				<div class="wps_etmfw_premium_heading"><?php esc_html_e( 'Allow Attendees To Pass The Ticket', 'event-tickets-manager-for-woocommerce' ); ?></div>
-				<div class="wps_etmfw_premium_content"><?php esc_html_e( 'The customers can pass the ticket they have bought to their friends or family if they are not able to visit your event.', 'event-tickets-manager-for-woocommerce' ); ?></div>
 			</li>
 			<li>
 				<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/img12.png' ); ?>">	

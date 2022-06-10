@@ -338,9 +338,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 */
 	public function wps_etmfw_event_status_changed( $order_id, $old_status, $new_status ) {
 		$wps_etmfw_enable = get_option( 'wps_etmfw_enable_plugin', false );
+		$wps_etmfw_in_processing = get_option( 'wps_wet_enable_after_payment_done_ticket', false );
 		if ( $wps_etmfw_enable ) {
 			if ( $old_status != $new_status ) {
-				if ( 'completed' == $new_status ) {
+				if ( 'completed' == $new_status || ( 'processing' == $new_status && 'on' == $wps_etmfw_in_processing ) ) {
 					$this->wps_etmfw_process_event_order( $order_id, $old_status, $new_status );
 				}
 			}
@@ -559,10 +560,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 */
 	public function wps_etmfw_attach_pdf_to_emails( $attachments, $email_id, $order, $email ) {
 
+		$wps_etmfw_in_processing = get_option( 'wps_wet_enable_after_payment_done_ticket', false );
 		if ( 'wps_etmfw_email_notification' == $email_id ) {
 			if ( is_a( $order, 'WC_Order' ) ) {
 				$order_status  = $order->get_status();
-				if ( 'completed' === $order_status ) {
+				if ( 'completed' === $order_status || ( 'processing' == $order_status && 'on' == $wps_etmfw_in_processing ) ) {
 					$order_id = $order->get_id();
 					$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
 					foreach ( $order->get_items() as $item_id => $item ) {
@@ -692,7 +694,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	public function wps_etmfw_view_ticket_button( $item_id, $item, $order ) {
 		$order_id = $order->get_id();
 		$order_status = $order->get_status();
-		if ( 'completed' == $order_status ) {
+		$wps_etmfw_in_processing = get_option( 'wps_wet_enable_after_payment_done_ticket', false );
+		if ( 'completed' == $order_status || ( 'processing' == $order_status && 'on' == $wps_etmfw_in_processing ) ) {
 			$_product = apply_filters( 'wps_etmfw_woo_order_item_product', $product = $item->get_product(), $item );
 			if ( isset( $_product ) && ! empty( $_product ) ) {
 				$product_id = $_product->get_id();
@@ -725,11 +728,13 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								$calendar_url = 'https://calendar.google.com/calendar/r/eventedit?text=' . $event_name . '&dates=' . gmdate( 'Ymd\\THi00\\Z', ( $start_timestamp - $gmt_offset_seconds ) ) . '/' . gmdate( 'Ymd\\THi00\\Z', ( $end_timestamp - $gmt_offset_seconds ) ) . '&details=' . $pro_short_desc . '&location=' . $event_venue;
 
 								?>
+								<div class='wps_order_section_for_meta'>
 								<div class="wps_etmfw_view_ticket_section">
 									<a href="<?php echo esc_attr( $upload_dir_path ); ?>" class="wps_view_ticket_pdf" target="_blank"><?php esc_html_e( 'View', 'event-tickets-manager-for-woocommerce' ); ?></a>
 								</div>
 								<div class="wps_etmfw_calendar_section">
 									<a href="<?php echo esc_attr( $calendar_url ); ?>" class="wps_etmfw_add_event_calendar" target="_blank"><?php esc_html_e( '+ Add to Google Calendar', 'event-tickets-manager-for-woocommerce' ); ?></a>
+								</div>
 								</div>
 								<?php
 								$item_meta_data = $item->get_meta_data();
