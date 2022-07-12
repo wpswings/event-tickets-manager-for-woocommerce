@@ -634,7 +634,18 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$site_logo = '<img src="' . get_option( 'wps_etmfw_mail_setting_upload_logo', '' ) . '" style="width: 100%;">';
 		$wps_ticket_details = str_replace( '[EVENTNAME]', $product->get_name(), $wps_ticket_details );
 
+		$file = apply_filters( 'wps_etmfw_generate_qr_code', $order_id, $ticket_number, $product_id  );
+		$ticket_number1 = '';
+		if( ! empty( $file ) ) {
+
+			if( 'string' == gettype($file) ) {
+				$ticket_number1 = $ticket_number;
+				$ticket_number = '<img src="' . get_site_url() . '/' . str_replace( ABSPATH, '', $file ) . '" alt= "QR" height="100" width="100"  />';
+			}
+		}
+		
 		$wps_ticket_details = str_replace( '[TICKET]', $ticket_number, $wps_ticket_details );
+		$wps_ticket_details = str_replace( '[TICKET1]', $ticket_number1, $wps_ticket_details );
 		$wps_ticket_details = str_replace( '[VENUE]', $venue, $wps_ticket_details );
 		$wps_ticket_details = str_replace( '[STARTDATE]', wps_etmfw_get_date_format( $start ), $wps_ticket_details );
 		$wps_ticket_details = str_replace( '[ENDDATE]', wps_etmfw_get_date_format( $end ), $wps_ticket_details );

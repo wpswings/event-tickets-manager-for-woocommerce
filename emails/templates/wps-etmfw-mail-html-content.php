@@ -49,6 +49,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 													<h3 style="margin: 0;color: #ffffff;">Date - [STARTDATE] To [ENDDATE]</h3>						
 												</td>
 											</tr>
+											<?php require_once ABSPATH . 'wp-admin/includes/plugin.php';
+											$plug           = get_plugins();
+											if ( isset( $plug['event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php'] ) ) {
+												if( is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) {
+													
+													if ( ! version_compare( $plug['event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php']['Version'], '1.0.4', '<' ) ) { ?>
+														<tr>
+															<td style="color: #ffffff;padding: 10px 0;">									
+																<h3 style="margin: 0;color: #ffffff;">Ticket - [TICKET1]</h3>						
+															</td>
+														</tr>
+										<?php		}
+												}
+											} ?>
+											
 										</tbody>
 									</table>
 								</td>
