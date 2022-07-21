@@ -1,12 +1,12 @@
-=== Event Tickets Manager for WooCommerce - Ticket Stock Management, Download Tickets as PDF, Events Calendar, Event Check-in Using Emails, Edit Your Ticket Content  ===
+=== Event Tickets Manager for WooCommerce - Ticket Stock Management, Download Tickets as PDF, Events Calendar, Event Check-in Using Emails, Edit Your Ticket Content ===
 Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: events, tickets, events plugin, event management, event manager, event schedule, schedule, events calendar, calendar, event page, 
 Requires at least: 4.6
-Tested up to: 6.0.0
+Tested up to: 6.0.1
 WC requires at least: 4.0
-WC tested up to: 6.5.1
-Stable tag: 1.0.7
+WC tested up to: 6.7.0
+Stable tag: 1.0.8
 Requires PHP: 7.2 or Higher
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -19,22 +19,11 @@ Event Tickets Manager for WooCommerce is an extension that allows you to create 
 
 Events Tickets Manager For WooCommerce is a complete solution for merchants that want to add event-based products to their WooCommerce store. Now you don’t have to pay commissions to your third-party services to manage event registration and ticket sales. You can manage the entire process from your WooCommerce store and be your own boss.
 
-* Create event management and ticketing websites with WordPress events plugin.
+* Create event management and ticketing websites with [**WordPress events plugin**](https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-pro&utm_medium=events-org-page&utm_campaign=events-pro).
 * Sell event tickets without depending on external service providers
 * Develop event management and ticketing websites. 
 * Invite the audience to your gig with the WooCommerce event calendar.
 
-
-
-***
-
->**IMPORTANT NOTICE:**
-
->_**From 1.0.4 Version update onwards, the Event Tickets plugin and its support will be handled by [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=events-org-page&utm_campaign=official).**_
-
->_**WP Swings is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end. Please [**Connect with us**](https://wpswings.com/contact-us/?utm_source=wpswings-events-contactus&utm_medium=events-org-page&utm_campaign=contactus) for all setup, support, and update related queries without hesitation.**_
-
-***
 
 
 [youtube https://www.youtube.com/watch?v=hf2gImcoqqk&w=560&h=315&rel=0]
@@ -56,7 +45,7 @@ Events Tickets Manager For WooCommerce is a complete solution for merchants that
 
 
 == PLUGIN MEETS YOUR REQUIREMENT, SO ==
-[Download Now](https://downloads.wordpress.org/plugins/event-tickets-manager-for-woocommerce.zip)
+[**Download Now**](https://downloads.wordpress.org/plugins/event-tickets-manager-for-woocommerce.zip)
 
 
 == WHAT IS INCLUDED IN FREE EVENT TICKETS MANAGER FOR WOOCOMMERCE PLUGIN == 
@@ -80,13 +69,12 @@ The WooCommerce Event Plugin gives the merchants an easy-to-use editor to update
 The users have to use the email address on which they received the ticket. By entering the email addresses users can validate their check-in for the events they are planning to participate in.
 
 **7) WPML Multilingual Support**
-The Event Ticket System Plugin comes with [WPML](https://wpml.org/purchase/) multilingual support, so as to say, the WooCommerce extension will work in your local language. You can also use the Loco Translate Plugin to translate the string into your local language.
-
-Thus, making Events  plugin one of the best online ticketing solutions and event management plugins in WordPress for eCommerce websites.
+The Event Ticket System Plugin comes with [**WPML**](https://wpml.org/purchase/) multilingual support, so as to say, the WooCommerce extension will work in your local language. You can also use the Loco Translate Plugin to translate the string into your local language.
+Thus, making Events plugin one of the best online ticketing solutions and event management plugins in WordPress for eCommerce websites.
 
 Visit [**Event Tickets Managers for WooCommerce Documentation**](https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-org-page&utm_campaign=events-doc) and learn more about the features and working of the plugin.
 
-Check out [**Event Tickets Managers for WooCommerce Knowledge base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-kb&utm_medium=events-org-page&utm_campaign=kb)
+
 
 == LIVE  DEMO OF EVENTS TICKETS MANAGER PLUGIN ==
 
@@ -109,9 +97,12 @@ Check out [**Event Tickets Managers for WooCommerce Knowledge base**](https://su
    * Facebook Sharing of Events.
    * Send Tickets To Users On Processing Order Also.
    * Set The Price Of Event Tickets Depending On Specific User Type.
+   * QR Code Inclusion on Tickets.
 
 
 == TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF WOOCOMMERCE EVENTS PLUGIN ==
+
+The  Events Manager plugin lets the merchant add events as WooCommerce products and create ticketing website with WordPress.
 
 > Note:  Get [**Event Tickets Manager  for WooCommerce Pro**](https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-pro&utm_medium=events-org-page&utm_campaign=events-pro)
 
@@ -121,6 +112,10 @@ Check out [**Event Tickets Managers for WooCommerce Knowledge base**](https://su
 
 == SUPPORT ==
 If you need support or have questions, kindly use our online chat window [**here**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=events-org-page&utm_campaign=official) or connect with us then [**Generate a ticket**](https://wpswings.com/submit-query/?utm_source=wpswings-events-query&utm_medium=events-org-page&utm_campaign=query)
+
+Create and Revamp Your Store with  [**WooCommerce Services**](https://wpswings.com/woocommerce-services/?utm_source=wpswings-events-services&utm_medium=events-org-page&utm_campaign=woocommerce-services )
+
+
 
 
 == Installation ==
@@ -184,11 +179,15 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
-= 1.0.7- Released on 10 June 2022 =
+= 1.0.8 - Released on 21 July 2022 =
+* New: Minor  Bug fixes and Enhancement
+* New: Compatible with the latest WP and WC
+
+= 1.0.7 - Released on 10 June 2022 =
 * New : Bug fix and Enhancement
 * New : Compatible with latest WP and WC
 
-= 1.0.6- Released on 2 May 2022 =
+= 1.0.6 - Released on 2 May 2022 =
 * New : Bug fix and Enhancement
 * New : Compatible with latest WP and WC
 
@@ -221,6 +220,8 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 * First version
 
 == Upgrade Notice == 
-= 1.0.7- Released on 10 June 2022 
-* New : Bug fix and Enhancement
-* New : Compatible with latest WP and WC
+
+= 1.0.8 - Released on 21 July 2022 =
+* New: Minor  Bug fixes and Enhancement
+* New: Compatible with the latest WP and WC
+
