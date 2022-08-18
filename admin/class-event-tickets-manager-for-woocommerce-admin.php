@@ -766,7 +766,11 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				$order_id = sanitize_text_field( wp_unslash( $_GET['post'] ) );
 				$order = new WC_Order( $order_id );
 				$order_status = $order->get_status();
-				if ( 'completed' == $order_status || ( 'processing' == $order_status && 'on' == $wps_etmfw_in_processing ) ) {
+				$temp_status = 'completed';
+				if( 'on' == $wps_etmfw_in_processing ) {
+					$temp_status = 'processing';
+				}
+				if ( $temp_status == $order_status ) {
 					if ( null != $_product ) {
 						$product_id = $_product->get_id();
 						if ( isset( $product_id ) && ! empty( $product_id ) ) {
