@@ -54,13 +54,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 											if ( isset( $plug['event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php'] ) ) {
 												if( is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) {
 													
-													if ( ! version_compare( $plug['event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php']['Version'], '1.0.4', '<' ) ) { ?>
+													if ( ! version_compare( $plug['event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php']['Version'], '1.0.4', '<' ) ) { 
+														if( 'on' == get_option( 'wps_etmfwp_include_qr' ) ) {
+														
+														?>
 														<tr>
 															<td style="color: #ffffff;padding: 10px 0;">									
 																<h3 style="margin: 0;color: #ffffff;">Ticket - [TICKET1]</h3>						
 															</td>
 														</tr>
-										<?php		}
+										<?php			}
+													}
 												}
 											} ?>
 											
