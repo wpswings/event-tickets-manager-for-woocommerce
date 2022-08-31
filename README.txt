@@ -5,8 +5,8 @@ Tags: events, tickets, events plugin, event management, event manager, event sch
 Requires at least: 4.6
 Tested up to: 6.0.1
 WC requires at least: 4.0
-WC tested up to: 6.7.0
-Stable tag: 1.0.8
+WC tested up to: 6.8.1
+Stable tag: 1.0.9
 Requires PHP: 7.2 or Higher
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -102,7 +102,7 @@ Visit [**Event Tickets Managers for WooCommerce Documentation**](https://docs.wp
 
 == TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF WOOCOMMERCE EVENTS PLUGIN ==
 
-The  Events Manager plugin lets the merchant add events as WooCommerce products and create ticketing website with WordPress.
+The  Events Manager plugin lets the merchant add events as WooCommerce products and create ticketing websites with WordPress.
 
 > Note:  Get [**Event Tickets Manager  for WooCommerce Pro**](https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-pro&utm_medium=events-org-page&utm_campaign=events-pro)
 
@@ -179,6 +179,10 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
+= 1.0.9 - Released on 31 August 2022 =
+* New: Minor Bug fixes and Enhancement
+* New: Compatible with the latest WP and WC
+
 = 1.0.8 - Released on 21 July 2022 =
 * New: Minor  Bug fixes and Enhancement
 * New: Compatible with the latest WP and WC
@@ -221,7 +225,6 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Upgrade Notice == 
 
-= 1.0.8 - Released on 21 July 2022 =
-* New: Minor  Bug fixes and Enhancement
+= 1.0.9 - Released on 31 August 2022 =
+* New: Minor Bug fixes and Enhancement
 * New: Compatible with the latest WP and WC
-
