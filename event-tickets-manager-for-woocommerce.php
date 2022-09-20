@@ -33,8 +33,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-// Check if woocommerce is activated.
-if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+
+$activated = false;
+/**
+ * Checking if WooCommerce is active.
+ */
+if ( function_exists( 'is_multisite' ) && is_multisite() ) {
+	include_once ABSPATH . 'wp-admin/includes/plugin.php';
+	if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+		$activated = true;
+	}
+} else {
+	if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
+		$activated = true;
+	}
+}
+
+
+if ( $activated ) {
 
 	/**
 	 * Define plugin constants.
@@ -119,23 +135,52 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	/**
 	 * Function to create check in page template.
 	 */
-	function wps_etmfw_create_checkin_page() {
-		/* ===== ====== Create the Check Gift Card Page ====== ======*/
-		if ( ! get_option( 'event_checkin_page_created', false ) ) {
+	function wps_etmfw_create_checkin_page($network_wide) {
+		/* ===== ====== Create the Check Event Checkin Page ====== ======*/
+		global $wpdb;
+		if ( is_multisite() && $network_wide ) { 
+			
+			$blogids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+			foreach ( $blogids as $blog_id ) {
+				switch_to_blog($blog_id);
 
-			$checkin_content = '[wps_etmfw_event_checkin_page]';
+				if ( ! get_option( 'event_checkin_page_created', false ) ) {
+	
+					$checkin_content = '[wps_etmfw_event_checkin_page]';
+		
+					$checkin_page = array(
+						'post_author'    => get_current_user_id(),
+						'post_name'      => __( 'Event Check In', 'event-tickets-manager-for-woocommerce' ),
+						'post_title'     => __( 'Event Check In', 'event-tickets-manager-for-woocommerce' ),
+						'post_type'      => 'page',
+						'post_status'    => 'publish',
+						'post_content'   => $checkin_content,
+					);
+					$page_id = wp_insert_post( $checkin_page );
+					update_option( 'event_checkin_page_created', $page_id );
+					/* ===== ====== End of Create the Event Checkin Page ====== ======*/
+				}
 
-			$checkin_page = array(
-				'post_author'    => get_current_user_id(),
-				'post_name'      => __( 'Event Check In', 'event-tickets-manager-for-woocommerce' ),
-				'post_title'     => __( 'Event Check In', 'event-tickets-manager-for-woocommerce' ),
-				'post_type'      => 'page',
-				'post_status'    => 'publish',
-				'post_content'   => $checkin_content,
-			);
-			$page_id = wp_insert_post( $checkin_page );
-			update_option( 'event_checkin_page_created', $page_id );
-			/* ===== ====== End of Create the Gift Card Page ====== ======*/
+				restore_current_blog();
+			}
+		} else{
+			
+			if ( ! get_option( 'event_checkin_page_created', false ) ) {
+	
+				$checkin_content = '[wps_etmfw_event_checkin_page]';
+	
+				$checkin_page = array(
+					'post_author'    => get_current_user_id(),
+					'post_name'      => __( 'Event Check In', 'event-tickets-manager-for-woocommerce' ),
+					'post_title'     => __( 'Event Check In', 'event-tickets-manager-for-woocommerce' ),
+					'post_type'      => 'page',
+					'post_status'    => 'publish',
+					'post_content'   => $checkin_content,
+				);
+				$page_id = wp_insert_post( $checkin_page );
+				update_option( 'event_checkin_page_created', $page_id );
+				/* ===== ====== End of Create the Event Checkin Page ====== ======*/
+			}
 		}
 	}
 
@@ -143,15 +188,61 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 * Delete checkin page created when plugin is deactivated.
 	 */
 	function wps_etmfw_delete_checkin_page() {
-		$checkin_pageid = get_option( 'event_checkin_page_created', false );
-		if ( $checkin_pageid ) {
-			wp_delete_post( $checkin_pageid );
-			delete_option( 'event_checkin_page_created' );
+		global $wpdb;
+		if ( is_multisite() && $network_wide ) { 
+			
+			$blogids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+			foreach ( $blogids as $blog_id ) {
+				switch_to_blog($blog_id); 
+				$checkin_pageid = get_option( 'event_checkin_page_created', false );
+				if ( $checkin_pageid ) {
+					wp_delete_post( $checkin_pageid );
+					delete_option( 'event_checkin_page_created' );
+				}
+				restore_current_blog();
+			}
+		} else {
+				$checkin_pageid = get_option( 'event_checkin_page_created', false );
+				if ( $checkin_pageid ) {
+					wp_delete_post( $checkin_pageid );
+					delete_option( 'event_checkin_page_created' );
+				}
 		}
+		
 	}
 
 	register_activation_hook( __FILE__, 'wps_etmfw_create_checkin_page' );
 	register_deactivation_hook( __FILE__, 'wps_etmfw_delete_checkin_page' );
+
+	add_action( 'wp_initialize_site', 'wps_etmfw_standard_plugin_on_create_blog', 900 );
+	 function wps_etmfw_standard_plugin_on_create_blog( $new_site ){
+		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+			require_once ABSPATH . '/wp-admin/includes/plugin.php';
+		}
+		if ( is_plugin_active_for_network( 'event-tickets-manager-for-woocommerce/event-tickets-manager-for-woocommerce.php' ) ) {
+			$blog_id = isset( $new_site->blog_id ) ? $new_site->blog_id : '';
+			switch_to_blog( $blog_id );
+
+			if ( ! get_option( 'event_checkin_page_created', false ) ) {
+	
+				$checkin_content = '[wps_etmfw_event_checkin_page]';
+	
+				$checkin_page = array(
+					'post_author'    => get_current_user_id(),
+					'post_name'      => __( 'Event Check In', 'event-tickets-manager-for-woocommerce' ),
+					'post_title'     => __( 'Event Check In', 'event-tickets-manager-for-woocommerce' ),
+					'post_type'      => 'page',
+					'post_status'    => 'publish',
+					'post_content'   => $checkin_content,
+				);
+				$page_id = wp_insert_post( $checkin_page );
+				update_option( 'event_checkin_page_created', $page_id );
+				/* ===== ====== End of Create the Event Checkin Page ====== ======*/
+			}
+
+			restore_current_blog();
+		}
+	 }
 
 	/**
 	 * The core plugin class that is used to define internationalization,
@@ -316,7 +407,12 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		</div>
 		<?php
 	}
-	add_action( 'admin_notices', 'wps_etmfw_plugin_error_notice' );
+	if ( is_multisite() ) { 
+		add_action( 'network_admin_notices', 'wps_etmfw_plugin_error_notice' );
+	} else{
+
+		add_action( 'admin_notices', 'wps_etmfw_plugin_error_notice' );
+	}
 
 	/**
 	 * Deactivate plugin is woocommerce if not activated.
