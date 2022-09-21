@@ -193,8 +193,19 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	public function wps_etmfw_allow_single_quantity( $allow_qty, $product ) {
 
 		if ( $product->is_type( 'event_ticket_manager' ) ) {
+			$active_plugins = (array) get_option( 'active_plugins', array() );
 
-			$allow_qty = true;
+			if ( ! empty( $active_plugins ) ) {
+
+				if( ! in_array( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php', $active_plugins ) ) {
+
+					$allow_qty = true;
+				} else {
+					$allow_qty = false;
+				}
+			
+			}
+
 		}
 		return apply_filters( 'wps_etmfw_increase_event_product_quantity', $allow_qty, $product );
 	}
