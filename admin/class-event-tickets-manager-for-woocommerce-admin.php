@@ -343,6 +343,25 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'class' => 'wps_etmfw_mail_setting_upload_logo_box',
 				'description' => __( 'Upload the image which is used as a logo on your Email Template.', 'event-tickets-manager-for-woocommerce' ),
 			),
+
+			array(
+				'title' => __( 'Ticket Background Colour', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'text',
+				'description'  => __( 'Enter the colour code( e.g. #0000FF ) or colour name( e.g. blue ).', 'event-tickets-manager-for-woocommerce' ),
+				'id'    => 'wps_etmfw_ticket_bg_color',
+				'value' => get_option( 'wps_etmfw_ticket_bg_color', '' ),
+				'class' => 'etmfw-text-class',
+				'placeholder' => __( 'Enter colour/colour code', 'event-tickets-manager-for-woocommerce' ),
+			),
+			array(
+				'title' => __( 'Ticket Text Colour', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'text',
+				'description'  => __( 'Enter the colour code( e.g. #FFFFFF ) or colour name( e.g. black ).', 'event-tickets-manager-for-woocommerce' ),
+				'id'    => 'wps_etmfw_ticket_text_color',
+				'value' => get_option( 'wps_etmfw_ticket_text_color', '' ),
+				'class' => 'etmfw-text-class',
+				'placeholder' => __( 'Enter colour/colour code', 'event-tickets-manager-for-woocommerce' ),
+			),
 		);
 		$etmfw_email_template_settings = apply_filters( 'wps_etmfw_extent_email_template_settings_array', $etmfw_email_template_settings );
 		$etmfw_email_template_settings[] = array(
