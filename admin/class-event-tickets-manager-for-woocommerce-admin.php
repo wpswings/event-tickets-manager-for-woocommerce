@@ -910,4 +910,44 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		echo json_encode( $response );
 		wp_die();
 	}
+
+	/**
+	 * Set order as booking type.
+	 *
+	 * @param int    $order_id current order id.
+	 * @param object $order current order object.
+	 * @return void
+	 */
+	public function wps_etmfw_set_order_as_event_ticket_manager( $order_id, $order ) {
+		$order_items = $order->get_items();
+		foreach ( $order_items as $item ) {
+			$product = $item->get_product();
+			if ( 'event_ticket_manager' === $product->get_type() ) {
+				$order->update_meta_data( 'wps_order_type', 'event' );
+				$order->save();
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Add custom badge of booking at order listing page.
+	 *
+	 * @param string $column_name current table columnname.
+	 * @param int    $order_id current order id.
+	 * @return void
+	 */
+	public function etmfw_add_label_for_event_type( $column_name, $order_id ) {
+		if ( 'order_number' === $column_name ) {
+			$order = wc_get_order( $order_id );
+			if ( 'event' === $order->get_meta( 'wps_order_type', true ) ) {
+				?>
+				<span class="wps-etmfw-event-product-order-listing" title="<?php esc_html_e( 'This order contains Event Product.', 'event-tickets-manager-for-woocommerce' ); ?>">
+					<?php esc_html_e( 'Event', 'event-tickets-manager-for-woocommerce' ); ?>
+				</span>
+				<?php
+			}
+		}
+	}
+
 }

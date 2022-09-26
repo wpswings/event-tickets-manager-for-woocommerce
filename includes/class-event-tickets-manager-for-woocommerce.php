@@ -205,6 +205,10 @@ class Event_Tickets_Manager_For_Woocommerce {
 		// Custom product type.
 		$this->loader->add_action( 'plugins_loaded', $etmfw_plugin_admin, 'wps_wgc_register_event_ticket_manager_product_type' );
 
+		$this->loader->add_action( 'woocommerce_new_order', $etmfw_plugin_admin, 'wps_etmfw_set_order_as_event_ticket_manager', 10, 2 );
+
+		$this->loader->add_action( 'manage_shop_order_posts_custom_column', $etmfw_plugin_admin, 'etmfw_add_label_for_event_type', 20, 2 );
+
 	}
 
 	/**
@@ -242,6 +246,8 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		// Custom product type.
 		$this->loader->add_action( 'plugins_loaded', $etmfw_plugin_public, 'wps_wgc_register_event_ticket_manager_product_types' );
+
+		$this->loader->add_action( 'woocommerce_new_order', $etmfw_plugin_public, 'wps_etmfw_set_order_as_event_ticket_manager', 10, 2 );
 	}
 
 

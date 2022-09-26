@@ -1509,4 +1509,23 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	public function wps_wgc_register_event_ticket_manager_product_types() {
 		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'includes/class-wc-product-event-ticket-manager.php';
 	}
+
+	/**
+	 * Set order as booking type.
+	 *
+	 * @param int    $order_id current order id.
+	 * @param object $order current order object.
+	 * @return void
+	 */
+	public function wps_etmfw_set_order_as_event_ticket_manager( $order_id, $order ) {
+		$order_items = $order->get_items();
+		foreach ( $order_items as $item ) {
+			$product = $item->get_product();
+			if ( 'event_ticket_manager' === $product->get_type() ) {
+				$order->update_meta_data( 'wps_order_type', 'event' );
+				$order->save();
+				break;
+			}
+		}
+	}
 }
