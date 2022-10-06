@@ -134,6 +134,9 @@ if ( $activated ) {
 
 	/**
 	 * Function to create check in page template.
+	 *
+	 * @param string $network_wide is a string.
+	 * @return void
 	 */
 	function wps_etmfw_create_checkin_page($network_wide) {
 		/* ===== ====== Create the Check Event Checkin Page ====== ======*/
@@ -215,6 +218,13 @@ if ( $activated ) {
 	register_deactivation_hook( __FILE__, 'wps_etmfw_delete_checkin_page' );
 
 	add_action( 'wp_initialize_site', 'wps_etmfw_standard_plugin_on_create_blog', 900 );
+
+	/**
+	 * Function to create blog.
+	 *
+	 * @param object $new_site is the object.
+	 * @return void
+	 */
 	 function wps_etmfw_standard_plugin_on_create_blog( $new_site ){
 		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 			require_once ABSPATH . '/wp-admin/includes/plugin.php';
