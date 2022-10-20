@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: events, tickets, events plugin, event management, event manager, event schedule, schedule, events calendar, calendar, event page, 
 Requires at least: 4.6
-Tested up to: 6.0.1
+Tested up to: 6.0.3
 WC requires at least: 4.0
-WC tested up to: 6.8.1
-Stable tag: 1.0.9
+WC tested up to: 7.0.0
+Stable tag: 1.10
 Requires PHP: 7.2 or Higher
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -42,6 +42,9 @@ Events Tickets Manager For WooCommerce is a complete solution for merchants that
 * Create an event management and ticketing system with WooCommerce.
 * Allow the customers to validate their check-ins using emails.
 * The best part is you can fully automate your event and ticketing website & schedule of events with event manager WordPress.
+* The Event Tickets Manager Plugin supports multisite compatibility.
+* Event Tickets WooCommerce allows dynamic CSS to change the background and text of the ticket to give a dynamic look.
+
 
 
 == PLUGIN MEETS YOUR REQUIREMENT, SO ==
@@ -53,22 +56,28 @@ Events Tickets Manager For WooCommerce is a complete solution for merchants that
 **1) Ticket Stock Management**
 The WordPress events  plugin i.e. Event Tickets Manager For WooCommerce uses the default stock management system to show customers the number of available tickets. The merchant can manage the stock of the tickets from the admin panel. You can also see how many event tickets are sold and track if you are running out of stock with the help of a WordPress event calendar. 
 
-**2) Set Location For Events With Google Map**
+**2) Dynamic CSS on Ticket**
+The Event Ticket Manager For WooCommerce plugin allows merchants to give a Dynamic CSS on Ticket. The merchant can alter the background color of the ticket to give it a more interesting appearance. The merchant can alter the text color on the ticket to give it a more vibrant and better appearance.
+
+**3) Multisite Compatibility**
+Users of the Multisite Compatibility feature can control numerous websites with similar functions from a single dashboard. You may set up the Event Ticket Manager plugin on websites in your multisite network with  this compatibility feature.
+
+**4) Set Location For Events With Google Map**
 Provide a high-level view of your offline events with event manager WordPress  by showing the exact location of events to the user in the frontend. The plugin is integrated with Google Maps that lets WooCommerce store owners show the live location of the events on the store.
 
-**3) Download Tickets As PDF**
+**5) Download Tickets As PDF**
 The WooCommerce Event Tickets Manager allows the customer to download the tickets as PDF for offline use. When customers buy the event tickets for an event from your WooCommerce store they send an email with a pdf attachment of the ticket. The customers can also download the ticket from the **My Account tab.**
 
-**4) Events Calendar**
+**6) Events Calendar**
 The Events Ticket Manager comes with an interactive calendar widget. The widget shows your customers the names of upcoming, past, and present ongoing events in the form of a list or grid.
 
-**5) Edit Your Ticket Content With A Breeze**
+**7) Edit Your Ticket Content With A Breeze**
 The WooCommerce Event Plugin gives the merchants an easy-to-use editor to update the content of the tickets mailed to customers. You can very easily edit the subject and the main body of your WooCommerce event tickets. The editor also lets you use the shortcode to insert the name of your site in emails.
 
-**6) Validate Event Check-in Using Emails**
+**8) Validate Event Check-in Using Emails**
 The users have to use the email address on which they received the ticket. By entering the email addresses users can validate their check-in for the events they are planning to participate in.
 
-**7) WPML Multilingual Support**
+**9) WPML Multilingual Support**
 The Event Ticket System Plugin comes with [**WPML**](https://wpml.org/purchase/) multilingual support, so as to say, the WooCommerce extension will work in your local language. You can also use the Loco Translate Plugin to translate the string into your local language.
 Thus, making Events plugin one of the best online ticketing solutions and event management plugins in WordPress for eCommerce websites.
 
@@ -97,12 +106,13 @@ Visit [**Event Tickets Managers for WooCommerce Documentation**](https://docs.wp
    * Facebook Sharing of Events.
    * Send Tickets To Users On Processing Order Also.
    * Set The Price Of Event Tickets Depending On Specific User Type.
-   * QR Code Inclusion on Tickets.
+   * QR Code Inclusion on Tickets. Now Customer Can Scan Code with Event Ticket Scanner.
+   * Events Tickets allows you to filter any event related order in the order table.
 
 
 == TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF WOOCOMMERCE EVENTS PLUGIN ==
 
-The  Events Manager plugin lets the merchant add events as WooCommerce products and create ticketing websites with WordPress.
+The  Events Manager plugin lets the merchant add events as WooCommerce products and create ticketing website with WordPress.
 
 > Note:  Get [**Event Tickets Manager  for WooCommerce Pro**](https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-pro&utm_medium=events-org-page&utm_campaign=events-pro)
 
@@ -147,6 +157,9 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 13. Upload Event  Logo
 14. Events
 15. Event check-in page
+16. Dynamic CSS 
+17. Ticket Background Color
+18. Ticket Text Color
 
 
 == Frequently Asked Questions ==
@@ -178,6 +191,11 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 
 == Changelog ==
+= 1.1.0 - Released on 20 October 2022 =
+* New: Dynamic CSS on Tickets
+* New: Multisite Compatibility
+* New: Compatible with latest version of Php 8
+* New: Compatible with the latest WP and WC
 
 = 1.0.9 - Released on 31 August 2022 =
 * New: Minor Bug fixes and Enhancement
@@ -225,6 +243,9 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Upgrade Notice == 
 
-= 1.0.9 - Released on 31 August 2022 =
-* New: Minor Bug fixes and Enhancement
+= 1.1.0 - Released on 20 October 2022 =
+* New: Dynamic CSS on Tickets
+* New: Multisite Compatibility
+* New: Compatible with latest version of Php 8
 * New: Compatible with the latest WP and WC
+
