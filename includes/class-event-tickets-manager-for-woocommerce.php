@@ -81,7 +81,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 			$this->version = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '1.0.4';
+			$this->version = '1.1.0';
 		}
 
 		$this->plugin_name = 'event-tickets-manager-for-woocommerce';
@@ -205,6 +205,10 @@ class Event_Tickets_Manager_For_Woocommerce {
 		// Custom product type.
 		$this->loader->add_action( 'plugins_loaded', $etmfw_plugin_admin, 'wps_wgc_register_event_ticket_manager_product_type' );
 
+		$this->loader->add_action( 'woocommerce_new_order', $etmfw_plugin_admin, 'wps_etmfw_set_order_as_event_ticket_manager', 10, 2 );
+
+		$this->loader->add_action( 'manage_shop_order_posts_custom_column', $etmfw_plugin_admin, 'etmfw_add_label_for_event_type', 20, 2 );
+
 	}
 
 	/**
@@ -222,13 +226,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'wp_enqueue_scripts', $etmfw_plugin_public, 'etmfw_public_enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $etmfw_plugin_public, 'etmfw_public_enqueue_scripts' );
 		$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $etmfw_plugin_public, 'wps_etmfw_before_add_to_cart_button_html' );
-
-		$active_plugins = (array) get_option( 'active_plugins', array() );
-
-		if ( ! empty( $active_plugins ) && ! in_array( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php', $active_plugins ) ) {
-
-			$this->loader->add_filter( 'woocommerce_is_sold_individually', $etmfw_plugin_public, 'wps_etmfw_allow_single_quantity', 10, 2 );
-		}
+		$this->loader->add_filter( 'woocommerce_is_sold_individually', $etmfw_plugin_public, 'wps_etmfw_allow_single_quantity', 10, 2 );
 		$this->loader->add_filter( 'woocommerce_add_cart_item_data', $etmfw_plugin_public, 'wps_etmfw_cart_item_data', 10, 3 );
 		$this->loader->add_filter( 'woocommerce_get_item_data', $etmfw_plugin_public, 'wps_etmfw_get_cart_item_data', 10, 2 );
 		$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $etmfw_plugin_public, 'wps_etmfw_create_order_line_item', 10, 3 );
@@ -248,6 +246,8 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		// Custom product type.
 		$this->loader->add_action( 'plugins_loaded', $etmfw_plugin_public, 'wps_wgc_register_event_ticket_manager_product_types' );
+
+		$this->loader->add_action( 'woocommerce_new_order', $etmfw_plugin_public, 'wps_etmfw_set_order_as_event_ticket_manager', 10, 2 );
 	}
 
 

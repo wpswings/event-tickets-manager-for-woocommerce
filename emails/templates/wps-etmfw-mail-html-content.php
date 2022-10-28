@@ -9,6 +9,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 // Inline style used for sending in email.
 ?>
 <!DOCTYPE html>
@@ -31,24 +32,47 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<td style="width: 20%;background: #000000;">
 									[LOGO]
 								</td>
-								<td style="width: 60%;background: #2196f3;">
+								<?php 
+									  $bg_color = ! empty( get_option( 'wps_etmfw_ticket_bg_color', '' ) ) ? get_option( 'wps_etmfw_ticket_bg_color' ) : "#2196f3" ;
+									  $text_color = ! empty( get_option( 'wps_etmfw_ticket_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_text_color' ) : "#ffffff" ;
+								?>
+								<td style="width: 60%;background: <?php echo esc_attr( $bg_color ); ?>">
 									<table style="padding: 20px; table-layout: auto; width: 100%;">
 										<tbody>
 											<tr>
 												<td style="text-align: center;">
-													<h1 style="margin: 0 0 15px;font-size: 32px;color: #ffffff;">[EVENTNAME]</h1>
+													<h1 style="margin: 0 0 15px;font-size: 32px;color: <?php echo esc_attr( $text_color ); ?>;">[EVENTNAME]</h1>
 												</td>
 											</tr>
 											<tr>
 												<td style="color: #ffffff;padding: 10px 0;">
-													<h3 style="margin: 0;color: #ffffff;">Venue - [VENUE]</h3>
+													<h3 style="margin: 0;color: <?php echo esc_attr( $text_color ); ?>;">Venue - [VENUE]</h3>
 												</td>
 											</tr>
 											<tr>
 												<td style="color: #ffffff;padding: 10px 0;">									
-													<h3 style="margin: 0;color: #ffffff;">Date - [STARTDATE] To [ENDDATE]</h3>						
+													<h3 style="margin: 0;color: <?php echo esc_attr( $text_color ); ?>;">Date - [STARTDATE] To [ENDDATE]</h3>						
 												</td>
 											</tr>
+											<?php require_once ABSPATH . 'wp-admin/includes/plugin.php';
+											$plug           = get_plugins();
+											if ( isset( $plug['event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php'] ) ) {
+												if( is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) {
+													
+													if ( ! version_compare( $plug['event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php']['Version'], '1.0.4', '<' ) ) { 
+														if( 'on' == get_option( 'wps_etmfwp_include_qr' ) ) {
+														
+														?>
+														<tr>
+															<td style="color: <?php echo esc_attr( $bg_color ); ?>;padding: 10px 0;">									
+																<h3 style="margin: 0;color: <?php echo esc_attr( $text_color ); ?>;">Ticket - [TICKET1]</h3>						
+															</td>
+														</tr>
+										<?php			}
+													}
+												}
+											} ?>
+											
 										</tbody>
 									</table>
 								</td>

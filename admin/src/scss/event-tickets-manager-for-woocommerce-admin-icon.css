@@ -1,1 +1,8 @@
 @import url('https://use.fontawesome.com/releases/v5.6.3/css/all.css');
+span.wps-etmfw-event-product-order-listing {
+    background-color: #2196f3;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 4px 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  }

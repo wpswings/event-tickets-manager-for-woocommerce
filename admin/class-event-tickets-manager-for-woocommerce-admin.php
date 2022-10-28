@@ -343,6 +343,25 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'class' => 'wps_etmfw_mail_setting_upload_logo_box',
 				'description' => __( 'Upload the image which is used as a logo on your Email Template.', 'event-tickets-manager-for-woocommerce' ),
 			),
+
+			array(
+				'title' => __( 'Ticket Background Colour', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'text',
+				'description'  => __( 'Enter the colour code( e.g. #0000FF ) or colour name( e.g. blue ).', 'event-tickets-manager-for-woocommerce' ),
+				'id'    => 'wps_etmfw_ticket_bg_color',
+				'value' => get_option( 'wps_etmfw_ticket_bg_color', '' ),
+				'class' => 'etmfw-text-class',
+				'placeholder' => __( 'Enter colour/colour code', 'event-tickets-manager-for-woocommerce' ),
+			),
+			array(
+				'title' => __( 'Ticket Text Colour', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'text',
+				'description'  => __( 'Enter the colour code( e.g. #FFFFFF ) or colour name( e.g. black ).', 'event-tickets-manager-for-woocommerce' ),
+				'id'    => 'wps_etmfw_ticket_text_color',
+				'value' => get_option( 'wps_etmfw_ticket_text_color', '' ),
+				'class' => 'etmfw-text-class',
+				'placeholder' => __( 'Enter colour/colour code', 'event-tickets-manager-for-woocommerce' ),
+			),
 		);
 		$etmfw_email_template_settings = apply_filters( 'wps_etmfw_extent_email_template_settings_array', $etmfw_email_template_settings );
 		$etmfw_email_template_settings[] = array(
@@ -766,7 +785,11 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				$order_id = sanitize_text_field( wp_unslash( $_GET['post'] ) );
 				$order = new WC_Order( $order_id );
 				$order_status = $order->get_status();
-				if ( 'completed' == $order_status || ( 'processing' == $order_status && 'on' == $wps_etmfw_in_processing ) ) {
+				$temp_status = 'completed';
+				if( 'on' == $wps_etmfw_in_processing ) {
+					$temp_status = 'processing';
+				}
+				if ( $temp_status == $order_status ) {
 					if ( null != $_product ) {
 						$product_id = $_product->get_id();
 						if ( isset( $product_id ) && ! empty( $product_id ) ) {
@@ -829,6 +852,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'demo' => '<a href="https://demo.wpswings.com/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-demo&utm_medium=events-org-backend&utm_campaign=demo" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Demo.svg"  style="margin-right: 6px;margin-top: -3px;max-width: 15px;">Demo</a>',
 				'documentation' => '<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-org-backend&utm_campaign=documentation" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Documentation.svg" style="margin-right: 6px;margin-top: -3px;max-width: 15px;" >Documentation</a>',
 				'support' => '<a href="https://wpswings.com/submit-query/?utm_source=wpswings-events-support&utm_medium=events-org-backend&utm_campaign=support" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Support.svg" style="margin-right: 6px;margin-top: -3px;max-width: 15px;" >Support</a>',
+				'services' =>'<a href="https://wpswings.com/woocommerce-services/?utm_source=wpswings-events-services&utm_medium=events-pro-backend&utm_campaign=woocommerce-services" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/services.svg" class="wps-info-img" style="margin-right: 6px;margin-top: -3px;max-width: 15px;" alt="Services image">'. __( 'Services', 'mwb-bookings-for-woocommerce' ) . '</a>',
 			);
 
 			$links = array_merge( $links, $new_links );
@@ -886,4 +910,44 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		echo json_encode( $response );
 		wp_die();
 	}
+
+	/**
+	 * Set order as booking type.
+	 *
+	 * @param int    $order_id current order id.
+	 * @param object $order current order object.
+	 * @return void
+	 */
+	public function wps_etmfw_set_order_as_event_ticket_manager( $order_id, $order ) {
+		$order_items = $order->get_items();
+		foreach ( $order_items as $item ) {
+			$product = $item->get_product();
+			if ( 'event_ticket_manager' === $product->get_type() ) {
+				$order->update_meta_data( 'wps_order_type', 'event' );
+				$order->save();
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Add custom badge of booking at order listing page.
+	 *
+	 * @param string $column_name current table columnname.
+	 * @param int    $order_id current order id.
+	 * @return void
+	 */
+	public function etmfw_add_label_for_event_type( $column_name, $order_id ) {
+		if ( 'order_number' === $column_name ) {
+			$order = wc_get_order( $order_id );
+			if ( 'event' === $order->get_meta( 'wps_order_type', true ) ) {
+				?>
+				<span class="wps-etmfw-event-product-order-listing" title="<?php esc_html_e( 'This order contains Event Product.', 'event-tickets-manager-for-woocommerce' ); ?>">
+					<?php esc_html_e( 'Event', 'event-tickets-manager-for-woocommerce' ); ?>
+				</span>
+				<?php
+			}
+		}
+	}
+
 }
