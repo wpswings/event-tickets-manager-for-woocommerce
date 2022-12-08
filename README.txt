@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: events, tickets, events plugin, event management, event manager, event schedule, schedule, events calendar, calendar, event page, 
 Requires at least: 4.6
-Tested up to: 6.0.3
+Tested up to: 6.1.1
 WC requires at least: 4.0
-WC tested up to: 7.0.0
-Stable tag: 1.10
+WC tested up to: 7.1.0
+Stable tag: 1.1.1
 Requires PHP: 7.2 or Higher
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -19,8 +19,8 @@ Event Tickets Manager for WooCommerce is an extension that allows you to create 
 
 Events Tickets Manager For WooCommerce is a complete solution for merchants that want to add event-based products to their WooCommerce store. Now you don’t have to pay commissions to your third-party services to manage event registration and ticket sales. You can manage the entire process from your WooCommerce store and be your own boss.
 
-* Create event management and ticketing websites with [**WordPress events plugin**](https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-pro&utm_medium=events-org-page&utm_campaign=events-pro).
-* Sell event tickets without depending on external service providers
+* Create event management and ticketing websites with [**WordPress Events Plugin**](https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-pro&utm_medium=events-org-page&utm_campaign=events-pro).
+* Sell event tickets without depending on external service providers with WordPress Event Plugin
 * Develop event management and ticketing websites. 
 * Invite the audience to your gig with the WooCommerce event calendar.
 
@@ -32,13 +32,13 @@ Events Tickets Manager For WooCommerce is a complete solution for merchants that
 ==  WITH THE WOOCOMMERCE EVENT TICKETS MANAGER PLUGIN YOU CAN: ==
 
 * Add an event management plugin in WordPress as a WooCommerce product type on your online store.
-* With event manager plugin You can Manage the stock of tickets as admin.
+* With event manager plugin You can Manage the stock of tickets as admin & Manage events.
 * Show the event location to customers at the front end.
 * Send the tickets as PDF to customers in an email.
-* Track check-in status of attendees.
+* With Event in WordPress you can Track check-in status of attendees.
 * Allow the customers to print the tickets from the Order details page for offline use whenever you sell event tickets.
 * Widget to show upcoming, past, and present events in the form of a list or event calendar.
-* You can collect additional information from the user if needed at the time of checkout.
+* You can collect additional information from the user if needed at the time of checkout with the help of event plugin.
 * Create an event management and ticketing system with WooCommerce.
 * Allow the customers to validate their check-ins using emails.
 * The best part is you can fully automate your event and ticketing website & schedule of events with event manager WordPress.
@@ -47,7 +47,7 @@ Events Tickets Manager For WooCommerce is a complete solution for merchants that
 
 
 
-== PLUGIN MEETS YOUR REQUIREMENT, SO ==
+== EVENTS MANAGER PLUGIN MEETS YOUR REQUIREMENT, SO ==
 [**Download Now**](https://downloads.wordpress.org/plugins/event-tickets-manager-for-woocommerce.zip)
 
 
@@ -69,7 +69,7 @@ Provide a high-level view of your offline events with event manager WordPress  b
 The WooCommerce Event Tickets Manager allows the customer to download the tickets as PDF for offline use. When customers buy the event tickets for an event from your WooCommerce store they send an email with a pdf attachment of the ticket. The customers can also download the ticket from the **My Account tab.**
 
 **6) Events Calendar**
-The Events Ticket Manager comes with an interactive calendar widget. The widget shows your customers the names of upcoming, past, and present ongoing events in the form of a list or grid.
+The Events Ticket Manager comes with an interactive calendar widget. The widget shows your customers the names of upcoming, past, and present ongoing events in the form of a list or grid via event calendar .
 
 **7) Edit Your Ticket Content With A Breeze**
 The WooCommerce Event Plugin gives the merchants an easy-to-use editor to update the content of the tickets mailed to customers. You can very easily edit the subject and the main body of your WooCommerce event tickets. The editor also lets you use the shortcode to insert the name of your site in emails.
@@ -123,9 +123,9 @@ The  Events Manager plugin lets the merchant add events as WooCommerce products 
 == SUPPORT ==
 If you need support or have questions, kindly use our online chat window [**here**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=events-org-page&utm_campaign=official) or connect with us then [**Generate a ticket**](https://wpswings.com/submit-query/?utm_source=wpswings-events-query&utm_medium=events-org-page&utm_campaign=query)
 
-Create and Revamp Your Store with  [**WooCommerce Services**](https://wpswings.com/woocommerce-services/?utm_source=wpswings-events-services&utm_medium=events-org-page&utm_campaign=woocommerce-services )
+>If our documentation doesn’t contain the solution to your problem, you can visit the [**WP Swings Forums Community**](https://forums.wpswings.com/?utm_source=wpswings-forums&utm_medium=events-org-page&utm_campaign=forum)
 
-
+> Create and Revamp Your Store with  [**WooCommerce Services**](https://wpswings.com/woocommerce-services/?utm_source=wpswings-events-services&utm_medium=events-org-page&utm_campaign=woocommerce-services )
 
 
 == Installation ==
@@ -191,7 +191,10 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 
 == Changelog ==
-= 1.1.0 - Released on 20 October 2022 =
+= 1.1.1 - Released on 1  December 2022 =
+* New: Compatible with the latest WP and WC
+
+= 1.1.0 - Released on 19 October 2022 =
 * New: Dynamic CSS on Tickets
 * New: Multisite Compatibility
 * New: Compatible with latest version of Php 8
@@ -243,9 +246,6 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Upgrade Notice == 
 
-= 1.1.0 - Released on 20 October 2022 =
-* New: Dynamic CSS on Tickets
-* New: Multisite Compatibility
-* New: Compatible with latest version of Php 8
+= 1.1.1 - Released on 1 December 2022 =
 * New: Compatible with the latest WP and WC
 
