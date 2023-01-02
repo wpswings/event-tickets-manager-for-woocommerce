@@ -208,6 +208,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'woocommerce_new_order', $etmfw_plugin_admin, 'wps_etmfw_set_order_as_event_ticket_manager', 10, 2 );
 
 		$this->loader->add_action( 'manage_shop_order_posts_custom_column', $etmfw_plugin_admin, 'etmfw_add_label_for_event_type', 20, 2 );
+		$this->loader->add_action( 'wp_print_scripts', $etmfw_plugin_admin, 'etmfw_dequeque_theme_script', 20 );
 
 	}
 

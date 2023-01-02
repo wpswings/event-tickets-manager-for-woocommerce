@@ -437,6 +437,3 @@ if ( $activated ) {
 	add_action( 'admin_init', 'wps_etmfw_plugin_deactivate' );
 
 }
-
-
-

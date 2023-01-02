@@ -130,6 +130,22 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			wp_enqueue_script( $this->plugin_name . 'admin-edit-product-js' );
 
 		}
+		
+	}
+
+	/**
+	 * Dequeue theme.
+	 *
+	 * @return void
+	 */
+	public function etmfw_dequeque_theme_script() {
+		$temp_theme = wp_get_theme();
+			
+		if( 'Divi' == $temp_theme['Name']  ){
+
+			wp_dequeue_script( 'et_bfb_admin_date_addon_js' );
+			
+		}
 	}
 
 	/**
