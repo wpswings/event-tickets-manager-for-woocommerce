@@ -146,6 +146,8 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			wp_dequeue_script( 'et_bfb_admin_date_addon_js' );
 			
 		}
+		
+		wp_dequeue_script( 'acf-timepicker' );
 	}
 
 	/**
