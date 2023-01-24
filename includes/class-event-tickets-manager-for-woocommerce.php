@@ -249,6 +249,15 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'plugins_loaded', $etmfw_plugin_public, 'wps_wgc_register_event_ticket_manager_product_types' );
 
 		$this->loader->add_action( 'woocommerce_new_order', $etmfw_plugin_public, 'wps_etmfw_set_order_as_event_ticket_manager', 10, 2 );
+		
+		// Register Endpoint For "MY Event" tab.
+		$this->loader->add_action( 'init', $etmfw_plugin_public, 'wps_my_event_register_endpoint' );
+		// Add query variable.
+		$this->loader->add_action( 'query_vars', $etmfw_plugin_public, 'wps_myevent_endpoint_query_var', 0 );
+		// Inserting custom My Event tab.
+		$this->loader->add_action( 'woocommerce_account_menu_items', $etmfw_plugin_public, 'wps_event_add_myevent_tab' );
+		// Populate mmbership details tab.
+		$this->loader->add_action( 'woocommerce_account_wps-myevent-tab_endpoint', $etmfw_plugin_public, 'wps_myevent_populate_tab' );
 	}
 
 

@@ -1528,4 +1528,61 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			}
 		}
 	}
+
+	/**
+	 * Register Endpoint for My Event Tab.
+	 */
+	public function wps_my_event_register_endpoint() {
+
+		add_rewrite_endpoint( 'wps-myevent-tab', EP_PERMALINK | EP_PAGES );
+		flush_rewrite_rules();
+	}
+
+	/**
+	 * Adding a query variable for the Endpoint.
+	 *
+	 * @param array $vars An array of query variables.
+	 */
+	public function wps_myevent_endpoint_query_var( $vars ) {
+
+		$vars[] = 'wps-myevent-tab';
+
+		/**
+		 * Filter for endpoints.
+		 *
+		 * @since 1.0.0
+		 */
+		$vars = apply_filters( 'wps_myevent_endpoint_query_var', $vars );
+
+		return $vars;
+	}
+
+	/**
+	 * Inserting custom membership endpoint.
+	 *
+	 * @param array $items An array of all menu items on My Account page.
+	 */
+	public function wps_event_add_myevent_tab( $items ) {
+		// Placing the custom tab just above logout tab.
+		$items['wps-myevent-tab'] = esc_html__( 'My Event', 'membership-for-woocommerce' );
+
+		/**
+		 * Filter for my event tab.
+		 *
+		 * @since 1.0.0
+		 */
+		$items = apply_filters( 'wps_event_add_myevent_tab', $items );
+
+		return $items;
+	}
+
+	/**
+	 * Add content to My Event details tab.
+	 *
+	 * @return void
+	 */
+	public function wps_myevent_populate_tab() {
+		require plugin_dir_path( __FILE__ ) . 'partials/wps-myevent-details-tab.php';
+
+	}
 }
