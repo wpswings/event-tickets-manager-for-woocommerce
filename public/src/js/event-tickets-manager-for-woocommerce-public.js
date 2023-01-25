@@ -147,3 +147,35 @@
 			title: "Event!",
 		});
 	}
+
+	jQuery( document ).on( 'click', '#wps_etmfwp_checkin_button', function(e) {
+		e.preventDefault();
+		jQuery("#wps_etmfw_checkin_loader").show();
+		var user_email =  jQuery('#wps_etmfw_chckin_email').val();
+		var for_event = jQuery('#wps_etmfw_event_selected').val();
+		var ticket_num = jQuery('#wps_etmfw_imput_ticket').val();
+		var user_email =  jQuery('#wps_etmfw_chckin_email').val();
+
+		var sel = document.getElementById("wps_etmfw_event_selected");
+		var text= sel.options[sel.selectedIndex].text;
+		var data = {
+			action:'wps_etmfwp_transfer_ticket_org',
+			for_event:for_event,
+			ticket_num:ticket_num,
+			event_name:text,
+			// wps_nonce:etmfwp_public_param.wps_etmfw_nonce,
+			user_email : user_email
+		};
+		jQuery.ajax(
+			{
+				dataType:'json',
+				url: etmfw_public_param.ajaxurl,
+				type: "POST",
+				data: data,
+				success: function(response)
+				{
+					console.log('shared');
+				}
+			}
+		);
+	});
