@@ -600,7 +600,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 */
 	public function wps_etmfw_attach_pdf_to_emails( $attachments, $email_id, $order, $email ) {
 
-		session_start();
+		if(!isset($_SESSION)) 
+		{ 
+			session_start(); 
+		} 
 		$wps_etmfw_in_processing = get_option( 'wps_wet_enable_after_payment_done_ticket', false );
 		if ( 'wps_etmfw_email_notification' == $email_id ) {
 			if ( is_a( $order, 'WC_Order' ) ) {
@@ -1482,10 +1485,15 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
 					$product_id = $product->get_id();
 					$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
+					$wps_trash_event_expire = isset(  $wps_etmfw_product_array['etmfw_event_trash_event'] ) ?  $wps_etmfw_product_array['etmfw_event_trash_event'] : true;
+					$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
 					$end_date = isset( $wps_etmfw_product_array['event_end_date_time'] ) ? $wps_etmfw_product_array['event_end_date_time'] : '';
 					$current_timestamp = current_time( 'timestamp' );
 					$end_date_timestamp = strtotime( $end_date );
 					if ( $end_date_timestamp < $current_timestamp ) {
+						if('yes' == $wps_trash_event_expire){
+							wp_trash_post( $product_id );
+						}
 						$wps_etmfw_if_expired = true;
 					}
 				}
