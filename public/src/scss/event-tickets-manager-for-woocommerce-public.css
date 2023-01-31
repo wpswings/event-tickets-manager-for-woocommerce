@@ -277,3 +277,9 @@ div#wps_etmfw_event_map {
 .woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link--wps-myevent-tab a:before{
 	content: "\f2ce"
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
