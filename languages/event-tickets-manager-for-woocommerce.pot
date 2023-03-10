@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Tickets Manager for WooCommerce 1.1.2\n"
-"POT-Creation-Date: 2023-01-31 19:07+0530\n"
-"PO-Revision-Date: 2023-01-31 19:07+0530\n"
+"POT-Creation-Date: 2023-03-10 16:27+0530\n"
+"PO-Revision-Date: 2023-03-10 16:27+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
 "Language: en_US\n"
@@ -779,7 +779,7 @@ msgid "Event Expired!"
 msgstr ""
 
 #: public/class-event-tickets-manager-for-woocommerce-public.php:1087
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1721
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1720
 msgid "Order not exist."
 msgstr ""
 
@@ -795,15 +795,15 @@ msgstr ""
 msgid "My Event"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1715
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1714
 msgid "Ticket Transfer successfully."
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1724
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1723
 msgid "Wrong Ticket Number / Not Yours Ticket."
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1728
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1727
 msgid "Ticket of Event is not yet purchase."
 msgstr ""
 
