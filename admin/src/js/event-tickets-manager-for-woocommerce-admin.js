@@ -31,6 +31,50 @@
 
 	 $(document).ready(function() {
 
+	// Available Ticket Template Change - Start.
+
+	$('#wps_etmfw_new_layout_setting_save_2').on( 'click', function(e) {
+       $('#wps_etmfw_new_layout_setting_save').trigger("click");
+	});
+
+	var temp_id;
+	$('.wps_etmfw_template_link').on( 'click', function(e) {
+		
+	e.preventDefault();
+	temp_id = $(this).attr('data_link' );
+	// alert(temp_id);
+	$('.wps_etmfw_skin_popup_wrapper').css( 'display', 'flex' );
+		
+			// On yes, reset the css
+			$('.wps_ubo_template_layout_yes').on( 'click', function(e) { //Ticket Template chnage css and design.
+
+				e.preventDefault();
+				$( '#wps_etmfw_ticket_template').val( temp_id ); 
+				$( '.wps_etmfw_animation_loader' ).css('display', 'flex'); // Loader.
+	
+				// For Scroll back.
+				$( '#wps_etmfw_new_layout_setting_save' ).click(); // Save Ticket Layout.
+				$('.wps_etmfw_skin_popup_wrapper').css( 'display', 'none' );
+			});
+
+		// On No, do nothing.
+		$('.wps_ubo_template_layout_no').on( 'click', function(e) {
+			e.preventDefault();
+			$('.wps_etmfw_skin_popup_wrapper').css( 'display', 'none' );
+
+		});
+			
+	});
+
+	// Onclick outside the popup close the popup.
+	$('body').click( function(e) {
+				if( e.target.className == 'wps_etmfw_skin_popup_wrapper' ) {
+					$('.wps_etmfw_skin_popup_wrapper').hide();
+				}
+			  }
+			);
+	// Available Ticket Template Change - End.
+
 		const MDCText = mdc.textField.MDCTextField;
         const textField = [].map.call(document.querySelectorAll('.mdc-text-field'), function(el) {
             return new MDCText(el);

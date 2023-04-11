@@ -798,4 +798,214 @@ button#wps_etmfw_mail_setting_upload_logo_button {
     border-radius: 5px;
   }
 
+  /*Appearance Section start*/
+.wps_etmfw_ticket_layout_div_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+  }
 
+  .wps-etmfw-template-section {
+    flex: 0 0 58%;
+    margin-right: 2%;
+  }
+
+/*My custom Css -- end*/
+.wps-etmfw-template-section {
+    margin-top: 25px;
+  }
+
+  .wps-etmfw-template-section {
+    flex: 0 0 100%;
+    margin-right: 0;
+  }
+  
+  @media screen and (max-width:520px) {
+
+    .wps_etmfw_template_select-wrapper {
+        gap: 0;
+    }
+  
+    .wps_etmfw_template_select-wrapper .wps_etmfw_template_select {
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+  }
+
+  .wps_etmfw_template_select-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .wps_etmfw_template_select-wrapper .wps_etmfw_template_select {
+    max-width: 45%;
+    flex: 0 0 45%;
+    padding: 10px;
+    background-color: #eeeeee;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .wps_etmfw_template_select-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center;
+  }
+
+  @media screen and (max-width:768px) {
+    .nav-tab-wrapper.wps-ubo-appearance-nav-tab {
+        width: 100%;
+    }
+  
+    .wps_etmfw_template_select-wrapper {
+        gap: 20px;
+    }
+  }
+
+  /* Layout change popup. */
+.wps_etmfw_skin_popup_wrapper {
+    position: fixed;
+    left: -30px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1;
+    display: none;
+    padding: 15px;
+  }
+  .wps_etmfw_skin_popup_inner {
+    background-color: #ffffff;
+    max-width: 550px;
+    width: calc(100% - 70px);
+    text-align: center;
+    padding: 20px;
+    border-radius: 6px;
+    animation: flipInX 0.5s linear;
+  }
+
+  .wps_etmfw_skin_popup_head {
+    max-width: 100px;
+    margin: 0 auto;
+  }
+  .wps_etmfw_skin_popup_head img {
+    max-width: 100%;
+    width: auto;
+  }
+  .wps_etmfw_skin_popup_ques h5 {
+    font-size: 18px;
+    line-height: 1.5;
+    margin: 10px 0;
+  }
+  .wps_etmfw_skin_popup_ques p {
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 15px 0;
+  }
+
+  .wps_ubo_template_layout_no, 
+.wps_ubo_template_layout_yes {
+  padding: 8px 30px;
+  display: inline-block;
+  background-color: #6dbe45;
+  color: #ffffff;
+  margin: 10px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 14px;
+}
+.wps_ubo_template_layout_no {
+  background-color: #f04848;
+}
+.wps_ubo_template_layout_no:hover, 
+.wps_ubo_template_layout_yes:hover,
+.wps_ubo_template_layout_no:focus, 
+.wps_ubo_template_layout_yes:focus{
+  opacity: 0.8;
+  outline: 0;
+  box-shadow: none;
+  color: #ffffff;
+}
+
+.wps_etmfw_animation_loader {
+    position: fixed;  
+    left: 0;  
+    right: 0; 
+    text-align: center; 
+    background-color: rgba(255,255,255,0.6);  
+    bottom: 0;  
+    top: 0; 
+    z-index: 9999; 
+    display: none;  
+    align-items: center;  
+    justify-content: center;  
+    align-items: center;  
+    flex-direction: column; 
+  }
+
+  .wps_etmfw_template_select.wps_etmfw_selected_class {
+    background-color: #ffffff;
+    border: 6px solid #7979f6;
+  }
+
+  .wps_etmfw_premium_strip:after {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 39px solid transparent;
+    border-top: 21px solid #78c900;
+    position: absolute;
+    content: '';
+    top: 8px;
+    left: 24px;
+    transform: rotate(27deg);
+    z-index: -1;
+  }
+  .wps_etmfw_premium_strip {
+    border: 1px solid #78c900;
+    color: #ffffff;
+    background-color: #78c900;
+    position: absolute;
+    top: 7px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 32px;
+    height: 21px;
+    transform: skewY(-26deg);
+    color: #ffffff;
+    text-align: right;
+    font-size: 14px;
+  }
+
+  a.wps_etmfw_template_link {
+    display: block;
+    text-align: center;
+  }
+
+  a.wps_etmfw_template_link img {
+    max-width: 100%;
+  }
+
+  a.wps_etmfw_template_link_pro {
+    display: block;
+    text-align: center;
+  }
+
+  a.wps_etmfw_template_link_pro img {
+    max-width: 100%;
+  }
+  .wps_etmfw_template_name {
+    text-align: center;
+  }
+
+  .wps_hide_save_button {
+    display: none;
+  }
+  .wps_center_save_changes{
+    margin:0 auto;
+  }
