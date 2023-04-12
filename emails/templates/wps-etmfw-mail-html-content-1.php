@@ -73,7 +73,7 @@ $text_color = ! empty( get_option( 'wps_etmfw_ticket_text_color', '' ) ) ? get_o
         <td style="width: 25%; padding: 15px 15px; vertical-align: top; text-align: center; box-sizing: border-box;">
 					<table style="100%; box-sizing: border-box;">
 						<tr>
-							<td style="background-color: #483DE0;padding: 5px 15px;border-radius: 5px;text-align: center;color: <?php echo esc_attr( $text_color ); ?>;">Your Ticket</td>
+							<td style="background-color: #EFC4C8;padding: 5px 15px;border-radius: 5px;text-align: center;color: <?php echo esc_attr( $text_color ); ?>;">Your Ticket</td>
 						</tr>
 						<tr>
 							<td style="padding-top: 20px; width: 190px;text-align: center;">

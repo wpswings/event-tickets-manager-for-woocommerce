@@ -31,7 +31,7 @@ if ( in_array( $plugin , $pluginList ) ) {
 						<?php if(true != $wps_is_pro_active){?><span class="wps_etmfw_premium_strip"><?php esc_html_e( 'Pro', 'upsell-order-bump-offer-for-woocommerce' ); }?></span>	
 						<p class="wps_etmfw_template_name" ><strong><?php esc_html_e( 'Elixir', 'upsell-order-bump-offer-for-woocommerce' ); ?></strong></p>
 							<a href="javascript:void" class=" <?php if(true == $wps_is_pro_active){ ?>  <?php echo 'wps_etmfw_template_link'; } else { echo 'wps_etmfw_template_link_pro'; } ?>" data_link = '2' >
-								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-1.png' ); ?>">
+								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-2.png' ); ?>">
 							</a>
 						</div>
 
@@ -40,7 +40,7 @@ if ( in_array( $plugin , $pluginList ) ) {
 						<?php if(true != $wps_is_pro_active){?><span class="wps_etmfw_premium_strip"><?php esc_html_e( 'Pro', 'upsell-order-bump-offer-for-woocommerce' ); }?></span>	
 						<p class="wps_etmfw_template_name" ><strong><?php esc_html_e( 'Demure', 'upsell-order-bump-offer-for-woocommerce' ); ?></strong></p>
 							<a href="javascript:void" class=" <?php if(true == $wps_is_pro_active){ ?>  <?php echo 'wps_etmfw_template_link'; } else { echo 'wps_etmfw_template_link_pro'; } ?>" data_link = '3' >
-								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-1.png' ); ?>">
+								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-3.png' ); ?>">
 							</a>
 						</div>
 						
@@ -49,7 +49,7 @@ if ( in_array( $plugin , $pluginList ) ) {
 						<?php if(true != $wps_is_pro_active){?><span class="wps_etmfw_premium_strip"><?php esc_html_e( 'Pro', 'upsell-order-bump-offer-for-woocommerce' ); }?></span>	
 						<p class="wps_etmfw_template_name" ><strong><?php esc_html_e( 'Mellifluous', 'upsell-order-bump-offer-for-woocommerce' ); ?></strong></p>
 							<a href="javascript:void" class=" <?php if(true == $wps_is_pro_active){ ?>  <?php echo 'wps_etmfw_template_link'; } else { echo 'wps_etmfw_template_link_pro'; } ?>" data_link = '4' >
-								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-1.png' ); ?>">
+								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-4.png' ); ?>">
 							</a>
 						</div>
 					</div>
@@ -83,8 +83,7 @@ if ( in_array( $plugin , $pluginList ) ) {
 		<!-- Popup body. -->
 		<div class="wps_etmfw_skin_popup_content">
 			<div class="wps_etmfw_skin_popup_ques">
-				<h5><?php esc_html_e( 'Do you really want to change PDF Ticket layout ?', 'upsell-order-bump-offer-for-woocommerce' ); ?></h5>
-				<p><?php esc_html_e( 'Changing layout will reset Design settings back to default.', 'upsell-order-bump-offer-for-woocommerce' ); ?></p>
+				<h5><strong><?php esc_html_e( 'Do you really want to change PDF Ticket layout ?', 'upsell-order-bump-offer-for-woocommerce' ); ?></strong></h5>
 			</div>
 			<div class="wps_etmfw_skin_popup_option">
 				<!-- Yes button. -->
