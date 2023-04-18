@@ -32,9 +32,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<td style="width: 20%;background: #000000;">
 									[LOGO]
 								</td>
-								<?php 
-									  $bg_color = ! empty( get_option( 'wps_etmfw_ticket_bg_color', '' ) ) ? get_option( 'wps_etmfw_ticket_bg_color' ) : "#2196f3" ;
-									  $text_color = ! empty( get_option( 'wps_etmfw_ticket_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_text_color' ) : "#ffffff" ;
+								<?php
+									  $bg_color = ! empty( get_option( 'wps_etmfw_ticket_bg_color', '' ) ) ? get_option( 'wps_etmfw_ticket_bg_color' ) : '#2196f3';
+									  $text_color = ! empty( get_option( 'wps_etmfw_ticket_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_text_color' ) : '#ffffff';
 								?>
 								<td style="width: 60%;background: <?php echo esc_attr( $bg_color ); ?>">
 									<table style="padding: 20px; table-layout: auto; width: 100%;">
@@ -54,24 +54,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 													<h3 style="margin: 0;color: <?php echo esc_attr( $text_color ); ?>;">Date - [STARTDATE] To [ENDDATE]</h3>						
 												</td>
 											</tr>
-											<?php require_once ABSPATH . 'wp-admin/includes/plugin.php';
+											<?php
+											require_once ABSPATH . 'wp-admin/includes/plugin.php';
 											$plug           = get_plugins();
 											if ( isset( $plug['event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php'] ) ) {
-												if( is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) {
-													
-													if ( ! version_compare( $plug['event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php']['Version'], '1.0.4', '<' ) ) { 
-														if( 'on' == get_option( 'wps_etmfwp_include_qr' ) ) {
-														
-														?>
+												if ( is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) {
+
+													if ( ! version_compare( $plug['event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php']['Version'], '1.0.4', '<' ) ) {
+														if ( 'on' == get_option( 'wps_etmfwp_include_qr' ) ) {
+
+															?>
 														<tr>
 															<td style="color: <?php echo esc_attr( $bg_color ); ?>;padding: 10px 0;">									
 																<h3 style="margin: 0;color: <?php echo esc_attr( $text_color ); ?>;">Ticket - [TICKET1]</h3>						
 															</td>
 														</tr>
-										<?php			}
+															<?php
+														}
 													}
 												}
-											} ?>
+											}
+											?>
 											
 										</tbody>
 									</table>

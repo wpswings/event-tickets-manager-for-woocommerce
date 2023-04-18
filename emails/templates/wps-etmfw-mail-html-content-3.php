@@ -10,15 +10,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$bg_color = ! empty( get_option( 'wps_etmfw_ticket_bg_color', '' ) ) ? get_option( 'wps_etmfw_ticket_bg_color' ) : "#FFE6EA" ;
-$text_color = ! empty( get_option( 'wps_etmfw_ticket_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_text_color' ) : "#ffffff" ;
+$bg_color = ! empty( get_option( 'wps_etmfw_ticket_bg_color', '' ) ) ? get_option( 'wps_etmfw_ticket_bg_color' ) : '#FFE6EA';
+$text_color = ! empty( get_option( 'wps_etmfw_ticket_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_text_color' ) : '#ffffff';
 // Inline style used for sending in email.
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;500;700;800;900&display=swap');
+	@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;500;700;800;900&display=swap');
 
 		body , html {
 			font-family: 'Inter', sans-serif;
@@ -32,11 +32,11 @@ $text_color = ! empty( get_option( 'wps_etmfw_ticket_text_color', '' ) ) ? get_o
 
 <body style="background-color: #ffffff; margin: 0; box-sizing: border-box;">
   <table cellspacing="0" cellpadding="0" style="width: 900px; background-color: <?php echo esc_attr( $bg_color ); ?>; margin: 0 auto;">
-    <tbody>
-      <tr>
-        <td style="width: 25%; padding: 15px; box-sizing: border-box;">[LOGO]</td>
-        <td style="width: 75%; box-sizing: border-box; background-color: #502343;">
-				<table style="width: 100%; background-image: url(http://localhost:10044/wp-content/plugins/event-tickets-manager-for-woocommerce/admin/src/images/ticket-bg.png); background-size: cover;">
+	<tbody>
+	  <tr>
+		<td style="width: 25%; padding: 15px; box-sizing: border-box;">[LOGO]</td>
+		<td style="width: 75%; box-sizing: border-box; background-color: #502343;">
+				<table style="width: 100%; background-image: url(<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/ticket-bg.png' ); ?>); background-size: cover;">
 					<tr>
 						<td>
 							<table style="width: 80%; padding: 15px 15px; border-right: dashed 2px #ffffff; margin: 0 auto">
@@ -81,11 +81,11 @@ $text_color = ! empty( get_option( 'wps_etmfw_ticket_text_color', '' ) ) ? get_o
 									</td>
 								</tr>					
 								<tr>
-								<?php if( true == $wps_is_qr_is_enable ){?>
+								<?php if ( true == $wps_is_qr_is_enable ) { ?>
 									<td colspan="2">
 										<p style="margin: 0; margin-top: 10px; color:<?php echo esc_attr( $text_color ); ?>; font-size: 16px; text-align: center;">Ticket- <span style="color:<?php echo esc_attr( $text_color ); ?>;">[TICKET1]</span></p>
 									</td>
-									<?php  } ?>
+									<?php } ?>
 								</tr>
 							</table>
 						</td>
@@ -103,16 +103,16 @@ $text_color = ! empty( get_option( 'wps_etmfw_ticket_text_color', '' ) ) ? get_o
 						</td>
 					</tr>
 				</table>
-        </td>
-      </tr>
-    </tbody>
+		</td>
+	  </tr>
+	</tbody>
   </table>
 
 		<div style="width: 870px; padding: 15px; background-color: #FFE6EA; margin: 0 auto; margin-top: 20px; box-sizing: border-box;">
 			<?php
 				$body = get_option( 'wps_etmfw_email_body_content', '' );
-				if ( '' != $body ) {
-			?>
+			if ( '' != $body ) {
+				?>
 			[ADDITIONALINFO]
 			<h4 style="margin-top: 0px; margin-bottom: 10px; font-size: 24px; color: #000000;">Note</h4>
 			<div style="width:auto;text-align:left;vertical-align: top;">

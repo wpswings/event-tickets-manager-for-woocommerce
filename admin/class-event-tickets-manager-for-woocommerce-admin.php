@@ -130,7 +130,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			wp_enqueue_script( $this->plugin_name . 'admin-edit-product-js' );
 
 		}
-		
+
 	}
 
 	/**
@@ -140,13 +140,13 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	 */
 	public function etmfw_dequeque_theme_script() {
 		$temp_theme = wp_get_theme();
-			
-		if( 'Divi' == $temp_theme['Name']  ){
+
+		if ( 'Divi' == $temp_theme['Name'] ) {
 
 			wp_dequeue_script( 'et_bfb_admin_date_addon_js' );
-			
+
 		}
-		
+
 		wp_dequeue_script( 'acf-timepicker' );
 	}
 
@@ -611,7 +611,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					'id' => 'etmfw_event_trash_event',
 					'wrapper_class' => 'show_if_event_ticket_manager',
 					'label' => __( 'Remove/Hide Product', 'event-tickets-manager-for-woocommerce-pro' ),
-					'value' => isset(  $wps_etmfw_product_array['etmfw_event_trash_event'] ) ?  $wps_etmfw_product_array['etmfw_event_trash_event'] : true,
+					'value' => isset( $wps_etmfw_product_array['etmfw_event_trash_event'] ) ? $wps_etmfw_product_array['etmfw_event_trash_event'] : true,
 					'desc_tip'    => true,
 					'description' => __( 'Remove/Hide Current Event Product On Event Expire ', 'event-tickets-manager-for-woocommerce' ),
 				)
@@ -817,7 +817,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				$order = new WC_Order( $order_id );
 				$order_status = $order->get_status();
 				$temp_status = 'completed';
-				if( 'on' == $wps_etmfw_in_processing ) {
+				if ( 'on' == $wps_etmfw_in_processing ) {
 					$temp_status = 'processing';
 				}
 				if ( $temp_status == $order_status ) {
@@ -884,7 +884,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'documentation' => '<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-org-backend&utm_campaign=documentation" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Documentation.svg" style="margin-right: 6px;margin-top: -3px;max-width: 15px;" >Documentation</a>',
 				'video' => '<a href="https://www.youtube.com/embed/9KyB4qpal6M" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/video.png" style="margin-right: 6px;margin-top: -3px;max-width: 15px;" >Video</a>',
 				'support' => '<a href="https://wpswings.com/submit-query/?utm_source=wpswings-events-support&utm_medium=events-org-backend&utm_campaign=support" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Support.svg" style="margin-right: 6px;margin-top: -3px;max-width: 15px;" >Support</a>',
-				'services' =>'<a href="https://wpswings.com/woocommerce-services/?utm_source=wpswings-events-services&utm_medium=events-pro-backend&utm_campaign=woocommerce-services" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/services.svg" class="wps-info-img" style="margin-right: 6px;margin-top: -3px;max-width: 15px;" alt="Services image">'. __( 'Services', 'mwb-bookings-for-woocommerce' ) . '</a>',
+				'services' => '<a href="https://wpswings.com/woocommerce-services/?utm_source=wpswings-events-services&utm_medium=events-pro-backend&utm_campaign=woocommerce-services" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/services.svg" class="wps-info-img" style="margin-right: 6px;margin-top: -3px;max-width: 15px;" alt="Services image">' . __( 'Services', 'mwb-bookings-for-woocommerce' ) . '</a>',
 			);
 
 			$links = array_merge( $links, $new_links );

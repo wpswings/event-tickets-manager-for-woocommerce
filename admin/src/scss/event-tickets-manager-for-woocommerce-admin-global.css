@@ -162,7 +162,7 @@ select {
     font-weight: bold;
     font-size: 14px;
     line-height: 24px;
-    letter-spacing: 0.3px;
+    letter-spacing: -0.7px;
     color: #3F4756;
     display: inline-block;
 }

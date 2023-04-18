@@ -1,20 +1,39 @@
-<?php 
-if(isset($_POST['wps_etmfw_new_layout_setting_save'])) {
-	$wps_selected_pdf_ticket_template = isset($_POST['wps_etmfw_ticket_template']) ? $_POST['wps_etmfw_ticket_template'] : '1';
-    update_option( 'wps_etmfw_ticket_template', $wps_selected_pdf_ticket_template);
+<?php
+/**
+ * Provide a admin area view for the plugin
+ *
+ * This file is used to markup the html field for email template tab.
+ *
+ * @link       https://wpswings.com/
+ * @since      1.0.0
+ *
+ * @package    Event_Tickets_Manager_For_Woocommerce
+ * @subpackage Event_Tickets_Manager_For_Woocommerce/admin/partials
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
-$pluginList = get_option( 'active_plugins' );
+if ( isset( $_POST['wps_etmfw_new_layout_setting_save'] ) ) {
+	$wps_verify_nonce_form = isset( $_POST['wps_layout_value'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_layout_value'] ) ) : '1';
+	if ( wp_verify_nonce( $wps_verify_nonce_form, 'wps_layout_nonce_verify' ) ) {
+		$wps_selected_pdf_ticket_template = isset( $_POST['wps_etmfw_ticket_template'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_ticket_template'] ) ) : '1';
+		update_option( 'wps_etmfw_ticket_template', $wps_selected_pdf_ticket_template );
+	}
+}
+$wps_plugin_list = get_option( 'active_plugins' );
 $wps_is_pro_active = false;
-$plugin = 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php'; 
-if ( in_array( $plugin , $pluginList ) ) {
-   $wps_is_pro_active = true;
+$wps_plugin = 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php';
+if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
+	$wps_is_pro_active = true;
 }
 ?>
 <form action="" method="POST">
 <div class="wps_etmfw_ticket_layout_div_wrapper" >
+<input type="hidden" name="wps_layout_value" value="<?php echo esc_html( wp_create_nonce( 'wps_layout_nonce_verify' ) ); ?>"/>
 				<!-- Template start -->
 				<div class="wps-etmfw-template-section" >
-					<?php $wps_ubo_selected_template = get_option( 'wps_etmfw_ticket_template'); ?>
+					<?php $wps_ubo_selected_template = get_option( 'wps_etmfw_ticket_template' ); ?>
 					<!-- Image wrapper -->
 					<div id="available_tab" class="wps_etmfw_temp_class wps_etmfw_template_select-wrapper" >
 						<!-- Template one. -->
@@ -28,27 +47,63 @@ if ( in_array( $plugin , $pluginList ) ) {
 
 						<!-- Template two. -->
 						<div id ="wps_ubo_premium_popup_1_template" class="wps_etmfw_template_select <?php echo esc_html( 2 === (int) $wps_ubo_selected_template ? 'wps_etmfw_selected_class' : '' ); ?>">
-						<?php if(true != $wps_is_pro_active){?><span class="wps_etmfw_premium_strip"><?php esc_html_e( 'Pro', 'upsell-order-bump-offer-for-woocommerce' ); }?></span>	
+						<?php
+						if ( true != $wps_is_pro_active ) {
+							?>
+							<span class="wps_etmfw_premium_strip"><?php esc_html_e( 'Pro', 'upsell-order-bump-offer-for-woocommerce' ); } ?></span>	
 						<p class="wps_etmfw_template_name" ><strong><?php esc_html_e( 'Elixir', 'upsell-order-bump-offer-for-woocommerce' ); ?></strong></p>
-							<a href="javascript:void" class=" <?php if(true == $wps_is_pro_active){ ?>  <?php echo 'wps_etmfw_template_link'; } else { echo 'wps_etmfw_template_link_pro'; } ?>" data_link = '2' >
+							<a href="javascript:void" class=" 
+							<?php
+							if ( true == $wps_is_pro_active ) {
+								?>
+								  <?php
+									echo 'wps_etmfw_template_link';
+							} else {
+								echo 'wps_etmfw_template_link_pro'; }
+							?>
+																" data_link = '2' >
 								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-2.png' ); ?>">
 							</a>
 						</div>
 
 						<!-- Template three. -->
 						<div id ="wps_ubo_premium_popup_2_template"  class="wps_etmfw_template_select <?php echo esc_html( 3 === (int) $wps_ubo_selected_template ? 'wps_etmfw_selected_class' : '' ); ?>">
-						<?php if(true != $wps_is_pro_active){?><span class="wps_etmfw_premium_strip"><?php esc_html_e( 'Pro', 'upsell-order-bump-offer-for-woocommerce' ); }?></span>	
+						<?php
+						if ( true != $wps_is_pro_active ) {
+							?>
+							<span class="wps_etmfw_premium_strip"><?php esc_html_e( 'Pro', 'upsell-order-bump-offer-for-woocommerce' ); } ?></span>	
 						<p class="wps_etmfw_template_name" ><strong><?php esc_html_e( 'Demure', 'upsell-order-bump-offer-for-woocommerce' ); ?></strong></p>
-							<a href="javascript:void" class=" <?php if(true == $wps_is_pro_active){ ?>  <?php echo 'wps_etmfw_template_link'; } else { echo 'wps_etmfw_template_link_pro'; } ?>" data_link = '3' >
+							<a href="javascript:void" class=" 
+							<?php
+							if ( true == $wps_is_pro_active ) {
+								?>
+								  <?php
+									echo 'wps_etmfw_template_link';
+							} else {
+								echo 'wps_etmfw_template_link_pro'; }
+							?>
+																" data_link = '3' >
 								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-3.png' ); ?>">
 							</a>
 						</div>
 						
 						<!-- Template four. -->
 						<div id ="wps_ubo_premium_popup_3_template" class="wps_etmfw_template_select <?php echo esc_html( 4 === (int) $wps_ubo_selected_template ? 'wps_etmfw_selected_class' : '' ); ?>">
-						<?php if(true != $wps_is_pro_active){?><span class="wps_etmfw_premium_strip"><?php esc_html_e( 'Pro', 'upsell-order-bump-offer-for-woocommerce' ); }?></span>	
+						<?php
+						if ( true != $wps_is_pro_active ) {
+							?>
+							<span class="wps_etmfw_premium_strip"><?php esc_html_e( 'Pro', 'upsell-order-bump-offer-for-woocommerce' ); } ?></span>	
 						<p class="wps_etmfw_template_name" ><strong><?php esc_html_e( 'Mellifluous', 'upsell-order-bump-offer-for-woocommerce' ); ?></strong></p>
-							<a href="javascript:void" class=" <?php if(true == $wps_is_pro_active){ ?>  <?php echo 'wps_etmfw_template_link'; } else { echo 'wps_etmfw_template_link_pro'; } ?>" data_link = '4' >
+							<a href="javascript:void" class=" 
+							<?php
+							if ( true == $wps_is_pro_active ) {
+								?>
+								  <?php
+									echo 'wps_etmfw_template_link';
+							} else {
+								echo 'wps_etmfw_template_link_pro'; }
+							?>
+																" data_link = '4' >
 								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-4.png' ); ?>">
 							</a>
 						</div>
@@ -64,7 +119,7 @@ if ( in_array( $plugin , $pluginList ) ) {
 							</div>
 						</div>
 
-                <p class="submit" class="wps_hide_save_button" >
+				<p class="submit" class="wps_hide_save_button" >
 			<input type="submit" class="wps_hide_save_button" value="<?php esc_html_e( 'Save Changes', 'upsell-order-bump-offer-for-woocommerce' ); ?>" class="button-primary woocommerce-save-button" name="wps_etmfw_new_layout_setting_save" id="wps_etmfw_new_layout_setting_save" >
 		</p>
 </form>

@@ -27,6 +27,8 @@ $etmfw_default_tabs = $etmfw_wps_etmfw_obj->wps_etmfw_plug_default_tabs();
 
 		<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-org-backend&utm_campaign=documentation" target="_blank" class="wps-link"><?php esc_html_e( 'Documentation', 'event-tickets-manager-for-woocommerce' ); ?></a>
 		<span>|</span>
+		<a href="https://www.youtube.com/embed/9KyB4qpal6M" target="_blank" class="wps-link"><?php esc_html_e( 'Video', 'event-tickets-manager-for-woocommerce' ); ?></a>
+		<span>|</span>
 		<a href="https://wpswings.com/submit-query/?utm_source=wpswings-events-support&utm_medium=events-org-backend&utm_campaign=support" target="_blank" class="wps-link"><?php esc_html_e( 'Support', 'event-tickets-manager-for-woocommerce' ); ?></a>
 	</div>
 </header>

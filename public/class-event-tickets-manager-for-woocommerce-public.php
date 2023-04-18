@@ -664,15 +664,15 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	public function wps_etmfw_get_html_content( $item_meta_data, $order, $order_id, $ticket_number, $product_id ) {
 		ob_start();
 		$wps_is_qr_is_enable = false;
-		$wps_set_the_pdf_ticket_template =  get_option( 'wps_etmfw_ticket_template', '1');
+		$wps_set_the_pdf_ticket_template = get_option( 'wps_etmfw_ticket_template', '1' );
 
 		if ( '1' == $wps_set_the_pdf_ticket_template ) {
-			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content.php';
+			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content.php';// Zenith.
 		}
 
 		$file = apply_filters( 'wps_etmfw_generate_qr_code', $order_id, $ticket_number, $product_id );
 		$ticket_number1 = '';
-		
+
 		if ( ! empty( $file ) ) {
 
 			if ( 'string' == gettype( $file ) ) {
@@ -680,21 +680,19 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$wps_is_qr_is_enable = true;
 				$ticket_number = '<img src="' . get_site_url() . '/' . str_replace( ABSPATH, '', $file ) . '" alt= "QR" width="100%"  />';
 				if ( '1' == $wps_set_the_pdf_ticket_template ) {
-				$ticket_number = '<img src="' . get_site_url() . '/' . str_replace( ABSPATH, '', $file ) . '" alt= "QR" height="100" width="100"  />';
+					$ticket_number = '<img src="' . get_site_url() . '/' . str_replace( ABSPATH, '', $file ) . '" alt= "QR" height="100" width="100"  />';
 				}
 			}
 		}
-		
-			if( '2' == $wps_set_the_pdf_ticket_template ){
-				include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-1.php';
-			}
-			elseif( '3' == $wps_set_the_pdf_ticket_template ){
-				include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-2.php';
-			}
-			elseif( '4' == $wps_set_the_pdf_ticket_template ){
-				include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-3.php';
-			}
-	
+
+		if ( '2' == $wps_set_the_pdf_ticket_template ) {
+			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-1.php';// Elixir.
+		} elseif ( '3' == $wps_set_the_pdf_ticket_template ) {
+			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-2.php';// Demure.
+		} elseif ( '4' == $wps_set_the_pdf_ticket_template ) {
+			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-3.php';// Mellifluous.
+		}
+
 		$wps_ticket_details = ob_get_contents();
 		ob_end_clean();
 		$additinal_info = '';
@@ -718,8 +716,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		}
 		$site_logo = '<img src="' . get_option( 'wps_etmfw_mail_setting_upload_logo', '' ) . '" style="width: 180px;">';
 		$wps_ticket_details = str_replace( '[EVENTNAME]', $product->get_name(), $wps_ticket_details );
-
-	
 
 		$wps_ticket_details = str_replace( '[TICKET]', $ticket_number, $wps_ticket_details );
 		$wps_ticket_details = str_replace( '[TICKET1]', $ticket_number1, $wps_ticket_details );
