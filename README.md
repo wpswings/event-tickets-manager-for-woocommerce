@@ -12,12 +12,12 @@
 
 [**Event Tickets Manager for WooCommerce**](https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/) is a complete solution for merchants that want to add event-based products to their WooCommerce store. Now you don’t have to pay commissions to your third-party services to manage event registration and ticket sales. You can manage the entire process from your WooCommerce store and be your own boss with an event ticket plugin.
 
-* Create event management and ticketing websites with [WordPress Event Plugin](https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-pro&utm_medium=events-github-page&utm_campaign=events-pro).
+* Create event management and ticketing websites with [**WordPress Event Plugin**](https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-pro&utm_medium=events-github-page&utm_campaign=events-pro).
 * Sell event tickets without depending on external service providers with WordPress Event Plugin.
 * Develop event management and ticketing websites. 
 * Invite the audience to your gig with the WooCommerce event tickets.
 
-[How to Create, Sell and Manage Event Tickets in WooCommerce?](https://www.youtube.com/watch?v=9KyB4qpal6M&rel=0)
+[**How to Create, Sell and Manage Event Tickets in WooCommerce?**](https://www.youtube.com/watch?v=9KyB4qpal6M&rel=0)
 
 
 ## WITH THE WOOCOMMERCE EVENT TICKETS MANAGER PLUGIN YOU CAN:
@@ -39,14 +39,15 @@
 * WooCommerce Events plugin Hide/Remove the Event Product On Being Expired.
 
 
-
 ## EVENTS MANAGER PLUGIN PLUGIN MEETS YOUR REQUIREMENT, SO
-[Download Now](https://downloads.wordpress.org/plugins/event-tickets-manager-for-woocommerce.zip)
+[**Download Now**](https://downloads.wordpress.org/plugins/event-tickets-manager-for-woocommerce.zip)
+
 ##  WHAT IS INCLUDED IN THE FREE EVENT TICKETS MANAGER FOR WOOCOMMERCE PLUGIN 
 
-**1)My Event Tab in My Account Section**
+**1) My Event Tab in My Account Section**
 The WooCommerce Event Manager plugin allows a separate section for the users to see their personal orders and to list the purchased tickets of the client. Customer can check their purchased events in the "My Events" tab in the "My Account" section to give their customers a more personalized experience.
-**2)Hide/Remove Expired Event**
+
+**2) Hide/Remove Expired Event**
 Event Plugin removes the expired event from the account to keep your customers updated. Removed events can be recovered from the Trash section. Expired Event is permanently deleted when you clear your trash section.
 
 **3) Dynamic CSS on Ticket**
