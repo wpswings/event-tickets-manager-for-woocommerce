@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-03-10 16:27+0530\n"
-"PO-Revision-Date: 2023-03-10 16:28+0530\n"
+"POT-Creation-Date: 2023-04-19 18:35+0530\n"
+"PO-Revision-Date: 2023-04-19 18:36+0530\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -226,20 +226,20 @@ msgstr ""
 msgid "Ticket"
 msgstr ""
 
-#: admin/class-event-tickets-manager-for-woocommerce-admin.php:886
+#: admin/class-event-tickets-manager-for-woocommerce-admin.php:887
 msgid "Services"
 msgstr ""
 
-#: admin/class-event-tickets-manager-for-woocommerce-admin.php:937
+#: admin/class-event-tickets-manager-for-woocommerce-admin.php:938
 #, php-format
 msgid "Please add Google API key %s to display event location on google map."
 msgstr ""
 
-#: admin/class-event-tickets-manager-for-woocommerce-admin.php:976
+#: admin/class-event-tickets-manager-for-woocommerce-admin.php:977
 msgid "This order contains Event Product."
 msgstr ""
 
-#: admin/class-event-tickets-manager-for-woocommerce-admin.php:977
+#: admin/class-event-tickets-manager-for-woocommerce-admin.php:978
 #: admin/partials/class-event-tickets-manager-for-woocommerce-events-info.php:46
 msgid "Event"
 msgstr ""
@@ -305,10 +305,14 @@ msgid "Documentation"
 msgstr ""
 
 #: admin/partials/event-tickets-manager-for-woocommerce-admin-dashboard.php:30
+msgid "Video"
+msgstr ""
+
+#: admin/partials/event-tickets-manager-for-woocommerce-admin-dashboard.php:32
 msgid "Support"
 msgstr ""
 
-#: admin/partials/event-tickets-manager-for-woocommerce-admin-dashboard.php:37
+#: admin/partials/event-tickets-manager-for-woocommerce-admin-dashboard.php:39
 msgid "Settings saved !"
 msgstr ""
 
@@ -431,6 +435,63 @@ msgstr ""
 
 #: admin/partials/event-tickets-manager-for-woocommerce-system-status.php:57
 msgid "System Values"
+msgstr ""
+
+#: admin/partials/event-tickets-manager-for-woocommerce-ticket-layout-setting.php:40
+#: admin/partials/event-tickets-manager-for-woocommerce-ticket-layout-setting.php:49
+#: admin/partials/event-tickets-manager-for-woocommerce-ticket-layout-setting.php:70
+#: admin/partials/event-tickets-manager-for-woocommerce-ticket-layout-setting.php:91
+msgid "wps_etmfw_selected_class"
+msgstr ""
+
+#: admin/partials/event-tickets-manager-for-woocommerce-ticket-layout-setting.php:42
+msgid "Zenith"
+msgstr ""
+
+#: admin/partials/event-tickets-manager-for-woocommerce-ticket-layout-setting.php:53
+#: admin/partials/event-tickets-manager-for-woocommerce-ticket-layout-setting.php:74
+#: admin/partials/event-tickets-manager-for-woocommerce-ticket-layout-setting.php:95
+msgid "Pro"
+msgstr ""
+
+#: admin/partials/event-tickets-manager-for-woocommerce-ticket-layout-setting.php:54
+msgid "Elixir"
+msgstr ""
+
+#: admin/partials/event-tickets-manager-for-woocommerce-ticket-layout-setting.php:75
+msgid "Demure"
+msgstr ""
+
+#: admin/partials/event-tickets-manager-for-woocommerce-ticket-layout-setting.php:96
+msgid "Mellifluous"
+msgstr ""
+
+#: admin/partials/event-tickets-manager-for-woocommerce-ticket-layout-setting.php:123
+#: public/class-event-tickets-manager-for-woocommerce-public.php:869
+#: public/class-event-tickets-manager-for-woocommerce-public.php:950
+msgid "Save Changes"
+msgstr ""
+
+#: admin/partials/event-tickets-manager-for-woocommerce-ticket-layout-setting.php:141
+msgid "Do you really want to change PDF Ticket layout ?"
+msgstr ""
+
+#: admin/partials/event-tickets-manager-for-woocommerce-ticket-layout-setting.php:145
+#: includes/class-event-tickets-manager-for-woocommerce.php:493
+#: includes/class-event-tickets-manager-for-woocommerce.php:496
+#: includes/class-event-tickets-manager-for-woocommerce.php:499
+#: templates/frontend/event-tickets-manager-for-woocommerce-additional-field-html.php:135
+#: templates/frontend/event-tickets-manager-for-woocommerce-view-ticket-html.php:62
+msgid "Yes"
+msgstr ""
+
+#: admin/partials/event-tickets-manager-for-woocommerce-ticket-layout-setting.php:147
+#: includes/class-event-tickets-manager-for-woocommerce.php:493
+#: includes/class-event-tickets-manager-for-woocommerce.php:496
+#: includes/class-event-tickets-manager-for-woocommerce.php:499
+#: templates/frontend/event-tickets-manager-for-woocommerce-additional-field-html.php:139
+#: templates/frontend/event-tickets-manager-for-woocommerce-view-ticket-html.php:66
+msgid "No"
 msgstr ""
 
 #: emails/class-wps-etmfw-emails-notification.php:50
@@ -600,87 +661,75 @@ msgstr ""
 msgid "Integrations"
 msgstr ""
 
-#: includes/class-event-tickets-manager-for-woocommerce.php:383
+#: includes/class-event-tickets-manager-for-woocommerce.php:381
+msgid "PDF Ticket Layout Setting"
+msgstr ""
+
+#: includes/class-event-tickets-manager-for-woocommerce.php:387
 msgid "System Status"
 msgstr ""
 
-#: includes/class-event-tickets-manager-for-woocommerce.php:407
+#: includes/class-event-tickets-manager-for-woocommerce.php:411
 #, php-format
 msgid ""
 "Unable to locate file at location \"%s\". Some features may not work "
 "properly in this plugin. Please contact us!"
 msgstr ""
 
-#: includes/class-event-tickets-manager-for-woocommerce.php:465
+#: includes/class-event-tickets-manager-for-woocommerce.php:469
 msgid "N/A (phpversion function does not exist)"
 msgstr ""
 
-#: includes/class-event-tickets-manager-for-woocommerce.php:474
+#: includes/class-event-tickets-manager-for-woocommerce.php:478
 msgid "N/A (make sure exec function is enabled)"
 msgstr ""
 
-#: includes/class-event-tickets-manager-for-woocommerce.php:477
+#: includes/class-event-tickets-manager-for-woocommerce.php:481
 msgid "N/A (ABSPATH constant not defined)"
 msgstr ""
 
-#: includes/class-event-tickets-manager-for-woocommerce.php:480
+#: includes/class-event-tickets-manager-for-woocommerce.php:484
 msgid "N/A (php_uname function does not exist)"
 msgstr ""
 
-#: includes/class-event-tickets-manager-for-woocommerce.php:483
+#: includes/class-event-tickets-manager-for-woocommerce.php:487
 msgid "N/A (get_bloginfo function does not exist)"
 msgstr ""
 
-#: includes/class-event-tickets-manager-for-woocommerce.php:486
+#: includes/class-event-tickets-manager-for-woocommerce.php:490
 msgid "N/A (get_option function does not exist)"
 msgstr ""
 
-#: includes/class-event-tickets-manager-for-woocommerce.php:489
-#: includes/class-event-tickets-manager-for-woocommerce.php:492
-#: includes/class-event-tickets-manager-for-woocommerce.php:495
-#: templates/frontend/event-tickets-manager-for-woocommerce-additional-field-html.php:135
-#: templates/frontend/event-tickets-manager-for-woocommerce-view-ticket-html.php:62
-msgid "Yes"
-msgstr ""
-
-#: includes/class-event-tickets-manager-for-woocommerce.php:489
-#: includes/class-event-tickets-manager-for-woocommerce.php:492
-#: includes/class-event-tickets-manager-for-woocommerce.php:495
-#: templates/frontend/event-tickets-manager-for-woocommerce-additional-field-html.php:139
-#: templates/frontend/event-tickets-manager-for-woocommerce-view-ticket-html.php:66
-msgid "No"
-msgstr ""
-
-#: includes/class-event-tickets-manager-for-woocommerce.php:498
+#: includes/class-event-tickets-manager-for-woocommerce.php:502
 msgid "N/A (count_users function does not exist)"
 msgstr ""
 
-#: includes/class-event-tickets-manager-for-woocommerce.php:501
+#: includes/class-event-tickets-manager-for-woocommerce.php:505
 msgid "0"
 msgstr ""
 
-#: includes/class-event-tickets-manager-for-woocommerce.php:504
-#: includes/class-event-tickets-manager-for-woocommerce.php:510
-#: includes/class-event-tickets-manager-for-woocommerce.php:513
-#: includes/class-event-tickets-manager-for-woocommerce.php:541
-#: includes/class-event-tickets-manager-for-woocommerce.php:544
+#: includes/class-event-tickets-manager-for-woocommerce.php:508
+#: includes/class-event-tickets-manager-for-woocommerce.php:514
+#: includes/class-event-tickets-manager-for-woocommerce.php:517
+#: includes/class-event-tickets-manager-for-woocommerce.php:545
+#: includes/class-event-tickets-manager-for-woocommerce.php:548
 msgid "N/A (ini_get function does not exist)"
 msgstr ""
 
-#: includes/class-event-tickets-manager-for-woocommerce.php:507
+#: includes/class-event-tickets-manager-for-woocommerce.php:511
 msgid "N/A"
 msgstr ""
 
-#: includes/class-event-tickets-manager-for-woocommerce.php:525
+#: includes/class-event-tickets-manager-for-woocommerce.php:529
 msgid "N/A (gethostname function does not exist)"
 msgstr ""
 
-#: includes/class-event-tickets-manager-for-woocommerce.php:528
-#: includes/class-event-tickets-manager-for-woocommerce.php:537
+#: includes/class-event-tickets-manager-for-woocommerce.php:532
+#: includes/class-event-tickets-manager-for-woocommerce.php:541
 msgid "N/A (make sure exec is enabled)"
 msgstr ""
 
-#: includes/class-event-tickets-manager-for-woocommerce.php:869
+#: includes/class-event-tickets-manager-for-woocommerce.php:873
 msgid "max="
 msgstr ""
 
@@ -723,82 +772,77 @@ msgstr ""
 msgid "Please enter correct email"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:802
-#: public/class-event-tickets-manager-for-woocommerce-public.php:886
+#: public/class-event-tickets-manager-for-woocommerce-public.php:821
+#: public/class-event-tickets-manager-for-woocommerce-public.php:905
 #: public/partials/wps-myevent-details-tab.php:89
 #: public/partials/wps-myevent-details-tab.php:140
 msgid "View"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:805
-#: public/class-event-tickets-manager-for-woocommerce-public.php:889
+#: public/class-event-tickets-manager-for-woocommerce-public.php:824
+#: public/class-event-tickets-manager-for-woocommerce-public.php:908
 msgid "+ Add to Google Calendar"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:832
-#: public/class-event-tickets-manager-for-woocommerce-public.php:913
+#: public/class-event-tickets-manager-for-woocommerce-public.php:851
+#: public/class-event-tickets-manager-for-woocommerce-public.php:932
 msgid "Edit Ticket Information"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:850
-#: public/class-event-tickets-manager-for-woocommerce-public.php:931
-msgid "Save Changes"
-msgstr ""
-
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1009
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1028
 msgid "For"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1022
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1041
 msgid "Ticket Number *"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1026
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1045
 msgid "Enter Email *"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1033
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1052
 msgid "Check In"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1079
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1098
 msgid "User checked in successfully."
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1081
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1100
 msgid "Event has not started yet."
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1084
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1103
 msgid "Event Expired!"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1087
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1720
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1106
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1739
 msgid "Order not exist."
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1090
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1109
 msgid "User has already checked in for the event."
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1093
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1112
 msgid "Please Enter the correct email."
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1609
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1628
 msgid "My Event"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1714
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1733
 msgid "Ticket Transfer successfully."
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1723
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1742
 msgid "Wrong Ticket Number / Not Yours Ticket."
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1727
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1746
 msgid "Ticket of Event is not yet purchase."
 msgstr ""
 
