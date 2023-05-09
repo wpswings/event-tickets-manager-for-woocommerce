@@ -179,6 +179,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 	private function event_tickets_manager_for_woocommerce_admin_hooks() {
 
 		$etmfw_plugin_admin = new Event_Tickets_Manager_For_Woocommerce_Admin( $this->etmfw_get_plugin_name(), $this->etmfw_get_version() );
+		$etmfw_resend_pdf_ticket_admin = get_option( 'wps_etmfw_resend_plugin','on' );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $etmfw_plugin_admin, 'etmfw_admin_enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $etmfw_plugin_admin, 'etmfw_admin_enqueue_scripts' );
@@ -210,6 +211,12 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'manage_shop_order_posts_custom_column', $etmfw_plugin_admin, 'etmfw_add_label_for_event_type', 20, 2 );
 		$this->loader->add_action( 'wp_print_scripts', $etmfw_plugin_admin, 'etmfw_dequeque_theme_script', 20 );
 
+		// Ajax For resending the ticket by admin or customer.
+		if('on' == $etmfw_resend_pdf_ticket_admin){
+		$this->loader->add_action( 'add_meta_boxes', $etmfw_plugin_admin, 'wps_etmfw_order_edit_meta_box', 10, 2 );
+		$this->loader->add_action( 'wp_ajax_wps_etmfw_resend_the_ticket_pdf', $etmfw_plugin_admin, 'wps_etmfw_resend_the_ticket_pdf', 11 );  
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_resend_the_ticket_pdf', $etmfw_plugin_admin, 'wps_etmfw_resend_the_ticket_pdf', 11 );
+		}
 	}
 
 	/**
@@ -222,6 +229,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 	private function event_tickets_manager_for_woocommerce_public_hooks() {
 
 		$etmfw_plugin_public = new Event_Tickets_Manager_For_Woocommerce_Public( $this->etmfw_get_plugin_name(), $this->etmfw_get_version() );
+		$etmfw_resend_pdf_ticket_public = get_option( 'wps_etmfw_resend_plugin','on' );
 
 		add_action( 'woocommerce_event_ticket_manager_add_to_cart', 'woocommerce_simple_add_to_cart', 30 );
 		$this->loader->add_action( 'wp_enqueue_scripts', $etmfw_plugin_public, 'etmfw_public_enqueue_styles' );
@@ -260,6 +268,15 @@ class Event_Tickets_Manager_For_Woocommerce {
 		// Ajax For sharing the tickets.
 		$this->loader->add_action( 'wp_ajax_wps_etmfwp_transfer_ticket_org', $etmfw_plugin_public, 'wps_etmfwp_sharing_tickets_org', 11 ); 
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfwp_transfer_ticket_org', $etmfw_plugin_public, 'wps_etmfwp_sharing_tickets_org', 11 );
+
+		if('on' == $etmfw_resend_pdf_ticket_public){
+		//Function to resend the PDF Ticket By Customer Itself.
+		$this->loader->add_action( 'woocommerce_order_details_after_order_table', $etmfw_plugin_public, 'wps_etmfw_resend_mail_ticket_view_order_frontend',10,1 );
+
+		//Function to resend the PDF Ticket By Customer Itself.
+		$this->loader->add_action( 'wp_ajax_wps_etmfw_resend_mail_pdf_order_deatails', $etmfw_plugin_public, 'wps_etmfw_resend_mail_pdf_order_deatails', 11 ); 
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_resend_mail_pdf_order_deatails', $etmfw_plugin_public, 'wps_etmfw_resend_mail_pdf_order_deatails', 11 );
+		}
 	}
 
 

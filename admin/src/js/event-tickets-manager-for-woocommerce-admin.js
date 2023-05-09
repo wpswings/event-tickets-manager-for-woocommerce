@@ -32,6 +32,71 @@
 	 $(document).ready(function() {
 
 	// Available Ticket Template Change - Start.
+	$('.wps_etmfw_colorpicker').wpColorPicker();
+	var ProductTcolorPricepicker = $('.wps_etmfw_select_ticket_background');//2.1.7.
+	ProductTcolorPricepicker.wpColorPicker({ //2.1.7.
+		change: (event, ui) => {
+
+			product_tcolor = ui.color.toString();
+			ProductPriceColor.css( 'color', product_tcolor );
+			ProductQty.css( 'color', product_tcolor );
+		}
+	});
+
+	var VerticalSpacingTop = '';
+	var VerticalSpacingTop1 = '';
+	
+	$('.wps_etmfw_logo_size_slider').on('change', function () {
+       
+		VerticalSpacingTop = $(this).val();
+		console.log(VerticalSpacingTop);
+
+		var yourImg = document.getElementById('wps_logo_image');
+		if(yourImg && yourImg.style) {
+   			 yourImg.style.width = VerticalSpacingTop + 'px';
+			}
+
+		$('.wps_etmfw_logo_size_slider_span').html( VerticalSpacingTop + 'px' );
+	});
+
+	$('.wps_etmfw_qr_size_slider').on('change', function () {
+       
+		VerticalSpacingTop1 = $(this).val();
+		console.log(VerticalSpacingTop1);
+		
+		var yourImg = document.getElementById('wps_qr_image');
+		if(yourImg && yourImg.style) {
+   			 yourImg.style.width = VerticalSpacingTop1 + 'px';
+			}
+
+		$('.wps_etmfw_qr_size_slider_span').html( VerticalSpacingTop1 + 'px' );
+	});
+
+
+	jQuery('body').on('click', '.wps_etmfw_upload_image_button', function(e){
+
+		e.preventDefault();
+		var button = jQuery(this),
+		custom_uploader = wp.media({
+			title: 'Insert image',
+			library : {
+				type : 'image'
+			},
+			button: {
+				text: 'Use this image' 
+			},
+			multiple: false
+		}).on('select', function() {
+			var attachment = custom_uploader.state().get('selection').first().toJSON();
+			jQuery(button).removeClass('button').html('<img class="true_pre_image" src="' + attachment.url + '" style="max-width:150px;display:block;" />').next().val(attachment.id).next().show();
+		}).open();
+	});
+
+	jQuery('body').on('click', '.wps_etmfw_remove_image_button', function(e){
+		e.preventDefault();
+		jQuery(this).hide().prev().val('').prev().addClass('button').html('Upload image');
+		return false;
+	});
 
 	$('#wps_etmfw_new_layout_setting_save_2').on( 'click', function(e) {
        $('#wps_etmfw_new_layout_setting_save').trigger("click");
@@ -176,6 +241,16 @@
 		if( $(document).find('.wps-defaut-multiselect').length > 0 ) {
 			$(document).find('.wps-defaut-multiselect').select2();
 		}
+	});
+	// PDF Setting Layout Section JS - start.
+	$(document).on( 'click','.wps-etmfw-appearance-template' , function(e) {
+		e.preventDefault();
+		$('.wps-etmfw-template-section').css("display", "block");
+		$('.wps_etmfw_table_column_wrapper').css("display", "none");
+	});
+	$(document).on( 'click','.wps-etmfw-appearance-design' ,function(e) {
+        $('.wps-etmfw-template-section').css("display", "none");
+		$('.wps_etmfw_table_column_wrapper').css("display", "block");
 	});
 
 	})( jQuery );

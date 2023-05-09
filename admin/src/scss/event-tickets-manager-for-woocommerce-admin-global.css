@@ -1009,3 +1009,27 @@ button#wps_etmfw_mail_setting_upload_logo_button {
   .wps_center_save_changes{
     margin:0 auto;
   }
+  .wps-etmfw-appearance-section-hidden{
+    display: none;
+  }
+
+      /* ======== LOADER CSS =======*/
+      #wps_etmfw_loader {
+        background-color: rgba(255, 255, 255, 0.6);
+        bottom: 0;
+        height: 100%;
+        left: 0;
+        position: fixed;
+        right: 0;
+        top: 0;
+        width: 100%;
+        z-index: 99999;
+      }
+      #wps_etmfw_loader img {
+        display: block;
+        left: 0;
+        margin: 0 auto;
+        position: absolute;
+        right: 0;
+        top: 40%;
+      }

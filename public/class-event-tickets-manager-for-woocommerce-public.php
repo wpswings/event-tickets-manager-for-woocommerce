@@ -119,6 +119,17 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				wp_enqueue_script( $this->plugin_name . '-checkin-page' );
 			}
 		}
+		
+		wp_enqueue_script( $this->plugin_name . 'public-org-custom-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-org-custom-public.js', array( 'jquery','jquery-ui-sortable' ), $this->version , false );
+
+		wp_localize_script(
+			$this->plugin_name . 'public-org-custom-js',
+			'etmfw_org_custom_param_public',
+			array(
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				'nonce'   => wp_create_nonce( 'wps_wet_custom_ajax_nonce' ),
+			)
+		);
 	}
 
 	/**
@@ -1748,4 +1759,85 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		echo json_encode( $response );
 		wp_die();
 	}
+
+	public function wps_etmfw_resend_mail_ticket_view_order_frontend($order){
+		$order_id = $order->get_id();
+		$order_status = $order->get_status();
+		
+		if ( 'completed' == $order_status || 'processing' == $order_status ) {
+			$wps_etmfw_is_product = false;
+			foreach ( $order->get_items() as $item_id => $item ) {
+				$_product = apply_filters( 'woocommerce_order_item_product', $product = $item->get_product(), $item );
+
+				if ( isset( $_product ) && ! empty( $_product ) ) {
+					$product_id = $_product->get_id();
+				}
+
+				if ( isset( $product_id ) && ! empty( $product_id ) ) {
+
+					$product_types = wp_get_object_terms( $product_id, 'product_type' );
+					$product_type =  $product_types[0]->slug;
+
+					if ( 'event_ticket_manager' == $product_type ) {
+						$wps_etmfw_is_product = true;
+					}
+
+				}
+			}
+			if ( $wps_etmfw_is_product ) {
+				?>
+				<style>
+				#wps_etmfw_loader {
+					background-color: rgba(255, 255, 255, 0.6);
+					bottom: 0;
+					height: 100%;
+					left: 0;		
+					position: fixed;
+					right: 0;
+					top: 0;
+					width: 100%;
+					z-index: 99999;
+				}
+
+				#wps_etmfw_loader img {
+					display: block;
+					left: 0;
+					margin: 0 auto;
+					position: absolute;
+					right: 0;
+					top: 40%;
+				}
+			</style>
+				<?php
+					?>
+					<div class="resend_mail_wrapper">
+						<span id="wps_etmfw_resend_mail_frontend_notification"></span>
+						<h4>
+							<strong><?php esc_html_e( 'Resend Ticket PDF Email', 'giftware' ); ?></strong>
+						</h4>
+						<div id="wps_etmfw_loader" style="display: none;">
+							<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ); ?>public/src/image/loading.gif">
+						</div>
+						<span class="wps_resend_content"><?php esc_html_e( "Press the icon to resend tickte pdf mail if the receiver hasn't received the ticket you sent.", 'giftware' ); ?>
+						</span>
+						<a href="javascript:void(0);" data-id="<?php echo esc_attr( $order_id ); ?>" class="wps_uwgc_resend_mail" id="wps_etmfw_resend_mail_button_frontend"> 
+							<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ); ?>public/src/image/ticket.png" class="wps_resend_image">
+						</a>
+					</div>
+					<?php
+		}
+	}
+}
+
+public function wps_etmfw_resend_mail_pdf_order_deatails(){
+
+	if(isset($_POST['order_id'])){
+	$this->wps_etmfw_process_event_order( $_POST['order_id'], $old_status = '', $new_status ='');
+	$response = __( 'Ticket PDF Sent Successfully!', 'giftware' );
+	} else {
+	$response = __( 'Ticket PDF Not Sent!', 'giftware' );
+	}
+	echo ( $response );
+	wp_die();
+}
 }

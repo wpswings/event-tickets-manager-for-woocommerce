@@ -38,6 +38,15 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	 * @var      string    $version    The current version of this plugin.
 	 */
 	private $version;
+	
+	/**
+	 * The object of common class file.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 * @var      string    $wps_common_fun    The common variable used for classes.
+	 */
+	public $etmfw_public;
 
 	/**
 	 * Initialize the class and set its properties.
@@ -50,6 +59,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
+		$this->etmfw_public = new Event_Tickets_Manager_For_Woocommerce_Public($plugin_name, $version);
 
 	}
 
@@ -112,6 +122,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			);
 
 			wp_enqueue_script( $this->plugin_name . 'admin-js' );
+			wp_enqueue_script( 'wp-color-picker' );
 		}
 		if ( isset( $screen->id ) && 'product' == $screen->id ) {
 			// Date Time Picker Library.
@@ -130,6 +141,17 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			wp_enqueue_script( $this->plugin_name . 'admin-edit-product-js' );
 
 		}
+
+		wp_enqueue_script( $this->plugin_name . 'org-custom-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/js/event-tickets-manager-for-woocommerce-org-custom-admin.js', array( 'jquery','jquery-ui-sortable' ), $this->version , false );
+
+		wp_localize_script(
+			$this->plugin_name . 'org-custom-js',
+			'wet_org_custom_param',
+			array(
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				'nonce'   => wp_create_nonce( 'wps_wet_custom_ajax_nonce' ),
+			)
+		);
 
 	}
 
@@ -981,5 +1003,98 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			}
 		}
 	}
+
+	/**
+	 * This function is used to add meta box on order detail page
+	 *
+	 * @name wps_uwgc_order_edit_meta_box
+	 * @param String $post_type Contains post type.
+	 * @param object $post Contains Post .
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link http://www.wpswings.com/
+	 */
+	public function wps_etmfw_order_edit_meta_box( $post_type, $post ) {
+
+		$woo_ver = WC()->version;
+		global $post;
+		if ( isset( $post->ID ) && 'shop_order' == $post->post_type ) {
+			$order_id = $post->ID;
+			$order = new WC_Order( $order_id );
+			$order_status = $order->get_status();
+
+			if ( 'completed' == $order_status || 'processing' == $order_status ) {
+
+				$giftcard = false;
+				foreach ( $order->get_items() as $item_id => $item ) {
+					if ( $woo_ver < '3.0.0' ) {
+						$_product = apply_filters( 'woocommerce_order_item_product', $order->get_product_from_item( $item ), $item );
+					} else {
+						$_product = apply_filters( 'woocommerce_order_item_product', $item->get_product(), $item );
+					}
+					if ( isset( $_product ) && ! empty( $_product ) ) {
+						$product_id = $_product->get_id();
+					}
+					if ( isset( $product_id ) && ! empty( $product_id ) ) {
+						$product_types = wp_get_object_terms( $product_id, 'product_type' );
+						if ( isset( $product_types[0] ) ) {
+							$product_type = $product_types[0]->slug;
+							$wps_gift_product = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+							if ( 'event_ticket_manager' == $product_type || ! empty($wps_gift_product) ) {
+								$giftcard = true;
+							}
+						}
+					}
+				}
+
+				if ( $giftcard ) {
+					add_meta_box( 'wps_etmfw_resend_mail', __( 'Resend Ticket PDF Mail', 'giftware' ), array( $this, 'wps_etmfw_resend_mail' ), 'shop_order' );
+
+					// add_meta_box( 'wps_uwgc_resend_coupon_add_more', __( 'Resend Gift Card by changing amount', 'giftware' ), array( $this, 'wps_uwgc_resend_coupon_add_more' ), 'shop_order' );
+
+					// add_meta_box( 'wps_uwgc_edit_email_address', __( 'Edit Email Address', 'giftware' ), array( $this, 'wps_uwgc_edit_email_address' ), 'shop_order' );
+				}
+
+			}
+		}
+	}
+
+	/**
+	 * This function is used to add resend email button on order detal page
+	 *
+	 * @name wps_etmfw_resend_mail
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link http://www.wpswings.com/
+	 */
+	public function wps_etmfw_resend_mail() {
+    echo 'This is the resending the mail pdf';
+	global $post;
+	if ( isset( $post->ID ) ) {
+		$order_id = $post->ID;
+		?>
+		<div id="wps_etmfw_loader" style="display: none;">
+			<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ); ?>admin/src/images/loading.gif">
+		</div>
+		<p><?php esc_html_e( 'If the user is not received a Ticket PDF Mail then resend mail.', 'giftware' ); ?> </p>
+		<p id="wps_etmfw_resend_mail_notification"></p>
+		<input type="button" data-id="<?php echo esc_html( $order_id ); ?>" id="wps_etmfw_resend_mail_button" class="button button-primary" value="<?php esc_html_e( 'Resend Ticket PDF Mail', 'giftware' ); ?>">
+		<?php
+	}
+	}
+
+	public function wps_etmfw_resend_the_ticket_pdf(){
+
+		$response['result'] = false;
+		if(isset($_POST['order_id'])){
+		$response['result'] = true;
+		$this->etmfw_public->wps_etmfw_process_event_order( $_POST['order_id'], $old_status = '', $new_status ='');
+		$response['message_success'] = __( 'Email Sent Successfully!', 'giftware' );
+	} else {
+		$response['message_error'] = __( 'Email Not Sent!', 'giftware' );
+	}
+
+		echo json_encode( $response );
+		wp_die();
+	}
+
 
 }
