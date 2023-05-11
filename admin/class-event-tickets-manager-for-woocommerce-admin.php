@@ -113,6 +113,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		
 			wp_register_script( $this->plugin_name . 'admin-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/js/event-tickets-manager-for-woocommerce-admin.js', array( 'jquery', 'wps-etmfw-select2', 'wps-etmfw-metarial-js', 'wps-etmfw-metarial-js2', 'wps-etmfw-metarial-lite', 'wp-color-picker' ), $this->version, false );
 
+
+			$wps_etmfw_selected_template = get_option( 'wps_etmfw_ticket_template' , '1' );
+
 			wp_localize_script(
 				$this->plugin_name . 'admin-js',
 				'etmfw_admin_param',
@@ -120,6 +123,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'reloadurl' => admin_url( 'admin.php?page=event_tickets_manager_for_woocommerce_menu' ),
 					'etmfw_gen_tab_enable' => get_option( 'wps_etmfw_radio_switch_demo' ),
+					'wps_etmfw_selected_template' => $wps_etmfw_selected_template,
 				)
 			);
 

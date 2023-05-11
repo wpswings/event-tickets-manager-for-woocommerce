@@ -30,7 +30,7 @@
      */
 
     $(document).ready(function() {
-
+        wps_etmfw_hide_bck_ground_image_setting();
         // Available Ticket Template Change - Start.
         $('.wps_etmfw_colorpicker').wpColorPicker();
 
@@ -366,6 +366,14 @@
 			// BumpOfferBox.css( 'border', border_type);
 
 		}
+        function wps_etmfw_hide_bck_ground_image_setting(){
+            if('3'== etmfw_admin_param.wps_etmfw_selected_template || '4' == etmfw_admin_param.wps_etmfw_selected_template){
+                $('.wps_etmfw_hide_setting').show();
+            }else{
+                $('.wps_etmfw_hide_setting').hide();
+            }
+        }
+
         $('.wps_etmfw_colorpicker').wpColorPicker();
 
 })(jQuery);

@@ -244,14 +244,15 @@ $allowed_html = array(
 					<?php
 					$attribute_description = esc_html__( 'Select among different border types for PDF Ticket.', 'upsell-order-bump-offer-for-woocommerce' );
 					// wps_ubo_lite_help_tip( $attribute_description );
-					echo wp_kses( wc_help_tip( $attribute_description ), $allowed_html );
+					echo wp_kses( wc_help_tip( $attribute_description ), false );
+					echo '<span class="woocommerce-help-tip" data-tip="' . wc_sanitize_tooltip( $attribute_description ) . '"></span>';
 					?>
 					<input type="range" min="100" value="<?php echo get_option( 'wps_etmfw_qr_size' );  //echo esc_html( $wps_upsell_bumps_list[ $wps_upsell_bump_id ]['design_css']['top_vertical_spacing'] ); ?>"  max="220" value="" name='wps_etmfw_qr_size' class="wps_etmfw_qr_size_slider" />
 					<span class="wps_etmfw_qr_size_slider_span" ><?php echo get_option( 'wps_etmfw_qr_size' ).'px';//echo esc_html( ! empty( $wps_upsell_bumps_list[ $wps_upsell_bump_id ]['design_css']['top_vertical_spacing'] ) ? esc_html( $wps_upsell_bumps_list[ $wps_upsell_bump_id ]['design_css']['top_vertical_spacing'] . 'px' ) : '0px' ); ?></span>
 					</td>
 				</tr>
 
-				<tr valign="top">
+				<tr class="wps_etmfw_hide_setting" valign="top">
 					<th>Background Image</th>
 					<td>
 					<?php

@@ -690,9 +690,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			if ( 'string' == gettype( $file ) ) {
 				$ticket_number1 = $ticket_number;
 				$wps_is_qr_is_enable = true;
-				$ticket_number = '<img id="wps_qr_image" src="' . get_site_url() . '/' . str_replace( ABSPATH, '', $file ) . '" alt= "QR" style="width:'. $wps_etmfw_qr_size.'px;height:'. $wps_etmfw_qr_size.'px'." />'";
+				$ticket_number = '<img src="' . get_site_url() . '/' . str_replace( ABSPATH, '', $file ) . '" alt= "QR" height="'.$wps_etmfw_qr_size.'" width="'.$wps_etmfw_qr_size.'"  />';
 				if ( '1' == $wps_set_the_pdf_ticket_template ) {
-					$ticket_number = '<img id="wps_qr_image" src="' . get_site_url() . '/' . str_replace( ABSPATH, '', $file ) . '" alt= "QR" style="width:'. $wps_etmfw_qr_size.'px;height:'. $wps_etmfw_qr_size.'px'." />'";
+					$ticket_number = '<img src="' . get_site_url() . '/' . str_replace( ABSPATH, '', $file ) . '" alt= "QR" height="'.$wps_etmfw_qr_size.'" width="'.$wps_etmfw_qr_size.'"  />';
 				}
 			}
 		}
