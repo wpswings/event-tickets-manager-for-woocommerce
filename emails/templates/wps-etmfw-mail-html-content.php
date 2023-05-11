@@ -10,6 +10,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+$image_attributes = wp_get_attachment_image_src( get_option('wps_etmfw_background_image'), 'thumbnail' );
+$wps_etmfw_logo_size = ! empty( get_option( 'wps_etmfw_logo_size',true ) ) ? get_option( 'wps_etmfw_logo_size',true ) : '180';
+$wps_etmfw_qr_size = ! empty(get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 'wps_etmfw_qr_size' ) : '180';
+$wps_etmfw_background_color = ! empty(get_option( 'wps_etmfw_pdf_background_color' ) ) ? get_option( 'wps_etmfw_pdf_background_color' ) : '#006333';
+$wps_etmfw_text_color = ! empty(get_option( 'wps_etmfw_pdf_text_color' ) ) ? get_option( 'wps_etmfw_pdf_text_color' ) : '#ffffff';
 // Inline style used for sending in email.
 ?>
 <!DOCTYPE html>
@@ -22,36 +27,36 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</style>	
 </head>
 <body>	
-	<table border="1" cellspacing="0" cellpadding="0" style="padding: 20px;table-layout: auto; width: 100%;">
+	<table cellspacing="0" class="wps_etmfw_border_color" id = "wps_etmfw_parent_wrapper" cellpadding="0" style="padding: 20px;table-layout: auto; width: 100%;border:2px <?php echo get_option('wps_etmfw_border_type').' ' . get_option('wps_etmfw_pdf_border_color'); ?>"> 
 		<tbody>
 			<tr>
 				<td style="padding: 20px;">
-					<table border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;">
+					<table cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;">
 						<tbody>
 							<tr style="width: 100%;">
 								<td style="width: 20%;background: #000000;">
-									[LOGO]
+                                <img id="wps_wem_logo_id" class="wps_wem_logo" src="<?php echo esc_url(get_option('wps_etmfw_mail_setting_upload_logo','')); ?>" style="width:<?php echo $wps_etmfw_logo_size.'px' ?>;margin-left: 25px">
 								</td>
 								<?php
 									  $bg_color = ! empty( get_option( 'wps_etmfw_ticket_bg_color', '' ) ) ? get_option( 'wps_etmfw_ticket_bg_color' ) : '#2196f3';
 									  $text_color = ! empty( get_option( 'wps_etmfw_ticket_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_text_color' ) : '#ffffff';
 								?>
-								<td style="width: 60%;background: <?php echo esc_attr( $bg_color ); ?>">
-									<table style="padding: 20px; table-layout: auto; width: 100%;">
+								<td style="width: 60%;background: <?php echo esc_attr( $wps_etmfw_background_color ); ?>">
+									<table class="wps_etmfw_ticket_body" style="padding: 20px; table-layout: auto; width: 100%;">
 										<tbody>
 											<tr>
 												<td style="text-align: center;">
-													<h1 style="margin: 0 0 15px;font-size: 32px;color: <?php echo esc_attr( $text_color ); ?>;">[EVENTNAME]</h1>
+													<h1 class="wps_etmfw_pdf_text_colour" style="margin: 0 0 15px;font-size: 32px;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">[EVENTNAME]</h1>
 												</td>
 											</tr>
 											<tr>
 												<td style="color: #ffffff;padding: 10px 0;">
-													<h3 style="margin: 0;color: <?php echo esc_attr( $text_color ); ?>;">Venue - [VENUE]</h3>
+													<h3 class="wps_etmfw_pdf_text_colour" style="margin: 0;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">Venue - [VENUE]</h3>
 												</td>
 											</tr>
 											<tr>
 												<td style="color: #ffffff;padding: 10px 0;">									
-													<h3 style="margin: 0;color: <?php echo esc_attr( $text_color ); ?>;">Date - [STARTDATE] To [ENDDATE]</h3>						
+													<h3 class="wps_etmfw_pdf_text_colour" style="margin: 0;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">Date - [STARTDATE] To [ENDDATE]</h3>						
 												</td>
 											</tr>
 											<?php
@@ -65,8 +70,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 															?>
 														<tr>
-															<td style="color: <?php echo esc_attr( $bg_color ); ?>;padding: 10px 0;">									
-																<h3 style="margin: 0;color: <?php echo esc_attr( $text_color ); ?>;">Ticket - [TICKET1]</h3>						
+															<td style="color: <?php echo esc_attr( $wps_etmfw_background_color ); ?>;padding: 10px 0;">									
+																<h3 class="wps_etmfw_pdf_text_colour" style="margin: 0;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">Ticket - <span style="color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">[TICKET1]</span></h3>						
 															</td>
 														</tr>
 															<?php
@@ -83,13 +88,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 									<table style="table-layout: auto; width: 100%;">
 										<tbody>
 											<tr>
-												<td style="text-align: center;color: #ffffff;">
-													<h3>Your Ticket</h3>
+												<td style="text-align: center;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">
+													<h3 class="wps_etmfw_pdf_text_colour"  style="color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">Your Ticket</h3>
 												</td>
 											</tr>
 											<tr>
 												<td>
-													<h3 style="margin: 0;text-align: center;color: #ffffff;">[TICKET]</h3>
+													<h3  style="margin: 0;text-align: center;color:<?php echo esc_attr( $wps_etmfw_text_color ); ?>;"> [TICKET]</h3>
 												</td>
 											</tr>
 										</tbody>
@@ -99,18 +104,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</tbody>
 					</table>
 					[ADDITIONALINFO]
-				</td>
+                </td>
 			</tr>
 		</tbody>
 	</table>
-	<div  style="margin-right:20px;margin-left:20px;border: 1px solid black">
+	<div id="wps_etmfw_parent_wrapper_2" class="wps_etmfw_border_color" style="margin-right:0px;margin-left:0px;border:2px <?php echo get_option('wps_etmfw_border_type').' ' . get_option('wps_etmfw_pdf_border_color'); ?>">
 	<?php
 	$body = get_option( 'wps_etmfw_email_body_content', '' );
 	if ( '' != $body ) {
 		?>
 									<h4 style="padding: 10px;">Note</h4>
 									<div style="padding: 20px;width:auto;text-align:left;vertical-align: middle;">
-										[EMAILBODYCONTENT]
+                                    [EMAILBODYCONTENT]
 									</div>
 									<?php } ?>
 	</div>

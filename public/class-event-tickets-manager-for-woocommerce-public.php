@@ -683,15 +683,16 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 		$file = apply_filters( 'wps_etmfw_generate_qr_code', $order_id, $ticket_number, $product_id );
 		$ticket_number1 = '';
+		$wps_etmfw_qr_size = ! empty(get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 'wps_etmfw_qr_size' ) : '180';
 
 		if ( ! empty( $file ) ) {
 
 			if ( 'string' == gettype( $file ) ) {
 				$ticket_number1 = $ticket_number;
 				$wps_is_qr_is_enable = true;
-				$ticket_number = '<img src="' . get_site_url() . '/' . str_replace( ABSPATH, '', $file ) . '" alt= "QR" width="100%"  />';
+				$ticket_number = '<img id="wps_qr_image" src="' . get_site_url() . '/' . str_replace( ABSPATH, '', $file ) . '" alt= "QR" style="width:'. $wps_etmfw_qr_size.'px;height:'. $wps_etmfw_qr_size.'px'." />'";
 				if ( '1' == $wps_set_the_pdf_ticket_template ) {
-					$ticket_number = '<img src="' . get_site_url() . '/' . str_replace( ABSPATH, '', $file ) . '" alt= "QR" height="100" width="100"  />';
+					$ticket_number = '<img id="wps_qr_image" src="' . get_site_url() . '/' . str_replace( ABSPATH, '', $file ) . '" alt= "QR" style="width:'. $wps_etmfw_qr_size.'px;height:'. $wps_etmfw_qr_size.'px'." />'";
 				}
 			}
 		}
@@ -725,7 +726,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			}
 			$additinal_info .= '</tbody></table>';
 		}
-		$site_logo = '<img src="' . get_option( 'wps_etmfw_mail_setting_upload_logo', '' ) . '" style="width: 180px;">';
+		// $image_attributes = wp_get_attachment_image_src( get_option('wps_etmfw_background_image'), 'thumbnail' );
+		$wps_etmfw_logo_size = ! empty( get_option( 'wps_etmfw_logo_size',true ) ) ? get_option( 'wps_etmfw_logo_size',true ) : '180';
+		$site_logo = '<img id="wps_wem_logo_id" class="wps_wem_logo" src="' . get_option('wps_etmfw_mail_setting_upload_logo','') . '" style="width:' . $wps_etmfw_logo_size .'px;margin-left: 25px">';
 		$wps_ticket_details = str_replace( '[EVENTNAME]', $product->get_name(), $wps_ticket_details );
 
 		$wps_ticket_details = str_replace( '[TICKET]', $ticket_number, $wps_ticket_details );

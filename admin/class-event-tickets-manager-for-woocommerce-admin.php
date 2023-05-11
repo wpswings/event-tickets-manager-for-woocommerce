@@ -108,8 +108,10 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			wp_enqueue_script( 'wps-etmfw-metarial-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.js', array(), time(), false );
 			wp_enqueue_script( 'wps-etmfw-metarial-js2', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.js', array(), time(), false );
 			wp_enqueue_script( 'wps-etmfw-metarial-lite', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.js', array(), time(), false );
-
-			wp_register_script( $this->plugin_name . 'admin-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/js/event-tickets-manager-for-woocommerce-admin.js', array( 'jquery', 'wps-etmfw-select2', 'wps-etmfw-metarial-js', 'wps-etmfw-metarial-js2', 'wps-etmfw-metarial-lite' ), $this->version, false );
+			wp_enqueue_style( 'wp-color-picker' );
+			wp_enqueue_script( 'wp-color-picker');
+		
+			wp_register_script( $this->plugin_name . 'admin-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/js/event-tickets-manager-for-woocommerce-admin.js', array( 'jquery', 'wps-etmfw-select2', 'wps-etmfw-metarial-js', 'wps-etmfw-metarial-js2', 'wps-etmfw-metarial-lite', 'wp-color-picker' ), $this->version, false );
 
 			wp_localize_script(
 				$this->plugin_name . 'admin-js',
@@ -152,7 +154,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'nonce'   => wp_create_nonce( 'wps_wet_custom_ajax_nonce' ),
 			)
 		);
-
+		wp_enqueue_media();
 	}
 
 	/**
