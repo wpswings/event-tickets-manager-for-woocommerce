@@ -34,7 +34,7 @@
 		var data = {
 			action:'wps_etmfw_resend_the_ticket_pdf',
 			order_id:$(this).attr("data-id"),
-			// wps_nonce:etmfw_public_param.wps_etmfw_public_nonce
+			wps_nonce:wet_org_custom_param.wps_etmfw_edit_prod_nonce
 		};
 		jQuery.ajax({
 			type: 'POST',

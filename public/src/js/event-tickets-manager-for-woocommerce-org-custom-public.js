@@ -40,7 +40,7 @@
             var data = {
                 action:'wps_etmfw_resend_mail_pdf_order_deatails',
                 order_id:order_id,
-                // wps_uwgc_nonce:wps_uwgc_param.wps_uwgc_nonce
+                wps_nonce:etmfw_org_custom_param_public.wps_etmfw_public_nonce
             };
 
             jQuery.ajax({

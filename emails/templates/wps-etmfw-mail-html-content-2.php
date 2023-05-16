@@ -14,12 +14,14 @@ $bg_color = ! empty( get_option( 'wps_etmfw_ticket_bg_color', '' ) ) ? get_optio
 $text_color = ! empty( get_option( 'wps_etmfw_ticket_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_text_color' ) : '#000000';
 
 
-$image_attributes = wp_get_attachment_image_src( get_option('wps_etmfw_background_image'), 'thumbnail' );
-$wps_etmfw_logo_size = ! empty( get_option( 'wps_etmfw_logo_size',true ) ) ? get_option( 'wps_etmfw_logo_size',true ) : '180';
-$wps_etmfw_qr_size = ! empty(get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 'wps_etmfw_qr_size' ) : '180';
-$wps_etmfw_background_color = ! empty(get_option( 'wps_etmfw_pdf_background_color' ) ) ? get_option( 'wps_etmfw_pdf_background_color' ) : '#D77565';
-$wps_etmfw_text_color = ! empty(get_option( 'wps_etmfw_pdf_text_color' ) ) ? get_option( 'wps_etmfw_pdf_text_color' ) : '#000000';
+$image_attributes = wp_get_attachment_image_src( get_option( 'wps_etmfw_background_image' ), 'thumbnail' );
+$wps_etmfw_logo_size = ! empty( get_option( 'wps_etmfw_logo_size', true ) ) ? get_option( 'wps_etmfw_logo_size', true ) : '180';
+$wps_etmfw_qr_size = ! empty( get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 'wps_etmfw_qr_size' ) : '180';
+$wps_etmfw_background_color = ! empty( get_option( 'wps_etmfw_pdf_background_color' ) ) ? get_option( 'wps_etmfw_pdf_background_color' ) : '#D77565';
+$wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_pdf_text_color' ) ) ? get_option( 'wps_etmfw_pdf_text_color' ) : '#000000';
 // Inline style used for sending in email.
+$wps_etmfw_border_type = ! empty( get_option( 'wps_etmfw_border_type' ) ) ? get_option( 'wps_etmfw_border_type' ) : 'none';
+$wps_etmfw_border_color = ! empty( get_option( 'wps_etmfw_pdf_border_color' ) ) ? get_option( 'wps_etmfw_pdf_border_color' ) : '#000000';
 ?>
 <!DOCTYPE html>
 <html>
@@ -38,7 +40,7 @@ $wps_etmfw_text_color = ! empty(get_option( 'wps_etmfw_pdf_text_color' ) ) ? get
 </head>
 
 <body style="background-color: #ffffff; margin: 0; box-sizing: border-box;">
-  <table class="wps_etmfw_border_color wps_etmfw_ticket_body" id = "wps_etmfw_parent_wrapper" cellspacing="0" cellpadding="0" style="width: 900px; background-color: <?php echo esc_attr( $wps_etmfw_background_color ); ?>; margin: 0 auto;border:2px <?php echo get_option('wps_etmfw_border_type').' ' . get_option('wps_etmfw_pdf_border_color'); ?>">
+  <table class="wps_etmfw_border_color wps_etmfw_ticket_body" id = "wps_etmfw_parent_wrapper" cellspacing="0" cellpadding="0" style="width: 900px; background-color: <?php echo esc_attr( $wps_etmfw_background_color ); ?>; margin: 0 auto;border:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>">
 	<tbody>
 	  <tr>
 		<td style="width: 25%; padding: 15px; box-sizing: border-box;">[LOGO]</td>
@@ -53,7 +55,7 @@ $wps_etmfw_text_color = ! empty(get_option( 'wps_etmfw_pdf_text_color' ) ) ? get
 							<td>
 								<p style="margin: 0; margin-top: 10px; margin-bottom: 10px; color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>; font-size: 16px;">Venue- <br><span style="color:<?php echo esc_attr( $wps_etmfw_text_color ); ?>">[VENUE]</span></p>
 							</td>
-							<?php if ( 'on' == get_option( 'wps_etmfwp_include_qr') ) { ?>
+							<?php if ( 'on' == get_option( 'wps_etmfwp_include_qr' ) ) { ?>
 							<td>
 								<p style="margin: 0; margin-top: 10px; color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>; font-size: 16px;">Ticket- <br><span style="color:<?php echo esc_attr( $wps_etmfw_text_color ); ?>">[TICKET1]</span></p>
 							</td>
@@ -95,7 +97,7 @@ $wps_etmfw_text_color = ! empty(get_option( 'wps_etmfw_pdf_text_color' ) ) ? get
 	</tbody>
   </table>
 
-		<div class="wps_etmfw_border_color wps_etmfw_ticket_body" id = "wps_etmfw_parent_wrapper_2" style="width: 870px; padding: 15px; background-color:<?php echo esc_attr( $wps_etmfw_background_color ); ?>; margin: 0 auto; margin-top: 20px; box-sizing: border-box;border:2px <?php echo get_option('wps_etmfw_border_type').' ' . get_option('wps_etmfw_pdf_border_color'); ?>">
+		<div class="wps_etmfw_border_color wps_etmfw_ticket_body" id = "wps_etmfw_parent_wrapper_2" style="width: 870px; padding: 15px; background-color:<?php echo esc_attr( $wps_etmfw_background_color ); ?>; margin: 0 auto; margin-top: 20px; box-sizing: border-box;border:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>">
 			<?php
 				$body = get_option( 'wps_etmfw_email_body_content', '' );
 			if ( '' != $body ) {

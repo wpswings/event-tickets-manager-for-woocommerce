@@ -10,12 +10,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$image_attributes = wp_get_attachment_image_src( get_option('wps_etmfw_background_image'), 'thumbnail' );
-$wps_etmfw_logo_size = ! empty( get_option( 'wps_etmfw_logo_size',true ) ) ? get_option( 'wps_etmfw_logo_size',true ) : '180';
-$wps_etmfw_qr_size = ! empty(get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 'wps_etmfw_qr_size' ) : '180';
-$wps_etmfw_background_color = ! empty(get_option( 'wps_etmfw_pdf_background_color' ) ) ? get_option( 'wps_etmfw_pdf_background_color' ) : '#006333';
-$wps_etmfw_text_color = ! empty(get_option( 'wps_etmfw_pdf_text_color' ) ) ? get_option( 'wps_etmfw_pdf_text_color' ) : '#ffffff';
+$image_attributes = wp_get_attachment_image_src( get_option( 'wps_etmfw_background_image' ), 'thumbnail' );
+$wps_etmfw_logo_size = ! empty( get_option( 'wps_etmfw_logo_size', true ) ) ? get_option( 'wps_etmfw_logo_size', true ) : '180';
+$wps_etmfw_qr_size = ! empty( get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 'wps_etmfw_qr_size' ) : '180';
+$wps_etmfw_background_color = ! empty( get_option( 'wps_etmfw_pdf_background_color' ) ) ? get_option( 'wps_etmfw_pdf_background_color' ) : '#006333';
+$wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_pdf_text_color' ) ) ? get_option( 'wps_etmfw_pdf_text_color' ) : '#ffffff';
 // Inline style used for sending in email.
+$wps_etmfw_border_type = ! empty( get_option( 'wps_etmfw_border_type' ) ) ? get_option( 'wps_etmfw_border_type' ) : 'none';
+$wps_etmfw_border_color = ! empty( get_option( 'wps_etmfw_pdf_border_color' ) ) ? get_option( 'wps_etmfw_pdf_border_color' ) : '#000000';
+$wps_etmfw_logo_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' ) ) ? get_option( 'wps_etmfw_mail_setting_upload_logo' ) : '';
+$wps_etmfw_email_body_content = ! empty( get_option( 'wps_etmfw_email_body_content' ) ) ? get_option( 'wps_etmfw_email_body_content' ) : '';
+$wps_etmfw_qr_code_is_enable = ! empty( get_option( 'wps_etmfwp_include_qr' ) ) ? get_option( 'wps_etmfwp_include_qr' ) : '';
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,7 +32,7 @@ $wps_etmfw_text_color = ! empty(get_option( 'wps_etmfw_pdf_text_color' ) ) ? get
 	</style>	
 </head>
 <body>	
-	<table cellspacing="0" class="wps_etmfw_border_color" id = "wps_etmfw_parent_wrapper" cellpadding="0" style="padding: 20px;table-layout: auto; width: 100%;border:2px <?php echo get_option('wps_etmfw_border_type').' ' . get_option('wps_etmfw_pdf_border_color'); ?>"> 
+	<table cellspacing="0" class="wps_etmfw_border_color" id = "wps_etmfw_parent_wrapper" cellpadding="0" style="padding: 20px;table-layout: auto; width: 100%;border:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>"> 
 		<tbody>
 			<tr>
 				<td style="padding: 20px;">
@@ -35,7 +40,7 @@ $wps_etmfw_text_color = ! empty(get_option( 'wps_etmfw_pdf_text_color' ) ) ? get
 						<tbody>
 							<tr style="width: 100%;">
 								<td style="width: 20%;background: #000000;">
-                                <img id="wps_wem_logo_id" class="wps_wem_logo" src="<?php echo esc_url(get_option('wps_etmfw_mail_setting_upload_logo','')); ?>" style="width:<?php echo $wps_etmfw_logo_size.'px' ?>;margin-left: 25px">
+								<img id="wps_wem_logo_id" class="wps_wem_logo" src="<?php echo esc_url( get_option( 'wps_etmfw_mail_setting_upload_logo', '' ) ); ?>" style="width:<?php echo esc_attr( $wps_etmfw_logo_size . 'px' ); ?>;margin-left: 25px">
 								</td>
 								<?php
 									  $bg_color = ! empty( get_option( 'wps_etmfw_ticket_bg_color', '' ) ) ? get_option( 'wps_etmfw_ticket_bg_color' ) : '#2196f3';
@@ -104,18 +109,18 @@ $wps_etmfw_text_color = ! empty(get_option( 'wps_etmfw_pdf_text_color' ) ) ? get
 						</tbody>
 					</table>
 					[ADDITIONALINFO]
-                </td>
+				</td>
 			</tr>
 		</tbody>
 	</table>
-	<div id="wps_etmfw_parent_wrapper_2" class="wps_etmfw_border_color" style="margin-right:0px;margin-left:0px;border:2px <?php echo get_option('wps_etmfw_border_type').' ' . get_option('wps_etmfw_pdf_border_color'); ?>">
+	<div id="wps_etmfw_parent_wrapper_2" class="wps_etmfw_border_color" style="margin-right:0px;margin-left:0px;border:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>">
 	<?php
 	$body = get_option( 'wps_etmfw_email_body_content', '' );
 	if ( '' != $body ) {
 		?>
 									<h4 style="padding: 10px;">Note</h4>
 									<div style="padding: 20px;width:auto;text-align:left;vertical-align: middle;">
-                                    [EMAILBODYCONTENT]
+									[EMAILBODYCONTENT]
 									</div>
 									<?php } ?>
 	</div>

@@ -15,31 +15,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 if ( isset( $_POST['wps_etmfw_new_layout_setting_save'] ) ) {
-	// var_dump($_POST['wps_etmfw_pdf_border_color']);
-	// die('issue');
-	
+
 	$wps_verify_nonce_form = isset( $_POST['wps_layout_value'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_layout_value'] ) ) : '1';
 	if ( wp_verify_nonce( $wps_verify_nonce_form, 'wps_layout_nonce_verify' ) ) {
 		$wps_selected_pdf_ticket_template = isset( $_POST['wps_etmfw_ticket_template'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_ticket_template'] ) ) : '1';
 		update_option( 'wps_etmfw_ticket_template', $wps_selected_pdf_ticket_template );
-		// var_dump($_POST['product_section_price_border_color']);
-		// die('issue');
-		// update_option('wps_etmfw_pdf_border_color',$_POST['product_section_price_border_color']);  
 	}
 }
 if ( isset( $_POST['wps_etmfw_new_layout_setting_save_2'] ) ) {
+	$wps_etmfw_border_type_template = isset( $_POST['wps_etmfw_border_type'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_border_type'] ) ) : 'none';
+	$wps_etmfw_pdf_border_color = isset( $_POST['wps_etmfw_pdf_border_color'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_pdf_border_color'] ) ) : 'black';
+	$wps_etmfw_pdf_background_color = isset( $_POST['wps_etmfw_pdf_background_color'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_pdf_background_color'] ) ) : '';
+	update_option( 'wps_etmfw_border_type', $wps_etmfw_border_type_template );
+	update_option( 'wps_etmfw_pdf_border_color', $wps_etmfw_pdf_border_color );
+	update_option( 'wps_etmfw_pdf_background_color', $wps_etmfw_pdf_background_color );
 
-	update_option('wps_etmfw_border_type',$_POST['wps_etmfw_border_type']);
-	update_option('wps_etmfw_pdf_border_color',$_POST['wps_etmfw_pdf_border_color']);
-	update_option('wps_etmfw_pdf_background_color',$_POST['wps_etmfw_pdf_background_color']);
+	$wps_etmfw_pdf_text_color = isset( $_POST['wps_etmfw_pdf_text_color'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_pdf_text_color'] ) ) : '';
+	$wps_etmfw_logo_size = isset( $_POST['wps_etmfw_logo_size'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_logo_size'] ) ) : '';
+	$wps_etmfw_qr_size = isset( $_POST['wps_etmfw_qr_size'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_qr_size'] ) ) : '';
+	$wps_etmfw_background_image = isset( $_POST['wps_etmfw_background_image'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_background_image'] ) ) : '';
 
-	// var_dump($_POST['wps_etmfw_pdf_background_color']);
+	update_option( 'wps_etmfw_pdf_text_color', $wps_etmfw_pdf_text_color );
+	update_option( 'wps_etmfw_logo_size', $wps_etmfw_logo_size );
+	update_option( 'wps_etmfw_qr_size', $wps_etmfw_qr_size );
+	update_option( 'wps_etmfw_background_image', $wps_etmfw_background_image );
 
-	update_option('wps_etmfw_pdf_text_color',$_POST['wps_etmfw_pdf_text_color']);
-	update_option('wps_etmfw_logo_size',$_POST['wps_etmfw_logo_size']);
-	update_option('wps_etmfw_qr_size',$_POST['wps_etmfw_qr_size']);
-	update_option('wps_etmfw_background_image',$_POST['wps_etmfw_background_image']);
-	
 }
 
 
@@ -152,7 +152,6 @@ $allowed_html = array(
 
 				<!--2nd Section for the design setting.-->
 				<div class="wps_etmfw_table wps_etmfw_table--border wps_etmfw_custom_template_settings ">
-				<!-- <div class="wps_etmfw_offer_sections"><?php //esc_html_e( 'Ticket PDF', 'upsell-order-bump-offer-for-woocommerce' ); ?></div> -->
 				<table class="form-table wps_etmfw_creation_setting">
 				<tbody>
 				<!-- Border style start. -->
@@ -161,7 +160,8 @@ $allowed_html = array(
 					<td>
 					<?php
 					$attribute_description = esc_html__( 'Select among different border types for PDF Ticket.', 'upsell-order-bump-offer-for-woocommerce' );
-					// wps_ubo_lite_help_tip( $attribute_description );
+					$wps_etmfw_border_type = ! empty( get_option( 'wps_etmfw_border_type' ) ) ? get_option( 'wps_etmfw_border_type' ) : '';
+					// wps_ubo_lite_help_tip( $attribute_description );.
 					echo wp_kses( wc_help_tip( $attribute_description ), $allowed_html );
 					?>
 				<label>
@@ -171,17 +171,17 @@ $allowed_html = array(
 
 				<?php
 				$border_type_array = array(
-				'none' => esc_html__( 'No Border', 'upsell-order-bump-offer-for-woocommerce' ),
-				'solid' => esc_html__( 'Solid', 'upsell-order-bump-offer-for-woocommerce' ),
-				'dashed' => esc_html__( 'Dashed', 'upsell-order-bump-offer-for-woocommerce' ),
-				'double' => esc_html__( 'Double', 'upsell-order-bump-offer-for-woocommerce' ),
-				'dotted' => esc_html__( 'Dotted', 'upsell-order-bump-offer-for-woocommerce' ),
+					'none' => esc_html__( 'No Border', 'upsell-order-bump-offer-for-woocommerce' ),
+					'solid' => esc_html__( 'Solid', 'upsell-order-bump-offer-for-woocommerce' ),
+					'dashed' => esc_html__( 'Dashed', 'upsell-order-bump-offer-for-woocommerce' ),
+					'double' => esc_html__( 'Double', 'upsell-order-bump-offer-for-woocommerce' ),
+					'dotted' => esc_html__( 'Dotted', 'upsell-order-bump-offer-for-woocommerce' ),
 				);
 
 				?>
 				<option value="" ><?php esc_html_e( '----Select Border Type----', 'upsell-order-bump-offer-for-woocommerce' ); ?></option>
 				<?php foreach ( $border_type_array as $value => $name ) : ?>
-						<option <?php  echo esc_html( get_option('wps_etmfw_border_type') === $value ? 'selected' : '' ); ?> value="<?php echo esc_html( $value ); ?>" ><?php echo esc_html( $name ); ?></option>
+						<option <?php echo esc_html( $wps_etmfw_border_type === $value ? 'selected' : '' ); ?> value="<?php echo esc_html( $value ); ?>" ><?php echo esc_html( $name ); ?></option>
 							<?php endforeach; ?>
 							</select>
 
@@ -194,10 +194,11 @@ $allowed_html = array(
 					<td>
 					<?php
 					$attribute_description = esc_html__( 'Select color of different border types for PDF Ticket.', 'upsell-order-bump-offer-for-woocommerce' );
-					// wps_ubo_lite_help_tip( $attribute_description );
+					$wps_etmfw_border_color = ! empty( get_option( 'wps_etmfw_pdf_border_color' ) ) ? get_option( 'wps_etmfw_pdf_border_color' ) : '';
+					// wps_ubo_lite_help_tip( $attribute_description );.
 					echo wp_kses( wc_help_tip( $attribute_description ), $allowed_html );
 					?>
-					<input type="text" name="wps_etmfw_pdf_border_color" class="wps_etmfw_colorpicker wps_etmfw_select_ticket_border_color" value="<?php echo get_option( 'wps_etmfw_pdf_border_color' ); //echo ! empty( $wps_upsell_bumps_list[ $wps_upsell_bump_id ]['design_css']['product_section_price_text_color'] ) ? esc_html( $wps_upsell_bumps_list[ $wps_upsell_bump_id ]['design_css']['product_section_price_text_color'] ) : ''; ?>">
+					<input type="text" name="wps_etmfw_pdf_border_color" class="wps_etmfw_colorpicker wps_etmfw_select_ticket_border_color" value="<?php echo esc_attr( $wps_etmfw_border_color ); ?>">
 					</td>
 				</tr>
 
@@ -206,10 +207,11 @@ $allowed_html = array(
 					<td>
 					<?php
 					$attribute_description = esc_html__( 'Select among different border types for PDF Ticket.', 'upsell-order-bump-offer-for-woocommerce' );
-					// wps_ubo_lite_help_tip( $attribute_description );
+					$wps_etmfw_background_color = ! empty( get_option( 'wps_etmfw_pdf_background_color' ) ) ? get_option( 'wps_etmfw_pdf_background_color' ) : '';
+					// wps_ubo_lite_help_tip( $attribute_description );.
 					echo wp_kses( wc_help_tip( $attribute_description ), $allowed_html );
 					?>
-					<input type="text" name="wps_etmfw_pdf_background_color" class="wps_etmfw_colorpicker wps_etmfw_select_ticket_background" value="<?php echo get_option( 'wps_etmfw_pdf_background_color' ); //echo ! empty( $wps_upsell_bumps_list[ $wps_upsell_bump_id ]['design_css']['product_section_price_text_color'] ) ? esc_html( $wps_upsell_bumps_list[ $wps_upsell_bump_id ]['design_css']['product_section_price_text_color'] ) : ''; ?>">
+					<input type="text" name="wps_etmfw_pdf_background_color" class="wps_etmfw_colorpicker wps_etmfw_select_ticket_background" value="<?php echo esc_attr( $wps_etmfw_background_color ); ?>">
 					</td>
 				</tr>
 
@@ -218,10 +220,11 @@ $allowed_html = array(
 					<td>
 					<?php
 					$attribute_description = esc_html__( 'Select among different border types for PDF Ticket.', 'upsell-order-bump-offer-for-woocommerce' );
-					// wps_ubo_lite_help_tip( $attribute_description );
+					$wps_etmfw_pdf_text_color = ! empty( get_option( 'wps_etmfw_pdf_text_color' ) ) ? get_option( 'wps_etmfw_pdf_text_color' ) : '';
+					// wps_ubo_lite_help_tip( $attribute_description );.
 					echo wp_kses( wc_help_tip( $attribute_description ), $allowed_html );
 					?>
-					<input type="text" name="wps_etmfw_pdf_text_color" class="wps_etmfw_colorpicker wps_etmfw_pdf_text_color" value="<?php echo get_option( 'wps_etmfw_pdf_text_color' ); //echo ! empty( $wps_upsell_bumps_list[ $wps_upsell_bump_id ]['design_css']['product_section_price_text_color'] ) ? esc_html( $wps_upsell_bumps_list[ $wps_upsell_bump_id ]['design_css']['product_section_price_text_color'] ) : ''; ?>">
+					<input type="text" name="wps_etmfw_pdf_text_color" class="wps_etmfw_colorpicker wps_etmfw_pdf_text_color" value="<?php echo esc_attr( $wps_etmfw_pdf_text_color ); ?>">
 					</td>
 				</tr>
 
@@ -230,11 +233,12 @@ $allowed_html = array(
 					<td>
 					<?php
 					$attribute_description = esc_html__( 'Select among different border types for PDF Ticket.', 'upsell-order-bump-offer-for-woocommerce' );
-					// wps_ubo_lite_help_tip( $attribute_description );
+					$wps_etmfw_logo_size = ! empty( get_option( 'wps_etmfw_logo_size' ) ) ? get_option( 'wps_etmfw_logo_size' ) : '';
+					// wps_ubo_lite_help_tip( $attribute_description );.
 					echo wp_kses( wc_help_tip( $attribute_description ), $allowed_html );
 					?>
-					<input type="range" min="100" value="<?php echo get_option( 'wps_etmfw_logo_size' ); //echo esc_html( $wps_upsell_bumps_list[ $wps_upsell_bump_id ]['design_css']['top_vertical_spacing'] ); ?>"  max="200" value="" name='wps_etmfw_logo_size' class="wps_etmfw_logo_size_slider" />
-					<span class="wps_etmfw_logo_size_slider_span" ><?php echo get_option( 'wps_etmfw_logo_size' ).'px';//echo esc_html( ! empty( $wps_upsell_bumps_list[ $wps_upsell_bump_id ]['design_css']['top_vertical_spacing'] ) ? esc_html( $wps_upsell_bumps_list[ $wps_upsell_bump_id ]['design_css']['top_vertical_spacing'] . 'px' ) : '0px' ); ?></span>
+					<input type="range" min="100" value="<?php echo esc_attr( $wps_etmfw_logo_size ); ?>"  max="200" value="" name='wps_etmfw_logo_size' class="wps_etmfw_logo_size_slider" />
+					<span class="wps_etmfw_logo_size_slider_span" ><?php echo esc_attr( $wps_etmfw_logo_size . 'px' ); ?></span>
 					</td>
 				</tr>
 
@@ -243,12 +247,13 @@ $allowed_html = array(
 					<td>
 					<?php
 					$attribute_description = esc_html__( 'Select among different border types for PDF Ticket.', 'upsell-order-bump-offer-for-woocommerce' );
-					// wps_ubo_lite_help_tip( $attribute_description );
+					$wps_etmfw_qr_size = ! empty( get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 'wps_etmfw_qr_size' ) : '';
+					// wps_ubo_lite_help_tip( $attribute_description );.
 					echo wp_kses( wc_help_tip( $attribute_description ), false );
-					echo '<span class="woocommerce-help-tip" data-tip="' . wc_sanitize_tooltip( $attribute_description ) . '"></span>';
+					// echo '<span class="woocommerce-help-tip" data-tip="' . wc_sanitize_tooltip( $attribute_description ) . '"></span>';.
 					?>
-					<input type="range" min="100" value="<?php echo get_option( 'wps_etmfw_qr_size' );  //echo esc_html( $wps_upsell_bumps_list[ $wps_upsell_bump_id ]['design_css']['top_vertical_spacing'] ); ?>"  max="220" value="" name='wps_etmfw_qr_size' class="wps_etmfw_qr_size_slider" />
-					<span class="wps_etmfw_qr_size_slider_span" ><?php echo get_option( 'wps_etmfw_qr_size' ).'px';//echo esc_html( ! empty( $wps_upsell_bumps_list[ $wps_upsell_bump_id ]['design_css']['top_vertical_spacing'] ) ? esc_html( $wps_upsell_bumps_list[ $wps_upsell_bump_id ]['design_css']['top_vertical_spacing'] . 'px' ) : '0px' ); ?></span>
+					<input type="range" min="100" value="<?php echo esc_attr( $wps_etmfw_qr_size );  // echo esc_html( $wps_upsell_bumps_list[ $wps_upsell_bump_id ]['design_css']['top_vertical_spacing'] );. ?>"  max="220" value="" name='wps_etmfw_qr_size' class="wps_etmfw_qr_size_slider" />
+					<span class="wps_etmfw_qr_size_slider_span" ><?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?></span>
 					</td>
 				</tr>
 
@@ -257,17 +262,15 @@ $allowed_html = array(
 					<td>
 					<?php
 					$attribute_description = esc_html__( 'Select among different border types for PDF Ticket.', 'upsell-order-bump-offer-for-woocommerce' );
-					// wps_ubo_lite_help_tip( $attribute_description );
+					$wps_etmfw_background_image = ! empty( get_option( 'wps_etmfw_background_image' ) ) ? get_option( 'wps_etmfw_background_image' ) : '';
+					// wps_ubo_lite_help_tip( $attribute_description );.
 					echo wp_kses( wc_help_tip( $attribute_description ), $allowed_html );
 					?>
-					<?php 
-					if ( ! empty( get_option('wps_etmfw_background_image') ) ) {
+					<?php
+					if ( ! empty( $wps_etmfw_background_image ) ) {
 
-					// $image_attributes[0] - Image URL.
-					// $image_attributes[1] - Image width.
-					// $image_attributes[2] - Image height.
-					$image_attributes = wp_get_attachment_image_src( get_option('wps_etmfw_background_image'), 'thumbnail' );
-					?>
+						$image_attributes = wp_get_attachment_image_src( $wps_etmfw_background_image, 'thumbnail' );
+						?>
 					<div class="wps_wocuf_saved_custom_image">
 					<a href="#" class="wps_etmfw_upload_image_button button"><img src="<?php echo esc_url( $image_attributes[0] ); ?>" style="max-width:150px;display:block;"></a>
 					<input type="hidden" name="wps_etmfw_background_image" id="wps_etmfw_background_image_1" value="<?php echo esc_attr( $image_post_id ); ?>">
@@ -276,7 +279,7 @@ $allowed_html = array(
 				<?php } else { ?>
 						<div class="wps_wocuf_saved_custom_image"> 
 						<a href="#" class="wps_etmfw_upload_image_button button"><?php esc_html_e( 'Upload image', 'upsell-order-bump-offer-for-woocommerce-pro' ); ?></a>
-						<input type="hidden" name="wps_etmfw_background_image" id="wps_etmfw_background_image" value="<?php echo esc_attr( get_option('m1') ); ?>">
+						<input type="hidden" name="wps_etmfw_background_image" id="wps_etmfw_background_image" value="<?php echo esc_attr( get_option( 'm1' ) ); ?>">
 						<a href="#" class="wps_etmfw_remove_image_button button" style="display:inline-block;margin-top: 10px;display:none;"><?php esc_html_e( 'Remove Image', 'upsell-order-bump-offer-for-woocommerce-pro' ); ?></a>
 						</div>
 						<?php } ?>
@@ -292,15 +295,15 @@ $allowed_html = array(
 				<!-- Preview start -->
 				<div class="wps_etmfw_offer_preview" >
 				<div class="wps_etmfw_offer_preview_in" >
-					<?php $wps_ubo_selected_template = get_option( 'wps_etmfw_ticket_template' , '1' );?>
+					<?php $wps_ubo_selected_template = ! empty( get_option( 'wps_etmfw_ticket_template' ) ) ? get_option( 'wps_etmfw_ticket_template' ) : '1'; ?>
 					<h3 class="wps_ubo_offer_preview_heading"><?php esc_html_e( 'PDF Ticket Preview', 'upsell-order-bump-offer-for-woocommerce' ); ?></h3>
-					<?php if(1 === (int) $wps_ubo_selected_template ){?>
+					<?php if ( 1 === (int) $wps_ubo_selected_template ) { ?>
 					<?php include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'Demo/wps-etmfw-mail-html-content.php'; } // Zenith. ?>
-					<?php if(2 === (int) $wps_ubo_selected_template ){?>
+					<?php if ( 2 === (int) $wps_ubo_selected_template ) { ?>
 					<?php include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'Demo/wps-etmfw-mail-html-content-1.php'; } // // Elixir. ?>
-					<?php if(3 === (int) $wps_ubo_selected_template ){?>
+					<?php if ( 3 === (int) $wps_ubo_selected_template ) { ?>
 					<?php include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'Demo/wps-etmfw-mail-html-content-2.php'; } // Demure. ?>
-					<?php if(4 === (int) $wps_ubo_selected_template ){?>
+					<?php if ( 4 === (int) $wps_ubo_selected_template ) { ?>
 					<?php include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'Demo/wps-etmfw-mail-html-content-3.php'; } // Mellifluous. ?>			
 				</div>
 				</div>
@@ -310,6 +313,9 @@ $allowed_html = array(
 							<div class="wps-form-group__control">
 								<button class="mdc-button mdc-button--raised" name= "wps_etmfw_new_layout_setting_save_2" id = 'wps_etmfw_new_layout_setting_save_2'><span class="mdc-button__ripple"></span>
 									<span class="mdc-button__label"><?php echo 'Save'; ?></span>
+								</button>
+								<button class="mdc-button mdc-button--raised" name= "reset_wps" id = 'wps_etmfw_new_layout_setting_save_3'><span class="mdc-button__ripple"></span>
+									<span class="mdc-button__label"><?php echo 'Reset'; ?></span>
 								</button>
 							</div>
 						</div>
@@ -344,3 +350,51 @@ $allowed_html = array(
 		</div>
 	</div>
 </div>
+<?php
+if ( isset( $_POST['reset_wps'] ) ) {
+	$wps_ubo_selected_template = get_option( 'wps_etmfw_ticket_template', '1' );
+	if ( 1 === (int) $wps_ubo_selected_template ) {
+
+		 update_option( 'wps_etmfw_logo_size', '133' );
+		 update_option( 'wps_etmfw_qr_size', '133' );
+		 update_option( 'wps_etmfw_pdf_background_color', '#2196f3' );
+		 update_option( 'wps_etmfw_pdf_text_color', '#ffffff' );
+		 update_option( 'wps_etmfw_border_type', 'solid' );
+		 update_option( 'wps_etmfw_pdf_border_color', 'black' );
+		// update_option('wps_etmfw_background_image','#ffffff');.
+	}
+
+
+	if ( 2 === (int) $wps_ubo_selected_template ) {
+
+		update_option( 'wps_etmfw_logo_size', '133' );
+		update_option( 'wps_etmfw_qr_size', '133' );
+		update_option( 'wps_etmfw_pdf_background_color', '#f5ebeb' );
+		update_option( 'wps_etmfw_pdf_text_color', '#000000' );
+		update_option( 'wps_etmfw_border_type', 'none' );
+		update_option( 'wps_etmfw_pdf_border_color', 'black' );
+	}
+	// include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'Demo/wps-etmfw-mail-html-content-1.php'; } // // Elixir.
+
+
+	if ( 3 === (int) $wps_ubo_selected_template ) {
+
+		update_option( 'wps_etmfw_logo_size', '133' );
+		update_option( 'wps_etmfw_qr_size', '133' );
+		update_option( 'wps_etmfw_pdf_background_color', '#D77565' );
+		update_option( 'wps_etmfw_pdf_text_color', '#000000' );
+		update_option( 'wps_etmfw_border_type', 'none' );
+		update_option( 'wps_etmfw_pdf_border_color', 'black' );
+	} // Demure.
+
+
+	if ( 4 === (int) $wps_ubo_selected_template ) {
+
+		update_option( 'wps_etmfw_logo_size', '133' );
+		update_option( 'wps_etmfw_qr_size', '133' );
+		update_option( 'wps_etmfw_pdf_background_color', '#FFE6EA' );
+		update_option( 'wps_etmfw_pdf_text_color', '#ffffff' );
+		update_option( 'wps_etmfw_border_type', 'none' );
+		update_option( 'wps_etmfw_pdf_border_color', 'black' );
+	} // Mellifluous.
+}
