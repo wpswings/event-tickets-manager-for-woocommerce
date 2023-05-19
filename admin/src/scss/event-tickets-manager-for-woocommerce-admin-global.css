@@ -1097,3 +1097,35 @@ h3.wps_ubo_offer_preview_heading {
     max-width: 100px;
     max-height: 20px;
   }
+
+  .wps_etmfw_helper_text{
+    font-size: 12px;
+    margin-top: 5px;
+    display: inline-block;
+  }
+
+  .wps_etmfw_creation_setting td:before {
+    align-items: center;
+    background: #d8ffd6;
+    top: 0;
+    color: #078800;
+    content: "PRO";
+    display: inline-flex;
+    font-size: 10px;
+    justify-content: center;
+    right: 0;
+    padding: 5px 10px 5px 2px;
+    position: absolute;
+    width: 60px;
+    clip-path: polygon(100% 0, 80% 50%, 100% 100%, 0 100%, 0 0);
+}
+
+.wps_etmfw_creation_setting td {
+    padding-top: 15px;
+    padding-left: 25px;
+    position: relative
+}
+
+.wps_etmfw_class_for_pro{
+    pointer-events: none;
+}

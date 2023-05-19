@@ -30,6 +30,7 @@
      */
 
     $(document).ready(function() {
+        wps_checking_for_pro();
         wps_etmfw_hide_bck_ground_image_setting();
         // Available Ticket Template Change - Start.
         $('.wps_etmfw_colorpicker').wpColorPicker();
@@ -49,10 +50,6 @@
             }
         });
         //Dynamic text color for pdf ticket end here.
-
-
-
-
         //Dynamic color change for border start here.
         var wps_etmfw_border_color_change = $('.wps_etmfw_select_ticket_border_color'); //2.1.7.
         var wps_etmfw_border_color = '';
@@ -322,19 +319,6 @@
 		wps_etmfw_apply_border_styling();
 		
 	});
-	// var Bordercolorpicker = $('.wps_etmfw_select_ticket_border_color');
-	// // var Bordercolorpicker1 = $('.wps_etmfw_select_ticket_background');
-
-	// Bordercolorpicker.wpColorPicker({
-	// 	change: (event, ui) => {
-
-	// 		border_color = ui.color.toString();
-	// 		// alert('prince');
-
-	// 		wps_etmfw_apply_border_styling( border_color );
-
-	// 	}
-	// });
 
 	// Apply Border stylings.
 	function wps_etmfw_apply_border_styling( border_color = '' ) {
@@ -374,6 +358,17 @@
             }
         }
 
-        $('.wps_etmfw_colorpicker').wpColorPicker();
+        function wps_checking_for_pro(){
+            var wps_event_pro_is_enable = etmfw_admin_param.is_pro_active;
+            if(1 != wps_event_pro_is_enable){
+               var element = document.getElementById("wps_etmfw_is_for_pro");
+               element.classList.add("wps_etmfw_class_for_pro");
+               $('#wps_etmfw_new_layout_setting_save_3').hide();
+            }else{
+               var element = document.getElementById("wps_etmfw_is_for_pro");
+               element.classList.remove("wps_etmfw_class_for_pro");
+            }
+           }
 
+        $('.wps_etmfw_colorpicker').wpColorPicker();
 })(jQuery);
