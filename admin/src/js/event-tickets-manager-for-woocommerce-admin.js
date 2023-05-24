@@ -30,55 +30,48 @@
      */
 
     $(document).ready(function() {
-        wps_checking_for_pro();
         wps_etmfw_hide_bck_ground_image_setting();
         // Available Ticket Template Change - Start.
         $('.wps_etmfw_colorpicker').wpColorPicker();
 
         //Dynamic text color for pdf ticket start here.
-        var wps_etmfw_text_color_change = $('.wps_etmfw_pdf_text_color'); //2.1.7.
+        var wps_etmfw_text_color_change = $('.wps_etmfw_pdf_text_color'); //1.1.5.
         var wps_etmfw_text_color = '';
-        var wps_etmfw_text_color_selector = $('.wps_etmfw_pdf_text_colour');//2.1.7.
+        var wps_etmfw_text_color_selector = $('.wps_etmfw_pdf_text_colour');//1.1.5.
 
-        wps_etmfw_text_color_change.wpColorPicker({ //2.1.7.
+        wps_etmfw_text_color_change.wpColorPicker({ //1.1.5.
             change: (event, ui) => {
 
                 wps_etmfw_text_color = ui.color.toString();
-                // console.log(product_tcolor);
                 wps_etmfw_text_color_selector.css('color', wps_etmfw_text_color);
-                // ProductQty.css('color', product_tcolor);
             }
         });
         //Dynamic text color for pdf ticket end here.
         //Dynamic color change for border start here.
-        var wps_etmfw_border_color_change = $('.wps_etmfw_select_ticket_border_color'); //2.1.7.
+        var wps_etmfw_border_color_change = $('.wps_etmfw_select_ticket_border_color'); //1.1.5.
         var wps_etmfw_border_color = '';
-        var wps_etmfw_border_color_selector = $('.wps_etmfw_border_color');//2.1.7.
+        var wps_etmfw_border_color_selector = $('.wps_etmfw_border_color');//1.1.5.
 
-        wps_etmfw_border_color_change.wpColorPicker({ //2.1.7.
+        wps_etmfw_border_color_change.wpColorPicker({ //1.1.5.
             change: (event, ui) => {
 
                 wps_etmfw_border_color = ui.color.toString();
-                // console.log(product_tcolor);
                 wps_etmfw_border_color_selector.css('border-color', wps_etmfw_border_color);
-                // ProductQty.css('color', product_tcolor);
             }
         });
         //Dynamic color change for border ends here.
 
 
         //Dynamic Changes for background start Here.
-        var wps_etmfw_background_color_change = $('.wps_etmfw_select_ticket_background'); //2.1.7.
+        var wps_etmfw_background_color_change = $('.wps_etmfw_select_ticket_background'); //1.1.5.
         var wps_etmfw_background_color = '';
-        var wps_etmfw_background_selector = $('.wps_etmfw_ticket_body');//2.1.7.
+        var wps_etmfw_background_selector = $('.wps_etmfw_ticket_body');//1.1.5.
 
-        wps_etmfw_background_color_change.wpColorPicker({ //2.1.7.
+        wps_etmfw_background_color_change.wpColorPicker({ //1.1.5.
             change: (event, ui) => {
 
                 wps_etmfw_background_color = ui.color.toString();
-                // console.log(product_tcolor);
                 wps_etmfw_background_selector.css('background-color', wps_etmfw_background_color);
-                // ProductQty.css('color', product_tcolor);
             }
         });
         //Dynamic Changes for background end Here.
@@ -137,7 +130,6 @@
         });
 
         jQuery('body').on('click', '.wps_etmfw_remove_image_button', function(e) {
-			// alert('me');
             e.preventDefault();
             jQuery(this).hide().prev().val('').prev().addClass('button').html('Upload image');
             return false;
@@ -314,10 +306,7 @@
 	
 
 	$(document).on('change', '.wps_etmfw_preview_select_border_type' , function () {
-
-		// alert('clicked');
 		wps_etmfw_apply_border_styling();
-		
 	});
 
 	// Apply Border stylings.
@@ -358,6 +347,9 @@
             }
         }
 
+        $(document).ready(function() {
+        wps_checking_for_pro();
+        });
         function wps_checking_for_pro(){
             var wps_event_pro_is_enable = etmfw_admin_param.is_pro_active;
             if(1 != wps_event_pro_is_enable){
