@@ -652,6 +652,17 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				)
 			);
 
+			woocommerce_wp_checkbox(
+				array(
+					'id' => 'etmfw_event_disable_shipping',
+					'wrapper_class' => 'show_if_event_ticket_manager',
+					'label' => __( 'Disable Shipping Charge', 'event-tickets-manager-for-woocommerce-pro' ),
+					'value' => isset( $wps_etmfw_product_array['etmfw_event_disable_shipping'] ) ? $wps_etmfw_product_array['etmfw_event_disable_shipping'] : true,
+					'desc_tip'    => true,
+					'description' => __( 'Disable the shipping charge on product in cart', 'event-tickets-manager-for-woocommerce' ),
+				)
+			);
+
 			if ( 'on' === get_option( 'wps_etmfw_enabe_location_site', 'off' ) ) {
 				woocommerce_wp_checkbox(
 					array(
@@ -659,7 +670,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 						'wrapper_class' => 'show_if_event_ticket_manager',
 						'label' => __( 'Display event on google map', 'event-tickets-manager-for-woocommerce' ),
 						'value' => isset( $wps_etmfw_product_array['etmfw_display_map'] ) ? $wps_etmfw_product_array['etmfw_display_map'] : true,
-					)
+						'desc_tip'    => true,
+						'description' => __( 'To Show The Location On Map On Product Page', 'event-tickets-manager-for-woocommerce' ),
+						)
 				);
 
 			}
@@ -699,10 +712,12 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					$event_lat = isset( $_POST['etmfw_event_venue_lat'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_event_venue_lat'] ) ) : '';
 					$event_lng = isset( $_POST['etmfw_event_venue_lng'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_event_venue_lng'] ) ) : '';
 					$wps_event_trash_on_expire_event = isset( $_POST['etmfw_event_trash_event'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_event_trash_event'] ) ) : 'no';
+					$wps_event_disable_shipping_event = isset( $_POST['etmfw_event_disable_shipping'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_event_disable_shipping'] ) ) : 'no';
 					$wps_etmfw_product_array['etmfw_event_venue'] = $event_venue;
 					$wps_etmfw_product_array['etmfw_event_venue_lat'] = $event_lat;
 					$wps_etmfw_product_array['etmfw_event_venue_lng'] = $event_lng;
 					$wps_etmfw_product_array['etmfw_event_trash_event'] = $wps_event_trash_on_expire_event;
+					$wps_etmfw_product_array['etmfw_event_disable_shipping'] = $wps_event_disable_shipping_event;
 					$wps_etmfw_field_data = ! empty( $_POST['etmfw_fields'] ) ? map_deep( wp_unslash( $_POST['etmfw_fields'] ), 'sanitize_text_field' ) : array();
 					$wps_etmfw_field_data_array = array();
 					if ( is_array( $wps_etmfw_field_data ) && ! empty( $wps_etmfw_field_data ) ) {

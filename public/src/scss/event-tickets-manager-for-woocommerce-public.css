@@ -287,3 +287,79 @@ img.wps_resend_image {
     background: #70b3b5;
     width: 45px;
 }
+
+
+#wps_share_ticket_lable {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 15px;
+}
+
+#wps_etmfw_error_message {
+    font-size: 12px;
+    color: red;
+    margin: 10px 0;
+}
+
+.wps_etmfw_events_section,
+.wps_etmfw_input_ticket_section {
+    margin: 0 0 15px;
+    flex-wrap: nowrap;
+}
+
+.wps_etmfw_events_section label,
+.wps_etmfw_input_ticket_section label {
+    font-size: 18px;
+}
+
+#wps_etmfw_event_selected {
+    min-height: 40px;
+    margin: 0;
+}
+
+#wps_select_user {
+    margin: 0 0 15px;
+    min-height: 40px;
+}
+
+#wps_etmfwp_checkin_button {
+    min-height: 40px;
+    padding: 10px;
+}
+
+input#wps_etmfw_chckin_email,
+input#wps_etmfw_imput_ticket {
+    min-height: 40px;
+}
+
+@media screen and (max-width:580px) {
+
+    .wps_etmfw_events_section,
+    .wps_etmfw_input_ticket_section {
+        align-items: flex-start;
+        flex-direction: column;
+        margin: 0 0 15px;
+    }
+
+    .wps_etmfw_events_section label,
+    .wps_etmfw_input_ticket_section label {
+        flex: 1;
+        max-width: 100%;
+        font-size: 18px;
+    }
+
+    select#wps_etmfw_event_selected {
+        flex: 1;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    input#wps_etmfw_chckin_email,
+    input#wps_etmfw_imput_ticket {
+        width: 100%;
+        flex: 1;
+        max-width: 100%;
+    }
+}
+
+/* Event tab in My account page end */
