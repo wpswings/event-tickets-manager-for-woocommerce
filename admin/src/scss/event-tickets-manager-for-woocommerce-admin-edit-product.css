@@ -29,4 +29,30 @@ div#wps_etmfw_location_loader img {
     height: 30px;
 }
 
+/*Product Edit Page*/
+div#wps_etmfw_event_data {
+    padding: 10px 0;
+}
 
+.wps_etmfw_dynamic_price_wrap {
+    padding: 0 10px;
+}
+
+.wps_etmfw_dynamic_pricing_base_price input[type=radio] {
+    margin: 0 5px;
+}
+
+.wps_etmfwpp_add_fields_title h2 strong {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 15px 0 0;
+    display: block;
+}
+
+.wps_etmfw_price_cal_rule h4 {
+    font-size: 14px;
+}
+
+.wps_etmfw_dynamic_pricing_base_price {
+    margin: 0 0 15px;
+}
