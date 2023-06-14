@@ -82,7 +82,12 @@ $allowed_html = array(
 						</div>
 
 						<!-- Template two. -->
-						<div id ="wps_ubo_premium_popup_1_template" class="wps_etmfw_template_select <?php echo esc_html( 2 === (int) $wps_ubo_selected_template ? 'wps_etmfw_selected_class' : '' ); ?>">
+						<div id ="wps_ubo_premium_popup_1_template" class="wps_etmfw_template_select 
+						<?php
+						if ( true != $wps_is_pro_active ) {
+							echo 'wps-etmfw-radio-switch-class-pro-tag'; }
+						?>
+						<?php echo esc_html( 2 === (int) $wps_ubo_selected_template ? 'wps_etmfw_selected_class' : '' ); ?>">
 						<?php
 						if ( true != $wps_is_pro_active ) {
 							?>
@@ -103,7 +108,12 @@ $allowed_html = array(
 						</div>
 
 						<!-- Template three. -->
-						<div id ="wps_ubo_premium_popup_2_template"  class="wps_etmfw_template_select <?php echo esc_html( 3 === (int) $wps_ubo_selected_template ? 'wps_etmfw_selected_class' : '' ); ?>">
+						<div id ="wps_ubo_premium_popup_2_template"  class="wps_etmfw_template_select 
+						<?php
+						if ( true != $wps_is_pro_active ) {
+							echo 'wps-etmfw-radio-switch-class-pro-tag'; }
+						?>
+						 <?php echo esc_html( 3 === (int) $wps_ubo_selected_template ? 'wps_etmfw_selected_class' : '' ); ?>">
 						<?php
 						if ( true != $wps_is_pro_active ) {
 							?>
@@ -124,7 +134,12 @@ $allowed_html = array(
 						</div>
 						
 						<!-- Template four. -->
-						<div id ="wps_ubo_premium_popup_3_template" class="wps_etmfw_template_select <?php echo esc_html( 4 === (int) $wps_ubo_selected_template ? 'wps_etmfw_selected_class' : '' ); ?>">
+						<div id ="wps_ubo_premium_popup_3_template" class="wps_etmfw_template_select 
+						<?php
+						if ( true != $wps_is_pro_active ) {
+							echo 'wps-etmfw-radio-switch-class-pro-tag'; }
+						?>
+						<?php echo esc_html( 4 === (int) $wps_ubo_selected_template ? 'wps_etmfw_selected_class' : '' ); ?>">
 						<?php
 						if ( true != $wps_is_pro_active ) {
 							?>

@@ -30,6 +30,41 @@
      */
 
     $(document).ready(function() {
+
+//-------------------------------Pop-up For Pro Tags start -------------------------------------------//
+        var wps_event_pro_is_enable = etmfw_admin_param.is_pro_active;
+        if(1 == wps_event_pro_is_enable){
+            jQuery('.etmfw-radio-switch-class-pro').closest('.wps-form-group').addClass('wps-etmfw-radio-switch-class-pro-tag').hide();  
+        } else {
+            jQuery('.etmfw-radio-switch-class-pro').closest('.wps-form-group').addClass('wps-etmfw-radio-switch-class-pro-tag').show();
+        }
+        jQuery('.etmfw-radio-switch-class-pro').closest('.wps-form-group').addClass('wps-etmfw-radio-switch-class-pro-tag');
+
+        $('.wps_rma_pro_class_wrap label,.wps_rma_pro_div label').attr('for', '');
+
+        $(document).on('click', '.wps-etmfw-radio-switch-class-pro-tag', function() {
+            $('.wps-rma__popup-for-pro-shadow').show();
+            $('.wps-rma__popup-for-pro').addClass('active-pro');
+        })
+    
+        $(document).on('click', '.wps-rma__popup-for-pro-close', function() {
+            $('.wps-rma__popup-for-pro-shadow').hide();
+            $('.wps-rma__popup-for-pro').removeClass('active-pro');
+        })
+    
+        $(document).on('click', '.wps-rma__popup-for-pro-shadow', function() {
+            $(this).hide();
+            $('.wps-rma__popup-for-pro').removeClass('active-pro');
+        })
+    
+        $(document).on('click', '.wps_go_pro_link', function(e) {
+            e.preventDefault();
+            $('.wps-rma__popup-for-pro-shadow').show();
+            $('.wps-rma__popup-for-pro').addClass('active-pro');
+        })
+        $('.button_wps_rma_pro_div').css('pointer-events','none');
+//-------------------------------Pop-up For Pro Tags End -------------------------------------------//
+
         wps_etmfw_hide_bck_ground_image_setting();
         // Available Ticket Template Change - Start.
         $('.wps_etmfw_colorpicker').wpColorPicker();

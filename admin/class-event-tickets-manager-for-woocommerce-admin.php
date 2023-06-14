@@ -293,6 +293,65 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
 				),
 			),
+
+			array(
+				'title' => __( 'Allow Ticket Sharing', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'  => 'radio-switch',
+				'description'  => __( 'Enable this option  to share the tickets to another.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'id'    => 'wps_wet_enable_ticket_sharing',
+				'value' => '',
+				'class' => 'etmfw-radio-switch-class-pro',
+				'options' => array(
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce-pro' ),
+					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce-pro' ),
+				),
+			),
+			array(
+				'title' => __( 'Send Ticket During Processing Order', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'  => 'radio-switch',
+				'description'  => __( 'Enable this option to send ticket during processing.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'id'    => 'wps_wet_enable_after_payment_done_ticket',
+				'value' => '',
+				'class' => 'etmfw-radio-switch-class-pro',
+				'options' => array(
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce-pro' ),
+					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce-pro' ),
+				),
+			),
+			array(
+				'title' => __( 'Include QR code in ticket', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'  => 'radio-switch',
+				'description'  => __( 'Enable this option to display qr code in the ticket.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'id'    => 'wps_etmfwp_include_qr',
+				'value' => '',
+				'class' => 'etmfw-radio-switch-class-pro',
+				'options' => array(
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce-pro' ),
+					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce-pro' ),
+				),
+			),
+			array(
+				'title' => __( 'Enable Resend Button', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'radio-switch',
+				'description'  => __( 'Enable it to resend the pdf ticket by admin and customer.', 'event-tickets-manager-for-woocommerce' ),
+				'id'    => 'wps_etmfw_resend_plugin',
+				'value' => '',
+				'class' => 'etmfw-radio-switch-class-pro',
+				'options' => array(
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
+					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
+				),
+			),
+			array(
+				'title' => __( 'Reminder Send Before Event Day', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'  => 'number',
+				'min' => '0',
+				'max' => '7',
+				'id'    => 'wps_etmfwp_send_remainder_before_event',
+				'value' => '',
+				'class' => 'etmfw-radio-switch-class-pro',
+				'description'  => __( 'Enter no. of days before event, email should be send as remainder. ', 'event-tickets-manager-for-woocommerce-pro' ),
+			),
 		);
 		$etmfw_settings_general = apply_filters( 'wps_etmfw_extent_general_settings_array', $etmfw_settings_general );
 		$etmfw_settings_general[] = array(
@@ -321,6 +380,87 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'value' => get_option( 'wps_etmfw_google_maps_api_key', '' ),
 				'class' => 'etmfw-text-class',
 				'placeholder' => __( 'Google API Key', 'event-tickets-manager-for-woocommerce' ),
+			),
+			array(
+				'title' => __( 'Enable Twilio Integration', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'  => 'radio-switch',
+				'description'  => __( 'Enable this send messages using twilio api.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'id'    => 'wps_wet_enable_twilio_integration',
+				'value' => '',
+				'class' => 'etmfw-radio-switch-class-pro',
+				'options' => array(
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce-pro' ),
+					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce-pro' ),
+				),
+			),
+			array(
+				'title' => __( 'Enter Twilio Api Sid', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'  => 'text',
+				'description'  => __( 'Enter twilio api sid here', 'event-tickets-manager-for-woocommerce-pro' ),
+				'id'    => 'wps_wet_twilio_sid',
+				'value' => '',
+				'class' => 'etmfw-radio-switch-class-pro',
+				'placeholder' => __( 'Enter twilio api sid', 'event-tickets-manager-for-woocommerce-pro' ),
+			),
+			array(
+				'title' => __( 'Enter Twilio Api Token', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'  => 'text',
+				'description'  => __( 'Enable twilio api token here.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'id'    => 'wps_wet_twilio_token',
+				'value' => '',
+				'class' => 'etmfw-radio-switch-class-pro',
+				'placeholder' => __( 'Enter twilio api Token', 'event-tickets-manager-for-woocommerce-pro' ),
+			),
+			array(
+				'title' => __( 'Enter Twilio Sending Number', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'  => 'text',
+				'description'  => __( 'Enable twilio sending number here.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'id'    => 'wps_wet_twilio_number',
+				'value' => '',
+				'class' => 'etmfw-radio-switch-class-pro',
+				'placeholder' => __( 'Enter twilio api sending number', 'event-tickets-manager-for-woocommerce-pro' ),
+			),
+			array(
+				'title'       => __( 'Enable Sharing on Facebook', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this to share booking product on facebook.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'id'          => 'wps_wet_facebook_sharing_enable',
+				'value'       => '',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'name'        => 'wps_wet_facebook_sharing_enable',
+			),
+			array(
+				'title'            => __( 'Enter Facebook App-Id here', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'             => 'text',
+				'description'      => __( 'Enter Facebook app id here. Create an application in Facebook developer profile and enter the credentials here.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'id'               => 'wps_wet_fb_app_id',
+				'value'            => '',
+				'class'            => 'etmfw-radio-switch-class-pro',
+				'name'             => 'wps_wet_fb_app_id',
+				'placeholder'      => __( 'Facebook App Id', 'event-tickets-manager-for-woocommerce-pro' ),
+				'custom_attribute' => array( 'autocomplete' => 'new-password' ),
+			),
+			array(
+				'title'            => __( 'Enter Facebook App-Secret here', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'             => 'password',
+				'description'      => __( 'Enter Facebook app secret here. Create an application in Facebook developer profile and enter the credentials here.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'id'               => 'wps_wet_fb_app_secret',
+				'value'            => '',
+				'class'            => 'etmfw-radio-switch-class-pro',
+				'name'             => 'wps_wet_fb_app_secret',
+				'placeholder'      => __( 'Facebook App Secret', 'event-tickets-manager-for-woocommerce-pro' ),
+				'custom_attribute' => array( 'autocomplete' => 'new-password' ),
+			),
+			array(
+				'title'            => __( 'Enter Facebook Access Token here', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'             => 'text',
+				'description'      => __( '<a class="mdc-button generate-token mdc-button--raised mdc-ripple-upgraded" href="https://developers.facebook.com/tools/explorer" target="_blank">Generate Token</a>.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'id'               => 'wps_wet_fb_app_access_token',
+				'value'            => '',
+				'class'            => 'etmfw-radio-switch-class-pro',
+				'name'             => 'wps_wet_fb_app_access_token',
+				'placeholder'      => __( 'Facebook Access Token', 'event-tickets-manager-for-woocommerce-pro' ),
+
 			),
 		);
 		$etmfw_settings_integrations = apply_filters( 'wps_etmfw_extent_integration_settings_array', $etmfw_settings_integrations );
@@ -414,6 +554,15 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'value' => get_option( 'wps_etmfw_ticket_text_color', '' ),
 				'class' => 'etmfw-text-class',
 				'placeholder' => __( 'Enter colour/colour code', 'event-tickets-manager-for-woocommerce' ),
+			),
+			array(
+				'title' => __( 'Enter Content to send in Sms with ticket', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'  => 'textarea',
+				'id'    => 'wps_wet_twilio_sms_content',
+				'value' => '',
+				'description'  => esc_html__( 'Use Placeholders  ', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( '{event-time}' ) . esc_html__( ' for Event starting - ending time and ', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( ' {venue} ' ) . esc_html__( ' for event location ,', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( ' {event-name} ' ) . esc_html__( ' for Event-Name,', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( ' {customer} ' ) . esc_html__( ' for Customer-Name,', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( ' {ticket} ' ) . esc_html__( ' for Ticket-Number,', 'event-tickets-manager-for-woocommerce-pro' ),
+				'class' => 'etmfw-radio-switch-class-pro',
+				'placeholder' => __( 'Enter content to send in sms', 'event-tickets-manager-for-woocommerce-pro' ),
 			),
 		);
 		$etmfw_email_template_settings = apply_filters( 'wps_etmfw_extent_email_template_settings_array', $etmfw_email_template_settings );
@@ -672,7 +821,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 						'value' => isset( $wps_etmfw_product_array['etmfw_display_map'] ) ? $wps_etmfw_product_array['etmfw_display_map'] : true,
 						'desc_tip'    => true,
 						'description' => __( 'To Show The Location On Map On Product Page', 'event-tickets-manager-for-woocommerce' ),
-						)
+					)
 				);
 
 			}

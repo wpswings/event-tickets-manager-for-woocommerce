@@ -1156,3 +1156,154 @@ div#wps_etmfw_event_data {
 .wps_etmfw_dynamic_pricing_base_price {
     margin: 0 0 15px;
 }
+
+/*Pop Up For Pro Tag start */
+.wps-rma__popup-for-pro-shadow {
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99998;
+    display: none;
+  }
+  
+  span.wps-rma__popup-for-pro-close {
+    display: inline-block;
+    line-height: 14px;
+    font-size: 24px;
+    font-weight: 400;
+    transform: rotate(45deg);
+    padding: 10px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+  }
+  
+  .wps-rma__popup-for-pro {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    padding: 32px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 99999;
+    transform: translate(-50%, -50%) scale(0);
+    width: 90%;
+    max-width: 600px;
+    opacity: 0;
+    transition: transform 0.8s ease;
+  }
+  
+  .wps-rma__popup-for-pro.active-pro {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  
+  h2.wps-rma__popup-for-pro-title {
+    font-size: 32px;
+    line-height: 1.25;
+    margin: 0 0 15px;
+    text-align: center;
+  }
+  
+  p.wps-rma__popup-for-pro-content {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    margin: 0 0 50px;
+    text-align: center;
+  }
+  
+  .wps-rma__popup-for-pro-link-wrap {
+    text-align: center;
+  }
+  
+  a.wps-rma__popup-for-pro-link {
+    font-size: 16px;
+    font-weight: 400;
+    color: #fff;
+    background: #0aa000;
+    border: 1px solid #0aa000;
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 50px;
+    transition: all 0.4s;
+  }
+  
+  a.wps-rma__popup-for-pro-link:hover {
+    color: #0aa000;
+    background: transparent;
+  }
+  /*Pop Up For Pro Tag end */
+
+  /*Pro Tag start */
+  .wps-etmfw-radio-switch-class-pro-tag .wps-form-group__control {
+    position: relative;
+  }
+  
+  .wps-etmfw-radio-switch-class-pro-tag .wps-form-group__control:before {
+    position: absolute;
+    content: "PRO Feature";
+    z-index: 99;
+    background: #f3fff5;
+    top: -10px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    color: #00b81f;
+    font-weight: 600;
+  }
+  
+  .wps-etmfw-radio-switch-class-pro-tag .wps-form-group__label {
+    position: relative;
+    overflow: hidden;
+    padding-left: 25px;
+    padding-bottom: 15px;
+  }
+  
+  .wps-etmfw-radio-switch-class-pro-tag .wps-form-group__label:before {
+    align-items: center;
+    background: #0aa000;
+    bottom: 4px;
+    -webkit-clip-path: polygon(0 0,100% 0,66% 100%,34% 100%);
+    clip-path: polygon(0 0,100% 0,66% 100%,34% 100%);
+    color: #fff;
+    content: "PRO";
+    display: inline-flex;
+    font-size: 10px;
+    justify-content: center;
+    left: -15px;
+    padding: 0;
+    position: absolute;
+    transform: rotate(45deg);
+    width: 60px;
+  }
+  
+  .wps-etmfw-radio-switch-class-pro-tag .wps-form-group__control .mdc-floating-label {
+    display: none;
+  }
+
+  .wps-etmfw-radio-switch-class-pro-tag .wps-form-group__control div{
+    visibility: hidden;
+}
+
+
+  @media screen and (max-width: 480px){
+  .wps-etmfw-radio-switch-class-pro-tag .wps-form-group__label {
+      padding-left: 40px;
+    }
+  
+  .wps-etmfw-radio-switch-class-pro-tag .wps-form-group__control:before{
+      bottom: -20px;
+      top: 0;
+    }
+  }
+/*Pro Tag End */
