@@ -1020,7 +1020,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				if ( 'on' == $wps_etmfw_in_processing ) {
 					$temp_status = 'processing';
 				}
-				if ( $temp_status == $order_status ) {
+				if ( ('completed' == $order_status) || ('processing' == $order_status) ) {  //Create During Event Ticket.
 					if ( null != $_product ) {
 						$product_id = $_product->get_id();
 						if ( isset( $product_id ) && ! empty( $product_id ) ) {

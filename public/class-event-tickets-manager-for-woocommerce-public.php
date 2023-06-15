@@ -366,7 +366,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		}
 		if ( $wps_etmfw_enable ) {
 			if ( $old_status != $new_status ) {
-				if ( $temp_status == $new_status ) {
+				if ( 'completed' == $new_status || 'processing' == $new_status ) {     // Order Status For Creating Event Ticket.
 					$this->wps_etmfw_process_event_order( $order_id, $old_status, $new_status );
 				}
 			}
@@ -621,7 +621,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					$temp_status = 'processing';
 				}
 				$wps_check_point = isset( $_SESSION['wps_Check_point'] ) ? $_SESSION['wps_Check_point'] : 0;
-				if ( $temp_status === $order_status && ( 0 == $wps_check_point || 1 != $wps_check_point ) ) {
+				if ( ( 'completed' === $order_status || 'processing' === $order_status ) && ( 0 == $wps_check_point || 1 != $wps_check_point ) ) { // Order Status For Creating Event Ticket.
 					$order_id = $order->get_id();
 					$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
 					foreach ( $order->get_items() as $item_id => $item ) {
@@ -798,7 +798,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		if ( 'on' == $wps_etmfw_in_processing ) {
 			$temp_status = 'processing';
 		}
-		if ( $temp_status == $order_status ) {
+		if ( ( 'completed' === $order_status || 'processing' === $order_status ) ) { // Order Status For Creating Event Ticket.
 			$_product = apply_filters( 'wps_etmfw_woo_order_item_product', $product = $item->get_product(), $item );
 			if ( isset( $_product ) && ! empty( $_product ) ) {
 				$product_id = $_product->get_id();
@@ -1678,7 +1678,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		if ( 'on' == $wps_etmfw_in_processing ) {
 			$order_statuses = array( 'wc-completed', 'wc-processing' );
 		} else {
-			$order_statuses = array( 'wc-completed' );
+			$order_statuses = array( 'wc-completed', 'wc-processing' ); // Order Status For Creating Event Ticket.
 		}
 
 		// // ==> Define HERE the customer ID.
