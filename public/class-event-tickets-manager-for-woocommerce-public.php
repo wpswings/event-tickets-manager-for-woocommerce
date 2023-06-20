@@ -1862,42 +1862,45 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @param array $wps_need_shipping is an id of the product.
 	 */
 	public function wps_etmfw_cart_needs_shipping( $wps_need_shipping ) {
-		$wps_products_ids_array_cart = array();
-		$wps_all_event_product_ids_array = array();
 
-		$args = array(
-			'status'            => array( 'publish' ),
-			'type'              => 'event_ticket_manager',
-			'limit'             => get_option( 'posts_per_page' ),  // -1 for unlimited
-		);
+		if ( is_cart() || is_checkout() ) {
+			$wps_products_ids_array_cart = array();
+			$wps_all_event_product_ids_array = array();
 
-		// Array of product objects.
-		$products = wc_get_products( $args );
-		$wps_evnt_prouct_back_data_arry = array();
+			$args = array(
+				'status'            => array( 'publish' ),
+				'type'              => 'event_ticket_manager',
+				'limit'             => get_option( 'posts_per_page' ),  // -1 for unlimited
+			);
 
-		foreach ( $products as $product ) {
+			// Array of product objects.
+			$products = wc_get_products( $args );
+			$wps_evnt_prouct_back_data_arry = array();
 
-			$product_id   = $product->get_id();
+			foreach ( $products as $product ) {
 
-			$wps_all_event_product_ids_array[] = $product_id;
+				$product_id   = $product->get_id();
 
-		}
+				$wps_all_event_product_ids_array[] = $product_id;
 
-		foreach ( WC()->cart->get_cart() as $cart_item ) {
-			$wps_products_ids_array_cart[] = $cart_item['product_id'];
-
-			$wps_etmfw_product_array = get_post_meta( $cart_item['product_id'], 'wps_etmfw_product_array', true );
-			$wps_evnt_prouct_back_data_arry[] = isset( $wps_etmfw_product_array['etmfw_event_disable_shipping'] ) ? $wps_etmfw_product_array['etmfw_event_disable_shipping'] : true;
-		}
-
-		$wps_shipping_result = array_intersect( $wps_products_ids_array_cart, $wps_all_event_product_ids_array );
-		$wps_is_shipping_disable = array_intersect( array( 'yes' ), $wps_evnt_prouct_back_data_arry );
-
-		if ( ! empty( $wps_shipping_result ) && ! empty( $wps_is_shipping_disable ) ) {
-			if ( is_cart() || is_checkout() ) {
-				$wps_need_shipping = false;
 			}
+
+			foreach ( WC()->cart->get_cart() as $cart_item ) {
+				$wps_products_ids_array_cart[] = $cart_item['product_id'];
+
+				$wps_etmfw_product_array = get_post_meta( $cart_item['product_id'], 'wps_etmfw_product_array', true );
+				$wps_evnt_prouct_back_data_arry[] = isset( $wps_etmfw_product_array['etmfw_event_disable_shipping'] ) ? $wps_etmfw_product_array['etmfw_event_disable_shipping'] : true;
+			}
+
+			$wps_shipping_result = array_intersect( $wps_products_ids_array_cart, $wps_all_event_product_ids_array );
+			$wps_is_shipping_disable = array_intersect( array( 'yes' ), $wps_evnt_prouct_back_data_arry );
+
+			if ( ! empty( $wps_shipping_result ) && ! empty( $wps_is_shipping_disable ) ) {
+				if ( is_cart() || is_checkout() ) {
+					$wps_need_shipping = false;
+				}
+			}
+			return $wps_need_shipping;
 		}
-		return $wps_need_shipping;
 	}
 }
