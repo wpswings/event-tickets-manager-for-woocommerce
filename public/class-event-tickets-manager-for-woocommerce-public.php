@@ -727,7 +727,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			}
 			$additinal_info .= '</tbody></table>';
 		}
-		// $image_attributes = wp_get_attachment_image_src( get_option('wps_etmfw_background_image'), 'thumbnail' );
 		$wps_etmfw_logo_size = ! empty( get_option( 'wps_etmfw_logo_size', true ) ) ? get_option( 'wps_etmfw_logo_size', true ) : '180';
 		$site_logo = '<img id="wps_wem_logo_id" class="wps_wem_logo" src="' . get_option( 'wps_etmfw_mail_setting_upload_logo', '' ) . '" style="width:' . $wps_etmfw_logo_size . 'px;margin-left: 25px">';
 		$wps_ticket_details = str_replace( '[EVENTNAME]', $product->get_name(), $wps_ticket_details );
@@ -1731,7 +1730,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 									$wps_etmfw_mail_template_data = array(
 										'product_id' => $product_id,
-										// 'item_id'   => $item_id,
 										'order_id'   => $transfer_id,
 										'product_name' => get_the_title( $product_id ),
 
