@@ -176,13 +176,18 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	public function etmfw_dequeque_theme_script() {
 		$temp_theme = wp_get_theme();
 
-		if ( 'Divi' == $temp_theme['Name'] ) {
+		$screen = get_current_screen();
+  
+		if( 'product' == $screen->id ) {
 
-			wp_dequeue_script( 'et_bfb_admin_date_addon_js' );
-
+			  if( 'Divi' == $temp_theme['Name']  ){
+				
+					wp_dequeue_script( 'et_bfb_admin_date_addon_js' );
+			  }
+  
+			  wp_dequeue_script( 'acf-timepicker' );
 		}
-
-		wp_dequeue_script( 'acf-timepicker' );
+  
 	}
 
 	/**
@@ -868,6 +873,14 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					$wps_etmfw_product_array['etmfw_event_trash_event'] = $wps_event_trash_on_expire_event;
 					$wps_etmfw_product_array['etmfw_event_disable_shipping'] = $wps_event_disable_shipping_event;
 					$wps_etmfw_field_data = ! empty( $_POST['etmfw_fields'] ) ? map_deep( wp_unslash( $_POST['etmfw_fields'] ), 'sanitize_text_field' ) : array();
+					
+					//Save Data For The Dynamic Form Collection.
+					$wps_etmfw_product_array['wps_etmfw_dyn_name'] = isset( $_POST['wps_etmfw_dyn_name'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_dyn_name'] ) ) : '';
+					$wps_etmfw_product_array['wps_etmfw_dyn_mail'] = isset( $_POST['wps_etmfw_dyn_mail'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_dyn_mail'] ) ) : '';
+					$wps_etmfw_product_array['wps_etmfw_dyn_contact'] = isset( $_POST['wps_etmfw_dyn_contact'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_dyn_contact'] ) ) : '';
+					$wps_etmfw_product_array['wps_etmfw_dyn_date'] = isset( $_POST['wps_etmfw_dyn_date'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_dyn_date'] ) ) : '';
+					$wps_etmfw_product_array['wps_etmfw_dyn_address'] = isset( $_POST['wps_etmfw_dyn_address'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_dyn_address'] ) ) : '';
+
 					$wps_etmfw_field_data_array = array();
 					if ( is_array( $wps_etmfw_field_data ) && ! empty( $wps_etmfw_field_data ) ) {
 						if ( '' !== $wps_etmfw_field_data[0]['_label'] ) {

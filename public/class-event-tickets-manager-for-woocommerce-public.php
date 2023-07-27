@@ -77,6 +77,19 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 */
 	public function etmfw_public_enqueue_scripts() {
 		$event_view = get_option( 'wps_etmfw_event_view', 'list' );
+
+		//Get the Details For the Dynamic Form Start Here.
+		$wps_etmfw_product_array = get_post_meta( get_the_ID(  ), 'wps_etmfw_product_array', true );
+
+		if(isset($wps_etmfw_product_array) && ! empty($wps_etmfw_product_array) && is_array($wps_etmfw_product_array)) {
+		$wps_etmfw_dyn_name = isset( $wps_etmfw_product_array['wps_etmfw_dyn_name'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_name'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_name'] : '';
+		$wps_etmfw_dyn_mail = isset( $wps_etmfw_product_array['wps_etmfw_dyn_mail'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_mail'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_mail'] : '';
+		$wps_etmfw_dyn_contact = isset( $wps_etmfw_product_array['wps_etmfw_dyn_contact'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_contact'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_contact'] : '';
+		$wps_etmfw_dyn_date = isset( $wps_etmfw_product_array['wps_etmfw_dyn_date'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_date'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_date'] : '';
+		$wps_etmfw_dyn_address = isset( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_address'] : '';
+        //Get the Details For the Dynamic Form End Here.
+		}
+
 		if ( 'calendar' === $event_view ) {
 			wp_enqueue_script( 'wps-etmfw-fullcalendar-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/fullcalendar/fullcalendar.min.js', array( 'jquery' ), $this->version, false );
 			wp_register_script( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-public.js', array( 'jquery', 'wps-etmfw-fullcalendar-js' ), $this->version, false );
@@ -88,7 +101,13 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			'event_view' => $event_view,
 			'wps_etmfw_public_nonce' => wp_create_nonce( 'wps-etmfw-verify-public-nonce' ),
 			'is_required' => __( ' Is Required', 'event-tickets-manager-for-woocommerce' ),
+			'wps_etmfw_dyn_name' => $wps_etmfw_dyn_name,
+			'wps_etmfw_dyn_mail' => $wps_etmfw_dyn_mail,
+			'wps_etmfw_dyn_contact' => $wps_etmfw_dyn_contact,
+			'wps_etmfw_dyn_date' => $wps_etmfw_dyn_date ,
+			'wps_etmfw_dyn_address' => $wps_etmfw_dyn_address,
 		);
+
 		wp_localize_script( $this->plugin_name, 'etmfw_public_param', $public_param_data );
 		wp_enqueue_script( $this->plugin_name );
 
@@ -245,6 +264,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				if ( 'event_ticket_manager' == $product_type ) {
 
 					$cart_values = ! empty( $_POST ) ? map_deep( wp_unslash( $_POST ), 'sanitize_text_field' ) : array();
+					// var_dump($cart_values);
 					foreach ( $cart_values as $key => $value ) {
 						if ( false !== strpos( $key, 'wps_etmfw_' ) && 'wps_etmfw_single_nonce_field' !== $key ) {
 							if ( isset( $key ) && ! empty( $value ) ) {
@@ -396,6 +416,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 				$product_id = $product->get_id();
 				$item_meta_data = $item->get_meta_data();
+
+				var_dump($item_meta_data);
+				// die('check');
+				
 				$wps_etmfw_mail_template_data = array(
 					'product_id' => $product_id,
 					'item_id'   => $item_id,
@@ -416,7 +440,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						for ( $i = 0; $i < $item_quantity; $i++ ) {
 							$temp = wps_etmfw_ticket_generator();
 							$ticket_number[ $i ] = $temp;
-							$wps_ticket_content = $this->wps_etmfw_get_html_content( $item_meta_data, $order, $order_id, $temp, $product_id );
+							$wps_ticket_content = $this->wps_etmfw_get_html_content( $item_meta_data, $order, $order_id, $temp, $product_id ); //need to change on this line for dynamics details.
 							$this->wps_etmfw_generate_ticket_pdf( $wps_ticket_content, $order, $order_id, $temp );
 						}
 						update_post_meta( $order_id, "event_ticket#$order_id#$item_id", $ticket_number );

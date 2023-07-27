@@ -11,6 +11,17 @@
  * @subpackage Event_Tickets_Manager_For_Woocommerce/templates/frontend/
  */
 
+ 	//Get the Details For the Dynamic Form Start Here.
+	$wps_etmfw_product_array = get_post_meta( get_the_ID(  ), 'wps_etmfw_product_array', true );
+
+	if(isset($wps_etmfw_product_array) && ! empty($wps_etmfw_product_array) && is_array($wps_etmfw_product_array)) {
+		$wps_etmfw_dyn_name = isset( $wps_etmfw_product_array['wps_etmfw_dyn_name'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_name'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_name'] : '';
+		$wps_etmfw_dyn_mail = isset( $wps_etmfw_product_array['wps_etmfw_dyn_mail'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_mail'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_mail'] : '';
+		$wps_etmfw_dyn_contact = isset( $wps_etmfw_product_array['wps_etmfw_dyn_contact'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_contact'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_contact'] : '';
+		$wps_etmfw_dyn_date = isset( $wps_etmfw_product_array['wps_etmfw_dyn_date'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_date'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_date'] : '';
+		$wps_etmfw_dyn_address = isset( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_address'] : '';
+        //Get the Details For the Dynamic Form End Here.
+		}
 ?>
 <div class="wps_etmfw_product_wrapper">
 	<div class="wps_etmfw_event_info_section">
@@ -51,5 +62,14 @@
 		<?php do_action( 'wps_etmfw_before_more_info', $product_id ); ?>
 		<?php $this->wps_etmfw_generate_addional_fields( $product_id, $event_field_array ); ?>
 		<?php do_action( 'wps_etmfw_after_more_info', $product_id ); ?>
+
+		<?php if($wps_etmfw_dyn_name != '' || $wps_etmfw_dyn_mail != '' || $wps_etmfw_dyn_contact != '' || $wps_etmfw_dyn_date != '' || $wps_etmfw_dyn_address != '') { ?>
+		<div id = 'wps_add_more_people_wrapper' class = 'wps_class_add_more_people'>
+	    <span id = 'wps_add_more_people' class="button">More Participant! Click To Add</span>
+		</div>
+		<div id = 'wps_etmfw_dynamic_form_fr_<?php echo esc_attr($product_id); ?>'>Here is the form</div>
+	   <div id = 'wps_etmfw_total_member' class='wps_class_etmfw_total_member'><span id='wps_total_member'></span></div>
+	   <div id = 'wps_etmfw_total_price' class='wps_class_etmfw_total_price'><span id='wps_total_price'></span></div>
+	   <?php } ?>
 	</div>
 </div>
