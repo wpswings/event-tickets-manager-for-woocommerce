@@ -11,17 +11,24 @@
  * @subpackage Event_Tickets_Manager_For_Woocommerce/templates/frontend/
  */
 
- 	//Get the Details For the Dynamic Form Start Here.
-	$wps_etmfw_product_array = get_post_meta( get_the_ID(  ), 'wps_etmfw_product_array', true );
+	// Get the Details For the Dynamic Form Start Here.
+	$wps_etmfw_product_array = get_post_meta( get_the_ID(), 'wps_etmfw_product_array', true );
 
-	if(isset($wps_etmfw_product_array) && ! empty($wps_etmfw_product_array) && is_array($wps_etmfw_product_array)) {
-		$wps_etmfw_dyn_name = isset( $wps_etmfw_product_array['wps_etmfw_dyn_name'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_name'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_name'] : '';
-		$wps_etmfw_dyn_mail = isset( $wps_etmfw_product_array['wps_etmfw_dyn_mail'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_mail'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_mail'] : '';
-		$wps_etmfw_dyn_contact = isset( $wps_etmfw_product_array['wps_etmfw_dyn_contact'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_contact'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_contact'] : '';
-		$wps_etmfw_dyn_date = isset( $wps_etmfw_product_array['wps_etmfw_dyn_date'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_date'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_date'] : '';
-		$wps_etmfw_dyn_address = isset( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_address'] : '';
-        //Get the Details For the Dynamic Form End Here.
-		}
+if ( isset( $wps_etmfw_product_array ) && ! empty( $wps_etmfw_product_array ) && is_array( $wps_etmfw_product_array ) ) {
+	$wps_etmfw_dyn_name = isset( $wps_etmfw_product_array['wps_etmfw_dyn_name'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_name'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_name'] : '';
+	$wps_etmfw_dyn_mail = isset( $wps_etmfw_product_array['wps_etmfw_dyn_mail'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_mail'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_mail'] : '';
+	$wps_etmfw_dyn_contact = isset( $wps_etmfw_product_array['wps_etmfw_dyn_contact'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_contact'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_contact'] : '';
+	$wps_etmfw_dyn_date = isset( $wps_etmfw_product_array['wps_etmfw_dyn_date'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_date'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_date'] : '';
+	$wps_etmfw_dyn_address = isset( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_address'] : '';
+	// Get the Details For the Dynamic Form End Here.
+}
+
+$wps_plugin_list = get_option( 'active_plugins' );
+$wps_is_pro_active = false;
+$wps_plugin = 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php';
+if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
+	$wps_is_pro_active = true;
+}
 ?>
 <div class="wps_etmfw_product_wrapper">
 	<div class="wps_etmfw_event_info_section">
@@ -60,16 +67,31 @@
 	?>
 	<div class="wps_etmfw_addition_info_section">
 		<?php do_action( 'wps_etmfw_before_more_info', $product_id ); ?>
-		<?php $this->wps_etmfw_generate_addional_fields( $product_id, $event_field_array ); ?>
-		<?php do_action( 'wps_etmfw_after_more_info', $product_id ); ?>
-
-		<?php if($wps_etmfw_dyn_name != '' || $wps_etmfw_dyn_mail != '' || $wps_etmfw_dyn_contact != '' || $wps_etmfw_dyn_date != '' || $wps_etmfw_dyn_address != '') { ?>
+		<?php if ( '' == $wps_etmfw_dyn_name || '' == $wps_etmfw_dyn_mail || '' == $wps_etmfw_dyn_contact || '' == $wps_etmfw_dyn_date || '' == $wps_etmfw_dyn_address ) { ?>
+			<?php $this->wps_etmfw_generate_addional_fields( $product_id, $event_field_array ); ?>
+			<?php do_action( 'wps_etmfw_after_more_info', $product_id ); ?>
+		<?php } ?>
+		<?php if ( true == $wps_is_pro_active ) { ?>
+			<?php if ( '' != $wps_etmfw_dyn_name || '' != $wps_etmfw_dyn_mail || '' != $wps_etmfw_dyn_contact || '' != $wps_etmfw_dyn_date || '' != $wps_etmfw_dyn_address ) { ?>
 		<div id = 'wps_add_more_people_wrapper' class = 'wps_class_add_more_people'>
-	    <span id = 'wps_add_more_people' class="button">More Participant! Click To Add</span>
+		<span id = 'wps_add_more_people' class="button">Add Participants</span>
 		</div>
-		<div id = 'wps_etmfw_dynamic_form_fr_<?php echo esc_attr($product_id); ?>'>Here is the form</div>
+		<div id = 'wps_etmfw_dynamic_form_fr_<?php echo esc_attr( $product_id ); ?>'></div>
 	   <div id = 'wps_etmfw_total_member' class='wps_class_etmfw_total_member'><span id='wps_total_member'></span></div>
 	   <div id = 'wps_etmfw_total_price' class='wps_class_etmfw_total_price'><span id='wps_total_price'></span></div>
-	   <?php } ?>
+				<?php
+			}
+		}
+		?>
 	</div>
 </div>
+<?php if ( true == $wps_is_pro_active ) { ?>
+	<?php if ( '' != $wps_etmfw_dyn_name || '' != $wps_etmfw_dyn_mail || '' != $wps_etmfw_dyn_contact || '' != $wps_etmfw_dyn_date || '' != $wps_etmfw_dyn_address ) { ?>
+<style>
+ .single_add_to_cart_button{
+	opacity: 0.5;
+	cursor: none;
+ }
+	</style>
+	 <?php }
+} ?>
