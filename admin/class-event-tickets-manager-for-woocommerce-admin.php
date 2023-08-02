@@ -177,17 +177,17 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		$temp_theme = wp_get_theme();
 
 		$screen = get_current_screen();
-  
-		if( 'product' == $screen->id ) {
 
-			  if( 'Divi' == $temp_theme['Name']  ){
-				
-					wp_dequeue_script( 'et_bfb_admin_date_addon_js' );
-			  }
-  
+		if ( 'product' == $screen->id ) {
+
+			if ( 'Divi' == $temp_theme['Name'] ) {
+
+				  wp_dequeue_script( 'et_bfb_admin_date_addon_js' );
+			}
+
 			  wp_dequeue_script( 'acf-timepicker' );
 		}
-  
+
 	}
 
 	/**
@@ -799,7 +799,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				array(
 					'id' => 'etmfw_event_trash_event',
 					'wrapper_class' => 'show_if_event_ticket_manager',
-					'label' => __( 'Remove/Hide Product', 'event-tickets-manager-for-woocommerce-pro' ),
+					'label' => __( 'Remove/Hide Product', 'event-tickets-manager-for-woocommerce' ),
 					'value' => isset( $wps_etmfw_product_array['etmfw_event_trash_event'] ) ? $wps_etmfw_product_array['etmfw_event_trash_event'] : true,
 					'desc_tip'    => true,
 					'description' => __( 'Remove/Hide Current Event Product On Event Expire ', 'event-tickets-manager-for-woocommerce' ),
@@ -810,7 +810,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				array(
 					'id' => 'etmfw_event_disable_shipping',
 					'wrapper_class' => 'show_if_event_ticket_manager',
-					'label' => __( 'Disable Shipping Charge', 'event-tickets-manager-for-woocommerce-pro' ),
+					'label' => __( 'Disable Shipping Charge', 'event-tickets-manager-for-woocommerce' ),
 					'value' => isset( $wps_etmfw_product_array['etmfw_event_disable_shipping'] ) ? $wps_etmfw_product_array['etmfw_event_disable_shipping'] : true,
 					'desc_tip'    => true,
 					'description' => __( 'Disable the shipping charge on product in cart', 'event-tickets-manager-for-woocommerce' ),
@@ -873,8 +873,8 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					$wps_etmfw_product_array['etmfw_event_trash_event'] = $wps_event_trash_on_expire_event;
 					$wps_etmfw_product_array['etmfw_event_disable_shipping'] = $wps_event_disable_shipping_event;
 					$wps_etmfw_field_data = ! empty( $_POST['etmfw_fields'] ) ? map_deep( wp_unslash( $_POST['etmfw_fields'] ), 'sanitize_text_field' ) : array();
-					
-					//Save Data For The Dynamic Form Collection.
+
+					// Save Data For The Dynamic Form Collection.
 					$wps_etmfw_product_array['wps_etmfw_dyn_name'] = isset( $_POST['wps_etmfw_dyn_name'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_dyn_name'] ) ) : '';
 					$wps_etmfw_product_array['wps_etmfw_dyn_mail'] = isset( $_POST['wps_etmfw_dyn_mail'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_dyn_mail'] ) ) : '';
 					$wps_etmfw_product_array['wps_etmfw_dyn_contact'] = isset( $_POST['wps_etmfw_dyn_contact'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_dyn_contact'] ) ) : '';
@@ -1033,7 +1033,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				if ( 'on' == $wps_etmfw_in_processing ) {
 					$temp_status = 'processing';
 				}
-				if ( ('completed' == $order_status) || ('processing' == $order_status) ) {  //Create During Event Ticket.
+				if ( ( 'completed' == $order_status ) || ( 'processing' == $order_status ) ) {  // Create During Event Ticket.
 					if ( null != $_product ) {
 						$product_id = $_product->get_id();
 						if ( isset( $product_id ) && ! empty( $product_id ) ) {

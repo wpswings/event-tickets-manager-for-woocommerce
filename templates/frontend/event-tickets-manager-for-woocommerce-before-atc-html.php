@@ -67,7 +67,7 @@ if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
 	?>
 	<div class="wps_etmfw_addition_info_section">
 		<?php do_action( 'wps_etmfw_before_more_info', $product_id ); ?>
-		<?php if ( '' == $wps_etmfw_dyn_name || '' == $wps_etmfw_dyn_mail || '' == $wps_etmfw_dyn_contact || '' == $wps_etmfw_dyn_date || '' == $wps_etmfw_dyn_address ) { ?>
+		<?php if ( '' == $wps_etmfw_dyn_name && '' == $wps_etmfw_dyn_mail && '' == $wps_etmfw_dyn_contact && '' == $wps_etmfw_dyn_date && '' == $wps_etmfw_dyn_address ) { ?>
 			<?php $this->wps_etmfw_generate_addional_fields( $product_id, $event_field_array ); ?>
 			<?php do_action( 'wps_etmfw_after_more_info', $product_id ); ?>
 		<?php } ?>

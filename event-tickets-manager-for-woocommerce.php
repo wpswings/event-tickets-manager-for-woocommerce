@@ -138,19 +138,19 @@ if ( $activated ) {
 	 * @param string $network_wide is a string.
 	 * @return void
 	 */
-	function wps_etmfw_create_checkin_page($network_wide) {
+	function wps_etmfw_create_checkin_page( $network_wide ) {
 		/* ===== ====== Create the Check Event Checkin Page ====== ======*/
 		global $wpdb;
-		if ( is_multisite() && $network_wide ) { 
-			
+		if ( is_multisite() && $network_wide ) {
+
 			$blogids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
 			foreach ( $blogids as $blog_id ) {
-				switch_to_blog($blog_id);
+				switch_to_blog( $blog_id );
 
 				if ( ! get_option( 'event_checkin_page_created', false ) ) {
-	
+
 					$checkin_content = '[wps_etmfw_event_checkin_page]';
-		
+
 					$checkin_page = array(
 						'post_author'    => get_current_user_id(),
 						'post_name'      => __( 'Event Check In', 'event-tickets-manager-for-woocommerce' ),
@@ -166,12 +166,12 @@ if ( $activated ) {
 
 				restore_current_blog();
 			}
-		} else{
-			
+		} else {
+
 			if ( ! get_option( 'event_checkin_page_created', false ) ) {
-	
+
 				$checkin_content = '[wps_etmfw_event_checkin_page]';
-	
+
 				$checkin_page = array(
 					'post_author'    => get_current_user_id(),
 					'post_name'      => __( 'Event Check In', 'event-tickets-manager-for-woocommerce' ),
@@ -192,11 +192,11 @@ if ( $activated ) {
 	 */
 	function wps_etmfw_delete_checkin_page() {
 		global $wpdb;
-		if ( is_multisite() && $network_wide ) { 
-			
+		if ( is_multisite() && $network_wide ) {
+
 			$blogids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
 			foreach ( $blogids as $blog_id ) {
-				switch_to_blog($blog_id); 
+				switch_to_blog( $blog_id );
 				$checkin_pageid = get_option( 'event_checkin_page_created', false );
 				if ( $checkin_pageid ) {
 					wp_delete_post( $checkin_pageid );
@@ -206,12 +206,12 @@ if ( $activated ) {
 			}
 		} else {
 				$checkin_pageid = get_option( 'event_checkin_page_created', false );
-				if ( $checkin_pageid ) {
-					wp_delete_post( $checkin_pageid );
-					delete_option( 'event_checkin_page_created' );
-				}
+			if ( $checkin_pageid ) {
+				wp_delete_post( $checkin_pageid );
+				delete_option( 'event_checkin_page_created' );
+			}
 		}
-		
+
 	}
 
 	register_activation_hook( __FILE__, 'wps_etmfw_create_checkin_page' );
@@ -225,7 +225,7 @@ if ( $activated ) {
 	 * @param object $new_site is the object.
 	 * @return void
 	 */
-	 function wps_etmfw_standard_plugin_on_create_blog( $new_site ){
+	function wps_etmfw_standard_plugin_on_create_blog( $new_site ) {
 		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 			require_once ABSPATH . '/wp-admin/includes/plugin.php';
 		}
@@ -234,9 +234,9 @@ if ( $activated ) {
 			switch_to_blog( $blog_id );
 
 			if ( ! get_option( 'event_checkin_page_created', false ) ) {
-	
+
 				$checkin_content = '[wps_etmfw_event_checkin_page]';
-	
+
 				$checkin_page = array(
 					'post_author'    => get_current_user_id(),
 					'post_name'      => __( 'Event Check In', 'event-tickets-manager-for-woocommerce' ),
@@ -252,7 +252,7 @@ if ( $activated ) {
 
 			restore_current_blog();
 		}
-	 }
+	}
 
 	/**
 	 * The core plugin class that is used to define internationalization,
@@ -417,9 +417,9 @@ if ( $activated ) {
 		</div>
 		<?php
 	}
-	if ( is_multisite() ) { 
+	if ( is_multisite() ) {
 		add_action( 'network_admin_notices', 'wps_etmfw_plugin_error_notice' );
-	} else{
+	} else {
 
 		add_action( 'admin_notices', 'wps_etmfw_plugin_error_notice' );
 	}

@@ -236,7 +236,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 				if ( ! in_array( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php', $active_plugins ) ) {
 
-					$allow_qty = true;
+					$allow_qty = false;
 				} else {
 					$allow_qty = false;
 				}
