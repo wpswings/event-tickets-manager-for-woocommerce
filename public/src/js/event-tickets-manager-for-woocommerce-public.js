@@ -219,20 +219,20 @@ jQuery(document).ready(function(){
 		contentNew += '<div class="wps_etmfw_div_close removable">+</div>';
 
 		if(wps_etmfw_dyn_name == 'dyn_name' ){
-		contentNew += '<label>Name</label><input type="text" class="wps_text_class" required name = "wps_etmfw_name_name_'+ i + '" >';
+		contentNew += '<label>Name</label><input type="text" class="wps_text_class" required name = "wps_etmfw_name_'+ i + '" >';
 		}
 		if(wps_etmfw_dyn_mail == 'dyn_mail' ){
-		contentNew += '<label>Email</label><input type="email" class="wps_mail_class" required name = "wps_etmfw_name_email_'+ i + '" >';
+		contentNew += '<label>Email</label><input type="email" class="wps_mail_class" required name = "wps_etmfw_email_'+ i + '" >';
 		}
 		if(wps_etmfw_dyn_contact == 'dyn_contact' ){
-		contentNew += '<label>Contact</label><input type="number" class="wps_contact_class" required name = "wps_etmfw_name_contact_'+ i + '" >';
+		contentNew += '<label>Contact</label><input type="number" class="wps_contact_class" required name = "wps_etmfw_contact_'+ i + '" >';
 		}
 		if(wps_etmfw_dyn_date== 'dyn_date' ){
-		contentNew += '<label>Date</label><input type="date" class="wps_date_class" required name = "wps_etmfw_name_date_'+ i + '" >';
+		contentNew += '<label>Date</label><input type="date" class="wps_date_class" required name = "wps_etmfw_date_'+ i + '" >';
 		}
 
 		if(wps_etmfw_dyn_address== 'dyn_address' ){
-		contentNew += '<label>Address</label><textarea rows="2"  class="wps_address_class"  required name = "wps_etmfw_name_address_'+ i + '" ></textarea>';
+		contentNew += '<label>Address</label><textarea rows="2"  class="wps_address_class"  required name = "wps_etmfw_address_'+ i + '" ></textarea>';
 		}
 
 		contentNew += '</div>';

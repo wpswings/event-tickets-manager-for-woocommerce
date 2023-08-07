@@ -332,15 +332,30 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_etmfw_generate_key_value_pair( $field_post ) {
+
+		// Get the Details For the Dynamic Form Start Here.
+		$wps_etmfw_product_array = get_post_meta( get_the_ID(), 'wps_etmfw_product_array', true );
+
+		$wps_etmfw_dyn_name = isset( $wps_etmfw_product_array['wps_etmfw_dyn_name'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_name'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_name'] : '';
+		$wps_etmfw_dyn_mail = isset( $wps_etmfw_product_array['wps_etmfw_dyn_mail'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_mail'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_mail'] : '';
+		$wps_etmfw_dyn_contact = isset( $wps_etmfw_product_array['wps_etmfw_dyn_contact'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_contact'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_contact'] : '';
+		$wps_etmfw_dyn_date = isset( $wps_etmfw_product_array['wps_etmfw_dyn_date'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_date'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_date'] : '';
+		$wps_etmfw_dyn_address = isset( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_address'] : '';
+
 		$field_array = array();
 		$label = '';
 		$discard_keys = array( 'wps_etmfw_event_start', 'wps_etmfw_event_finish', 'wps_etmfw_event_venue' );
 		foreach ( $field_post as $key => $value ) {
 			if ( strpos( $key, 'wps_etmfw_' ) !== false && ! in_array( $key, $discard_keys ) ) {
-				$key = ucwords( str_replace( '_', ' ', substr( $key, 10 ) ) );
-				// $modifiedString = preg_replace( '/\d+/', '', $key );.
-				$wps_modified_string1 = substr( $key, 5 );
-				$field_array[ $wps_modified_string1 ] = $value;
+				if ( '' == $wps_etmfw_dyn_name && '' == $wps_etmfw_dyn_mail && '' == $wps_etmfw_dyn_contact && '' == $wps_etmfw_dyn_date && '' == $wps_etmfw_dyn_address ) {
+					$key = ucwords( str_replace( '_', ' ', substr( $key, 10 ) ) );
+					$field_array[ $key ] = $value;
+				} else {
+					$key = ucwords( str_replace( '_', ' ', substr( $key, 10 ) ) );
+					// $modifiedString = preg_replace( '/\d+/', '', $key );.
+					$wps_modified_string1 = substr( $key, 5 );
+					$field_array[ $wps_modified_string1 ] = $value;
+				}
 			}
 		}
 		return $field_array;
