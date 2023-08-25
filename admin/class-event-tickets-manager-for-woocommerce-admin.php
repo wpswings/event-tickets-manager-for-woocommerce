@@ -174,13 +174,14 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function etmfw_dequeque_theme_script() {
-		$temp_theme = wp_get_theme();
+		$active_theme = wp_get_theme(); // Get information about the active theme
+		$target_theme = 'Divi'; // Replace with the folder name of the theme you want to check
 
 		$screen = get_current_screen();
 
 		if ( 'product' == $screen->id ) {
 
-			if ( 'Divi' == $temp_theme['Name'] ) {
+			if ($active_theme->get_template() === $target_theme) {
 
 				  wp_dequeue_script( 'et_bfb_admin_date_addon_js' );
 			}

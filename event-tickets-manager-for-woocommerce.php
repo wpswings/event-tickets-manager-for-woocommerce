@@ -15,7 +15,7 @@
  * Plugin Name:          Event Tickets Manager for WooCommerce
  * Plugin URI:           https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/
  * Description:          <code><strong>Event Tickets Manager for WooCommerce</strong></code> is all-in-one solution to create an event , manage ticket stocks download ticket as PDFs & much more. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-events&utm_medium=events-org-backend&utm_campaign=official">Elevate your e-commerce store by exploring more on <strong>WP Swings</strong></a>
- * Version:              1.1.7
+ * Version:              1.1.8
  * Author:               WP Swings
  * Author URI:           https://wpswings.com/?utm_source=wpswings-events-official&utm_medium=events-org-page&utm_campaign=official
  * Text Domain:          event-tickets-manager-for-woocommerce
@@ -23,7 +23,7 @@
  * Requires at least:    4.6
  * Tested up to:         6.3
  * WC requires at least: 4.0
- * WC tested up to:      8.0.0
+ * WC tested up to:      8.0.2
  * License:              GNU General Public License v3.0
  * License URI:          http://www.gnu.org/licenses/gpl-3.0.html
  */
@@ -33,6 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
+use Automattic\WooCommerce\Utilities\OrderUtil;
 
 $activated = false;
 /**
@@ -436,4 +437,37 @@ if ( $activated ) {
 	 */
 	add_action( 'admin_init', 'wps_etmfw_plugin_deactivate' );
 
+}
+
+// Replacng get_post_meta with wps_mautic_get_meta_data for HPOS 
+function wps_etmfw_get_meta_data( $id, $key, $v ) {
+	if ( 'shop_order' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
+		// HPOS usage is enabled.
+		$order    = wc_get_order( $id );
+		if ( '_customer_user' == $key ) {
+			$meta_val = $order->get_customer_id();
+			return $meta_val;
+		}
+		$meta_val = $order->get_meta( $key );
+		// die('iowrj');
+		return $meta_val;
+	} else {
+		// Traditional CPT-based orders are in use.
+		$meta_val = get_post_meta( $id, $key, $v );
+		// die('iowrj');
+		return $meta_val; 
+	}
+}
+
+// Replace update_post_meta with wps_mautic_update_meta_data.
+function wps_etmfw_update_meta_data( $id, $key, $value ) {
+	if ( 'shop_order' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
+		// HPOS usage is enabled.
+		$order = wc_get_order( $id );
+		$order->update_meta_data( $key, $value );
+		$order->save();
+	} else {
+		// Traditional CPT-based orders are in use.
+		update_post_meta( $id, $key, $value );
+	}
 }

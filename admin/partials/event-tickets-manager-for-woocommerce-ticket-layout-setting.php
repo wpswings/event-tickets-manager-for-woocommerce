@@ -279,7 +279,7 @@ $allowed_html = array(
 						?>
 					<div class="wps_wocuf_saved_custom_image">
 					<a href="#" class="wps_etmfw_upload_image_button button"><img src="<?php echo esc_url( $image_attributes[0] ); ?>" style="max-width:150px;display:block;"></a>
-					<input type="hidden" name="wps_etmfw_background_image" id="wps_etmfw_background_image_1" value="<?php echo esc_attr( $image_post_id ); ?>">
+					<!-- <input type="hidden" name="wps_etmfw_background_image" id="wps_etmfw_background_image_1" value="<?php //echo esc_attr( $image_post_id ); ?>"> -->
 					<a href="#" class="wps_etmfw_remove_image_button button" style="display:inline-block;margin-top: 10px;display:inline-block;"><?php esc_html_e( 'Remove Image', 'event-tickets-manager-for-woocommerce' ); ?></a>
 				</div>
 				<?php } else { ?>
@@ -360,6 +360,22 @@ $allowed_html = array(
 <?php
 if ( isset( $_POST['reset_wps'] ) ) {
 	$wps_ubo_selected_template = get_option( 'wps_etmfw_ticket_template', '1' );
+
+	if (!isset($_SESSION['refreshCount'])) {
+        $_SESSION['refreshCount'] = 0;
+    }
+
+    $refreshCount = $_SESSION['refreshCount'];
+
+    if ($refreshCount < 2) {
+        // Increment the refresh count
+        $_SESSION['refreshCount'] = $refreshCount + 1;
+
+        // Refresh the page using JavaScript
+        echo '<script>';
+        echo 'setTimeout(function(){ location.reload(); }, 1000);'; // Refresh after 1 second
+        echo '</script>';
+    }
 	if ( 1 === (int) $wps_ubo_selected_template ) {
 
 		 update_option( 'wps_etmfw_logo_size', '133' );
