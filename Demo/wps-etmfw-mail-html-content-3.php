@@ -48,7 +48,12 @@ $wps_etmfw_logo_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' 
 	  <tr>
 		<td style="width: 25%; padding: 15px; box-sizing: border-box;"><img id = "wps_wem_logo_id" src='<?php echo esc_url( $wps_etmfw_logo_url ); ?>' style="width:<?php echo esc_attr( $wps_etmfw_logo_size . 'px' ); ?>;margin-left: 25px"></td>
 		<td style="width: 75%; box-sizing: border-box; background-color: #502343;">
-				<table style="width: 100%; background-image: url(<?php echo esc_url( $image_attributes[0] ); ?>); background-size: cover;">
+				<table style="width: 100%; background-image: url(
+				<?php
+				echo is_array( $image_attributes ) && isset( $image_attributes[0] ) ? esc_url( $image_attributes[0] ) : '';
+				;
+				?>
+				); background-size: cover;">
 					<tr>
 						<td>
 							<table style="width: 80%; padding: 15px 15px; border-right: dashed 2px #ffffff; margin: 0 auto">

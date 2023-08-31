@@ -21,9 +21,9 @@
  * Text Domain:          event-tickets-manager-for-woocommerce
  * Domain Path:          /languages
  * Requires at least:    4.6
- * Tested up to:         6.3
+ * Tested up to:         6.3.1
  * WC requires at least: 4.0
- * WC tested up to:      8.0.2
+ * WC tested up to:      8.0.3
  * License:              GNU General Public License v3.0
  * License URI:          http://www.gnu.org/licenses/gpl-3.0.html
  */
@@ -438,8 +438,13 @@ if ( $activated ) {
 	add_action( 'admin_init', 'wps_etmfw_plugin_deactivate' );
 
 }
-
-// Replacng get_post_meta with wps_mautic_get_meta_data for HPOS 
+/**
+ * Replacing get_post_meta with wps_etmfw_get_meta_data for HPOS.
+ *
+ * @param int    $id Date Passed.
+ * @param string $key key Passed.
+ * @param string $v $value Passed.
+ */
 function wps_etmfw_get_meta_data( $id, $key, $v ) {
 	if ( 'shop_order' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
 		// HPOS usage is enabled.
@@ -449,17 +454,21 @@ function wps_etmfw_get_meta_data( $id, $key, $v ) {
 			return $meta_val;
 		}
 		$meta_val = $order->get_meta( $key );
-		// die('iowrj');
 		return $meta_val;
 	} else {
 		// Traditional CPT-based orders are in use.
 		$meta_val = get_post_meta( $id, $key, $v );
-		// die('iowrj');
-		return $meta_val; 
+		return $meta_val;
 	}
 }
 
-// Replace update_post_meta with wps_mautic_update_meta_data.
+/**
+ * Update update_post_meta with wps_etmfw_update_meta_data for HPOS.
+ *
+ * @param int    $id Date Passed.
+ * @param string $key key Passed.
+ * @param string $value $value Passed.
+ */
 function wps_etmfw_update_meta_data( $id, $key, $value ) {
 	if ( 'shop_order' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
 		// HPOS usage is enabled.
