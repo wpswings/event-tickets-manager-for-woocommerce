@@ -10,6 +10,7 @@
  */
 
 use Dompdf\Dompdf;
+use Automattic\WooCommerce\Utilities\OrderUtil;
 /**
  * The public-facing functionality of the plugin.
  *
@@ -453,7 +454,14 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				}
 
 				if ( 1 < $item_quantity ) {
-					$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+					// $ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );.
+					if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+						// HPOS usage is enabled.
+						$ticket_number = $order->get_meta( "event_ticket#$order_id#$item_id", true );
+					} else {
+						$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+					}
+
 					if ( empty( $ticket_number ) ) {
 						$ticket_number = array();
 
@@ -463,7 +471,16 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 							$wps_ticket_content = $this->wps_etmfw_get_html_content( $item_meta_data, $order, $order_id, $temp, $product_id ); // need to change on this line for dynamics details.
 							$this->wps_etmfw_generate_ticket_pdf( $wps_ticket_content, $order, $order_id, $temp );
 						}
-						update_post_meta( $order_id, "event_ticket#$order_id#$item_id", $ticket_number );
+						// update_post_meta( $order_id, "event_ticket#$order_id#$item_id", $ticket_number );.
+
+						if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+							// HPOS usage is enabled.
+							$order->update_meta_data( "event_ticket#$order_id#$item_id", $ticket_number );
+							$order->save();
+
+						} else {
+							update_post_meta( $order_id, "event_ticket#$order_id#$item_id", $ticket_number );
+						}
 					}
 
 					if ( is_array( $ticket_number ) && ! empty( $ticket_number ) ) {
@@ -501,10 +518,28 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						}
 					}
 				} else {
-					$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+					// $ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );.
+
+					if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+						// HPOS usage is enabled.
+						$ticket_number = $order->get_meta( "event_ticket#$order_id#$item_id", true );
+					} else {
+						$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+					}
+
 					if ( '' === $ticket_number ) {
 						$ticket_number = wps_etmfw_ticket_generator();
-						update_post_meta( $order_id, "event_ticket#$order_id#$item_id", $ticket_number );
+						// update_post_meta( $order_id, "event_ticket#$order_id#$item_id", $ticket_number );.
+
+						if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+							// HPOS usage is enabled.
+							$order->update_meta_data( "event_ticket#$order_id#$item_id", $ticket_number );
+							$order->save();
+
+						} else {
+							update_post_meta( $order_id, "event_ticket#$order_id#$item_id", $ticket_number );
+						}
+
 						$wps_ticket_content = $this->wps_etmfw_get_html_content( $item_meta_data, $order, $order_id, $ticket_number, $product_id );// tickt pdf html.
 						$this->wps_etmfw_generate_ticket_pdf( $wps_ticket_content, $order, $order_id, $ticket_number );
 
@@ -671,7 +706,15 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					foreach ( $order->get_items() as $item_id => $item ) {
 						$product = $item->get_product();
 						if ( isset( $product ) && $product->is_type( 'event_ticket_manager' ) ) {
-							$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+							// $ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+
+							if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+								// HPOS usage is enabled.
+								$ticket_number = $order->get_meta( "event_ticket#$order_id#$item_id", true );
+							} else {
+								$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+							}
+
 							if ( is_array( $ticket_number ) && ! empty( $ticket_number ) ) {
 
 								foreach ( $ticket_number as $key => $value ) {
@@ -850,12 +893,26 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$product_types = wp_get_object_terms( $product_id, 'product_type' );
 				if ( isset( $product_types[0] ) ) {
 					$product_type = $product_types[0]->slug;
-					$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+					// $ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+					if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+						// HPOS usage is enabled.
+						$ticket_number = $order->get_meta( "event_ticket#$order_id#$item_id", true );
+					} else {
+						$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+					}
 					if ( is_array( $ticket_number ) ) {
 
 						foreach ( $ticket_number as $key => $value ) {
 							if ( '' !== $value && 'event_ticket_manager' == $product_type ) {
-								$updated_meta_pdf = get_post_meta( $order_id, 'wps_etmfw_order_meta_updated', true );
+
+								// $updated_meta_pdf = get_post_meta( $order_id, 'wps_etmfw_order_meta_updated', true );
+								if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+									// HPOS usage is enabled.
+									$updated_meta_pdf = $order->get_meta( 'wps_etmfw_order_meta_updated', true );
+								} else {
+									$updated_meta_pdf = get_post_meta( $order_id, 'wps_etmfw_order_meta_updated', true );
+								}
+
 								if ( '' === $updated_meta_pdf ) {
 									$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_URL . '/events_pdf/events' . $order_id . $value . '.pdf';
 								} else {
@@ -940,7 +997,15 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					} else {
 
 						if ( '' !== $ticket_number && 'event_ticket_manager' == $product_type ) {
-							$updated_meta_pdf = get_post_meta( $order_id, 'wps_etmfw_order_meta_updated', true );
+							// $updated_meta_pdf = get_post_meta( $order_id, 'wps_etmfw_order_meta_updated', true );
+
+							if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+								// HPOS usage is enabled.
+								$updated_meta_pdf = $order->get_meta( 'wps_etmfw_order_meta_updated', true );
+							} else {
+								$updated_meta_pdf = get_post_meta( $order_id, 'wps_etmfw_order_meta_updated', true );
+							}
+
 							if ( '' === $updated_meta_pdf ) {
 								$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_URL . '/events_pdf/events' . $order_id . $ticket_number . '.pdf';
 							} else {
@@ -1203,10 +1268,28 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						$item->update_meta_data( $key, $value );
 						$item->save();
 						$response['result'] = true;
-						update_post_meta( $order_id, 'wps_etmfw_order_meta_updated', 'yes' );
+						// update_post_meta( $order_id, 'wps_etmfw_order_meta_updated', 'yes' );.
+
+						if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+							// HPOS usage is enabled.
+							$order->update_meta_data( 'wps_etmfw_order_meta_updated', 'yes' );
+							$order->save();
+
+						} else {
+							update_post_meta( $order_id, 'wps_etmfw_order_meta_updated', 'yes' );
+						}
+
 						$product_id = $product->get_id();
 						$item_meta_data = $item->get_meta_data();
-						$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+						// $ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+
+						if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+							// HPOS usage is enabled.
+							$ticket_number = $order->get_meta( "event_ticket#$order_id#$item_id", true );
+						} else {
+							$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+						}
+
 						if ( is_array( $ticket_number ) && ! empty( $ticket_number ) ) {
 
 							foreach ( $ticket_number as $key => $value ) {

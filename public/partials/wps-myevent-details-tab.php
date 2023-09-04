@@ -8,37 +8,52 @@
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/emails
  */
+use Automattic\WooCommerce\Utilities\OrderUtil;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 		$event_attendees_details = array();
 		$customer = wp_get_current_user(); // do this when user is logged in.
-		$order_statuses = array(
-			'wc-completed'  => __( 'Completed', 'event-tickets-manager-for-woocommerce' ),
+		// $order_statuses = array(
+		// 	'wc-completed'  => __( 'Completed', 'event-tickets-manager-for-woocommerce' ),
+		// );
+		// $customer_orders = get_posts(
+		// 	array(
+		// 		'numberposts' => -1,
+		// 		'meta_key' => '_customer_user',
+		// 		'orderby' => 'date',
+		// 		'order' => 'DESC',
+		// 		'meta_value' => get_current_user_id(),
+		// 		'post_type' => wc_get_order_types(),
+		// 		'post_status'       => array_keys( $order_statuses ),
+		// 		'fields' => 'ids',
+		// 	)
+		// );
+
+		$args = array(
+			'status' => array('wc-processing', 'wc-completed'),
+			'return' => 'ids',
+			'customer_id' => get_current_user_id(),
 		);
-		$customer_orders = get_posts(
-			array(
-				'numberposts' => -1,
-				'meta_key' => '_customer_user',
-				'orderby' => 'date',
-				'order' => 'DESC',
-				'meta_value' => get_current_user_id(),
-				'post_type' => wc_get_order_types(),
-				'post_status'       => array_keys( $order_statuses ),
-				'fields' => 'ids',
-			)
-		);
+		$shop_orders = wc_get_orders($args);
 
 		$user_orders = array();
-		foreach ( $customer_orders as $order_id ) {
+
+		foreach ( $shop_orders as $order_id ) {
 			$order_obj = wc_get_order( $order_id );
 
 			foreach ( $order_obj->get_items() as $item_id => $item ) {
 				$product = $item->get_product();
 				$orderme = $order_obj->get_id();
 				if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
-					$ticket = get_post_meta( $order_obj->get_id(), "event_ticket#$orderme#$item_id", true );
+					// $ticket = get_post_meta( $order_obj->get_id(), "event_ticket#$orderme#$item_id", true );
+					if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+						// HPOS usage is enabled.
+						$ticket = 	$order_obj->get_meta("event_ticket#$orderme#$item_id", true );
+					} else {
+						$ticket = get_post_meta( $order_obj->get_id(), "event_ticket#$orderme#$item_id", true );
+					}
 					if ( is_array( $ticket ) && ! empty( $ticket ) ) {
 						$length = count( $ticket );
 						for ( $i = 0;$i < $length; $i++ ) {
@@ -105,7 +120,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 						  $upload_dir_path = '';
 						  $generated_tickets = get_post_meta( $pro_id, 'wps_etmfw_generated_tickets', true );
 						  $orderme = $order_obj->get_id();
-						  $ticket = get_post_meta( $order_obj->get_id(), "event_ticket#$orderme#$item_id", true );
+
+						//   $ticket = get_post_meta( $order_obj->get_id(), "event_ticket#$orderme#$item_id", true );
+						  if (OrderUtil::custom_orders_table_usage_is_enabled()) {
+							// HPOS usage is enabled.
+							$ticket = 	$order_obj->get_meta("event_ticket#$orderme#$item_id", true);
+						} else {
+							$ticket = get_post_meta( $order_obj->get_id(), "event_ticket#$orderme#$item_id", true );
+						}
 
 						if ( ! empty( $generated_tickets ) ) {
 							foreach ( $generated_tickets as $key => $value ) {

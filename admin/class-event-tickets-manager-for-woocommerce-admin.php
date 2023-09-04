@@ -8,7 +8,7 @@
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/admin
  */
-
+use Automattic\WooCommerce\Utilities\OrderUtil;
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -19,6 +19,7 @@
  * @subpackage Event_Tickets_Manager_For_Woocommerce/admin
  * @author     WPSwings <webmaster@wpswings.com>
  */
+
 class Event_Tickets_Manager_For_Woocommerce_Admin {
 
 	/**
@@ -1043,7 +1044,15 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 							if ( isset( $product_types[0] ) ) {
 								$product_type = $product_types[0]->slug;
 								if ( 'event_ticket_manager' == $product_type ) {
-									$ticket = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+									// $ticket = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+
+									if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+										// HPOS usage is enabled.
+										$ticket = $order->get_meta( "event_ticket#$order_id#$item_id", true );
+									} else {
+										$ticket = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+									}
+
 									if ( is_array( $ticket ) && ! empty( $ticket ) ) {
 										$length = count( $ticket );
 										for ( $i = 0;$i < $length;$i++ ) {
@@ -1230,7 +1239,15 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 						$product_types = wp_get_object_terms( $product_id, 'product_type' );
 						if ( isset( $product_types[0] ) ) {
 							$product_type = $product_types[0]->slug;
-							$wps_gift_product = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+							// $wps_gift_product = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+
+							if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+								// HPOS usage is enabled.
+								$wps_gift_product = $order->get_meta( "event_ticket#$order_id#$item_id", true );
+							} else {
+								$wps_gift_product = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+							}
+
 							if ( 'event_ticket_manager' == $product_type || ! empty( $wps_gift_product ) ) {
 								$giftcard = true;
 							}

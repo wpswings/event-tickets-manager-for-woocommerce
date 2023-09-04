@@ -3,363 +3,366 @@
  * included in this file.
  */
 
- .woocommerce .cart-collaterals .cart_totals, .woocommerce-page .cart-collaterals .cart_totals {
-    float: none!important;
-
- }
-
- .wps_etmfw_events_section,
- .wps_etmfw_input_ticket_section {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 10px;
+.woocommerce .cart-collaterals .cart_totals,
+.woocommerce-page .cart-collaterals .cart_totals {
+  float: none !important;
 }
 
- .wps_etmfw_events_section label,
- .wps_etmfw_input_ticket_section label {
-    flex: 0 0 25%;
-    max-width: 25%;
+.wps_etmfw_events_section,
+.wps_etmfw_input_ticket_section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.wps_etmfw_events_section label,
+.wps_etmfw_input_ticket_section label {
+  flex: 0 0 25%;
+  max-width: 25%;
 }
 
 select#wps_etmfw_event_selected {
-    flex: 0 0 75%;
-    max-width: 75%;
+  flex: 0 0 75%;
+  max-width: 75%;
 }
 
 input#wps_etmfw_imput_ticket {
-    flex: 0 0 75%;
-    max-width: 75%;
-    margin: 0;
+  flex: 0 0 75%;
+  max-width: 75%;
+  margin: 0;
 }
 input#wps_etmfw_chckin_email {
-    flex: 0 0 75%;
-    max-width: 75%;
-    margin: 0;
+  flex: 0 0 75%;
+  max-width: 75%;
+  margin: 0;
 }
 
-
 .wps_etmfw--loader-btn-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .wps_etmfw_checkin_button_section {
-    flex: 0 0 15%;
-    max-width: 115px;
+  flex: 0 0 15%;
+  max-width: 115px;
 }
 
 div#wps_etmfw_checkin_loader img {
-    width: 25px;
-    height: auto;
-    margin-left: 50px;
+  width: 25px;
+  height: auto;
+  margin-left: 50px;
 }
 
 div#wps_etmfw_edit_info_loader img {
-   width: 25px;
-    height: auto;
-    position: relative;
-    top: 5px;
+  width: 25px;
+  height: auto;
+  position: relative;
+  top: 5px;
 }
-#wps_etmfw_edit_info_loader{
-    display: none;
+#wps_etmfw_edit_info_loader {
+  display: none;
 }
-#wps_etmfw_checkin_loader{
-    display: none;
+#wps_etmfw_checkin_loader {
+  display: none;
 }
-#wps_etmfw_event_map{
-    width: 60%;
-    height: 350px;
-    margin-bottom: 10px;
+#wps_etmfw_event_map {
+  width: 60%;
+  height: 350px;
+  margin-bottom: 10px;
 }
-.wps_check_in_error {/* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
-    background: #e2401c;
-    padding: 16px 20px;
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: bold;
-    margin: 20px 0;
+.wps_check_in_error {
+  /* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
+  background: #e2401c;
+  padding: 16px 20px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 20px 0;
 }
 
-.wps_check_in_success {/* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
-    background: #1a6f1a;
-    padding: 16px 20px;
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: bold;
-    margin: 20px 0;
+.wps_check_in_success {
+  /* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
+  background: #1a6f1a;
+  padding: 16px 20px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 20px 0;
 }
 
 .wps_etmfw_addition_info_section input {
-    width: 99%!important;
-    max-width: 99%!important;
+  width: 99% !important;
+  max-width: 99% !important;
 }
 
 .wps-form-group__control label {
-    margin-top: 8px;
-    margin-left: 5px;
-    margin-bottom: 8px;
-    line-height: 1;
+  margin-top: 8px;
+  margin-left: 5px;
+  margin-bottom: 8px;
+  line-height: 1;
 }
 
 .wps-form-group__control div {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
-.wps_etmfw_view_ticket_section, 
+.wps_etmfw_view_ticket_section,
 .wps_etmfw_calendar_section {
-    display: inline-block;
-    margin: 5px 0;
+  display: inline-block;
+  margin: 5px 0;
 }
 
 .wps_etmfw_view_ticket_section {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
-.wps_etmfw_view_ticket_section a, 
+.wps_etmfw_view_ticket_section a,
 .wps_etmfw_calendar_section a {
-    padding: 7px 25px;
-    border: 2px solid #28303d;
+  padding: 7px 25px;
+  border: 2px solid #28303d;
 }
 
-.wps_etmfw_view_ticket_section a:hover, 
+.wps_etmfw_view_ticket_section a:hover,
 .wps_etmfw_calendar_section a:hover {
-    background: #ffffff!important;
-    color: #28303d!important;
+  background: #ffffff !important;
+  color: #28303d !important;
 }
 
 span#wps_etmfw_edit_ticket {
-    font-size: 20px;
-    font-weight: 400;
-    display: block;
-    margin: 10px 0;
-    text-decoration: underline;
-    cursor: pointer;
+  font-size: 20px;
+  font-weight: 400;
+  display: block;
+  margin: 10px 0;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 #wps_etmfw_edit_ticket_form input {
-    width: 50%;
+  width: 50%;
 }
 
 input#wps_etmfw_save_edit_ticket_info_btn {
-    margin-top: 15px;
-    width: auto;
+  margin-top: 15px;
+  width: auto;
 }
 
 form#wps_etmfw_edit_ticket_form {
-    display: none;
+  display: none;
 }
 
 form.wps_etmfw_show_ticket_form {
-    display: block !important;
+  display: block !important;
 }
 div#wps_etmwf_event_date img {
-    display: inline-block;
-    margin-right: 5px;
+  display: inline-block;
+  margin-right: 5px;
 }
 div#wps_etmwf_event_time img {
-    display: inline-block;
-    margin-right: 5px;
+  display: inline-block;
+  margin-right: 5px;
 }
 div#wps_etmwf_event_venue img {
-    display: inline-block;
-    margin-right: 5px;
+  display: inline-block;
+  margin-right: 5px;
 }
 
 .fc-header-toolbar.fc-toolbar {
-    display: block;
+  display: block;
 }
 
 .fc-toolbar-chunk {
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.wps-form-group__control input[type=checkbox], 
-.wps-form-group__control input[type=radio] {
-    width: auto !important;
-    margin-bottom: 3px;
+.wps-form-group__control input[type="checkbox"],
+.wps-form-group__control input[type="radio"] {
+  width: auto !important;
+  margin-bottom: 3px;
 }
 
 form.cart {
-    flex-direction: column;
-    align-content: flex-start;
+  flex-direction: column;
+  align-content: flex-start;
 }
 
-
-.woocommerce-message, .woocommerce-info, .woocommerce-error, .woocommerce-noreviews, p.no-comments {
-    margin-bottom: 2.617924em;
-    background-color: #0f834d;
-    margin-left: 0;
-    border-radius: 2px;
-    color: #fff;
-    clear: both;
-    border-left: 0.6180469716em solid rgba(0,0,0,.15);
-    padding: 1em 2em 1em 3.5em
-;   position: relative;
-    list-style: none outside;
+.woocommerce-message,
+.woocommerce-info,
+.woocommerce-error,
+.woocommerce-noreviews,
+p.no-comments {
+  margin-bottom: 2.617924em;
+  background-color: #0f834d;
+  margin-left: 0;
+  border-radius: 2px;
+  color: #fff;
+  clear: both;
+  border-left: 0.6180469716em solid rgba(0, 0, 0, 0.15);
+  padding: 1em 2em 1em 3.5em;
+  position: relative;
+  list-style: none outside;
 }
 div#wps_etmfw_event_map {
-    margin: 10px 0px;
+  margin: 10px 0px;
 }
 
 .fc-daygrid.fc-dayGridMonth-view.fc-view,
 .fc-timegrid.fc-timeGridDay-view.fc-view,
 .fc-timegrid.fc-timeGridWeek-view.fc-view {
-    overscroll-behavior-x: auto;
-    overflow: scroll;
-    width: 100%;
+  overscroll-behavior-x: auto;
+  overflow: scroll;
+  width: 100%;
 }
 
 .fc-scrollgrid.fc-scrollgrid-liquid {
-    table-layout: auto;
+  table-layout: auto;
 }
 
 .fc-view-harness.fc-view-harness-active {
-    height: 250px !important;
+  height: 250px !important;
 }
 
 .fc-day {
-    width: 40px;
+  width: 40px;
 }
 
 .wps-edit-form-group div {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .wps-edit-form-group div #wps_etmfw_radio {
-    width: auto;
+  width: auto;
 }
 
 @media only screen and (max-width: 768px) {
-    .product-remove {
-        display: none!important;
-    }
+  .product-remove {
+    display: none !important;
+  }
 
-    input#coupon_code {
-        margin-bottom: 20px;
-    }
- }
-
- @media only screen and (max-width: 540px) {
-    .wps_etmfw_view_ticket_section,
-    .wps_etmfw_calendar_section {
-        display: block;
-        text-align: center;
-    }
-
-    a.wps_etmfw_add_event_calendar,
-    a.wps_view_ticket_pdf {
-        display: block;
-    }
-
-    .fc-toolbar-chunk {
-        display: flex;
-        margin-bottom: 10px;
-    }
-
-    .fc .fc-toolbar {
-        display: block;
-    }
-
-
+  input#coupon_code {
+    margin-bottom: 20px;
+  }
 }
-.etmfw_expiration_message{
-    color: red;
-    font-size: 25px;
+
+@media only screen and (max-width: 540px) {
+  .wps_etmfw_view_ticket_section,
+  .wps_etmfw_calendar_section {
+    display: block;
+    text-align: center;
+  }
+
+  a.wps_etmfw_add_event_calendar,
+  a.wps_view_ticket_pdf {
+    display: block;
+  }
+
+  .fc-toolbar-chunk {
+    display: flex;
+    margin-bottom: 10px;
+  }
+
+  .fc .fc-toolbar {
+    display: block;
+  }
 }
-.woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link--wps-myevent-tab a:before{
-	content: "\f2ce"
+.etmfw_expiration_message {
+  color: red;
+  font-size: 25px;
+}
+.woocommerce-MyAccount-navigation
+  ul
+  li.woocommerce-MyAccount-navigation-link--wps-myevent-tab
+  a:before {
+  content: "\f2ce";
 }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 img.wps_resend_image {
-    background: #70b3b5;
-    width: 45px;
+  background: #70b3b5;
+  width: 45px;
 }
 
-
 #wps_share_ticket_lable {
-    font-size: 24px;
-    font-weight: 600;
-    margin: 0 0 15px;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 15px;
 }
 
 #wps_etmfw_error_message {
-    font-size: 12px;
-    color: red;
-    margin: 10px 0;
+  font-size: 12px;
+  color: white;
+  margin: 10px 0;
 }
 
 .wps_etmfw_events_section,
 .wps_etmfw_input_ticket_section {
-    margin: 0 0 15px;
-    flex-wrap: nowrap;
+  margin: 0 0 15px;
+  flex-wrap: nowrap;
 }
 
 .wps_etmfw_events_section label,
 .wps_etmfw_input_ticket_section label {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 #wps_etmfw_event_selected {
-    min-height: 40px;
-    margin: 0;
+  min-height: 40px;
+  margin: 0;
 }
 
 #wps_select_user {
-    margin: 0 0 15px;
-    min-height: 40px;
+  margin: 0 0 15px;
+  min-height: 40px;
 }
 
 #wps_etmfwp_checkin_button {
-    min-height: 40px;
-    padding: 10px;
+  min-height: 40px;
+  padding: 10px;
 }
 
 input#wps_etmfw_chckin_email,
 input#wps_etmfw_imput_ticket {
-    min-height: 40px;
+  min-height: 40px;
 }
 
-@media screen and (max-width:580px) {
+@media screen and (max-width: 580px) {
+  .wps_etmfw_events_section,
+  .wps_etmfw_input_ticket_section {
+    align-items: flex-start;
+    flex-direction: column;
+    margin: 0 0 15px;
+  }
 
-    .wps_etmfw_events_section,
-    .wps_etmfw_input_ticket_section {
-        align-items: flex-start;
-        flex-direction: column;
-        margin: 0 0 15px;
-    }
+  .wps_etmfw_events_section label,
+  .wps_etmfw_input_ticket_section label {
+    flex: 1;
+    max-width: 100%;
+    font-size: 18px;
+  }
 
-    .wps_etmfw_events_section label,
-    .wps_etmfw_input_ticket_section label {
-        flex: 1;
-        max-width: 100%;
-        font-size: 18px;
-    }
+  select#wps_etmfw_event_selected {
+    flex: 1;
+    max-width: 100%;
+    width: 100%;
+  }
 
-    select#wps_etmfw_event_selected {
-        flex: 1;
-        max-width: 100%;
-        width: 100%;
-    }
-
-    input#wps_etmfw_chckin_email,
-    input#wps_etmfw_imput_ticket {
-        width: 100%;
-        flex: 1;
-        max-width: 100%;
-    }
+  input#wps_etmfw_chckin_email,
+  input#wps_etmfw_imput_ticket {
+    width: 100%;
+    flex: 1;
+    max-width: 100%;
+  }
 }
 
 /* Event tab in My account page end */
