@@ -206,14 +206,13 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 		);
 		$shop_orders = wc_get_orders( $args );
 		if ( isset( $shop_orders ) && ! empty( $shop_orders ) ) {
-			// if (isset($shop_orders->posts) && !empty($shop_orders->posts)) {.
+
 			foreach ( $shop_orders as $shop_order ) {
 				$order_id = $shop_order;
 				$order = wc_get_order( $shop_order );
 				foreach ( $order->get_items() as $item_id => $item ) {
 					$product = $item->get_product();
 					if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
-						// $ticket = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );.
 						if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 							// HPOS usage is enabled.
 							$ticket = $order->get_meta( "event_ticket#$order_id#$item_id", true );
@@ -298,7 +297,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 									}
 								}
 							}
-							// $updated_meta_pdf = get_post_meta($order_id, 'wps_etmfw_order_meta_updated', true);
+
 							if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 								// HPOS usage is enabled.
 								$updated_meta_pdf = $order->get_meta( 'wps_etmfw_order_meta_updated', true );
@@ -329,7 +328,6 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 					}
 				}
 			}
-			// }
 		}
 		$event_attendees_details = apply_filters( 'wps_etmfw_unfiltered_events_data', $event_attendees_details );
 		$filtered_data = array();

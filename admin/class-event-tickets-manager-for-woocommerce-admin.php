@@ -1041,7 +1041,6 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 							if ( isset( $product_types[0] ) ) {
 								$product_type = $product_types[0]->slug;
 								if ( 'event_ticket_manager' == $product_type ) {
-									// $ticket = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
 
 									if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 										// HPOS usage is enabled.
@@ -1240,7 +1239,6 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 							$product_types = wp_get_object_terms( $product_id, 'product_type' );
 							if ( isset( $product_types[0] ) ) {
 								$product_type = $product_types[0]->slug;
-								// $wps_gift_product = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
 
 								if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 									// HPOS usage is enabled.
