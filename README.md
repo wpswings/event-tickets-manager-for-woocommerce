@@ -1,5 +1,5 @@
-[![BuildStatus](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-1000%2B-brightgreen)![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.3-brightgreen)![WC tested](https://img.shields.io/badge/WC%20tested-8.0.0-brightgreen)![Requires PHP](https://img.shields.io/badge/Requires%20PHP-8-blue)
-# Event Tickets Manager for WooCommerce – Ticket Stock Management, Download Tickets As PDF, Events Calendar, Event Check-in Using Emails, Edit  Ticket Content
+[![BuildStatus](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-1000%2B-brightgreen)![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.3.1-brightgreen)![WC tested](https://img.shields.io/badge/WC%20tested-8.0.3-brightgreen)![Requires PHP](https://img.shields.io/badge/Requires%20PHP-8-blue)
+# Event Tickets Manager for WooCommerce – Events and Bookings Calendar, Registration, Event Check-in Using Emails, Edit Your Ticket Content
 ![Event Tickets Manager  for WooCommerce](https://ps.w.org/event-tickets-manager-for-woocommerce/assets/banner-772x250.jpg?rev=2672038)
 * Contributors: WP Swings
 * Author URI: [WP Swings](https://wpswings.com/?utm_source=events-github-official&utm_medium=events-github-page&utm_campaign=official)
@@ -8,12 +8,9 @@
 
 ## Description 
 
-**EVENT TICKETS MANAGER IS AN ALL-IN-ONE SOLUTION THAT ALLOWS YOU TO CREATE AN EVENT & EVENT TICKETING WEBSITE. NOW YOU CAN EASILY SELL TICKETS ONLINE AND MANAGE YOUR EVENTS ON A WOOCOMMERCE STORE WITH THE HELP OF THIS EVENT TICKETS PLUGIN.**
+**EVENT TICKETS MANAGER IS AN ALL-IN-ONE SOLUTION THAT ALLOWS YOU TO CREATE AN EVENT & EVENT TICKETING WEBSITE. NOW YOU CAN EASILY SELL TICKETS ONLINE AND MANAGE YOUR EVENTS ON A WOOCOMMERCE STORE WITH THE HELP OF THE EVENTS CALENDAR PLUGIN.**
 
-[**Event Tickets Manager for WooCommerce**](https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/) is a complete solution for merchants that want to add event-based products to their WooCommerce store. Now you don’t have to pay commissions to your third-party services to manage event registration and ticket sales. You can manage the entire process from your WooCommerce store and be your own boss, by installing our Events Manager plugin.
-
-[**Video**]: [**How to Create, Sell and Manage Event Tickets in WooCommerce?**](https://www.youtube.com/watch?v=9KyB4qpal6M&rel=0)
-
+[**The WordPress Calendar Plugin**](https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/) is a complete solution for merchants that want to add event-based products to their WooCommerce store. Now you don’t have to pay commissions to your third-party services to manage event registration and ticket sales. You can manage the entire process from your WooCommerce store and be your own boss, by installing our WordPress Events plugin.
 
 * Create event management and event ticketing websites with [**WordPress Event Plugin**](https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-pro&utm_medium=events-github-page&utm_campaign=events-pro).
 * Sell tickets online without depending on external service providers with WordPress Event Plugin.
@@ -22,8 +19,9 @@
 
  [**Event Tickets Manger Demo**](https://demo.wpswings.com/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-pro&utm_medium=events-github-page&utm_campaign=frontend-demo ) | [**Event Tickets Documentation**](https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-github-page&utm_campaign=events-doc ) 
 
+[**How to Create, Sell and Manage Event Tickets in WooCommerce?**](https://www.youtube.com/watch?v=9KyB4qpal6M&rel=0)
 
-##  WHAT IS INCLUDED IN THE FREE WOOCOMMERCE EVENT TICKETS
+## WHAT IS INCLUDED IN THE FREE WOOCOMMERCE EVENT TICKETS 
 
 **1) Enable/Disable Shipping Charges**: With WordPress Events Plugins, the admins get a chance to decide whether he wants a certain event/item to have shipping charges inclusive or not. They get a chance to enable/disable the shipping charges. 
 
@@ -38,7 +36,7 @@
 
 **6) Ticket Stock Management**: The WordPress events plugin i.e. Event Tickets Manager For WooCommerce uses the default stock management system to show customers the number of available tickets. The merchant can manage the stock of the tickets from the admin panel. You can also see how many event tickets are sold and track if you are running out of stock with the help of a WordPress event calendar. 
 
-**7) Set Location For Events With Google Maps**: The Event Manager Plugin provides a high-level view of your offline events with event manager WordPress by showing the exact location of events to the user in the front end. The plugin is integrated with Google Maps that lets WooCommerce store owners show the live location of the events on the store.
+**7) Set Location For Events With Google Maps**: The Event Manager Plugin provides a high-level view of your offline events with Event Manager WordPress by showing the exact location of events to the user in the front end. The plugin is integrated with Google Maps and lets WooCommerce store owners show the live location of the events on the store.
 
 **8) Download Tickets As PDF**: The WooCommerce Event Tickets Manager allows the customer to download the tickets as PDFs for offline use. When customers buy event tickets for an event from your WooCommerce store they send an email with a pdf attachment of the ticket. The customers can also download the ticket from the **My Account tab.**
 
@@ -49,6 +47,9 @@
 **11) Validate Event Check-in Using Emails**: The users have to use the email address on which they received the ticket. By entering their email addresses users can validate their check-in for the events they are planning to participate in.
 
 **12) WPML Multilingual Support**: The Event Ticket System Plugin comes with [**WPML**](https://wpml.org/purchase/) multilingual support, so to say, the WooCommerce extension will work in your local language. You can also use the Loco Translate Plugin to translate the string into your local language. Thus, making the Events plugin WordPress one of the best online ticketing solutions and event management plugins in WordPress for eCommerce websites.
+
+## EVENTS MANAGER PLUGIN PLUGIN MEETS YOUR REQUIREMENTS, SO
+[**Download Now**](https://downloads.wordpress.org/plugins/event-tickets-manager-for-woocommerce.zip)
 
 ## LIVE  DEMO OF EVENTS TICKETS MANAGER PLUGIN 
 
@@ -72,11 +73,9 @@
 * The best part is you can fully automate your event and ticketing website & schedule events with event manager WordPress.
 * The Event Tickets Manager Plugin supports multisite compatibility.
 * Event Tickets WooCommerce allows dynamic CSS to change the background and text of the ticket to give a dynamic look.
-* WordPress Events Plugin has a My Event tab in the My Account Section For Listing Purchased Ticket Of Users.
+* WordPress Events Plugin has a My Event tab in the My Account Section For Listing Purchased Tickets Of Users.
 * WooCommerce Events plugin Hide/Remove the Event Product On Being Expired.
 
-## EVENTS MANAGER PLUGIN PLUGIN MEETS YOUR REQUIREMENT, SO
-[**Download Now**](https://downloads.wordpress.org/plugins/event-tickets-manager-for-woocommerce.zip)
 
 ##  WHAT PREMIUM VERSION OF EVENT TICKETS FOR WOOCOMMERCE OFFERS
  
@@ -84,21 +83,22 @@
 
 **2) Fully Customizable PDF Tickets**: We have now introduced fully customizable PDF tickets. This allows the users to create event tickets the way they want.
 
-**3) Multiple Layouts for Tickets PDFs**: The WooCommerce Events Plugin now offers a feature that allows users to select from multiple layout options for ticket PDFs when creating and managing events.
+**3) Multiple Layouts for Tickets PDFs**: The WordPress Events Plugin now offers a feature that allows users to select from multiple layout options for ticket PDFs when creating and managing events.
 
-**4) Send Ticket Details with SMS**: Merchants can assure that the customers have received their products by tracking SMSs.
+**4) Send Ticket Details with SMS**: Merchants can ensure that the customers have received their products by tracking SMSs.
 
-**5) Facebook Sharing of Tickets**: Event Tickets WooCommerce allows you to share your events on Facebook to get the traffic and audience for your event, this helps you to generate revenue.
+**5) Facebook Sharing of Tickets**: WordPress Events Plugin allows you to share your events on Facebook to get the traffic and audience for your event, this helps you to generate revenue.
 
-**6) Email Reminder Before Event**: In Event Tickets WooCommerce, merchants are allowed to send an email reminder to their customers before an event to notify customers that the event will start or x no. of days left to the event.
+**6) Email Reminder Before Event**: WordPress calendar plugin, merchants are allowed to send an email reminder to their customers before the WordPress event to notify customers that the event will start or x no. of days left to the event.
    
-### TAKE ADVANTAGE OF THE EXCLUSIVE FEATURES OF THE WOOCOMMERCE EVENTS PLUGIN
+
+### TAKE ADVANTAGE OF THE EXCLUSIVE FEATURES OF THE WORDPRESS EVENTS PLUGIN
 
 The Events Manager plugin lets the merchant add events as WooCommerce products and create a ticketing website with WordPress.
 > Note:  Get [**Event Tickets Manager For WooCommerce Pro**](https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-pro&utm_medium=events-github-page&utm_campaign=go-pro)
 
 ### See What Garden Rock Music Band is Saying About The Event Plugin
-> Perfect customer service by WP Swings; the plugin works as expected; and the services from WP Swings is great! [**See Event Tickets Manager Case Study**]( https://wpswings.com/case-studies/gardenrock/?utm_source=wpswings-event-case-study&utm_medium=events-github-page&utm_campaign=event-case-study )
+> Perfect customer service by WP Swings; the plugin works as expected; and the services from WP Swings are great! [**See Event Tickets Manager Case Study**]( https://wpswings.com/case-studies/gardenrock/?utm_source=wpswings-event-case-study&utm_medium=events-github-page&utm_campaign=event-case-study )
 
 
 ### DOCUMENTATION OF PREMIUM VERSION
@@ -118,7 +118,3 @@ If you need support or have questions, kindly use our online chat window [**here
 * [**Tweet us on @wpswings**](https://twitter.com/wpswings)
 * [**Visit our LinkedIn Account**](https://www.linkedin.com/company/77072505/)
 * [**Subscribe To Our YouTube Channel**](https://www.youtube.com/channel/UC7nYNf0JETOwW3GOD_EW2Ag)
-
-
-
-
