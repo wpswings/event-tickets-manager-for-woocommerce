@@ -395,7 +395,11 @@
                var element = document.getElementById("wps_etmfw_is_for_pro");
                element.classList.remove("wps_etmfw_class_for_pro");
             }
-           }
+        }
+    
+    $(document).ready(function () {
+        
+    });
 
         $('.wps_etmfw_colorpicker').wpColorPicker();
 })(jQuery);

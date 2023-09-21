@@ -879,7 +879,6 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					$wps_etmfw_product_array['wps_etmfw_dyn_contact'] = isset( $_POST['wps_etmfw_dyn_contact'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_dyn_contact'] ) ) : '';
 					$wps_etmfw_product_array['wps_etmfw_dyn_date'] = isset( $_POST['wps_etmfw_dyn_date'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_dyn_date'] ) ) : '';
 					$wps_etmfw_product_array['wps_etmfw_dyn_address'] = isset( $_POST['wps_etmfw_dyn_address'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_dyn_address'] ) ) : '';
-
 					$wps_etmfw_field_data_array = array();
 					if ( is_array( $wps_etmfw_field_data ) && ! empty( $wps_etmfw_field_data ) ) {
 						if ( '' !== $wps_etmfw_field_data[0]['_label'] ) {
@@ -892,6 +891,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 							}
 						}
 					}
+
+					$wps_etmfw_product_array['wps_event_recurring_type'] = ! empty( $_POST['wps_recurring_type'] ) ? $_POST['wps_recurring_type'] : '';
+					$wps_etmfw_product_array['wps_event_recurring_value'] = ! empty( $_POST['wps_recurring_value'] ) ? $_POST['wps_recurring_value'] : '';
 
 					$wps_etmfw_field_stock_price_data = ! empty( $_POST['etmfwp_fields'] ) ? map_deep( wp_unslash( $_POST['etmfwp_fields'] ), 'sanitize_text_field' ) : array();
 					$wps_etmfw_field_stock_price_data_array = array();

@@ -412,6 +412,10 @@ class Event_Tickets_Manager_For_Woocommerce {
 			'title'       => esc_html__( 'PDF Ticket Layout Setting', 'event-tickets-manager-for-woocommerce' ),
 			'name'        => 'event-tickets-manager-for-woocommerce-ticket-layout-setting',
 		);
+		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-ticket-recurring-setting'] = array(
+			'title'       => esc_html__( 'Recurring Event Settings', 'event-tickets-manager-for-woocommerce' ),
+			'name'        => 'event-tickets-manager-for-woocommerce-ticket-recurring-setting',
+		);
 		$etmfw_default_tabs = apply_filters( 'wps_etmfw_etmfw_plugin_standard_admin_settings_tabs', $etmfw_default_tabs );
 
 		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-system-status'] = array(
