@@ -235,5 +235,16 @@
     });
   }
 
+  $(document).ready(function () {
+    $('#etmfwp_recurring_event_enable').change(function () {
+      if (this.checked) {
+        $('.wps_main_recurring_wrapper').show();
+        // $('.wps_main_recurring_wrapper').css("display", "flex");
+    } else {
+        $('.wps_main_recurring_wrapper').hide(); // Hide the div when the checkbox is unchecked
+        // $('.wps_main_recurring_wrapper').css("display", "none");
+      }
+    });
+  });
   window.initMap = initMap;
 })(jQuery);

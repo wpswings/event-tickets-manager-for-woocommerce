@@ -1,13 +1,6 @@
 <?php
 // echo 'prince';
 
-echo '<pre>';
-// print_r(get_post_meta(390, 'wps_etmfw_product_array',array()));
-// var_dump($_POST);
-// $product = wc_get_product( 915 );
-// $product_data = get_post_meta(858, 'wps_etmfw_product_array',array());
-// print_r(($product));
-// die('check');
 if ($_POST['submit'] && !empty($_POST['product_id']) && is_numeric($_POST['product_id'])) {
 
     $product_data = get_post_meta($_POST['product_id'], 'wps_etmfw_product_array', array());
@@ -15,7 +8,7 @@ if ($_POST['submit'] && !empty($_POST['product_id']) && is_numeric($_POST['produ
     $product = wc_get_product($_POST['product_id']);
 
     // if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
-    $event_id = 951; // Replace with the actual event ID
+    $event_id = 1711; // Replace with the actual event ID
     $recurring_type = 'daily'; // 'daily', 'weekly', or 'monthly'
     $end_date = $product_data[0]['event_end_date_time']; // Replace with the desired end date
     $start_date = $product_data[0]['event_start_date_time'];
@@ -121,9 +114,9 @@ function convert_to_recurring_event($event_id, $recurring_type, $end_date, $star
         // Define the array data for your recurring product (replace with your actual data)
         $recurring_product_data = array(
             'etmfw_event_price' => $product->get_price(),
-            'event_start_date_time' => $current_date->format('Y-m-d'),
+            'event_start_date_time' => $current_date->format('Y-m-d H:i:s'),
             'wps_etmfw_field_user_type_price_data_baseprice' => 'base_price',
-            'event_end_date_time' => $current_end_date->format('Y-m-d'),
+            'event_end_date_time' => $current_end_date->format('Y-m-d H:i:s'),
             'etmfw_event_venue' => 'Delhi',
             'etmfw_event_venue_lat' => 28.7040592,
             'etmfw_event_venue_lng' => 77.10249019999999,
@@ -173,7 +166,7 @@ function convert_to_recurring_event($event_id, $recurring_type, $end_date, $star
         }
         // Move to the next recurring date
         if ($recurring_type === 'daily') {
-            $current_date->modify('+5 day');
+            $current_date->modify('+2 day');
         } elseif ($recurring_type === 'weekly') {
             $current_date->modify('+1 week');
         } elseif ($recurring_type === 'monthly') {
@@ -183,17 +176,38 @@ function convert_to_recurring_event($event_id, $recurring_type, $end_date, $star
 }
 
 $args = array(
-    'post_type' => 'product',
-    'posts_per_page' => -1, // Get all products
+    'post_type' => 'product', // Change to the appropriate post type (e.g., 'product')
+    'posts_per_page' => -1,  // Retrieve all posts
     'meta_query' => array(
         array(
-            'key' => '_product_type', // WooCommerce product type meta key
-            'value' => 'event_ticket_manager', // Type of product you want to retrieve
-            'compare' => '=',
+            'key' => 'parent_of_recurring', // Replace with your custom field name
+            'value' => '1711',            // Specify the value you're looking for
+            'compare' => '=',             // Match the exact value
+            'type' => 'NUMERIC',          // Assuming the value is numeric
         ),
     ),
 );
-$products = new WP_Query($args);
+
+$products_query = new WP_Query($args);
+
+if ($products_query->have_posts()) {
+    while ($products_query->have_posts()) {
+        $products_query->the_post();
+        // Output or manipulate the product information as needed
+        the_title().'<br>'; // Display the title of the product
+
+        $post_id = get_the_ID();
+        // Delete the post
+        // wp_delete_post($post_id, true); // Set the second parameter to true to force deletion
+
+        // Output or manipulate the product information as needed
+        // echo 'Deleted product: ' . get_the_title() . '<br>';
+    }
+    wp_reset_postdata();
+} else {
+    // No products found with the specified custom field value
+    echo 'No products found.';
+}
 ?>
 <form method="post">
     <label>Product ID :</label><input type="number" value="" name="product_id" />

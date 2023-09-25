@@ -59,3 +59,48 @@ div#wps_etmfw_event_data {
 #wps_etmfwppp_add_dynamic_fields_wrapper input[type=checkbox] {
     margin: 0 5px 0 2px;
 }
+
+/* Recuring events settings start */
+#wps_main_recurring_wrapper_id h2{
+    font-size: 16px;
+}
+.wps_main_recurring_common {
+    padding: 0 0 5px 15px;
+}
+
+.wps_main_recurring_common i {
+    font-size: 12px;
+    line-height: 1.25;
+    display: inline-block;
+}
+
+#wps_main_recurring_wrapper_id .wps_main_recurring_common label,
+#wps_main_recurring_wrapper_id .wps_main_recurring_common input,
+#wps_main_recurring_wrapper_id .wps_main_recurring_common select {
+    float: unset;
+    margin: 0;
+    padding: 0;
+}
+
+#wps_main_recurring_wrapper_id .wps_main_recurring_common label {
+    max-width: 145px;
+    width: 100%;
+    display: inline-block;
+}
+
+#wps_main_recurring_wrapper_id .wps_main_recurring_common input {
+    max-width: 200px;
+    margin: 0 5px 0 0;
+    padding: 0 5px;
+}
+
+#wps_main_recurring_wrapper_id .wps_main_recurring_common select {
+    max-width: 80px;
+    padding: 0 5px;
+}
+
+.wps_recurring_start_button {
+    padding: 15px;
+}
+
+/* Recuring events settings end */
