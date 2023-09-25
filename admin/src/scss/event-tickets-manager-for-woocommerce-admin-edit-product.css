@@ -92,11 +92,13 @@ div#wps_etmfw_event_data {
     max-width: 200px;
     margin: 0 5px 0 0;
     padding: 0 5px;
+    width: 100%;
 }
 
 #wps_main_recurring_wrapper_id .wps_main_recurring_common select {
-    max-width: 80px;
+    max-width: 90px;
     padding: 0 5px;
+    width: 100%;
 }
 
 .wps_recurring_start_button {
