@@ -217,6 +217,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'manage_shop_order_posts_custom_column', $etmfw_plugin_admin, 'etmfw_add_label_for_event_type', 20, 2 );
 		$this->loader->add_action( 'wp_print_scripts', $etmfw_plugin_admin, 'etmfw_dequeque_theme_script', 20 );
 
+		//Code For The Banner Image.
+		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'wps_etmfw_set_cron_for_plugin_notification' );
+		$this->loader->add_action( 'wps_wgm_check_for_notification_update', $etmfw_plugin_admin, 'wps_sfw_save_notice_message' );
+		$this->loader->add_action( 'wp_ajax_wps_sfw_dismiss_notice_banner', $etmfw_plugin_admin, 'wps_sfw_dismiss_notice_banner_callback' );
+
 		// Ajax For resending the ticket by admin or customer.
 		if ( 'on' == $etmfw_resend_pdf_ticket_admin && $wps_is_pro_active ) {
 			$this->loader->add_action( 'add_meta_boxes', $etmfw_plugin_admin, 'wps_etmfw_order_edit_meta_box', 10, 2 );

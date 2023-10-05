@@ -106,3 +106,6 @@ div#wps_etmfw_event_data {
 }
 
 /* Recuring events settings end */
+.wps_recurring_loader_main{
+    display: none;
+  }

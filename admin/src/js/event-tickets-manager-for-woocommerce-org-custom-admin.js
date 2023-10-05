@@ -60,7 +60,35 @@
 			}
 		});
 
-   });
+	 });
+		 
+	 jQuery( document ).ready(
+		function($){
+			$( document ).on(
+				'click',
+				'#dismiss-banner',
+				function(e){
+					e.preventDefault();
+					var data = {
+						action:'wps_sfw_dismiss_notice_banner',
+						wps_nonce:wet_org_custom_param.wps_etmfw_edit_prod_nonce
+					};
+					$.ajax(
+						{
+							url: wet_org_custom_param.ajaxurl,
+							type: "POST",
+							data: data,
+							success: function(response)
+							{
+								window.location.reload();
+							}
+						}
+					);
+				}
+			);
+		}
+	 );
+	 
 });
 
  })( jQuery );
