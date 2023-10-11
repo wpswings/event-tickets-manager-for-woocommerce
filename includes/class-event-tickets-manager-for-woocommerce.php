@@ -628,6 +628,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 									type="<?php echo esc_attr( $etmfw_component['type'] ); ?>"
 									value="<?php echo ( isset( $etmfw_component['value'] ) ? esc_attr( $etmfw_component['value'] ) : '' ); ?>"
 									placeholder="<?php echo ( isset( $etmfw_component['placeholder'] ) ? esc_attr( $etmfw_component['placeholder'] ) : '' ); ?>"
+									min = 0
 									>
 								</label>
 								<div class="mdc-text-field-helper-line">

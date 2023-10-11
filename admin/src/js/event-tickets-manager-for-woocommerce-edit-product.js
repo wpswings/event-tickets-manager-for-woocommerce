@@ -236,12 +236,20 @@
   }
 
   $(document).ready(function () {
+    var checkbox = document.getElementById("etmfwp_recurring_event_enable");
+  
+    if (checkbox.checked) {
+      $('.wps_main_recurring_wrapper').show(1000);
+    } else {
+      $('.wps_main_recurring_wrapper').hide(1000);
+    }
+
     $('#etmfwp_recurring_event_enable').change(function () {
       if (this.checked) {
-        $('.wps_main_recurring_wrapper').show();
+        $('.wps_main_recurring_wrapper').show(1000);
         // $('.wps_main_recurring_wrapper').css("display", "flex");
     } else {
-        $('.wps_main_recurring_wrapper').hide(); // Hide the div when the checkbox is unchecked
+        $('.wps_main_recurring_wrapper').hide(1000); // Hide the div when the checkbox is unchecked
         // $('.wps_main_recurring_wrapper').css("display", "none");
       }
     });
