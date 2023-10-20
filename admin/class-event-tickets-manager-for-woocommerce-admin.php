@@ -1320,13 +1320,13 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		 * @name wps_etmfw_set_cron_for_plugin_notification.
 		 * @link http://www.wpswings.com/
 		 */
-	public function wps_etmfw_set_cron_for_plugin_notification() {   
+	public function wps_etmfw_set_cron_for_plugin_notification() {
 		$wps_sfw_offset = get_option( 'gmt_offset' );
 			  $wps_sfw_time   = time() + $wps_sfw_offset * 60 * 60;
-			  if ( ! wp_next_scheduled( 'wps_wgm_check_for_notification_update' ) ) {
-				  wp_schedule_event( $wps_sfw_time, 'daily', 'wps_wgm_check_for_notification_update' );
-			  }
-		  }
+		if ( ! wp_next_scheduled( 'wps_wgm_check_for_notification_update' ) ) {
+			wp_schedule_event( $wps_sfw_time, 'daily', 'wps_wgm_check_for_notification_update' );
+		}
+	}
 
 		/**
 		 * This is function is used to save data for banner image.
@@ -1336,19 +1336,19 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		 */
 	public function wps_sfw_save_notice_message() {
 			$wps_notification_data = $this->wps_sfw_get_update_notification_data();
-			if ( is_array( $wps_notification_data ) && ! empty( $wps_notification_data ) ) {
-				$banner_id      = array_key_exists( 'notification_id', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_id'] : '';
-				$banner_image = array_key_exists( 'notification_message', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_image'] : '';
-				$banner_url = array_key_exists( 'notification_message', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_url'] : '';
-				$banner_type = array_key_exists( 'notification_message', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_type'] : '';
-				update_option( 'wps_wgm_notify_new_banner_id', $banner_id );
-				update_option( 'wps_wgm_notify_new_banner_image', $banner_image );
-				update_option( 'wps_wgm_notify_new_banner_url', $banner_url );
-				if ( 'regular' == $banner_type ) {
-					update_option( 'wps_wgm_notify_hide_baneer_notification', '' );
-				}
+		if ( is_array( $wps_notification_data ) && ! empty( $wps_notification_data ) ) {
+			$banner_id      = array_key_exists( 'notification_id', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_id'] : '';
+			$banner_image = array_key_exists( 'notification_message', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_image'] : '';
+			$banner_url = array_key_exists( 'notification_message', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_url'] : '';
+			$banner_type = array_key_exists( 'notification_message', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_type'] : '';
+			update_option( 'wps_wgm_notify_new_banner_id', $banner_id );
+			update_option( 'wps_wgm_notify_new_banner_image', $banner_image );
+			update_option( 'wps_wgm_notify_new_banner_url', $banner_url );
+			if ( 'regular' == $banner_type ) {
+				update_option( 'wps_wgm_notify_hide_baneer_notification', '' );
 			}
 		}
+	}
 
 		/**
 		 * This is function is used to get data for banner image.
@@ -1371,17 +1371,16 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					'sslverify' => false,
 				)
 			);
-	 
-	 
-			if ( is_wp_error( $response ) ) {
-				$error_message = $response->get_error_message();
-				echo '<p><strong>Something went wrong: ' . esc_html( stripslashes( $error_message ) ) . '</strong></p>';
-			} else {
-				$wps_notification_data = json_decode( wp_remote_retrieve_body( $response ), true );
-			}
-			return $wps_notification_data;
+
+		if ( is_wp_error( $response ) ) {
+			$error_message = $response->get_error_message();
+			echo '<p><strong>Something went wrong: ' . esc_html( stripslashes( $error_message ) ) . '</strong></p>';
+		} else {
+			$wps_notification_data = json_decode( wp_remote_retrieve_body( $response ), true );
 		}
-		  
+			return $wps_notification_data;
+	}
+
 		/**
 		 * This is function is used to run the ajax for banner image.
 		 *
@@ -1393,14 +1392,12 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			return;
 		}
 				$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
-	 
-	 
-				if ( isset( $banner_id ) && '' != $banner_id ) {
-					update_option( 'wps_wgm_notify_hide_baneer_notification', $banner_id );
-				}
-	 
-	 
-				wp_send_json_success();
+
+		if ( isset( $banner_id ) && '' != $banner_id ) {
+			update_option( 'wps_wgm_notify_hide_baneer_notification', $banner_id );
 		}
-	 
+
+				wp_send_json_success();
+	}
+
 }
