@@ -109,3 +109,11 @@ div#wps_etmfw_event_data {
 .wps_recurring_loader_main{
     display: none;
   }
+
+  .wps_event_daily_duration_wrap {
+    padding: 10px 15px;
+}
+
+.wps_event_daily_duration_wrap >span{
+  margin-right: 10px;
+}
