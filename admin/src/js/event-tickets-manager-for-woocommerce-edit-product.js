@@ -255,4 +255,25 @@
     });
   });
   window.initMap = initMap;
+
+  $(document).ready(function () {
+    $('#wps_recurring_type').on('change', function (e) {
+      var wps_recurring_type = document.getElementById('wps_recurring_type');
+      
+      var wps_recurring_text = wps_recurring_type.options[wps_recurring_type.selectedIndex].text;
+      if ('Daily' == wps_recurring_text) {
+        $('.wps_event_daily_duration_wrap').show(1000);
+      } else {
+        $('.wps_event_daily_duration_wrap').hide(1000);
+      }
+    });
+
+    var wps_recurring_type = document.getElementById('wps_recurring_type');
+    var wps_set_recurring_type = wps_recurring_type.options[wps_recurring_type.selectedIndex].text;
+    if ('Daily' == wps_set_recurring_type) {
+      $('.wps_event_daily_duration_wrap').show(1000);
+    } else {
+      $('.wps_event_daily_duration_wrap').hide(1000);
+    }
+  });
 })(jQuery);

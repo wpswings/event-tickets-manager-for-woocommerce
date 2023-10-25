@@ -895,6 +895,10 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					$wps_etmfw_product_array['wps_event_recurring_type'] = ! empty( $_POST['wps_recurring_type'] ) ? $_POST['wps_recurring_type'] : '';
 					$wps_etmfw_product_array['wps_event_recurring_value'] = ! empty( $_POST['wps_recurring_value'] ) ? $_POST['wps_recurring_value'] : '';
 
+					//Daily Start/End Time Saving.
+					$wps_etmfw_product_array['wps_event_recurring_daily_start_time'] = ! empty( $_POST['wps_event_daily_start_time_val'] ) ? $_POST['wps_event_daily_start_time_val'] : '';
+					$wps_etmfw_product_array['wps_event_recurring_daily_end_time'] = ! empty( $_POST['wps_event_daily_end_time_val'] ) ? $_POST['wps_event_daily_end_time_val'] : '';
+
 					$wps_etmfw_field_stock_price_data = ! empty( $_POST['etmfwp_fields'] ) ? map_deep( wp_unslash( $_POST['etmfwp_fields'] ), 'sanitize_text_field' ) : array();
 					$wps_etmfw_field_stock_price_data_array = array();
 					if ( is_array( $wps_etmfw_field_stock_price_data ) && ! empty( $wps_etmfw_field_stock_price_data ) ) {
