@@ -10,7 +10,7 @@ span.wps-etmfw-event-product-order-listing {
     padding: 0;
     border: none;
     margin-left: 2px;
-    margin-right: 20px;
+    /* margin-right: 20px; */
   }
   .wps-offer-notice.notice.notice-warning a img {
     display: block;
