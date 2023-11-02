@@ -276,4 +276,34 @@
       $('.wps_event_daily_duration_wrap').hide(1000);
     }
   });
+
+  $(document).ready(function () {
+
+    $('#publish').on('click', function (e) {
+      // Get the "Start Time" input value.
+      var wps_start_time_input = document.querySelector('.wps_event_daily_start_time input[name="wps_event_daily_start_time_val"]');
+      var wps_start_time_value = wps_start_time_input.value;
+      
+      // Get the "End Time" input value.
+      var  wps_end_time_input = document.querySelector('.wps_event_daily_end_time input[name="wps_event_daily_end_time_val"]');
+      var wps_end_time_value = wps_end_time_input.value;
+
+      var wps_start_time_timestamp = wps_time_to_timestamp(wps_start_time_value);
+      var wps_end_time_timestamp = wps_time_to_timestamp(wps_end_time_value);
+
+      if (wps_end_time_timestamp < wps_start_time_timestamp) {
+        e.preventDefault();
+        alert('Start And End Time Is Not Proper.')
+      }
+    });
+    
+      function wps_time_to_timestamp(time) {
+        const [hours, minutes] = time.split(":");
+        const date = new Date();
+        date.setHours(parseInt(hours, 10));
+        date.setMinutes(parseInt(minutes, 10));
+        return date.getTime() / 1000; // Convert to seconds
+    }
+  });
+
 })(jQuery);
