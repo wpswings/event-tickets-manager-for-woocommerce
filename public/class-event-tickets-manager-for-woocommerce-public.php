@@ -410,7 +410,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		}
 		if ( $wps_etmfw_enable ) {
 			if ( $old_status != $new_status ) {
-				if ( 'completed' == $new_status || 'processing' == $new_status ) {     // Order Status For Creating Event Ticket.
+				if ( $temp_status == $new_status ) {
 					$this->wps_etmfw_process_event_order( $order_id, $old_status, $new_status );
 				}
 			}
