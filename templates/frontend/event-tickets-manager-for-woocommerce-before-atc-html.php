@@ -91,6 +91,7 @@ if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
  .single_add_to_cart_button{
 	opacity: 0.5;
 	cursor: none;
+	display: none;
  }
 	</style>
 	 <?php }

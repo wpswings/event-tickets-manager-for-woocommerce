@@ -1887,8 +1887,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	public function wps_etmfw_resend_mail_ticket_view_order_frontend( $order ) {
 		$order_id = $order->get_id();
 		$order_status = $order->get_status();
+		$wps_etmfw_in_processing = get_option( 'wps_wet_enable_after_payment_done_ticket', false );
 
-		if ( 'completed' == $order_status || 'processing' == $order_status ) {
+		if ( ( 'completed' == $order_status && '' == $wps_etmfw_in_processing ) || ( 'processing' == $order_status && 'on' == $wps_etmfw_in_processing ) ) {
 			$wps_etmfw_is_product = false;
 			foreach ( $order->get_items() as $item_id => $item ) {
 				$_product = apply_filters( 'woocommerce_order_item_product', $product = $item->get_product(), $item );

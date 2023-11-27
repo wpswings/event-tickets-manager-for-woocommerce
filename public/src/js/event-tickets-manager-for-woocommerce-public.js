@@ -253,6 +253,8 @@ jQuery(document).ready(function(){
 			inputElement.value = countChildDivs();
 			document.querySelector('.single_add_to_cart_button').style.opacity = '1';
 			document.querySelector('.single_add_to_cart_button').style.cursor = 'pointer';
+			document.querySelector('.single_add_to_cart_button').style.display = 'block';
+
 		});
 
 
@@ -264,7 +266,9 @@ jQuery(document).ready(function(){
 
 			if((inputElement.value) <= 0){
 			document.querySelector('.single_add_to_cart_button').style.opacity = '0.5';
-			document.querySelector('.single_add_to_cart_button').style.cursor = 'none';
+				document.querySelector('.single_add_to_cart_button').style.cursor = 'none';
+				document.querySelector('.single_add_to_cart_button').style.display = 'none';
+
 			}
 		});
 
