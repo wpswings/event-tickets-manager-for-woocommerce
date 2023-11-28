@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: calendar, events, tickets, organizer, schedule, registration, bookings, event
 Requires at least: 4.6
-Tested up to: 6.3.1
+Tested up to: 6.4.1
 WC requires at least: 4.0
-WC tested up to: 8.2.1
-Stable tag: 1.2.1
+WC tested up to: 8.3.1
+Stable tag: 1.2.2
 Requires PHP: 7.2 or Higher
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -191,6 +191,10 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
+= 1.2.2 - Released on 28 November 2023 =
+* Support : Compatibility With Latest WP[6.4.1] and WC[8.3.1].
+* Support : Compatibility With Cart and Checkout Block.
+
 = 1.2.1 - Released on 06 November 2023 =
 * New: Compatibility with latest WP [6.3.1] and WC [8.2.1]
 
@@ -285,5 +289,6 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Upgrade Notice == 
 
-= 1.2.1 - Released on 06 November 2023 =
-* New: Compatibility with latest WP [6.3.1] and WC [8.2.1]
+= 1.2.2 - Released on 28 November 2023 =
+* Support : Compatibility With Latest WP[6.4.1] and WC[8.3.1].
+* Support : Compatibility With Cart and Checkout Block.
