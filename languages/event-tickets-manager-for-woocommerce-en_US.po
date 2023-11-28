@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-11-03 17:14+0530\n"
-"PO-Revision-Date: 2023-11-03 17:15+0530\n"
+"POT-Creation-Date: 2023-11-27 23:48+0530\n"
+"PO-Revision-Date: 2023-11-27 23:48+0530\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -13,8 +13,8 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 
 #: admin/class-event-tickets-manager-for-woocommerce-admin.php:237
-#: event-tickets-manager-for-woocommerce.php:113
-#: event-tickets-manager-for-woocommerce.php:119
+#: event-tickets-manager-for-woocommerce.php:124
+#: event-tickets-manager-for-woocommerce.php:130
 msgid "Event Tickets Manager for WooCommerce"
 msgstr ""
 
@@ -888,24 +888,24 @@ msgstr ""
 msgid "Choose which format of email to send."
 msgstr ""
 
-#: event-tickets-manager-for-woocommerce.php:168
-#: event-tickets-manager-for-woocommerce.php:169
-#: event-tickets-manager-for-woocommerce.php:189
-#: event-tickets-manager-for-woocommerce.php:190
-#: event-tickets-manager-for-woocommerce.php:254
-#: event-tickets-manager-for-woocommerce.php:255
+#: event-tickets-manager-for-woocommerce.php:179
+#: event-tickets-manager-for-woocommerce.php:180
+#: event-tickets-manager-for-woocommerce.php:200
+#: event-tickets-manager-for-woocommerce.php:201
+#: event-tickets-manager-for-woocommerce.php:265
+#: event-tickets-manager-for-woocommerce.php:266
 msgid "Event Check In"
 msgstr ""
 
-#: event-tickets-manager-for-woocommerce.php:308
+#: event-tickets-manager-for-woocommerce.php:319
 msgid "Settings"
 msgstr ""
 
-#: event-tickets-manager-for-woocommerce.php:318
+#: event-tickets-manager-for-woocommerce.php:329
 msgid "GO PRO"
 msgstr ""
 
-#: event-tickets-manager-for-woocommerce.php:428
+#: event-tickets-manager-for-woocommerce.php:439
 msgid ""
 "Woocommerce is not activated, Please activate Woocommerce first to install "
 "Event Tickets Manager for WooCommerce"
@@ -1203,21 +1203,21 @@ msgstr ""
 msgid "Ticket of Event is not yet purchase."
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1937
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1938
 msgid "Resend Ticket PDF Email"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1942
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1943
 msgid ""
 "Press the icon to resend tickte pdf mail if the receiver hasn't received the "
 "ticket you sent."
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1964
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1965
 msgid "Ticket PDF Sent Successfully!"
 msgstr ""
 
-#: public/class-event-tickets-manager-for-woocommerce-public.php:1966
+#: public/class-event-tickets-manager-for-woocommerce-public.php:1967
 msgid "Ticket PDF Not Sent!"
 msgstr ""
 
