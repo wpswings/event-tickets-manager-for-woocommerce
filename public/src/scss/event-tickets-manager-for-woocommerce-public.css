@@ -32,6 +32,7 @@ input#wps_etmfw_imput_ticket {
   max-width: 75%;
   margin: 0;
 }
+
 input#wps_etmfw_chckin_email {
   flex: 0 0 75%;
   max-width: 75%;
@@ -61,17 +62,21 @@ div#wps_etmfw_edit_info_loader img {
   position: relative;
   top: 5px;
 }
+
 #wps_etmfw_edit_info_loader {
   display: none;
 }
+
 #wps_etmfw_checkin_loader {
   display: none;
 }
+
 #wps_etmfw_event_map {
   width: 60%;
   height: 350px;
   margin-bottom: 10px;
 }
+
 .wps_check_in_error {
   /* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
   background: #e2401c;
@@ -157,14 +162,17 @@ form#wps_etmfw_edit_ticket_form {
 form.wps_etmfw_show_ticket_form {
   display: block !important;
 }
+
 div#wps_etmwf_event_date img {
   display: inline-block;
   margin-right: 5px;
 }
+
 div#wps_etmwf_event_time img {
   display: inline-block;
   margin-right: 5px;
 }
+
 div#wps_etmwf_event_venue img {
   display: inline-block;
   margin-right: 5px;
@@ -208,6 +216,7 @@ p.no-comments {
   position: relative;
   list-style: none outside;
 }
+
 div#wps_etmfw_event_map {
   margin: 10px 0px;
 }
@@ -252,6 +261,7 @@ div#wps_etmfw_event_map {
 }
 
 @media only screen and (max-width: 540px) {
+
   .wps_etmfw_view_ticket_section,
   .wps_etmfw_calendar_section {
     display: block;
@@ -272,21 +282,17 @@ div#wps_etmfw_event_map {
     display: block;
   }
 }
+
 .etmfw_expiration_message {
   color: red;
   font-size: 25px;
 }
-.woocommerce-MyAccount-navigation
-  ul
-  li.woocommerce-MyAccount-navigation-link--wps-myevent-tab
-  a:before {
+
+.woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link--wps-myevent-tab a:before {
   content: "\f2ce";
 }
 
-.woocommerce-MyAccount-navigation
-  ul
-  li.woocommerce-MyAccount-navigation-link--event-ticket
-  a:before {
+.woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link--event-ticket a:before {
   content: "\f274";
 }
 
@@ -295,6 +301,7 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 img.wps_resend_image {
   background: #70b3b5;
   width: 45px;
@@ -344,6 +351,7 @@ input#wps_etmfw_imput_ticket {
 }
 
 @media screen and (max-width: 580px) {
+
   .wps_etmfw_events_section,
   .wps_etmfw_input_ticket_section {
     align-items: flex-start;
@@ -371,5 +379,154 @@ input#wps_etmfw_imput_ticket {
     max-width: 100%;
   }
 }
+
+/* Event Listing using shortcode start */
+.wps-etmw_search-input-wrap .wps-etmw_search-input input[type=text] {
+  min-height: 40px;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 400;
+  width: 100%;
+  margin: 0;
+  line-height: 1.5;
+  appearance: auto;
+  -webkit-appearance: auto;
+}
+
+.wps-etmw_search-input-wrap .wps-etmw_search-input select {
+  width: 100%;
+  padding: 10px;
+  cursor: pointer;
+  margin: 0;
+  appearance: inner-spin-button;
+  -webkit-appearance: inner-spin-button;
+  background-image: none;
+  min-height: 40px;
+  line-height: 1.5;
+  height: auto;
+}
+
+.wps-etmw_search-input {
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  gap: 10px;
+  margin: 0 0 20px;
+}
+
+.wps-etmw_search-input input[type=text]:focus,
+.wps-etmw_search-input select:focus {
+  outline: none;
+}
+
+#wps-search-results {
+  display: grid;
+  gap: 20px;
+  font-size: 14px;
+  padding: 0;
+  margin: 0 0 20px;
+}
+
+.wps-etmw_search-input-wrap {
+  position: relative;
+  float: left;
+  clear: both;
+  width: 100%;
+}
+
+.wps-etmw_search-loader {
+  position: absolute;
+  top: 10px;
+  right: 120px;
+}
+
+.wps-etmw_search-input-wrap .wps-etmw_search-loader img {
+  width: 24px;
+  height: 24px;
+}
+
+.wps-etmw_prod-desc h4 {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.wps-etmw_prod-price {
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 1.25;
+}
+
+.wps-etmw_prod-btn a.button {
+  min-width: 120px;
+  min-height: 40px;
+  padding: 10px;
+  font-size: 16px;
+  margin: 10px 0 0;
+  cursor: pointer;
+  line-height: 1.25;
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+}
+
+#wps-search-results img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  aspect-ratio: 1;
+}
+
+#wps-search-results.wps_list .wps-etmw_single-event {
+  grid-template-columns: 30% 1fr;
+  display: grid;
+  gap: 20px;
+}
+
+.wps-etmw_all-date {
+  font-size: 16px;
+  color: #000;
+  display: grid;
+  gap: 5px;
+}
+
+/* Card2, Card3 */
+
+#wps-search-results.wps_card-2 .wps-etmw_prod-desc h4,
+#wps-search-results.wps_card-3 .wps-etmw_prod-desc h4 {
+  margin: 20px 0 0;
+}
+
+#wps-search-results.wps_card-2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+#wps-search-results.wps_card-3 {
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
+}
+
+@media screen and (max-width: 992px) {
+  #wps-search-results.wps_card-2 {
+    grid-template-columns: 1fr;
+  }
+
+  #wps-search-results.wps_card-3 {
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  #wps-search-results.wps_list .wps-etmw_single-event {
+    grid-template-columns: 1fr;
+  }
+
+  #wps-search-results.wps_card-3 {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* Event Listing using shortcode end */
 
 /* Event tab in My account page end */

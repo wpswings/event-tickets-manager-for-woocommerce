@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The public-facing functionality of the plugin.
  *
@@ -11,6 +12,7 @@
 
 use Dompdf\Dompdf;
 use Automattic\WooCommerce\Utilities\OrderUtil;
+
 /**
  * The public-facing functionality of the plugin.
  *
@@ -23,6 +25,7 @@ use Automattic\WooCommerce\Utilities\OrderUtil;
  * @author     WPSwings <webmaster@wpswings.com>
  */
 class Event_Tickets_Manager_For_Woocommerce_Public {
+
 
 	/**
 	 * The ID of this plugin.
@@ -53,7 +56,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
 	}
 
 	/**
@@ -62,13 +64,12 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @since    1.0.0
 	 */
 	public function etmfw_public_enqueue_styles() {
-		$event_view = get_option( 'wps_etmfw_event_view', 'list' );
+		 $event_view = get_option( 'wps_etmfw_event_view', 'list' );
 		if ( 'calendar' === $event_view ) {
 			wp_enqueue_style( 'wps-etmfw-fullcalendar-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/fullcalendar/main.min.css', array(), time(), 'all' );
 		}
 
 		wp_enqueue_style( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/scss/event-tickets-manager-for-woocommerce-public.css', array(), $this->version, 'all' );
-
 	}
 
 	/**
@@ -212,7 +213,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					$required = '';
 				}
 				require EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'templates/frontend/event-tickets-manager-for-woocommerce-additional-field-html.php';
-
 			}
 		}
 	}
@@ -285,7 +285,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			}
 		}
 		return $the_cart_data;
-
 	}
 
 	/**
@@ -302,13 +301,13 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	public function wps_etmfw_get_cart_item_data( $item_meta, $existing_item_meta ) {
 		$wps_etmfw_enable = get_option( 'wps_etmfw_enable_plugin', false );
 		if ( $wps_etmfw_enable ) {
-			if ( isset( $existing_item_meta ['product_meta']['meta_data'] ) ) {
-				foreach ( $existing_item_meta['product_meta'] ['meta_data'] as $key => $val ) {
+			if ( isset( $existing_item_meta['product_meta']['meta_data'] ) ) {
+				foreach ( $existing_item_meta['product_meta']['meta_data'] as $key => $val ) {
 					if ( 'wps_etmfw_field_info' == $key ) {
 						if ( ! empty( $val ) ) {
 							$info_array = $this->wps_etmfw_generate_key_value_pair( $val );
 							foreach ( $info_array as $info_key => $info_value ) {
-								$item_meta [] = array(
+								$item_meta[] = array(
 									'name'  => esc_html( $info_key ),
 									'value' => stripslashes( $info_value ),
 								);
@@ -376,8 +375,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	public function wps_etmfw_create_order_line_item( $item, $cart_key, $values ) {
 		$wps_etmfw_enable = get_option( 'wps_etmfw_enable_plugin', false );
 		if ( $wps_etmfw_enable ) {
-			if ( isset( $values ['product_meta'] ) ) {
-				foreach ( $values ['product_meta'] ['meta_data'] as $key => $val ) {
+			if ( isset( $values['product_meta'] ) ) {
+				foreach ( $values['product_meta']['meta_data'] as $key => $val ) {
 					if ( 'wps_etmfw_field_info' == $key && $val ) {
 						$info_array = $this->wps_etmfw_generate_key_value_pair( $val );
 						foreach ( $info_array as $info_key => $info_value ) {
@@ -475,7 +474,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 							// HPOS usage is enabled.
 							$order->update_meta_data( "event_ticket#$order_id#$item_id", $ticket_number );
 							$order->save();
-
 						} else {
 							update_post_meta( $order_id, "event_ticket#$order_id#$item_id", $ticket_number );
 						}
@@ -530,12 +528,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 							// HPOS usage is enabled.
 							$order->update_meta_data( "event_ticket#$order_id#$item_id", $ticket_number );
 							$order->save();
-
 						} else {
 							update_post_meta( $order_id, "event_ticket#$order_id#$item_id", $ticket_number );
 						}
 
-						$wps_ticket_content = $this->wps_etmfw_get_html_content( $item_meta_data, $order, $order_id, $ticket_number, $product_id );// tickt pdf html.
+						$wps_ticket_content = $this->wps_etmfw_get_html_content( $item_meta_data, $order, $order_id, $ticket_number, $product_id ); // tickt pdf html.
 						$this->wps_etmfw_generate_ticket_pdf( $wps_ticket_content, $order, $order_id, $ticket_number );
 
 						if ( isset( $ticket_number ) ) {
@@ -665,7 +662,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		// Inline style used for sending in email.
 		$template_html['featuredimage'] = '<img src="' . $image . '" style="margin-right: 20px; " alt="image" />';
 		return apply_filters( 'wps_etmfw_ticket_info', $template_html, $product_id );
-
 	}
 
 	/**
@@ -720,7 +716,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 								$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';
 								$attachments[] = $generated_ticket_pdf;
-
 							}
 						}
 					}
@@ -760,7 +755,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$wps_set_the_pdf_ticket_template = get_option( 'wps_etmfw_ticket_template', '1' );
 
 		if ( '1' == $wps_set_the_pdf_ticket_template ) {
-			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content.php';// Zenith.
+			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content.php'; // Zenith.
 		}
 
 		$file = apply_filters( 'wps_etmfw_generate_qr_code', $order_id, $ticket_number, $product_id );
@@ -780,11 +775,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		}
 
 		if ( '2' == $wps_set_the_pdf_ticket_template ) {
-			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-1.php';// Elixir.
+			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-1.php'; // Elixir.
 		} elseif ( '3' == $wps_set_the_pdf_ticket_template ) {
-			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-2.php';// Demure.
+			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-2.php'; // Demure.
 		} elseif ( '4' == $wps_set_the_pdf_ticket_template ) {
-			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-3.php';// Mellifluous.
+			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-3.php'; // Mellifluous.
 		}
 
 		$wps_ticket_details = ob_get_contents();
@@ -924,12 +919,12 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 								?>
 								<div class='wps_order_section_for_meta'>
-								<div class="wps_etmfw_view_ticket_section">
-									<a href="<?php echo esc_attr( $upload_dir_path ); ?>" class="wps_view_ticket_pdf" target="_blank"><?php esc_html_e( 'View', 'event-tickets-manager-for-woocommerce' ); ?></a>
-								</div>
-								<div class="wps_etmfw_calendar_section">
-									<a href="<?php echo esc_attr( $calendar_url ); ?>" class="wps_etmfw_add_event_calendar" target="_blank"><?php esc_html_e( '+ Add to Google Calendar', 'event-tickets-manager-for-woocommerce' ); ?></a>
-								</div>
+									<div class="wps_etmfw_view_ticket_section">
+										<a href="<?php echo esc_attr( $upload_dir_path ); ?>" class="wps_view_ticket_pdf" target="_blank"><?php esc_html_e( 'View', 'event-tickets-manager-for-woocommerce' ); ?></a>
+									</div>
+									<div class="wps_etmfw_calendar_section">
+										<a href="<?php echo esc_attr( $calendar_url ); ?>" class="wps_etmfw_add_event_calendar" target="_blank"><?php esc_html_e( '+ Add to Google Calendar', 'event-tickets-manager-for-woocommerce' ); ?></a>
+									</div>
 								</div>
 								<?php
 								$item_meta_data = $item->get_meta_data();
@@ -970,14 +965,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 														}
 													}
 													?>
-													<input type="submit" class="button button-primary"
-														name="wps_etmfw_save_edit_ticket_info_btn"
-														id="wps_etmfw_save_edit_ticket_info_btn"
-														value="<?php esc_attr_e( 'Save Changes', 'event-tickets-manager-for-woocommerce' ); ?>"
-														/>
-														<div class="wps_etmfw_loader" id="wps_etmfw_edit_info_loader">
-															<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/loading.gif' ); ?>">
-														</div>
+													<input type="submit" class="button button-primary" name="wps_etmfw_save_edit_ticket_info_btn" id="wps_etmfw_save_edit_ticket_info_btn" value="<?php esc_attr_e( 'Save Changes', 'event-tickets-manager-for-woocommerce' ); ?>" />
+													<div class="wps_etmfw_loader" id="wps_etmfw_edit_info_loader">
+														<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/loading.gif' ); ?>">
+													</div>
 												</form>
 											</div>
 											<?php
@@ -1057,14 +1048,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 													}
 												}
 												?>
-												<input type="submit" class="button button-primary"
-													name="wps_etmfw_save_edit_ticket_info_btn"
-													id="wps_etmfw_save_edit_ticket_info_btn"
-													value="<?php esc_attr_e( 'Save Changes', 'event-tickets-manager-for-woocommerce' ); ?>"
-													/>
-													<div class="wps_etmfw_loader" id="wps_etmfw_edit_info_loader">
-														<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/loading.gif' ); ?>">
-													</div>
+												<input type="submit" class="button button-primary" name="wps_etmfw_save_edit_ticket_info_btn" id="wps_etmfw_save_edit_ticket_info_btn" value="<?php esc_attr_e( 'Save Changes', 'event-tickets-manager-for-woocommerce' ); ?>" />
+												<div class="wps_etmfw_loader" id="wps_etmfw_edit_info_loader">
+													<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/loading.gif' ); ?>">
+												</div>
 											</form>
 										</div>
 										<?php
@@ -1098,7 +1085,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		}
 		$html_value_label = strtolower( str_replace( ' ', '_', $html_value['label'] ) );
 		require EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'templates/frontend/event-tickets-manager-for-woocommerce-view-ticket-html.php';
-
 	}
 
 	/**
@@ -1120,7 +1106,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link http://www.wpswings.com/
 	 */
 	public function wps_etmfw_create_event_checkin_page() {
-
 		$query_args = array(
 			'post_type'          => 'product',
 			'post_status'        => 'publish',
@@ -1149,7 +1134,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			}
 		}
 
-			$html .= '</div>
+		$html .= '</div>
 			<div class="wps_etmfw_input_ticket_section">
 				<label>' . __( 'Ticket Number *', 'event-tickets-manager-for-woocommerce' ) . '</label>
 				<input type="text" name="wps_etmfw_imput_ticket" id="wps_etmfw_imput_ticket">
@@ -1223,14 +1208,12 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						}
 					} else {
 						$response['message'] = __( 'Please Enter the correct email.', 'event-tickets-manager-for-woocommerce' );
-
 					}
 				}
 			}
 		}
 		echo json_encode( $response );
 		wp_die();
-
 	}
 
 	/**
@@ -1263,7 +1246,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 							// HPOS usage is enabled.
 							$order->update_meta_data( 'wps_etmfw_order_meta_updated', 'yes' );
 							$order->save();
-
 						} else {
 							update_post_meta( $order_id, 'wps_etmfw_order_meta_updated', 'yes' );
 						}
@@ -1296,7 +1278,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		}
 		echo json_encode( $response );
 		wp_die();
-
 	}
 
 	/**
@@ -1622,7 +1603,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @return boolean $wps_etmfw_if_expired If event is expired.
 	 */
 	public function wps_etmfw_check_if_event_is_expired() {
-		$wps_etmfw_if_expired = false;
+		 $wps_etmfw_if_expired = false;
 		global $post;
 		if ( isset( $post ) && ! empty( $post ) ) {
 			$product = wc_get_product( $post->ID );
@@ -1688,7 +1669,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$wps_etmfw_if_expired   = $this->wps_etmfw_check_if_event_is_expired();
 		if ( $wps_etmfw_if_expired ) {
 			require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'templates/frontend/event-tickets-manager-for-woocommerce-event-expired-html.php';
-
 		}
 	}
 	/**
@@ -1697,7 +1677,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function wps_wgc_register_event_ticket_manager_product_types() {
-		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'includes/class-wc-product-event-ticket-manager.php';
+		 require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'includes/class-wc-product-event-ticket-manager.php';
 	}
 
 	/**
@@ -1723,7 +1703,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * Register Endpoint for My Event Tab.
 	 */
 	public function wps_my_event_register_endpoint() {
-
 		add_rewrite_endpoint( 'wps-myevent-tab', EP_PERMALINK | EP_PAGES );
 		flush_rewrite_rules();
 	}
@@ -1773,7 +1752,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 */
 	public function wps_myevent_populate_tab() {
 		require plugin_dir_path( __FILE__ ) . 'partials/wps-myevent-details-tab.php';
-
 	}
 	/**
 	 * This is function is used to share the tickets in Mail.
@@ -1824,7 +1802,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				// Order ID (added WooCommerce 3+ compatibility).
 
 				$order_id[] = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
-
 			}
 
 			if ( ! empty( $order_id ) ) {
@@ -1839,23 +1816,23 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								$billing_email = $order->get_billing_email();
 								$wps_etmfw_mail_template_data = array();
 
-									session_start();
-									$_SESSION['order_id'] = $value['order_id'];
-									$_SESSION['ticket_no'] = $ticket_num;
+								session_start();
+								$_SESSION['order_id'] = $value['order_id'];
+								$_SESSION['ticket_no'] = $ticket_num;
 
-									$wps_etmfw_mail_template_data = array(
-										'product_id' => $product_id,
-										'order_id'   => $transfer_id,
-										'product_name' => get_the_title( $product_id ),
+								$wps_etmfw_mail_template_data = array(
+									'product_id' => $product_id,
+									'order_id'   => $transfer_id,
+									'product_name' => get_the_title( $product_id ),
 
-									);
-										$item_meta_data = array();
-										$ticket_number = wps_etmfw_ticket_generator();
-										$wps_ticket_content = $this->wps_etmfw_get_html_content( $item_meta_data, $order, $transfer_id, $ticket_num, $product_id );
-										$this->wps_etmfw_generate_ticket_pdf( $wps_ticket_content, $order, $transfer_id, $ticket_num );
+								);
+								$item_meta_data = array();
+								$ticket_number = wps_etmfw_ticket_generator();
+								$wps_ticket_content = $this->wps_etmfw_get_html_content( $item_meta_data, $order, $transfer_id, $ticket_num, $product_id );
+								$this->wps_etmfw_generate_ticket_pdf( $wps_ticket_content, $order, $transfer_id, $ticket_num );
 
-										$wps_etmfw_mail_template_data['ticket_number'] = $ticket_num;
-									$this->wps_etmfw_send_ticket_mail_shared( $order, $wps_etmfw_mail_template_data, $user_email );
+								$wps_etmfw_mail_template_data['ticket_number'] = $ticket_num;
+								$this->wps_etmfw_send_ticket_mail_shared( $order, $wps_etmfw_mail_template_data, $user_email );
 							}
 						}
 						$response['message'] = __( 'Ticket Transfer successfully.', 'event-tickets-manager-for-woocommerce-pro' );
@@ -1911,42 +1888,42 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			if ( $wps_etmfw_is_product ) {
 				?>
 				<style>
-				#wps_etmfw_loader {
-					background-color: rgba(255, 255, 255, 0.6);
-					bottom: 0;
-					height: 100%;
-					left: 0;		
-					position: fixed;
-					right: 0;
-					top: 0;
-					width: 100%;
-					z-index: 99999;
-				}
+					#wps_etmfw_loader {
+						background-color: rgba(255, 255, 255, 0.6);
+						bottom: 0;
+						height: 100%;
+						left: 0;
+						position: fixed;
+						right: 0;
+						top: 0;
+						width: 100%;
+						z-index: 99999;
+					}
 
-				#wps_etmfw_loader img {
-					display: block;
-					left: 0;
-					margin: 0 auto;
-					position: absolute;
-					right: 0;
-					top: 40%;
-				}
-			</style>
-									<div class="resend_mail_wrapper">
-						<span id="wps_etmfw_resend_mail_frontend_notification"></span>
-						<h4>
-							<strong><?php esc_html_e( 'Resend Ticket PDF Email', 'event-tickets-manager-for-woocommerce-pro' ); ?></strong>
-						</h4>
-						<div id="wps_etmfw_loader" style="display: none;">
-							<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ); ?>public/src/image/loading.gif">
-						</div>
-						<span class="wps_resend_content"><?php esc_html_e( "Press the icon to resend tickte pdf mail if the receiver hasn't received the ticket you sent.", 'event-tickets-manager-for-woocommerce-pro' ); ?>
-						</span>
-						<a href="javascript:void(0);" data-id="<?php echo esc_attr( $order_id ); ?>" class="wps_uwgc_resend_mail" id="wps_etmfw_resend_mail_button_frontend"> 
-							<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ); ?>public/src/image/ticket.png" class="wps_resend_image">
-						</a>
+					#wps_etmfw_loader img {
+						display: block;
+						left: 0;
+						margin: 0 auto;
+						position: absolute;
+						right: 0;
+						top: 40%;
+					}
+				</style>
+				<div class="resend_mail_wrapper">
+					<span id="wps_etmfw_resend_mail_frontend_notification"></span>
+					<h4>
+						<strong><?php esc_html_e( 'Resend Ticket PDF Email', 'event-tickets-manager-for-woocommerce-pro' ); ?></strong>
+					</h4>
+					<div id="wps_etmfw_loader" style="display: none;">
+						<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ); ?>public/src/image/loading.gif">
 					</div>
-					<?php
+					<span class="wps_resend_content"><?php esc_html_e( "Press the icon to resend tickte pdf mail if the receiver hasn't received the ticket you sent.", 'event-tickets-manager-for-woocommerce-pro' ); ?>
+					</span>
+					<a href="javascript:void(0);" data-id="<?php echo esc_attr( $order_id ); ?>" class="wps_uwgc_resend_mail" id="wps_etmfw_resend_mail_button_frontend">
+						<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ); ?>public/src/image/ticket.png" class="wps_resend_image">
+					</a>
+				</div>
+				<?php
 			}
 		}
 	}
@@ -1996,7 +1973,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$product_id   = $product->get_id();
 
 				$wps_all_event_product_ids_array[] = $product_id;
-
 			}
 
 			foreach ( WC()->cart->get_cart() as $cart_item ) {
@@ -2023,8 +1999,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 *
 	 * @param array $wps_need_shipping is an id of the product.
 	 */
-	public function wp_shortcode_init_callback(){
-		add_shortcode('wps_my_all_event_list', array( $this,'wps_event_listing_shortcode_callback'));
+	public function wp_shortcode_init_callback() {
+		add_shortcode( 'wps_my_all_event_list', array( $this, 'wps_event_listing_shortcode_callback' ) );
 	}
 
 
@@ -2033,16 +2009,19 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function wps_event_listing_shortcode_callback($wps_atts) {
-        $wps_html = '';
+	public function wps_event_listing_shortcode_callback( $wps_atts ) {
+		$wps_html = '';
 		// Extract attributes and set defaults
-		$wps_atts = shortcode_atts(array(
-			'category' => '', // Default category is empty
-		), $wps_atts);
+		$wps_atts = shortcode_atts(
+			array(
+				'category' => '', // Default category is empty
+			),
+			$wps_atts
+		);
 
 		// $wps_html 	 =  'The Current Set Category is '. sanitize_text_field($wps_atts['category']);
-       	$wps_html   .=  '<input type="hidden" value="'.esc_attr(sanitize_text_field($wps_atts['category'])) .'" class="pky_select_cat" id = "pky_select_cat_id" />';
-		$wps_html 	.= $this->wps_custom_html_part_callback( $content = '' );
+		$wps_html   .= '<input type="hidden" value="' . esc_attr( sanitize_text_field( $wps_atts['category'] ) ) . '" class="pky_select_cat" id = "pky_select_cat_id" />';
+		$wps_html   .= $this->wps_custom_html_part_callback( $content = '' );
 		return $wps_html;
 	}
 
@@ -2065,58 +2044,57 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function wps_filter_event_search_callback(){
-
+	public function wps_filter_event_search_callback() {
 		$search_term = sanitize_text_field( $_POST['search_term'] );
 		$args = array();
-			$args = array(
-				'post_type' => 'product', // Change to your custom post type if needed.
-				's' => $search_term, // Search in post title and content.
-				'sentence' => true,
-			);
+		$args = array(
+			'post_type' => 'product', // Change to your custom post type if needed.
+			's' => $search_term, // Search in post title and content.
+			'sentence' => true,
+		);
 
-			$html = '';
-			$product_query = new WC_Product_Query( $args );
-			$products = $product_query->get_products();
-			if ( ! empty( $products ) ) {
-				foreach ( $products as $product ) {
-					$product_id = $product->get_id();
-					$product_name = $product->get_name();
-					$product_price = $product->get_price();
-					$image = wp_get_attachment_image_src( get_post_thumbnail_id( $product_id ), 'single-post-thumbnail' );
-					$product_url = get_permalink( $product_id );
-					$wps_product_image_src = (is_array($image) && isset($image[0])) ? $image[0] : null;
-					$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
+		$html = '';
+		$product_query = new WC_Product_Query( $args );
+		$products = $product_query->get_products();
+		if ( ! empty( $products ) ) {
+			foreach ( $products as $product ) {
+				$product_id = $product->get_id();
+				$product_name = $product->get_name();
+				$product_price = $product->get_price();
+				$image = wp_get_attachment_image_src( get_post_thumbnail_id( $product_id ), 'single-post-thumbnail' );
+				$product_url = get_permalink( $product_id );
+				$wps_product_image_src = ( is_array( $image ) && isset( $image[0] ) ) ? $image[0] : null;
+				$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
 
-					$wps_event_start_date_time = new DateTime($wps_etmfw_product_array['event_start_date_time']);
-					$wps_event_end_date_time = new DateTime($wps_etmfw_product_array['event_end_date_time']);
-				
-					$wps_event_formated_start_date_time = $wps_event_start_date_time->format('F j, Y g:i A');
-					$wps_event_formated_end_date_time = $wps_event_end_date_time->format('F j, Y g:i A');
+				$wps_event_start_date_time = new DateTime( $wps_etmfw_product_array['event_start_date_time'] );
+				$wps_event_end_date_time = new DateTime( $wps_etmfw_product_array['event_end_date_time'] );
 
-					$html .=  '<div>';
+				$wps_event_formated_start_date_time = $wps_event_start_date_time->format( 'F j, Y' );
+				$wps_event_formated_end_date_time = $wps_event_end_date_time->format( 'F j, Y' );
 
-					$html .=  '<img src="'.$wps_product_image_src.'" />';
-					
-					$html .=  '<div>';
-					$html .=  '<h2>'.$product_name.'</h2>';
-					$html .=  '<div>'.$$product_price.'</div>';
-					
-					$html .=  '<div>';
-					$html .=  '<span>'.$wps_event_formated_start_date_time.'</span>';
-					$html .=  '<span>'.$wps_event_formated_end_date_time.'</span>';
-					$html .=  '<div>'.$wps_etmfw_product_array['etmfw_event_venue'].'</div>';
-					$html .=  '</div>';
-					
-					$html .=  '</div>';
-					$html .=  '<div>';
-					$html .=  '<button  onclick="'.$product_url.'">View</button>';
-					$html .=  '</div>';
-					$html .=  '</div>';
-				}
+				$html .= '<div class ="wps-etmw_single-event">';
+
+				$html .= '<img src="' . $wps_product_image_src . '" />';
+
+				$html .= '<div class="wps-etmw_prod-desc">';
+				$html .= '<h4>' . $product_name . '</h4>';
+				$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
+
+				$html .= '<div class="wps-etmw_all-date">';
+				$html .= '<span class="wps-etmw_start-time"><strong>' . esc_html__( 'Start Date: ', 'event-tickets-manager-for-woocommerce-pro' ) . '</strong>' . $wps_event_formated_start_date_time . '</span>';
+				$html .= '<span class="wps-etmw_end-time"><strong>' . esc_html__( 'End Date: ', 'event-tickets-manager-for-woocommerce-pro' ) . '</strong>' . $wps_event_formated_end_date_time . '</span>';
+				$html .= '<div class="wps-etmw_prod-venue"><strong>' . esc_html__( 'Venue: ', 'event-tickets-manager-for-woocommerce-pro' ) . '</strong>' . $wps_etmfw_product_array['etmfw_event_venue'] . '</div>';
+				$html .= '</div>';
+
+				$html .= '<div class="wps-etmw_prod-btn">';
+				$html .= '<a  href="' . $product_url . '" class="button btn">View</a>';
+				$html .= '</div>';
+				$html .= '</div>';
+				$html .= '</div>';
 			}
+		}
 
-			echo $html;
+		echo $html;
 		wp_die();
 	}
 
@@ -2126,9 +2104,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function wps_default_filter_product_search_callback(){
-
-		$wps_selected_value = sanitize_text_field( $_POST['wps_selected_value'] ); //for class chnage.
+	public function wps_default_filter_product_search_callback() {
+		$wps_selected_value = sanitize_text_field( $_POST['wps_selected_value'] ); // for class chnage.
 
 		$args = array(
 			'post_type' => 'product', // Change to your custom post type if needed.
@@ -2146,34 +2123,34 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$product_price = $product->get_price();
 				$image = wp_get_attachment_image_src( get_post_thumbnail_id( $product_id ), 'single-post-thumbnail' );
 				$product_url = get_permalink( $product_id );
-				$wps_product_image_src = (is_array($image) && isset($image[0])) ? $image[0] : null;
+				$wps_product_image_src = ( is_array( $image ) && isset( $image[0] ) ) ? $image[0] : null;
 				$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
 
-				$wps_event_start_date_time = new DateTime($wps_etmfw_product_array['event_start_date_time']);
-				$wps_event_end_date_time = new DateTime($wps_etmfw_product_array['event_end_date_time']);
-			
-				$wps_event_formated_start_date_time = $wps_event_start_date_time->format('F j, Y g:i A');
-				$wps_event_formated_end_date_time = $wps_event_end_date_time->format('F j, Y g:i A');
+				$wps_event_start_date_time = new DateTime( $wps_etmfw_product_array['event_start_date_time'] );
+				$wps_event_end_date_time = new DateTime( $wps_etmfw_product_array['event_end_date_time'] );
 
-				$html .=  '<div class ="wps_single_event">';
+				$wps_event_formated_start_date_time = $wps_event_start_date_time->format( 'F j, Y' );
+				$wps_event_formated_end_date_time = $wps_event_end_date_time->format( 'F j, Y' );
 
-				$html .=  '<img src="'.$wps_product_image_src.'" />';
-				
-				$html .=  '<div>';
-				$html .=  '<h2>'.$product_name.'</h2>';
-				$html .=  '<div>'.$$product_price.'</div>';
-				
-				$html .=  '<div>';
-				$html .=  '<span>'.$wps_event_formated_start_date_time.'</span>';
-				$html .=  '<span>'.$wps_event_formated_end_date_time.'</span>';
-				$html .=  '<div>'.$wps_etmfw_product_array['etmfw_event_venue'].'</div>';
-				$html .=  '</div>';
-				
-				$html .=  '</div>';
-				$html .=  '<div>';
-				$html .=  '<button  onclick="'.$product_url.'">View</button>';
-				$html .=  '</div>';
-				$html .=  '</div>';
+				$html .= '<div class ="wps-etmw_single-event">';
+
+				$html .= '<img src="' . $wps_product_image_src . '" />';
+
+				$html .= '<div class="wps-etmw_prod-desc">';
+				$html .= '<h4>' . $product_name . '</h4>';
+				$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
+
+				$html .= '<div class="wps-etmw_all-date">';
+				$html .= '<div class="wps-etmw_start-time"><strong>' . esc_html__( 'Start Date: ', 'event-tickets-manager-for-woocommerce-pro' ) . '</strong>' . $wps_event_formated_start_date_time . '</div>';
+				$html .= '<div class="wps-etmw_end-time"><strong>' . esc_html__( 'End Date: ', 'event-tickets-manager-for-woocommerce-pro' ) . '</strong>' . $wps_event_formated_end_date_time . '</div>';
+				$html .= '<div class="wps-etmw_prod-venue"><strong>' . esc_html__( 'Venue: ', 'event-tickets-manager-for-woocommerce-pro' ) . '</strong>' . $wps_etmfw_product_array['etmfw_event_venue'] . '</div>';
+				$html .= '</div>';
+
+				$html .= '<div class="wps-etmw_prod-btn">';
+				$html .= '<a  href="' . $product_url . '" class="button btn">View</a>';
+				$html .= '</div>';
+				$html .= '</div>';
+				$html .= '</div>';
 			}
 		}
 
@@ -2187,9 +2164,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function wps_select_event_listing_type_callback(){
-		$wps_selected_value = sanitize_text_field( $_POST['wps_selected_value'] ); //for class chnage.
-        echo $wps_selected_value;
+	public function wps_select_event_listing_type_callback() {
+		$wps_selected_value = sanitize_text_field( $_POST['wps_selected_value'] ); // for class chnage.
+		echo $wps_selected_value;
 		wp_die();
 	}
 }
