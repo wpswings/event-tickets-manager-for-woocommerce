@@ -70,8 +70,6 @@
              var wps_input_value = $(this).val();
              var wps_search_input = $(this).val().trim();
              var wps_search_word = wps_input_value.split("");
-            //  var wps_type_selected_value = $('#wps_select_type_main').val();
-            //  console.log(wps_type_selected_value);
 
             // Check if the search input is empty.
             if (wps_search_input === "") {
@@ -131,8 +129,6 @@
          
          $('select[name="wps_select_event_listing_type"]').change(function () {
             var wps_selected_value = $(this).val();
-            //  alert(wps_selected_value);
-             //  wps_display_default_product_listing(wps_selected_value);
              var data = {
                 action: "wps_select_event_listing_type",
                 wps_selected_value : wps_selected_value,
@@ -142,25 +138,16 @@
                 url: etmfw_org_custom_param_public.ajaxurl,
                 data: data,
                 success: function (response) {
-                console.log(response);
                     var wps_search_result_div = document.getElementById('wps-search-results');
                     // Remove all classes from the div
                     wps_search_result_div.className = '';
                     wps_search_result_div.classList.add(response);
-                    
-                // $("#wps-search-results").html(response);
-                // $("#wps-loader").hide();
                 },
                 error: function (response) {
                 console.log("ajax fails");
                 },
-            }); 
-
-
-             
+            });  
          });
-
-
      });
 
     })( jQuery );
