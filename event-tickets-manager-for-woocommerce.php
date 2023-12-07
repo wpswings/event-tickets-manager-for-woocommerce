@@ -15,7 +15,7 @@
  * Plugin Name:          Event Tickets Manager for WooCommerce
  * Plugin URI:           https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/
  * Description:          <code><strong>Event Tickets Manager for WooCommerce</strong></code> is all-in-one solution to create an event , manage ticket stocks download ticket as PDFs & much more. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-events&utm_medium=events-org-backend&utm_campaign=official">Elevate your e-commerce store by exploring more on <strong>WP Swings</strong></a>
- * Version:              1.2.2
+ * Version:              1.2.3
  * Author:               WP Swings
  * Author URI:           https://wpswings.com/?utm_source=wpswings-events-official&utm_medium=events-org-page&utm_campaign=official
  * Text Domain:          event-tickets-manager-for-woocommerce
@@ -82,7 +82,7 @@ if ( $activated ) {
 	 */
 	function define_event_tickets_manager_for_woocommerce_constants() {
 
-		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION', '1.2.2' );
+		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION', '1.2.3' );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com' );
@@ -580,3 +580,67 @@ function wps_etmfw_banner_notification_html() {
 	}
 }
 
+// add_shortcode('wps_my_all_event_list', 'wps_event_listing_shortcode_callback');
+
+// function wps_event_listing_shortcode_callback(){
+
+// 	$args = array(
+// 		'status'            => array( 'publish' ),
+// 		'type'              => 'event_ticket_manager',
+// 		'parent'            => null,
+// 		'sku'               => '',
+// 		'category'          => array(),
+// 		'tag'               => array(),
+// 		'limit'             => get_option( 'posts_per_page' ),  // -1 for unlimited.
+// 		'offset'            => null,
+// 		'page'              => 1,
+// 		'include'           => array(),
+// 		'exclude'           => array(),
+// 		'orderby'           => 'date',
+// 		'order'             => 'DESC',
+// 		'return'            => 'objects',
+// 		'paginate'          => false,
+// 		'shipping_class'    => array(),
+// 	);
+
+// 	$html = '';
+// 	// Array of product objects.
+// 	$products = wc_get_products( $args );
+// 	// Loop through list of products.
+
+// 	if(! empty($products)){
+// 	foreach( $products as $product ) {
+
+//     // Collect product variables
+//     $product_id   = $product->get_id();
+//     $product_name = $product->get_name();
+// 	$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
+// 	$product_url = $product->get_permalink();
+// 	$html .=  '<div>';
+
+// 	$html .=  '<img src="" />';
+	
+// 	$html .=  '<div>';
+// 	$html .=  '<h2>'.$product_name.'</h2>';
+// 	$html .=  '<div>'.$product->get_price().'</div>';
+	
+// 	$html .=  '<div>';
+// 	$html .=  '<span>'.$wps_etmfw_product_array['event_start_date_time'].'</span>';
+// 	$html .=  '<span>'.$wps_etmfw_product_array['event_end_date_time'].'</span>';
+// 	$html .=  '<div>'.$wps_etmfw_product_array['etmfw_event_venue'].'</div>';
+// 	$html .=  '</div>';
+	
+// 	$html .=  '</div>';
+// 	$html .=  '<div>';
+// 	$html .=  '<button  onclick="'.$product_url.'">View</button>';
+// 	$html .=  '</div>';
+//     // Output product ID and name
+//     // echo 'Product ID: ' . $product_id . ' is "' . $product_name . 'Start Time' .$wps_etmfw_product_array['event_start_date_time']. ' ' . $wps_etmfw_product_array['etmfw_event_venue'].'"<br>';
+
+//     // Do whatever...
+
+// } 
+// 	}
+// echo $html;
+
+// }

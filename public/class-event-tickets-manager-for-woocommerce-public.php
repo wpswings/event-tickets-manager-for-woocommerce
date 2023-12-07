@@ -2017,4 +2017,179 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			return $wps_need_shipping;
 		}
 	}
+
+	/**
+	 * Function for disabling the shipping on cart.
+	 *
+	 * @param array $wps_need_shipping is an id of the product.
+	 */
+	public function wp_shortcode_init_callback(){
+		add_shortcode('wps_my_all_event_list', array( $this,'wps_event_listing_shortcode_callback'));
+	}
+
+
+	/**
+	 * Register the JavaScript for the public-facing side of the site.
+	 *
+	 * @since    1.0.0
+	 */
+	public function wps_event_listing_shortcode_callback($wps_atts) {
+        $wps_html = '';
+		// Extract attributes and set defaults
+		$wps_atts = shortcode_atts(array(
+			'category' => '', // Default category is empty
+		), $wps_atts);
+
+		// $wps_html 	 =  'The Current Set Category is '. sanitize_text_field($wps_atts['category']);
+       	$wps_html   .=  '<input type="hidden" value="'.esc_attr(sanitize_text_field($wps_atts['category'])) .'" class="pky_select_cat" id = "pky_select_cat_id" />';
+		$wps_html 	.= $this->wps_custom_html_part_callback( $content = '' );
+		return $wps_html;
+	}
+
+	/**
+	 * Register the JavaScript for the public-facing side of the site.
+	 *
+	 * @since    1.0.0
+	 */
+	public function wps_custom_html_part_callback( $content ) {
+		ob_start();
+		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . '/public/partials/event-all-listing-public-display.php';
+		?>
+		<?php
+		return ob_get_clean();
+	}
+
+
+	/**
+	 * Register the JavaScript for the public-facing side of the site.
+	 *
+	 * @since    1.0.0
+	 */
+	public function wps_filter_event_search_callback(){
+
+		$search_term = sanitize_text_field( $_POST['search_term'] );
+		$args = array();
+			$args = array(
+				'post_type' => 'product', // Change to your custom post type if needed.
+				's' => $search_term, // Search in post title and content.
+				'sentence' => true,
+			);
+
+			$html = '';
+			$product_query = new WC_Product_Query( $args );
+			$products = $product_query->get_products();
+			if ( ! empty( $products ) ) {
+				foreach ( $products as $product ) {
+					$product_id = $product->get_id();
+					$product_name = $product->get_name();
+					$product_price = $product->get_price();
+					$image = wp_get_attachment_image_src( get_post_thumbnail_id( $product_id ), 'single-post-thumbnail' );
+					$product_url = get_permalink( $product_id );
+					$wps_product_image_src = (is_array($image) && isset($image[0])) ? $image[0] : null;
+					$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
+
+					$wps_event_start_date_time = new DateTime($wps_etmfw_product_array['event_start_date_time']);
+					$wps_event_end_date_time = new DateTime($wps_etmfw_product_array['event_end_date_time']);
+				
+					$wps_event_formated_start_date_time = $wps_event_start_date_time->format('F j, Y g:i A');
+					$wps_event_formated_end_date_time = $wps_event_end_date_time->format('F j, Y g:i A');
+
+					$html .=  '<div>';
+
+					$html .=  '<img src="'.$wps_product_image_src.'" />';
+					
+					$html .=  '<div>';
+					$html .=  '<h2>'.$product_name.'</h2>';
+					$html .=  '<div>'.$$product_price.'</div>';
+					
+					$html .=  '<div>';
+					$html .=  '<span>'.$wps_event_formated_start_date_time.'</span>';
+					$html .=  '<span>'.$wps_event_formated_end_date_time.'</span>';
+					$html .=  '<div>'.$wps_etmfw_product_array['etmfw_event_venue'].'</div>';
+					$html .=  '</div>';
+					
+					$html .=  '</div>';
+					$html .=  '<div>';
+					$html .=  '<button  onclick="'.$product_url.'">View</button>';
+					$html .=  '</div>';
+					$html .=  '</div>';
+				}
+			}
+
+			echo $html;
+		wp_die();
+	}
+
+
+	/**
+	 * Register the JavaScript for the public-facing side of the site.
+	 *
+	 * @since    1.0.0
+	 */
+	public function wps_default_filter_product_search_callback(){
+
+		$wps_selected_value = sanitize_text_field( $_POST['wps_selected_value'] ); //for class chnage.
+
+		$args = array(
+			'post_type' => 'product', // Change to your custom post type if needed.
+			'status'            => array( 'publish' ),
+			'type'              => 'event_ticket_manager',
+		);
+
+		$html = '';
+		$product_query = new WC_Product_Query( $args );
+		$products = $product_query->get_products();
+		if ( ! empty( $products ) ) {
+			foreach ( $products as $product ) {
+				$product_id = $product->get_id();
+				$product_name = $product->get_name();
+				$product_price = $product->get_price();
+				$image = wp_get_attachment_image_src( get_post_thumbnail_id( $product_id ), 'single-post-thumbnail' );
+				$product_url = get_permalink( $product_id );
+				$wps_product_image_src = (is_array($image) && isset($image[0])) ? $image[0] : null;
+				$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
+
+				$wps_event_start_date_time = new DateTime($wps_etmfw_product_array['event_start_date_time']);
+				$wps_event_end_date_time = new DateTime($wps_etmfw_product_array['event_end_date_time']);
+			
+				$wps_event_formated_start_date_time = $wps_event_start_date_time->format('F j, Y g:i A');
+				$wps_event_formated_end_date_time = $wps_event_end_date_time->format('F j, Y g:i A');
+
+				$html .=  '<div class ="wps_single_event">';
+
+				$html .=  '<img src="'.$wps_product_image_src.'" />';
+				
+				$html .=  '<div>';
+				$html .=  '<h2>'.$product_name.'</h2>';
+				$html .=  '<div>'.$$product_price.'</div>';
+				
+				$html .=  '<div>';
+				$html .=  '<span>'.$wps_event_formated_start_date_time.'</span>';
+				$html .=  '<span>'.$wps_event_formated_end_date_time.'</span>';
+				$html .=  '<div>'.$wps_etmfw_product_array['etmfw_event_venue'].'</div>';
+				$html .=  '</div>';
+				
+				$html .=  '</div>';
+				$html .=  '<div>';
+				$html .=  '<button  onclick="'.$product_url.'">View</button>';
+				$html .=  '</div>';
+				$html .=  '</div>';
+			}
+		}
+
+		echo $html;
+
+		wp_die();
+	}
+
+	/**
+	 * Register the JavaScript for the public-facing side of the site.
+	 *
+	 * @since    1.0.0
+	 */
+	public function wps_select_event_listing_type_callback(){
+		$wps_selected_value = sanitize_text_field( $_POST['wps_selected_value'] ); //for class chnage.
+        echo $wps_selected_value;
+		wp_die();
+	}
 }
