@@ -2092,9 +2092,12 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$html .= '</div>';
 				$html .= '</div>';
 			}
+
+			echo $html;
+		} else {
+			echo 'No Event Product Are Found.';
 		}
 
-		echo $html;
 		wp_die();
 	}
 
@@ -2152,9 +2155,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$html .= '</div>';
 				$html .= '</div>';
 			}
+			echo $html;
+		} else {
+			echo 'No Event Product Are Found.';
 		}
 
-		echo $html;
 
 		wp_die();
 	}
