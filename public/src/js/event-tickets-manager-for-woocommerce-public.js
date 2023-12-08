@@ -296,7 +296,7 @@ jQuery(document).ready(function () {
 	
 	jQuery(window).load(function () {
 		var event_view = etmfw_public_param.wps_is_event_in_calender_shortcode;
-		if (event_view) {
+		if (event_view && 'yes' == etmfw_public_param.wps_is_pro_active) {
 			var data = {
 				action: 'wps_etmfw_calendar_events_shortcode',
 				wps_nonce: etmfw_public_param.wps_etmfw_public_nonce

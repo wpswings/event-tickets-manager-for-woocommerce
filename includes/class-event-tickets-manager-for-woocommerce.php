@@ -945,6 +945,18 @@ class Event_Tickets_Manager_For_Woocommerce {
 						</tr>
 							<?php
 							break;
+							case 'wps_simple_text':
+								?>
+								<div class="wps-form-group wps-etmfw-<?php echo esc_attr( $etmfw_component['type'] ); ?>">
+								<div class="wps-form-group__label">
+									<label for="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="wps-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+								</div>
+									<div class="mdc-text-field-helper-line <?php echo esc_attr( $etmfw_component['class'] ); ?>" >
+										<div class="mdc-text-field-helper-text--persistent wps-helper-text" id="" aria-hidden="true"><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></div>
+									</div>
+							</div>
+							<?php
+							break;
 
 						case 'wp_editor':
 							?>

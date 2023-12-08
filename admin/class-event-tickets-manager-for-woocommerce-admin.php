@@ -300,6 +300,23 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
 				),
 			),
+			array(
+				'title' => __( 'Shortcode For Event Listing', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'wps_simple_text',
+				'description'  => __( 'Use these shortcode --> [wps_my_all_event_list] to list all event on any page with search filter.', 'event-tickets-manager-for-woocommerce' ),
+				'id'    => 'wps_event_list',
+				'class' => 'etmfw-radio-switch-class',
+				'value' => '',
+			),
+
+			array(
+				'title' => __( 'Shortcode For Event Listing On Calender', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'wps_simple_text',
+				'description'  => __( 'Use these shortcode --> [wps_event_in_calender] to show all event on any page in calender.', 'event-tickets-manager-for-woocommerce' ),
+				'id'    => 'wps_event_calender',
+				'class' => 'etmfw-radio-switch-class-pro',
+				'value' => '',
+			),
 
 			array(
 				'title' => __( 'Allow Ticket Sharing', 'event-tickets-manager-for-woocommerce-pro' ),
