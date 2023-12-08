@@ -60,7 +60,7 @@ class Event_Tickets_Manager_For_Woocommerce_Widget extends WP_Widget {
 		$radio = ! empty( $instance['radio'] ) ? $instance['radio'] : 'list';
 
 		if ( 'calendar' === $radio ) {
-			echo '<div id="calendar"></div>';
+			echo '<div id="wps-calendar"></div>';
 		} else {
 			$query_args = array(
 				'post_type'      => 'product',

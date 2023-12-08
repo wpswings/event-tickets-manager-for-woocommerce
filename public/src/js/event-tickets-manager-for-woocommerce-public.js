@@ -111,7 +111,7 @@
 	 			data: data,
 	 			dataType: 'json',
 	 			success: function(response) {
-	 				var calendarEl = document.getElementById('calendar');
+	 				var calendarEl = document.getElementById('wps-calendar');
 	 				var calendar = new FullCalendar.Calendar(calendarEl, {
 	 					initialView: 'dayGridMonth',
 	 					initialDate: new Date(),
@@ -290,3 +290,41 @@ jQuery(document).ready(function(){
 }
 });
 ///// ---- Js For The Dynamic Form End Here ----- //////
+
+// Js For Calendar Shortcode  start here.//
+jQuery(document).ready(function () {
+	
+	jQuery(window).load(function () {
+		var event_view = etmfw_public_param.wps_is_event_in_calender_shortcode;
+		if (event_view) {
+			var data = {
+				action: 'wps_etmfw_calendar_events_shortcode',
+				wps_nonce: etmfw_public_param.wps_etmfw_public_nonce
+			};
+			$.ajax({
+				type: 'POST',
+				url: etmfw_public_param.ajaxurl,
+				data: data,
+				dataType: 'json',
+				success: function (response) {
+					var calendarEl = document.getElementById('wps_event_listing_in_calender');
+					var calendar = new FullCalendar.Calendar(calendarEl, {
+						initialView: 'dayGridMonth',
+						initialDate: new Date(),
+						headerToolbar: {
+							left: 'prev,next today',
+							center: 'title',
+							right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+						},
+						events: response.result
+					});
+					calendar.render();
+				},
+				error: function (response) {
+
+				}
+			});
+		}
+	})
+});
+// Js For Calendar Shortcode end here.//

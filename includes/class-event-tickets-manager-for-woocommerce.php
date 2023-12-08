@@ -306,6 +306,9 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		$this->loader->add_action( 'wp_ajax_wps_select_event_listing_type', $etmfw_plugin_public, 'wps_select_event_listing_type_callback', 11 );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_select_event_listing_type', $etmfw_plugin_public, 'wps_select_event_listing_type_callback', 11 );
+
+		$this->loader->add_action( 'wp_ajax_wps_etmfw_calendar_events_shortcode', $etmfw_plugin_public, 'wps_etmfw_calendar_events_shortcode_callback', 8 );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_calendar_events_shortcode', $etmfw_plugin_public, 'wps_etmfw_calendar_events_shortcode_callback', 8 );
 	}
 
 

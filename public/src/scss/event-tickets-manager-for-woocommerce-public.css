@@ -221,9 +221,9 @@ div#wps_etmfw_event_map {
   margin: 10px 0px;
 }
 
-.fc-daygrid.fc-dayGridMonth-view.fc-view,
-.fc-timegrid.fc-timeGridDay-view.fc-view,
-.fc-timegrid.fc-timeGridWeek-view.fc-view {
+#wps-calendar.fc-daygrid.fc-dayGridMonth-view.fc-view,
+#wps-calendar.fc-timegrid.fc-timeGridDay-view.fc-view,
+#wps-calendar.fc-timegrid.fc-timeGridWeek-view.fc-view {
   overscroll-behavior-x: auto;
   overflow: scroll;
   width: 100%;
@@ -233,7 +233,7 @@ div#wps_etmfw_event_map {
   table-layout: auto;
 }
 
-.fc-view-harness.fc-view-harness-active {
+#wps-calendar.fc-view-harness.fc-view-harness-active {
   height: 250px !important;
 }
 

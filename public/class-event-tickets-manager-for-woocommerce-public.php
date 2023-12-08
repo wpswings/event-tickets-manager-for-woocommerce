@@ -96,6 +96,13 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$wps_etmfw_dyn_date = isset( $wps_etmfw_product_array['wps_etmfw_dyn_date'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_date'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_date'] : '';
 		$wps_etmfw_dyn_address = isset( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_address'] : '';
 		// Get the Details For the Dynamic Form End Here.
+         $wps_is_event_in_calender_shortcode = false;
+		// Check if the current page has a specific shortcode called 'wps_event_in_calender'.
+		if (has_shortcode(get_post()->post_content, 'wps_event_in_calender') && ('list' !== $event_view)) {
+			$wps_is_event_in_calender_shortcode = true;
+			wp_enqueue_script( 'wps-etmfw-fullcalendar-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/fullcalendar/fullcalendar.min.js', array( 'jquery' ), $this->version, false );
+			wp_register_script( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-public.js', array( 'jquery', 'wps-etmfw-fullcalendar-js' ), $this->version, false );
+		}
 
 		if ( 'calendar' === $event_view ) {
 			wp_enqueue_script( 'wps-etmfw-fullcalendar-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/fullcalendar/fullcalendar.min.js', array( 'jquery' ), $this->version, false );
@@ -114,6 +121,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			'wps_etmfw_dyn_date' => $wps_etmfw_dyn_date,
 			'wps_etmfw_dyn_address' => $wps_etmfw_dyn_address,
 			'wps_is_pro_active' => $wps_is_pro_active,
+			'wps_is_event_in_calender_shortcode' => $wps_is_event_in_calender_shortcode,
 		);
 
 		wp_localize_script( $this->plugin_name, 'etmfw_public_param', $public_param_data );
@@ -1376,6 +1384,45 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				break;
 		}
 		return $event_array;
+	}
+
+	/**
+	 * Get events for calendar.
+	 *
+	 * @since 1.0.0
+	 * @name wps_etmfw_calendar_events_shortcode_callback().
+	 * @author WPSwings<ticket@wpswings.com>
+	 * @link https://www.wpswings.com/
+	 */
+	public function wps_etmfw_calendar_events_shortcode_callback(){
+		check_ajax_referer( 'wps-etmfw-verify-public-nonce', 'wps_nonce' );
+		$calendar_data = array();
+		$filter_duration = 'all';
+		$query_args = array(
+			'post_type'      => 'product',
+			'post_status'    => 'publish',
+			'posts_per_page'    => -1,
+			'tax_query'      => array(
+				array(
+					'taxonomy' => 'product_type',
+					'field'    => 'slug',
+					'terms'    => 'event_ticket_manager',
+				),
+			),
+		);
+
+		$query_data = new WP_Query( $query_args );
+		if ( $query_data->have_posts() ) {
+			while ( $query_data->have_posts() ) {
+				$query_data->the_post();
+				$calendar_data[] = $this->wps_generate_list_view( $filter_duration, $calendar_data );
+			}
+		}
+
+		wp_reset_postdata();
+		$response['result'] = $calendar_data;
+		echo json_encode( $response );
+		wp_die();
 	}
 
 	/**
