@@ -48,7 +48,7 @@
 				</label>
 			</div>
 			<div class="wps-form-group__control">
-				<input type="email" name="wps_etmfw_<?php echo esc_attr( $field_label ); ?>" <?php echo esc_html( $required ); ?> >
+				<input type="email" name="wps_etmfw_<?php echo esc_attr( $field_label ); ?>" <?php echo esc_html( $required ); ?> pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
 			</div>
 		</div>
 			<?php

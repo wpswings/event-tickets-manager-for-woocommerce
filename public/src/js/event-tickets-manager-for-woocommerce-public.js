@@ -301,7 +301,7 @@ jQuery(document).ready(function () {
 				action: 'wps_etmfw_calendar_events_shortcode',
 				wps_nonce: etmfw_public_param.wps_etmfw_public_nonce
 			};
-			$.ajax({
+			jQuery.ajax({
 				type: 'POST',
 				url: etmfw_public_param.ajaxurl,
 				data: data,

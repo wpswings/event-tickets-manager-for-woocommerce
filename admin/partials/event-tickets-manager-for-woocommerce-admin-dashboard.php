@@ -19,6 +19,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $etmfw_wps_etmfw_obj, $error_notice;
 $etmfw_active_tab   = isset( $_GET['etmfw_tab'] ) ? sanitize_key( $_GET['etmfw_tab'] ) : 'event-tickets-manager-for-woocommerce-general';
 $etmfw_default_tabs = $etmfw_wps_etmfw_obj->wps_etmfw_plug_default_tabs();
+$plugin_path = 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php';
+$wps_pro_is_active = false;
+// Check if the plugin is active
+if (is_plugin_active($plugin_path)) {
+	$wps_pro_is_active = true;
+}
 ?>
 
 <header>
@@ -26,8 +32,10 @@ $etmfw_default_tabs = $etmfw_wps_etmfw_obj->wps_etmfw_plug_default_tabs();
 		<h1 class="wps-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', $etmfw_wps_etmfw_obj->etmfw_get_plugin_name() ) ) ); ?></h1>
 		<a href="https://demo.wpswings.com/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-event-demo&utm_medium=event-org-backend&utm_campaign=demo" target="_blank" class="wps-link"><?php esc_html_e( 'Demo', 'event-tickets-manager-for-woocommerce' ); ?></a>
 		<span>|</span>
+		<?php if($wps_pro_is_active){ ?>
 		<a href="https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-event-pro&utm_medium=event-org-backend&utm_campaign=go-pro" target="_blank" class="wps-link"><?php esc_html_e( 'Go Pro', 'event-tickets-manager-for-woocommerce' ); ?></a>
 		<span>|</span>
+		<?php } ?>
 		<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-org-backend&utm_campaign=documentation" target="_blank" class="wps-link"><?php esc_html_e( 'Documentation', 'event-tickets-manager-for-woocommerce' ); ?></a>
 		<span>|</span>
 		<a href="https://www.youtube.com/embed/9KyB4qpal6M" target="_blank" class="wps-link"><?php esc_html_e( 'Video', 'event-tickets-manager-for-woocommerce' ); ?></a>
