@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The public-facing functionality of the plugin.
  *
@@ -96,9 +95,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$wps_etmfw_dyn_date = isset( $wps_etmfw_product_array['wps_etmfw_dyn_date'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_date'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_date'] : '';
 		$wps_etmfw_dyn_address = isset( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_address'] : '';
 		// Get the Details For the Dynamic Form End Here.
-         $wps_is_event_in_calender_shortcode = false;
+		 $wps_is_event_in_calender_shortcode = false;
 		// Check if the current page has a specific shortcode called 'wps_event_in_calender'.
-		if (has_shortcode(get_post()->post_content, 'wps_event_in_calender') && ('list' !== $event_view)) {
+		if ( has_shortcode( get_post()->post_content, 'wps_event_in_calender' ) && ( 'list' !== $event_view ) ) {
 			$wps_is_event_in_calender_shortcode = true;
 			wp_enqueue_script( 'wps-etmfw-fullcalendar-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/fullcalendar/fullcalendar.min.js', array( 'jquery' ), $this->version, false );
 			wp_register_script( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-public.js', array( 'jquery', 'wps-etmfw-fullcalendar-js' ), $this->version, false );
@@ -1394,7 +1393,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @author WPSwings<ticket@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
-	public function wps_etmfw_calendar_events_shortcode_callback(){
+	public function wps_etmfw_calendar_events_shortcode_callback() {
 		check_ajax_referer( 'wps-etmfw-verify-public-nonce', 'wps_nonce' );
 		$calendar_data = array();
 		$filter_duration = 'all';
@@ -2043,8 +2042,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 	/**
 	 * Function for disabling the shipping on cart.
-	 *
-	 * @param array $wps_need_shipping is an id of the product.
 	 */
 	public function wp_shortcode_init_callback() {
 		add_shortcode( 'wps_my_all_event_list', array( $this, 'wps_event_listing_shortcode_callback' ) );
@@ -2054,27 +2051,26 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	/**
 	 * Register the JavaScript for the public-facing side of the site.
 	 *
+	 * @param array $wps_atts is an id of the product.
 	 * @since    1.0.0
 	 */
 	public function wps_event_listing_shortcode_callback( $wps_atts ) {
-		$wps_html = '';
-		// Extract attributes and set defaults
+		// Extract attributes and set defaults.
 		$wps_atts = shortcode_atts(
 			array(
-				'category' => '', // Default category is empty
+				'category' => '', // Default category is empty.
 			),
 			$wps_atts
 		);
 
-		// $wps_html 	 =  'The Current Set Category is '. sanitize_text_field($wps_atts['category']);
-		$wps_html   .= '<input type="hidden" value="' . esc_attr( sanitize_text_field( $wps_atts['category'] ) ) . '" class="pky_select_cat" id = "pky_select_cat_id" />';
-		$wps_html   .= $this->wps_custom_html_part_callback( $content = '' );
+		$wps_html  = $this->wps_custom_html_part_callback( $content = '' );
 		return $wps_html;
 	}
 
 	/**
 	 * Register the JavaScript for the public-facing side of the site.
 	 *
+	 * @param array $content is an id of the product.
 	 * @since    1.0.0
 	 */
 	public function wps_custom_html_part_callback( $content ) {
@@ -2092,7 +2088,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @since    1.0.0
 	 */
 	public function wps_filter_event_search_callback() {
-		$search_term = sanitize_text_field( $_POST['search_term'] );
+		check_ajax_referer( 'wps-etmfw-verify-public-nonce', 'wps_nonce' );
+		$search_term = isset( $_POST['search_term'] ) ? sanitize_text_field( wp_unslash( $_POST['search_term'] ) ) : '';
 		$args = array();
 		$args = array(
 			'post_type' => 'product', // Change to your custom post type if needed.
@@ -2140,7 +2137,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$html .= '</div>';
 			}
 
-			echo $html;
+			echo wp_kses_post( $html );
 		} else {
 			echo 'No Event Product Are Found.';
 		}
@@ -2155,7 +2152,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @since    1.0.0
 	 */
 	public function wps_default_filter_product_search_callback() {
-		$wps_selected_value = sanitize_text_field( $_POST['wps_selected_value'] ); // for class chnage.
+		check_ajax_referer( 'wps-etmfw-verify-public-nonce', 'wps_nonce' );
+		$wps_selected_value = isset( $_POST['wps_selected_value'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_selected_value'] ) ) : '';
 
 		$args = array(
 			'post_type' => 'product', // Change to your custom post type if needed.
@@ -2202,11 +2200,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$html .= '</div>';
 				$html .= '</div>';
 			}
-			echo $html;
+			echo wp_kses_post( $html );
 		} else {
 			echo 'No Event Product Are Found.';
 		}
-
 
 		wp_die();
 	}
@@ -2217,8 +2214,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @since    1.0.0
 	 */
 	public function wps_select_event_listing_type_callback() {
-		$wps_selected_value = sanitize_text_field( $_POST['wps_selected_value'] ); // for class chnage.
-		echo $wps_selected_value;
+		check_ajax_referer( 'wps-etmfw-verify-public-nonce', 'wps_nonce' );
+		$wps_selected_value = isset( $_POST['wps_selected_value'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_selected_value'] ) ) : '';
+		echo esc_attr( $wps_selected_value );
 		wp_die();
 	}
 }

@@ -84,6 +84,7 @@
                   var data = {
                     action: "wps_filter_event_search",
                     search_term: wps_input_value,
+                    wps_nonce:etmfw_org_custom_param_public.wps_etmfw_public_nonce
                   };
                   $.ajax({
                     type: "POST",
@@ -111,7 +112,8 @@
          function wps_display_default_product_listing(wps_selected_value = '') {
             var data = {
                 action: "wps_default_filter_product_search",
-                wps_selected_value : wps_selected_value,
+              wps_selected_value: wps_selected_value,
+              wps_nonce:etmfw_org_custom_param_public.wps_etmfw_public_nonce
             };
             $.ajax({
                 type: "POST",
@@ -131,7 +133,8 @@
             var wps_selected_value = $(this).val();
              var data = {
                 action: "wps_select_event_listing_type",
-                wps_selected_value : wps_selected_value,
+               wps_selected_value: wps_selected_value,
+               wps_nonce:etmfw_org_custom_param_public.wps_etmfw_public_nonce,
             };
             $.ajax({
                 type: "POST",
