@@ -32,7 +32,7 @@ if (is_plugin_active($plugin_path)) {
 		<h1 class="wps-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', $etmfw_wps_etmfw_obj->etmfw_get_plugin_name() ) ) ); ?></h1>
 		<a href="https://demo.wpswings.com/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-event-demo&utm_medium=event-org-backend&utm_campaign=demo" target="_blank" class="wps-link"><?php esc_html_e( 'Demo', 'event-tickets-manager-for-woocommerce' ); ?></a>
 		<span>|</span>
-		<?php if($wps_pro_is_active){ ?>
+		<?php if(! $wps_pro_is_active){ ?>
 		<a href="https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-event-pro&utm_medium=event-org-backend&utm_campaign=go-pro" target="_blank" class="wps-link"><?php esc_html_e( 'Go Pro', 'event-tickets-manager-for-woocommerce' ); ?></a>
 		<span>|</span>
 		<?php } ?>
