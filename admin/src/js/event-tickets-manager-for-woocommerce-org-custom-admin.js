@@ -88,7 +88,13 @@
 			);
 		}
 	 );
-	 
+		 
+		 $(document).on(
+			 'click',
+			 '#wps_show_attendee_set',
+			 function (e) {
+				 $('.wps_new_attendee').toggle(1000);
+			 });
 });
 
  })( jQuery );

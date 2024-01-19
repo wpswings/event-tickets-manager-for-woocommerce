@@ -228,6 +228,8 @@ class Event_Tickets_Manager_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_wps_etmfw_resend_the_ticket_pdf', $etmfw_plugin_admin, 'wps_etmfw_resend_the_ticket_pdf', 11 );
 			$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_resend_the_ticket_pdf', $etmfw_plugin_admin, 'wps_etmfw_resend_the_ticket_pdf', 11 );
 		}
+
+		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'wps_etmfw_import_attendess_callbck', 11 );
 	}
 
 	/**

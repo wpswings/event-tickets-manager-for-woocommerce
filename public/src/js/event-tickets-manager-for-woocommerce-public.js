@@ -219,21 +219,21 @@ jQuery(document).ready(function(){
 		contentNew += '<div class="wps_etmfw_div_close removable">+</div>';
 
 		if(wps_etmfw_dyn_name == 'dyn_name' ){
-		contentNew += '<label>Name</label><input type="text" class="wps_text_class" required name = "wps_etmfw_name_'+ i + '" >';
-		}
-		if(wps_etmfw_dyn_mail == 'dyn_mail' ){
-		contentNew += '<label>Email</label><input type="email" class="wps_mail_class" required name = "wps_etmfw_email_'+ i + '" >';
-		}
-		if(wps_etmfw_dyn_contact == 'dyn_contact' ){
-		contentNew += '<label>Contact</label><input type="number" class="wps_contact_class" required name = "wps_etmfw_contact_'+ i + '" >';
-		}
-		if(wps_etmfw_dyn_date== 'dyn_date' ){
-		contentNew += '<label>Date</label><input type="date" class="wps_date_class" required name = "wps_etmfw_date_'+ i + '" >';
-		}
-
-		if(wps_etmfw_dyn_address== 'dyn_address' ){
-		contentNew += '<label>Address</label><textarea rows="2"  class="wps_address_class"  required name = "wps_etmfw_address_'+ i + '" ></textarea>';
-		}
+			contentNew += '<label>' + etmfw_public_param.wps_dyn_name +'</label><input type="text" class="wps_text_class" required name = "wps_etmfw_name_'+ i + '" >';
+			}
+			if(wps_etmfw_dyn_mail == 'dyn_mail' ){
+			contentNew += '<label>' + etmfw_public_param.wps_dyn_mail +'</label><input type="email" class="wps_mail_class" required name = "wps_etmfw_email_'+ i + '" >';
+			}
+			if(wps_etmfw_dyn_contact == 'dyn_contact' ){
+			contentNew += '<label>' + etmfw_public_param.wps_dyn_contact +'</label><input type="number" class="wps_contact_class" required name = "wps_etmfw_contact_'+ i + '" >';
+			}
+			if(wps_etmfw_dyn_date== 'dyn_date' ){
+			contentNew += '<label>' + etmfw_public_param.wps_dyn_date +'</label><input type="date" class="wps_date_class" required name = "wps_etmfw_date_'+ i + '" >';
+			}
+	
+			if(wps_etmfw_dyn_address== 'dyn_address' ){
+			contentNew += '<label>' + etmfw_public_param.wps_dyn_address +'</label><textarea rows="2"  class="wps_address_class"  required name = "wps_etmfw_address_'+ i + '" ></textarea>';
+			}
 
 		contentNew += '</div>';
 
@@ -273,7 +273,8 @@ jQuery(document).ready(function(){
 		});
 
 		jQuery('#wps_add_more_people_wrapper').parent().parent().nextAll('.quantity').hide();
-
+		jQuery('#wps_add_more_people_wrapper').parent().parent().siblings().hide();
+		
 		function countChildDivs() {
 			// Get the parent div element using its ID
 			var product_id = jQuery('.single_add_to_cart_button').val();

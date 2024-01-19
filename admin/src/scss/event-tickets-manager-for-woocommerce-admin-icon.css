@@ -18,3 +18,64 @@ span.wps-etmfw-event-product-order-listing {
     height: auto;
   }
   
+  /* Add this CSS to your style.css file or in the head of your HTML document */
+
+/* Form container */
+.wps_new_attendee {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: none;
+}
+
+/* Form label */
+.wps_new_attendee label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+/* File input */
+.wps_new_attendee input[type="file"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+/* Submit button */
+.wps_new_attendee input[type="submit"] {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.wps_new_attendee input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+/* Additional information */
+.wps_new_attendee p {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Sample CSV link */
+.wps_new_attendee p a {
+  color: #4caf50;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.wps_new_attendee p a:hover {
+  text-decoration: underline;
+}

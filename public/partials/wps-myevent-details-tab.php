@@ -162,7 +162,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$wps_myevent_tab_html .= '<tr><td>' . rtrim( $mks['event'] ) . '</td><td>' . rtrim( $mks['schedule'] ) . '</td><td>' . rtrim( $mks['check_in_status'] ) . '</td><td>' . wc_price( rtrim( $mks['price'] ) ) . '</td><td>' . rtrim( $mks['order'] ) . '</td></tr>';
 				}
 			}
-			$wps_myevent_tab_html .= '</table></div>';
+			$wps_myevent_tab_html .= '</table>';
 
 			echo wp_kses_post( $wps_myevent_tab_html );
 		} else {

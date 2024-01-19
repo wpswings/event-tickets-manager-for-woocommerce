@@ -97,7 +97,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		// Get the Details For the Dynamic Form End Here.
 		 $wps_is_event_in_calender_shortcode = false;
 		// Check if the current page has a specific shortcode called 'wps_event_in_calender'.
-		if ( has_shortcode( get_post()->post_content, 'wps_event_in_calender' ) && ( 'list' !== $event_view ) ) {
+		$post = get_post();
+		if ($post && property_exists($post, 'post_content') && has_shortcode($post->post_content, 'wps_event_in_calender') && ('list' !== $event_view)) {
 			$wps_is_event_in_calender_shortcode = true;
 			wp_enqueue_script( 'wps-etmfw-fullcalendar-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/fullcalendar/fullcalendar.min.js', array( 'jquery' ), $this->version, false );
 			wp_register_script( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-public.js', array( 'jquery', 'wps-etmfw-fullcalendar-js' ), $this->version, false );
@@ -121,6 +122,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			'wps_etmfw_dyn_address' => $wps_etmfw_dyn_address,
 			'wps_is_pro_active' => $wps_is_pro_active,
 			'wps_is_event_in_calender_shortcode' => $wps_is_event_in_calender_shortcode,
+			'wps_dyn_name' => __( ' Name', 'event-tickets-manager-for-woocommerce' ),
+			'wps_dyn_mail' => __( ' EMail', 'event-tickets-manager-for-woocommerce' ),
+			'wps_dyn_contact' => __( ' Contact', 'event-tickets-manager-for-woocommerce' ),
+			'wps_dyn_date' => __( ' Date', 'event-tickets-manager-for-woocommerce' ),
+			'wps_dyn_address' => __( ' Address', 'event-tickets-manager-for-woocommerce' ),
 		);
 
 		wp_localize_script( $this->plugin_name, 'etmfw_public_param', $public_param_data );
@@ -418,6 +424,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			if ( $old_status != $new_status ) {
 				if ( $temp_status == $new_status ) {
 					$this->wps_etmfw_process_event_order( $order_id, $old_status, $new_status );
+					// die('jhj');
 				}
 			}
 		}
@@ -437,11 +444,17 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 */
 	public function wps_etmfw_process_event_order( $order_id, $old_status, $new_status ) {
 		$order = wc_get_order( $order_id );
+		// die('prince');
+		// echo '<pre>';
+		// print_r($order->get_items());
 		$billing_email = $order->get_billing_email();
 		$wps_etmfw_mail_template_data = array();
 		foreach ( $order->get_items() as $item_id => $item ) {
+			// die('check it');
 			$product = $item->get_product();
-			if ( isset( $product ) && $product->is_type( 'event_ticket_manager' ) ) {
+			
+			if ( isset( $product ) ) {
+				// die('checkkkk');
 				$item_quantity = wc_get_order_item_meta( $item_id, '_qty', true );
 
 				$product_id = $product->get_id();
@@ -464,11 +477,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						// HPOS usage is enabled.
 						$ticket_number = $order->get_meta( "event_ticket#$order_id#$item_id", true );
 					} else {
-						$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+						$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true ); //ticket code.
 					}
 
 					if ( empty( $ticket_number ) ) {
-						$ticket_number = array();
+						$ticket_number = array(); //store the code for quantity more than 1.
 
 						for ( $i = 0; $i < $item_quantity; $i++ ) {
 							$temp = wps_etmfw_ticket_generator();
@@ -766,6 +779,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		}
 
 		$file = apply_filters( 'wps_etmfw_generate_qr_code', $order_id, $ticket_number, $product_id );
+		// die($file);
 		$ticket_number1 = '';
 		$wps_etmfw_qr_size = ! empty( get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 'wps_etmfw_qr_size' ) : '180';
 
@@ -847,6 +861,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			wp_mkdir_p( $upload_dir_path );
 			chmod( $upload_dir_path, 0775 );
 		}
+		// die($wps_ticket_content);
 		$dompdf->loadHtml( $wps_ticket_content );
 		@ob_end_clean(); // phpcs:ignore
 		$dompdf->render();
