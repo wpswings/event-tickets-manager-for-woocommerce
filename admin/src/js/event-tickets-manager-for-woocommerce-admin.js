@@ -29,7 +29,7 @@
      * practising this, we should strive to set a better example in our own work.
      */
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
 //-------------------------------Pop-up For Pro Tags start -------------------------------------------//
         var wps_event_pro_is_enable = etmfw_admin_param.is_pro_active;

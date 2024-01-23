@@ -89,7 +89,11 @@ $wps_etmfw_qr_code_is_enable = ! empty( get_option( 'wps_etmfwp_include_qr' ) ) 
 										</tbody>
 									</table>
 								</td>
-								<td style="background: #000000;">
+								<?php if('on' == get_option( 'wps_etmfwp_include_barcode' )){ ?>
+								<td style="background: white;">
+								<?php } else { ?>
+								<td style="background: #000000">
+								<?php } ?>
 									<table style="table-layout: auto; width: 100%;">
 										<tbody>
 											<tr>

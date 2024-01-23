@@ -579,30 +579,3 @@ function wps_etmfw_banner_notification_html() {
 		}
 	}
 }
-
-// add_action( 'woocommerce_store_api_checkout_order_processed', 'custom_product_sales_count', 999, 1);
-
-function custom_product_sales_count( $order ) {
-    // Iterate through order items to update product sales count.
-    foreach ( $order->get_items() as $item_id => $item ) {
-        $product_id = $item->get_product_id();
-
-		$product = wc_get_product( $product_id );
-
-		// Check if the product is of a specific type (e.g., 'simple').
-		if ( $product && 'event_ticket_manager' === $product->get_type() ) {
-        // Update product sales count.
-        update_product_sales_count( $product_id );
-
-        // Display sale number (optional).
-        // display_sale_number( $product_id );
-		}
-    }
-}
-
-// Function to update product sales count.
-function update_product_sales_count( $product_id ) {
-	$count = get_post_meta( $product_id, '_product_sales_count', true );
-    $count = empty( $count ) ? 1 : $count + 1;
-    update_post_meta( $product_id, '_product_sales_count', $count );
-}

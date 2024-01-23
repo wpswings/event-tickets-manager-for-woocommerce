@@ -311,6 +311,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		$this->loader->add_action( 'wp_ajax_wps_etmfw_calendar_events_shortcode', $etmfw_plugin_public, 'wps_etmfw_calendar_events_shortcode_callback', 8 );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_calendar_events_shortcode', $etmfw_plugin_public, 'wps_etmfw_calendar_events_shortcode_callback', 8 );
+
+		if ( 'on' == get_option( 'wps_etmfwp_include_barcode' ) ) {
+
+			$this->loader->add_filter( 'wps_etmfw_generate_qr_code', $etmfw_plugin_public, 'wps_etmfwp_generate_bar_code_callback', 10, 3 );
+		}
 	}
 
 

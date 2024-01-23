@@ -2234,4 +2234,45 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		echo esc_attr( $wps_selected_value );
 		wp_die();
 	}
+
+
+	/**
+	 * Function to generate qr code.
+	 *
+	 * @param int    $order_id is the id of order.
+	 * @param string $ticket_number is ticket number.
+	 * @param int    $product_id is the id of product.
+	 * @return string
+	 */
+	public function wps_etmfwp_generate_bar_code_callback($order_id, $ticket_number, $product_id){
+
+		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'vendor Barcode/autoload.php';
+
+		$order = wc_get_order( $order_id );
+		
+		$billing_email = $order->get_billing_email();
+
+		// $site_url is link in the barcode.
+		$site_url = get_site_url() . '/event-check-in-using-qr?action=checkin&id=' . esc_html( $product_id ) . '&ticket=' . esc_html( $ticket_number ) . '&email=' . esc_html( $billing_email ) . '';
+		$uploads = wp_upload_dir();
+		$path = $uploads['basedir'] . '/images/';
+		$file  = $path . $order_id . $ticket_number . 'checkin.png';  // address of the image od barcode in which  url is saved.
+		if ( file_exists( $file ) ) {
+
+			unlink( $file );
+		}
+		$path = $uploads['basedir'] . '/images/';
+		$file = $path . $order_id . $ticket_number . 'checkin.png'; //path  of the image.
+
+		$wps_etmfw_barcode_color = ! empty( get_option( 'wps_etmfw_pdf_barcode_color' ) ) ? get_option( 'wps_etmfw_pdf_barcode_color' ) : 'black';
+
+		$barcode = new \Com\Tecnick\Barcode\Barcode();
+		$bobj = $barcode->getBarcodeObj('C128B', "{$ticket_number}", 450, 70, $wps_etmfw_barcode_color, array(0, 0, 0, 0));
+		
+		$imageData = $bobj->getPngData();
+
+		file_put_contents( $file, $imageData);
+
+		return $file;
+	}
 }

@@ -313,6 +313,18 @@ class Event_Tickets_Manager_For_Woocommerce_Admin
 				),
 			),
 			array(
+				'title' => __( 'Include Barcode in ticket', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'  => 'radio-switch',
+				'description'  => __( 'Enable this option to display QR code in the ticket.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'id'    => 'wps_etmfwp_include_barcode',
+				'value' => get_option( 'wps_etmfwp_include_barcode' ),
+				'class' => 'etmfw-radio-switch-class',
+				'options' => array(
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce-pro' ),
+					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce-pro' ),
+				),
+			),
+			array(
 				'title' => __('Shortcode For Event Listing', 'event-tickets-manager-for-woocommerce'),
 				'type'  => 'wps_simple_text',
 				'description'  => __('Use these shortcode --> [wps_my_all_event_list] to list all event on any page with search filter.', 'event-tickets-manager-for-woocommerce'),
