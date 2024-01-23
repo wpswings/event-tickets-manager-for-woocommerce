@@ -30,6 +30,16 @@ class Event_Tickets_Manager_For_Woocommerce_Activator {
 	 */
 	public static function event_tickets_manager_for_woocommerce_activate() {
 
+		if('on' == get_option('wps_etmfwp_include_qr')){
+
+			update_option('wps_etmfwp_include_barcode' . '');
+		}
+
+		if('on' == get_option('wps_etmfwp_include_barcode')){
+
+			update_option('wps_etmfwp_include_qr' . '');
+		}
+
 	}
 
 	/**

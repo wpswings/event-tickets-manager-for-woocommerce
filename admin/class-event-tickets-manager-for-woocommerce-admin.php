@@ -315,7 +315,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin
 			array(
 				'title' => __( 'Include Barcode in ticket', 'event-tickets-manager-for-woocommerce-pro' ),
 				'type'  => 'radio-switch',
-				'description'  => __( 'Enable this option to display QR code in the ticket.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description'  => __( 'Enable this option to display Ticket code as Bar code in the ticket.', 'event-tickets-manager-for-woocommerce-pro' ),
 				'id'    => 'wps_etmfwp_include_barcode',
 				'value' => get_option( 'wps_etmfwp_include_barcode' ),
 				'class' => 'etmfw-radio-switch-class',

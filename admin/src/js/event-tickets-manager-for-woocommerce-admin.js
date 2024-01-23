@@ -30,6 +30,31 @@
      */
 
     $(document).ready(function () {
+        
+        // var checkbox1 = document.getElementById('wps_etmfwp_include_barcode');
+        // var checkbox2 = document.getElementById('wps_etmfwp_include_qr');
+  
+        // $('#wps_etmfwp_include_barcode').on('change', function () {
+        //     var ariaCheckedValue = $(this).attr('aria-checked');
+
+        //     // Use the retrieved value
+        //     if (false == ariaCheckedValue) {
+        //         $('#wps_etmfwp_include_qr').parent().parent().removeClass('mdc-switch--checked');
+        //     } else {
+        //         // $('#wps_etmfwp_include_qr').parent().parent().addClass('mdc-switch--checked');
+        //     }
+        // });
+
+        // $('#wps_etmfwp_include_qr').on('change', function () {
+        //     var ariaCheckedValue = $(this).attr('aria-checked');
+
+        //     // Use the retrieved value
+        //     if (false == ariaCheckedValue) {
+        //         $('#wps_etmfwp_include_barcode').parent().parent().removeClass('mdc-switch--checked');
+        //     } else {
+        //         $('#wps_etmfwp_include_barcode').parent().parent().addClass('mdc-switch--checked');
+        //     }
+        // });
 
 //-------------------------------Pop-up For Pro Tags start -------------------------------------------//
         var wps_event_pro_is_enable = etmfw_admin_param.is_pro_active;
