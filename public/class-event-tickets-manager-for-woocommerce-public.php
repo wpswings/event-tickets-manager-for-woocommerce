@@ -781,7 +781,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$file = apply_filters( 'wps_etmfw_generate_qr_code', $order_id, $ticket_number, $product_id );
 		// die($file);
 		$ticket_number1 = '';
+		if('on' == get_option('wps_etmfwp_include_barcode')){
+		$wps_etmfw_qr_size = 100;
+		} else {
 		$wps_etmfw_qr_size = ! empty( get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 'wps_etmfw_qr_size' ) : '180';
+		}
 
 		if ( ! empty( $file ) ) {
 
