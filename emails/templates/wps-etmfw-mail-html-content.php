@@ -97,9 +97,15 @@ $wps_etmfw_qr_code_is_enable = ! empty( get_option( 'wps_etmfwp_include_qr' ) ) 
 									<table style="table-layout: auto; width: 100%;">
 										<tbody>
 											<tr>
+											<?php if('on' == get_option( 'wps_etmfwp_include_barcode' )){ ?>
 												<td style="text-align: center;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">
-													<h3 class="wps_etmfw_pdf_text_colour"  style="color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">Your Ticket</h3>
+													<h3 class="wps_etmfw_pdf_text_colour"  style="color: <?php echo esc_attr( 'black' ); ?>;">Your Ticket</h3>
 												</td>
+												<?php } else { ?>
+													<td style="text-align: center;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">
+													<h3 class="wps_etmfw_pdf_text_colour"  style="color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">Your Ticket</h3>
+												</td>	
+												<?php } ?>
 											</tr>
 											<tr>
 												<td>

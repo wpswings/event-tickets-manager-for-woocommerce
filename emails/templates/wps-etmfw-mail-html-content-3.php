@@ -41,7 +41,7 @@ $wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_pdf_text_color' ) ) ? ge
 	<tbody>
 	  <tr>
 		<td style="width: 25%; padding: 15px; box-sizing: border-box;">[LOGO]</td>
-		<td style="width: 75%; box-sizing: border-box; background-color: #502343;">
+		<td style="width: 75%; box-sizing: border-box; background-color: #81426e;">
 				<table style="width: 100%; background-image: url(<?php echo esc_url( $image_attributes[0] ); ?>); background-size: cover;">
 					<tr>
 						<td>
