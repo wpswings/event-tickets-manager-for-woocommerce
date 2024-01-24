@@ -1050,6 +1050,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin
 			<div class="wps_etmfw_event_display_wrapper">
 				<h1><?php echo esc_html('Events', 'event-tickets-manager-for-woocommerce'); ?></h1>
 
+				<?php if (is_plugin_active('event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php')) { ?>
 				<div class="wps_show_import_set">
 					<button class="button" id="wps_show_attendee_set"><?php esc_html_e('Import Bulk Event Order Attendees', 'event-tickets-manager-for-woocommerce-pro'); ?></button>
 				</div>
@@ -1061,6 +1062,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin
 					<p><?php esc_html_e('Download the ', 'event-tickets-manager-for-woocommerce-pro'); ?><a href="<?php echo EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/icons/wps_import_attendee.csv'; ?>" download><?php esc_html_e('Sample CSV.', 'event-tickets-manager-for-woocommerce-pro'); ?></a> <?php esc_html_e('for reference.', 'event-tickets-manager-for-woocommerce-pro'); ?></p>
 					<input type="submit" name="upload_csv" value="Upload CSV" />
 				</form>
+				<?php } ?>
 
 				<form method="post">
 					<?php
