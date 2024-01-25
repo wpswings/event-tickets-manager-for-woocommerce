@@ -32,12 +32,12 @@ class Event_Tickets_Manager_For_Woocommerce_Activator {
 
 		if('on' == get_option('wps_etmfwp_include_qr')){
 
-			update_option('wps_etmfwp_include_barcode' . '');
+			update_option('wps_etmfwp_include_barcode' , '');
 		}
 
 		if('on' == get_option('wps_etmfwp_include_barcode')){
 
-			update_option('wps_etmfwp_include_qr' . '');
+			update_option('wps_etmfwp_include_qr' ,'');
 		}
 
 	}
