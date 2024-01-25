@@ -79,3 +79,7 @@ span.wps-etmfw-event-product-order-listing {
 .wps_new_attendee p a:hover {
   text-decoration: underline;
 }
+
+.wps_show_import_set {
+  margin-bottom: 10px;
+}
