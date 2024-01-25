@@ -111,6 +111,22 @@ if ( $activated ) {
 		}
 	}
 
+	add_action( 'init', 'wps_etmfw_create_images_folder_inside_uploads' );
+
+	/**
+	 * Function for create directory.
+	 *
+	 * @return void
+	 */
+	function wps_etmfw_create_images_folder_inside_uploads() {
+		$upload = wp_upload_dir();
+		$upload_dir = $upload['basedir'];
+		$upload_dir = $upload_dir . '/images';
+		if ( ! is_dir( $upload_dir ) ) {
+			mkdir( $upload_dir, 0777 );
+		}
+	}
+
 	/**
 	 * The code that runs during plugin activation.
 	 * This action is documented in includes/class-event-tickets-manager-for-woocommerce-activator.php

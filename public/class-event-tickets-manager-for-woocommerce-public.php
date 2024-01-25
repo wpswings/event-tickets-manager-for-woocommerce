@@ -778,14 +778,16 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content.php'; // Zenith.
 		}
 
-		$file = apply_filters( 'wps_etmfw_generate_qr_code', $order_id, $ticket_number, $product_id );
-		// die($file);
+		
 		$ticket_number1 = '';
 		if('on' == get_option('wps_etmfwp_include_barcode')){
 		$wps_etmfw_qr_size = 100;
+		$file = $this->wps_etmfwp_generate_bar_code_callback($order_id, $ticket_number, $product_id);
 		} else {
 		$wps_etmfw_qr_size = ! empty( get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 'wps_etmfw_qr_size' ) : '180';
+		$file = apply_filters( 'wps_etmfw_generate_qr_code', $order_id, $ticket_number, $product_id );
 		}
+
 
 		if ( ! empty( $file ) ) {
 
