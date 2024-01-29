@@ -98,7 +98,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		 $wps_is_event_in_calender_shortcode = false;
 		// Check if the current page has a specific shortcode called 'wps_event_in_calender'.
 		$post = get_post();
-		if ($post && property_exists($post, 'post_content') && has_shortcode($post->post_content, 'wps_event_in_calender') && ('list' !== $event_view)) {
+		if ( $post && property_exists( $post, 'post_content' ) && has_shortcode( $post->post_content, 'wps_event_in_calender' ) && ( 'list' !== $event_view ) ) {
 			$wps_is_event_in_calender_shortcode = true;
 			wp_enqueue_script( 'wps-etmfw-fullcalendar-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/fullcalendar/fullcalendar.min.js', array( 'jquery' ), $this->version, false );
 			wp_register_script( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-public.js', array( 'jquery', 'wps-etmfw-fullcalendar-js' ), $this->version, false );
@@ -424,7 +424,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			if ( $old_status != $new_status ) {
 				if ( $temp_status == $new_status ) {
 					$this->wps_etmfw_process_event_order( $order_id, $old_status, $new_status );
-					// die('jhj');
 				}
 			}
 		}
@@ -444,17 +443,13 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 */
 	public function wps_etmfw_process_event_order( $order_id, $old_status, $new_status ) {
 		$order = wc_get_order( $order_id );
-		// die('prince');
-		// echo '<pre>';
-		// print_r($order->get_items());
+
 		$billing_email = $order->get_billing_email();
 		$wps_etmfw_mail_template_data = array();
 		foreach ( $order->get_items() as $item_id => $item ) {
-			// die('check it');
 			$product = $item->get_product();
-			
+
 			if ( isset( $product ) ) {
-				// die('checkkkk');
 				$item_quantity = wc_get_order_item_meta( $item_id, '_qty', true );
 
 				$product_id = $product->get_id();
@@ -477,11 +472,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						// HPOS usage is enabled.
 						$ticket_number = $order->get_meta( "event_ticket#$order_id#$item_id", true );
 					} else {
-						$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true ); //ticket code.
+						$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true ); // ticket code.
 					}
 
 					if ( empty( $ticket_number ) ) {
-						$ticket_number = array(); //store the code for quantity more than 1.
+						$ticket_number = array(); // store the code for quantity more than 1.
 
 						for ( $i = 0; $i < $item_quantity; $i++ ) {
 							$temp = wps_etmfw_ticket_generator();
@@ -778,16 +773,14 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content.php'; // Zenith.
 		}
 
-		
 		$ticket_number1 = '';
-		if('on' == get_option('wps_etmfwp_include_barcode')){
-		$wps_etmfw_qr_size = 100;
-		$file = $this->wps_etmfwp_generate_bar_code_callback($order_id, $ticket_number, $product_id);
+		if ( 'on' == get_option( 'wps_etmfwp_include_barcode' ) ) {
+			$wps_etmfw_qr_size = 100;
+			$file = $this->wps_etmfwp_generate_bar_code_callback( $order_id, $ticket_number, $product_id );
 		} else {
-		$wps_etmfw_qr_size = ! empty( get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 'wps_etmfw_qr_size' ) : '180';
-		$file = apply_filters( 'wps_etmfw_generate_qr_code', $order_id, $ticket_number, $product_id );
+			$wps_etmfw_qr_size = ! empty( get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 'wps_etmfw_qr_size' ) : '180';
+			$file = apply_filters( 'wps_etmfw_generate_qr_code', $order_id, $ticket_number, $product_id );
 		}
-
 
 		if ( ! empty( $file ) ) {
 
@@ -867,9 +860,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			wp_mkdir_p( $upload_dir_path );
 			chmod( $upload_dir_path, 0775 );
 		}
-		// die($wps_ticket_content);
+
 		$dompdf->loadHtml( $wps_ticket_content );
-		@ob_end_clean(); // phpcs:ignore
+		@ob_end_clean(); // phpcs:ignore.
 		$dompdf->render();
 		$dompdf->set_option( 'isRemoteEnabled', true );
 		$output = $dompdf->output();
@@ -2076,6 +2069,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @since    1.0.0
 	 */
 	public function wps_event_listing_shortcode_callback( $wps_atts ) {
+
+		$wps_html = '';
+
 		// Extract attributes and set defaults.
 		$wps_atts = shortcode_atts(
 			array(
@@ -2083,8 +2079,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			),
 			$wps_atts
 		);
-
-		$wps_html  = $this->wps_custom_html_part_callback( $content = '' );
+		$wps_html = $this->wps_custom_html_part_callback( '' );
 		return $wps_html;
 	}
 
@@ -2094,7 +2089,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @param array $content is an id of the product.
 	 * @since    1.0.0
 	 */
-	public function wps_custom_html_part_callback( $content ) {
+	public function wps_custom_html_part_callback( $content = '' ) {
 		ob_start();
 		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . '/public/partials/event-all-listing-public-display.php';
 		?>
@@ -2250,12 +2245,12 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @param int    $product_id is the id of product.
 	 * @return string
 	 */
-	public function wps_etmfwp_generate_bar_code_callback($order_id, $ticket_number, $product_id){
+	public function wps_etmfwp_generate_bar_code_callback( $order_id, $ticket_number, $product_id ) {
 
 		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'vendor Barcode/autoload.php';
 
 		$order = wc_get_order( $order_id );
-		
+
 		$billing_email = $order->get_billing_email();
 
 		// $site_url is link in the barcode.
@@ -2268,16 +2263,16 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			unlink( $file );
 		}
 		$path = $uploads['basedir'] . '/images/';
-		$file = $path . $order_id . $ticket_number . 'checkin.png'; //path  of the image.
+		$file = $path . $order_id . $ticket_number . 'checkin.png'; // path  of the image.
 
 		$wps_etmfw_barcode_color = ! empty( get_option( 'wps_etmfw_pdf_barcode_color' ) ) ? get_option( 'wps_etmfw_pdf_barcode_color' ) : 'black';
 
 		$barcode = new \Com\Tecnick\Barcode\Barcode();
-		$bobj = $barcode->getBarcodeObj('C128B', "{$ticket_number}", 450, 70, $wps_etmfw_barcode_color, array(0, 0, 0, 0));
-		
-		$imageData = $bobj->getPngData();
+		$bobj = $barcode->getBarcodeObj( 'C128B', "{$ticket_number}", 450, 70, $wps_etmfw_barcode_color, array( 0, 0, 0, 0 ) );
 
-		file_put_contents( $file, $imageData);
+		$wps_image_data = $bobj->getPngData();
+
+		file_put_contents( $file, $wps_image_data );
 
 		return $file;
 	}
