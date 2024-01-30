@@ -30,32 +30,21 @@
      */
 
     $(document).ready(function () {
-        
-        // var checkbox1 = document.getElementById('wps_etmfwp_include_barcode');
-        // var checkbox2 = document.getElementById('wps_etmfwp_include_qr');
-  
-        // $('#wps_etmfwp_include_barcode').on('change', function () {
-        //     var ariaCheckedValue = $(this).attr('aria-checked');
 
-        //     // Use the retrieved value
-        //     if (false == ariaCheckedValue) {
-        //         $('#wps_etmfwp_include_qr').parent().parent().removeClass('mdc-switch--checked');
-        //     } else {
-        //         // $('#wps_etmfwp_include_qr').parent().parent().addClass('mdc-switch--checked');
-        //     }
-        // });
+        $('#wps_etmfwp_include_barcode').change(function () {
+            console.log('barcode');
+            if ($(this).is(":checked")) {
+                $('#wps_etmfwp_include_qr').parent().parent().removeClass('mdc-switch--checked');
+                $('#wps_etmfwp_include_qr').attr('checked', false);
+                $('#wps_etmfwp_include_qr').attr('aria-checked', 'false').attr('value', '');
+            }
+            });
 
-        // $('#wps_etmfwp_include_qr').on('change', function () {
-        //     var ariaCheckedValue = $(this).attr('aria-checked');
-
-        //     // Use the retrieved value
-        //     if (false == ariaCheckedValue) {
-        //         $('#wps_etmfwp_include_barcode').parent().parent().removeClass('mdc-switch--checked');
-        //     } else {
-        //         $('#wps_etmfwp_include_barcode').parent().parent().addClass('mdc-switch--checked');
-        //     }
-        // });
-
+        $(document).on('change', '#wps_etmfwp_include_qr',function () {
+                $('#wps_etmfwp_include_barcode').parent().parent().removeClass('mdc-switch--checked');
+                    $('#wps_etmfwp_include_barcode').attr('checked', false);
+                    $('#wps_etmfwp_include_barcode').attr('aria-checked', 'false').attr('value', '');
+            });
 //-------------------------------Pop-up For Pro Tags start -------------------------------------------//
         var wps_event_pro_is_enable = etmfw_admin_param.is_pro_active;
         if(1 == wps_event_pro_is_enable){
@@ -418,7 +407,7 @@
                $('#wps_etmfw_new_layout_setting_save_3').hide();
             }else{
                var element = document.getElementById("wps_etmfw_is_for_pro");
-               element.classList.remove("wps_etmfw_class_for_pro");
+            //    element.classList.remove("wps_etmfw_class_for_pro");
             }
         }
     
