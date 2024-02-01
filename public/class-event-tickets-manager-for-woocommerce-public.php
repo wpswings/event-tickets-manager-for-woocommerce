@@ -2247,7 +2247,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 */
 	public function wps_etmfwp_generate_bar_code_callback( $order_id, $ticket_number, $product_id ) {
 
-		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'vendor Barcode/autoload.php';
+		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'vendor-barcode/autoload.php';
 
 		$order = wc_get_order( $order_id );
 
