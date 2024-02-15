@@ -508,7 +508,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 									'order_id' => $order_id,
 									'item_id' => $item_id,
 									'email'   => $billing_email,
-									'user'    => get_current_user_id(),
+									'user'    => $order->get_customer_id(),
+									'event_quantity' => $item_quantity,
 								);
 							}
 							update_post_meta( $product_id, 'wps_etmfw_generated_tickets', $generated_tickets );
@@ -522,7 +523,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 									'order_id' => $order_id,
 									'item_id' => $item_id,
 									'email'   => $billing_email,
-									'user'    => get_current_user_id(),
+									'user'    => $order->get_customer_id(),
+									'event_quantity' => $item_quantity,
 								);
 							}
 							update_post_meta( $product_id, 'wps_etmfw_generated_tickets', $generated_tickets );
@@ -561,7 +563,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 									'order_id' => $order_id,
 									'item_id' => $item_id,
 									'email'   => $billing_email,
-									'user'    => get_current_user_id(),
+									'user'    => $order->get_customer_id(),
+									'event_quantity' => $item_quantity,
 								);
 								update_post_meta( $product_id, 'wps_etmfw_generated_tickets', $generated_tickets );
 							} else {
@@ -571,7 +574,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 									'order_id' => $order_id,
 									'item_id' => $item_id,
 									'email'   => $billing_email,
-									'user' => get_current_user_id(),
+									'user' => $order->get_customer_id(),
+									'event_quantity' => $item_quantity,
 								);
 								update_post_meta( $product_id, 'wps_etmfw_generated_tickets', $generated_tickets );
 							}
