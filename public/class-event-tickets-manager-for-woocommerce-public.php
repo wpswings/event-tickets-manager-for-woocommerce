@@ -1824,11 +1824,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link http://www.wpswings.com/
 	 */
 	public function wps_etmfwp_sharing_tickets_org() {
-		$response['result'] = true;
+		$response['result'] = false;
 		$product_id = isset( $_REQUEST['for_event'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['for_event'] ) ) : '';
 		$ticket_num = isset( $_REQUEST['ticket_num'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['ticket_num'] ) ) : '';
 		$user_email = isset( $_REQUEST['user_email'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['user_email'] ) ) : '';
-
+		$current_ticket_order_id  = '';
 		// ==> Define HERE the statuses of that orders.
 		$wps_etmfw_in_processing = get_option( 'wps_wet_enable_after_payment_done_ticket', false );
 		if ( 'on' == $wps_etmfw_in_processing ) {
@@ -1837,21 +1837,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			$order_statuses = array( 'wc-completed', 'wc-processing' ); // Order Status For Creating Event Ticket.
 		}
 
-		// // ==> Define HERE the customer ID.
-		$customer_user_id = get_current_user_id(); // current user ID here for example.
-
-		// Getting current customer orders.
-		$customer_orders = wc_get_orders(
-			array(
-				'meta_key' => '_customer_user',
-				'meta_value' => $customer_user_id,
-				'post_status' => $order_statuses,
-				'numberposts' => -1,
-			)
-		);
-
 		$generated_tickets = get_post_meta( $product_id, 'wps_etmfw_generated_tickets', true );
-		$user_id = get_current_user_id();
 		$transfer_id = '';
 		if ( ! empty( $generated_tickets ) ) {
 			foreach ( $generated_tickets as $key => $value ) {
@@ -1860,17 +1846,21 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					$current_ticket_order_id = $value['order_id'];
 				}
 			}
-			// Loop through each customer WC_Order objects.
-			$order_id = array();
-			foreach ( $customer_orders as $order ) {
-				// Order ID (added WooCommerce 3+ compatibility).
+			// Initialize an empty array to store order IDs.
+			$order_ids = array();
 
-				$order_id[] = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
+			// Get order IDs for the current user.
+			$customer_order_ids = wc_get_orders(array(
+				'status'  => $order_statuses, // Example order statuses, adjust as needed.
+				'return'       => 'ids', // Return only IDs.
+				'customer_id' => get_current_user_id(),
+			));
+
+			if (!empty($customer_order_ids)) {
+				$order_ids = $customer_order_ids;
 			}
 
-			if ( ! empty( $order_id ) ) {
-
-				if ( in_array( $current_ticket_order_id, $order_id ) ) {
+				if ( in_array( $current_ticket_order_id, $order_ids ) ) {
 					$post = get_post( $current_ticket_order_id );
 					if ( 'trash' !== $post->post_status ) {
 						foreach ( $generated_tickets as $key => $value ) {
@@ -1910,7 +1900,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				} else {
 					$response['message'] = __( 'Wrong Ticket Number / Not Yours Ticket.', 'event-tickets-manager-for-woocommerce-pro' );
 				}
-			}
 		} else {
 			$response['message'] = __( 'Ticket of Event is not yet purchase.', 'event-tickets-manager-for-woocommerce-pro' );
 		}
