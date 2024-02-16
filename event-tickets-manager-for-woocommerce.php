@@ -45,16 +45,19 @@ add_action(
 	}
 );
 
-//Cart and Checkout Block Comaptibility.
-add_action( 'before_woocommerce_init', function() {
- 
-    if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
- 
-        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
- 
-    }
- 
-} );
+// Cart and Checkout Block Comaptibility.
+add_action(
+	'before_woocommerce_init',
+	function() {
+
+		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
+
+		}
+
+	}
+);
 
 
 $activated = false;
@@ -257,6 +260,26 @@ if ( $activated ) {
 	register_deactivation_hook( __FILE__, 'wps_etmfw_delete_checkin_page' );
 
 	add_action( 'wp_initialize_site', 'wps_etmfw_standard_plugin_on_create_blog', 900 );
+	add_filter( 'woocommerce_account_menu_items', 'move_logout_tab_to_bottom', 99 );
+
+
+	/**
+	 * Function to set logout to last.
+	 *
+	 * @param array $menu_links is the array.
+	 * @return array $menu_links.
+	 */
+	function move_logout_tab_to_bottom( $menu_links ) {
+		// Store the logout tab.
+		$logout_link = $menu_links['customer-logout'];
+
+		// Remove the logout tab from its original position.
+		unset( $menu_links['customer-logout'] );
+
+		// Add the logout tab to the bottom.
+		$menu_links['customer-logout'] = $logout_link;
+		return $menu_links;
+	}
 
 	/**
 	 * Function to create blog.
@@ -398,10 +421,10 @@ if ( $activated ) {
 	 * @link https://wpswings.com/
 	 */
 	function wps_etmfw_get_only_date_format( $date ) {
-		$wps_changed_date_format = get_option('wp_date_time_event_format');
-		$wps_custom_date_format = isset($wps_changed_date_format) ? $wps_changed_date_format : 'M j, Y';
+		$wps_changed_date_format = get_option( 'wp_date_time_event_format' );
+		$wps_custom_date_format = isset( $wps_changed_date_format ) ? $wps_changed_date_format : 'M j, Y';
 
-		 // Return the date in the custom format
+		 // Return the date in the custom format.
 		 return date_i18n( $wps_custom_date_format, strtotime( $date ) );
 	}
 
