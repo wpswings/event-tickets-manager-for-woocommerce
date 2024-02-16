@@ -398,7 +398,11 @@ if ( $activated ) {
 	 * @link https://wpswings.com/
 	 */
 	function wps_etmfw_get_only_date_format( $date ) {
-		return date_i18n( get_option( 'date_format' ), strtotime( $date ) );// get format from WordPress settings.
+		$wps_changed_date_format = get_option('wp_date_time_event_format');
+		$wps_custom_date_format = isset($wps_changed_date_format) ? $wps_changed_date_format : 'M j, Y';
+
+		 // Return the date in the custom format
+		 return date_i18n( $wps_custom_date_format, strtotime( $date ) );
 	}
 
 	/**

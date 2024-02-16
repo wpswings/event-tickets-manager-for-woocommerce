@@ -539,7 +539,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'placeholder' => __( 'Email Subject', 'event-tickets-manager-for-woocommerce' ),
 			),
 			array(
-				'title' => __( 'Email Body Content', 'event-tickets-manager-for-woocommerce' ),
+				'title' => __( 'Event PDF Body Content', 'event-tickets-manager-for-woocommerce' ),
 				'type' => 'wp_editor',
 				'description'  => __( 'Use [SITENAME] shortcode as the name of the site.', 'event-tickets-manager-for-woocommerce' ),
 				'id' => 'wps_etmfw_email_body_content',

@@ -724,7 +724,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 							</div>
 							<div class="wps-form-group__control">
 								<div class="wps-form-select">
-									<select id="<?php echo esc_attr( $etmfw_component['id'] ); ?>" name="<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : '' ); ?><?php echo ( 'multiselect' === $etmfw_component['type'] ) ? '[]' : ''; ?>" id="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mdl-textfield__input <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>" <?php echo 'multiselect' === $etmfw_component['type'] ? 'multiple="multiple"' : ''; ?> >
+									<select id="<?php echo esc_attr( $etmfw_component['id'] ); ?>" name="<?php echo ( isset( $etmfw_component['id'] ) ? esc_html( $etmfw_component['id'] ) : '' ); ?><?php echo ( 'multiselect' === $etmfw_component['type'] ) ? '[]' : ''; ?>" id="<?php echo esc_attr( $etmfw_component['id'] ); ?>" class="mdl-textfield__input <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>" <?php echo 'multiselect' === $etmfw_component['type'] ? 'multiple="multiple"' : ''; ?> >
 										<?php
 										foreach ( $etmfw_component['options'] as $etmfw_key => $etmfw_val ) {
 											?>
@@ -743,7 +743,9 @@ class Event_Tickets_Manager_For_Woocommerce {
 										}
 										?>
 									</select>
-									<label class="mdl-textfield__label" for="octane"><?php echo esc_html( $etmfw_component['description'] ); ?><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></label>
+									<div class="wps_etmfw_desc_helper">
+									<label class="mdl-textfield__label" for="octane"><?php echo ( isset( $etmfw_component['description'] ) ? wp_kses_post( $etmfw_component['description'] ) : '' ); ?></label>
+									</div>
 								</div>
 							</div>
 						</div>
