@@ -230,6 +230,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 		}
 
 		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'wps_etmfw_import_attendess_callbck', 11 );
+		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'wps_etmfw_css_control_callbck', 11 );
 	}
 
 	/**

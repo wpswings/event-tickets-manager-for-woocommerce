@@ -805,7 +805,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		} elseif ( '4' == $wps_set_the_pdf_ticket_template ) {
 			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-3.php'; // Mellifluous.
 		}
-
+		$wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_pdf_text_color' ) ) ? get_option( 'wps_etmfw_pdf_text_color' ) : '#ffffff';
 		$wps_ticket_details = ob_get_contents();
 		ob_end_clean();
 		$additinal_info = '';
@@ -816,13 +816,13 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$venue = isset( $wps_etmfw_product_array['etmfw_event_venue'] ) ? $wps_etmfw_product_array['etmfw_event_venue'] : '';
 		$wps_etmfw_stock_status = get_post_meta( $product_id, '_manage_stock', true );
 		if ( ! empty( $item_meta_data ) && ( ( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) || ( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) ) ) {
-			$additinal_info = '<table border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;"><tbody><tr><td style="padding: 20px 0 10px;"><h2 style="margin: 0;font-size: 24px; color: #000000;">Details :-</h2></td></tr>';
+			$additinal_info = '<table border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;"><tbody><tr><td style="padding: 20px 0 10px;"><h2 style="margin: 0;font-size: 24px; color:'.$wps_etmfw_text_color.';">Details :-</h2></td></tr>';
 			foreach ( $item_meta_data as $key => $value ) {
 				if ( isset( $value->key ) && ! empty( $value->value ) ) {
 					if ( '_reduced_stock' === $value->key ) {
 						continue;
 					}
-					$additinal_info .= '<tr><td style="padding: 5px 0;"><p style="margin: 0;">' . $value->key . ' - ' . $value->value . '</p></td></tr>';
+					$additinal_info .= '<tr><td style="padding: 5px 0;"><p style="margin: 0;color : '.$wps_etmfw_text_color.'">' . $value->key . ' - ' . $value->value . '</p></td></tr>';
 				}
 			}
 			$additinal_info .= '</tbody></table>';
@@ -1931,11 +1931,16 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				if ( isset( $product_id ) && ! empty( $product_id ) ) {
 
 					$product_types = wp_get_object_terms( $product_id, 'product_type' );
-					$product_type = $product_types[0]->slug;
+					if(is_array($product_types)){
+						$product_type = '';
+					if (isset($product_types[0])) {
+						$product_type = $product_types[0]->slug;
+					}
 
 					if ( 'event_ticket_manager' == $product_type ) {
 						$wps_etmfw_is_product = true;
 					}
+				}
 				}
 			}
 			if ( $wps_etmfw_is_product ) {

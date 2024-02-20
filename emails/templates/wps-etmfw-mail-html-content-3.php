@@ -19,6 +19,9 @@ $wps_etmfw_logo_size = ! empty( get_option( 'wps_etmfw_logo_size', true ) ) ? ge
 $wps_etmfw_qr_size = ! empty( get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 'wps_etmfw_qr_size' ) : '180';
 $wps_etmfw_background_color = ! empty( get_option( 'wps_etmfw_pdf_background_color' ) ) ? get_option( 'wps_etmfw_pdf_background_color' ) : '#FFE6EA';
 $wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_pdf_text_color' ) ) ? get_option( 'wps_etmfw_pdf_text_color' ) : '#ffffff';
+
+$wps_etmfw_border_type = ! empty( get_option( 'wps_etmfw_border_type' ) ) ? get_option( 'wps_etmfw_border_type' ) : 'none';
+$wps_etmfw_border_color = ! empty( get_option( 'wps_etmfw_pdf_border_color' ) ) ? get_option( 'wps_etmfw_pdf_border_color' ) : '#000000';
 ?>
 <!DOCTYPE html>
 <html>
@@ -120,8 +123,8 @@ $wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_pdf_text_color' ) ) ? ge
 			if ( '' != $body ) {
 				?>
 			[ADDITIONALINFO]
-			<h4 style="margin-top: 0px; margin-bottom: 10px; font-size: 24px; color: #000000;">Note</h4>
-			<div style="width:auto;text-align:left;vertical-align: top;">
+			<h4 style="margin-top: 0px; margin-bottom: 10px; font-size: 24px; color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">Note</h4>
+			<div style="width:auto;text-align:left;vertical-align: top;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?> ! important; ">
 			[EMAILBODYCONTENT]
 			</div>
 			<?php } ?>

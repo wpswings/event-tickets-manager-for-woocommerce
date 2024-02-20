@@ -94,7 +94,27 @@
     }
 
     $(document).on("click", ".wps_etmfw_add_fields_button", function () {
-      var fieldsetId = $(document)
+
+      var tbody = document.querySelector('.wps_etmfw_field_body');
+
+        // Get all existing field rows
+        var rows = tbody.querySelectorAll('.wps_etmfw_field_wrap');
+        
+        // Check if all previous inputs are filled
+        var allFilled = true;
+        rows.forEach(function(row) {
+            var labelInput = row.querySelector('.wps_etmfw_field_label');
+            var typeInput = row.querySelector('.wps_etmfw_field_type');
+            var requiredInput = row.querySelector('.wps_etmfw_required_fields');
+            if (labelInput.value.trim() === '' || typeInput.value.trim() === '' || (requiredInput.querySelector('input[type="checkbox"]').checked && requiredInput.querySelector('input[type="checkbox"]').value === '')) {
+                allFilled = false;
+            }
+        });
+
+        // If all previous inputs are filled, add a new row
+      if (allFilled) {
+          
+        var fieldsetId = $(document)
         .find(".wps_etmfw_field_table")
         .find(".wps_etmfw_field_wrap")
         .last()
@@ -118,6 +138,10 @@
         mainId +
         '"></td><td class="wps_etmfw_remove_row"><input type="button" name="wps_etmfw_remove_fields_button" class="wps_etmfw_remove_row_btn" value="Remove"></td></tr>';
       $(document).find(".wps_etmfw_field_body").append(field_html);
+  
+        } else {
+            alert('Please fill out all previous inputs before adding a new row.');
+        }
     });
 
     $(document).on("click", ".wps_etmfw_remove_row_btn", function (e) {

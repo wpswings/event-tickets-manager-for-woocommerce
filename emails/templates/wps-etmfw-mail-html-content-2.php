@@ -103,8 +103,8 @@ $wps_etmfw_border_color = ! empty( get_option( 'wps_etmfw_pdf_border_color' ) ) 
 			if ( '' != $body ) {
 				?>
 			[ADDITIONALINFO]
-			<h4 style="margin-top: 0px; margin-bottom: 0px; font-size: 24px; color:#000000;">Note</h4>
-			<div style="width:auto;text-align:left;vertical-align: top;">
+			<h4 style="margin-top: 0px; margin-bottom: 0px; font-size: 24px; color:<?php echo esc_attr( $wps_etmfw_text_color ); ?>;">Note</h4>
+			<div style="width:auto;text-align:left;vertical-align: top;<?php echo esc_attr( $wps_etmfw_text_color ); ?> ! important;">
 			[EMAILBODYCONTENT]
 			</div>
 			<?php } ?>

@@ -422,7 +422,7 @@ if ( $activated ) {
 	 */
 	function wps_etmfw_get_only_date_format( $date ) {
 		$wps_changed_date_format = get_option( 'wp_date_time_event_format' );
-		$wps_custom_date_format = isset( $wps_changed_date_format ) ? $wps_changed_date_format : 'M j, Y';
+		$wps_custom_date_format = isset( $wps_changed_date_format ) && ('no_select' !=  $wps_changed_date_format) ? $wps_changed_date_format : 'M j, Y';
 
 		 // Return the date in the custom format.
 		 return date_i18n( $wps_custom_date_format, strtotime( $date ) );

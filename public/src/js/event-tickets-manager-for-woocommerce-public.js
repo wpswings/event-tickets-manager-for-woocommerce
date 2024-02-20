@@ -174,11 +174,13 @@ jQuery(document).on('click', '#wps_etmfwp_event_transfer_button', function (e) {
 				data: data,
 				success: function(response)
 				{
+					console.log('check');
 				if (response.result) {
 				jQuery("#wps_etmfw_checkin_loader").hide();
 					jQuery("#wps_etmfw_error_message").addClass("wps_check_in_success");
 					jQuery("#wps_etmfw_error_message").html(response.message);
-				} else{
+				} else {
+					jQuery("#wps_etmfw_checkin_loader").hide();
 					jQuery("#wps_etmfw_error_message").addClass("wps_check_in_error");
 					jQuery("#wps_etmfw_error_message").html(response.message);
 				}

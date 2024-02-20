@@ -94,7 +94,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			wp_enqueue_style( 'wps-etmfw-date-time-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/jquery.datetimepicker.css', array(), time(), 'all' );
 			wp_enqueue_style( $this->plugin_name . '-admin-edit-product', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/event-tickets-manager-for-woocommerce-admin-edit-product.css', array(), $this->version, 'all' );
 		}
-		wp_enqueue_style('dashicons');
+		wp_enqueue_style( 'dashicons' );
 		wp_enqueue_style( 'event-tickets-manager-for-woocommerce-admin-icon.css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/event-tickets-manager-for-woocommerce-admin-icon.css', array(), $this->version, 'all' );
 	}
 
@@ -389,6 +389,26 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'value' => '',
 				'class' => 'etmfw-radio-switch-class-pro',
 				'description'  => __( 'Enter no. of days before event, email should be send as remainder. ', 'event-tickets-manager-for-woocommerce-pro' ),
+			),
+			array(
+				'title' => __( 'Event Date Format On Product Page', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'  => 'select',
+				'id'    => 'wp_date_time_event_format',
+				'class' => 'etmfw-radio-switch-class-pro',
+				'value' => '',
+				'options' => array(
+					''       => __( 'Select Date Format', 'woocommerce' ),
+					'Y-m-d'   => __( 'YYYY-MM-DD', 'woocommerce' ),
+					'm/d/Y'   => __( 'MM/DD/YYYY', 'woocommerce' ),
+					'd-m-Y'   => __( 'DD-MM-YYYY', 'woocommerce' ),
+					'F j, Y'   => __( 'January 31, 2024', 'woocommerce' ),
+					'j-F-Y'   => __( '31-January-2024', 'woocommerce' ),
+					'M j, Y'   => __( 'Jan 31, 2024', 'woocommerce' ),
+					'j-M-Y'   => __( '31-Jan-2024', 'woocommerce' ),
+					'l, F j, Y'   => __( 'Thursday, January 31, 2024', 'woocommerce' ),
+					'l, j-F-Y'   => __( 'Thursday, 31-January-2024', 'woocommerce' ),
+				),
+				'description'  => __( 'To Set The Date Format Which Will Show On The Product Page', 'event-tickets-manager-for-woocommerce-pro' ),
 			),
 		);
 		$etmfw_settings_general = apply_filters( 'wps_etmfw_extent_general_settings_array', $etmfw_settings_general );
@@ -874,21 +894,18 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		 */
 	public function wps_etmfw_save_product_data() {
 		 global $post;
-
-		//  die('check');
 		if ( isset( $post->ID ) ) {
 			if ( ! current_user_can( 'edit_post', $post->ID ) ) {
 				return;
 			}
-			
+
 			$product_id = $post->ID;
 			$product = wc_get_product( $product_id );
 			if ( isset( $product ) && is_object( $product ) ) {
 				if ( $product->get_type() == 'event_ticket_manager' ) {
 					// if ( ! isset( $_POST['wps_etmfw_product_nonce_field'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_etmfw_product_nonce_field'] ) ), 'wps_etmfw_lite_nonce' ) ) {
-					// 	return;
+					// return;
 					// }
-					// die('check13');
 					$price = $product->get_price();
 
 					$wps_etmfw_product_array = array();
@@ -927,19 +944,10 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 						}
 					}
 
-					// print_r($_POST);
-					// die('check');
-					
 					$wps_etmfw_product_array['etmfw_attendees/organizer_tab_name'] = isset( $_POST['etmfw_attendees/organizer_tab_name'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_attendees/organizer_tab_name'] ) ) : 'Event Organizer and Attendees';
-					$wps_etmfw_product_array['etmfw_display_attendees/organizer'] = $_POST['etmfw_display_attendees/organizer']; //isset( $_POST['etmfw_display_attendees/organizer'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_display_attendees/organizer'] ) ) : '';
+					$wps_etmfw_product_array['etmfw_display_attendees/organizer'] = $_POST['etmfw_display_attendees/organizer']; // isset( $_POST['etmfw_display_attendees/organizer'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_display_attendees/organizer'] ) ) : '';
 					$wps_etmfw_product_array['etmfw_display_organizer'] = isset( $_POST['etmfw_display_organizer'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_display_organizer'] ) ) : '';
-					// // $output = array();
-					// var_dump($_POST['custom_options']['multiselect']);
-					// $wps_multiselect_ = $_POST['custom_options']['multiselect'];
-					$wps_etmfw_product_array['wps_organizer_multiselect']= $_POST['wps_event_organizer']['multiselect'];//isset( $_POST['wps_event_organizer']['multiselect'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_event_organizer']['multiselect'] ) ) : array();
-
-
-
+					$wps_etmfw_product_array['wps_organizer_multiselect'] = $_POST['wps_event_organizer']['multiselect'];// isset( $_POST['wps_event_organizer']['multiselect'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_event_organizer']['multiselect'] ) ) : array();
 
 					$wps_etmfw_product_array['wps_event_recurring_type'] = ! empty( $_POST['wps_recurring_type'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_recurring_type'] ) ) : '';
 					$wps_etmfw_product_array['wps_event_recurring_value'] = ! empty( $_POST['wps_recurring_value'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_recurring_value'] ) ) : '';
@@ -1572,5 +1580,26 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		}
 
 		wp_send_json_success();
+	}
+
+
+		/**
+		 * This is function is used to control css pro tag.
+		 *
+		 * @name wps_etmfw_css_control_callbck.
+		 * @link http://www.wpswings.com/
+		 */
+	public function wps_etmfw_css_control_callbck() {
+		$wps_plugin_list = get_option( 'active_plugins' );
+		$wps_plugin = 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php';
+		if ( in_array( $wps_plugin, $wps_plugin_list ) && is_admin() && !wp_doing_ajax()) {
+		?>
+		<style>
+		.wps_etmfw_creation_setting td:before {
+		display: none !important;
+		}
+		</style>
+		<?php
+		}
 	}
 }

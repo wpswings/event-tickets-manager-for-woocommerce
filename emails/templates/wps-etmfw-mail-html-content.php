@@ -128,8 +128,8 @@ $wps_etmfw_qr_code_is_enable = ! empty( get_option( 'wps_etmfwp_include_qr' ) ) 
 	$body = get_option( 'wps_etmfw_email_body_content', '' );
 	if ( '' != $body ) {
 		?>
-									<h4 style="padding: 10px;">Note</h4>
-									<div style="padding: 20px;width:auto;text-align:left;vertical-align: middle;">
+									<h4 style="padding: 10px;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>">Note</h4>
+									<div style="padding: 20px;width:auto;text-align:left;vertical-align: middle;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?> ! important; ">
 									[EMAILBODYCONTENT]
 									</div>
 									<?php } ?>

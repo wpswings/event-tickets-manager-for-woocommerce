@@ -30,7 +30,7 @@
 						</tr>
 					</thead>
 					<tbody class="wps_etmfw_field_body">
-						<?php if ( empty( $wps_etmfw_field_data ) ) : ?>
+						<?php if ( 1 != 1 ) : ?>
 							<tr class="wps_etmfw_field_wrap" data-id="0">
 								<td class="drag-icon">
 									<i class="dashicons dashicons-move"></i>
