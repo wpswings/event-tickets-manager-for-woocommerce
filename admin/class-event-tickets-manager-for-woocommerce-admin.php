@@ -903,9 +903,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			$product = wc_get_product( $product_id );
 			if ( isset( $product ) && is_object( $product ) ) {
 				if ( $product->get_type() == 'event_ticket_manager' ) {
-					// if ( ! isset( $_POST['wps_etmfw_product_nonce_field'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_etmfw_product_nonce_field'] ) ), 'wps_etmfw_lite_nonce' ) ) {
-					// return;
-					// }
+					if ( ! isset( $_POST['wps_etmfw_product_nonce_field'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_etmfw_product_nonce_field'] ) ), 'wps_etmfw_lite_nonce' ) ) {
+						return;
+					}
 					$price = $product->get_price();
 
 					$wps_etmfw_product_array = array();
@@ -1592,14 +1592,14 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	public function wps_etmfw_css_control_callbck() {
 		$wps_plugin_list = get_option( 'active_plugins' );
 		$wps_plugin = 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php';
-		if ( in_array( $wps_plugin, $wps_plugin_list ) && is_admin() && !wp_doing_ajax()) {
-		?>
+		if ( in_array( $wps_plugin, $wps_plugin_list ) && is_admin() && ! wp_doing_ajax() ) {
+			?>
 		<style>
 		.wps_etmfw_creation_setting td:before {
 		display: none !important;
 		}
 		</style>
-		<?php
+			<?php
 		}
 	}
 }
