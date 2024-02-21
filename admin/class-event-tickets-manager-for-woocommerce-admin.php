@@ -945,9 +945,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					}
 
 					$wps_etmfw_product_array['etmfw_attendees/organizer_tab_name'] = isset( $_POST['etmfw_attendees/organizer_tab_name'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_attendees/organizer_tab_name'] ) ) : 'Event Organizer and Attendees';
-					$wps_etmfw_product_array['etmfw_display_attendees/organizer'] = $_POST['etmfw_display_attendees/organizer']; // isset( $_POST['etmfw_display_attendees/organizer'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_display_attendees/organizer'] ) ) : '';
+					$wps_etmfw_product_array['etmfw_display_attendees/organizer'] = isset( $_POST['etmfw_display_attendees/organizer'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_display_attendees/organizer'] ) ) : '';
 					$wps_etmfw_product_array['etmfw_display_organizer'] = isset( $_POST['etmfw_display_organizer'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_display_organizer'] ) ) : '';
-					$wps_etmfw_product_array['wps_organizer_multiselect'] = $_POST['wps_event_organizer']['multiselect'];// isset( $_POST['wps_event_organizer']['multiselect'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_event_organizer']['multiselect'] ) ) : array();
+					$wps_etmfw_product_array['wps_organizer_multiselect'] = ! empty( $_POST['wps_event_organizer']['multiselect'] ) ? map_deep( wp_unslash( $_POST['wps_event_organizer']['multiselect'] ), 'sanitize_text_field' ) : array();
 
 					$wps_etmfw_product_array['wps_event_recurring_type'] = ! empty( $_POST['wps_recurring_type'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_recurring_type'] ) ) : '';
 					$wps_etmfw_product_array['wps_event_recurring_value'] = ! empty( $_POST['wps_recurring_value'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_recurring_value'] ) ) : '';
