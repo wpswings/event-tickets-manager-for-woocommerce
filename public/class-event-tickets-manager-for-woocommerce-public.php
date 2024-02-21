@@ -816,13 +816,13 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$venue = isset( $wps_etmfw_product_array['etmfw_event_venue'] ) ? $wps_etmfw_product_array['etmfw_event_venue'] : '';
 		$wps_etmfw_stock_status = get_post_meta( $product_id, '_manage_stock', true );
 		if ( ! empty( $item_meta_data ) && ( ( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) || ( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) ) ) {
-			$additinal_info = '<table border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;"><tbody><tr><td style="padding: 20px 0 10px;"><h2 style="margin: 0;font-size: 24px; color:'.$wps_etmfw_text_color.';">Details :-</h2></td></tr>';
+			$additinal_info = '<table border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;"><tbody><tr><td style="padding: 20px 0 10px;"><h2 style="margin: 0;font-size: 24px; color:' . $wps_etmfw_text_color . ';">Details :-</h2></td></tr>';
 			foreach ( $item_meta_data as $key => $value ) {
 				if ( isset( $value->key ) && ! empty( $value->value ) ) {
 					if ( '_reduced_stock' === $value->key ) {
 						continue;
 					}
-					$additinal_info .= '<tr><td style="padding: 5px 0;"><p style="margin: 0;color : '.$wps_etmfw_text_color.'">' . $value->key . ' - ' . $value->value . '</p></td></tr>';
+					$additinal_info .= '<tr><td style="padding: 5px 0;"><p style="margin: 0;color : ' . $wps_etmfw_text_color . '">' . $value->key . ' - ' . $value->value . '</p></td></tr>';
 				}
 			}
 			$additinal_info .= '</tbody></table>';
@@ -1850,56 +1850,58 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			$order_ids = array();
 
 			// Get order IDs for the current user.
-			$customer_order_ids = wc_get_orders(array(
-				'status'  => $order_statuses, // Example order statuses, adjust as needed.
-				'return'       => 'ids', // Return only IDs.
-				'customer_id' => get_current_user_id(),
-			));
+			$customer_order_ids = wc_get_orders(
+				array(
+					'status'  => $order_statuses, // Example order statuses, adjust as needed.
+					'return'       => 'ids', // Return only IDs.
+					'customer_id' => get_current_user_id(),
+				)
+			);
 
-			if (!empty($customer_order_ids)) {
+			if ( ! empty( $customer_order_ids ) ) {
 				$order_ids = $customer_order_ids;
 			}
 
-				if ( in_array( $current_ticket_order_id, $order_ids ) ) {
-					$post = get_post( $current_ticket_order_id );
-					if ( 'trash' !== $post->post_status ) {
-						foreach ( $generated_tickets as $key => $value ) {
-							if ( $ticket_num == $value['ticket'] ) {
-								$transfer_id = $value['order_id'];
-								$order = wc_get_order( $transfer_id );
-								$billing_email = $order->get_billing_email();
-								$wps_etmfw_mail_template_data = array();
+			if ( in_array( $current_ticket_order_id, $order_ids ) ) {
+				$post = get_post( $current_ticket_order_id );
+				if ( 'trash' !== $post->post_status ) {
+					foreach ( $generated_tickets as $key => $value ) {
+						if ( $ticket_num == $value['ticket'] ) {
+							$transfer_id = $value['order_id'];
+							$order = wc_get_order( $transfer_id );
+							$billing_email = $order->get_billing_email();
+							$wps_etmfw_mail_template_data = array();
 
-								session_start();
-								$_SESSION['order_id'] = $value['order_id'];
-								$_SESSION['ticket_no'] = $ticket_num;
+							session_start();
+							$_SESSION['order_id'] = $value['order_id'];
+							$_SESSION['ticket_no'] = $ticket_num;
 
-								$wps_etmfw_mail_template_data = array(
-									'product_id' => $product_id,
-									'order_id'   => $transfer_id,
-									'product_name' => get_the_title( $product_id ),
+							$wps_etmfw_mail_template_data = array(
+								'product_id' => $product_id,
+								'order_id'   => $transfer_id,
+								'product_name' => get_the_title( $product_id ),
 
-								);
-								$item_meta_data = array();
-								$ticket_number = wps_etmfw_ticket_generator();
-								$wps_ticket_content = $this->wps_etmfw_get_html_content( $item_meta_data, $order, $transfer_id, $ticket_num, $product_id );
-								$this->wps_etmfw_generate_ticket_pdf( $wps_ticket_content, $order, $transfer_id, $ticket_num );
+							);
+							$item_meta_data = array();
+							$ticket_number = wps_etmfw_ticket_generator();
+							$wps_ticket_content = $this->wps_etmfw_get_html_content( $item_meta_data, $order, $transfer_id, $ticket_num, $product_id );
+							$this->wps_etmfw_generate_ticket_pdf( $wps_ticket_content, $order, $transfer_id, $ticket_num );
 
-								$wps_etmfw_mail_template_data['ticket_number'] = $ticket_num;
-								$this->wps_etmfw_send_ticket_mail_shared( $order, $wps_etmfw_mail_template_data, $user_email );
-							}
+							$wps_etmfw_mail_template_data['ticket_number'] = $ticket_num;
+							$this->wps_etmfw_send_ticket_mail_shared( $order, $wps_etmfw_mail_template_data, $user_email );
 						}
-						$response['message'] = __( 'Ticket Transfer successfully.', 'event-tickets-manager-for-woocommerce-pro' );
-						$_SESSION['wps_Check_point'] = 1;
-
-						// here send code will added.
-						$response['result'] = true;
-					} else {
-						$response['message'] = __( 'Order not exist.', 'event-tickets-manager-for-woocommerce-pro' );
 					}
+					$response['message'] = __( 'Ticket Transfer successfully.', 'event-tickets-manager-for-woocommerce-pro' );
+					$_SESSION['wps_Check_point'] = 1;
+
+					// here send code will added.
+					$response['result'] = true;
 				} else {
-					$response['message'] = __( 'Wrong Ticket Number / Not Yours Ticket.', 'event-tickets-manager-for-woocommerce-pro' );
+					$response['message'] = __( 'Order not exist.', 'event-tickets-manager-for-woocommerce-pro' );
 				}
+			} else {
+				$response['message'] = __( 'Wrong Ticket Number / Not Yours Ticket.', 'event-tickets-manager-for-woocommerce-pro' );
+			}
 		} else {
 			$response['message'] = __( 'Ticket of Event is not yet purchase.', 'event-tickets-manager-for-woocommerce-pro' );
 		}
@@ -1931,16 +1933,16 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				if ( isset( $product_id ) && ! empty( $product_id ) ) {
 
 					$product_types = wp_get_object_terms( $product_id, 'product_type' );
-					if(is_array($product_types)){
+					if ( is_array( $product_types ) ) {
 						$product_type = '';
-					if (isset($product_types[0])) {
-						$product_type = $product_types[0]->slug;
-					}
+						if ( isset( $product_types[0] ) ) {
+							$product_type = $product_types[0]->slug;
+						}
 
-					if ( 'event_ticket_manager' == $product_type ) {
-						$wps_etmfw_is_product = true;
+						if ( 'event_ticket_manager' == $product_type ) {
+							$wps_etmfw_is_product = true;
+						}
 					}
-				}
 				}
 			}
 			if ( $wps_etmfw_is_product ) {
@@ -2012,7 +2014,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 */
 	public function wps_etmfw_cart_needs_shipping( $wps_need_shipping ) {
 
-		if ( is_cart() || is_checkout() ) {
 			$wps_products_ids_array_cart = array();
 			$wps_all_event_product_ids_array = array();
 
@@ -2033,23 +2034,24 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$wps_all_event_product_ids_array[] = $product_id;
 			}
 
-			foreach ( WC()->cart->get_cart() as $cart_item ) {
-				$wps_products_ids_array_cart[] = $cart_item['product_id'];
+			if ( function_exists( 'WC' ) && WC()->cart ) {
+				if ( ! empty( WC()->cart->get_cart() ) ) {
+					foreach ( WC()->cart->get_cart() as $cart_item ) {
+						$wps_products_ids_array_cart[] = $cart_item['product_id'];
 
-				$wps_etmfw_product_array = get_post_meta( $cart_item['product_id'], 'wps_etmfw_product_array', true );
-				$wps_evnt_prouct_back_data_arry[] = isset( $wps_etmfw_product_array['etmfw_event_disable_shipping'] ) ? $wps_etmfw_product_array['etmfw_event_disable_shipping'] : true;
+						$wps_etmfw_product_array = get_post_meta( $cart_item['product_id'], 'wps_etmfw_product_array', true );
+						$wps_evnt_prouct_back_data_arry[] = isset( $wps_etmfw_product_array['etmfw_event_disable_shipping'] ) ? $wps_etmfw_product_array['etmfw_event_disable_shipping'] : true;
+					}
+				}
 			}
 
 			$wps_shipping_result = array_intersect( $wps_products_ids_array_cart, $wps_all_event_product_ids_array );
 			$wps_is_shipping_disable = array_intersect( array( 'yes' ), $wps_evnt_prouct_back_data_arry );
 
 			if ( ! empty( $wps_shipping_result ) && ! empty( $wps_is_shipping_disable ) ) {
-				if ( is_cart() || is_checkout() ) {
 					$wps_need_shipping = false;
-				}
 			}
 			return $wps_need_shipping;
-		}
 	}
 
 	/**
