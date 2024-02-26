@@ -1828,50 +1828,68 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$product_id = isset( $_REQUEST['for_event'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['for_event'] ) ) : '';
 		$ticket_num = isset( $_REQUEST['ticket_num'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['ticket_num'] ) ) : '';
 		$user_email = isset( $_REQUEST['user_email'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['user_email'] ) ) : '';
-		$current_ticket_order_id  = '';
+	
 		// ==> Define HERE the statuses of that orders.
 		$wps_etmfw_in_processing = get_option( 'wps_wet_enable_after_payment_done_ticket', false );
 		if ( 'on' == $wps_etmfw_in_processing ) {
 			$order_statuses = array( 'wc-completed', 'wc-processing' );
 		} else {
-			$order_statuses = array( 'wc-completed', 'wc-processing' ); // Order Status For Creating Event Ticket.
+			$order_statuses = array( 'wc-completed' );
 		}
 
+			// ==> Define HERE the customer ID.
+			$customer_user_id = get_current_user_id(); // current user ID here for example.
+
+			// Getting current customer orders.
+			$customer_orders = new WC_Order_Query(
+				array(
+					// 'meta_key' => '_customer_user',
+					'customer_id' => $customer_user_id,
+					'status' => $order_statuses,
+					'return' => 'ids',
+				)
+			);
+
 		$generated_tickets = get_post_meta( $product_id, 'wps_etmfw_generated_tickets', true );
-		$transfer_id = '';
+		$user_id = get_current_user_id();
+
+
 		if ( ! empty( $generated_tickets ) ) {
+
 			foreach ( $generated_tickets as $key => $value ) {
 				if ( $ticket_num == $value['ticket'] ) {
 					$response['order_id'] = $value['order_id'];
 					$current_ticket_order_id = $value['order_id'];
+					if(isset($value['transfer_id'])) {
+						$wps_is_tranfered = true;
+					} else {
+						$wps_is_tranfered = false;
+					}
+					$wps_assignee_mail = $value['email'];
 				}
 			}
-			// Initialize an empty array to store order IDs.
-			$order_ids = array();
 
-			// Get order IDs for the current user.
-			$customer_order_ids = wc_get_orders(
-				array(
-					'status'  => $order_statuses, // Example order statuses, adjust as needed.
-					'return'       => 'ids', // Return only IDs.
-					'customer_id' => get_current_user_id(),
-				)
-			);
+			// Loop through each customer WC_Order objects.
+			$order_id = array();
 
-			if ( ! empty( $customer_order_ids ) ) {
-				$order_ids = $customer_order_ids;
+			foreach ( $customer_orders as $order ) {
+				$order_id[] = $order->get_id();
 			}
 
-			if ( in_array( $current_ticket_order_id, $order_ids ) ) {
+			$order_id = $customer_orders->get_orders();
+
+			if (in_array( $current_ticket_order_id, $order_id ) && (false == $wps_is_tranfered) && ($user_email != $wps_assignee_mail)) {
 				$post = get_post( $current_ticket_order_id );
 				if ( 'trash' !== $post->post_status ) {
 					foreach ( $generated_tickets as $key => $value ) {
 						if ( $ticket_num == $value['ticket'] ) {
+							$generated_tickets[ $key ]['email'] = $user_email;
 							$transfer_id = $value['order_id'];
+							$generated_tickets[ $key ]['transfer_id'] = $transfer_id;
 							$order = wc_get_order( $transfer_id );
 							$billing_email = $order->get_billing_email();
 							$wps_etmfw_mail_template_data = array();
-
+							update_post_meta( $product_id, 'wps_etmfw_generated_tickets', $generated_tickets );
 							session_start();
 							$_SESSION['order_id'] = $value['order_id'];
 							$_SESSION['ticket_no'] = $ticket_num;
@@ -1900,7 +1918,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					$response['message'] = __( 'Order not exist.', 'event-tickets-manager-for-woocommerce-pro' );
 				}
 			} else {
-				$response['message'] = __( 'Wrong Ticket Number / Not Yours Ticket.', 'event-tickets-manager-for-woocommerce-pro' );
+				$response['message'] = __( 'Wrong Ticket Number / Not Yours Ticket / Cannot transfer to yourself.', 'event-tickets-manager-for-woocommerce-pro' );
 			}
 		} else {
 			$response['message'] = __( 'Ticket of Event is not yet purchase.', 'event-tickets-manager-for-woocommerce-pro' );

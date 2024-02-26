@@ -154,7 +154,7 @@ jQuery(document).on('click', '#wps_etmfwp_event_transfer_button', function (e) {
 		var user_email =  jQuery('#wps_etmfw_chckin_email').val();
 		var for_event = jQuery('#wps_etmfw_event_selected').val();
 		var ticket_num = jQuery('#wps_etmfw_imput_ticket').val();
-		var user_email =  jQuery('#wps_etmfw_chckin_email').val();
+		var user_email = jQuery('#wps_etmfw_chckin_email').val();
 
 		var sel = document.getElementById("wps_etmfw_event_selected");
 		var text= sel.options[sel.selectedIndex].text;
@@ -174,7 +174,7 @@ jQuery(document).on('click', '#wps_etmfwp_event_transfer_button', function (e) {
 				data: data,
 				success: function(response)
 				{
-					console.log('check');
+				console.log('check');
 				if (response.result) {
 				jQuery("#wps_etmfw_checkin_loader").hide();
 					jQuery("#wps_etmfw_error_message").addClass("wps_check_in_success");
