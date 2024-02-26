@@ -1977,7 +1977,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					<div id="wps_etmfw_loader" style="display: none;">
 						<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ); ?>public/src/image/loading.gif">
 					</div>
-					<span class="wps_resend_content"><?php esc_html_e( "Press the icon to resend tickte pdf mail if the receiver hasn't received the ticket you sent.", 'event-tickets-manager-for-woocommerce-pro' ); ?>
+					<span class="wps_resend_content"><?php esc_html_e( "Press the icon to resend the ticket PDF email if the recipient hasn't received the ticket you sent.", 'event-tickets-manager-for-woocommerce-pro' ); ?>
 					</span>
 					<a href="javascript:void(0);" data-id="<?php echo esc_attr( $order_id ); ?>" class="wps_uwgc_resend_mail" id="wps_etmfw_resend_mail_button_frontend">
 						<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ); ?>public/src/image/ticket.png" class="wps_resend_image">

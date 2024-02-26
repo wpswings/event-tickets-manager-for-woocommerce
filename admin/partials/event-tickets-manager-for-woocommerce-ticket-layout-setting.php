@@ -269,7 +269,7 @@ $allowed_html = array(
 					<th><?php esc_html_e( 'Select Background Image', 'event-tickets-manager-for-woocommerce' ); ?></th>
 					<td>
 					<?php
-					$attribute_description = esc_html__( 'Set different background image for PDF Ticket.', 'event-tickets-manager-for-woocommerce' );
+					$attribute_description = esc_html__( 'Set different background image for pdf ticket template like Mellifluous and Demure.', 'event-tickets-manager-for-woocommerce' );
 					$wps_etmfw_background_image = ! empty( get_option( 'wps_etmfw_background_image' ) ) ? get_option( 'wps_etmfw_background_image' ) : '';
 					?>
 					<?php
@@ -381,7 +381,7 @@ if ( isset( $_POST['reset_wps'] ) ) {
 		 update_option( 'wps_etmfw_logo_size', '133' );
 		 update_option( 'wps_etmfw_qr_size', '133' );
 		 update_option( 'wps_etmfw_pdf_background_color', '#2196f3' );
-		 update_option( 'wps_etmfw_pdf_text_color', '#ffffff' );
+		 update_option( 'wps_etmfw_pdf_text_color', '#757575' );
 		 update_option( 'wps_etmfw_border_type', 'solid' );
 		 update_option( 'wps_etmfw_pdf_border_color', 'black' );
 		// update_option('wps_etmfw_background_image','#ffffff');.
@@ -414,7 +414,7 @@ if ( isset( $_POST['reset_wps'] ) ) {
 		update_option( 'wps_etmfw_logo_size', '133' );
 		update_option( 'wps_etmfw_qr_size', '133' );
 		update_option( 'wps_etmfw_pdf_background_color', '#FFE6EA' );
-		update_option( 'wps_etmfw_pdf_text_color', '#ffffff' );
+		update_option( 'wps_etmfw_pdf_text_color', '#333333' );
 		update_option( 'wps_etmfw_border_type', 'none' );
 		update_option( 'wps_etmfw_pdf_border_color', 'black' );
 	} // Mellifluous.

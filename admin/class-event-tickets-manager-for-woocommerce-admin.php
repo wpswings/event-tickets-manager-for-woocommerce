@@ -452,22 +452,22 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				),
 			),
 			array(
-				'title' => __( 'Enter Twilio Api Sid', 'event-tickets-manager-for-woocommerce-pro' ),
+				'title' => __( 'Enter Twilio API Sid', 'event-tickets-manager-for-woocommerce-pro' ),
 				'type'  => 'text',
-				'description'  => __( 'Enter twilio api sid here', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description'  => __( 'Enter twilio API sid here', 'event-tickets-manager-for-woocommerce-pro' ),
 				'id'    => 'wps_wet_twilio_sid',
 				'value' => '',
 				'class' => 'etmfw-radio-switch-class-pro',
-				'placeholder' => __( 'Enter twilio api sid', 'event-tickets-manager-for-woocommerce-pro' ),
+				'placeholder' => __( 'Enter twilio API sid', 'event-tickets-manager-for-woocommerce-pro' ),
 			),
 			array(
-				'title' => __( 'Enter Twilio Api Token', 'event-tickets-manager-for-woocommerce-pro' ),
+				'title' => __( 'Enter Twilio API Token', 'event-tickets-manager-for-woocommerce-pro' ),
 				'type'  => 'text',
-				'description'  => __( 'Enable twilio api token here.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description'  => __( 'Enable twilio API token here.', 'event-tickets-manager-for-woocommerce-pro' ),
 				'id'    => 'wps_wet_twilio_token',
 				'value' => '',
 				'class' => 'etmfw-radio-switch-class-pro',
-				'placeholder' => __( 'Enter twilio api Token', 'event-tickets-manager-for-woocommerce-pro' ),
+				'placeholder' => __( 'Enter twilio API Token', 'event-tickets-manager-for-woocommerce-pro' ),
 			),
 			array(
 				'title' => __( 'Enter Twilio Sending Number', 'event-tickets-manager-for-woocommerce-pro' ),
@@ -593,26 +593,30 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				),
 				'class' => 'wps_etmfw_mail_setting_upload_logo_box',
 				'description' => __( 'Upload the image which is used as a logo on your Email Template.', 'event-tickets-manager-for-woocommerce' ),
-			),
-
+			));
+			if ( ! is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) { 
+			$etmfw_email_template_settings[] =
 			array(
 				'title' => __( 'Ticket Background Colour', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'text',
 				'description'  => __( 'Enter the colour code( e.g. #0000FF ) or colour name( e.g. blue ).', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'wps_etmfw_ticket_bg_color',
 				'value' => get_option( 'wps_etmfw_ticket_bg_color', '' ),
-				'class' => 'etmfw-text-class',
+				'class' => 'wps_etmfw_colorpicker',
 				'placeholder' => __( 'Enter colour/colour code', 'event-tickets-manager-for-woocommerce' ),
-			),
+			);
+			$etmfw_email_template_settings[] =
 			array(
 				'title' => __( 'Ticket Text Colour', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'text',
 				'description'  => __( 'Enter the colour code( e.g. #FFFFFF ) or colour name( e.g. black ).', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'wps_etmfw_ticket_text_color',
 				'value' => get_option( 'wps_etmfw_ticket_text_color', '' ),
-				'class' => 'etmfw-text-class',
+				'class' => 'wps_etmfw_colorpicker',
 				'placeholder' => __( 'Enter colour/colour code', 'event-tickets-manager-for-woocommerce' ),
-			),
+			);
+		}
+			$etmfw_email_template_settings[] =
 			array(
 				'title' => __( 'Enter Content to send in Sms with ticket', 'event-tickets-manager-for-woocommerce-pro' ),
 				'type'  => 'textarea',
@@ -621,8 +625,8 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'description'  => esc_html__( 'Use Placeholders  ', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( '{event-time}' ) . esc_html__( ' for Event starting - ending time and ', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( ' {venue} ' ) . esc_html__( ' for event location ,', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( ' {event-name} ' ) . esc_html__( ' for Event-Name,', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( ' {customer} ' ) . esc_html__( ' for Customer-Name,', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( ' {ticket} ' ) . esc_html__( ' for Ticket-Number,', 'event-tickets-manager-for-woocommerce-pro' ),
 				'class' => 'etmfw-radio-switch-class-pro',
 				'placeholder' => __( 'Enter content to send in sms', 'event-tickets-manager-for-woocommerce-pro' ),
-			),
-		);
+			);
+		// );
 		$etmfw_email_template_settings = apply_filters( 'wps_etmfw_extent_email_template_settings_array', $etmfw_email_template_settings );
 		$etmfw_email_template_settings[] = array(
 			'type'  => 'button',
