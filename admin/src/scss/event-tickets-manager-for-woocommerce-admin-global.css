@@ -1321,3 +1321,20 @@ a.wps-rma__popup-for-pro-link:hover {
 .wps_etmfw_desc_helper {
     margin-top: 10px;
 }
+
+/* Color fixes start */
+
+.wps-form-group__control .wp-picker-input-wrap {
+    display: inline-flex;
+  }
+  
+  .wps-form-group__control .wp-picker-input-wrap label.mdc-text-field {
+    display: block;
+    height: 30px;
+  }
+  
+  .wps-form-group__control .wp-picker-input-wrap .mdc-floating-label.mdc-floating-label--float-above {
+    transform: translateY(-20.75px) scale(0.75);
+  }
+  
+  /* Color fixes end */
