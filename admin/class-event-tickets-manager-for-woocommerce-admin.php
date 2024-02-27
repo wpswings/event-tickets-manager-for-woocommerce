@@ -333,9 +333,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			),
 
 			array(
-				'title' => __( 'Allow Ticket Sharing', 'event-tickets-manager-for-woocommerce-pro' ),
+				'title' => __( 'Allow Ticket Transfer', 'event-tickets-manager-for-woocommerce-pro' ),
 				'type'  => 'radio-switch',
-				'description'  => __( 'Enable this option  to share the tickets to another.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description'  => __( 'Enable this option  to share the transfer to another.', 'event-tickets-manager-for-woocommerce-pro' ),
 				'id'    => 'wps_wet_enable_ticket_sharing',
 				'value' => '',
 				'class' => 'etmfw-radio-switch-class-pro',
@@ -599,7 +599,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			array(
 				'title' => __( 'Ticket Background Colour', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'text',
-				'description'  => __( 'Enter the colour code( e.g. #0000FF ) or colour name( e.g. blue ).', 'event-tickets-manager-for-woocommerce' ),
+				'description'  => __( 'Select the colour code( e.g. #0000FF ).', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'wps_etmfw_ticket_bg_color',
 				'value' => get_option( 'wps_etmfw_ticket_bg_color', '' ),
 				'class' => 'wps_etmfw_colorpicker',
@@ -609,7 +609,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			array(
 				'title' => __( 'Ticket Text Colour', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'text',
-				'description'  => __( 'Enter the colour code( e.g. #FFFFFF ) or colour name( e.g. black ).', 'event-tickets-manager-for-woocommerce' ),
+				'description'  => __( 'Select the colour code( e.g. #FFFFFF ).', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'wps_etmfw_ticket_text_color',
 				'value' => get_option( 'wps_etmfw_ticket_text_color', '' ),
 				'class' => 'wps_etmfw_colorpicker',

@@ -256,7 +256,7 @@ $allowed_html = array(
 					<th><?php esc_html_e( 'Select QR Size', 'event-tickets-manager-for-woocommerce' ); ?></th>
 					<td>
 					<?php
-					$attribute_description = esc_html__( 'Select different qr size for PDF Ticket.', 'event-tickets-manager-for-woocommerce' );
+					$attribute_description = esc_html__( 'Select different QR size for PDF Ticket.', 'event-tickets-manager-for-woocommerce' );
 					$wps_etmfw_qr_size = ! empty( get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 'wps_etmfw_qr_size' ) : '';
 					?>
 					<input type="range" min="100" value="<?php echo esc_attr( $wps_etmfw_qr_size );  // echo esc_html( $wps_upsell_bumps_list[ $wps_upsell_bump_id ]['design_css']['top_vertical_spacing'] );. ?>"  max="220" value="" name='wps_etmfw_qr_size' class="wps_etmfw_qr_size_slider" />
