@@ -271,14 +271,14 @@ if ( $activated ) {
 	 */
 	function move_logout_tab_to_bottom( $menu_links ) {
 		// Store the logout tab.
-		if (isset($menu_links['customer-logout'])) {
-		$logout_link = $menu_links['customer-logout'];
+		if ( isset( $menu_links['customer-logout'] ) ) {
+			$logout_link = $menu_links['customer-logout'];
 
-		// Remove the logout tab from its original position.
-		unset( $menu_links['customer-logout'] );
+			// Remove the logout tab from its original position.
+			unset( $menu_links['customer-logout'] );
 
-		// Add the logout tab to the bottom.
-		$menu_links['customer-logout'] = $logout_link;
+			// Add the logout tab to the bottom.
+			$menu_links['customer-logout'] = $logout_link;
 		}
 		return $menu_links;
 	}
@@ -424,13 +424,13 @@ if ( $activated ) {
 	 */
 	function wps_etmfw_get_only_date_format( $date ) {
 		if ( in_array( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
-		$wps_changed_date_format = get_option( 'wp_date_time_event_format' );
-		$wps_custom_date_format = isset( $wps_changed_date_format ) && ('no_select' !=  $wps_changed_date_format) && ('' !=  $wps_changed_date_format)? $wps_changed_date_format : 'M j, Y';
+			$wps_changed_date_format = get_option( 'wp_date_time_event_format' );
+			$wps_custom_date_format = isset( $wps_changed_date_format ) && ( 'no_select' != $wps_changed_date_format ) && ( '' != $wps_changed_date_format ) ? $wps_changed_date_format : get_option( 'date_format' );
 
-		 // Return the date in the custom format.
-		 return date_i18n( $wps_custom_date_format, strtotime( $date ) );
+			// Return the date in the custom format.
+			return date_i18n( $wps_custom_date_format, strtotime( $date ) );
 		} else {
-		return date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime( $date ) );// get format from WordPress settings.
+			return date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime( $date ) );// get format from WordPress settings.
 		}
 	}
 

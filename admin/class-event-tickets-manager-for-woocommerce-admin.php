@@ -593,8 +593,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				),
 				'class' => 'wps_etmfw_mail_setting_upload_logo_box',
 				'description' => __( 'Upload the image which is used as a logo on your Email Template.', 'event-tickets-manager-for-woocommerce' ),
-			));
-			if ( ! is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) { 
+			),
+		);
+		if ( ! is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) {
 			$etmfw_email_template_settings[] =
 			array(
 				'title' => __( 'Ticket Background Colour', 'event-tickets-manager-for-woocommerce' ),
@@ -626,16 +627,16 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'class' => 'etmfw-radio-switch-class-pro',
 				'placeholder' => __( 'Enter content to send in sms', 'event-tickets-manager-for-woocommerce-pro' ),
 			);
-		// );
-		$etmfw_email_template_settings = apply_filters( 'wps_etmfw_extent_email_template_settings_array', $etmfw_email_template_settings );
-		$etmfw_email_template_settings[] = array(
-			'type'  => 'button',
-			'id'    => 'wps_etmfw_save_email_template_settings',
-			'button_text' => __( 'Save', 'event-tickets-manager-for-woocommerce' ),
-			'class' => 'etmfw-button-class',
-		);
+			// );
+			$etmfw_email_template_settings = apply_filters( 'wps_etmfw_extent_email_template_settings_array', $etmfw_email_template_settings );
+			$etmfw_email_template_settings[] = array(
+				'type'  => 'button',
+				'id'    => 'wps_etmfw_save_email_template_settings',
+				'button_text' => __( 'Save', 'event-tickets-manager-for-woocommerce' ),
+				'class' => 'etmfw-button-class',
+			);
 
-		return $etmfw_email_template_settings;
+			return $etmfw_email_template_settings;
 	}
 
 
