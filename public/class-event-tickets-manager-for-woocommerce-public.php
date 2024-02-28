@@ -365,7 +365,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					$field_array[ $key ] = $value;
 				} else {
 					$key = ucwords( str_replace( '_', ' ', substr( $key, 10 ) ) );
-					// $modifiedString = preg_replace( '/\d+/', '', $key );.
 					$wps_modified_string1 = substr( $key, 5 );
 					$field_array[ $wps_modified_string1 ] = $value;
 				}
@@ -1843,7 +1842,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			// Getting current customer orders.
 			$customer_orders = new WC_Order_Query(
 				array(
-					// 'meta_key' => '_customer_user',
 					'customer_id' => $customer_user_id,
 					'status' => $order_statuses,
 					'return' => 'ids',

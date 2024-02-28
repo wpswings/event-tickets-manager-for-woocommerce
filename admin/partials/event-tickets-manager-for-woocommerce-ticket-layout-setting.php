@@ -384,7 +384,6 @@ if ( isset( $_POST['reset_wps'] ) ) {
 		 update_option( 'wps_etmfw_pdf_text_color', '#757575' );
 		 update_option( 'wps_etmfw_border_type', 'solid' );
 		 update_option( 'wps_etmfw_pdf_border_color', 'black' );
-		// update_option('wps_etmfw_background_image','#ffffff');.
 	}
 
 

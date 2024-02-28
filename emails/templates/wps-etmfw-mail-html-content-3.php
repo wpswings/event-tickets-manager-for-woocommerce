@@ -71,7 +71,6 @@ $wps_etmfw_border_color = ! empty( get_option( 'wps_etmfw_pdf_border_color' ) ) 
 												<td class="wps_etmfw_pdf_text_colour" style="padding-bottom: 10px; color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">[STARTDATE]</td>
 											</tr>
 											<tr>
-												<!-- <td style="padding-bottom: 10px; color: #FFFFFF;">02:23 pm</td> -->
 											</tr>
 										</table>
 									</td>
@@ -85,7 +84,7 @@ $wps_etmfw_border_color = ! empty( get_option( 'wps_etmfw_pdf_border_color' ) ) 
 											<tr>
 												<td class="wps_etmfw_pdf_text_colour" style="padding-bottom: 10px; color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">[ENDDATE]</td>
 											</tr>
-											<!-- <tr><td style="padding-bottom: 10px; color: #FFFFFF;">12:00 am</td></tr> -->
+
 										</table>
 									</td>
 								</tr>					
