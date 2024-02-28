@@ -1597,14 +1597,17 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	public function wps_etmfw_css_control_callbck() {
 		$wps_plugin_list = get_option( 'active_plugins' );
 		$wps_plugin = 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php';
-		if ( in_array( $wps_plugin, $wps_plugin_list ) && is_admin() && ! wp_doing_ajax() ) {
-			?>
+		$screen = get_current_screen();
+		if ( isset( $screen->id ) && 'wp-swings_page_event_tickets_manager_for_woocommerce_menu' == $screen->id ) {
+			if ( in_array( $wps_plugin, $wps_plugin_list ) && is_admin() && ! wp_doing_ajax() ) {
+				?>
 		<style>
 		.wps_etmfw_creation_setting td:before {
 		display: none !important;
 		}
 		</style>
-			<?php
+				<?php
+			}
 		}
 	}
 }
