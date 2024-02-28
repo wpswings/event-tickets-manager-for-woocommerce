@@ -1,13 +1,13 @@
 === Event Tickets Manager for WooCommerce –  Events and Bookings Calendar, Registration, Event Check-in Using Emails, Edit Your Ticket Content ===
 Contributors: wpswings
 Donate link: https://wpswings.com/
-Tags: calendar, events, tickets, organizer, schedule, registration, bookings, event
+Tags: calendar, events, tickets, schedule, registration
 Requires at least: 4.6
 Tested up to: 6.4.3
-WC requires at least: 4.0
-WC tested up to: 8.5.2
-Stable tag: 1.2.4
-Requires PHP: 7.2 or Higher
+WC requires at least: 6.1
+WC tested up to: 8.6.1
+Stable tag: 1.2.5
+Requires PHP: 5.2.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -40,28 +40,26 @@ The WordPress Calendar Plugin is a complete solution for merchants who want to a
 
 **4) Hide/Remove Expired Event**: Event Tickets Plugin removes the expired event from the account to keep your customers updated. Removed events can be recovered from the Trash section. Expired Event is permanently deleted when you clear your trash section.
 
-**5) Dynamic CSS on Ticket**: The event calendar plugin allows merchants to give a Dynamic CSS on Ticket. The merchant can alter the background color of the ticket to give it a more interesting appearance. The merchant can alter the text color on the ticket to give it a more vibrant and better appearance.
+**5) Multisite Compatibility**: Users of the Multisite Compatibility feature of the events calendar plugin can control numerous websites with similar functions from a single dashboard. You may set up the WordPress calendar plugin on websites in your multisite network with this compatibility feature.
 
-**6) Multisite Compatibility**: Users of the Multisite Compatibility feature of the events calendar plugin can control numerous websites with similar functions from a single dashboard. You may set up the WordPress calendar plugin on websites in your multisite network with this compatibility feature.
+**6) Ticket Stock Management**: The WordPress events plugin i.e. Event Tickets Manager For WooCommerce uses the default stock management system to show customers the number of available event tickets. The merchant can manage the stock of the tickets from the admin panel. You can also see how many event tickets are sold and track if you are running out of stock with the help of a WordPress event calendar. 
 
-**7) Ticket Stock Management**: The WordPress events plugin i.e. Event Tickets Manager For WooCommerce uses the default stock management system to show customers the number of available event tickets. The merchant can manage the stock of the tickets from the admin panel. You can also see how many event tickets are sold and track if you are running out of stock with the help of a WordPress event calendar. 
+**7) Set Location For Events With Google Maps**: The Event Manager Plugin provides a high-level view of your offline events with Event Manager WordPress by showing the exact location of events to the user in the front end. The plugin is integrated with Google Maps and lets WooCommerce store owners show the live location of the events on their store.
 
-**8) Set Location For Events With Google Maps**: The Event Manager Plugin provides a high-level view of your offline events with Event Manager WordPress by showing the exact location of events to the user in the front end. The plugin is integrated with Google Maps and lets WooCommerce store owners show the live location of the events on their store.
+**8) Download Tickets As PDF**: The WooCommerce Event Tickets Manager allows the customer to download the tickets as PDFs for offline use. When customers buy event tickets for an event from your WooCommerce store they send an email with a PDF attachment of the ticket. The customers can also download the ticket from the **My Account tab.**
 
-**9) Download Tickets As PDF**: The WooCommerce Event Tickets Manager allows the customer to download the tickets as PDFs for offline use. When customers buy event tickets for an event from your WooCommerce store they send an email with a PDF attachment of the ticket. The customers can also download the ticket from the **My Account tab.**
+**9) WordPress Events Calendar**: The Events Ticket Manager comes with an interactive calendar widget. The widget shows your customers the names of upcoming, past, and present ongoing events in a list or grid.
 
-**10) WordPress Events Calendar**: The Events Ticket Manager comes with an interactive calendar widget. The widget shows your customers the names of upcoming, past, and present ongoing events in a list or grid.
+**10) Edit Your Ticket Content With A Breeze**: The WordPress Calendar Plugin gives merchants an easy-to-use editor to update the content of the tickets mailed to customers. You can very easily edit the subject and the main body of your WooCommerce event tickets. The editor also lets you use the shortcode to insert the name of your site in emails.
 
-**11) Edit Your Ticket Content With A Breeze**: The WordPress Calendar Plugin gives merchants an easy-to-use editor to update the content of the tickets mailed to customers. You can very easily edit the subject and the main body of your WooCommerce event tickets. The editor also lets you use the shortcode to insert the name of your site in emails.
+**11) Validate Event Check-in Using Emails**: The users must use the email address on which they received the event ticket. By entering their email addresses users can validate their check-in for the events they are planning to participate in by enabling the WordPress Events Plugin.
 
-**12) Validate Event Check-in Using Emails**: The users must use the email address on which they received the event ticket. By entering their email addresses users can validate their check-in for the events they are planning to participate in by enabling the WordPress Events Plugin.
-
-**13) WPML Multilingual Support**: The WordPress Events Plugin comes with [**WPML**](https://wpml.org/purchase/) multilingual support, To say, the WooCommerce extension will work in your local language. You can also use the Loco Translate Plugin to translate the string into your local language.
+**12) WPML Multilingual Support**: The WordPress Events Plugin comes with [**WPML**](https://wpml.org/purchase/) multilingual support, To say, the WooCommerce extension will work in your local language. You can also use the Loco Translate Plugin to translate the string into your local language.
 Thus, making the Events plugin WordPress one of the best online ticketing solutions and event management plugins in WordPress for eCommerce websites.
 
-**14) Compatibility with Mautic Integration for WooCommerce**: WordPress events plugin presents the compatibility of Mautic Integration that offers a complete management solution for your WooCommerce events data. The following data points can be captured after the placement of an event order, Last Event Price, Last Event Venue, Last Event Start Date And Time, Last Event End Date And Time, and Last Event Form Information.
+**13) Compatibility with Mautic Integration for WooCommerce**: WordPress events plugin presents the compatibility of Mautic Integration that offers a complete management solution for your WooCommerce events data. The following data points can be captured after the placement of an event order, Last Event Price, Last Event Venue, Last Event Start Date And Time, Last Event End Date And Time, and Last Event Form Information.
 
-**15) Compatibility with Direct Checkout for WooCommerce**: WordPress Calendar Plugin is now Compatible with [**Direct Checkout for WooCommerce**](https://wordpress.org/plugins/woocommerce-direct-checkout/), which simplifies the checkout process. With Direct Checkout, the admins can easily convert into a one-click process & customer decision to direct sale. 
+**14) Compatibility with Direct Checkout for WooCommerce**: WordPress Calendar Plugin is now Compatible with [**Direct Checkout for WooCommerce**](https://wordpress.org/plugins/woocommerce-direct-checkout/), which simplifies the checkout process. With Direct Checkout, the admins can easily convert into a one-click process & customer decision to direct sale. 
 
 == EVENTS MANAGER PLUGIN MEETS YOUR REQUIREMENT, SO ==
 [**Download Now**](https://downloads.wordpress.org/plugins/event-tickets-manager-for-woocommerce.zip)
@@ -75,25 +73,18 @@ Thus, making the Events plugin WordPress one of the best online ticketing soluti
 
 ==  WITH THE WORDPRESS EVENTS MANAGER PLUGIN YOU CAN: ==
 
-* The admins can utilize the WordPress event plugin to provide the customers with a secure experience - scannable barcodes containing the unique ticket code.
-* WordPress events plugin enables the admin to show the list of events over different pages using shortcodes. 
+* The admins can utilize the WordPress event plugin to provide the customers with a secure experience – scannable barcodes containing the unique ticket code.
+* WordPress events plugin enables the admin to show the list of events over different pages using shortcodes.
 * WordPress event calendar plugin provides more than one ticket at a time for your customers.
-* The merchant can disable the shipping charges as and when required by utilizing the events calendar plugin.
-* Add an event management plugin in WordPress as a WooCommerce product type on your online store.
-* With the event calendar plugin, you can manage the stock of tickets as an admin.
 * Show the event location to customers at the front end.
-* With the events calendar plugin, send the WooCommerce tickets as PDFs to customers in an email.
 * Track the check-in status of attendees using the WordPress calendar plugin.
 * Allow the customers to print the event ticket for an event from the Order details page for offline use whenever you sell event tickets.
-* Widget to show upcoming, past, and present events in the form of a list or the WordPress event calendar.
 * You can collect additional information from the user if needed at the time of checkout with the help of the event plugin.
-* Create an event management and ticketing events system with WooCommerce.
 * Allow the customers to validate their check-ins using emails.
-* The best part is you can fully automate your event and ticketing website & schedule events with the event calendar WordPress.
 * The Event Tickets Manager Plugin supports multisite compatibility.
-* WordPress Event plugin allows dynamic CSS to change the background and text of the ticket to give a dynamic look.
-* WordPress Events Plugin has a My Event tab in the My Account Section For Listing Purchased tickets of  the User.
 * WooCommerce Events plugin Hide/Remove the Event Product On Being Expired.
+
+
 
 == WHAT PREMIUM VERSION OF EVENT TICKETS FOR WOOCOMMERCE OFFERS == 
 
@@ -135,19 +126,6 @@ If you need support or have questions, kindly use our online chat window [**here
 > Create and Revamp Your Store with  [**WooCommerce Services**](https://wpswings.com/woocommerce-services/?utm_source=wpswings-events-services&utm_medium=events-org-page&utm_campaign=woocommerce-services )
 
 > Get huge discounts on event ticket management - [**Get More Offers**](https://wpswings.com/offers/?utm_source=wpswings-event-offers&utm_medium=wpswings-org-page&utm_campaign=offers)
-
-
-
-
-== Installation ==
-
-= Automatic installation =
-Automatic installation is the easiest option as WordPress handles the file transfers itself and you don't need to leave your web browser. To do an automatic install of the plugin, log in to your WordPress dashboard, navigate to the Plugins menu, and click Add New.
-
-In the search field type **"Event Tickets Manager for WooCommerce"** and click Search Plugins. Once you've found our Event Tickets Manager for WooCommerce plugin you can view details about it such as the point release, rating, and description. Most importantly, of course, you can install it by simply clicking **"Install Now"**.
-
-= Manual installation =
-The manual installation method involves downloading our Event Tickets Manager for WooCommerce and uploading it to your web server via your favorite FTP application. The WordPress codex contains [**instructions on how to do this here**](https://wordpress.org/support/article/managing-plugins/#manual-plugin-installation).
 
 = Updating =
 Automatic updates should work like a charm; as always though, ensure you backup your site just in case.
@@ -202,6 +180,10 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 
 == Changelog ==
+
+= 1.2.5 - Released on 28 February 2024 =
+* Fixes : critical warning issue on order status change.
+* New : Compatibility with Latest WP[6.4.3] and WC[8.6.1].
 
 = 1.2.4 - Released on 01 February 2024 =
 * New: Bar Code Scanning
@@ -266,7 +248,7 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 = 1.0.9 - Released on 31 August 2022 =
 * New: Minor Bug fixes and Enhancement
-* New: Compatible with the latest WP and WC
+* New: Compatible with the latest WP[6.4.3] and WC[8.6.1]
 
 = 1.0.8 - Released on 21 July 2022 =
 * New: Minor  Bug fixes and Enhancement
@@ -310,7 +292,6 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Upgrade Notice == 
 
-= 1.2.4 - Released on 01 February 2024 =
-* New: Bar Code Scanning
-* Fixes : Unnecessary JS Enqueue issue.
-* New: Compatibility with Direct Checkout for WooCommerce plugin
+= 1.2.5 - Released on 28 February 2024 =
+* Fixes : Critical warning issue on order status change.
+* New : Compatibility with Latest WP[6.4.3] and WC[8.6.1].

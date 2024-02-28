@@ -20,7 +20,7 @@
  * Author URI:           https://wpswings.com/?utm_source=wpswings-events-official&utm_medium=events-org-page&utm_campaign=official
  * Text Domain:          event-tickets-manager-for-woocommerce
  * Domain Path:          /languages
- * Requires at least:    4.6
+ * Requires at least:    5.2.4
  * Tested up to:         6.4.3
  * WC requires at least: 6.1
  * WC tested up to:      8.6.1
