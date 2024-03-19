@@ -330,4 +330,26 @@
     }
   });
 
+
+  jQuery(function($) {
+    // Function to show/hide custom field based on product type
+    function wps_toggle_custom_field() {
+      var productType = $('#product-type').val();
+      if (productType === 'event_ticket_manager') {
+        $('#wps_limit_user_purchase_event_wc').show();
+      } else {
+        $('#wps_limit_user_purchase_event_wc').hide();
+      }
+    }
+
+    // Initial check on page load
+    wps_toggle_custom_field();
+
+    // Watch for changes in product type dropdown
+    $('#product-type').change(function() {
+      wps_toggle_custom_field();
+      console.log('check');
+    });
+  });
+
 })(jQuery);

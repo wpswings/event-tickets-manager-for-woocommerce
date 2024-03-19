@@ -957,6 +957,10 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					$wps_etmfw_product_array['wps_event_recurring_type'] = ! empty( $_POST['wps_recurring_type'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_recurring_type'] ) ) : '';
 					$wps_etmfw_product_array['wps_event_recurring_value'] = ! empty( $_POST['wps_recurring_value'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_recurring_value'] ) ) : '';
 
+					//For the limit settiing
+					$wps_etmfw_product_array['wps_limit_user_purchase_event'] = ! empty( $_POST['wps_limit_user_purchase_event'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_limit_user_purchase_event'] ) ) : '';
+					$wps_etmfw_product_array['etmfw_set_limit_qty'] = ! empty( $_POST['etmfw_set_limit_qty'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_set_limit_qty'] ) ) : '';
+
 					// Daily Start/End Time Saving.
 					$wps_etmfw_product_array['wps_event_recurring_daily_start_time'] = ! empty( $_POST['wps_event_daily_start_time_val'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_event_daily_start_time_val'] ) ) : '';
 					$wps_etmfw_product_array['wps_event_recurring_daily_end_time'] = ! empty( $_POST['wps_event_daily_end_time_val'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_event_daily_end_time_val'] ) ) : '';
