@@ -859,23 +859,44 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$dompdf = new Dompdf( array( 'enable_remote' => true ) );
 		$dompdf->setPaper( 'A4', 'landscape' );
 		$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
-		if ( ! is_dir( $upload_dir_path ) ) {
-			wp_mkdir_p( $upload_dir_path );
-			chmod( $upload_dir_path, 0775 );
-		}
-
-		$dompdf->loadHtml( $wps_ticket_content );
-		@ob_end_clean(); // phpcs:ignore.
-		$dompdf->render();
-		$dompdf->set_option( 'isRemoteEnabled', true );
-		$output = $dompdf->output();
-
-		$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';
-		if ( file_exists( $generated_ticket_pdf ) ) {
-			$generated_pdf = file_put_contents( $upload_dir_path . '/events' . $order_id . $ticket_number . '-new.pdf', $output );
+		
+		// Check if WP_Filesystem is available.
+		if ( function_exists( 'WP_Filesystem' ) ) {
+			// Initialize WP_Filesystem.
+			WP_Filesystem();
+		
+			global $wp_filesystem;
+		
+			// Check if WP_Filesystem initialization was successful.
+			if ( is_wp_error( $wp_filesystem ) ) {
+				echo 'Failed to initialize the WordPress Filesystem.';
+			} else {
+				// Check if the directory doesn't exist.
+				if ( ! is_dir( $upload_dir_path ) ) {
+					// Create the directory using WP_Filesystem.
+					wp_mkdir_p( $upload_dir_path );
+					// Set permissions using WP_Filesystem.
+					$wp_filesystem->chmod( $upload_dir_path, 0775 );
+				}
+		
+				$dompdf->loadHtml( $wps_ticket_content );
+				@ob_end_clean(); // phpcs:ignore.
+				$dompdf->render();
+				$dompdf->set_option( 'isRemoteEnabled', true );
+				$output = $dompdf->output();
+		
+				$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';
+				// Use WP_Filesystem to write data to the file.
+				$generated_pdf = $wp_filesystem->put_contents( $generated_ticket_pdf, $output );
+		
+				if ( false === $generated_pdf ) {
+					echo 'Failed to write data to the file.';
+				}
+			}
 		} else {
-			$generated_pdf = file_put_contents( $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf', $output );
+			echo 'WordPress Filesystem API is not available.';
 		}
+		
 	}
 
 	/**
@@ -1236,7 +1257,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				}
 			}
 		}
-		echo json_encode( $response );
+		echo wp_json_encode( $response );
 		wp_die();
 	}
 
@@ -1300,7 +1321,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				}
 			}
 		}
-		echo json_encode( $response );
+		echo wp_json_encode( $response );
 		wp_die();
 	}
 
@@ -1340,7 +1361,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 		wp_reset_postdata();
 		$response['result'] = $calendar_data;
-		echo json_encode( $response );
+		echo wp_json_encode( $response );
 		wp_die();
 	}
 
@@ -1437,7 +1458,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 		wp_reset_postdata();
 		$response['result'] = $calendar_data;
-		echo json_encode( $response );
+		echo wp_json_encode( $response );
 		wp_die();
 	}
 
@@ -1823,6 +1844,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link http://www.wpswings.com/
 	 */
 	public function wps_etmfwp_sharing_tickets_org() {
+		$secure_nonce      = wp_create_nonce( 'wps-upsell-auth-nonce' );
+        $id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
+        if ( ! $id_nonce_verified ) {
+            wp_die( esc_html__( 'Nonce Not verified', 'upsell-order-bump-offer-for-woocommerce' ) );
+        }
 		$response['result'] = false;
 		$product_id = isset( $_REQUEST['for_event'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['for_event'] ) ) : '';
 		$ticket_num = isset( $_REQUEST['ticket_num'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['ticket_num'] ) ) : '';
@@ -1920,7 +1946,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		} else {
 			$response['message'] = __( 'Ticket of Event is not yet purchase.', 'event-tickets-manager-for-woocommerce-pro' );
 		}
-		echo json_encode( $response );
+		echo wp_json_encode( $response );
 		wp_die();
 	}
 
@@ -2018,7 +2044,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		} else {
 			$response = __( 'Ticket PDF Not Sent!', 'event-tickets-manager-for-woocommerce-pro' );
 		}
-		echo json_encode( $response );
+		echo wp_json_encode( $response );
 		wp_die();
 	}
 
@@ -2261,34 +2287,60 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @return string
 	 */
 	public function wps_etmfwp_generate_bar_code_callback( $order_id, $ticket_number, $product_id ) {
-
 		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'vendor-barcode/autoload.php';
 
 		$order = wc_get_order( $order_id );
-
+		
 		$billing_email = $order->get_billing_email();
-
+		
 		// $site_url is link in the barcode.
 		$site_url = get_site_url() . '/event-check-in-using-qr?action=checkin&id=' . esc_html( $product_id ) . '&ticket=' . esc_html( $ticket_number ) . '&email=' . esc_html( $billing_email ) . '';
 		$uploads = wp_upload_dir();
 		$path = $uploads['basedir'] . '/images/';
 		$file  = $path . $order_id . $ticket_number . 'checkin.png';  // address of the image od barcode in which  url is saved.
-		if ( file_exists( $file ) ) {
-
-			unlink( $file );
+		
+		// Initialize WP_Filesystem
+		if ( function_exists( 'WP_Filesystem' ) ) {
+			WP_Filesystem();
+		
+			global $wp_filesystem;
+		
+			// Check if WP_Filesystem initialization was successful
+			if ( is_wp_error( $wp_filesystem ) ) {
+				// Failed to initialize WP_Filesystem, handle the error
+				// For example, log the error or display a message to the user
+				echo 'Failed to initialize the WordPress Filesystem.';
+			} else {
+				// Check if file exists and delete it
+				if ( $wp_filesystem->exists( $file ) ) {
+					$wp_filesystem->delete( $file );
+				}
+		
+				// Create the directory if it doesn't exist
+				if ( ! $wp_filesystem->is_dir( $path ) ) {
+					$wp_filesystem->mkdir( $path, 0777 );
+				}
+		
+				// Recreate the file path
+				$file = $path . $order_id . $ticket_number . 'checkin.png'; // path  of the image.
+		
+				$wps_etmfw_barcode_color = ! empty( get_option( 'wps_etmfw_pdf_barcode_color' ) ) ? get_option( 'wps_etmfw_pdf_barcode_color' ) : 'black';
+		
+				$barcode = new \Com\Tecnick\Barcode\Barcode();
+				$bobj = $barcode->getBarcodeObj( 'C128B', "{$ticket_number}", 450, 70, $wps_etmfw_barcode_color, array( 0, 0, 0, 0 ) );
+		
+				$wps_image_data = $bobj->getPngData();
+		
+				// Write data to the file
+				$wp_filesystem->put_contents( $file, $wps_image_data, FS_CHMOD_FILE );
+		
+				return $file;
+			}
+		} else {
+			// WP_Filesystem not available, handle the situation
+			// For example, show an error message to the user
+			echo 'WordPress Filesystem API is not available.';
 		}
-		$path = $uploads['basedir'] . '/images/';
-		$file = $path . $order_id . $ticket_number . 'checkin.png'; // path  of the image.
-
-		$wps_etmfw_barcode_color = ! empty( get_option( 'wps_etmfw_pdf_barcode_color' ) ) ? get_option( 'wps_etmfw_pdf_barcode_color' ) : 'black';
-
-		$barcode = new \Com\Tecnick\Barcode\Barcode();
-		$bobj = $barcode->getBarcodeObj( 'C128B', "{$ticket_number}", 450, 70, $wps_etmfw_barcode_color, array( 0, 0, 0, 0 ) );
-
-		$wps_image_data = $bobj->getPngData();
-
-		file_put_contents( $file, $wps_image_data );
-
-		return $file;
+		
 	}
 }

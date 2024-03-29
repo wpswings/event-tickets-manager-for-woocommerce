@@ -18,13 +18,14 @@
 	 */
 class WC_Product_Event_Ticket_Manager extends WC_Product {
 
+	public $product_type = 'event_ticket_manager';
+	
 	/**
 	 * Initialize simple product.
 	 *
 	 * @param mixed $product product.
 	 */
 	public function __construct( $product ) {
-		$this->product_type = 'event_ticket_manager';
 		parent::__construct( $product );
 	}
 }

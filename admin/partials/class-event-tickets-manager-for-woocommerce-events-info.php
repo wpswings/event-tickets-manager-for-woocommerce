@@ -331,6 +331,11 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 		}
 		$event_attendees_details = apply_filters( 'wps_etmfw_unfiltered_events_data', $event_attendees_details );
 		$filtered_data = array();
+		$secure_nonce      = wp_create_nonce( 'wps-upsell-auth-nonce' );
+        $id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
+        if ( ! $id_nonce_verified ) {
+            wp_die( esc_html__( 'Nonce Not verified', 'upsell-order-bump-offer-for-woocommerce' ) );
+        }
 		if ( isset( $_REQUEST['s'] ) && '' !== $_REQUEST['s'] ) {
 			$data           = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
 			foreach ( $event_attendees_details as $key => $value ) {

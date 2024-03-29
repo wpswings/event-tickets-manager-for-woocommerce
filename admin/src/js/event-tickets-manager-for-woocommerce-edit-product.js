@@ -336,9 +336,9 @@
     function wps_toggle_custom_field() {
       var productType = $('#product-type').val();
       if (productType === 'event_ticket_manager') {
-        $('#wps_limit_user_purchase_event_wc').show();
+        jQuery('#wps_limit_user_purchase_event_wc').show();
       } else {
-        $('#wps_limit_user_purchase_event_wc').hide();
+        jQuery('#wps_limit_user_purchase_event_wc').hide();
       }
     }
 

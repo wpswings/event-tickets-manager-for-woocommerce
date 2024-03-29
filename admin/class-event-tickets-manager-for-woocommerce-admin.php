@@ -76,7 +76,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	 */
 	public function etmfw_admin_enqueue_styles( $hook ) {
 		$screen = get_current_screen();
-		if ( isset( $screen->id ) && 'wp-swings_page_event_tickets_manager_for_woocommerce_menu' == $screen->id ) {
+		if ( isset( $screen->id ) && ( 'wp-swings_page_event_tickets_manager_for_woocommerce_menu' == $screen->id || 'wp-swings_page_home' == $screen->id)) {
 			wp_enqueue_style( 'thickbox' );
 			wp_enqueue_style( 'wps-etmfw-select2-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/event-tickets-manager-for-woocommerce-select2.css', array(), time(), 'all' );
 			wp_enqueue_style( 'wps-etmfw-meterial-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.css', array(), time(), 'all' );
@@ -204,14 +204,45 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		global $submenu;
 		if ( empty( $GLOBALS['admin_page_hooks']['wps-plugins'] ) ) {
 			add_menu_page( 'WP Swings', 'WP Swings', 'manage_options', 'wps-plugins', array( $this, 'wps_plugins_listing_page' ), EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/wpswings_logo.png', 15 );
+			
+			// Add menus.
+			if ( wps_etmfw_check_multistep() ) {
+				add_submenu_page( 'wps-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'wps_etmfw_welcome_callback_function' ) );
+			}
+			
 			$etmfw_menus = apply_filters( 'wps_add_plugins_menus_array', array() );
 			if ( is_array( $etmfw_menus ) && ! empty( $etmfw_menus ) ) {
 				foreach ( $etmfw_menus as $etmfw_key => $etmfw_value ) {
 					add_submenu_page( 'wps-plugins', $etmfw_value['name'], $etmfw_value['name'], 'manage_options', $etmfw_value['menu_link'], array( $etmfw_value['instance'], $etmfw_value['function'] ) );
 				}
 			}
+		} else {
+			if ( ! empty( $submenu['wps-plugins'] ) ) {
+				foreach ( $submenu['wps-plugins'] as $key => $value ) {
+					if ( 'Home' === $value[0] ) {
+						$is_home = true;
+					}
+				}
+				if ( ! $is_home ) {
+					if ( wps_etmfw_check_multistep() ) {
+						add_submenu_page( 'wps-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'wps_etmfw_welcome_callback_function' ), 1 );
+					}
+				}
+			}
 		}
 	}
+
+	/**
+	 *
+	 * Adding the default menu into the wordpress menu
+	 *
+	 * @name wpswings_callback_function
+	 * @since 1.0.0
+	 */
+	public function wps_etmfw_welcome_callback_function() {
+		include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/event-ticket-for-woocommerce-welcome.php';
+	}
+
 
 	/**
 	 * Removing default submenu of parent menu in backend dashboard.
@@ -657,14 +688,11 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	public function wps_etmfw_admin_save_tab_settings() {
 		global $etmfw_wps_etmfw_obj, $error_notice;
 		$etmfw_post_check = false;
-
 		if ( wp_doing_ajax() ) {
 			return;
 		}
-		if ( ! isset( $_POST['wps_event_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_event_nonce'] ) ), 'wps_event_nonce' ) ) {
-			return;
-		}
-
+		if ( isset( $_POST['wps_event_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_event_nonce'] ) ), 'wps_event_nonce' ) ) {
+		
 		if ( isset( $_POST['wps_etmfw_save_general_settings'] ) ) {
 			$etmfw_genaral_settings = apply_filters( 'wps_etmfw_general_settings_array', array() );
 			$etmfw_post_check       = true;
@@ -721,6 +749,23 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 
 			do_action( 'wps_etmfw_generate_access_token_unlimited_time' );
 		}
+
+	}
+		if ( isset( $_POST['etmfw_track_button'] ) && isset( $_POST['wps-sfw-general-nonce-field'] ) ) {
+			$wps_etmfw_geberal_nonce = sanitize_text_field( wp_unslash( $_POST['wps-sfw-general-nonce-field'] ) );
+			if ( wp_verify_nonce( $wps_etmfw_geberal_nonce, 'wps-sfw-general-nonce' ) ) {
+
+				if ( isset( $_POST['wps_etmfw_enable_tracking'] ) && '' !== $_POST['wps_etmfw_enable_tracking'] ) {
+					$posted_value = sanitize_text_field( wp_unslash( $_POST['wps_etmfw_enable_tracking'] ) );
+					update_option( 'wps_etmfw_enable_tracking', $posted_value );
+				} else {
+					update_option( 'wps_etmfw_enable_tracking', '' );
+				}
+				$etmfw_post_check = true;
+
+			}
+		}
+
 	}
 
 	/**
@@ -1083,6 +1128,11 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				<form method="post">
 				<?php
 				do_action( 'wps_etmfw_support_csv' );
+				$secure_nonce      = wp_create_nonce( 'wps-upsell-auth-nonce' );
+				$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
+				if ( ! $id_nonce_verified ) {
+					wp_die( esc_html__( 'Nonce Not verified', 'upsell-order-bump-offer-for-woocommerce' ) );
+				}
 				$current_page = isset( $_REQUEST['page'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) : '';
 				?>
 					<input type="hidden" name="page" value="<?php echo esc_attr( $current_page ); ?>">
@@ -1214,6 +1264,11 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		if ( ! current_user_can( 'edit_shop_orders' ) ) {
 			return;
 		}
+		$secure_nonce      = wp_create_nonce( 'wps-upsell-auth-nonce' );
+        $id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
+        if ( ! $id_nonce_verified ) {
+            wp_die( esc_html__( 'Nonce Not verified', 'upsell-order-bump-offer-for-woocommerce' ) );
+        }
 		$wps_etmfw_enable = get_option( 'wps_etmfw_enable_plugin', false );
 		$wps_etmfw_in_processing = get_option( 'wps_wet_enable_after_payment_done_ticket', false );
 		if ( $wps_etmfw_enable ) {
@@ -1351,7 +1406,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'<a href="' . admin_url( 'admin.php?page=event_tickets_manager_for_woocommerce_menu&etmfw_tab=event-tickets-manager-for-woocommerce-integrations' ) . '" target="_blank">here</a>'
 			);
 		}
-		echo json_encode( $response );
+		echo wp_json_encode( $response );
 		wp_die();
 	}
 
@@ -1501,7 +1556,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			$response['message_error'] = __( 'Email Not Sent!', 'event-tickets-manager-for-woocommerce-pro' );
 		}
 
-		echo json_encode( $response );
+		echo wp_json_encode( $response );
 		wp_die();
 	}
 

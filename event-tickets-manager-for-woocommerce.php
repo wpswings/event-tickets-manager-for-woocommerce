@@ -15,7 +15,7 @@
  * Plugin Name:          Event Tickets Manager for WooCommerce
  * Plugin URI:           https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/
  * Description:          <code><strong>Event Tickets Manager for WooCommerce</strong></code> is all-in-one solution to create an event , manage ticket stocks download ticket as PDFs & much more. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-events&utm_medium=events-org-backend&utm_campaign=official">Elevate your e-commerce store by exploring more on <strong>WP Swings</strong></a>
- * Version:              1.2.5
+ * Version:              1.2.6
  * Author:               WP Swings
  * Author URI:           https://wpswings.com/?utm_source=wpswings-events-official&utm_medium=events-org-page&utm_campaign=official
  * Text Domain:          event-tickets-manager-for-woocommerce
@@ -23,7 +23,7 @@
  * Requires at least:    5.2.4
  * Tested up to:         6.4.3
  * WC requires at least: 6.1
- * WC tested up to:      8.6.1
+ * WC tested up to:      8.7.0
  * License:              GNU General Public License v3.0
  * License URI:          http://www.gnu.org/licenses/gpl-3.0.html
  */
@@ -99,6 +99,104 @@ if ( $activated ) {
 
 	}
 
+	if ( ! function_exists( 'wps_etmfw_check_multistep' ) ) {
+		/**
+		 * This function is used to check susbcripton product in cart.
+		 *
+		 * @name wps_sfw_check_multistep
+		 * @since 1.0.2
+		 */
+		function wps_etmfw_check_multistep() {
+			$bool = false;
+			$wps_etmfw_enable_plugin = get_option( 'wps_etmfw_enable_plugin', false );
+			if ( 'on' == $wps_etmfw_enable_plugin ) {
+				$bool = true;
+			}
+
+			return $bool;
+		}
+	}
+
+
+	if ( ! function_exists( 'wps_etmfw_is_enable_usage_tracking' ) ) {
+		/**
+		 * This function is used to check tracking enable.
+		 *
+		 * @name wps_sfw_is_enable_usage_tracking
+		 * @since 1.0.2
+		 */
+		function wps_etmfw_is_enable_usage_tracking() {
+			$is_enable = false;
+			$wps_wps_enable = get_option( 'wps_etmfw_enable_tracking', '' );
+			if ( 'on' == $wps_wps_enable ) {
+				$is_enable = true;
+			}
+			return $is_enable;
+		}
+	}
+
+
+	if ( wps_etmfw_is_enable_usage_tracking() ) {
+		add_action( 'wpswings_tracker_send_event', 'wps_sfw_wpswings_tracker_send_event');
+	}
+
+		/**
+		 * Function is used for the sending the track data
+		 *
+		 * @name wps_sfw_wpswings_tracker_send_event
+		 * @since 1.0.0
+		 */
+		function wps_sfw_wpswings_tracker_send_event() {
+
+			require WC()->plugin_path() . '/includes/class-wc-tracker.php';
+
+			$last_send = get_option( 'wpswings_tracker_last_send' );
+			if ( ! apply_filters( 'wpswings_tracker_send_override', false ) ) {
+
+				// Send a maximum of once per week by default.
+				$last_send = wps_etmfw_last_send_time();
+				if ( $last_send && $last_send > apply_filters( 'wpswings_tracker_last_send_interval', strtotime( '-1 week' ) ) ) {
+
+					return;
+				}
+			} else {
+
+				// Make sure there is at least a 1 hour delay between override sends, we don't want duplicate calls due to double clicking links.
+				$last_send = wps_etmfw_last_send_time();
+				if ( $last_send && $last_send > strtotime( '-1 hours' ) ) {
+
+					return;
+				}
+			}
+			// Update time first before sending to ensure it is set.
+			update_option( 'wpswings_tracker_last_send', time() );
+			$params = WC_Tracker::get_tracking_data();
+			$params = apply_filters( 'wpswings_tracker_params', $params );
+			$api_url = 'https://tracking.wpswings.com/wp-json/mps-route/v1/mps-testing-data/';
+			$sucess = wp_safe_remote_post(
+				$api_url,
+				array(
+					'method'      => 'POST',
+					'body'        => wp_json_encode( $params ),
+				)
+			);
+
+		}
+
+
+		/**
+		 * Get the updated time.
+		 *
+		 * @name wps_etmfw_last_send_time
+		 *
+		 * @since 1.0.0
+		 */
+		function wps_etmfw_last_send_time() {
+			return apply_filters( 'wpswings_tracker_last_send_time', get_option( 'wpswings_tracker_last_send', false ) );
+		}
+
+
+
 	/**
 	 * Callable function for defining plugin constants.
 	 *
@@ -125,9 +223,27 @@ if ( $activated ) {
 		$upload = wp_upload_dir();
 		$upload_dir = $upload['basedir'];
 		$upload_dir = $upload_dir . '/images';
+		
+		// Check if the directory doesn't exist.
 		if ( ! is_dir( $upload_dir ) ) {
-			mkdir( $upload_dir, 0777 );
+			// Attempt to create the directory using WP_Filesystem.
+			if ( function_exists( 'WP_Filesystem' ) ) {
+				WP_Filesystem(); // Initialize the filesystem.
+		
+				global $wp_filesystem;
+				if ( is_wp_error( $wp_filesystem ) ) {
+					esc_html_e('Failed to initialize the WordPress Filesystem.','event-tickets-manager-for-woocommerce');
+				} else {
+					// Create the directory using WP_Filesystem.
+					if ( ! $wp_filesystem->is_dir( $upload_dir ) ) {
+						$wp_filesystem->mkdir( $upload_dir, 0777 );
+					}
+				}
+			} else {
+				esc_html_e('WordPress Filesystem API is not available.', 'event-tickets-manager-for-woocommerce');
+			}
 		}
+		
 	}
 
 	/**
@@ -185,7 +301,16 @@ if ( $activated ) {
 		global $wpdb;
 		if ( is_multisite() && $network_wide ) {
 
-			$blogids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+			// Attempt to retrieve the blog ids from the cache.
+			$blogids = wp_cache_get( 'blog_ids', 'blog_ids_cache' );
+
+			// If not found in the cache, query the database and cache the result.
+			if ( false === $blogids ) {
+				$blogids = get_sites( array( 'fields' => 'ids' ) );
+				// Cache the result for future use.
+				wp_cache_set( 'blog_ids', $blogids, 'blog_ids_cache' );
+			}
+			
 			foreach ( $blogids as $blog_id ) {
 				switch_to_blog( $blog_id );
 
@@ -236,7 +361,15 @@ if ( $activated ) {
 		global $wpdb;
 		if ( is_multisite() && $network_wide ) {
 
-			$blogids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+			// Attempt to retrieve the blog ids from the cache.
+			$blogids = wp_cache_get( 'blog_ids', 'blog_ids_cache' );
+
+			// If not found in the cache, query the database and cache the result.
+			if ( false === $blogids ) {
+				$blogids = get_sites( array( 'fields' => 'ids' ) );
+				// Cache the result for future use.
+				wp_cache_set( 'blog_ids', $blogids, 'blog_ids_cache' );
+			}
 			foreach ( $blogids as $blog_id ) {
 				switch_to_blog( $blog_id );
 				$checkin_pageid = get_option( 'event_checkin_page_created', false );
@@ -604,6 +737,11 @@ function wps_etmfw_banner_notification_html() {
 	if ( isset( $screen->id ) ) {
 		$pagescreen = $screen->id;
 	}
+	$secure_nonce      = wp_create_nonce( 'wps-upsell-auth-nonce' );
+        $id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
+        if ( ! $id_nonce_verified ) {
+            wp_die( esc_html__( 'Nonce Not verified', 'upsell-order-bump-offer-for-woocommerce' ) );
+        }
 	if ( ( isset( $_GET['page'] ) && 'event_tickets_manager_for_woocommerce_menu' === $_GET['page'] ) ) {
 		$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
 		if ( isset( $banner_id ) && '' !== $banner_id ) {
