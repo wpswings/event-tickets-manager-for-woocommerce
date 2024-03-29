@@ -2305,23 +2305,23 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		
 			global $wp_filesystem;
 		
-			// Check if WP_Filesystem initialization was successful
+			// Check if WP_Filesystem initialization was successful.
 			if ( is_wp_error( $wp_filesystem ) ) {
-				// Failed to initialize WP_Filesystem, handle the error
-				// For example, log the error or display a message to the user
+				// Failed to initialize WP_Filesystem, handle the error.
+				// For example, log the error or display a message to the user.
 				echo 'Failed to initialize the WordPress Filesystem.';
 			} else {
-				// Check if file exists and delete it
+				// Check if file exists and delete it.
 				if ( $wp_filesystem->exists( $file ) ) {
 					$wp_filesystem->delete( $file );
 				}
 		
-				// Create the directory if it doesn't exist
+				// Create the directory if it doesn't exist.
 				if ( ! $wp_filesystem->is_dir( $path ) ) {
 					$wp_filesystem->mkdir( $path, 0777 );
 				}
 		
-				// Recreate the file path
+				// Recreate the file path.
 				$file = $path . $order_id . $ticket_number . 'checkin.png'; // path  of the image.
 		
 				$wps_etmfw_barcode_color = ! empty( get_option( 'wps_etmfw_pdf_barcode_color' ) ) ? get_option( 'wps_etmfw_pdf_barcode_color' ) : 'black';
@@ -2337,8 +2337,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				return $file;
 			}
 		} else {
-			// WP_Filesystem not available, handle the situation
-			// For example, show an error message to the user
+			// WP_Filesystem not available, handle the situation.
+			// For example, show an error message to the user.
 			echo 'WordPress Filesystem API is not available.';
 		}
 		
