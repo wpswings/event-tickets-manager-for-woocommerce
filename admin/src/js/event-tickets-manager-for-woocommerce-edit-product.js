@@ -195,6 +195,9 @@
         $("#etmfw_start_date_time").attr("required", "required");
         $("#etmfw_end_date_time").attr("required", "required");
         $("#etmfw_event_venue").attr("required", "required");
+        $('#wps_limit_user_purchase_event_wc').show();
+      } else {
+        $('#wps_limit_user_purchase_event_wc').hide();
       }
     });
   });
@@ -342,13 +345,9 @@
       }
     }
 
-    // Initial check on page load
-    wps_toggle_custom_field();
-
     // Watch for changes in product type dropdown
     $('#product-type').change(function() {
       wps_toggle_custom_field();
-      console.log('check');
     });
   });
 
