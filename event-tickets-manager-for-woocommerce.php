@@ -231,16 +231,12 @@ if ( $activated ) {
 				WP_Filesystem(); // Initialize the filesystem.
 		
 				global $wp_filesystem;
-				if ( is_wp_error( $wp_filesystem ) ) {
-					esc_html_e('Failed to initialize the WordPress Filesystem.','event-tickets-manager-for-woocommerce');
-				} else {
-					// Create the directory using WP_Filesystem.
-					if ( ! $wp_filesystem->is_dir( $upload_dir ) ) {
-						$wp_filesystem->mkdir( $upload_dir, 0777 );
-					}
+				if ( ! is_wp_error( $wp_filesystem ) ) {
+				// Create the directory using WP_Filesystem.
+				if ( ! $wp_filesystem->is_dir( $upload_dir ) ) {
+					$wp_filesystem->mkdir( $upload_dir, 0777 );
 				}
-			} else {
-				esc_html_e('WordPress Filesystem API is not available.', 'event-tickets-manager-for-woocommerce');
+				}
 			}
 		}
 		

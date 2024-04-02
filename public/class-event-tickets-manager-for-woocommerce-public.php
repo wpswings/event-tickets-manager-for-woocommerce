@@ -868,9 +868,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			global $wp_filesystem;
 		
 			// Check if WP_Filesystem initialization was successful.
-			if ( is_wp_error( $wp_filesystem ) ) {
-				echo 'Failed to initialize the WordPress Filesystem.';
-			} else {
+			if ( ! is_wp_error( $wp_filesystem ) ) {
 				// Check if the directory doesn't exist.
 				if ( ! is_dir( $upload_dir_path ) ) {
 					// Create the directory using WP_Filesystem.
@@ -893,8 +891,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					echo 'Failed to write data to the file.';
 				}
 			}
-		} else {
-			echo 'WordPress Filesystem API is not available.';
 		}
 		
 	}
@@ -2336,10 +2332,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		
 				return $file;
 			}
-		} else {
-			// WP_Filesystem not available, handle the situation.
-			// For example, show an error message to the user.
-			echo 'WordPress Filesystem API is not available.';
 		}
 		
 	}
