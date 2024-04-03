@@ -349,6 +349,14 @@
     $('#product-type').change(function() {
       wps_toggle_custom_field();
     });
+
+    var input = document.getElementById("etmfw_set_limit_qty");
+    input.setAttribute("type", "number");
+    input.setAttribute("min", "1"); // Set the minimum value to 1.
+        // Check if input value is empty, then set it to 1
+        if (input.value === "") {
+          input.value = "1";
+      }
   });
 
 })(jQuery);
