@@ -365,7 +365,7 @@ if ( isset( $_POST['reset_wps'] ) ) {
 		$_SESSION['wps_refresh_count'] = 0;
 	}
 
-	$wps_refresh_count = $_SESSION['wps_refresh_count'];
+	$wps_refresh_count = isset($_SESSION['wps_refresh_count']) ? intval($_SESSION['wps_refresh_count']) : 0;
 
 	if ( $wps_refresh_count < 2 ) {
 		// Increment the refresh count.

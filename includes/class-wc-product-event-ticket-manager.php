@@ -18,8 +18,14 @@
 	 */
 class WC_Product_Event_Ticket_Manager extends WC_Product {
 
+	/**
+	 *
+	 * This variable stores the type of the product. In this case, it represents an event ticket manager.
+	 *
+	 * @var string
+	 */
 	public $product_type = 'event_ticket_manager';
-	
+
 	/**
 	 * Initialize simple product.
 	 *

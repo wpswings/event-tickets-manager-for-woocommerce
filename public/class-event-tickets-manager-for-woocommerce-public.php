@@ -708,7 +708,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				if ( 'on' == $wps_etmfw_in_processing ) {
 					$temp_status = 'processing';
 				}
-				$wps_check_point = isset( $_SESSION['wps_Check_point'] ) ? $_SESSION['wps_Check_point'] : 0;
+				$wps_check_point = isset( $_SESSION['wps_Check_point'] ) ? intval( $_SESSION['wps_Check_point'] ) : 0;
 				if ( ( 'completed' === $order_status || 'processing' === $order_status ) && ( 0 == $wps_check_point || 1 != $wps_check_point ) ) { // Order Status For Creating Event Ticket.
 					$order_id = $order->get_id();
 					$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
@@ -739,7 +739,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					}
 				} else {
 					$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
-					$generated_ticket_pdf = $upload_dir_path . '/events' . $_SESSION['order_id'] . $_SESSION['ticket_no'] . '.pdf';
+					$generated_ticket_pdf = ( isset( $_SESSION['order_id'] ) && isset( $_SESSION['ticket_no'] ) && is_numeric( $_SESSION['order_id'] ) && is_numeric( $_SESSION['ticket_no'] ) ) ? $upload_dir_path . '/events' . intval( $_SESSION['order_id'] ) . intval( $_SESSION['ticket_no'] ) . '.pdf' : '';
 					$attachments[] = $generated_ticket_pdf;
 				}
 			}
@@ -859,14 +859,14 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$dompdf = new Dompdf( array( 'enable_remote' => true ) );
 		$dompdf->setPaper( 'A4', 'landscape' );
 		$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
-		
+
 		// Check if WP_Filesystem is available.
 		if ( function_exists( 'WP_Filesystem' ) ) {
 			// Initialize WP_Filesystem.
 			WP_Filesystem();
-		
+
 			global $wp_filesystem;
-		
+
 			// Check if WP_Filesystem initialization was successful.
 			if ( ! is_wp_error( $wp_filesystem ) ) {
 				// Check if the directory doesn't exist.
@@ -876,23 +876,23 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					// Set permissions using WP_Filesystem.
 					$wp_filesystem->chmod( $upload_dir_path, 0775 );
 				}
-		
+
 				$dompdf->loadHtml( $wps_ticket_content );
 				@ob_end_clean(); // phpcs:ignore.
 				$dompdf->render();
 				$dompdf->set_option( 'isRemoteEnabled', true );
 				$output = $dompdf->output();
-		
+
 				$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';
 				// Use WP_Filesystem to write data to the file.
 				$generated_pdf = $wp_filesystem->put_contents( $generated_ticket_pdf, $output );
-		
+
 				if ( false === $generated_pdf ) {
 					echo 'Failed to write data to the file.';
 				}
 			}
 		}
-		
+
 	}
 
 	/**
@@ -1841,10 +1841,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 */
 	public function wps_etmfwp_sharing_tickets_org() {
 		$secure_nonce      = wp_create_nonce( 'wps-upsell-auth-nonce' );
-        $id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
-        if ( ! $id_nonce_verified ) {
-            wp_die( esc_html__( 'Nonce Not verified', 'upsell-order-bump-offer-for-woocommerce' ) );
-        }
+		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
+		if ( ! $id_nonce_verified ) {
+			wp_die( esc_html__( 'Nonce Not verified', 'upsell-order-bump-offer-for-woocommerce' ) );
+		}
 		$response['result'] = false;
 		$product_id = isset( $_REQUEST['for_event'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['for_event'] ) ) : '';
 		$ticket_num = isset( $_REQUEST['ticket_num'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['ticket_num'] ) ) : '';
@@ -2286,21 +2286,21 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'vendor-barcode/autoload.php';
 
 		$order = wc_get_order( $order_id );
-		
+
 		$billing_email = $order->get_billing_email();
-		
+
 		// $site_url is link in the barcode.
 		$site_url = get_site_url() . '/event-check-in-using-qr?action=checkin&id=' . esc_html( $product_id ) . '&ticket=' . esc_html( $ticket_number ) . '&email=' . esc_html( $billing_email ) . '';
 		$uploads = wp_upload_dir();
 		$path = $uploads['basedir'] . '/images/';
 		$file  = $path . $order_id . $ticket_number . 'checkin.png';  // address of the image od barcode in which  url is saved.
-		
-		// Initialize WP_Filesystem
+
+		// Initialize WP_Filesystem.
 		if ( function_exists( 'WP_Filesystem' ) ) {
 			WP_Filesystem();
-		
+
 			global $wp_filesystem;
-		
+
 			// Check if WP_Filesystem initialization was successful.
 			if ( is_wp_error( $wp_filesystem ) ) {
 				// Failed to initialize WP_Filesystem, handle the error.
@@ -2311,28 +2311,28 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				if ( $wp_filesystem->exists( $file ) ) {
 					$wp_filesystem->delete( $file );
 				}
-		
+
 				// Create the directory if it doesn't exist.
 				if ( ! $wp_filesystem->is_dir( $path ) ) {
 					$wp_filesystem->mkdir( $path, 0777 );
 				}
-		
+
 				// Recreate the file path.
 				$file = $path . $order_id . $ticket_number . 'checkin.png'; // path  of the image.
-		
+
 				$wps_etmfw_barcode_color = ! empty( get_option( 'wps_etmfw_pdf_barcode_color' ) ) ? get_option( 'wps_etmfw_pdf_barcode_color' ) : 'black';
-		
+
 				$barcode = new \Com\Tecnick\Barcode\Barcode();
 				$bobj = $barcode->getBarcodeObj( 'C128B', "{$ticket_number}", 450, 70, $wps_etmfw_barcode_color, array( 0, 0, 0, 0 ) );
-		
+
 				$wps_image_data = $bobj->getPngData();
-		
-				// Write data to the file
+
+				// Write data to the file.
 				$wp_filesystem->put_contents( $file, $wps_image_data, FS_CHMOD_FILE );
-		
+
 				return $file;
 			}
 		}
-		
+
 	}
 }
