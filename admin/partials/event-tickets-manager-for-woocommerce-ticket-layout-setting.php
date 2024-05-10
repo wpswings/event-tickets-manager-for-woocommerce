@@ -14,6 +14,8 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+$wps_ubo_selected_template = get_option( 'wps_etmfw_ticket_template', '1' );
+
 if ( isset( $_POST['wps_etmfw_new_layout_setting_save'] ) ) {
 
 	$wps_verify_nonce_form = isset( $_POST['wps_layout_value'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_layout_value'] ) ) : '1';
@@ -34,11 +36,13 @@ if ( isset( $_POST['wps_etmfw_new_layout_setting_save_2'] ) ) {
 	$wps_etmfw_logo_size = isset( $_POST['wps_etmfw_logo_size'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_logo_size'] ) ) : '';
 	$wps_etmfw_qr_size = isset( $_POST['wps_etmfw_qr_size'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_qr_size'] ) ) : '';
 	$wps_etmfw_background_image = isset( $_POST['wps_etmfw_background_image'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_background_image'] ) ) : '';
+	$wps_etmfw_header_background_color = isset( $_POST['wps_etmfw_pdf_header_background_color'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_etmfw_pdf_header_background_color'] ) ) : '';
 
 	update_option( 'wps_etmfw_pdf_text_color', $wps_etmfw_pdf_text_color );
 	update_option( 'wps_etmfw_logo_size', $wps_etmfw_logo_size );
 	update_option( 'wps_etmfw_qr_size', $wps_etmfw_qr_size );
 	update_option( 'wps_etmfw_background_image', $wps_etmfw_background_image );
+	update_option( 'wps_etmfw_pdf_header_background_color', $wps_etmfw_header_background_color );
 
 }
 
@@ -158,6 +162,32 @@ $allowed_html = array(
 								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-4.png' ); ?>">
 							</a>
 						</div>
+
+						<!-- Template five. -->
+						<div id ="wps_ubo_premium_popup_3_template" class="wps_etmfw_template_select 
+						<?php
+						if ( true != $wps_is_pro_active ) {
+							echo 'wps-etmfw-radio-switch-class-pro-tag'; }
+						?>
+						<?php echo esc_html( 5 === (int) $wps_ubo_selected_template ? 'wps_etmfw_selected_class' : '' ); ?>">
+						<?php
+						if ( true != $wps_is_pro_active ) {
+							?>
+							<span class="wps_etmfw_premium_strip"><?php esc_html_e( 'Pro', 'event-tickets-manager-for-woocommerce' ); } ?></span>	
+						<p class="wps_etmfw_template_name" ><strong><?php esc_html_e( 'Unknow', 'event-tickets-manager-for-woocommerce' ); ?></strong></p>
+							<a href="javascript:void" class=" 
+							<?php
+							if ( true == $wps_is_pro_active ) {
+								?>
+								  <?php
+									echo 'wps_etmfw_template_link';
+							} else {
+								echo 'wps_etmfw_template_link_pro'; }
+							?>
+							" data_link = '5' >
+								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-4.png' ); ?>">
+							</a>
+						</div>
 					</div>
 				</div>
 
@@ -214,6 +244,19 @@ $allowed_html = array(
 					<span class="wps_etmfw_helper_text"><?php echo esc_html( $attribute_description ); ?></span>
 				</td>
 				</tr>
+				<?php if ( 5 === (int) $wps_ubo_selected_template ) { ?>
+				<tr valign="top">
+					<th><?php esc_html_e( 'Select Header Background Color', 'event-tickets-manager-for-woocommerce' ); ?></th>
+					<td>
+					<?php
+					$attribute_description = esc_html__( 'Select different header background color for PDF Ticket.', 'event-tickets-manager-for-woocommerce' );
+					$wps_etmfw_header_background_color = ! empty( get_option( 'wps_etmfw_pdf_header_background_color' ) ) ? get_option( 'wps_etmfw_pdf_header_background_color' ) : '';
+					?>
+					<input type="text" name="wps_etmfw_pdf_header_background_color" class="wps_etmfw_colorpicker wps_etmfw_select_ticket_header_background" value="<?php echo esc_attr( $wps_etmfw_header_background_color ); ?>">
+					<span class="wps_etmfw_helper_text"><?php echo esc_html( $attribute_description ); ?></span>
+				</td>
+				</tr>
+				<?php } ?>
 
 				<tr valign="top">
 					<th><?php esc_html_e( 'Select Background Color', 'event-tickets-manager-for-woocommerce' ); ?></th>
@@ -311,7 +354,9 @@ $allowed_html = array(
 					<?php if ( 3 === (int) $wps_ubo_selected_template ) { ?>
 					<?php include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'Demo/wps-etmfw-mail-html-content-2.php'; } // Demure. ?>
 					<?php if ( 4 === (int) $wps_ubo_selected_template ) { ?>
-					<?php include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'Demo/wps-etmfw-mail-html-content-3.php'; } // Mellifluous. ?>			
+					<?php include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'Demo/wps-etmfw-mail-html-content-3.php'; } // Mellifluous. ?>	
+					<?php if ( 5 === (int) $wps_ubo_selected_template ) { ?>
+					<?php include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'Demo/wps-etmfw-mail-html-content-4.php'; } // Mellifluous. ?>				
 				</div>
 				</div>
 				<!-- Preview end -->

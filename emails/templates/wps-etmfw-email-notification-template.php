@@ -52,7 +52,7 @@ $template = '<table class="wps-wuc__email-template" style=" border: 1px solid #0
 								[FEATUREDIMAGE]
 							</td>						
 							<td>
-								<h3 style="color: #000000; font-size: 26px; margin: 20px 0 0; text-align: left;">Check In For This Event</h3>
+								<h3 style="color: #000000; font-size: 26px; margin: 20px 0 0; text-align: left;">Check In For This Event 1</h3>
 														
 								<p style="font-size: 16px;">[TIME]</p>
 								<p style="font-size: 16px;">[VENUE]</p>	

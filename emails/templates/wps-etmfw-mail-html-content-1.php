@@ -25,10 +25,8 @@ $wps_etmfw_border_color = ! empty( get_option( 'wps_etmfw_pdf_border_color' ) ) 
 <html>
 <head>
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;500;700;800;900&display=swap');
-
 		body , html {
-			font-family: 'Inter', sans-serif;
+			font-family: 'DejaVu Sans';
 		}
 		* {
 			box-sizing: border-box;

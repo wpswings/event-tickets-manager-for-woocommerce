@@ -298,7 +298,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_wps_etmfw_resend_mail_pdf_order_deatails', $etmfw_plugin_public, 'wps_etmfw_resend_mail_pdf_order_deatails', 11 );
 			$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_resend_mail_pdf_order_deatails', $etmfw_plugin_public, 'wps_etmfw_resend_mail_pdf_order_deatails', 11 );
 		}
-		$this->loader->add_filter( 'woocommerce_cart_needs_shipping', $etmfw_plugin_public, 'wps_etmfw_cart_needs_shipping', 10, 1 );
+		// $this->loader->add_filter( 'woocommerce_cart_needs_shipping', $etmfw_plugin_public, 'wps_etmfw_cart_needs_shipping', 10, 1 );
 
 		$this->loader->add_action( 'init', $etmfw_plugin_public, 'wp_shortcode_init_callback' );
 		$this->loader->add_action( 'wp_ajax_wps_filter_event_search', $etmfw_plugin_public, 'wps_filter_event_search_callback', 11 );

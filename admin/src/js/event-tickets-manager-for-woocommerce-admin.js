@@ -84,15 +84,14 @@
         $('.wps_etmfw_colorpicker').wpColorPicker();
 
         //Dynamic text color for pdf ticket start here.
-        var wps_etmfw_text_color_change = $('.wps_etmfw_pdf_text_color'); //1.1.5.
-        var wps_etmfw_text_color = '';
-        var wps_etmfw_text_color_selector = $('.wps_etmfw_pdf_text_colour');//1.1.5.
-
-        wps_etmfw_text_color_change.wpColorPicker({ //1.1.5.
-            change: (event, ui) => {
-
-                wps_etmfw_text_color = ui.color.toString();
-                wps_etmfw_text_color_selector.css('color', wps_etmfw_text_color);
+        var wps_etmfw_text_color_change = $('.wps_etmfw_pdf_text_color'); // Select color picker element
+        var wps_etmfw_text_color = ''; // Variable to store selected color
+        var wps_etmfw_text_color_selector = $('.wps_etmfw_pdf_text_colour'); // Select elements to change text color
+        
+        wps_etmfw_text_color_change.wpColorPicker({ // Initialize color picker
+            change: function(event, ui) { // Event listener for color change
+                wps_etmfw_text_color = ui.color.toString(); // Get selected color
+                wps_etmfw_text_color_selector.css('color', wps_etmfw_text_color); // Apply selected color to text
             }
         });
         //Dynamic text color for pdf ticket end here.
@@ -124,6 +123,22 @@
             }
         });
         //Dynamic Changes for background end Here.
+
+
+        //Dynamic Changes for header background color start Here.
+        var wps_etmfw_header_background_color_change = $('.wps_etmfw_select_ticket_header_background'); //1.1.5.
+        var wps_etmfw_header_background_color = '';
+        var wps_etmfw_header_background_selector = $('.ticket-header');//1.1.5.
+
+        wps_etmfw_header_background_color_change.wpColorPicker({ //1.1.5.
+            change: (event, ui) => {
+
+                wps_etmfw_header_background_color = ui.color.toString();
+                wps_etmfw_header_background_selector.css('background-color', wps_etmfw_header_background_color);
+            }
+        });
+        //Dynamic Changes for header background color end Here.
+
 
         //Dynamic Changes for logo size start Here.
         var VerticalSpacingTop = '';
@@ -381,11 +396,9 @@
 
 				border_size = '2px';
 			}
-
+            document.getElementById('wps_event_border_type').style.border = border_size + ' ' + border_type + ' ' + border_color;
 			document.getElementById('wps_etmfw_parent_wrapper').style.border = border_size + ' ' + border_type + ' ' + border_color;
             document.getElementById('wps_etmfw_parent_wrapper_2').style.border = border_size + ' ' + border_type + ' ' + border_color;
-            // document.getElementById('wps_etmfw_parent_wrapper_3').style.border = border_size + ' ' + border_type + ' ' + border_color;
-			// BumpOfferBox.css( 'border', border_type);
 
 		}
         function wps_etmfw_hide_bck_ground_image_setting(){

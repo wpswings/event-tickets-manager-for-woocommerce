@@ -15,15 +15,15 @@
  * Plugin Name:          Event Tickets Manager for WooCommerce
  * Plugin URI:           https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/
  * Description:          <code><strong>Event Tickets Manager for WooCommerce</strong></code> is all-in-one solution to create an event , manage ticket stocks download ticket as PDFs & much more. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-events&utm_medium=events-org-backend&utm_campaign=official">Elevate your e-commerce store by exploring more on <strong>WP Swings</strong></a>
- * Version:              1.2.6
+ * Version:              1.2.7
  * Author:               WP Swings
  * Author URI:           https://wpswings.com/?utm_source=wpswings-events-official&utm_medium=events-org-page&utm_campaign=official
  * Text Domain:          event-tickets-manager-for-woocommerce
  * Domain Path:          /languages
  * Requires at least:    5.2.4
- * Tested up to:         6.5.0
+ * Tested up to:         6.5.3
  * WC requires at least: 6.1
- * WC tested up to:      8.7.0
+ * WC tested up to:      8.8.3
  * License:              GNU General Public License v3.0
  * License URI:          http://www.gnu.org/licenses/gpl-3.0.html
  */
@@ -32,6 +32,42 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
+
+function disable_shipping_calc_on_cart( $show_shipping ) {
+	$wps_need_shipping = false;
+
+	$args = array(
+		'status'            => array( 'publish' ),
+		'type'              => 'event_ticket_manager',
+		'limit'             => get_option( 'posts_per_page' ),  // -1 for unlimited
+	);
+
+	// Array of product objects.
+	$products = wc_get_products( $args );
+	$wps_evnt_prouct_back_data_arry = array();
+
+	foreach ( $products as $product ) {
+
+		$product_id   = $product->get_id();
+
+		$wps_all_event_product_ids_array[] = $product_id;
+	}
+
+	if ( function_exists( 'WC' ) && WC()->cart ) {
+		if ( ! empty( WC()->cart->get_cart() ) ) {
+			foreach ( WC()->cart->get_cart() as $cart_item ) {
+				$wps_products_ids_array_cart[] = $cart_item['product_id'];
+				$wps_product  = wc_get_product($cart_item['product_id']);
+				if($wps_product->get_type() == 'event_ticket_manager'){
+					$wps_need_shipping  = true;
+				}}
+		}
+	}
+
+    return !$wps_need_shipping;
+}
+add_filter( 'woocommerce_cart_ready_to_calc_shipping', 'disable_shipping_calc_on_cart', 99 );
+add_filter( 'woocommerce_cart_needs_shipping_address', 'disable_shipping_calc_on_cart', 99 );
 
 use Automattic\WooCommerce\Utilities\OrderUtil;
 
@@ -85,7 +121,7 @@ if ( $activated ) {
 	 */
 	function define_event_tickets_manager_for_woocommerce_constants() {
 
-		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION', '1.2.6' );
+		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION', '1.2.7' );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com' );

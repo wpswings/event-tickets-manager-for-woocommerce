@@ -447,6 +447,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$wps_etmfw_mail_template_data = array();
 		foreach ( $order->get_items() as $item_id => $item ) {
 			$product = $item->get_product();
+			if ( isset( $product ) && $product->is_type( 'event_ticket_manager' ) ) {
 
 			if ( isset( $product ) ) {
 				$item_quantity = wc_get_order_item_meta( $item_id, '_qty', true );
@@ -585,6 +586,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$wps_etmfw_mail_template_data = apply_filters( 'wps_etmfw_common_arr_data', $wps_etmfw_mail_template_data, $item );
 				$this->wps_etmfw_send_ticket_mail( $order, $wps_etmfw_mail_template_data );
 			}
+		}
 		}
 		do_action( 'wps_etmfw_action_on_order_status_changed', $order_id, $old_status, $new_status );
 	}
@@ -803,6 +805,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-2.php'; // Demure.
 		} elseif ( '4' == $wps_set_the_pdf_ticket_template ) {
 			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-3.php'; // Mellifluous.
+		} elseif ( '5' == $wps_set_the_pdf_ticket_template ) {
+			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-4.php'; // unknown.
 		}
 		$wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_pdf_text_color' ) ) ? get_option( 'wps_etmfw_pdf_text_color' ) : '#ffffff';
 		$wps_ticket_details = ob_get_contents();
@@ -857,7 +861,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	public function wps_etmfw_generate_ticket_pdf( $wps_ticket_content, $order, $order_id, $ticket_number ) {
 		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'package/lib/dompdf/vendor/autoload.php';
 		$dompdf = new Dompdf( array( 'enable_remote' => true ) );
-		$dompdf->setPaper( 'A4', 'landscape' );
+		$dompdf->setPaper( 'A4' );
 		$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
 
 		// Check if WP_Filesystem is available.
@@ -877,10 +881,12 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					$wp_filesystem->chmod( $upload_dir_path, 0775 );
 				}
 
+				// die($wps_ticket_content);
 				$dompdf->loadHtml( $wps_ticket_content );
 				@ob_end_clean(); // phpcs:ignore.
 				$dompdf->render();
 				$dompdf->set_option( 'isRemoteEnabled', true );
+				$dompdf->setPaper( 'A4' );
 				$output = $dompdf->output();
 
 				$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';
@@ -2248,7 +2254,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$html .= '</div>';
 
 				$html .= '<div class="wps-etmw_prod-btn">';
-				$html .= '<a  href="' . $product_url . '" class="button btn">View</a>';
+				$html .= '<a href="?add-to-cart=' . $product_id . '" class="button btn">View</a>';
 				$html .= '</div>';
 				$html .= '</div>';
 				$html .= '</div>';
