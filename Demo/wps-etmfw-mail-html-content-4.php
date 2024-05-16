@@ -19,6 +19,7 @@ $wps_etmfw_qr_code_is_enable = ! empty( get_option( 'wps_etmfwp_include_qr' ) ) 
 $wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_pdf_text_color' ) ) ? get_option( 'wps_etmfw_pdf_text_color' ) : '#ffffff';
 $wps_etmfw_background_color = ! empty( get_option( 'wps_etmfw_pdf_background_color' ) ) ? get_option( 'wps_etmfw_pdf_background_color' ) : '#FFE6EA';
 $wps_etmfw_header_background_color = ! empty( get_option( 'wps_etmfw_pdf_header_background_color' ) ) ? get_option( 'wps_etmfw_pdf_header_background_color' ) : '#81d742';
+$wps_etmfw_logo_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' ) ) ? get_option( 'wps_etmfw_mail_setting_upload_logo' ) : '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -139,7 +140,7 @@ $wps_etmfw_header_background_color = ! empty( get_option( 'wps_etmfw_pdf_header_
             <h1 class="wps_etmfw_pdf_text_colour" style="color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">Event Ticket</h1>
         </div>
         <div class="ticket-info">
-            <img class="logo" id="wps_wem_logo_id" style="width:<?php echo esc_attr( $wps_etmfw_logo_size . 'px' ); ?>;" src="http://localhost:10009/wp-content/uploads/2024/04/Vivamor-Image-1-1-150x150.png" alt="Event Logo">
+            <img class="logo" id="wps_wem_logo_id" style="width:<?php echo esc_attr( $wps_etmfw_logo_size . 'px' ); ?>;" src= <?php echo $wps_etmfw_logo_url; ?> alt="Event Logo">
             <div>
                 <p><strong>Event Name:</strong> Lorem Ipsum Event</p>
                 <p><strong>Date:</strong> May 15, 2024</p>

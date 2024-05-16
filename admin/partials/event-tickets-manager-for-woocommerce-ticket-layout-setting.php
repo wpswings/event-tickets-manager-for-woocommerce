@@ -85,6 +85,15 @@ $allowed_html = array(
 							</a>
 						</div>
 
+						<!-- Template five. -->
+						<div id ="wps_ubo_premium_popup_3_template" class="wps_etmfw_template_select 
+						<?php echo esc_html( 5 === (int) $wps_ubo_selected_template ? 'wps_etmfw_selected_class' : '' ); ?>">
+						<p class="wps_etmfw_template_name" ><strong><?php esc_html_e( 'Unknow', 'event-tickets-manager-for-woocommerce' ); ?></strong></p>
+							<a href="javascript:void" class="wps_etmfw_template_link" data_link = '5' >
+								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-4.png' ); ?>">
+							</a>
+						</div>
+
 						<!-- Template two. -->
 						<div id ="wps_ubo_premium_popup_1_template" class="wps_etmfw_template_select 
 						<?php
@@ -159,32 +168,6 @@ $allowed_html = array(
 								echo 'wps_etmfw_template_link_pro'; }
 							?>
 							" data_link = '4' >
-								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-4.png' ); ?>">
-							</a>
-						</div>
-
-						<!-- Template five. -->
-						<div id ="wps_ubo_premium_popup_3_template" class="wps_etmfw_template_select 
-						<?php
-						if ( true != $wps_is_pro_active ) {
-							echo 'wps-etmfw-radio-switch-class-pro-tag'; }
-						?>
-						<?php echo esc_html( 5 === (int) $wps_ubo_selected_template ? 'wps_etmfw_selected_class' : '' ); ?>">
-						<?php
-						if ( true != $wps_is_pro_active ) {
-							?>
-							<span class="wps_etmfw_premium_strip"><?php esc_html_e( 'Pro', 'event-tickets-manager-for-woocommerce' ); } ?></span>	
-						<p class="wps_etmfw_template_name" ><strong><?php esc_html_e( 'Unknow', 'event-tickets-manager-for-woocommerce' ); ?></strong></p>
-							<a href="javascript:void" class=" 
-							<?php
-							if ( true == $wps_is_pro_active ) {
-								?>
-								  <?php
-									echo 'wps_etmfw_template_link';
-							} else {
-								echo 'wps_etmfw_template_link_pro'; }
-							?>
-							" data_link = '5' >
 								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-4.png' ); ?>">
 							</a>
 						</div>
