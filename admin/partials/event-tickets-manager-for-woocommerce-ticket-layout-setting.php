@@ -88,9 +88,9 @@ $allowed_html = array(
 						<!-- Template five. -->
 						<div id ="wps_ubo_premium_popup_3_template" class="wps_etmfw_template_select 
 						<?php echo esc_html( 5 === (int) $wps_ubo_selected_template ? 'wps_etmfw_selected_class' : '' ); ?>">
-						<p class="wps_etmfw_template_name" ><strong><?php esc_html_e( 'Unknow', 'event-tickets-manager-for-woocommerce' ); ?></strong></p>
+						<p class="wps_etmfw_template_name" ><strong><?php esc_html_e( 'Vertico', 'event-tickets-manager-for-woocommerce' ); ?></strong></p>
 							<a href="javascript:void" class="wps_etmfw_template_link" data_link = '5' >
-								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-4.png' ); ?>">
+								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-5.png' ); ?>">
 							</a>
 						</div>
 
@@ -445,4 +445,14 @@ if ( isset( $_POST['reset_wps'] ) ) {
 		update_option( 'wps_etmfw_border_type', 'none' );
 		update_option( 'wps_etmfw_pdf_border_color', 'black' );
 	} // Mellifluous.
+
+	if ( 5 === (int) $wps_ubo_selected_template ) {
+
+		update_option( 'wps_etmfw_logo_size', '133' );
+		update_option( 'wps_etmfw_qr_size', '133' );
+		update_option( 'wps_etmfw_pdf_background_color', '#000000' );
+		update_option( 'wps_etmfw_pdf_text_color', '#ffffff' );
+		update_option( 'wps_etmfw_border_type', 'none' );
+		update_option( 'wps_etmfw_pdf_border_color', 'black' );
+	}
 }
