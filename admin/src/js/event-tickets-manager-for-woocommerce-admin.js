@@ -396,7 +396,7 @@
 
 				border_size = '2px';
 			}
-            document.getElementById('wps_event_border_type').style.border = border_size + ' ' + border_type + ' ' + border_color;
+            // document.getElementById('wps_event_border_type').style.border = border_size + ' ' + border_type + ' ' + border_color;
 			document.getElementById('wps_etmfw_parent_wrapper').style.border = border_size + ' ' + border_type + ' ' + border_color;
             document.getElementById('wps_etmfw_parent_wrapper_2').style.border = border_size + ' ' + border_type + ' ' + border_color;
 
