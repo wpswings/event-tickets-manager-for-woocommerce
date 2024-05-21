@@ -58,7 +58,7 @@ $wps_etmfw_header_background_color = ! empty( get_option( 'wps_etmfw_pdf_header_
         [ADDITIONALINFO]
             <!-- Add more participant details here if needed -->
         </div>
-        <div class="ticket-footer wps_etmfw_ticket_body" style="padding: 20px; text-align: center; background-color: #f4f4f4; border-top: 2px solid #ddd;">
+        <div class="ticket-footer wps_etmfw_ticket_body" style="padding: 20px; text-align: center; background-color: <?php echo esc_attr( $wps_etmfw_background_color ); ?>; border-top: 2px solid #ddd;">
             <p style="margin: 10px 0; font-size: 14px; color: #666;">[EMAILBODYCONTENT]</p>
         </div>
     </div>
