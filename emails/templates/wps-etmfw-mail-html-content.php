@@ -16,6 +16,7 @@ if ( is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-
 } else {
 	$wps_etmfw_background_color = ! empty( get_option( 'wps_etmfw_ticket_bg_color', '' ) ) ? get_option( 'wps_etmfw_ticket_bg_color' ) : '#f5ebeb';
 	$wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_ticket_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_text_color', '' ) : '#f5ebeb';
+	$wps_etmfw_body_text_color = ! empty( get_option( 'wps_etmfw_ticket_body_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_body_text_color', '' ) : '#f5ebeb';
 
 }
 
@@ -130,6 +131,7 @@ $wps_etmfw_qr_code_is_enable = ! empty( get_option( 'wps_etmfwp_include_qr' ) ) 
 			</tr>
 		</tbody>
 	</table>
+	<?php if ( is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) {  ?>
 	<div id="wps_etmfw_parent_wrapper_2" class="wps_etmfw_border_color" style="margin-right:0px;margin-left:0px;border:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>">
 	<?php
 	$body = get_option( 'wps_etmfw_email_body_content', '' );
@@ -141,5 +143,19 @@ $wps_etmfw_qr_code_is_enable = ! empty( get_option( 'wps_etmfwp_include_qr' ) ) 
 									</div>
 									<?php } ?>
 	</div>
+<?php } else { ?>
+	<div id="wps_etmfw_parent_wrapper_2" class="wps_etmfw_border_color" style="margin-right:0px;margin-left:0px;border:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>">
+	<?php
+	$body = get_option( 'wps_etmfw_email_body_content', '' );
+	if ( '' != $body ) {
+		?>
+									<h4 style="padding: 10px;color: <?php echo esc_attr( $wps_etmfw_body_text_color ); ?>">Note</h4>
+									<div style="padding: 20px;width:auto;text-align:left;vertical-align: middle;color: <?php echo esc_attr( $wps_etmfw_body_text_color ); ?> ! important; ">
+									[EMAILBODYCONTENT]
+									</div>
+									<?php } ?>
+	</div>
+
+<?php } ?>
 </body>
 </html>

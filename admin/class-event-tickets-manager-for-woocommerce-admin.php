@@ -639,11 +639,21 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			);
 			$etmfw_email_template_settings[] =
 			array(
-				'title' => __( 'Ticket Text Colour', 'event-tickets-manager-for-woocommerce' ),
+				'title' => __( 'Ticket Header Text Colour', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'text',
 				'description'  => __( 'Select the colour code( e.g. #FFFFFF ).', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'wps_etmfw_ticket_text_color',
 				'value' => get_option( 'wps_etmfw_ticket_text_color', '' ),
+				'class' => 'wps_etmfw_colorpicker',
+				'placeholder' => __( 'Enter colour/colour code', 'event-tickets-manager-for-woocommerce' ),
+			);
+			$etmfw_email_template_settings[] =
+			array(
+				'title' => __( 'Ticket Body Text Colour', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'text',
+				'description'  => __( 'Select the colour code( e.g. #FFFFFF ).', 'event-tickets-manager-for-woocommerce' ),
+				'id'    => 'wps_etmfw_ticket_body_text_color',
+				'value' => get_option( 'wps_etmfw_ticket_body_text_color', '' ),
 				'class' => 'wps_etmfw_colorpicker',
 				'placeholder' => __( 'Enter colour/colour code', 'event-tickets-manager-for-woocommerce' ),
 			);
