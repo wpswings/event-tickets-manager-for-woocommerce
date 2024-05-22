@@ -868,7 +868,12 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	public function wps_etmfw_generate_ticket_pdf( $wps_ticket_content, $order, $order_id, $ticket_number ) {
 		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'package/lib/dompdf/vendor/autoload.php';
 		$dompdf = new Dompdf( array( 'enable_remote' => true ) );
-		$dompdf->setPaper( 'A4' );
+		$wps_set_the_pdf_ticket_template = get_option( 'wps_etmfw_ticket_template', '1' );
+		if('5' == $wps_set_the_pdf_ticket_template){
+		$dompdf->setPaper( 'A4');
+		} else {
+		$dompdf->setPaper( 'A4','landscape' );
+		}
 		$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
 
 		// Check if WP_Filesystem is available.
@@ -887,13 +892,16 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					// Set permissions using WP_Filesystem.
 					$wp_filesystem->chmod( $upload_dir_path, 0775 );
 				}
-
-				// die($wps_ticket_content);
+				if('5' == $wps_set_the_pdf_ticket_template){
+				$dompdf->setPaper( 'A4');
+				} else {
+				$dompdf->setPaper( 'A4','landscape' );
+				}
 				$dompdf->loadHtml( $wps_ticket_content );
 				@ob_end_clean(); // phpcs:ignore.
 				$dompdf->render();
 				$dompdf->set_option( 'isRemoteEnabled', true );
-				$dompdf->setPaper( 'A4' );
+				$dompdf->setPaper( 'A4' , 'landscape');
 				$output = $dompdf->output();
 
 				$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';

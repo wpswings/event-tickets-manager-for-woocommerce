@@ -1242,7 +1242,7 @@ a.wps-rma__popup-for-pro-link:hover {
 
 .wps-etmfw-radio-switch-class-pro-tag .wps-form-group__control:before {
     position: absolute;
-    content: "PRO Feature";
+    /* content: "PRO Feature"; */
     z-index: 99;
     background: #f3fff5;
     top: -10px;
@@ -1253,7 +1253,7 @@ a.wps-rma__popup-for-pro-link:hover {
     border-radius: 5px;
     display: inline-flex;
     align-items: center;
-    color: #00b81f;
+    /* color: #00b81f; */
     font-weight: 600;
 }
 
@@ -1287,7 +1287,7 @@ a.wps-rma__popup-for-pro-link:hover {
 }
 
 .wps-etmfw-radio-switch-class-pro-tag .wps-form-group__control div {
-    visibility: hidden;
+    pointer-events: none;
 }
 
 @media screen and (max-width:768px) {

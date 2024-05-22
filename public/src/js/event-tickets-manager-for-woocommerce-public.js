@@ -51,20 +51,20 @@
 	 				$( '.wps-edit-form-group' ).each(
 	 					function() {
 	 						var label = $( this ).attr('data-id');
-	 						var fieldType = $( this ).find('#wps_etmfw_'+label).attr('type');
-	 						var check_required = $( this ).find('#wps_etmfw_'+label).attr('required');
-							if( check_required && ( '' == $('#wps_etmfw_'+label).val() ) ) {
+	 						var fieldType = $(this).find('#wps_etmfw_' + label.replace(/[+?]/g, '\\$&')).attr('type');
+	 						var check_required = $( this ).find('#wps_etmfw_' + label.replace(/[+?]/g, '\\$&')).attr('required');
+							if( check_required && ( '' == $('#wps_etmfw_' + label.replace(/[+?]/g, '\\$&')).val() ) ) {
 								$("#wps_etmfw_error_" + label).html( label + etmfw_public_param.is_required);
-								$('#wps_etmfw_'+label).css( 'border','2px solid red');
+								('#wps_etmfw_' + label.replace(/[+?]/g, '\\$&')).css( 'border','2px solid red');
 								check_validation = true;
 								return;
 							}
-							$('#wps_etmfw_'+label).css('border', '');
+							$('#wps_etmfw_' + label.replace(/[+?]/g, '\\$&')).css('border', '');
 	 						if( fieldType == 'radio'){
 	 							var radio_value = $( this ).find( 'input[name="wps_etmfw_'+label+'"]:checked' ).val();
 	 							modifiedValues[ label ] = radio_value;
 	 						} else{
-	 							modifiedValues[ label ] = $('#wps_etmfw_'+label).val();
+	 							modifiedValues[ label ] = $('#wps_etmfw_' + label.replace(/[+?]/g, '\\$&')).val();
 	 						}
 	 						order_id = $(document).find('#wps_etmfw_edit_info_order').val();
 	 					}
