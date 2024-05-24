@@ -33,6 +33,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
+/**
+ * This function is used to disable shipping.
+ *
+ * @param object $show_shipping shipping Object.
+ * @name disable_shipping_calc_on_cart
+ * @since 1.0.2
+ */
 function disable_shipping_calc_on_cart( $show_shipping ) {
 	$wps_need_shipping = false;
 
@@ -57,14 +64,15 @@ function disable_shipping_calc_on_cart( $show_shipping ) {
 		if ( ! empty( WC()->cart->get_cart() ) ) {
 			foreach ( WC()->cart->get_cart() as $cart_item ) {
 				$wps_products_ids_array_cart[] = $cart_item['product_id'];
-				$wps_product  = wc_get_product($cart_item['product_id']);
-				if($wps_product->get_type() == 'event_ticket_manager'){
+				$wps_product  = wc_get_product( $cart_item['product_id'] );
+				if ( $wps_product->get_type() == 'event_ticket_manager' ) {
 					$wps_need_shipping  = true;
-				}}
+				}
+			}
 		}
 	}
 
-    return !$wps_need_shipping;
+	return ! $wps_need_shipping;
 }
 add_filter( 'woocommerce_cart_ready_to_calc_shipping', 'disable_shipping_calc_on_cart', 99 );
 add_filter( 'woocommerce_cart_needs_shipping_address', 'disable_shipping_calc_on_cart', 99 );
@@ -173,7 +181,7 @@ if ( $activated ) {
 
 
 	if ( wps_etmfw_is_enable_usage_tracking() ) {
-		add_action( 'wpswings_tracker_send_event', 'wps_sfw_wpswings_tracker_send_event');
+		add_action( 'wpswings_tracker_send_event', 'wps_sfw_wpswings_tracker_send_event' );
 	}
 
 		/**
@@ -182,42 +190,42 @@ if ( $activated ) {
 		 * @name wps_sfw_wpswings_tracker_send_event
 		 * @since 1.0.0
 		 */
-		function wps_sfw_wpswings_tracker_send_event() {
+	function wps_sfw_wpswings_tracker_send_event() {
 
-			require WC()->plugin_path() . '/includes/class-wc-tracker.php';
+		require WC()->plugin_path() . '/includes/class-wc-tracker.php';
 
-			$last_send = get_option( 'wpswings_tracker_last_send' );
-			if ( ! apply_filters( 'wpswings_tracker_send_override', false ) ) {
+		$last_send = get_option( 'wpswings_tracker_last_send' );
+		if ( ! apply_filters( 'wpswings_tracker_send_override', false ) ) {
 
-				// Send a maximum of once per week by default.
-				$last_send = wps_etmfw_last_send_time();
-				if ( $last_send && $last_send > apply_filters( 'wpswings_tracker_last_send_interval', strtotime( '-1 week' ) ) ) {
+			// Send a maximum of once per week by default.
+			$last_send = wps_etmfw_last_send_time();
+			if ( $last_send && $last_send > apply_filters( 'wpswings_tracker_last_send_interval', strtotime( '-1 week' ) ) ) {
 
-					return;
-				}
-			} else {
-
-				// Make sure there is at least a 1 hour delay between override sends, we don't want duplicate calls due to double clicking links.
-				$last_send = wps_etmfw_last_send_time();
-				if ( $last_send && $last_send > strtotime( '-1 hours' ) ) {
-
-					return;
-				}
+				return;
 			}
-			// Update time first before sending to ensure it is set.
-			update_option( 'wpswings_tracker_last_send', time() );
-			$params = WC_Tracker::get_tracking_data();
-			$params = apply_filters( 'wpswings_tracker_params', $params );
-			$api_url = 'https://tracking.wpswings.com/wp-json/mps-route/v1/mps-testing-data/';
-			$sucess = wp_safe_remote_post(
-				$api_url,
-				array(
-					'method'      => 'POST',
-					'body'        => wp_json_encode( $params ),
-				)
-			);
+		} else {
 
+			// Make sure there is at least a 1 hour delay between override sends, we don't want duplicate calls due to double clicking links.
+			$last_send = wps_etmfw_last_send_time();
+			if ( $last_send && $last_send > strtotime( '-1 hours' ) ) {
+
+				return;
+			}
 		}
+		// Update time first before sending to ensure it is set.
+		update_option( 'wpswings_tracker_last_send', time() );
+		$params = WC_Tracker::get_tracking_data();
+		$params = apply_filters( 'wpswings_tracker_params', $params );
+		$api_url = 'https://tracking.wpswings.com/wp-json/mps-route/v1/mps-testing-data/';
+		$sucess = wp_safe_remote_post(
+			$api_url,
+			array(
+				'method'      => 'POST',
+				'body'        => wp_json_encode( $params ),
+			)
+		);
+
+	}
 
 
 		/**
@@ -227,9 +235,9 @@ if ( $activated ) {
 		 *
 		 * @since 1.0.0
 		 */
-		function wps_etmfw_last_send_time() {
-			return apply_filters( 'wpswings_tracker_last_send_time', get_option( 'wpswings_tracker_last_send', false ) );
-		}
+	function wps_etmfw_last_send_time() {
+		return apply_filters( 'wpswings_tracker_last_send_time', get_option( 'wpswings_tracker_last_send', false ) );
+	}
 
 
 
@@ -259,23 +267,23 @@ if ( $activated ) {
 		$upload = wp_upload_dir();
 		$upload_dir = $upload['basedir'];
 		$upload_dir = $upload_dir . '/images';
-		
+
 		// Check if the directory doesn't exist.
 		if ( ! is_dir( $upload_dir ) ) {
 			// Attempt to create the directory using WP_Filesystem.
 			if ( function_exists( 'WP_Filesystem' ) ) {
 				WP_Filesystem(); // Initialize the filesystem.
-		
+
 				global $wp_filesystem;
 				if ( ! is_wp_error( $wp_filesystem ) ) {
-				// Create the directory using WP_Filesystem.
-				if ( ! $wp_filesystem->is_dir( $upload_dir ) ) {
-					$wp_filesystem->mkdir( $upload_dir, 0777 );
-				}
+					// Create the directory using WP_Filesystem.
+					if ( ! $wp_filesystem->is_dir( $upload_dir ) ) {
+						$wp_filesystem->mkdir( $upload_dir, 0777 );
+					}
 				}
 			}
 		}
-		
+
 	}
 
 	/**
@@ -342,7 +350,7 @@ if ( $activated ) {
 				// Cache the result for future use.
 				wp_cache_set( 'blog_ids', $blogids, 'blog_ids_cache' );
 			}
-			
+
 			foreach ( $blogids as $blog_id ) {
 				switch_to_blog( $blog_id );
 
@@ -770,10 +778,10 @@ function wps_etmfw_banner_notification_html() {
 		$pagescreen = $screen->id;
 	}
 	$secure_nonce      = wp_create_nonce( 'wps-upsell-auth-nonce' );
-        $id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
-        if ( ! $id_nonce_verified ) {
-            wp_die( esc_html__( 'Nonce Not verified', 'upsell-order-bump-offer-for-woocommerce' ) );
-        }
+		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
+	if ( ! $id_nonce_verified ) {
+		wp_die( esc_html__( 'Nonce Not verified', 'upsell-order-bump-offer-for-woocommerce' ) );
+	}
 	if ( ( isset( $_GET['page'] ) && 'event_tickets_manager_for_woocommerce_menu' === $_GET['page'] ) ) {
 		$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
 		if ( isset( $banner_id ) && '' !== $banner_id ) {
