@@ -449,144 +449,144 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			$product = $item->get_product();
 			if ( isset( $product ) && $product->is_type( 'event_ticket_manager' ) ) {
 
-			if ( isset( $product ) ) {
-				$item_quantity = wc_get_order_item_meta( $item_id, '_qty', true );
+				if ( isset( $product ) ) {
+					$item_quantity = wc_get_order_item_meta( $item_id, '_qty', true );
 
-				$product_id = $product->get_id();
-				$item_meta_data = $item->get_meta_data();
+					$product_id = $product->get_id();
+					$item_meta_data = $item->get_meta_data();
 
-				$wps_etmfw_mail_template_data = array(
-					'product_id' => $product_id,
-					'item_id'   => $item_id,
-					'order_id'   => $order_id,
-					'product_name' => $product->get_name(),
-				);
-				foreach ( $item_meta_data as $key => $value ) {
-					if ( isset( $value->key ) && ! empty( $value->value ) ) {
-						$wps_etmfw_mail_template_data[ $value->key ] = $value->value;
-					}
-				}
-
-				if ( 1 < $item_quantity ) {
-					if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
-						// HPOS usage is enabled.
-						$ticket_number = $order->get_meta( "event_ticket#$order_id#$item_id", true );
-					} else {
-						$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true ); // ticket code.
-					}
-
-					if ( empty( $ticket_number ) ) {
-						$ticket_number = array(); // store the code for quantity more than 1.
-
-						for ( $i = 0; $i < $item_quantity; $i++ ) {
-							$temp = wps_etmfw_ticket_generator();
-							$ticket_number[ $i ] = $temp;
-							$wps_ticket_content = $this->wps_etmfw_get_html_content( $item_meta_data, $order, $order_id, $temp, $product_id ); // need to change on this line for dynamics details.
-							$this->wps_etmfw_generate_ticket_pdf( $wps_ticket_content, $order, $order_id, $temp );
+					$wps_etmfw_mail_template_data = array(
+						'product_id' => $product_id,
+						'item_id'   => $item_id,
+						'order_id'   => $order_id,
+						'product_name' => $product->get_name(),
+					);
+					foreach ( $item_meta_data as $key => $value ) {
+						if ( isset( $value->key ) && ! empty( $value->value ) ) {
+							$wps_etmfw_mail_template_data[ $value->key ] = $value->value;
 						}
+					}
 
+					if ( 1 < $item_quantity ) {
 						if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 							// HPOS usage is enabled.
-							$order->update_meta_data( "event_ticket#$order_id#$item_id", $ticket_number );
-							$order->save();
+							$ticket_number = $order->get_meta( "event_ticket#$order_id#$item_id", true );
 						} else {
-							update_post_meta( $order_id, "event_ticket#$order_id#$item_id", $ticket_number );
+							$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true ); // ticket code.
 						}
-					}
 
-					if ( is_array( $ticket_number ) && ! empty( $ticket_number ) ) {
-						$wps_etmfw_mail_template_data['ticket_number'] = $ticket_number;
-						$generated_tickets = get_post_meta( $product_id, 'wps_etmfw_generated_tickets', true );
-						if ( empty( $generated_tickets ) ) {
-							$generated_tickets = array();
+						if ( empty( $ticket_number ) ) {
+							$ticket_number = array(); // store the code for quantity more than 1.
 
-							foreach ( $ticket_number as $key => $value ) {
-
-								$generated_tickets[] = array(
-									'ticket' => $value,
-									'status' => 'pending',
-									'order_id' => $order_id,
-									'item_id' => $item_id,
-									'email'   => $billing_email,
-									'user'    => $order->get_customer_id(),
-									'event_quantity' => $item_quantity,
-								);
+							for ( $i = 0; $i < $item_quantity; $i++ ) {
+								$temp = wps_etmfw_ticket_generator();
+								$ticket_number[ $i ] = $temp;
+								$wps_ticket_content = $this->wps_etmfw_get_html_content( $item_meta_data, $order, $order_id, $temp, $product_id ); // need to change on this line for dynamics details.
+								$this->wps_etmfw_generate_ticket_pdf( $wps_ticket_content, $order, $order_id, $temp );
 							}
-							update_post_meta( $product_id, 'wps_etmfw_generated_tickets', $generated_tickets );
-						} else {
 
-							foreach ( $ticket_number as $key => $value ) {
-
-								$generated_tickets[] = array(
-									'ticket' => $value,
-									'status' => 'pending',
-									'order_id' => $order_id,
-									'item_id' => $item_id,
-									'email'   => $billing_email,
-									'user'    => $order->get_customer_id(),
-									'event_quantity' => $item_quantity,
-								);
+							if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+								// HPOS usage is enabled.
+								$order->update_meta_data( "event_ticket#$order_id#$item_id", $ticket_number );
+								$order->save();
+							} else {
+								update_post_meta( $order_id, "event_ticket#$order_id#$item_id", $ticket_number );
 							}
-							update_post_meta( $product_id, 'wps_etmfw_generated_tickets', $generated_tickets );
-						}
-					}
-				} else {
-					if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
-						// HPOS usage is enabled.
-						$ticket_number = $order->get_meta( "event_ticket#$order_id#$item_id", true );
-					} else {
-						$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
-					}
-
-					if ( '' === $ticket_number ) {
-						$ticket_number = wps_etmfw_ticket_generator();
-
-						if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
-							// HPOS usage is enabled.
-							$order->update_meta_data( "event_ticket#$order_id#$item_id", $ticket_number );
-							$order->save();
-						} else {
-							update_post_meta( $order_id, "event_ticket#$order_id#$item_id", $ticket_number );
 						}
 
-						$wps_ticket_content = $this->wps_etmfw_get_html_content( $item_meta_data, $order, $order_id, $ticket_number, $product_id ); // tickt pdf html.
-						$this->wps_etmfw_generate_ticket_pdf( $wps_ticket_content, $order, $order_id, $ticket_number );
-
-						if ( isset( $ticket_number ) ) {
+						if ( is_array( $ticket_number ) && ! empty( $ticket_number ) ) {
 							$wps_etmfw_mail_template_data['ticket_number'] = $ticket_number;
 							$generated_tickets = get_post_meta( $product_id, 'wps_etmfw_generated_tickets', true );
 							if ( empty( $generated_tickets ) ) {
 								$generated_tickets = array();
-								$generated_tickets[] = array(
-									'ticket' => $ticket_number,
-									'status' => 'pending',
-									'order_id' => $order_id,
-									'item_id' => $item_id,
-									'email'   => $billing_email,
-									'user'    => $order->get_customer_id(),
-									'event_quantity' => $item_quantity,
-								);
+
+								foreach ( $ticket_number as $key => $value ) {
+
+									$generated_tickets[] = array(
+										'ticket' => $value,
+										'status' => 'pending',
+										'order_id' => $order_id,
+										'item_id' => $item_id,
+										'email'   => $billing_email,
+										'user'    => $order->get_customer_id(),
+										'event_quantity' => $item_quantity,
+									);
+								}
 								update_post_meta( $product_id, 'wps_etmfw_generated_tickets', $generated_tickets );
 							} else {
-								$generated_tickets[] = array(
-									'ticket' => $ticket_number,
-									'status' => 'pending',
-									'order_id' => $order_id,
-									'item_id' => $item_id,
-									'email'   => $billing_email,
-									'user' => $order->get_customer_id(),
-									'event_quantity' => $item_quantity,
-								);
+
+								foreach ( $ticket_number as $key => $value ) {
+
+									$generated_tickets[] = array(
+										'ticket' => $value,
+										'status' => 'pending',
+										'order_id' => $order_id,
+										'item_id' => $item_id,
+										'email'   => $billing_email,
+										'user'    => $order->get_customer_id(),
+										'event_quantity' => $item_quantity,
+									);
+								}
 								update_post_meta( $product_id, 'wps_etmfw_generated_tickets', $generated_tickets );
 							}
 						}
-					}
-				}
+					} else {
+						if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+							// HPOS usage is enabled.
+							$ticket_number = $order->get_meta( "event_ticket#$order_id#$item_id", true );
+						} else {
+							$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+						}
 
-				$wps_etmfw_mail_template_data = apply_filters( 'wps_etmfw_common_arr_data', $wps_etmfw_mail_template_data, $item );
-				$this->wps_etmfw_send_ticket_mail( $order, $wps_etmfw_mail_template_data );
+						if ( '' === $ticket_number ) {
+							$ticket_number = wps_etmfw_ticket_generator();
+
+							if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+								// HPOS usage is enabled.
+								$order->update_meta_data( "event_ticket#$order_id#$item_id", $ticket_number );
+								$order->save();
+							} else {
+								update_post_meta( $order_id, "event_ticket#$order_id#$item_id", $ticket_number );
+							}
+
+							$wps_ticket_content = $this->wps_etmfw_get_html_content( $item_meta_data, $order, $order_id, $ticket_number, $product_id ); // tickt pdf html.
+							$this->wps_etmfw_generate_ticket_pdf( $wps_ticket_content, $order, $order_id, $ticket_number );
+
+							if ( isset( $ticket_number ) ) {
+								$wps_etmfw_mail_template_data['ticket_number'] = $ticket_number;
+								$generated_tickets = get_post_meta( $product_id, 'wps_etmfw_generated_tickets', true );
+								if ( empty( $generated_tickets ) ) {
+									$generated_tickets = array();
+									$generated_tickets[] = array(
+										'ticket' => $ticket_number,
+										'status' => 'pending',
+										'order_id' => $order_id,
+										'item_id' => $item_id,
+										'email'   => $billing_email,
+										'user'    => $order->get_customer_id(),
+										'event_quantity' => $item_quantity,
+									);
+									update_post_meta( $product_id, 'wps_etmfw_generated_tickets', $generated_tickets );
+								} else {
+									$generated_tickets[] = array(
+										'ticket' => $ticket_number,
+										'status' => 'pending',
+										'order_id' => $order_id,
+										'item_id' => $item_id,
+										'email'   => $billing_email,
+										'user' => $order->get_customer_id(),
+										'event_quantity' => $item_quantity,
+									);
+									update_post_meta( $product_id, 'wps_etmfw_generated_tickets', $generated_tickets );
+								}
+							}
+						}
+					}
+
+					$wps_etmfw_mail_template_data = apply_filters( 'wps_etmfw_common_arr_data', $wps_etmfw_mail_template_data, $item );
+					$this->wps_etmfw_send_ticket_mail( $order, $wps_etmfw_mail_template_data );
+				}
 			}
-		}
 		}
 		do_action( 'wps_etmfw_action_on_order_status_changed', $order_id, $old_status, $new_status );
 	}
@@ -809,11 +809,14 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-4.php'; // unknown.
 		}
 
-		if ( is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) { 
+		if ( is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) {
 			$wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_pdf_text_color' ) ) ? get_option( 'wps_etmfw_pdf_text_color' ) : '#ffffff';
 		} else {
-			$wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_ticket_body_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_body_text_color', '' ) : '#f5ebeb';
-		
+			if ( '1' == $wps_set_the_pdf_ticket_template ) {
+				$wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_ticket_body_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_body_text_color', '' ) : '#f5ebeb';
+			} elseif ( '5' == $wps_set_the_pdf_ticket_template ) {
+				$wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_ticket_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_text_color', '' ) : '#f5ebeb';
+			}
 		}
 
 		$wps_ticket_details = ob_get_contents();
@@ -869,10 +872,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'package/lib/dompdf/vendor/autoload.php';
 		$dompdf = new Dompdf( array( 'enable_remote' => true ) );
 		$wps_set_the_pdf_ticket_template = get_option( 'wps_etmfw_ticket_template', '1' );
-		if('5' == $wps_set_the_pdf_ticket_template){
-		$dompdf->setPaper( 'A4');
+		if ( '5' == $wps_set_the_pdf_ticket_template ) {
+			$dompdf->setPaper( 'A4' );
 		} else {
-		$dompdf->setPaper( 'A4','landscape' );
+			$dompdf->setPaper( 'A4', 'landscape' );
 		}
 		$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
 
@@ -892,16 +895,17 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					// Set permissions using WP_Filesystem.
 					$wp_filesystem->chmod( $upload_dir_path, 0775 );
 				}
-				if('5' == $wps_set_the_pdf_ticket_template){
-				$dompdf->setPaper( 'A4');
+				if ( '5' == $wps_set_the_pdf_ticket_template ) {
+					$dompdf->setPaper( 'A4' );
 				} else {
-				$dompdf->setPaper( 'A4','landscape' );
+					$dompdf->setPaper( 'A4', 'landscape' );
 				}
+
 				$dompdf->loadHtml( $wps_ticket_content );
 				@ob_end_clean(); // phpcs:ignore.
 				$dompdf->render();
 				$dompdf->set_option( 'isRemoteEnabled', true );
-				$dompdf->setPaper( 'A4' , 'landscape');
+				$dompdf->setPaper( 'A4', 'landscape' );
 				$output = $dompdf->output();
 
 				$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';

@@ -175,7 +175,7 @@ $wps_etmfw_logo_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' 
             <p><strong>Address:</strong> 123 Main Street, City, Country</p>
             <!-- Add more participant details here if needed -->
         </div>
-        <div class="ticket-footer wps_etmfw_ticket_body" style="background-color:  <?php echo esc_attr( $wps_etmfw_background_color ); ?>;">
+        <div class="ticket-footer wps_etmfw_ticket_body" style="background-color:<?php echo esc_attr( $wps_etmfw_background_color ); ?>;">
             <p>This ticket is valid for one entry only. Please keep it safe.</p>
         </div>
     </div>
