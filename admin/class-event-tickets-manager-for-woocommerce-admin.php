@@ -1558,7 +1558,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				<div id="wps_etmfw_loader" style="display: none;">
 					<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ); ?>admin/src/images/loading.gif">
 				</div>
-				<p><?php esc_html_e( 'If the user is not received a Ticket PDF Mail then resend mail.', 'giftware' ); ?> </p>
+				<p><?php esc_html_e( 'If the user is not received a Ticket PDF or PDF is not generated , then PDF Ticket Mail then resend mail.', 'giftware' ); ?> </p>
 				<p id="wps_etmfw_resend_mail_notification"></p>
 				<input type="button" data-id="<?php echo esc_html( $order_id ); ?>" id="wps_etmfw_resend_mail_button" class="button button-primary" value="<?php esc_html_e( 'Resend Ticket PDF Mail', 'giftware' ); ?>">
 			<?php

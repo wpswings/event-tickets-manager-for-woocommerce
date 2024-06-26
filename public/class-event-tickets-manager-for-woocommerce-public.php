@@ -475,7 +475,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 							$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true ); // ticket code.
 						}
 
-						if ( empty( $ticket_number ) ) {
+						$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
+						$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';
+
+						if ( empty( $ticket_number ) || ! file_exists($generated_ticket_pdf) ) {
 							$ticket_number = array(); // store the code for quantity more than 1.
 
 							for ( $i = 0; $i < $item_quantity; $i++ ) {
@@ -538,7 +541,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 							$ticket_number = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
 						}
 
-						if ( '' === $ticket_number ) {
+						$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
+						$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';
+
+
+						if ( '' === $ticket_number  || ! file_exists($generated_ticket_pdf) ) {
 							$ticket_number = wps_etmfw_ticket_generator();
 
 							if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
