@@ -26,6 +26,14 @@ $wps_etmfw_border_color = ! empty( get_option( 'wps_etmfw_pdf_border_color' ) ) 
 $wps_etmfw_logo_size = ! empty( get_option( 'wps_etmfw_logo_size', true ) ) ? get_option( 'wps_etmfw_logo_size', true ) : '180';
 $wps_etmfw_qr_size = ! empty( get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 'wps_etmfw_qr_size' ) : '180';
 $wps_etmfw_qr_code_is_enable = ! empty( get_option( 'wps_etmfwp_include_qr' ) ) ? get_option( 'wps_etmfwp_include_qr' ) : '';
+
+$image = wp_get_attachment_image_src(get_post_thumbnail_id($product_id), 'single-post-thumbnail');
+if('no' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
+	$product_image_url = get_option( 'wps_etmfw_mail_setting_upload_logo', '' );
+	} else {
+	$product_image_url = (is_array($image) && isset($image[0])) ? $image[0] : '';
+	}
+	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +48,7 @@ $wps_etmfw_qr_code_is_enable = ! empty( get_option( 'wps_etmfwp_include_qr' ) ) 
 			<h1 class="wps_etmfw_pdf_text_colour" style="text-align: center;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">[EVENTNAME]</h1>
 		</div>
 		<div class="ticket-info" style="padding: 20px; text-align: left; display: flex;">
-			<img class="logo" id="wps_wem_logo_id" style="width: <?php echo esc_attr( $wps_etmfw_logo_size . 'px' ); ?>; height: auto; margin-right: 20px;" src="http://localhost:10009/wp-content/uploads/2024/04/Vivamor-Image-1-1-150x150.png" alt="Event Logo">
+			<img class="logo" id="wps_wem_logo_id" style="width: <?php echo esc_attr( $wps_etmfw_logo_size . 'px' ); ?>; height: auto; margin-right: 20px;" src = <?php echo esc_url($product_image_url); ?>  alt="Event Logo">
 			<div style="text-align: center;">
 				<p><strong>Event Name:</strong>[EVENTNAME]</p>
 				<p><strong>Start Date:</strong> [STARTDATE]</p>

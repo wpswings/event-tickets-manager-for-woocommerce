@@ -848,7 +848,17 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			$additinal_info .= '</tbody></table>';
 		}
 		$wps_etmfw_logo_size = ! empty( get_option( 'wps_etmfw_logo_size', true ) ) ? get_option( 'wps_etmfw_logo_size', true ) : '180';
-		$site_logo = '<img id="wps_wem_logo_id" class="wps_wem_logo" src="' . get_option( 'wps_etmfw_mail_setting_upload_logo', '' ) . '" style="width:' . $wps_etmfw_logo_size . 'px;margin-left: 25px">';
+
+		// Get the product image URL
+		$product_image_url = '';
+		$image = wp_get_attachment_image_src(get_post_thumbnail_id($product_id), 'single-post-thumbnail');
+		if('no' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
+		$product_image_url = get_option( 'wps_etmfw_mail_setting_upload_logo', '' );
+		} else {
+		$product_image_url = (is_array($image) && isset($image[0])) ? $image[0] : '';
+		}
+		
+		$site_logo = '<img id="wps_wem_logo_id" class="wps_wem_logo" src="' .$product_image_url . '" style="width:' . $wps_etmfw_logo_size . 'px;margin-left: 25px">';
 		$wps_ticket_details = str_replace( '[EVENTNAME]', $product->get_name(), $wps_ticket_details );
 
 		$wps_ticket_details = str_replace( '[TICKET]', $ticket_number, $wps_ticket_details );
@@ -2185,6 +2195,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$html = '';
 		$product_query = new WC_Product_Query( $args );
 		$products = $product_query->get_products();
+		$events = [];
+		
 		if ( ! empty( $products ) ) {
 			foreach ( $products as $product ) {
 				$product_id = $product->get_id();
@@ -2194,34 +2206,55 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$product_url = get_permalink( $product_id );
 				$wps_product_image_src = ( is_array( $image ) && isset( $image[0] ) ) ? $image[0] : null;
 				$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
-
+		
 				$wps_event_start_date_time = new DateTime( $wps_etmfw_product_array['event_start_date_time'] );
 				$wps_event_end_date_time = new DateTime( $wps_etmfw_product_array['event_end_date_time'] );
-
+		
+				$events[] = [
+					'product' => $product,
+					'start_date' => $wps_event_start_date_time,
+					'end_date' => $wps_event_end_date_time,
+					'image_src' => $wps_product_image_src,
+					'event_data' => $wps_etmfw_product_array
+				];
+			}
+		
+			// Sort the events by start date
+			usort($events, function($a, $b) {
+				return $a['start_date'] <=> $b['start_date'];
+			});
+		
+			foreach ( $events as $event ) {
+				$product = $event['product'];
+				$product_id = $product->get_id();
+				$product_name = $product->get_name();
+				$product_price = $product->get_price();
+				$product_url = get_permalink( $product_id );
+				$wps_product_image_src = $event['image_src'];
+				$wps_event_start_date_time = $event['start_date'];
+				$wps_event_end_date_time = $event['end_date'];
+				$wps_etmfw_product_array = $event['event_data'];
+		
 				$wps_event_formated_start_date_time = $wps_event_start_date_time->format( 'F j, Y' );
 				$wps_event_formated_end_date_time = $wps_event_end_date_time->format( 'F j, Y' );
-
+		
 				$html .= '<div class ="wps-etmw_single-event">';
-
 				$html .= '<img src="' . $wps_product_image_src . '" />';
-
 				$html .= '<div class="wps-etmw_prod-desc">';
 				$html .= '<h4>' . $product_name . '</h4>';
 				$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
-
 				$html .= '<div class="wps-etmw_all-date">';
 				$html .= '<span class="wps-etmw_start-time"><strong>' . esc_html__( 'Start Date: ', 'event-tickets-manager-for-woocommerce-pro' ) . '</strong>' . $wps_event_formated_start_date_time . '</span>';
 				$html .= '<span class="wps-etmw_end-time"><strong>' . esc_html__( 'End Date: ', 'event-tickets-manager-for-woocommerce-pro' ) . '</strong>' . $wps_event_formated_end_date_time . '</span>';
 				$html .= '<div class="wps-etmw_prod-venue"><strong>' . esc_html__( 'Venue: ', 'event-tickets-manager-for-woocommerce-pro' ) . '</strong>' . $wps_etmfw_product_array['etmfw_event_venue'] . '</div>';
 				$html .= '</div>';
-
 				$html .= '<div class="wps-etmw_prod-btn">';
-				$html .= '<a  href="' . $product_url . '" class="button btn">View</a>';
+				$html .= '<a href="' . $product_url . '" class="button btn">View</a>';
 				$html .= '</div>';
 				$html .= '</div>';
 				$html .= '</div>';
 			}
-
+		
 			echo wp_kses_post( $html );
 		} else {
 			echo 'No Event Product Are Found.';
@@ -2249,6 +2282,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$html = '';
 		$product_query = new WC_Product_Query( $args );
 		$products = $product_query->get_products();
+		$events = [];
+		
 		if ( ! empty( $products ) ) {
 			foreach ( $products as $product ) {
 				$product_id = $product->get_id();
@@ -2258,33 +2293,55 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$product_url = get_permalink( $product_id );
 				$wps_product_image_src = ( is_array( $image ) && isset( $image[0] ) ) ? $image[0] : null;
 				$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
-
+		
 				$wps_event_start_date_time = new DateTime( $wps_etmfw_product_array['event_start_date_time'] );
 				$wps_event_end_date_time = new DateTime( $wps_etmfw_product_array['event_end_date_time'] );
-
+		
+				$events[] = [
+					'product' => $product,
+					'start_date' => $wps_event_start_date_time,
+					'end_date' => $wps_event_end_date_time,
+					'image_src' => $wps_product_image_src,
+					'event_data' => $wps_etmfw_product_array
+				];
+			}
+		
+			// Sort the events by start date
+			usort($events, function($a, $b) {
+				return $a['start_date'] <=> $b['start_date'];
+			});
+		
+			foreach ( $events as $event ) {
+				$product = $event['product'];
+				$product_id = $product->get_id();
+				$product_name = $product->get_name();
+				$product_price = $product->get_price();
+				$product_url = get_permalink( $product_id );
+				$wps_product_image_src = $event['image_src'];
+				$wps_event_start_date_time = $event['start_date'];
+				$wps_event_end_date_time = $event['end_date'];
+				$wps_etmfw_product_array = $event['event_data'];
+		
 				$wps_event_formated_start_date_time = $wps_event_start_date_time->format( 'F j, Y' );
 				$wps_event_formated_end_date_time = $wps_event_end_date_time->format( 'F j, Y' );
-
+		
 				$html .= '<div class ="wps-etmw_single-event">';
-
 				$html .= '<img src="' . $wps_product_image_src . '" />';
-
 				$html .= '<div class="wps-etmw_prod-desc">';
 				$html .= '<h4>' . $product_name . '</h4>';
 				$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
-
 				$html .= '<div class="wps-etmw_all-date">';
-				$html .= '<div class="wps-etmw_start-time"><strong>' . esc_html__( 'Start Date: ', 'event-tickets-manager-for-woocommerce-pro' ) . '</strong>' . $wps_event_formated_start_date_time . '</div>';
-				$html .= '<div class="wps-etmw_end-time"><strong>' . esc_html__( 'End Date: ', 'event-tickets-manager-for-woocommerce-pro' ) . '</strong>' . $wps_event_formated_end_date_time . '</div>';
+				$html .= '<span class="wps-etmw_start-time"><strong>' . esc_html__( 'Start Date: ', 'event-tickets-manager-for-woocommerce-pro' ) . '</strong>' . $wps_event_formated_start_date_time . '</span>';
+				$html .= '<span class="wps-etmw_end-time"><strong>' . esc_html__( 'End Date: ', 'event-tickets-manager-for-woocommerce-pro' ) . '</strong>' . $wps_event_formated_end_date_time . '</span>';
 				$html .= '<div class="wps-etmw_prod-venue"><strong>' . esc_html__( 'Venue: ', 'event-tickets-manager-for-woocommerce-pro' ) . '</strong>' . $wps_etmfw_product_array['etmfw_event_venue'] . '</div>';
 				$html .= '</div>';
-
 				$html .= '<div class="wps-etmw_prod-btn">';
-				$html .= '<a href="?add-to-cart=' . $product_id . '" class="button btn">View</a>';
+				$html .= '<a href="' . $product_url . '" class="button btn">View</a>';
 				$html .= '</div>';
 				$html .= '</div>';
 				$html .= '</div>';
 			}
+		
 			echo wp_kses_post( $html );
 		} else {
 			echo 'No Event Product Are Found.';

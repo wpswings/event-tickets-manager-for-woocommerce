@@ -29,6 +29,14 @@ $wps_etmfw_border_color = ! empty( get_option( 'wps_etmfw_pdf_border_color' ) ) 
 $wps_etmfw_logo_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' ) ) ? get_option( 'wps_etmfw_mail_setting_upload_logo' ) : '';
 $wps_etmfw_email_body_content = ! empty( get_option( 'wps_etmfw_email_body_content' ) ) ? get_option( 'wps_etmfw_email_body_content' ) : '';
 $wps_etmfw_qr_code_is_enable = ! empty( get_option( 'wps_etmfwp_include_qr' ) ) ? get_option( 'wps_etmfwp_include_qr' ) : '';
+
+$image = wp_get_attachment_image_src(get_post_thumbnail_id($product_id), 'single-post-thumbnail');
+if('yes' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
+	$product_image_url = (is_array($image) && isset($image[0])) ? $image[0] : '';
+	$product_image_url = get_option( 'wps_etmfw_mail_setting_upload_logo', '' );
+	} else {
+		$product_image_url = get_option( 'wps_etmfw_mail_setting_upload_logo', '' );
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -48,7 +56,7 @@ $wps_etmfw_qr_code_is_enable = ! empty( get_option( 'wps_etmfwp_include_qr' ) ) 
 						<tbody>
 							<tr style="width: 100%;">
 								<td style="width: 20%;background: #000000;">
-								<img id="wps_wem_logo_id" class="wps_wem_logo" src="<?php echo esc_url( get_option( 'wps_etmfw_mail_setting_upload_logo', '' ) ); ?>" style="width:<?php echo esc_attr( $wps_etmfw_logo_size . 'px' ); ?>;margin-left: 25px">
+								<img id="wps_wem_logo_id" class="wps_wem_logo" src="<?php echo esc_url( $product_image_url ); ?>" style="width:<?php echo esc_attr( $wps_etmfw_logo_size . 'px' ); ?>;margin-left: 25px">
 								</td>
 								<?php
 									  $bg_color = ! empty( get_option( 'wps_etmfw_ticket_bg_color', '' ) ) ? get_option( 'wps_etmfw_ticket_bg_color' ) : '#2196f3';
