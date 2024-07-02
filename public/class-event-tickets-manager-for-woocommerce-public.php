@@ -852,11 +852,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		// Get the product image URL
 		$product_image_url = '';
 		$image = wp_get_attachment_image_src(get_post_thumbnail_id($product_id), 'single-post-thumbnail');
-		if('no' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
-		$product_image_url = get_option( 'wps_etmfw_mail_setting_upload_logo', '' );
-		} else {
-		$product_image_url = (is_array($image) && isset($image[0])) ? $image[0] : '';
-		}
+		if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
+			$product_image_url = (is_array($image) && isset($image[0])) ? $image[0] : '';
+			} else {
+			$product_image_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' ) ) ? get_option( 'wps_etmfw_mail_setting_upload_logo' ) : '';
+			}
 		
 		$site_logo = '<img id="wps_wem_logo_id" class="wps_wem_logo" src="' .$product_image_url . '" style="width:' . $wps_etmfw_logo_size . 'px;margin-left: 25px">';
 		$wps_ticket_details = str_replace( '[EVENTNAME]', $product->get_name(), $wps_ticket_details );
@@ -917,7 +917,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				} else {
 					$dompdf->setPaper( 'A4', 'landscape' );
 				}
-
+               	// die();
 				$dompdf->loadHtml( $wps_ticket_content );
 				@ob_end_clean(); // phpcs:ignore.
 				$dompdf->render();

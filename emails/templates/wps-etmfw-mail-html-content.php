@@ -26,16 +26,14 @@ $wps_etmfw_qr_size = ! empty( get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 
 // Inline style used for sending in email.
 $wps_etmfw_border_type = ! empty( get_option( 'wps_etmfw_border_type' ) ) ? get_option( 'wps_etmfw_border_type' ) : 'none';
 $wps_etmfw_border_color = ! empty( get_option( 'wps_etmfw_pdf_border_color' ) ) ? get_option( 'wps_etmfw_pdf_border_color' ) : '#000000';
-$wps_etmfw_logo_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' ) ) ? get_option( 'wps_etmfw_mail_setting_upload_logo' ) : '';
 $wps_etmfw_email_body_content = ! empty( get_option( 'wps_etmfw_email_body_content' ) ) ? get_option( 'wps_etmfw_email_body_content' ) : '';
 $wps_etmfw_qr_code_is_enable = ! empty( get_option( 'wps_etmfwp_include_qr' ) ) ? get_option( 'wps_etmfwp_include_qr' ) : '';
 
 $image = wp_get_attachment_image_src(get_post_thumbnail_id($product_id), 'single-post-thumbnail');
-if('yes' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
+if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 	$product_image_url = (is_array($image) && isset($image[0])) ? $image[0] : '';
-	$product_image_url = get_option( 'wps_etmfw_mail_setting_upload_logo', '' );
 	} else {
-		$product_image_url = get_option( 'wps_etmfw_mail_setting_upload_logo', '' );
+	$product_image_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' ) ) ? get_option( 'wps_etmfw_mail_setting_upload_logo' ) : '';
 	}
 ?>
 <!DOCTYPE html>

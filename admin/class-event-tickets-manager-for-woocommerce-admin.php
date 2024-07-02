@@ -412,6 +412,19 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				),
 			),
 			array(
+				'title' => __( 'Enable Product Image as Logo', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'  => 'radio-switch',
+				'description'  => __( 'Enable it to set the product image as logo on PDF Ticket.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'id'    => 'wps_etmfw_prod_logo_plugin',
+				'value' =>'',
+				'class' => 'etmfw-radio-switch-class-pro',
+				'options' => array(
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce-pro' ),
+					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce-pro' ),
+				),
+			)
+			,
+			array(
 				'title' => __( 'Reminder Send Before Event Day', 'event-tickets-manager-for-woocommerce-pro' ),
 				'type'  => 'number',
 				'min' => '0',
