@@ -184,7 +184,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 
 		$screen = get_current_screen();
 
-		if ( 'product' == $screen->id ) {
+		if ( $screen instanceof WP_Screen && !empty($screen->id) && 'product' == $screen->id ) {
 
 			if ( $active_theme->get_template() === $target_theme ) {
 

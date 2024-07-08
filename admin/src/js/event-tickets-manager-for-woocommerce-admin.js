@@ -113,13 +113,13 @@
         //Dynamic Changes for background start Here.
         var wps_etmfw_background_color_change = $('.wps_etmfw_select_ticket_background'); //1.1.5.
         var wps_etmfw_background_color = '';
-        var wps_etmfw_background_selector = $('.wps_etmfw_ticket_body');//1.1.5.
+        var wps_etmfw_background_selector = $('.wps_etmfw_ticket_body'); //1.1.5.
 
         wps_etmfw_background_color_change.wpColorPicker({ //1.1.5.
             change: (event, ui) => {
-
                 wps_etmfw_background_color = ui.color.toString();
                 wps_etmfw_background_selector.css('background-color', wps_etmfw_background_color);
+                $('#wps_etmfw_parent_wrapper_3').css('background-color','white');
             }
         });
         //Dynamic Changes for background end Here.
