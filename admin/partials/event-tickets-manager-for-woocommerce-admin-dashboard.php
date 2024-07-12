@@ -42,9 +42,17 @@ if ( is_plugin_active( $plugin_path ) ) {
 		<a href="https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-event-pro&utm_medium=event-org-backend&utm_campaign=go-pro" target="_blank" class="wps-link"><?php esc_html_e( 'Go Pro', 'event-tickets-manager-for-woocommerce' ); ?></a>
 		<span>|</span>
 		<?php } ?>
+		<?php if (  $wps_pro_is_active ) { ?>
+		<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-doc&utm_medium=events-pro-page&utm_campaign=documentation" target="_blank" class="wps-link"><?php esc_html_e( 'Documentation', 'event-tickets-manager-for-woocommerce' ); ?></a>
+		<?php } else { ?>
 		<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-org-backend&utm_campaign=documentation" target="_blank" class="wps-link"><?php esc_html_e( 'Documentation', 'event-tickets-manager-for-woocommerce' ); ?></a>
+		<?php } ?>
 		<span>|</span>
+		<?php if (  $wps_pro_is_active ) { ?>
+		<a href="https://www.youtube.com/watch?v=kSlD1p1SQEA&t=3s" target="_blank" class="wps-link"><?php esc_html_e( 'Video', 'event-tickets-manager-for-woocommerce' ); ?></a>
+		<?php } else  { ?>
 		<a href="https://www.youtube.com/embed/9KyB4qpal6M" target="_blank" class="wps-link"><?php esc_html_e( 'Video', 'event-tickets-manager-for-woocommerce' ); ?></a>
+		<?php } ?>
 		<span>|</span>
 		<a href="https://wpswings.com/submit-query/?utm_source=wpswings-events-support&utm_medium=events-org-backend&utm_campaign=support" target="_blank" class="wps-link"><?php esc_html_e( 'Support', 'event-tickets-manager-for-woocommerce' ); ?></a>
 	</div>

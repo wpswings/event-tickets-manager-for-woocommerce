@@ -109,13 +109,13 @@ $wps_set_the_pdf_ticket_template = get_option( 'wps_etmfw_ticket_template', '1' 
 										<tbody>
 											<tr>
 											<?php if ( 'on' == get_option( 'wps_etmfwp_include_barcode' ) ) { ?>
-												<td style="text-align: center;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">
-													<h3 class="wps_etmfw_pdf_text_colour"  style="color: <?php echo esc_attr( 'black' ); ?>;">Your Ticket</h3>
+												<td style="text-align: center;">
+													<h3 id = "wps_not_change_color" class="wps_etmfw_pdf_text_colour"  style="color:<?php echo esc_attr( 'white' ); ?> ;">Your Ticket</h3>
 												</td>
 												<?php } else { ?>
 
-												<td style="text-align: center;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">
-												<h3 class="wps_etmfw_pdf_text_colour"  style="color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">Your Ticket</h3>
+												<td style="text-align: center;">
+												<h3 id = "wps_not_change_color" class="wps_etmfw_pdf_text_colour"  style="color: <?php echo esc_attr('white' ); ?>;">Your Ticket</h3>
 												</td>
 												<?php } ?>
 											</tr>

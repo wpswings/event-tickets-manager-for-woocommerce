@@ -92,6 +92,7 @@
             change: function(event, ui) { // Event listener for color change
                 wps_etmfw_text_color = ui.color.toString(); // Get selected color
                 wps_etmfw_text_color_selector.css('color', wps_etmfw_text_color); // Apply selected color to text
+                $('#wps_not_change_color').css('color','white');
             }
         });
         //Dynamic text color for pdf ticket end here.
@@ -119,7 +120,7 @@
             change: (event, ui) => {
                 wps_etmfw_background_color = ui.color.toString();
                 wps_etmfw_background_selector.css('background-color', wps_etmfw_background_color);
-                $('#wps_etmfw_parent_wrapper_3').css('background-color','white');
+                $('#wps_etmfw_parent_wrapper_3').css('background-color', 'white');
             }
         });
         //Dynamic Changes for background end Here.

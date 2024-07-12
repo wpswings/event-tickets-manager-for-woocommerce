@@ -163,19 +163,10 @@ form.wps_etmfw_show_ticket_form {
   display: block !important;
 }
 
-div#wps_etmwf_event_date img {
+div#wps_etmwf_event_date img , div#wps_etmwf_event_time img , div#wps_etmwf_event_venue img {
   display: inline-block;
   margin-right: 5px;
-}
-
-div#wps_etmwf_event_time img {
-  display: inline-block;
-  margin-right: 5px;
-}
-
-div#wps_etmwf_event_venue img {
-  display: inline-block;
-  margin-right: 5px;
+  max-width: 24px;
 }
 
 .fc-header-toolbar.fc-toolbar {
