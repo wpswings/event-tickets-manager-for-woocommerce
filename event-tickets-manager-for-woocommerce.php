@@ -20,7 +20,7 @@
  * Author URI:           https://wpswings.com/?utm_source=wpswings-events-official&utm_medium=events-org-page&utm_campaign=official
  * Text Domain:          event-tickets-manager-for-woocommerce
  * Domain Path:          /languages
- * 
+ *
  * Requires Plugins:  woocommerce
  * Requires at least:    5.2.4
  * Tested up to:         6.5.5
@@ -34,95 +34,94 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
+use Automattic\WooCommerce\Utilities\OrderUtil;
 
-/**
- * This function is used to disable shipping.
- *
- * @param object $show_shipping shipping Object.
- * @name disable_shipping_calc_on_cart
- * @since 1.0.2
- */
-function disable_shipping_calc_on_cart( $show_shipping ) {
-	$wps_need_shipping = false;
-
-	$args = array(
-		'status'            => array( 'publish' ),
-		'type'              => 'event_ticket_manager',
-		'limit'             => get_option( 'posts_per_page' ),  // -1 for unlimited
-	);
-
-	// Array of product objects.
-	$products = wc_get_products( $args );
-	$wps_evnt_prouct_back_data_arry = array();
-
-	foreach ( $products as $product ) {
-
-		$product_id   = $product->get_id();
-
-		$wps_all_event_product_ids_array[] = $product_id;
+$activated      = false;
+$active_plugins = get_option( 'active_plugins', array() );
+if ( function_exists( 'is_multisite' ) && is_multisite() ) {
+	$active_network_wide = get_site_option( 'active_sitewide_plugins', array() );
+	if ( ! empty( $active_network_wide ) ) {
+		foreach ( $active_network_wide as $key => $value ) {
+			$active_plugins[] = $key;
+		}
 	}
+	$active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
+	if ( file_exists( WP_PLUGIN_DIR . '/woocommerce/woocommerce.php' ) && in_array( 'woocommerce/woocommerce.php', $active_plugins, true ) ) {
+		$activated = true;
+	}
+} elseif ( file_exists( WP_PLUGIN_DIR . '/woocommerce/woocommerce.php' ) && in_array( 'woocommerce/woocommerce.php', $active_plugins, true ) ) {
+		$activated = true;
+}
 
-	if ( function_exists( 'WC' ) && WC()->cart ) {
-		if ( ! empty( WC()->cart->get_cart() ) ) {
-			foreach ( WC()->cart->get_cart() as $cart_item ) {
-				$wps_products_ids_array_cart[] = $cart_item['product_id'];
-				$wps_product  = wc_get_product( $cart_item['product_id'] );
-				if ( $wps_product->get_type() == 'event_ticket_manager' ) {
-					$wps_need_shipping  = true;
+if ( $activated ) {
+	/**
+	 * This function is used to disable shipping.
+	 *
+	 * @param object $show_shipping shipping Object.
+	 * @name disable_shipping_calc_on_cart
+	 * @since 1.0.2
+	 */
+	function disable_shipping_calc_on_cart( $show_shipping ) {
+		$wps_need_shipping = false;
+
+		$args = array(
+			'status'            => array( 'publish' ),
+			'type'              => 'event_ticket_manager',
+			'limit'             => get_option( 'posts_per_page' ),  // -1 for unlimited
+		);
+
+		// Array of product objects.
+		$products = wc_get_products( $args );
+		$wps_evnt_prouct_back_data_arry = array();
+
+		foreach ( $products as $product ) {
+
+			$product_id   = $product->get_id();
+
+			$wps_all_event_product_ids_array[] = $product_id;
+		}
+
+		if ( function_exists( 'WC' ) && WC()->cart ) {
+			if ( ! empty( WC()->cart->get_cart() ) ) {
+				foreach ( WC()->cart->get_cart() as $cart_item ) {
+					$wps_products_ids_array_cart[] = $cart_item['product_id'];
+					$wps_product  = wc_get_product( $cart_item['product_id'] );
+					if ( $wps_product->get_type() == 'event_ticket_manager' ) {
+						$wps_need_shipping  = true;
+					}
 				}
 			}
 		}
+
+		return ! $wps_need_shipping;
 	}
+	add_filter( 'woocommerce_cart_ready_to_calc_shipping', 'disable_shipping_calc_on_cart', 99 );
+	add_filter( 'woocommerce_cart_needs_shipping_address', 'disable_shipping_calc_on_cart', 99 );
 
-	return ! $wps_need_shipping;
-}
-add_filter( 'woocommerce_cart_ready_to_calc_shipping', 'disable_shipping_calc_on_cart', 99 );
-add_filter( 'woocommerce_cart_needs_shipping_address', 'disable_shipping_calc_on_cart', 99 );
 
-use Automattic\WooCommerce\Utilities\OrderUtil;
-
-// HPOS Compatibility.
-add_action(
-	'before_woocommerce_init',
-	function() {
-		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+	// HPOS Compatibility.
+	add_action(
+		'before_woocommerce_init',
+		function() {
+			if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+			}
 		}
-	}
-);
+	);
 
-// Cart and Checkout Block Comaptibility.
-add_action(
-	'before_woocommerce_init',
-	function() {
+	// Cart and Checkout Block Comaptibility.
+	add_action(
+		'before_woocommerce_init',
+		function() {
 
-		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+			if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
 
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
+				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
+
+			}
 
 		}
-
-	}
-);
-
-
-$activated = false;
-/**
- * Checking if WooCommerce is active.
- */
-if ( function_exists( 'is_multisite' ) && is_multisite() ) {
-	include_once ABSPATH . 'wp-admin/includes/plugin.php';
-	if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
-		$activated = true;
-	}
-} else {
-	if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
-		$activated = true;
-	}
-}
-
-
-if ( $activated ) {
+	);
 
 	/**
 	 * Define plugin constants.
@@ -650,6 +649,131 @@ if ( $activated ) {
 		update_option( 'is_wps_etmfw_migration_done', 'done' );
 
 	}
+
+	/**
+	 * Replacing get_post_meta with wps_etmfw_get_meta_data for HPOS.
+	 *
+	 * @param int    $id Date Passed.
+	 * @param string $key key Passed.
+	 * @param string $v $value Passed.
+	 */
+	function wps_etmfw_get_meta_data( $id, $key, $v ) {
+		if ( 'shop_order' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
+			// HPOS usage is enabled.
+			$order    = wc_get_order( $id );
+			if ( '_customer_user' == $key ) {
+				$meta_val = $order->get_customer_id();
+				return $meta_val;
+			}
+			$meta_val = $order->get_meta( $key );
+			return $meta_val;
+		} else {
+			// Traditional CPT-based orders are in use.
+			$meta_val = get_post_meta( $id, $key, $v );
+			return $meta_val;
+		}
+	}
+
+	/**
+	 * Update update_post_meta with wps_etmfw_update_meta_data for HPOS.
+	 *
+	 * @param int    $id Date Passed.
+	 * @param string $key key Passed.
+	 * @param string $value $value Passed.
+	 */
+	function wps_etmfw_update_meta_data( $id, $key, $value ) {
+		if ( 'shop_order' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
+			// HPOS usage is enabled.
+			$order = wc_get_order( $id );
+			$order->update_meta_data( $key, $value );
+			$order->save();
+		} else {
+			// Traditional CPT-based orders are in use.
+			update_post_meta( $id, $key, $value );
+		}
+	}
+
+	add_action( 'admin_notices', 'wps_banner_notification_plugin_html' );
+	if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
+		/**
+		 * Common Function To show banner image.
+		 *
+		 * @return void
+		 */
+		function wps_banner_notification_plugin_html() {
+
+			$screen = get_current_screen();
+			if ( isset( $screen->id ) ) {
+				$pagescreen = $screen->id;
+			}
+			if ( ( isset( $pagescreen ) && 'plugins' === $pagescreen ) || ( 'wp-swings_page_home' == $pagescreen ) ) {
+				$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
+				if ( isset( $banner_id ) && '' !== $banner_id ) {
+					$hidden_banner_id            = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
+					$banner_image = get_option( 'wps_wgm_notify_new_banner_image', '' );
+
+					$banner_url = get_option( 'wps_wgm_notify_new_banner_url', '' );
+					if ( isset( $hidden_banner_id ) && $hidden_banner_id < $banner_id ) {
+
+						if ( '' !== $banner_image && '' !== $banner_url ) {
+
+							?>
+						   <div class="wps-offer-notice notice notice-warning is-dismissible">
+							   <div class="notice-container">
+								   <a href="<?php echo esc_url( $banner_url ); ?>" target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
+							   </div>
+							   <button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+						   </div>
+						  
+							<?php
+						}
+					}
+				}
+			}
+		}
+	}
+
+	add_action( 'admin_notices', 'wps_etmfw_banner_notification_html' );
+	/**
+	 * Function to show banner image based on subscription.
+	 *
+	 * @return void
+	 */
+	function wps_etmfw_banner_notification_html() {
+
+		$screen = get_current_screen();
+		if ( isset( $screen->id ) ) {
+			$pagescreen = $screen->id;
+		}
+		$secure_nonce      = wp_create_nonce( 'wps-upsell-auth-nonce' );
+		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
+		if ( ! $id_nonce_verified ) {
+			wp_die( esc_html__( 'Nonce Not verified', 'upsell-order-bump-offer-for-woocommerce' ) );
+		}
+		if ( ( isset( $_GET['page'] ) && 'event_tickets_manager_for_woocommerce_menu' === $_GET['page'] ) ) {
+			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
+			if ( isset( $banner_id ) && '' !== $banner_id ) {
+				$hidden_banner_id            = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
+				$banner_image = get_option( 'wps_wgm_notify_new_banner_image', '' );
+				$banner_url = get_option( 'wps_wgm_notify_new_banner_url', '' );
+				if ( isset( $hidden_banner_id ) && $hidden_banner_id < $banner_id ) {
+
+					if ( '' !== $banner_image && '' !== $banner_url ) {
+
+						?>
+							<div class="wps-offer-notice notice notice-warning is-dismissible">
+								<div class="notice-container">
+									<a href="<?php echo esc_url( $banner_url ); ?>"target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
+								</div>
+								<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+							</div>
+						   
+						<?php
+					}
+				}
+			}
+		}
+	}
 } else {
 
 	/**
@@ -684,127 +808,4 @@ if ( $activated ) {
 	add_action( 'admin_init', 'wps_etmfw_plugin_deactivate' );
 
 }
-/**
- * Replacing get_post_meta with wps_etmfw_get_meta_data for HPOS.
- *
- * @param int    $id Date Passed.
- * @param string $key key Passed.
- * @param string $v $value Passed.
- */
-function wps_etmfw_get_meta_data( $id, $key, $v ) {
-	if ( 'shop_order' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
-		// HPOS usage is enabled.
-		$order    = wc_get_order( $id );
-		if ( '_customer_user' == $key ) {
-			$meta_val = $order->get_customer_id();
-			return $meta_val;
-		}
-		$meta_val = $order->get_meta( $key );
-		return $meta_val;
-	} else {
-		// Traditional CPT-based orders are in use.
-		$meta_val = get_post_meta( $id, $key, $v );
-		return $meta_val;
-	}
-}
 
-/**
- * Update update_post_meta with wps_etmfw_update_meta_data for HPOS.
- *
- * @param int    $id Date Passed.
- * @param string $key key Passed.
- * @param string $value $value Passed.
- */
-function wps_etmfw_update_meta_data( $id, $key, $value ) {
-	if ( 'shop_order' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
-		// HPOS usage is enabled.
-		$order = wc_get_order( $id );
-		$order->update_meta_data( $key, $value );
-		$order->save();
-	} else {
-		// Traditional CPT-based orders are in use.
-		update_post_meta( $id, $key, $value );
-	}
-}
-
-add_action( 'admin_notices', 'wps_banner_notification_plugin_html' );
-if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
-	/**
-	 * Common Function To show banner image.
-	 *
-	 * @return void
-	 */
-	function wps_banner_notification_plugin_html() {
-
-		$screen = get_current_screen();
-		if ( isset( $screen->id ) ) {
-			$pagescreen = $screen->id;
-		}
-		if ( ( isset( $pagescreen ) && 'plugins' === $pagescreen ) || ( 'wp-swings_page_home' == $pagescreen ) ) {
-			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
-			if ( isset( $banner_id ) && '' !== $banner_id ) {
-				$hidden_banner_id            = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
-				$banner_image = get_option( 'wps_wgm_notify_new_banner_image', '' );
-
-				$banner_url = get_option( 'wps_wgm_notify_new_banner_url', '' );
-				if ( isset( $hidden_banner_id ) && $hidden_banner_id < $banner_id ) {
-
-					if ( '' !== $banner_image && '' !== $banner_url ) {
-
-						?>
-						   <div class="wps-offer-notice notice notice-warning is-dismissible">
-							   <div class="notice-container">
-								   <a href="<?php echo esc_url( $banner_url ); ?>" target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
-							   </div>
-							   <button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
-						   </div>
-						  
-						<?php
-					}
-				}
-			}
-		}
-	}
-}
-
-add_action( 'admin_notices', 'wps_etmfw_banner_notification_html' );
-/**
- * Function to show banner image based on subscription.
- *
- * @return void
- */
-function wps_etmfw_banner_notification_html() {
-
-	$screen = get_current_screen();
-	if ( isset( $screen->id ) ) {
-		$pagescreen = $screen->id;
-	}
-	$secure_nonce      = wp_create_nonce( 'wps-upsell-auth-nonce' );
-		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
-	if ( ! $id_nonce_verified ) {
-		wp_die( esc_html__( 'Nonce Not verified', 'upsell-order-bump-offer-for-woocommerce' ) );
-	}
-	if ( ( isset( $_GET['page'] ) && 'event_tickets_manager_for_woocommerce_menu' === $_GET['page'] ) ) {
-		$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
-		if ( isset( $banner_id ) && '' !== $banner_id ) {
-			$hidden_banner_id            = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
-			$banner_image = get_option( 'wps_wgm_notify_new_banner_image', '' );
-			$banner_url = get_option( 'wps_wgm_notify_new_banner_url', '' );
-			if ( isset( $hidden_banner_id ) && $hidden_banner_id < $banner_id ) {
-
-				if ( '' !== $banner_image && '' !== $banner_url ) {
-
-					?>
-							<div class="wps-offer-notice notice notice-warning is-dismissible">
-								<div class="notice-container">
-									<a href="<?php echo esc_url( $banner_url ); ?>"target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
-								</div>
-								<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
-							</div>
-						   
-						<?php
-				}
-			}
-		}
-	}
-}
