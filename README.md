@@ -1,4 +1,4 @@
-﻿﻿![Build Status](https://img.shields.io/badge/build-passing-brightgreen) ![Active installs](https://img.shields.io/badge/Active-1000%2B-brightgreen)![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.4.2-brightgreen)![WC tested](https://img.shields.io/badge/WC%20tested-8.4.0-brightgreen)![Requires PHP](https://img.shields.io/badge/Requires%20PHP-8-blue)
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen) ![Active installs](https://img.shields.io/badge/Active-1000%2B-brightgreen)![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.5.5-brightgreen)![WC tested](https://img.shields.io/badge/WC%20tested-9.1.2-brightgreen)![Requires PHP](https://img.shields.io/badge/Requires%20PHP-5.2.4-blue)
 # Event Tickets Manager for WooCommerce – Events and Bookings Calendar, Registration, Event Check-in Using Emails, Edit Your Ticket Content
 ![Event Tickets Manager  for WooCommerce](https://ps.w.org/event-tickets-manager-for-woocommerce/assets/banner-772x250.jpg?rev=2672038)
 * Contributors: WP Swings
@@ -77,19 +77,38 @@
 
 * [**Event Tickets Manager For WooCommerce Backend demo**](https://demo.wpswings.com/bookings-for-woocommerce-pro/get-personal-demo/?utm_source=wpswings-events-demo&utm_medium=events-github-page&utm_campaign=backend-demo)
 
+## WITH THE WORDPRESS EVENTS MANAGEMENT PLUGIN YOU CAN
+
+* Provide the customers with a secure experience – scannable barcodes containing the unique ticket code.
+* Track the check-in status of attendees using the WordPress calendar plugin.
+* Allow the customers to validate their check-ins using emails.
+* The Event Tickets Manager Plugin supports multisite compatibility.
+* Enables the admin to show the list of events over different pages using shortcodes.
+* Show the event location to customers at the front end.
+
+## WORDPRESS EVENT PLUGIN COMPATIBILITIES
+
+* WordPress Events Plugin is compatible with [WPML](https://wpml.org/purchase/) multilingual support.
+* Compatibility of Mautic Integration that offers a complete management solution for your WooCommerce events data.
+* WordPress Calendar Plugin is now Compatible with [Direct Checkout for WooCommerce](https://wordpress.org/plugins/woocommerce-direct-checkout/), which simplifies the checkout process.
+* WooCommerce event ticket system is now compatible [Ultimate Gift Cards for WooCommerce](https://wordpress.org/plugins/woo-gift-cards-lite/) and [Gift Cards For WooCommerce Pro](https://wpswings.com/product/gift-cards-for-woocommerce-pro/?utm_source=wpswings-github-page&utm_medium=referral&utm_campaign=gift-cards-pro)
+* The event ticket system is now compatible with the [Wallet System for WooCommerce](https://wpswings.com/product/wallet-system-for-woocommerce-pro/?utm_source=wpswings-github-page&utm_medium=referral&utm_campaign=wallet-pro), enabling the customers to utilize the negative balance to shop.
+
 ##  WHAT PREMIUM VERSION OF EVENT TICKETS FOR WOOCOMMERCE OFFERS
  
-**1) Check-In Using QR Code**: The WooCommerce Event Tickets plugin allows customers an easy check-in process by using QR Code. 
+**1)** Admins can set the recurring date for any event very conveniently; events can recur on a daily, weekly, or monthly.
+ 
+**2)** The WooCommerce Event Tickets plugin allows customers an easy check-in process by using a QR Code.
 
-**2) Fully Customizable PDF Tickets**: We have now introduced fully customizable PDF tickets. This allows the users to create event tickets the way they want.
+**3)** Offers fully customizable PDF tickets. This allows the users to create event tickets the way they want.
 
-**3) Multiple Layouts for Tickets PDFs**: The WordPress Events Plugin now offers a feature that allows users to select from multiple layout options for ticket PDFs when creating and managing events.
+**4)** Allow users to select from multiple layout options for ticket PDFs when creating and managing events.
 
-**4) Send Ticket Details with SMS**: Merchants can ensure that the customers have received their products by tracking SMSs.
+**5)** Merchants can ensure  that the customers have received their products by tracking SMSs by using the events calendar plugin.
 
-**5) Facebook Sharing of Tickets**: WordPress Events Plugin allows you to share your events on Facebook to get the traffic and audience for your event, this helps you to generate revenue.
+**6)** Share your events on Facebook to get the traffic and audience for your event, this helps you to generate revenue.
 
-**6) Email Reminder Before Event**: WordPress calendar plugin, merchants are allowed to send an email reminder to their customers before the WordPress event to notify customers that the event will start or x no. of days left to the event.
+**7)** Allow merchants to send an email reminder to their customers before WordPress events to notify them that the event will start or x no. of days left to the event.
    
 
 ### TAKE ADVANTAGE OF THE EXCLUSIVE FEATURES OF THE WORDPRESS EVENTS PLUGIN
@@ -120,5 +139,3 @@ If you need support or have questions, kindly use our online chat window [**here
 * [**Tweet us on @wpswings**](https://twitter.com/wpswings)
 * [**Visit our LinkedIn Account**](https://www.linkedin.com/company/77072505/)
 * [**Subscribe To Our YouTube Channel**](https://www.youtube.com/channel/UC7nYNf0JETOwW3GOD_EW2Ag)
-
-

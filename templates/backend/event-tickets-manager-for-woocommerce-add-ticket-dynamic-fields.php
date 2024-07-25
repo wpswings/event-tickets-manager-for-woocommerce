@@ -12,11 +12,11 @@
  */
 
 ?>
-<div id="wps_etmfw_add_fields_wrapper">
-	<div class="wps_etmfw_add_fields_title">
-		<h2>
-			<strong class="attribute_name"><?php esc_html_e( 'Add custom fields on the tickets for this event', 'event-tickets-manager-for-woocommerce' ); ?></strong></h2>
-		</div>
+<div class="wps_etmfwpp_add_fields_title">
+<h2>
+<strong class="attribute_name"><?php esc_html_e( 'Add custom fields on the tickets for this event', 'event-tickets-manager-for-woocommerce' ); ?></strong></h2>
+</div>
+<div class="wps_etmfw_dynamic_price_wrap" id="wps_etmfw_add_fields_wrapper">
 		<div class="wps_etmfw_add_fields_data">
 			<div class="wps_etmfw_fields_panel">
 				<table class="field-options wp-list-table widefat wps_etmfw_field_table">
@@ -30,7 +30,7 @@
 						</tr>
 					</thead>
 					<tbody class="wps_etmfw_field_body">
-						<?php if ( empty( $wps_etmfw_field_data ) ) : ?>
+						<?php if ( 1 != 1 ) : ?>
 							<tr class="wps_etmfw_field_wrap" data-id="0">
 								<td class="drag-icon">
 									<i class="dashicons dashicons-move"></i>

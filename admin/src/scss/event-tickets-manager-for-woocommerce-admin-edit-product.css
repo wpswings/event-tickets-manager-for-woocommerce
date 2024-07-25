@@ -29,4 +29,95 @@ div#wps_etmfw_location_loader img {
     height: 30px;
 }
 
+/*Product Edit Page*/
+div#wps_etmfw_event_data {
+    padding: 10px 0;
+}
 
+.wps_etmfw_dynamic_price_wrap {
+    padding: 0 10px;
+}
+
+.wps_etmfw_dynamic_pricing_base_price input[type=radio] {
+    margin: 0 5px;
+}
+
+.wps_etmfwpp_add_fields_title h2 strong {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 15px 0 0;
+    display: block;
+}
+
+.wps_etmfw_price_cal_rule h4 {
+    font-size: 14px;
+}
+
+.wps_etmfw_dynamic_pricing_base_price {
+    margin: 0 0 15px;
+}
+#wps_etmfwppp_add_dynamic_fields_wrapper input[type=checkbox] {
+    margin: 0 5px 0 2px;
+}
+
+/* Recuring events settings start */
+#wps_main_recurring_wrapper_id h2{
+    font-size: 16px;
+}
+.wps_main_recurring_common {
+    padding: 0 0 5px 15px;
+}
+
+.wps_main_recurring_common i {
+    font-size: 12px;
+    line-height: 1.25;
+    display: inline-block;
+}
+
+#wps_main_recurring_wrapper_id .wps_main_recurring_common label,
+#wps_main_recurring_wrapper_id .wps_main_recurring_common input,
+#wps_main_recurring_wrapper_id .wps_main_recurring_common select {
+    float: unset;
+    margin: 0;
+    padding: 0;
+}
+
+#wps_main_recurring_wrapper_id .wps_main_recurring_common label {
+    max-width: 145px;
+    width: 100%;
+    display: inline-block;
+}
+
+#wps_main_recurring_wrapper_id .wps_main_recurring_common input {
+    max-width: 200px;
+    margin: 0 5px 0 0;
+    padding: 0 5px;
+    width: 100%;
+}
+
+#wps_main_recurring_wrapper_id .wps_main_recurring_common select {
+    max-width: 90px;
+    padding: 0 5px;
+    width: 100%;
+}
+
+.wps_recurring_start_button {
+    padding: 15px;
+}
+
+/* Recuring events settings end */
+.wps_recurring_loader_main{
+    display: none;
+  }
+
+  .wps_event_daily_duration_wrap {
+    padding: 10px 15px;
+}
+
+.wps_event_daily_duration_wrap >span{
+  margin-right: 10px;
+}
+
+.wps_etmfwpp_add_fields_title .woocommerce-help-tip {
+    vertical-align: top;
+}

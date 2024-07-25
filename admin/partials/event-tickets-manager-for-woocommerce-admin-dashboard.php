@@ -18,14 +18,41 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $etmfw_wps_etmfw_obj, $error_notice;
 $etmfw_active_tab   = isset( $_GET['etmfw_tab'] ) ? sanitize_key( $_GET['etmfw_tab'] ) : 'event-tickets-manager-for-woocommerce-general';
+$secure_nonce      = wp_create_nonce( 'wps-upsell-auth-nonce' );
+$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
+
+if ( ! $id_nonce_verified ) {
+	wp_die( esc_html__( 'Nonce Not verified', 'upsell-order-bump-offer-for-woocommerce' ) );
+}
 $etmfw_default_tabs = $etmfw_wps_etmfw_obj->wps_etmfw_plug_default_tabs();
+$plugin_path = 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php';
+$wps_pro_is_active = false;
+// Check if the plugin is active.
+if ( is_plugin_active( $plugin_path ) ) {
+	$wps_pro_is_active = true;
+}
 ?>
 
 <header>
 	<div class="wps-header-container wps-bg-white wps-r-8">
 		<h1 class="wps-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', $etmfw_wps_etmfw_obj->etmfw_get_plugin_name() ) ) ); ?></h1>
-
+		<a href="https://demo.wpswings.com/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-event-demo&utm_medium=event-org-backend&utm_campaign=demo" target="_blank" class="wps-link"><?php esc_html_e( 'Demo', 'event-tickets-manager-for-woocommerce' ); ?></a>
+		<span>|</span>
+		<?php if ( ! $wps_pro_is_active ) { ?>
+		<a href="https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-event-pro&utm_medium=event-org-backend&utm_campaign=go-pro" target="_blank" class="wps-link"><?php esc_html_e( 'Go Pro', 'event-tickets-manager-for-woocommerce' ); ?></a>
+		<span>|</span>
+		<?php } ?>
+		<?php if (  $wps_pro_is_active ) { ?>
+		<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-doc&utm_medium=events-pro-page&utm_campaign=documentation" target="_blank" class="wps-link"><?php esc_html_e( 'Documentation', 'event-tickets-manager-for-woocommerce' ); ?></a>
+		<?php } else { ?>
 		<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-org-backend&utm_campaign=documentation" target="_blank" class="wps-link"><?php esc_html_e( 'Documentation', 'event-tickets-manager-for-woocommerce' ); ?></a>
+		<?php } ?>
+		<span>|</span>
+		<?php if (  $wps_pro_is_active ) { ?>
+		<a href="https://www.youtube.com/watch?v=kSlD1p1SQEA&t=3s" target="_blank" class="wps-link"><?php esc_html_e( 'Video', 'event-tickets-manager-for-woocommerce' ); ?></a>
+		<?php } else  { ?>
+		<a href="https://www.youtube.com/embed/9KyB4qpal6M" target="_blank" class="wps-link"><?php esc_html_e( 'Video', 'event-tickets-manager-for-woocommerce' ); ?></a>
+		<?php } ?>
 		<span>|</span>
 		<a href="https://wpswings.com/submit-query/?utm_source=wpswings-events-support&utm_medium=events-org-backend&utm_campaign=support" target="_blank" class="wps-link"><?php esc_html_e( 'Support', 'event-tickets-manager-for-woocommerce' ); ?></a>
 	</div>
@@ -63,6 +90,18 @@ if ( ! $error_notice ) {
 	</nav>
 
 	<section class="wps-section">
+	<div class="wps-rma__popup-for-pro-wrap">
+			<div class="wps-rma__popup-for-pro-shadow"></div>
+			<div class="wps-rma__popup-for-pro">
+				<span class="wps-rma__popup-for-pro-close">+</span>
+				<h2 class="wps-rma__popup-for-pro-title"><?php esc_html_e( 'Want More ?? Go Pro !!', 'event-tickets-manager-for-woocommerce' ); ?></h2>
+				<p class="wps-rma__popup-for-pro-content"><i><?php echo esc_html__( 'The Pro Version will unlock all of the feature', 'event-tickets-manager-for-woocommerce' ) . '<br/>' . esc_html__( 'This will easily process event tickets, allow sharing of tickets, resend tickets, and QRCode generation, twilio integration, and email notifications feature making it the perfect event management system', 'event-tickets-manager-for-woocommerce' ); ?></i></p>
+				<div class="wps-rma__popup-for-pro-link-wrap">
+					<a target="_blank" href="https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-pro&utm_medium=events-org-backend&utm_campaign=go-pro" class="wps-rma__popup-for-pro-link"><?php esc_html_e( 'Go pro now', 'event-tickets-manager-for-woocommerce' ); ?></a>
+				</div>
+			</div>
+		</div>
+
 		<div>
 			<?php
 				do_action( 'wps_etmfw_before_general_settings_form' );

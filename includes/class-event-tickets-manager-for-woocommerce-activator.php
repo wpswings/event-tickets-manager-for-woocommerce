@@ -30,6 +30,20 @@ class Event_Tickets_Manager_For_Woocommerce_Activator {
 	 */
 	public static function event_tickets_manager_for_woocommerce_activate() {
 
+		if('on' == get_option('wps_etmfwp_include_qr')){
+
+			update_option('wps_etmfwp_include_barcode' , '');
+		}
+
+		if('on' == get_option('wps_etmfwp_include_barcode')){
+
+			update_option('wps_etmfwp_include_qr' ,'');
+		}
+
+		// Schedule event to send data to wpswings.
+		wp_clear_scheduled_hook( 'wpswings_tracker_send_event' );
+		wp_schedule_event( time() + 10, apply_filters( 'wpswings_tracker_event_recurrence', 'daily' ), 'wpswings_tracker_send_event' );
+
 	}
 
 	/**

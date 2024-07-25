@@ -29,6 +29,8 @@ class Event_Tickets_Manager_For_Woocommerce_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function event_tickets_manager_for_woocommerce_deactivate() {
+		wp_clear_scheduled_hook( 'wps_wgm_check_for_notification_update' );
+		update_option('wp_date_time_event_format' , 'F j, Y g:i a');
 
 	}
 
