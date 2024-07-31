@@ -59,6 +59,8 @@ $allowed_html = array(
 		'data-tip' => array(),
 	),
 );
+
+$wps_ubo_selected_template = ! empty( get_option( 'wps_etmfw_ticket_template' ) ) ? get_option( 'wps_etmfw_ticket_template' ) : '1';
 ?>
 <form action="" method="POST">
 
@@ -93,6 +95,45 @@ $allowed_html = array(
 								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-5.png' ); ?>">
 							</a>
 						</div>
+
+						<!-- Template 6 Start Start-->
+						<div id ="wps_ubo_premium_popup_3_template" class="wps_etmfw_template_select 
+						<?php echo esc_html( 6 === (int) $wps_ubo_selected_template ? 'wps_etmfw_selected_class' : '' ); ?>">
+						<p class="wps_etmfw_template_name" ><strong><?php esc_html_e( 'New Template', 'event-tickets-manager-for-woocommerce' ); ?></strong></p>
+							<a href="javascript:void" class="wps_etmfw_template_link" data_link = '6' >
+								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-5.png' ); ?>">
+							</a>
+						</div>
+						<!-- Template 6 Start End-->
+
+                        <!-- New Template Pro 1 Start-->
+						<div id ="wps_ubo_premium_popup_4_template" class="wps_etmfw_template_select 
+						<?php
+						if ( true != $wps_is_pro_active ) {
+							echo 'wps-etmfw-radio-switch-class-pro-tag'; }
+						?>
+						<?php echo esc_html( 7 === (int) $wps_ubo_selected_template ? 'wps_etmfw_selected_class' : '' ); ?>">
+						<?php
+						if ( true != $wps_is_pro_active ) {
+							?>
+							<span class="wps_etmfw_premium_strip"><?php esc_html_e( 'Pro', 'event-tickets-manager-for-woocommerce' ); } ?></span>	
+						<p class="wps_etmfw_template_name" ><strong><?php esc_html_e( 'New Pro Template 1', 'event-tickets-manager-for-woocommerce' ); ?></strong></p>
+							<a href="javascript:void" class=" 
+							<?php
+							if ( true == $wps_is_pro_active ) {
+								?>
+								  <?php
+									echo 'wps_etmfw_template_link';
+							} else {
+								echo 'wps_etmfw_template_link_pro'; }
+							?>
+																" data_link = '7' >
+								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-5.png' ); ?>">
+							</a>
+						</div>
+                        <!-- New Template Pro 1 End -->
+
+
 
 						<!-- Template two. -->
 						<div id ="wps_ubo_premium_popup_1_template" class="wps_etmfw_template_select 
@@ -240,7 +281,7 @@ $allowed_html = array(
 				</td>
 				</tr>
 				<?php } ?>
-
+				<?php if ( (1== (int) $wps_ubo_selected_template)  || 2== (int) $wps_ubo_selected_template || 3== (int) $wps_ubo_selected_template || 4 == (int) $wps_ubo_selected_template || (5 == (int) $wps_ubo_selected_template)) { ?>
 				<tr valign="top">
 					<th><?php esc_html_e( 'Select Background Color', 'event-tickets-manager-for-woocommerce' ); ?></th>
 					<td>
@@ -252,7 +293,7 @@ $allowed_html = array(
 					<span class="wps_etmfw_helper_text"><?php echo esc_html( $attribute_description ); ?></span>
 				</td>
 				</tr>
-
+				
 				<tr valign="top">
 					<th><?php esc_html_e( 'Select Text Color', 'event-tickets-manager-for-woocommerce' ); ?></th>
 					<td>
@@ -265,6 +306,7 @@ $allowed_html = array(
 				</td>
 				</tr>
 
+				
 				<tr valign="top">
 					<th><?php esc_html_e( 'Select Logo Size', 'event-tickets-manager-for-woocommerce' ); ?></th>
 					<td>
@@ -277,6 +319,7 @@ $allowed_html = array(
 					<span class="wps_etmfw_helper_text"><?php echo esc_html( $attribute_description ); ?></span>
 				</td>
 				</tr>
+				
 
 				<tr valign="top">
 					<th><?php esc_html_e( 'Select QR Size', 'event-tickets-manager-for-woocommerce' ); ?></th>
@@ -290,18 +333,17 @@ $allowed_html = array(
 					<span class="wps_etmfw_helper_text"><?php echo esc_html( $attribute_description ); ?></span>
 				</td>
 				</tr>
-
+				<?php } ?>
 				<tr class="wps_etmfw_hide_setting" valign="top">
 					<th><?php esc_html_e( 'Select Background Image', 'event-tickets-manager-for-woocommerce' ); ?></th>
 					<td>
 					<?php
 					$attribute_description = esc_html__( 'Set different background image for pdf ticket template like Mellifluous and Demure.', 'event-tickets-manager-for-woocommerce' );
 					$wps_etmfw_background_image = ! empty( get_option( 'wps_etmfw_background_image' ) ) ? get_option( 'wps_etmfw_background_image' ) : '';
+					$image_attributes = wp_get_attachment_image_src( $wps_etmfw_background_image, 'thumbnail' );
 					?>
 					<?php
-					if ( ! empty( $wps_etmfw_background_image ) ) {
-
-						$image_attributes = wp_get_attachment_image_src( $wps_etmfw_background_image, 'thumbnail' );
+					if ( ! empty($image_attributes[0]) ) {
 						?>
 					<div class="wps_wocuf_saved_custom_image">
 					<a href="#" class="wps_etmfw_upload_image_button button"><img src="<?php echo esc_url( $image_attributes[0] ); ?>" style="max-width:150px;display:block;"></a>
@@ -339,7 +381,11 @@ $allowed_html = array(
 					<?php if ( 4 === (int) $wps_ubo_selected_template ) { ?>
 					<?php include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'Demo/wps-etmfw-mail-html-content-3.php'; } // Mellifluous. ?>	
 					<?php if ( 5 === (int) $wps_ubo_selected_template ) { ?>
-					<?php include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'Demo/wps-etmfw-mail-html-content-4.php'; } // Mellifluous. ?>				
+					<?php include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'Demo/wps-etmfw-mail-html-content-4.php'; } // Mellifluous. ?>
+					<?php if ( 6 === (int) $wps_ubo_selected_template ) { ?>
+					<?php include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'Demo/wps-etmfw-mail-html-content-5.php'; } // New Template 1. ?>	
+					<?php if ( 7 === (int) $wps_ubo_selected_template ) { ?>
+					<?php include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'Demo/wps-etmfw-mail-html-content-6.php'; } // New Template Pro 1. ?>			
 				</div>
 				</div>
 				<!-- Preview end -->
