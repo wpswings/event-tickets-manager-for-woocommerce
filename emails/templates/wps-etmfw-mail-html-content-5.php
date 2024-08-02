@@ -47,7 +47,7 @@ if (!empty($wps_etmfw_background_image)) {
 
 ?>
 <!-- Template Start -->
-
+<h1><?php echo $image_attributes[0]; ?></h1>
 <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='width: 100%;font-family:Arial, Helvetica, sans-serif;border:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>'>
 	<tbody>
 		<tr>

@@ -405,7 +405,7 @@
 
 		}
         function wps_etmfw_hide_bck_ground_image_setting(){
-            if('3'== etmfw_admin_param.wps_etmfw_selected_template || '4' == etmfw_admin_param.wps_etmfw_selected_template || '6' == etmfw_admin_param.wps_etmfw_selected_template){
+            if('3'== etmfw_admin_param.wps_etmfw_selected_template || '4' == etmfw_admin_param.wps_etmfw_selected_template || '6' == etmfw_admin_param.wps_etmfw_selected_template || '8' == etmfw_admin_param.wps_etmfw_selected_template){
                 $('.wps_etmfw_hide_setting').show();
             }else{
                 $('.wps_etmfw_hide_setting').hide();

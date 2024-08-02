@@ -817,9 +817,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		} elseif ( '5' == $wps_set_the_pdf_ticket_template ) {
 			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-4.php'; // unknown.
 		} elseif('6' == $wps_set_the_pdf_ticket_template){
-			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-5.php'; // Custom 1.
+			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-5.php'; // New Template Org 1.
 		} elseif('7' == $wps_set_the_pdf_ticket_template){
-			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-6.php'; // Custom 2.
+			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-6.php'; //New Template 2.
+		} elseif('8' == $wps_set_the_pdf_ticket_template){
+			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-7.php'; // Custom 2.
 		}
 
 		if ( is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) {
@@ -875,6 +877,27 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		// 	}
 		// 	$additinal_info .= '</p>';
 		// }
+
+
+
+		if('8' == $wps_set_the_pdf_ticket_template){
+		// Additional Info Details.
+		if ( ! empty( $item_meta_data ) && ( ( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) || ( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) ) ) {
+			$additinal_info = "<h4 style='color:#000;font-weight:bold;font-size:18px;margin:0 0 10px;letter-spacing:0.5px;line-height:1;'>". __('Details:', 'event-tickets-manager-for-woocommerce') ."</h4><div>";
+			foreach ( $item_meta_data as $key => $value ) {
+				if ( isset( $value->key ) && ! empty( $value->value ) ) {
+					if ( '_reduced_stock' === $value->key ) {
+						continue;
+					}
+
+					$additinal_info .= "<p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;padding:5px 0 0;'><span style='margin:0 10px 0 0;'><strong>".$value->key.": </strong>".$value->value."</span></p>";
+				}
+			}
+			$additinal_info .= '</div>';
+		}
+
+	}
+
 
 
 
@@ -965,7 +988,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					$dompdf->setPaper( 'A4', 'landscape' );
 				}
                 
-				// die($wps_ticket_content);
 				$dompdf->loadHtml( $wps_ticket_content );
 				@ob_end_clean(); // phpcs:ignore.
 				$dompdf->render();

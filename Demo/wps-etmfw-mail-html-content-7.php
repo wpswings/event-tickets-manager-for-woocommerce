@@ -27,16 +27,36 @@ $wps_etmfw_logo_size = !empty(get_option('wps_etmfw_logo_size', true)) ? get_opt
 $wps_etmfw_qr_size = !empty(get_option('wps_etmfw_qr_size')) ? get_option('wps_etmfw_qr_size') : '180';
 $wps_etmfw_qr_code_is_enable = !empty(get_option('wps_etmfwp_include_qr')) ? get_option('wps_etmfwp_include_qr') : '';
 $wps_etmfw_logo_url = !empty(get_option('wps_etmfw_mail_setting_upload_logo')) ? get_option('wps_etmfw_mail_setting_upload_logo') : '';
+$wps_qr_image = esc_url(EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/qr_image.png');
 $wps_etmfw_barcode_enable = !empty(get_option( 'wps_etmfwp_include_barcode' )) ? get_option( 'wps_etmfwp_include_barcode' ) : '';
 
-$wps_qr_image = esc_url(EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/qr_image.png');
+$image_attributes = '';
+$wps_etmfw_background_image = ! empty( get_option( 'wps_etmfw_background_image' ) ) ? get_option( 'wps_etmfw_background_image' ) : '';
+if ( ! empty( $wps_etmfw_background_image ) ) {
+	$image_attributes = wp_get_attachment_image_src( $wps_etmfw_background_image, 'thumbnail' );
+}
 ?>
 <!-- Template Start -->
 
 <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='width: 100%;font-family:Arial, Helvetica, sans-serif;border:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>' id="wps_new_template_border">
 	<tbody>
 		<tr>
-			<td style="width:30%;border:1px solid #bc8a00;border-right:none;">
+			<td colspan="3" style='padding: 0 0 10px;'>
+				<div style="padding:20px;background-image:url(<?php echo esc_url( $image_attributes[0] ); ?>);background-size: cover;background-position:center center;background-repeat: no-repeat;">
+					<div style="background-image: url(<?php echo $wps_etmfw_logo_url; ?>); height: 40px; background-size: contain; background-position: center; background-repeat: no-repeat"></div>
+					<div style='color:#FFC525;font-size:32px;font-weight:bold;margin:10px 0 0;letter-spacing:0.5px;line-height:1.25;text-align:center;'>Anniversary Gala Concert</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:35%;padding:10px;background:#FFC525;">
+				<div style='color:#000;'>
+					<h3 style='color:#000;font-size:14px;font-weight:normal;margin:0 0 8px;letter-spacing:0.5px;'><strong style='color:#000;'>From: </strong> September 15, 2024 | 09:00am</h3>
+					<h3 style='color:#000;font-size:14px;font-weight:normal;margin:0 0 8px;letter-spacing:0.5px;'><strong style='color:#000;'>To: </strong> September 16, 2024 | 06:00pm</h3>
+					<h3 style='color:#000;font-size:14px;font-weight:normal;margin:0;letter-spacing:0.5px;'><strong style='color:#000;'>Venue: </strong> Music Areana Auditorium, Los Vegas</h4>
+				</div>
+			</td>
+			<td style="width:30%;background:#fff;">
 				<div style='text-align:center;padding:20px;'>
 					<h4 style='color:#000;font-size: 20px;font-weight:bold;line-height:20px;border-bottom:1px solid #f4f4f4;margin: 0 0 5px;padding:0 0 10px;text-align: center;letter-spacing:0.5px;'><?php echo __('Ticket Code' ,'event-tickets-manager-for-woocommerce'); ?></h4>
 
@@ -50,35 +70,28 @@ $wps_qr_image = esc_url(EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/r
                     <!-- QR CODE START -->
 					<div style="background-image: url(<?php echo $wps_qr_image; ?>); height: 120px; background-size: contain; background-position: center center; background-repeat: no-repeat"></div>
 					<!-- QR CODE END -->
-                    <?php  } ?>
+                    <?php }  ?>
 
                     <?php if(('' == $wps_etmfw_barcode_enable) && (('' == $wps_etmfw_qr_code_is_enable))) {?>
 					<h4 style='color:#000;font-size: 20px;font-weight:normal;line-height:1;border-top:1px solid #f4f4f4;margin: 5px 0 0;padding:10px 0 0;text-align: center;letter-spacing:0.5px;'>2QWRT500</h4>
-                    <?php  } ?>
-
+                    <?php }  ?>
 				</div>
 			</td>
-			<td style="width:70%;padding:0 0 0 10px;border:1px solid #bc8a00;">
-				<div style='color:#000;padding: 20px;'>
-					<div style="background-image: url(<?php echo $wps_etmfw_logo_url; ?>); height: 40px; background-size: contain; background-position: left; background-repeat: no-repeat"></div>
-					<div style='color:#000;font-size:32px;font-weight:bold;margin:10px 0 12px;letter-spacing:0.5px;line-height:1.25;'>Anniversary Gala Concert</div>
-					<h3 style='color:#bc8a00;font-size:16px;font-weight:normal;margin:0 0 8px;letter-spacing:0.5px;'><strong style='color:#000;'>From: </strong> September 15, 2024 | 09:00am</h3>
-					<h3 style='color:#bc8a00;font-size:16px;font-weight:normal;margin:0 0 8px;letter-spacing:0.5px;'><strong style='color:#000;'>To: </strong> September 16, 2024 | 06:00pm</h3>
-					<h3 style='color:#bc8a00;font-size:16px;font-weight:normal;margin:0;letter-spacing:0.5px;'><strong style='color:#000;'>Venue: </strong> Music Areana Auditorium, Los Vegas</h4>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2" style='padding: 20px 0 0;background: #fff;'>
+			<td style='width:35%;padding:10px;background:#FFC525;'>
 				<h4 style='color:#000;font-weight:bold;font-size:18px;margin:0 0 10px;letter-spacing:0.5px;line-height:1;'>Details:</h4>
-				<p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;border-bottom:1px solid #bc8a00;padding:5px 0;'><span style="margin:0 10px 0 0;"><strong>&#8226; Name: </strong> Anvi Tiwari</span><span style="margin:0 10px 0 0;"><strong>&#8226; Mob No.: </strong>+91 8004589657</span><span style="margin:0 10px 0 0;"><strong>&#8226; Date: </strong>August 24, 2024</span><span style="margin:0 10px 0 0;"><strong>&#8226; Email ID: </strong>anvi2015@gmail.com</span></p>
+				<div>
+					<p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;padding:5px 0 0;'><span style="margin:0 10px 0 0;"><strong>Name: </strong> Anvi Tiwari</span></p>
+					<p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;padding:5px 0 0;'><span style="margin:0 10px 0 0;"><strong>Mob No.: </strong>+91 8004589657</span></p>
+					<p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;padding:5px 0 0;'><span style="margin:0 10px 0 0;"><strong>Date: </strong>August 24, 2024</span></p>
+					<p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;padding:5px 0 0;'><span style="margin:0 10px 0 0;"><strong>Email ID: </strong>anvi2015@gmail.com</span></p>
+				</div>
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2" style='padding: 20px 0 0;background: #fff;'>
-				<div style='padding: 20px;background: #bc8a00;'>
-					<h4 style='color:#fff;font-weight:bold;font-size:18px;margin:0 0 5px;letter-spacing:0.5px;line-height:1;'>Note:</h4>
-					<p style='color:#fff;font-size:14px;letter-spacing:0.5px;line-height:1.5;'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+			<td colspan="3" style='padding-top:10px;'>
+				<div style='padding: 20px;background:#f4f4f4;'>
+					<h4 style='color:#000;font-weight:bold;font-size:18px;margin:0 0 5px;letter-spacing:0.5px;line-height:1;'>Note:</h4>
+					<p style='color:#000;font-size:14px;letter-spacing:0.5px;line-height:1.5;'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
 				</div>
 			</td>
 		</tr>
