@@ -31,10 +31,14 @@ $wps_qr_image = esc_url(EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/r
 
 $wps_etmfw_barcode_enable = !empty(get_option( 'wps_etmfwp_include_barcode' )) ? get_option( 'wps_etmfwp_include_barcode' ) : '';
 
-$image_attributes = '';
+$m = '';
 $wps_etmfw_background_image = ! empty( get_option( 'wps_etmfw_background_image' ) ) ? get_option( 'wps_etmfw_background_image' ) : '';
 if ( ! empty( $wps_etmfw_background_image ) ) {
 	$image_attributes = wp_get_attachment_image_src( $wps_etmfw_background_image, 'thumbnail' );
+	$m = $image_attributes[0];
+} else {
+
+	$m =  esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/bg-image.png' );
 }
 
 ?>
@@ -44,7 +48,7 @@ if ( ! empty( $wps_etmfw_background_image ) ) {
 	<tbody>
 		<tr>
 			<td style="width:70%;">
-				<div style='color:#fff;border-radius: 15px;padding: 20px;background-image:url(<?php echo esc_url( $image_attributes[0] ); ?>);background-size: 140% 120%;background-position:center center;background-repeat: no-repeat;overflow:hidden;'>
+				<div style='color:#fff;border-radius: 15px;padding: 20px;background-image:url(<?php echo esc_url( $m ); ?>);background-size: 140% 120%;background-position:center center;background-repeat: no-repeat;overflow:hidden;'>
 					<div style="background-image: url(<?php echo $wps_etmfw_logo_url; ?>); height: 40px; background-size: contain; background-position: left; background-repeat: no-repeat"></div>
 					<div style='color:#fff;font-size:32px;font-weight:bold;margin:10px 0 12px;letter-spacing:0.5px;line-height:1.25;'>Anniversary Gala Concert</div>
 					<h3 style='color:#FFC525;font-size:16px;font-weight:normal;margin:0 0 8px;letter-spacing:0.5px;'><strong style='color:#fff;'>From: </strong> September 15, 2024 | 09:00am</h3>

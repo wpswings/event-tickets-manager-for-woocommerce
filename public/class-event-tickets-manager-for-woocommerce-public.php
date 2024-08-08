@@ -753,7 +753,14 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			}
 		}
 
+		// Remove all old elements, keeping only the most recent one.
+		if (count($attachments) > 1) {
+			// Keep only the last element in the array.
+			$attachments = array_slice($attachments, -1);
+		} 
+
 		return $attachments;
+
 		// Finally, destroy the session.
 		unset( $_SESSION['order_id'] );
 		unset( $_SESSION['ticket_no'] );
@@ -778,7 +785,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	public function wps_etmfw_get_html_content( $item_meta_data, $order, $order_id, $ticket_number, $product_id ) {
 		ob_start();
 		$wps_is_qr_is_enable = false;
-		$wps_set_the_pdf_ticket_template = get_option( 'wps_etmfw_ticket_template', '1' );
+		$wps_set_the_pdf_ticket_template = get_option( 'wps_etmfw_ticket_template');
 
 		if ( '1' == $wps_set_the_pdf_ticket_template ) {
 			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content.php'; // Zenith.
@@ -817,11 +824,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		} elseif ( '5' == $wps_set_the_pdf_ticket_template ) {
 			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-4.php'; // unknown.
 		} elseif('6' == $wps_set_the_pdf_ticket_template){
-			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-5.php'; // New Template Org 1.
+			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-5.php'; //Nexus.
 		} elseif('7' == $wps_set_the_pdf_ticket_template){
-			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-6.php'; //New Template 2.
+			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-6.php'; //Eclipse.
 		} elseif('8' == $wps_set_the_pdf_ticket_template){
-			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-7.php'; // Custom 2.
+			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-7.php'; //Fusion.
 		}
 
 		if ( is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) {
@@ -844,61 +851,39 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$venue = isset( $wps_etmfw_product_array['etmfw_event_venue'] ) ? $wps_etmfw_product_array['etmfw_event_venue'] : '';
 		$wps_etmfw_stock_status = get_post_meta( $product_id, '_manage_stock', true );
 
-	// 	if('6' != $wps_set_the_pdf_ticket_template){
-	// 	// Additional Info Details.
-	// 	if ( ! empty( $item_meta_data ) && ( ( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) || ( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) ) ) {
-	// 		$additinal_info = '<table border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;"><tbody><tr><td style="padding: 20px 0 10px;"><h2 style="margin: 0;font-size: 24px; color:' . $wps_etmfw_text_color . ';">Details :-</h2></td></tr>';
-	// 		foreach ( $item_meta_data as $key => $value ) {
-	// 			if ( isset( $value->key ) && ! empty( $value->value ) ) {
-	// 				if ( '_reduced_stock' === $value->key ) {
-	// 					continue;
-	// 				}
-	// 				$additinal_info .= '<tr><td style="padding: 5px 0;"><p style="margin: 0;color : ' . $wps_etmfw_text_color . '">' . $value->key . ' - ' . $value->value . '</p></td></tr>';
-	// 			}
-	// 		}
-	// 		$additinal_info .= '</tbody></table>';
-	// 	}
-
-	// }
-
-		// Additional Info Details For New Template.
-		// if ( ! empty( $item_meta_data ) && ( ( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) || ( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) ) ) {
-		// 	$additinal_info = "<h4 style='color:#000;font-weight:bold;font-size:18px;margin:0 0 10px;letter-spacing:0.5px;line-height:1;'>". __('Details','event-tickets-manager-for-woocommerce') ."</h4>
-		// 	<p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;border-bottom:1px solid #FFC525;padding:5px 0;'>";
-		// 	foreach ( $item_meta_data as $key => $value ) {
-		// 		if ( isset( $value->key ) && ! empty( $value->value ) ) {
-		// 			if ( '_reduced_stock' === $value->key ) {
-		// 				continue;
-		// 			}
-		// 			// $additinal_info .= '<tr><td style="padding: 5px 0;"><p style="margin: 0;color : ' . $wps_etmfw_text_color . '">' . $value->key . ' - ' . $value->value . '</p></td></tr>';
-		// 			$additinal_info .= "<span style='margin:0 10px 0 0;'><strong>".$value->key .": </strong> ".$value->value."</span>";
-					
-		// 		}
-		// 	}
-		// 	$additinal_info .= '</p>';
-		// }
 
 
-
-		if('8' == $wps_set_the_pdf_ticket_template){
+		if('6' == $wps_set_the_pdf_ticket_template || '7' == $wps_set_the_pdf_ticket_template){
 		// Additional Info Details.
 		if ( ! empty( $item_meta_data ) && ( ( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) || ( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) ) ) {
-			$additinal_info = "<h4 style='color:#000;font-weight:bold;font-size:18px;margin:0 0 10px;letter-spacing:0.5px;line-height:1;'>". __('Details:', 'event-tickets-manager-for-woocommerce') ."</h4><div>";
+			$additinal_info = "<h4 style='color:#000;font-weight:bold;font-size:18px;margin:0 0 10px;letter-spacing:0.5px;line-height:1;'>Details:</h4><p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;border-bottom:1px solid #FFC525;padding:5px 0;'>";
 			foreach ( $item_meta_data as $key => $value ) {
 				if ( isset( $value->key ) && ! empty( $value->value ) ) {
 					if ( '_reduced_stock' === $value->key ) {
 						continue;
 					}
-
-					$additinal_info .= "<p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;padding:5px 0 0;'><span style='margin:0 10px 0 0;'><strong>".$value->key.": </strong>".$value->value."</span></p>";
+					$additinal_info .= '<span style="margin:0 10px 0 0;"">';
+					$additinal_info .= '<strong>'.$value->key.':</strong>'.''.$value->value.'</span>';
 				}
 			}
 			$additinal_info .= '</div>';
 		}
 
+	} else{
+				// Additional Info Details.
+				if ( ! empty( $item_meta_data ) && ( ( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) || ( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) ) ) {
+					$additinal_info = '<table border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;"><tbody><tr><td style="padding: 20px 0 10px;"><h2 style="margin: 0;font-size: 24px; color:' . $wps_etmfw_text_color . ';">Details :-</h2></td></tr>';
+					foreach ( $item_meta_data as $key => $value ) {
+						if ( isset( $value->key ) && ! empty( $value->value ) ) {
+							if ( '_reduced_stock' === $value->key ) {
+								continue;
+							}
+							$additinal_info .= '<tr><td style="padding: 5px 0;"><p style="margin: 0;color : ' . $wps_etmfw_text_color . '">' . $value->key . ' - ' . $value->value . '</p></td></tr>';
+						}
+					}
+					$additinal_info .= '</tbody></table>';
+				}
 	}
-
-
 
 
 
@@ -987,7 +972,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				} else {
 					$dompdf->setPaper( 'A4', 'landscape' );
 				}
-                
+				
 				$dompdf->loadHtml( $wps_ticket_content );
 				@ob_end_clean(); // phpcs:ignore.
 				$dompdf->render();

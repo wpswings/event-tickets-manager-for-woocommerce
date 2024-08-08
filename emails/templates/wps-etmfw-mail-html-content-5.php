@@ -38,21 +38,22 @@ if ('on' == get_option('wps_etmfw_prod_logo_plugin')) {
 	$product_image_url = !empty(get_option('wps_etmfw_mail_setting_upload_logo')) ? get_option('wps_etmfw_mail_setting_upload_logo') : '';
 }
 
-
 $image_attributes = '';
-$wps_etmfw_background_image = !empty(get_option('wps_etmfw_background_image')) ? get_option('wps_etmfw_background_image') : '';
-if (!empty($wps_etmfw_background_image)) {
-	$image_attributes = wp_get_attachment_image_src($wps_etmfw_background_image, 'thumbnail');
+$m = '';
+$wps_etmfw_background_image = ! empty( get_option( 'wps_etmfw_background_image' ) ) ? get_option( 'wps_etmfw_background_image' ) : '';
+if ( ! empty( $wps_etmfw_background_image ) ) {
+	$image_attributes = wp_get_attachment_image_src( $wps_etmfw_background_image, 'thumbnail' );
+	$m = $image_attributes[0];
+} else {
+	$m =  esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/bg-image.png' );
 }
-
 ?>
 <!-- Template Start -->
-<h1><?php echo $image_attributes[0]; ?></h1>
 <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='width: 100%;font-family:Arial, Helvetica, sans-serif;border:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>'>
 	<tbody>
 		<tr>
 			<td style="width:70%;">
-				<div style='color:#fff;border-radius: 15px;padding: 20px;background-image:url(<?php echo esc_url($image_attributes[0]); ?>);background-size: 140% 120%;background-position:center center;background-repeat: no-repeat;overflow:hidden;'>
+				<div style='color:#fff;border-radius: 15px;padding: 20px;background-image:url(<?php echo esc_url($m); ?>);background-size: 140% 120%;background-position:center center;background-repeat: no-repeat;overflow:hidden;'>
 					<div style="background-image: url(<?php echo $product_image_url; ?>); height: 40px; background-size: contain; background-position: left; background-repeat: no-repeat"></div>
 					<div style='color:#fff;font-size:32px;font-weight:bold;margin:10px 0 12px;letter-spacing:0.5px;line-height:1.25;'>[EVENTNAME]</div>
 					<h3 style='color:#FFC525;font-size:16px;font-weight:normal;margin:0 0 8px;letter-spacing:0.5px;'><strong style='color:#fff;'><?php echo __('From:', 'event-tickets-manager-for-woocommerce'); ?> </strong>[NEW_START_DATE]</h3>
@@ -72,7 +73,7 @@ if (!empty($wps_etmfw_background_image)) {
 
 					<?php if (is_plugin_active('event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php') && ('on' == $wps_etmfw_qr_code_is_enable) && ('' == $wps_etmfw_barcode_enable)) { ?>
 						<!-- QR CODE START -->
-						<div style="background-image: url([TICKET_URL]); height: 120px; background-size: contain; background-position: center center; background-repeat: no-repeat"></div>
+						<div style="height:200px;max-width:200px;width:100%;margin:auto;text-align: center;background-image: url([TICKET_URL]); background-size:160% 160%;background-position: center center; background-repeat: no-repeat"></div>
 						<!-- QR CODE END -->
 					<?php  } ?>
 
