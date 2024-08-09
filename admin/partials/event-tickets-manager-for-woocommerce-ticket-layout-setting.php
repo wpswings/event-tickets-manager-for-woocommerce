@@ -484,7 +484,7 @@ if ( isset( $_POST['reset_wps'] ) ) {
 		 update_option( 'wps_etmfw_logo_size', '133' );
 		 update_option( 'wps_etmfw_qr_size', '133' );
 		 update_option( 'wps_etmfw_pdf_background_color', '#2196f3' );
-		 update_option( 'wps_etmfw_pdf_text_color', '#757575' );
+		 update_option( 'wps_etmfw_pdf_text_color', '#0f0b0b' );
 		 update_option( 'wps_etmfw_border_type', 'solid' );
 		 update_option( 'wps_etmfw_pdf_border_color', 'black' );
 	}
