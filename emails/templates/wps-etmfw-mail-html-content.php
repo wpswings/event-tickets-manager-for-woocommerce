@@ -117,13 +117,13 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 												</td>
 												<?php } else { ?>
 													<td style="text-align: center;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">
-													<h3 class="wps_etmfw_pdf_text_colour"  style="color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">Your Ticket</h3>
+													<h3 class="wps_etmfw_pdf_text_colour"  style="color: <?php echo esc_attr( 'White' ); ?>;">Your Ticket</h3>
 												</td>	
 												<?php } ?>
 											</tr>
 											<tr>
 												<td>
-													<h3  style="margin: 0;text-align: center;color:<?php echo esc_attr( $wps_etmfw_text_color ); ?>;"> [TICKET]</h3>
+													<h3  style="margin: 0;text-align: center;color:<?php echo esc_attr( 'white' ); ?>;"> [TICKET]</h3>
 												</td>
 											</tr>
 										</tbody>

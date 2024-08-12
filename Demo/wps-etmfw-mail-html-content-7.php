@@ -30,10 +30,14 @@ $wps_etmfw_logo_url = !empty(get_option('wps_etmfw_mail_setting_upload_logo')) ?
 $wps_qr_image = esc_url(EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/qr_image.png');
 $wps_etmfw_barcode_enable = !empty(get_option( 'wps_etmfwp_include_barcode' )) ? get_option( 'wps_etmfwp_include_barcode' ) : '';
 
-$image_attributes = '';
+$m = '';
 $wps_etmfw_background_image = ! empty( get_option( 'wps_etmfw_background_image' ) ) ? get_option( 'wps_etmfw_background_image' ) : '';
 if ( ! empty( $wps_etmfw_background_image ) ) {
 	$image_attributes = wp_get_attachment_image_src( $wps_etmfw_background_image, 'thumbnail' );
+	$m = $image_attributes[0];
+} else {
+
+	$m =  esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/bg-image.png' );
 }
 ?>
 <!-- Template Start -->
@@ -42,7 +46,7 @@ if ( ! empty( $wps_etmfw_background_image ) ) {
 	<tbody>
 		<tr>
 			<td colspan="3" style='padding: 0 0 10px;'>
-				<div style="padding:20px;background-image:url(<?php echo esc_url( $image_attributes[0] ); ?>);background-size: cover;background-position:center center;background-repeat: no-repeat;">
+				<div style="padding:20px;background-image:url(<?php echo esc_url( $m ); ?>);background-size: cover;background-position:center center;background-repeat: no-repeat;">
 					<div style="background-image: url(<?php echo $wps_etmfw_logo_url; ?>); height: 40px; background-size: contain; background-position: center; background-repeat: no-repeat"></div>
 					<div style='color:#FFC525;font-size:32px;font-weight:bold;margin:10px 0 0;letter-spacing:0.5px;line-height:1.25;text-align:center;'>Anniversary Gala Concert</div>
 				</div>

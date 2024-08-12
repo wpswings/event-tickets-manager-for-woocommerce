@@ -869,6 +869,22 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			$additinal_info .= '</div>';
 		}
 
+	} elseif('8' == $wps_set_the_pdf_ticket_template){
+
+					// Additional Info Details.
+					if ( ! empty( $item_meta_data ) && ( ( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) || ( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) ) ) {
+						$additinal_info = '<table border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;"><tbody><tr><td style="padding: 20px 0 10px;"><h2 style="margin: 0;font-size: 24px;color:black;">Details :-</h2></td></tr>';
+						foreach ( $item_meta_data as $key => $value ) {
+							if ( isset( $value->key ) && ! empty( $value->value ) ) {
+								if ( '_reduced_stock' === $value->key ) {
+									continue;
+								}
+								$additinal_info .= '<tr><td style="padding: 5px 0;"><p style="margin: 0;color : black">' . $value->key . ' - ' . $value->value . '</p></td></tr>';
+							}
+						}
+						$additinal_info .= '</tbody></table>';
+					}
+
 	} else{
 				// Additional Info Details.
 				if ( ! empty( $item_meta_data ) && ( ( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) || ( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) ) ) {
