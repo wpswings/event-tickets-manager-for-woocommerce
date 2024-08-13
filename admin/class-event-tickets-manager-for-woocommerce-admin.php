@@ -1002,9 +1002,22 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 
 					$wps_etmfw_product_array = array();
 					$wps_etmfw_product_array['etmfw_event_price'] = ! empty( $price ) ? $price : '';
-					$wps_etmfw_product_array['event_start_date_time'] = isset( $_POST['etmfw_start_date_time'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_start_date_time'] ) ) : '';
+					
+					$plugin = 'tutor-pro/tutor-pro.php'; //Tutor Pro.
+					if (is_plugin_active($plugin)) {
+					$wps_event_start_date = isset( $_POST['etmfw_start_date_time'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_start_date_time'] ) ) : '';
+					$wps_event_end_date = isset( $_POST['etmfw_end_date_time'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_end_date_time'] ) ) : '';
+
+					$wps_start_date_time = DateTime::createFromFormat('d/m/Y H:i', $wps_event_start_date);
+					$wps_end_date_time = DateTime::createFromFormat('d/m/Y H:i', $wps_event_end_date);
+
+					$wps_etmfw_product_array['event_start_date_time'] = $wps_start_date_time->format('Y-m-d h:i a');
+					$wps_etmfw_product_array['event_end_date_time'] = $wps_end_date_time->format('Y-m-d h:i a');
+				} else {
+						$wps_etmfw_product_array['event_start_date_time'] = isset( $_POST['etmfw_start_date_time'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_start_date_time'] ) ) : '';
+						$wps_etmfw_product_array['event_end_date_time'] = isset( $_POST['etmfw_end_date_time'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_end_date_time'] ) ) : '';	
+					}
 					$wps_etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] = isset( $_POST['wps_base_price_cal'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_base_price_cal'] ) ) : 'base_price';
-					$wps_etmfw_product_array['event_end_date_time'] = isset( $_POST['etmfw_end_date_time'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_end_date_time'] ) ) : '';
 					$event_venue = isset( $_POST['etmfw_event_venue'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_event_venue'] ) ) : '';
 					$event_lat = isset( $_POST['etmfw_event_venue_lat'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_event_venue_lat'] ) ) : '';
 					$event_lng = isset( $_POST['etmfw_event_venue_lng'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_event_venue_lng'] ) ) : '';

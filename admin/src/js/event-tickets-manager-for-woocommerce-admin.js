@@ -30,7 +30,6 @@
      */
 
     $(document).ready(function () {
-
         $('#wps_etmfwp_include_barcode').change(function () {
             console.log('barcode');
             if ($(this).is(":checked")) {
