@@ -279,6 +279,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_wps_etmfw_get_calendar_events', $etmfw_plugin_public, 'wps_etmfw_get_calendar_widget_data' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_get_calendar_events', $etmfw_plugin_public, 'wps_etmfw_get_calendar_widget_data' );
 		$this->loader->add_action( 'woocommerce_available_payment_gateways', $etmfw_plugin_public, 'wps_etmfw_unset_cod_payment_gateway_for_event' );
+		$this->loader->add_filter( 'woocommerce_available_payment_gateways', $etmfw_plugin_public , 'restrict_cod_for_specific_product_types', 10,1 );
 		$this->loader->add_filter( 'woocommerce_is_purchasable', $etmfw_plugin_public, 'wps_etmfw_handle_expired_events', 10, 2 );
 		$this->loader->add_action( 'woocommerce_product_meta_start', $etmfw_plugin_public, 'wps_etmfw_show_expired_message' );
 

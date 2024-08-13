@@ -1604,6 +1604,33 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		return $available_gateways;
 	}
 
+
+	/**
+	 * Unset COD payment gateway for cod.
+	 *
+	 * @since 1.0.0
+	 * @name wps_etmfw_unset_cod_payment_gateway_for_event().
+	 * @param array $available_gateways Available payment gateways.
+	 * @author WPSwings<ticket@wpswings.com>
+	 * @link https://www.wpswings.com/
+	 */
+	function restrict_cod_for_specific_product_types( $available_gateways ) {
+		if ( is_admin() ) return $available_gateways;
+	
+		// Define the product types for which COD should be restricted
+		$restricted_product_types = array( 'event_ticket_manager' );
+	
+		// Check the cart for products of the restricted types
+		foreach ( WC()->cart->get_cart() as $cart_item ) {
+			$product = wc_get_product( $cart_item['product_id'] );
+			if ( in_array( $product->get_type(), $restricted_product_types ) ) {
+				unset( $available_gateways['cod'] );
+				break;
+			}
+		}
+		return $available_gateways;
+	}
+
 	/**
 	 * Check if product is event type.
 	 *
