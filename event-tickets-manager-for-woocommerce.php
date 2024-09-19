@@ -15,7 +15,7 @@
  * Plugin Name:          Event Tickets Manager for WooCommerce
  * Plugin URI:           https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/
  * Description:          <code><strong>Event Tickets Manager for WooCommerce</strong></code> is all-in-one solution to create an event , manage ticket stocks download ticket as PDFs & much more. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-events&utm_medium=events-org-backend&utm_campaign=official">Elevate your e-commerce store by exploring more on <strong>WP Swings</strong></a>
- * Version:              1.3.0
+ * Version:              1.3.1
  * Author:               WP Swings
  * Author URI:           https://wpswings.com/?utm_source=wpswings-events-official&utm_medium=events-org-page&utm_campaign=official
  * Text Domain:          event-tickets-manager-for-woocommerce
@@ -23,9 +23,9 @@
  *
  * Requires Plugins:  woocommerce
  * Requires at least:    5.2.4
- * Tested up to:         6.6.1
+ * Tested up to:         6.6.2
  * WC requires at least: 6.1
- * WC tested up to:      9.1.4
+ * WC tested up to:      9.3.2
  * License:              GNU General Public License v3.0
  * License URI:          http://www.gnu.org/licenses/gpl-3.0.html
  */
@@ -130,7 +130,7 @@ if ( $activated ) {
 	 */
 	function define_event_tickets_manager_for_woocommerce_constants() {
 
-		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION', '1.3.0' );
+		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION', '1.3.1' );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com' );

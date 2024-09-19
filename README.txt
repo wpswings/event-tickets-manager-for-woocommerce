@@ -3,11 +3,11 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: event, calendar, RSVP, tickets, appointments
 Requires at least: 6.1
-Tested up to: 6.6.1
+Tested up to: 6.6.2
 WC requires at least: 6.1
-WC tested up to: 9.1.4
-Stable tag: 1.3.0
-Requires PHP: 5.2.4
+WC tested up to: 9.3.2
+Stable tag: 1.3.1
+Requires PHP: 7.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
