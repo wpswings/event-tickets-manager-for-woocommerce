@@ -564,6 +564,33 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'placeholder'      => __( 'Facebook Access Token', 'event-tickets-manager-for-woocommerce-pro' ),
 
 			),
+			array(
+				'title'       => __( 'Enable Whatsapp Integration', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this to send message on whatsapp on order notification,  you can go through this <a href="https://developers.facebook.com/docs/whatsapp/cloud-api/get-started" target="_blank">docs</a> you need to register from <a href="https://developers.facebook.com/docs/development/register" target="_blank">here</a>', 'event-tickets-manager-for-woocommerce-pro' ),
+				'id'          => 'wps_wet_whatsapp_sharing_enable',
+				'value'       => get_option( 'wps_wet_whatsapp_sharing_enable' ),
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'name'        => 'wps_wet_whatsapp_sharing_enable',
+			),
+			array(
+				'title'       => __( 'Enter Phone number ID', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'        => 'text',
+				'description' => __( 'Enter Phone number ID here.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'id'          => 'wps_wet_whatsapp_phone_number_id',
+				'value'       => get_option( 'wps_wet_whatsapp_phone_number_id' ),
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'placeholder' => __( 'Enter Phone number ID', 'event-tickets-manager-for-woocommerce-pro' ),
+			),
+			array(
+				'title'       => __( 'Enter Access Token', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'        => 'text',
+				'description' => __( 'Enable Access Token here.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'id'          => 'wps_wet_access_token',
+				'value'       => get_option( 'wps_wet_access_token' ),
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'placeholder' => __( 'Enter Access Token', 'event-tickets-manager-for-woocommerce-pro' ),
+			),
 		);
 		$etmfw_settings_integrations = apply_filters( 'wps_etmfw_extent_integration_settings_array', $etmfw_settings_integrations );
 		$etmfw_settings_integrations[] = array(
