@@ -5,7 +5,7 @@ Tags: event, calendar, RSVP, tickets, appointments
 Requires at least: 6.1
 Tested up to: 6.6.2
 WC requires at least: 6.1
-WC tested up to: 9.3.2
+WC tested up to: 9.3.3
 Stable tag: 1.3.1
 Requires PHP: 7.4
 License: GNU General Public License v3.0
