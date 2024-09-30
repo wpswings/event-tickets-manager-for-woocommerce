@@ -1,7 +1,7 @@
-=== Event Tickets Manager for WooCommerce –  Event, Events Calendar, Event Tickets and Registration, Event Check-in Using Emails, Edit Your Ticket Content ===
+=== Event Tickets Manager for WooCommerce – Event Manager WordPress, WordPress Events Plugin, Events Calendar, Events Listing, Event Planning, Event Registration, Tickets Sales, Event Check-in Using Emails And Edit Your Ticket Content ===
 Contributors: wpswings
 Donate link: https://wpswings.com/
-Tags: event, calendar, RSVP, tickets, appointments
+Tags: events, calendar, RSVP, ticket sales, appointments
 Requires at least: 6.1
 Tested up to: 6.6.2
 WC requires at least: 6.1
@@ -11,25 +11,25 @@ Requires PHP: 7.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-An event management system to manage events, easily register,  engage customers with upcoming event visibility over events calendar & ticket editing.
+Streamline your event planning with our WordPress Event manager. Easily create/manage events, event listing, engage attendees and drive ticket sales.
 
 == Description ==
 
-**EVENT TICKETS MANAGER IS AN ALL-IN-ONE SOLUTION THAT ALLOWS YOU TO CREATE AN EVENT & EVENT TICKETING WEBSITE. NOW YOU CAN EASILY SELL TICKETS ONLINE AND MANAGE YOUR EVENTS ON A WOOCOMMERCE STORE WITH THE HELP OF THE EVENTS CALENDAR PLUGIN.**
+**EVENT TICKETS MANAGER IS AN ALL-IN-ONE EVENT TICKET MANAGEMENT SYSTEM THAT ALLOWS YOU TO CREATE AND MANAGE YOUR EVENTS. NOW YOU CAN EASILY CREATE EVENT TICKETING WEBSITE, SELL TICKETS ONLINE AND MANAGE RECURRING EVENTS ON A WOOCOMMERCE STORE.**
 
-The Event Plugin Plugin is a complete solution for merchants who want to add event-based products to their WooCommerce store. Now you don’t have to pay commissions to your third-party service providers to manage event registration and ticket sales. 
-
-
-Merchants can manage the entire process from your WooCommerce store and be your boss, by installing our WordPress Events plugin. 
+The WordPress Events Manager Plugin is a complete solution for merchants who want to add event-based products to their WooCommerce store. Now you don’t have to pay commissions to your third-party service providers to manage event registration and ticket sales. 
 
 
-[**Event Tickets Manger Demo**](https://demo.wpswings.com/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-pro&utm_medium=events-org-page&utm_campaign=frontend-demo) | [**Event Tickets Documentation**](https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-org-page&utm_campaign=events-doc) | [**Contact Us**](https://wpswings.com/contact-us/?utm_source=wpswings-event&utm_medium=event-org-page&utm_campaign=contact-us)
-
-[youtube https://www.youtube.com/watch?v=9KyB4qpal6M&rel=0]
+Through this [**WooCommerce Events**](https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=events-org-page&utm_medium=referral&utm_campaign=events-pro) Plugin merchants can manage the entire process from your WooCommerce store and be your boss, by installing our WordPress Events plugin. 
 
 
+[**WordPress Event manager Demo**](https://demo.wpswings.com/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-pro&utm_medium=events-org-page&utm_campaign=frontend-demo) | [**Events Ticket Documentation**](https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-org-page&utm_campaign=events-doc) | [**Contact Us**](https://wpswings.com/contact-us/?utm_source=wpswings-event&utm_medium=event-org-page&utm_campaign=contact-us) 
 
-== SALIENT FEATURES OF THE  WORDPRESS Events PLUGIN: ==
+[youtube https://youtu.be/xjKPLNhKF1A?si=Zfrkx7Ngyag-67Rn&rel=0]
+
+
+
+== SALIENT FEATURES OF THE  WORDPRESS EVENTS PLUGIN: ==
 
 **1) Barcode Scanning For WooCommerce Event Ticket**: The admins can utilize the WordPress calendar plugin to provide the customers with a safe and secure experience. The unique ticket code can now be shown in the form of a scannable barcode. This helps the admins to prevent any fraudulent activities.
 
@@ -69,7 +69,7 @@ Merchants can manage the entire process from your WooCommerce store and be your 
 * Enables the admin to show the list of events over different pages using shortcodes.
 * Show the event location to customers at the front end.
 
-== WORDPRESS EVENT PLUGIN COMPATIBILITIES: ==
+== WORDPRESS EVENT MANAGER PLUGIN COMPATIBILITIES: ==
 
 * WordPress Events Plugin is compatible with [WPML](https://wpml.org/purchase/) multilingual support.
 * Compatibility of Mautic Integration that offers a complete management solution for your WooCommerce events data.
@@ -110,7 +110,7 @@ If you need support or have questions, kindly use our online chat window [**here
 
 > Create and Revamp Your Store with  [**WooCommerce Services**](https://wpswings.com/woocommerce-services/?utm_source=wpswings-events-services&utm_medium=events-org-page&utm_campaign=woocommerce-services )
 
-> Get huge discounts on event ticket management - [**Get More Offers**](https://wpswings.com/offers/?utm_source=wpswings-event-offers&utm_medium=wpswings-org-page&utm_campaign=offers)
+> Get huge discounts on event ticket management – [**Get More Offers**](https://wpswings.com/offers/?utm_source=wpswings-event-offers&utm_medium=wpswings-org-page&utm_campaign=offers)
 
 == Installation ==
 
@@ -153,7 +153,7 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 You can search for a widget and there you will get the option of an Event Ticket Manager widget simply add it. And there you will get the settings to list view for event or calendar view you can choose it according to your need.
 
 = Can we display the event location on the tickets and product page? =
-Yes, the Event Manager Plugin provides the exact location of events to the user on the product page and tickets as the plugin is integrated with Google Maps.
+Yes, the WordPress Event Manager Plugin provides the exact location of events to the user on the product page and tickets as the plugin is integrated with Google Maps.
 
 = How are the Tickets sent to the customer with the Events plugin? =
 Tickets will be sent to the customer via email with a pdf attachment.
@@ -177,110 +177,113 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
-= 1.3.0 - Released on 20 August 2024 =
+= 1.3.1 – Released on 30 September 2024 =
+* New: Compatibility with latest WP [6.6.2] and WC [9.3.3].
+
+= 1.3.0 – Released on 20 August 2024 =
 * New: New Template For Event PDF Ticket.
 * New: Compatibility with latest WP [6.6.1] and WC [9.1.4].
 
-= 1.2.8 - Released on 17 July 2024 =
+= 1.2.8 – Released on 17 July 2024 =
 * New : Compatibility with wallet Negative balance buying Event product
 * Fixes: layout customisation fixes for themes.
 * New: Compatibility with latest WP [6.5.5] and WC [9.1.2]
 
-= 1.2.7 - Released on 24 May 2024 =
+= 1.2.7 – Released on 24 May 2024 =
 * New : New event ticket template
 * New : Comaptibility with Gift cards
 * Support : Compatibility with latest WP [6.5.3] and WC [8.9.1]
 
-= 1.2.6 - Released on 05 April 2024 =
+= 1.2.6 – Released on 05 April 2024 =
 * New : Compatibility With Latest WP[6.5.0] and WC[8.7.0].
 * Fix : Calendar event fixes.
 
-= 1.2.5 - Released on 28 February 2024 =
+= 1.2.5 – Released on 28 February 2024 =
 * Fixes : critical warning issue on order status change.
 * New : Compatibility With Latest WP[6.4.3] and WC[8.6.1].
 
-= 1.2.4 - Released on 01 February 2024 =
+= 1.2.4 – Released on 01 February 2024 =
 * New: Bar Code Scanning
 * Fixes : Unnecessary JS Enqueue issue.
 * New: Compatibility With Direct Checkout for WooCommerce plugin
 
-= 1.2.3 - Released on 15 December 2023 =
+= 1.2.3 – Released on 15 December 2023 =
 * New : All Event List Using Short-code 
 * Support : Compatibility With Latest WP[6.4.2] and WC[8.4.0]
 
-= 1.2.2 - Released on 28 November 2023 =
+= 1.2.2 – Released on 28 November 2023 =
 * Support : Compatibility With Latest WP[6.4.1] and WC[8.3.1].
 * Support : Compatibility With Cart and Checkout Block.
 
-= 1.2.1 - Released on 06 November 2023 =
+= 1.2.1 – Released on 06 November 2023 =
 * New: Compatibility with latest WP [6.3.1] and WC [8.2.1]
 
-= 1.2.0 - Released on 20 October 2023 =
-* Fixes - warning on banner functionality.
+= 1.2.0 – Released on 20 October 2023 =
+* Fixes – warning on banner functionality.
 
-= 1.1.9 - Released on 12 October 2023 =
+= 1.1.9 – Released on 12 October 2023 =
 * Support : Compatibility with latest WP[6.3.1]and WC[8.2.0]
 
-= 1.1.8 - Released on 06 September 2023 =
+= 1.1.8 – Released on 06 September 2023 =
 * New: HPOS Compatibility.
 * New : Compatibility with WP[6.3.1] and WC[8.0.3].
 
-= 1.1.7 - Released on 7 August 2023 =
+= 1.1.7 – Released on 7 August 2023 =
 * New: Compatibility with WP[6.3] and WC[8.0.0]
 * New: Multiple Ticket Buy 
 * Fixes: Issue regarding the date picker in divi theme
 
-= 1.1.6 - Released on 22 June 2023 =
+= 1.1.6 – Released on 22 June 2023 =
 * Feature: Setting for Disable the Shipping Charge on the Event Product Page.
 * Fixes: Mini-Cart issue on adding the product.
 * New: Compatibility with latest WP[6.2.2] and WC[7.8.0]
 
-= 1.1.5 - Released on 26 May 2023 =
+= 1.1.5 – Released on 26 May 2023 =
 * New: Re-sending the PDF Ticket by Admin or customer.
 * New: Back-end Setting for Customizing the PDF Ticket.
 * New: Compatibility with Latest WP[6.2.2] and WC[7.7.0]
 
-= 1.1.4 - Released on 20 April 2023 =
+= 1.1.4 – Released on 20 April 2023 =
 * New: Compatible with the latest WP[6.2.0] and WC[7.6.0]
 
-= 1.1.3 - Released on 13  March 2023 =
+= 1.1.3 – Released on 13  March 2023 =
 * New: Compatible with the latest WP[6.1.1] and WC[7.4.1]
 
-= 1.1.2 - Released on 2  February 2023 =
+= 1.1.2 – Released on 2  February 2023 =
 * New: My Event Tab in My Account Section For Listing Purchased Ticket Of User.
 * New: Remove the Event Product On Being Expired.
 * New: Compatible with the latest WP and WC
 
-= 1.1.1 - Released on 1  December 2022 =
+= 1.1.1 – Released on 1  December 2022 =
 * New: Compatible with the latest WP and WC
 
-= 1.1.0 - Released on 19 October 2022 =
+= 1.1.0 – Released on 19 October 2022 =
 * New: Dynamic CSS on Tickets
 * New: Multisite Compatibility
 * New: Compatible with the latest version of Php 8
 * New: Compatible with the latest WP and WC
 
-= 1.0.9 - Released on 31 August 2022 =
+= 1.0.9 – Released on 31 August 2022 =
 * New: Minor Bug fixes and Enhancement
 * New: Compatible with the latest WP[6.4.3] and WC[8.6.1]
 
-= 1.0.8 - Released on 21 July 2022 =
+= 1.0.8 – Released on 21 July 2022 =
 * New: Minor  Bug fixes and Enhancement
 * New: Compatible with the latest WP and WC
 
-= 1.0.7 - Released on 10 June 2022 =
+= 1.0.7 – Released on 10 June 2022 =
 * New: Bug fix and Enhancement
 * New: Compatible with the latest WP and WC
 
-= 1.0.6 - Released on 2 May 2022 =
+= 1.0.6 – Released on 2 May 2022 =
 * New: Bug fix and Enhancement
 * New: Compatible with the latest WP and WC
 
-= 1.0.5 - Released on 18 April 2022 =
+= 1.0.5 – Released on 18 April 2022 =
 * New: Bug fix and Enhancement
 * New: Compatible with the latest WP and WC
 
-= 1.0.4 - Released on 17 February  2022 =
+= 1.0.4 – Released on 17 February  2022 =
 * New: Change author from MakeWebBetter to WP Swings
 * New: Notice display of current version for [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=events-org-page&utm_campaign=official).
 * New: Codebase migration
@@ -288,24 +291,23 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 * Fix: Bug fix and Enhancement
 * New: Compatible with the latest WP and WC
 
-= 1.0.3 - Released on 27 Nov 2021 =
+= 1.0.3 – Released on 27 Nov 2021 =
 * New: Compatibility with WooCommerce 5.9.0
 * New: Compatibility with WordPress 5.8.2
 
-= 1.0.2 - Released on 31 August 2021  =
+= 1.0.2 – Released on 31 August 2021  =
 * Fix: UI Issues
 * New: Event Check-In validation using email
 * New: WPML compatibility added
 * New: Compatibility with WooCommerce 5.6.0 and WordPress 5.8
 
-= 1.0.1 - Released on 08 June 2021 =  
+= 1.0.1 – Released on 08 June 2021 =  
 * Tweak: Dashboard update
 
-= 1.0.0 - Released on 29 April 2021 =
+= 1.0.0 – Released on 29 April 2021 =
 * First version
 
 == Upgrade Notice == 
 
-= 1.3.0 - Released on 20 August 2024 =
-* New: New Template For Event PDF Ticket.
-* New: Compatibility with latest WP [6.6.1] and WC [9.1.4].
+= 1.3.1 – Released on 30 September 2024 =
+* New: Compatibility with latest WP [6.6.2] and WC [9.3.3].
