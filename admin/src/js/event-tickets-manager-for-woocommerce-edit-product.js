@@ -38,6 +38,7 @@
   });
 
   $(document).ready(function () {
+
     //for General tab.
     $(".options_group.pricing").addClass("show_if_event_ticket_manager").show();
     //for Inventory tab.
@@ -356,7 +357,13 @@
         // Check if input value is empty, then set it to 1
         if (input.value === "") {
           input.value = "1";
-      }
+        }
+    
+      document.getElementById('wps_non_negative').addEventListener('input', function (e) {
+        if (e.target.value < 0) {
+          alert('Negative input is not allowed');
+        }
+    });
   });
 
 })(jQuery);

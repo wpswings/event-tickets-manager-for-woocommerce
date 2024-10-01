@@ -564,6 +564,33 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'placeholder'      => __( 'Facebook Access Token', 'event-tickets-manager-for-woocommerce-pro' ),
 
 			),
+			array(
+				'title'       => __( 'Enable Whatsapp Integration', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this to send message on whatsapp on order notification,  you can go through this <a href="https://developers.facebook.com/docs/whatsapp/cloud-api/get-started" target="_blank">docs</a> you need to register from <a href="https://developers.facebook.com/docs/development/register" target="_blank">here</a>', 'event-tickets-manager-for-woocommerce-pro' ),
+				'id'          => 'wps_wet_whatsapp_sharing_enable',
+				'value'       => get_option( 'wps_wet_whatsapp_sharing_enable' ),
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'name'        => 'wps_wet_whatsapp_sharing_enable',
+			),
+			array(
+				'title'       => __( 'Enter Phone number ID', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'        => 'text',
+				'description' => __( 'Enter Phone number ID here.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'id'          => 'wps_wet_whatsapp_phone_number_id',
+				'value'       => get_option( 'wps_wet_whatsapp_phone_number_id' ),
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'placeholder' => __( 'Enter Phone number ID', 'event-tickets-manager-for-woocommerce-pro' ),
+			),
+			array(
+				'title'       => __( 'Enter Access Token', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'        => 'text',
+				'description' => __( 'Enable Access Token here.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'id'          => 'wps_wet_access_token',
+				'value'       => get_option( 'wps_wet_access_token' ),
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'placeholder' => __( 'Enter Access Token', 'event-tickets-manager-for-woocommerce-pro' ),
+			),
 		);
 		$etmfw_settings_integrations = apply_filters( 'wps_etmfw_extent_integration_settings_array', $etmfw_settings_integrations );
 		$etmfw_settings_integrations[] = array(
@@ -1002,9 +1029,22 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 
 					$wps_etmfw_product_array = array();
 					$wps_etmfw_product_array['etmfw_event_price'] = ! empty( $price ) ? $price : '';
-					$wps_etmfw_product_array['event_start_date_time'] = isset( $_POST['etmfw_start_date_time'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_start_date_time'] ) ) : '';
+					
+					$plugin = 'tutor-pro/tutor-pro.php'; //Tutor Pro.
+					if (is_plugin_active($plugin)) {
+					$wps_event_start_date = isset( $_POST['etmfw_start_date_time'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_start_date_time'] ) ) : '';
+					$wps_event_end_date = isset( $_POST['etmfw_end_date_time'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_end_date_time'] ) ) : '';
+
+					$wps_start_date_time = DateTime::createFromFormat('d/m/Y H:i', $wps_event_start_date);
+					$wps_end_date_time = DateTime::createFromFormat('d/m/Y H:i', $wps_event_end_date);
+
+					$wps_etmfw_product_array['event_start_date_time'] = $wps_start_date_time->format('Y-m-d h:i a');
+					$wps_etmfw_product_array['event_end_date_time'] = $wps_end_date_time->format('Y-m-d h:i a');
+				} else {
+						$wps_etmfw_product_array['event_start_date_time'] = isset( $_POST['etmfw_start_date_time'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_start_date_time'] ) ) : '';
+						$wps_etmfw_product_array['event_end_date_time'] = isset( $_POST['etmfw_end_date_time'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_end_date_time'] ) ) : '';	
+					}
 					$wps_etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] = isset( $_POST['wps_base_price_cal'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_base_price_cal'] ) ) : 'base_price';
-					$wps_etmfw_product_array['event_end_date_time'] = isset( $_POST['etmfw_end_date_time'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_end_date_time'] ) ) : '';
 					$event_venue = isset( $_POST['etmfw_event_venue'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_event_venue'] ) ) : '';
 					$event_lat = isset( $_POST['etmfw_event_venue_lat'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_event_venue_lat'] ) ) : '';
 					$event_lng = isset( $_POST['etmfw_event_venue_lng'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_event_venue_lng'] ) ) : '';

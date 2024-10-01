@@ -79,7 +79,7 @@ $wps_etmfw_border_color = ! empty( get_option( 'wps_etmfw_pdf_border_color' ) ) 
 						</tr>
 					</table>
 		</td>
-					<td style="width: 25%; padding: 0; vertical-align: top; text-align: center; box-sizing: border-box; background-image: url(<?php echo esc_url( $image_attributes[0] ); ?>); background-size: cover;">
+					<td style="padding: 0; vertical-align: top; text-align: center; box-sizing: border-box; background-image: url(<?php echo esc_url( $image_attributes[0] ); ?>); background-size: cover;">
 					<table style="100%; box-sizing: border-box; padding: 15px 20px;">
 						<tr>
 							<td id = "wps_etmfw_parent_wrapper_3" class="wps_etmfw_pdf_text_colour  wps_etmfw_ticket_body" style="background-color: #65C7D7;padding: 5px 15px;border-radius: 5px;text-align: center;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>; background-color: #ffffff;">Your Ticket</td>

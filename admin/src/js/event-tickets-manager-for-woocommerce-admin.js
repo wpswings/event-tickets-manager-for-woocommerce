@@ -30,7 +30,6 @@
      */
 
     $(document).ready(function () {
-
         $('#wps_etmfwp_include_barcode').change(function () {
             console.log('barcode');
             if ($(this).is(":checked")) {
@@ -396,14 +395,16 @@
 			else {
 
 				border_size = '2px';
-			}
+            }
+           
             // document.getElementById('wps_event_border_type').style.border = border_size + ' ' + border_type + ' ' + border_color;
 			document.getElementById('wps_etmfw_parent_wrapper').style.border = border_size + ' ' + border_type + ' ' + border_color;
             document.getElementById('wps_etmfw_parent_wrapper_2').style.border = border_size + ' ' + border_type + ' ' + border_color;
+            document.getElementById('wps_new_template_border').style.border = border_size + ' ' + border_type + ' ' + border_color;
 
 		}
         function wps_etmfw_hide_bck_ground_image_setting(){
-            if('3'== etmfw_admin_param.wps_etmfw_selected_template || '4' == etmfw_admin_param.wps_etmfw_selected_template){
+            if('3'== etmfw_admin_param.wps_etmfw_selected_template || '4' == etmfw_admin_param.wps_etmfw_selected_template || '6' == etmfw_admin_param.wps_etmfw_selected_template || '8' == etmfw_admin_param.wps_etmfw_selected_template){
                 $('.wps_etmfw_hide_setting').show();
             }else{
                 $('.wps_etmfw_hide_setting').hide();
