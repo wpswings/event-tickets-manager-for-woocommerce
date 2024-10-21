@@ -36,7 +36,7 @@
 									<i class="dashicons dashicons-move"></i>
 								</td>
 								<td class="form-field wps_etmfw_label_fields">
-									<input type="text" class="wps_etmfw_field_label" style="" name="etmfw_fields[0][_label]" id="label_fields_0" value="" placeholder="">
+									<input type="text" class="wps_etmfw_field_label" style="" name="etmfw_fields[0][_label]" id="label_fields_0" value="" placeholder="" required>
 								</td>
 								<td class="form-field wps_etmfw_type_fields">
 									<select id="type_fields_0" name="etmfw_fields[0][_type]" class="wps_etmfw_field_type">

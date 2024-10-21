@@ -2,7 +2,7 @@
 
 /**
  * Exit if accessed directly
- *
+ * Eclipse Template
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/emails/templates
  */
@@ -20,7 +20,7 @@ if (is_plugin_active('event-tickets-manager-for-woocommerce-pro/event-tickets-ma
 	$wps_etmfw_text_color = !empty(get_option('wps_etmfw_ticket_text_color', '')) ? get_option('wps_etmfw_ticket_text_color', '') : '#f5ebeb';
 	$wps_etmfw_header_background_color = !empty(get_option('wps_etmfw_ticket_bg_color')) ? get_option('wps_etmfw_ticket_bg_color') : '#81d742';
 }
-
+$wps_etmfw_email_body_content = ! empty( get_option( 'wps_etmfw_email_body_content' ) ) ? get_option( 'wps_etmfw_email_body_content' ) : '';
 $wps_etmfw_border_type = !empty(get_option('wps_etmfw_border_type')) ? get_option('wps_etmfw_border_type') : 'none';
 $wps_etmfw_border_color = !empty(get_option('wps_etmfw_pdf_border_color')) ? get_option('wps_etmfw_pdf_border_color') : '#000000';
 $wps_etmfw_logo_size = !empty(get_option('wps_etmfw_logo_size', true)) ? get_option('wps_etmfw_logo_size', true) : '180';
@@ -74,11 +74,23 @@ $wps_qr_image = esc_url(EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/r
 				<p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;border-bottom:1px solid #bc8a00;padding:5px 0;'><span style="margin:0 10px 0 0;"><strong>&#8226; Name: </strong> Anvi Tiwari</span><span style="margin:0 10px 0 0;"><strong>&#8226; Mob No.: </strong>+91 8004589657</span><span style="margin:0 10px 0 0;"><strong>&#8226; Date: </strong>August 24, 2024</span><span style="margin:0 10px 0 0;"><strong>&#8226; Email ID: </strong>anvi2015@gmail.com</span></p>
 			</td>
 		</tr>
+		<?php
+        $body = $wps_etmfw_email_body_content;
+        ?>
 		<tr>
 			<td colspan="2" style='padding: 20px 0 0;background: #fff;'>
 				<div style='padding: 20px;background: #bc8a00;'>
 					<h4 style='color:#fff;font-weight:bold;font-size:18px;margin:0 0 5px;letter-spacing:0.5px;line-height:1;'>Note:</h4>
-					<p style='color:#fff;font-size:14px;letter-spacing:0.5px;line-height:1.5;'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+					<p style='color:#fff;font-size:14px;letter-spacing:0.5px;line-height:1.5;'>
+					<?php if ( '' != $body ) { 
+						echo $body;
+					} else {
+						?>
+						Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+						<?php
+					}
+					?>
+					</p>
 				</div>
 			</td>
 		</tr>

@@ -129,7 +129,7 @@
         mainId +
         '][_label]" id="label_fields_' +
         mainId +
-        '" value="" placeholder=""></td><td class="form-field wps_etmfw_type_fields"><select id="type_fields_' +
+        '" value="" placeholder="" required></td><td class="form-field wps_etmfw_type_fields"><select id="type_fields_' +
         mainId +
         '" name="etmfw_fields[' +
         mainId +

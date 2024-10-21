@@ -1105,6 +1105,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 											}
 										}
 									}
+									$wps_etmfw_flag = false;
 									if ( is_wc_endpoint_url( 'order-received' ) || is_wc_endpoint_url( 'view-order' ) ) {
 										if ( $wps_etmfw_flag ) {
 											?>
@@ -1188,6 +1189,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 										}
 									}
 								}
+								$wps_etmfw_flag = false;
 								if ( is_wc_endpoint_url( 'order-received' ) || is_wc_endpoint_url( 'view-order' ) ) {
 									if ( $wps_etmfw_flag ) {
 										?>
