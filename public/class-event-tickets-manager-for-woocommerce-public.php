@@ -11,6 +11,7 @@
 
 use Dompdf\Dompdf;
 use Automattic\WooCommerce\Utilities\OrderUtil;
+use Automattic\WooCommerce\Blocks\Utils\CartCheckoutUtils;
 
 /**
  * The public-facing functionality of the plugin.
@@ -1626,11 +1627,14 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$restricted_product_types = array( 'event_ticket_manager' );
 	
 		// Check the cart for products of the restricted types
-		foreach ( WC()->cart->get_cart() as $cart_item ) {
-			$product = wc_get_product( $cart_item['product_id'] );
-			if ( in_array( $product->get_type(), $restricted_product_types ) ) {
-				unset( $available_gateways['cod'] );
-				break;
+		$whole_cart = WC()->cart;
+		if ( isset( $whole_cart ) && ! empty( $whole_cart ) ) {
+			foreach ( $whole_cart->get_cart() as $cart_item ) {
+				$product = wc_get_product( $cart_item['product_id'] );
+				if ( in_array( $product->get_type(), $restricted_product_types ) ) {
+					unset( $available_gateways['cod'] );
+					break;
+				}
 			}
 		}
 		return $available_gateways;
@@ -2532,5 +2536,47 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			}
 		}
 
+	}
+
+	/**
+	 * This function is used to disable shipping.
+	 *
+	 * @param object $show_shipping shipping Object.
+	 * @name disable_shipping_calc_on_cart
+	 * @since 1.0.2
+	 */
+	public function wps_etmfw_wc_shipping_enabled( $enable ) {
+
+		if ( CartCheckoutUtils::is_cart_block_default() || CartCheckoutUtils::is_checkout_block_default() ) {
+			global $woocommerce;
+			$event_bool = false;
+			$other_bool = false;
+			if ( $enable ) {
+				if ( isset( WC()->cart ) && ! empty( WC()->cart ) ) {
+
+					foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+
+						$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+						$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
+						$product_types = wp_get_object_terms( $product_id, 'product_type' );
+						if ( isset( $product_types[0] ) ) {
+							$product_type = $product_types[0]->slug;
+							if ( 'event_ticket_manager' == $product_type ) {
+								$event_bool  = true;
+							} else if ( ! $cart_item['data']->is_virtual() ) {
+								$other_bool = true;
+							}
+						}
+					}
+
+					if ( $event_bool && ! $other_bool ) {
+						$enable = false;
+					} else {
+						$enable = true;
+					}
+				}
+			}
+		}
+		return $enable;
 	}
 }

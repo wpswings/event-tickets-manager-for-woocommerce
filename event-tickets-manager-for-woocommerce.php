@@ -54,50 +54,6 @@ if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 }
 
 if ( $activated ) {
-	/**
-	 * This function is used to disable shipping.
-	 *
-	 * @param object $show_shipping shipping Object.
-	 * @name disable_shipping_calc_on_cart
-	 * @since 1.0.2
-	 */
-	function disable_shipping_calc_on_cart( $show_shipping ) {
-		$wps_need_shipping = false;
-
-		$args = array(
-			'status'            => array( 'publish' ),
-			'type'              => 'event_ticket_manager',
-			'limit'             => get_option( 'posts_per_page' ),  // -1 for unlimited
-		);
-
-		// Array of product objects.
-		$products = wc_get_products( $args );
-		$wps_evnt_prouct_back_data_arry = array();
-
-		foreach ( $products as $product ) {
-
-			$product_id   = $product->get_id();
-
-			$wps_all_event_product_ids_array[] = $product_id;
-		}
-
-		if ( function_exists( 'WC' ) && WC()->cart ) {
-			if ( ! empty( WC()->cart->get_cart() ) ) {
-				foreach ( WC()->cart->get_cart() as $cart_item ) {
-					$wps_products_ids_array_cart[] = $cart_item['product_id'];
-					$wps_product  = wc_get_product( $cart_item['product_id'] );
-					if ( $wps_product->get_type() == 'event_ticket_manager' ) {
-						$wps_need_shipping  = true;
-					}
-				}
-			}
-		}
-
-		return ! $wps_need_shipping;
-	}
-	add_filter( 'woocommerce_cart_ready_to_calc_shipping', 'disable_shipping_calc_on_cart', 99 );
-	add_filter( 'woocommerce_cart_needs_shipping_address', 'disable_shipping_calc_on_cart', 99 );
-
 
 	// HPOS Compatibility.
 	add_action(
@@ -271,18 +227,8 @@ if ( $activated ) {
 
 		// Check if the directory doesn't exist.
 		if ( ! is_dir( $upload_dir ) ) {
-			// Attempt to create the directory using WP_Filesystem.
-			if ( function_exists( 'WP_Filesystem' ) ) {
-				WP_Filesystem(); // Initialize the filesystem.
-
-				global $wp_filesystem;
-				if ( ! is_wp_error( $wp_filesystem ) ) {
-					// Create the directory using WP_Filesystem.
-					if ( ! $wp_filesystem->is_dir( $upload_dir ) ) {
-						$wp_filesystem->mkdir( $upload_dir, 0777 );
-					}
-				}
-			}
+			wp_mkdir_p( $upload_dir );
+			chmod( $upload_dir, 0775 );
 		}
 
 	}

@@ -1354,8 +1354,14 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		$wps_etmfw_enable = get_option( 'wps_etmfw_enable_plugin', false );
 		$wps_etmfw_in_processing = get_option( 'wps_wet_enable_after_payment_done_ticket', false );
 		if ( $wps_etmfw_enable ) {
-			if ( isset( $_GET['post'] ) ) {
-				$order_id = sanitize_text_field( wp_unslash( $_GET['post'] ) );
+			if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+				// HPOS Enabled.
+				$post_id = isset( $_GET['id'] ) ? sanitize_text_field( wp_unslash( $_GET['id'] ) ) : '';
+			} else {
+				$post_id = isset( $_GET['post'] ) ? sanitize_text_field( wp_unslash( $_GET['post'] ) ) : '';
+			}
+			if ( isset( $post_id ) ) {
+				$order_id = $post_id;
 				$order = new WC_Order( $order_id );
 				$order_status = $order->get_status();
 				$temp_status = 'completed';
