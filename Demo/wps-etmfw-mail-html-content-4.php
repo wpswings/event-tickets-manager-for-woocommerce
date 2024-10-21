@@ -156,11 +156,15 @@ $wps_etmfw_logo_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' 
         </div>
         <?php  if ( 'on' == $wps_etmfw_qr_code_is_enable ) { ?>
         <div class="ticket-qrcode">
-            <img id="wps_qr_image" style="width:<?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?>;height:<?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?>" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=EventTicketData">
-        </div>
+            <span style="background:white; display:inline-block">
+                <img id="wps_qr_image" style="margin:10px;width:<?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?>;height:<?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?>" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=EventTicketData">
+            </span>
+            </div>
         <?php } elseif ( 'on' == get_option( 'wps_etmfwp_include_barcode' ) ) { ?>
             <div class="ticket-qrcode">
-            <img id="wps_qr_image" style="width:<?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?>;height:<?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?>" src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/barcode.png' ); ?>">
+                <span style="background:white; display:inline-block">
+                    <img id="wps_qr_image" style="margin:10px;width:<?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?>;height:<?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?>" src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/barcode.png' ); ?>">
+                </span>
         </div>
         <?php } else { ?>
         <div class="ticket-code wps_etmfw_pdf_text_colour" style="margin-top:140px">
