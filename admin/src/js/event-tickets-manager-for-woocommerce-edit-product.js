@@ -359,7 +359,7 @@
           input.value = "1";
         }
     
-      document.getElementById('wps_non_negative').addEventListener('input', function (e) {
+      document.getElementById('wps_recurring_value_id').addEventListener('input', function (e) {
         if (e.target.value < 0) {
           alert('Negative input is not allowed');
         }

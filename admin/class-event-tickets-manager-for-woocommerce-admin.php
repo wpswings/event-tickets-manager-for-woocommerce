@@ -523,9 +523,18 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'placeholder' => __( 'Enter twilio api sending number', 'event-tickets-manager-for-woocommerce-pro' ),
 			),
 			array(
+				'title' => __( 'Enter Content to send in Sms with ticket', 'event-tickets-manager-for-woocommerce-pro' ),
+				'type'  => 'textarea',
+				'id'    => 'wps_wet_twilio_sms_content',
+				'value' => '',
+				'description'  => esc_html__( 'Use Placeholders  ', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( '{event-time}' ) . esc_html__( ' for Event starting - ending time and ', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( ' {venue} ' ) . esc_html__( ' for event location ,', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( ' {event-name} ' ) . esc_html__( ' for Event-Name,', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( ' {customer} ' ) . esc_html__( ' for Customer-Name,', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( ' {ticket} ' ) . esc_html__( ' for Ticket-Number,', 'event-tickets-manager-for-woocommerce-pro' ),
+				'class' => 'etmfw-radio-switch-class-pro',
+				'placeholder' => __( 'Enter content to send in sms', 'event-tickets-manager-for-woocommerce-pro' ),
+			),
+			array(
 				'title'       => __( 'Enable Sharing on Facebook', 'event-tickets-manager-for-woocommerce-pro' ),
 				'type'        => 'radio-switch',
-				'description' => __( 'Enable this to share booking product on facebook.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description' => __( 'Enable this to share event product on facebook.', 'event-tickets-manager-for-woocommerce-pro' ),
 				'id'          => 'wps_wet_facebook_sharing_enable',
 				'value'       => '',
 				'class'       => 'etmfw-radio-switch-class-pro',
@@ -569,7 +578,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'type'        => 'radio-switch',
 				'description' => __( 'Enable this to send message on whatsapp on order notification,  you can go through this <a href="https://developers.facebook.com/docs/whatsapp/cloud-api/get-started" target="_blank">docs</a> you need to register from <a href="https://developers.facebook.com/docs/development/register" target="_blank">here</a>', 'event-tickets-manager-for-woocommerce-pro' ),
 				'id'          => 'wps_wet_whatsapp_sharing_enable',
-				'value'       => get_option( 'wps_wet_whatsapp_sharing_enable' ),
+				'value'       => '',
 				'class'       => 'etmfw-radio-switch-class-pro',
 				'name'        => 'wps_wet_whatsapp_sharing_enable',
 			),
@@ -578,7 +587,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'type'        => 'text',
 				'description' => __( 'Enter Phone number ID here.', 'event-tickets-manager-for-woocommerce-pro' ),
 				'id'          => 'wps_wet_whatsapp_phone_number_id',
-				'value'       => get_option( 'wps_wet_whatsapp_phone_number_id' ),
+				'value'       => '',
 				'class'       => 'etmfw-radio-switch-class-pro',
 				'placeholder' => __( 'Enter Phone number ID', 'event-tickets-manager-for-woocommerce-pro' ),
 			),
@@ -587,7 +596,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'type'        => 'text',
 				'description' => __( 'Enable Access Token here.', 'event-tickets-manager-for-woocommerce-pro' ),
 				'id'          => 'wps_wet_access_token',
-				'value'       => get_option( 'wps_wet_access_token' ),
+				'value'       => '',
 				'class'       => 'etmfw-radio-switch-class-pro',
 				'placeholder' => __( 'Enter Access Token', 'event-tickets-manager-for-woocommerce-pro' ),
 			),
@@ -718,17 +727,6 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 
 			}
 		}
-			$etmfw_email_template_settings[] =
-			array(
-				'title' => __( 'Enter Content to send in Sms with ticket', 'event-tickets-manager-for-woocommerce-pro' ),
-				'type'  => 'textarea',
-				'id'    => 'wps_wet_twilio_sms_content',
-				'value' => '',
-				'description'  => esc_html__( 'Use Placeholders  ', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( '{event-time}' ) . esc_html__( ' for Event starting - ending time and ', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( ' {venue} ' ) . esc_html__( ' for event location ,', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( ' {event-name} ' ) . esc_html__( ' for Event-Name,', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( ' {customer} ' ) . esc_html__( ' for Customer-Name,', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( ' {ticket} ' ) . esc_html__( ' for Ticket-Number,', 'event-tickets-manager-for-woocommerce-pro' ),
-				'class' => 'etmfw-radio-switch-class-pro',
-				'placeholder' => __( 'Enter content to send in sms', 'event-tickets-manager-for-woocommerce-pro' ),
-			);
-			// );
 			$etmfw_email_template_settings = apply_filters( 'wps_etmfw_extent_email_template_settings_array', $etmfw_email_template_settings );
 			$etmfw_email_template_settings[] = array(
 				'type'  => 'button',
