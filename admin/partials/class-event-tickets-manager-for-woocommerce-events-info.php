@@ -203,6 +203,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 		$args = array(
 			'status' => array( 'wc-processing', 'wc-completed' ),
 			'return' => 'ids',
+			'limit' => -1,
 		);
 		$shop_orders = wc_get_orders( $args );
 		if ( isset( $shop_orders ) && ! empty( $shop_orders ) ) {
