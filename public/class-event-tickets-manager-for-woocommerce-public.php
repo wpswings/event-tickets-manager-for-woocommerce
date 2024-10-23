@@ -479,7 +479,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
 						$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';
 
-						if ( empty( $ticket_number ) || ! file_exists( $generated_ticket_pdf ) ) {
+						if ( empty( $ticket_number ) ) {
 							$ticket_number = array(); // store the code for quantity more than 1.
 
 							for ( $i = 0; $i < $item_quantity; $i++ ) {
@@ -757,10 +757,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		}
 
 		// Remove all old elements, keeping only the most recent one.
-		if (count($attachments) > 1) {
-			// Keep only the last element in the array.
-			$attachments = array_slice($attachments, -1);
-		} 
+		// if (count($attachments) > 1) {
+		// 	// Keep only the last element in the array.
+		// 	$attachments = array_slice($attachments, -1);
+		// } 
 
 		return $attachments;
 
@@ -798,16 +798,16 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		if ( 'on' == get_option( 'wps_etmfwp_include_barcode' ) ) {
 			$wps_etmfw_qr_size = 100;
 			$file = $this->wps_etmfwp_generate_bar_code_callback( $order_id, $ticket_number, $product_id );
-		} else {
+		} elseif ( 'on' == get_option( 'wps_etmfwp_include_qr' ) ) {
 			$wps_etmfw_qr_size = ! empty( get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 'wps_etmfw_qr_size' ) : '180';
 			$file = apply_filters( 'wps_etmfw_generate_qr_code', $order_id, $ticket_number, $product_id );
 		}
 
-
-		$ticket_url = get_site_url() . '/' . str_replace( ABSPATH, '', $file );
+		$ticket_url = '';
 
 		if ( ! empty( $file ) ) {
 
+			$ticket_url = get_site_url() . '/' . str_replace( ABSPATH, '', $file );
 			if ( 'string' == gettype( $file ) ) {
 				$ticket_number1 = $ticket_number;
 				$wps_is_qr_is_enable = true;
