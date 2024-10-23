@@ -2548,8 +2548,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @since 1.0.2
 	 */
 	public function wps_etmfw_wc_shipping_enabled( $enable ) {
+		$wps_etmfw_enable_plugin = get_option( 'wps_etmfw_enable_plugin', false );
 
-		if ( CartCheckoutUtils::is_cart_block_default() || CartCheckoutUtils::is_checkout_block_default() ) {
+		if ( ( CartCheckoutUtils::is_cart_block_default() || CartCheckoutUtils::is_checkout_block_default() ) && 'on' == $wps_etmfw_enable_plugin ) {
 			global $woocommerce;
 			$event_bool = false;
 			$other_bool = false;
@@ -2575,6 +2576,37 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						$enable = false;
 					} else {
 						$enable = true;
+					}
+				}
+			}
+		} else {
+			if ( ( is_cart() || is_checkout() ) && 'on' == $wps_etmfw_enable_plugin ) {
+				global $woocommerce;
+				$event_bool = false;
+				$other_bool = false;
+				if ( $enable ) {
+					if ( isset( WC()->cart ) && ! empty( WC()->cart ) ) {
+
+						foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+
+							$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+							$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
+							$product_types = wp_get_object_terms( $product_id, 'product_type' );
+							if ( isset( $product_types[0] ) ) {
+								$product_type = $product_types[0]->slug;
+								if ( 'event_ticket_manager' == $product_type ) {
+									$event_bool  = true;
+								} else if ( ! $cart_item['data']->is_virtual() ) {
+									$other_bool = true;
+								}
+							}
+						}
+
+						if ( $event_bool && ! $other_bool ) {
+							$enable = false;
+						} else {
+							$enable = true;
+						}
 					}
 				}
 			}
