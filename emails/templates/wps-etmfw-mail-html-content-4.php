@@ -51,9 +51,9 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 			<img class="logo" id="wps_wem_logo_id" style="width: <?php echo esc_attr( $wps_etmfw_logo_size . 'px' ); ?>; height: auto; margin-right: 20px;" src = <?php echo esc_url($product_image_url); ?>  alt="Event Logo">
 			<div style="text-align: center;">
 				<p><strong>Event Name:</strong>[EVENTNAME]</p>
-				<p><strong>Start Date:</strong> [STARTDATE]</p>
-				<p><strong>End Date:</strong> [ENDDATE]</p>
-				<p><strong>Venue:</strong> [VENUE]</p>
+				<p><strong><?php echo esc_html__( 'Start Date', 'event-tickets-manager-for-woocommerce' ); ?>:</strong> [STARTDATE]</p>
+				<p><strong><?php echo esc_html__( 'End Date', 'event-tickets-manager-for-woocommerce' ); ?>:</strong> [ENDDATE]</p>
+				<p><strong><?php echo esc_html__( 'Venue', 'event-tickets-manager-for-woocommerce' ); ?>:</strong> [VENUE]</p>
 			</div>
 		</div>
 		<?php if ( 'on' == $wps_etmfw_qr_code_is_enable ) { ?>

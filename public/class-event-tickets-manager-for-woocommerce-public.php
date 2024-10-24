@@ -2079,19 +2079,19 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 							$this->wps_etmfw_send_ticket_mail_shared( $order, $wps_etmfw_mail_template_data, $user_email );
 						}
 					}
-					$response['message'] = __( 'Ticket Transfer successfully.', 'event-tickets-manager-for-woocommerce-pro' );
+					$response['message'] = __( 'Ticket Transfer successfully.', 'event-tickets-manager-for-woocommerce' );
 					$_SESSION['wps_Check_point'] = 1;
 
 					// here send code will added.
 					$response['result'] = true;
 				} else {
-					$response['message'] = __( 'Order not exist.', 'event-tickets-manager-for-woocommerce-pro' );
+					$response['message'] = __( 'Order not exist.', 'event-tickets-manager-for-woocommerce' );
 				}
 			} else {
-				$response['message'] = __( 'Wrong Ticket Number / Not Yours Ticket / Cannot transfer to yourself.', 'event-tickets-manager-for-woocommerce-pro' );
+				$response['message'] = __( 'Wrong Ticket Number / Not Yours Ticket / Cannot transfer to yourself.', 'event-tickets-manager-for-woocommerce' );
 			}
 		} else {
-			$response['message'] = __( 'Ticket of Event is not yet purchase.', 'event-tickets-manager-for-woocommerce-pro' );
+			$response['message'] = __( 'Ticket of Event is not yet purchase.', 'event-tickets-manager-for-woocommerce' );
 		}
 		echo wp_json_encode( $response );
 		wp_die();
@@ -2160,12 +2160,12 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				<div class="resend_mail_wrapper">
 					<span id="wps_etmfw_resend_mail_frontend_notification"></span>
 					<h4>
-						<strong><?php esc_html_e( 'Resend Ticket PDF Email', 'event-tickets-manager-for-woocommerce-pro' ); ?></strong>
+						<strong><?php esc_html_e( 'Resend Ticket PDF Email', 'event-tickets-manager-for-woocommerce' ); ?></strong>
 					</h4>
 					<div id="wps_etmfw_loader" style="display: none;">
 						<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ); ?>public/src/image/loading.gif">
 					</div>
-					<span class="wps_resend_content"><?php esc_html_e( "Press the icon to resend the ticket PDF email if the recipient hasn't received the ticket you sent.", 'event-tickets-manager-for-woocommerce-pro' ); ?>
+					<span class="wps_resend_content"><?php esc_html_e( "Press the icon to resend the ticket PDF email if the recipient hasn't received the ticket you sent.", 'event-tickets-manager-for-woocommerce' ); ?>
 					</span>
 					<a href="javascript:void(0);" data-id="<?php echo esc_attr( $order_id ); ?>" class="wps_uwgc_resend_mail" id="wps_etmfw_resend_mail_button_frontend">
 						<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ); ?>public/src/image/ticket.png" class="wps_resend_image">
@@ -2187,9 +2187,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		if ( isset( $_POST['order_id'] ) ) {
 			$order_id = isset( $_POST['order_id'] ) ? sanitize_text_field( wp_unslash( $_POST['order_id'] ) ) : '';
 			$this->wps_etmfw_process_event_order( $order_id, $old_status = '', $new_status = '' );
-			$response = __( 'Ticket PDF Sent Successfully!', 'event-tickets-manager-for-woocommerce-pro' );
+			$response = __( 'Ticket PDF Sent Successfully!', 'event-tickets-manager-for-woocommerce' );
 		} else {
-			$response = __( 'Ticket PDF Not Sent!', 'event-tickets-manager-for-woocommerce-pro' );
+			$response = __( 'Ticket PDF Not Sent!', 'event-tickets-manager-for-woocommerce' );
 		}
 		echo wp_json_encode( $response );
 		wp_die();
@@ -2356,9 +2356,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$html .= '<h4>' . $product_name . '</h4>';
 				$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
 				$html .= '<div class="wps-etmw_all-date">';
-				$html .= '<span class="wps-etmw_start-time"><strong>' . esc_html__( 'Start Date: ', 'event-tickets-manager-for-woocommerce-pro' ) . '</strong>' . $wps_event_formated_start_date_time . '</span>';
-				$html .= '<span class="wps-etmw_end-time"><strong>' . esc_html__( 'End Date: ', 'event-tickets-manager-for-woocommerce-pro' ) . '</strong>' . $wps_event_formated_end_date_time . '</span>';
-				$html .= '<div class="wps-etmw_prod-venue"><strong>' . esc_html__( 'Venue: ', 'event-tickets-manager-for-woocommerce-pro' ) . '</strong>' . $wps_etmfw_product_array['etmfw_event_venue'] . '</div>';
+				$html .= '<span class="wps-etmw_start-time"><strong>' . esc_html__( 'Start Date: ', 'event-tickets-manager-for-woocommerce' ) . '</strong>' . $wps_event_formated_start_date_time . '</span>';
+				$html .= '<span class="wps-etmw_end-time"><strong>' . esc_html__( 'End Date: ', 'event-tickets-manager-for-woocommerce' ) . '</strong>' . $wps_event_formated_end_date_time . '</span>';
+				$html .= '<div class="wps-etmw_prod-venue"><strong>' . esc_html__( 'Venue: ', 'event-tickets-manager-for-woocommerce' ) . '</strong>' . $wps_etmfw_product_array['etmfw_event_venue'] . '</div>';
 				$html .= '</div>';
 				$html .= '<div class="wps-etmw_prod-btn">';
 				$html .= '<a href="' . $product_url . '" class="button btn">View</a>';
@@ -2446,9 +2446,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$html .= '<h4>' . $product_name . '</h4>';
 				$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
 				$html .= '<div class="wps-etmw_all-date">';
-				$html .= '<span class="wps-etmw_start-time"><strong>' . esc_html__( 'Start Date: ', 'event-tickets-manager-for-woocommerce-pro' ) . '</strong>' . $wps_event_formated_start_date_time . '</span>';
-				$html .= '<span class="wps-etmw_end-time"><strong>' . esc_html__( 'End Date: ', 'event-tickets-manager-for-woocommerce-pro' ) . '</strong>' . $wps_event_formated_end_date_time . '</span>';
-				$html .= '<div class="wps-etmw_prod-venue"><strong>' . esc_html__( 'Venue: ', 'event-tickets-manager-for-woocommerce-pro' ) . '</strong>' . $wps_etmfw_product_array['etmfw_event_venue'] . '</div>';
+				$html .= '<span class="wps-etmw_start-time"><strong>' . esc_html__( 'Start Date: ', 'event-tickets-manager-for-woocommerce' ) . '</strong>' . $wps_event_formated_start_date_time . '</span>';
+				$html .= '<span class="wps-etmw_end-time"><strong>' . esc_html__( 'End Date: ', 'event-tickets-manager-for-woocommerce' ) . '</strong>' . $wps_event_formated_end_date_time . '</span>';
+				$html .= '<div class="wps-etmw_prod-venue"><strong>' . esc_html__( 'Venue: ', 'event-tickets-manager-for-woocommerce' ) . '</strong>' . $wps_etmfw_product_array['etmfw_event_venue'] . '</div>';
 				$html .= '</div>';
 				$html .= '<div class="wps-etmw_prod-btn">';
 				$html .= '<a href="' . $product_url . '" class="button btn">View</a>';
