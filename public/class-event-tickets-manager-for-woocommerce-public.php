@@ -621,6 +621,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$email_status = $mailer_obj->trigger( $user_email, $wps_etmfw_email_discription, $wps_etmfw_email_subject, $order );
 		do_action( 'wps_etmfw_send_sms_ticket', $wps_etmfw_mail_template_data );
 		do_action( 'wps_etmfw_send_whatsapp_msg', $wps_etmfw_mail_template_data );
+		do_action( 'wps_etmfw_send_gmeet_invitation', $wps_etmfw_mail_template_data );
 	}
 
 	/**
@@ -646,6 +647,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$email_status = $mailer_obj->trigger( $user_email, $wps_etmfw_email_discription, $wps_etmfw_email_subject, $order );
 		do_action( 'wps_etmfw_send_sms_ticket', $wps_etmfw_mail_template_data );
 		do_action( 'wps_etmfw_send_whatsapp_msg', $wps_etmfw_mail_template_data );
+		do_action( 'wps_etmfw_send_gmeet_invitation', $wps_etmfw_mail_template_data );
 	}
 
 	/**
