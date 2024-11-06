@@ -38,7 +38,7 @@ $wps_qr_image = esc_url(EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/r
 		<tr>
 			<td style="width:30%;border:1px solid #bc8a00;border-right:none;">
 				<div style='text-align:center;padding:20px;'>
-					<h4 style='color:#000;font-size: 20px;font-weight:bold;line-height:20px;border-bottom:1px solid #f4f4f4;margin: 0 0 5px;padding:0 0 10px;text-align: center;letter-spacing:0.5px;'><?php echo __('Ticket Code' ,'event-tickets-manager-for-woocommerce'); ?></h4>
+					<h4 style='color:#000;font-size: 20px;font-weight:bold;line-height:20px;border-bottom:1px solid #f4f4f4;margin: 0 0 5px;padding:0 0 10px;text-align: center;letter-spacing:0.5px;'><?php esc_html_e('Ticket Code' ,'event-tickets-manager-for-woocommerce'); ?></h4>
 
                     <?php if(('on' == $wps_etmfw_barcode_enable) && (('' == $wps_etmfw_qr_code_is_enable))) {?>
 					<!-- BAR CODE START-->
@@ -70,7 +70,7 @@ $wps_qr_image = esc_url(EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/r
 		</tr>
 		<tr>
 			<td colspan="2" style='padding: 20px 0 0;background: #fff;'>
-				<h4 style='color:#000;font-weight:bold;font-size:18px;margin:0 0 10px;letter-spacing:0.5px;line-height:1;'>Details:</h4>
+				<h4 style='color:#000;font-weight:bold;font-size:18px;margin:0 0 10px;letter-spacing:0.5px;line-height:1;'><?php esc_html_e( 'Details:', 'event-tickets-manager-for-woocommerce' ); ?></h4>
 				<p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;border-bottom:1px solid #bc8a00;padding:5px 0;'><span style="margin:0 10px 0 0;"><strong>&#8226; Name: </strong> Anvi Tiwari</span><span style="margin:0 10px 0 0;"><strong>&#8226; Mob No.: </strong>+91 8004589657</span><span style="margin:0 10px 0 0;"><strong>&#8226; Date: </strong>August 24, 2024</span><span style="margin:0 10px 0 0;"><strong>&#8226; Email ID: </strong>anvi2015@gmail.com</span></p>
 			</td>
 		</tr>

@@ -64,10 +64,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 										$checkin_status = $value['status'];
 										if ( 'checked_in' === $checkin_status ) :
 											$upload_dir_path  = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_URL . '/events_pdf/events' . $value['order_id'] . $value['ticket'] . '.pdf';
-											$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/checked.png" width="20" height="20" title="' . esc_html( 'Checked-In', 'event-tickets-manager-for-woocommerce' ) . '">';
+											$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/checked.png" width="20" height="20" title="' . esc_html__( 'Checked-In', 'event-tickets-manager-for-woocommerce' ) . '">';
 										else :
 											$upload_dir_path  = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_URL . '/events_pdf/events' . $value['order_id'] . $value['ticket'] . '.pdf';
-											$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/pending.svg" width="20" height="20" title="' . esc_html( 'Pending', 'event-tickets-manager-for-woocommerce' ) . '">';
+											$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/pending.svg" width="20" height="20" title="' . esc_html__( 'Pending', 'event-tickets-manager-for-woocommerce' ) . '">';
 										endif;
 									}
 								}
@@ -120,10 +120,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 									if ( 'checked_in' === $checkin_status && $order_obj->get_id() == $value['order_id'] ) {
 										  $upload_dir_path  = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_URL . '/events_pdf/events' . $value['order_id'] . $value['ticket'] . '.pdf';
-										  $checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/checked.png" width="20" height="20" title="' . esc_html( 'Checked-In', 'event-tickets-manager-for-woocommerce' ) . '">';
+										  $checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/checked.png" width="20" height="20" title="' . esc_html__( 'Checked-In', 'event-tickets-manager-for-woocommerce' ) . '">';
 									} else {
 										$upload_dir_path  = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_URL . '/events_pdf/events' . $value['order_id'] . $value['ticket'] . '.pdf';
-										$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/pending.svg" width="20" height="20" title="' . esc_html( 'Pending', 'event-tickets-manager-for-woocommerce' ) . '">';
+										$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/pending.svg" width="20" height="20" title="' . esc_html__( 'Pending', 'event-tickets-manager-for-woocommerce' ) . '">';
 									}
 								}
 							}
@@ -153,7 +153,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$wps_myevent_tab_html = '';
 			$wps_currency_symbol = get_option( 'woocommerce_currency' );
 			$wps_myevent_tab_html .= "<table class='woocommerce-orders-table woocommerce-MyAccount-orders shop_table shop_table_responsive my_account_orders account-orders-table' id ='wps_myevent_table_id'>";
-			$wps_myevent_tab_html .= "<tr><th class='woocommerce-orders-table__header'>Event</th><th class='woocommerce-orders-table__header'>Event Date</th><th class='woocommerce-orders-table__header'>Event Status</th><th class='woocommerce-orders-table__header'>Price</th><th class='woocommerce-orders-table__header'>Action</th></tr>";
+			$wps_myevent_tab_html .= "<tr><th class='woocommerce-orders-table__header'>Event</th><th class='woocommerce-orders-table__header'>" . esc_html__( 'Event Date', 'event-tickets-manager-for-woocommerce' ) . "</th><th class='woocommerce-orders-table__header'>" . esc_html__( 'Event Status', 'event-tickets-manager-for-woocommerce' ) . "</th><th class='woocommerce-orders-table__header'>" . esc_html__( 'Price', 'event-tickets-manager-for-woocommerce' ) . "</th><th class='woocommerce-orders-table__header'>" . esc_html__( 'Action', 'event-tickets-manager-for-woocommerce' ) . "</th></tr>";
 
 			foreach ( $event_attendees_details as $mks ) {
 				if ( in_array( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
@@ -166,5 +166,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			echo wp_kses_post( $wps_myevent_tab_html );
 		} else {
-			esc_html_e( 'No Event Ticket has been purchased yet.', 'membership-for-woocommerce' );
+			esc_html_e( 'No Event Ticket has been purchased yet.', 'event-tickets-manager-for-woocommerce' );
 		}

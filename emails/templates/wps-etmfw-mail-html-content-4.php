@@ -40,7 +40,7 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Event Ticket</title>
+	<title><?php esc_html_e('Event Ticket', 'event-tickets-manager-for-woocommerce'); ?></title>
 </head>
 <body>
 	<div class="ticket-container wps_etmfw_border_color wps_etmfw_ticket_body wps_etmfw_pdf_text_colour" style="background-color:  <?php echo esc_attr( $wps_etmfw_background_color ); ?>; border: 2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>; color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;" id="wps_event_border_type">
@@ -50,7 +50,7 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 		<div class="ticket-info" style="padding: 20px; text-align: left; display: flex;">
 			<img class="logo" id="wps_wem_logo_id" style="width: <?php echo esc_attr( $wps_etmfw_logo_size . 'px' ); ?>; height: auto; margin-right: 20px;" src = <?php echo esc_url($product_image_url); ?>  alt="Event Logo">
 			<div style="text-align: center;">
-				<p><strong>Event Name:</strong>[EVENTNAME]</p>
+				<p><strong><?php esc_html_e('Event Name', 'event-tickets-manager-for-woocommerce'); ?>: </strong>[EVENTNAME]</p>
 				<p><strong><?php echo esc_html__( 'Start Date', 'event-tickets-manager-for-woocommerce' ); ?>:</strong> [STARTDATE]</p>
 				<p><strong><?php echo esc_html__( 'End Date', 'event-tickets-manager-for-woocommerce' ); ?>:</strong> [ENDDATE]</p>
 				<p><strong><?php echo esc_html__( 'Venue', 'event-tickets-manager-for-woocommerce' ); ?>:</strong> [VENUE]</p>
@@ -66,7 +66,7 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 			</div>
 		<?php } else { ?>
 			<div class="ticket-code wps_etmfw_pdf_text_colour" style="flex: 1; padding: 20px; text-align: center; border: 2px dashed #ddd;">
-				<p style="font-size: 24px; margin: 0; padding: 10px;">Ticket Code: [TICKET]</p>
+				<p style="font-size: 24px; margin: 0; padding: 10px;"><?php esc_html_e('Ticket Code: ', 'event-tickets-manager-for-woocommerce'); ?> [TICKET]</p>
 			</div>
 		<?php } ?>
 		<div class="participant-details" style="padding: 20px; border-top: 2px solid #ddd; text-align: left; overflow-y: auto;">

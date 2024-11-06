@@ -63,7 +63,7 @@ if ( ! empty( $wps_etmfw_background_image ) ) {
 			</td>
 			<td style="width:30%;">
 				<div style='border-radius:0 15px 0 0;text-align:center;padding:20px;background: #fff;'>
-					<h4 style='color:#000;font-size: 20px;font-weight:bold;line-height:20px;border-bottom:1px solid #f4f4f4;margin: 0 0 5px;padding:0 0 10px;text-align: center;letter-spacing:0.5px;'><?php echo __('Ticket Code', 'event-tickets-manager-for-woocommerce'); ?></h4>
+					<h4 style='color:#000;font-size: 20px;font-weight:bold;line-height:20px;border-bottom:1px solid #f4f4f4;margin: 0 0 5px;padding:0 0 10px;text-align: center;letter-spacing:0.5px;'><?php esc_html_e('Ticket Code', 'event-tickets-manager-for-woocommerce'); ?></h4>
 
 					<?php if (('on' == $wps_etmfw_barcode_enable) && (('' == $wps_etmfw_qr_code_is_enable))) { ?>
 						<!-- BAR CODE START-->

@@ -62,7 +62,7 @@ if ( ! empty( $wps_etmfw_background_image ) ) {
 			</td>
 			<td style="width:30%;background:#fff;">
 				<div style='text-align:center;padding:20px;'>
-					<h4 style='color:#000;font-size: 20px;font-weight:bold;line-height:20px;border-bottom:1px solid #f4f4f4;margin: 0 0 5px;padding:0 0 10px;text-align: center;letter-spacing:0.5px;'><?php echo __('Ticket Code' ,'event-tickets-manager-for-woocommerce'); ?></h4>
+					<h4 style='color:#000;font-size: 20px;font-weight:bold;line-height:20px;border-bottom:1px solid #f4f4f4;margin: 0 0 5px;padding:0 0 10px;text-align: center;letter-spacing:0.5px;'><?php esc_html_e('Ticket Code' ,'event-tickets-manager-for-woocommerce'); ?></h4>
 
                     <?php if(('on' == $wps_etmfw_barcode_enable) && (('' == $wps_etmfw_qr_code_is_enable))) {?>
 					<!-- BAR CODE START-->
@@ -82,7 +82,7 @@ if ( ! empty( $wps_etmfw_background_image ) ) {
 				</div>
 			</td>
 			<td style='width:35%;padding:10px;background:#FFC525;'>
-				<h4 style='color:#000;font-weight:bold;font-size:18px;margin:0 0 10px;letter-spacing:0.5px;line-height:1;'>Details:</h4>
+				<h4 style='color:#000;font-weight:bold;font-size:18px;margin:0 0 10px;letter-spacing:0.5px;line-height:1;'><?php esc_html_e( 'Details:', 'event-tickets-manager-for-woocommerce' ); ?></h4>
 				<div>
 					<p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;padding:5px 0 0;'><span style="margin:0 10px 0 0;"><strong>Name: </strong> Anvi Tiwari</span></p>
 					<p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;padding:5px 0 0;'><span style="margin:0 10px 0 0;"><strong>Mob No.: </strong>+91 8004589657</span></p>

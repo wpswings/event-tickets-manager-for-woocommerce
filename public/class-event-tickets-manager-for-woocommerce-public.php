@@ -861,7 +861,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		if('6' == $wps_set_the_pdf_ticket_template || '7' == $wps_set_the_pdf_ticket_template){
 		// Additional Info Details.
 		if ( ! empty( $item_meta_data ) && ( ( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) || ( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) ) ) {
-			$additinal_info = "<h4 style='color:#000;font-weight:bold;font-size:18px;margin:0 0 10px;letter-spacing:0.5px;line-height:1;'>Details:</h4><p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;border-bottom:1px solid #FFC525;padding:5px 0;'>";
+			$additinal_info = "<h4 style='color:#000;font-weight:bold;font-size:18px;margin:0 0 10px;letter-spacing:0.5px;line-height:1;'>" . esc_html__( 'Details:', 'event-tickets-manager-for-woocommerce' ) . "</h4><p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;border-bottom:1px solid #FFC525;padding:5px 0;'>";
 			foreach ( $item_meta_data as $key => $value ) {
 				if ( isset( $value->key ) && ! empty( $value->value ) ) {
 					if ( '_reduced_stock' === $value->key ) {
@@ -1966,7 +1966,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 */
 	public function wps_event_add_myevent_tab( $items ) {
 		// Placing the custom tab just above logout tab.
-		$items['wps-myevent-tab'] = esc_html__( 'My Event', 'membership-for-woocommerce' );
+		$items['wps-myevent-tab'] = esc_html__( 'My Event', 'event-tickets-manager-for-woocommerce' );
 
 		/**
 		 * Filter for my event tab.

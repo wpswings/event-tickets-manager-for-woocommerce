@@ -1101,7 +1101,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 						}
 					}
 
-					$wps_etmfw_product_array['etmfw_attendees/organizer_tab_name'] = isset( $_POST['etmfw_attendees/organizer_tab_name'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_attendees/organizer_tab_name'] ) ) : 'Event Organizer and Attendees';
+					$wps_etmfw_product_array['etmfw_attendees/organizer_tab_name'] = isset( $_POST['etmfw_attendees/organizer_tab_name'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_attendees/organizer_tab_name'] ) ) : __( 'Event Organizer and Attendees', 'event-tickets-manager-for-woocommerce' );
 					$wps_etmfw_product_array['etmfw_display_attendees/organizer'] = isset( $_POST['etmfw_display_attendees/organizer'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_display_attendees/organizer'] ) ) : '';
 					$wps_etmfw_product_array['etmfw_display_organizer'] = isset( $_POST['etmfw_display_organizer'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_display_organizer'] ) ) : '';
 					$wps_etmfw_product_array['wps_organizer_multiselect'] = ! empty( $_POST['wps_event_organizer']['multiselect'] ) ? map_deep( wp_unslash( $_POST['wps_event_organizer']['multiselect'] ), 'sanitize_text_field' ) : array();
@@ -1578,7 +1578,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		global $post;
 		if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 			$screen = wc_get_container()->get( CustomOrdersTableController::class )->custom_orders_table_usage_is_enabled() ? wc_get_page_screen_id( 'shop-order' ) : 'shop_order';
-			add_meta_box( 'wps_etmfw_resend_mail', __( 'Resend Ticket PDF Mail', 'giftware' ), array( $this, 'wps_etmfw_resend_mail' ), $screen );
+			add_meta_box( 'wps_etmfw_resend_mail', __( 'Resend Ticket PDF Mail', 'event-tickets-manager-for-woocommerce' ), array( $this, 'wps_etmfw_resend_mail' ), $screen );
 		} else {
 			if ( isset( $post->ID ) && 'shop_order' == $post->post_type ) {
 				$order_id = $post->ID;
@@ -1618,7 +1618,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 
 					if ( $giftcard ) {
 						$screen = wc_get_container()->get( CustomOrdersTableController::class )->custom_orders_table_usage_is_enabled() ? wc_get_page_screen_id( 'shop-order' ) : 'shop_order';
-						add_meta_box( 'wps_etmfw_resend_mail', __( 'Resend Ticket PDF Mail', 'giftware' ), array( $this, 'wps_etmfw_resend_mail' ), $screen );
+						add_meta_box( 'wps_etmfw_resend_mail', __( 'Resend Ticket PDF Mail', 'event-tickets-manager-for-woocommerce' ), array( $this, 'wps_etmfw_resend_mail' ), $screen );
 					}
 				}
 			}
@@ -1643,9 +1643,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				<div id="wps_etmfw_loader" style="display: none;">
 					<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ); ?>admin/src/images/loading.gif">
 				</div>
-				<p><?php esc_html_e( 'If the user is not received a Ticket PDF or PDF is not generated , then PDF Ticket Mail then resend mail.', 'giftware' ); ?> </p>
+				<p><?php esc_html_e( 'If the user is not received a Ticket PDF or PDF is not generated , then PDF Ticket Mail then resend mail.', 'event-tickets-manager-for-woocommerce' ); ?> </p>
 				<p id="wps_etmfw_resend_mail_notification"></p>
-				<input type="button" data-id="<?php echo esc_html( $order_id ); ?>" id="wps_etmfw_resend_mail_button" class="button button-primary" value="<?php esc_html_e( 'Resend Ticket PDF Mail', 'giftware' ); ?>">
+				<input type="button" data-id="<?php echo esc_html( $order_id ); ?>" id="wps_etmfw_resend_mail_button" class="button button-primary" value="<?php esc_html_e( 'Resend Ticket PDF Mail', 'event-tickets-manager-for-woocommerce' ); ?>">
 			<?php
 		}
 	}

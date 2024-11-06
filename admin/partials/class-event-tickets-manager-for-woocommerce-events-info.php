@@ -241,9 +241,9 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 										if ( $ticket[ $i ] == $value['ticket'] ) {
 											$checkin_status = $value['status'];
 											if ( 'checked_in' === $checkin_status ) :
-												$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/checked.png" width="20" height="20" title="' . esc_html( 'Checked-In', 'event-tickets-manager-for-woocommerce' ) . '">';
+												$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/checked.png" width="20" height="20" title="' . esc_html__( 'Checked-In', 'event-tickets-manager-for-woocommerce' ) . '">';
 												else :
-													$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/pending.svg" width="20" height="20" title="' . esc_html( 'Pending', 'event-tickets-manager-for-woocommerce' ) . '">';
+													$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/pending.svg" width="20" height="20" title="' . esc_html__( 'Pending', 'event-tickets-manager-for-woocommerce' ) . '">';
 												endif;
 										}
 									}
@@ -271,7 +271,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 									'purchase_date'     => $order_date,
 									'schedule'          => wps_etmfw_get_date_format( $start ) . '-' . wps_etmfw_get_date_format( $end ),
 									'action'            => '<a href="' . $upload_dir_path . '" target="_blank">
-										<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/view_ticket.svg" width="20" height="20" title="' . esc_html( 'View Ticket', 'event-tickets-manager-for-woocommerce' ) . '"></a>',
+										<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/view_ticket.svg" width="20" height="20" title="' . esc_html__( 'View Ticket', 'event-tickets-manager-for-woocommerce' ) . '"></a>',
 								);
 							}
 						} else if ( '' !== $ticket ) {
@@ -291,9 +291,9 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 									if ( $ticket == $value['ticket'] ) {
 										$checkin_status = $value['status'];
 										if ( 'checked_in' === $checkin_status ) :
-											$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/checked.png" width="20" height="20" title="' . esc_html( 'Checked-In', 'event-tickets-manager-for-woocommerce' ) . '">';
+											$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/checked.png" width="20" height="20" title="' . esc_html__( 'Checked-In', 'event-tickets-manager-for-woocommerce' ) . '">';
 											else :
-												$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/pending.svg" width="20" height="20" title="' . esc_html( 'Pending', 'event-tickets-manager-for-woocommerce' ) . '">';
+												$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/pending.svg" width="20" height="20" title="' . esc_html__( 'Pending', 'event-tickets-manager-for-woocommerce' ) . '">';
 											endif;
 									}
 								}

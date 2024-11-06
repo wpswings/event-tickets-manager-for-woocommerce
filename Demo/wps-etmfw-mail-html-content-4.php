@@ -168,7 +168,7 @@ $wps_etmfw_logo_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' 
         </div>
         <?php } else { ?>
         <div class="ticket-code wps_etmfw_pdf_text_colour" style="margin-top:140px">
-            <p>Ticket Code: ABC123</p>
+            <p><?php esc_html_e('Ticket Code' ,'event-tickets-manager-for-woocommerce'); ?>: ABC123</p>
         </div>
 
         <?php  }  ?>
