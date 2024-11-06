@@ -600,6 +600,33 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'class'       => 'etmfw-radio-switch-class-pro',
 				'placeholder' => __( 'Enter Access Token', 'event-tickets-manager-for-woocommerce' ),
 			),
+			array(
+				'title'       => __( 'Enable Google Meet Integration', 'event-tickets-manager-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this to send Google Meet link on email to customer for virtual event product,  Make Sure you enable the <a target="_blank" href="https://console.cloud.google.com/apis/library">Google Meet API</a> and <a target="_blank" href="https://console.cloud.google.com/apis/library">Google Calendar API</a> you need to create project from <a href="https://console.cloud.google.com/apis/dashboard" target="_blank">here</a>', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_wet_gmeet_sharing_enable',
+				'value'       => '',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'name'        => 'wps_wet_gmeet_sharing_enable',
+			),
+			array(
+				'title'       => __( 'Enter OAuth 2.0 Client ID', 'event-tickets-manager-for-woocommerce' ),
+				'type'        => 'text',
+				'description' => __( 'You can create from credentials section under the APIs & Services in <a href="https://console.cloud.google.com/apis/dashboard" target="_blank">Google Cloud Console</a>.', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_wet_gmeet_client_id',
+				'value'       => '',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'placeholder' => __( 'Enter Client ID here', 'event-tickets-manager-for-woocommerce' ),
+			),
+			array(
+				'title'       => __( 'Enter OAuth 2.0 Client Secret', 'event-tickets-manager-for-woocommerce' ),
+				'type'        => 'text',
+				'description' => __( 'After Setup, Make sure you have set the scopes( .../auth/calendar, .../auth/calendar.events, ./auth/meetings.space.created ) under the OAuth Consent Screen -> App Registration )  in <a href="https://console.cloud.google.com/apis/dashboard" target="_blank">Google Cloud Console</a>. <p><a class="mdc-button generate-token mdc-button--raised mdc-ripple-upgraded" href="#" target="_blank">Generate Token</a></p>.', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_wet_gmeet_client_secret',
+				'value'       => '',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'placeholder' => __( 'Enable Client Secret here', 'event-tickets-manager-for-woocommerce' ),
+			),
 		);
 		$etmfw_settings_integrations = apply_filters( 'wps_etmfw_extent_integration_settings_array', $etmfw_settings_integrations );
 		$etmfw_settings_integrations[] = array(
