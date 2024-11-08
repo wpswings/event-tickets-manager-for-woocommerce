@@ -64,7 +64,7 @@ if ('on' == get_option('wps_etmfw_prod_logo_plugin')) {
 			</td>
 			<td style="width:30%;background:#fff;">
 				<div style='text-align:center;padding:20px;'>
-					<h4 style='color:#000;font-size: 20px;font-weight:bold;line-height:20px;border-bottom:1px solid #f4f4f4;margin: 0 0 5px;padding:0 0 10px;text-align: center;letter-spacing:0.5px;'><?php echo __('Ticket Code', 'event-tickets-manager-for-woocommerce'); ?></h4>
+					<h4 style='color:#000;font-size: 20px;font-weight:bold;line-height:20px;border-bottom:1px solid #f4f4f4;margin: 0 0 5px;padding:0 0 10px;text-align: center;letter-spacing:0.5px;'><?php esc_html_e('Ticket Code', 'event-tickets-manager-for-woocommerce'); ?></h4>
 
                     <?php if (('on' == $wps_etmfw_barcode_enable) && (('' == $wps_etmfw_qr_code_is_enable))) { ?>
 					<!-- BAR CODE START-->

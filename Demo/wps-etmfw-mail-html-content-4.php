@@ -1,7 +1,7 @@
 <?php 
 /**
  * Exit if accessed directly
- *
+ * Vertico Template
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/emails/templates
  */
@@ -19,7 +19,7 @@ if ( is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-
 	$wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_ticket_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_text_color', '' ) : '#f5ebeb';
     $wps_etmfw_header_background_color = ! empty( get_option( 'wps_etmfw_ticket_bg_color' ) ) ? get_option( 'wps_etmfw_ticket_bg_color' ) : '#81d742';
 }
-
+$wps_etmfw_email_body_content = ! empty( get_option( 'wps_etmfw_email_body_content' ) ) ? get_option( 'wps_etmfw_email_body_content' ) : '';
 $wps_etmfw_border_type = ! empty( get_option( 'wps_etmfw_border_type' ) ) ? get_option( 'wps_etmfw_border_type' ) : 'none';
 $wps_etmfw_border_color = ! empty( get_option( 'wps_etmfw_pdf_border_color' ) ) ? get_option( 'wps_etmfw_pdf_border_color' ) : '#000000';
 $wps_etmfw_logo_size = ! empty( get_option( 'wps_etmfw_logo_size', true ) ) ? get_option( 'wps_etmfw_logo_size', true ) : '180';
@@ -156,15 +156,19 @@ $wps_etmfw_logo_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' 
         </div>
         <?php  if ( 'on' == $wps_etmfw_qr_code_is_enable ) { ?>
         <div class="ticket-qrcode">
-            <img id="wps_qr_image" style="width:<?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?>;height:<?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?>" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=EventTicketData">
-        </div>
+            <span style="background:white; display:inline-block">
+                <img id="wps_qr_image" style="margin:10px;width:<?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?>;height:<?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?>" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=EventTicketData">
+            </span>
+            </div>
         <?php } elseif ( 'on' == get_option( 'wps_etmfwp_include_barcode' ) ) { ?>
             <div class="ticket-qrcode">
-            <img id="wps_qr_image" style="width:<?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?>;height:<?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?>" src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/barcode.png' ); ?>">
+                <span style="background:white; display:inline-block">
+                    <img id="wps_qr_image" style="margin:10px;width:<?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?>;height:<?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?>" src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/barcode.png' ); ?>">
+                </span>
         </div>
         <?php } else { ?>
         <div class="ticket-code wps_etmfw_pdf_text_colour" style="margin-top:140px">
-            <p>Ticket Code: ABC123</p>
+            <p><?php esc_html_e('Ticket Code' ,'event-tickets-manager-for-woocommerce'); ?>: ABC123</p>
         </div>
 
         <?php  }  ?>
@@ -175,8 +179,18 @@ $wps_etmfw_logo_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' 
             <p><strong>Address:</strong> 123 Main Street, City, Country</p>
             <!-- Add more participant details here if needed -->
         </div>
+        <?php
+        $body = $wps_etmfw_email_body_content;
+        ?>
         <div class="ticket-footer wps_etmfw_ticket_body" style="background-color:<?php echo esc_attr( $wps_etmfw_background_color ); ?>;">
-            <p>This ticket is valid for one entry only. Please keep it safe.</p>
+           <p> <?php if ( '' != $body ) { 
+				echo $body;
+			} else {
+				?>
+				This ticket is valid for one entry only. Please keep it safe.
+				<?php
+			}
+			?></p>
         </div>
     </div>
 </body>

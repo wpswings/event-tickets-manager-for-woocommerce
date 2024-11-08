@@ -6,7 +6,7 @@ Requires at least: 6.1
 Tested up to: 6.6.2
 WC requires at least: 6.1
 WC tested up to: 9.3.3
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 Requires PHP: 7.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -26,7 +26,6 @@ Through this [**WooCommerce Events**](https://wpswings.com/product/event-tickets
 [**WordPress Event manager Demo**](https://demo.wpswings.com/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-pro&utm_medium=events-org-page&utm_campaign=frontend-demo) | [**Events Ticket Documentation**](https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-org-page&utm_campaign=events-doc) | [**Contact Us**](https://wpswings.com/contact-us/?utm_source=wpswings-event&utm_medium=event-org-page&utm_campaign=contact-us) 
 
 [youtube https://youtu.be/xjKPLNhKF1A?si=Zfrkx7Ngyag-67Rn&rel=0]
-
 
 
 == SALIENT FEATURES OF THE  WORDPRESS EVENTS PLUGIN: ==
@@ -177,6 +176,9 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
+= 1.3.2 – Released on 08 November 2024 =
+* Fixes: Minor Bug Fixes.
+
 = 1.3.1 – Released on 30 September 2024 =
 * New: Compatibility with latest WP [6.6.2] and WC [9.3.3].
 
@@ -309,5 +311,5 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Upgrade Notice == 
 
-= 1.3.1 – Released on 30 September 2024 =
-* New: Compatibility with latest WP [6.6.2] and WC [9.3.3].
+= 1.3.2 – Released on 08 November 2024 =
+* Fixes: Minor Bug Fixes.

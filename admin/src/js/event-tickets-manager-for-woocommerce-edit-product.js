@@ -129,7 +129,7 @@
         mainId +
         '][_label]" id="label_fields_' +
         mainId +
-        '" value="" placeholder=""></td><td class="form-field wps_etmfw_type_fields"><select id="type_fields_' +
+        '" value="" placeholder="" required></td><td class="form-field wps_etmfw_type_fields"><select id="type_fields_' +
         mainId +
         '" name="etmfw_fields[' +
         mainId +
@@ -359,7 +359,7 @@
           input.value = "1";
         }
     
-      document.getElementById('wps_non_negative').addEventListener('input', function (e) {
+      document.getElementById('wps_recurring_value_id').addEventListener('input', function (e) {
         if (e.target.value < 0) {
           alert('Negative input is not allowed');
         }

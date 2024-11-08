@@ -1,7 +1,7 @@
 <?php
 /**
  * Exit if accessed directly
- *
+ * Elixir Template
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/emails/templates
  */
@@ -108,7 +108,6 @@ $wps_etmfw_logo_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' 
 		<div id="wps_etmfw_parent_wrapper_2" class="wps_etmfw_border_color wps_etmfw_ticket_body"  style="color: #000000;padding: 15px; background-color: <?php echo esc_attr( $wps_etmfw_background_color ); ?>; margin: 0 auto; margin-top: 20px; box-sizing: border-box;border:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>">
 			<?php
 				$body = $wps_etmfw_email_body_content;
-			if ( '' != $body ) {
 				?>
 				<table class="wps_etmfw_pdf_text_colour" border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;"><tbody><tr><td style="padding: 20px 0 10px;"><h2 class="wps_etmfw_pdf_text_colour" style="margin: 0;font-size: 24px; color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">Details :-</p></h2></td></tr>
 				<tr><td style="padding: 5px 0;">
@@ -119,10 +118,16 @@ $wps_etmfw_logo_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' 
 				</tbody></table>
 			<h4 class="wps_etmfw_pdf_text_colour" style="margin-top: 15px; margin-bottom: 10px; font-size: 24px; color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">Note</h4>
 			<div class="wps_etmfw_pdf_text_colour" style="width:auto;text-align:left;vertical-align: top;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">
-			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
+			<?php if ( '' != $body ) { 
+				echo $body;
+			} else {
+				?>
+				Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
+				Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
+				<?php
+			}
+			?>
 			</div>
-			<?php } ?>
 		</div>
 </body>
 </html>

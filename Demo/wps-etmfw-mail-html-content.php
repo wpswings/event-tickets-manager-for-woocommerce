@@ -1,7 +1,7 @@
 <?php
 /**
  * Exit if accessed directly
- *
+ * Zenith Template
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/emails/templates
  */
@@ -169,23 +169,35 @@ $wps_set_the_pdf_ticket_template = get_option( 'wps_etmfw_ticket_template', '1' 
 	<div id="wps_etmfw_parent_wrapper_2" class="wps_etmfw_border_color" style="margin-right:0px;margin-left:0px;border:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>">
 	<?php
 	$body = $wps_etmfw_email_body_content;
-	if ( '' != $body ) {
-		?>
-							<?php if ( '1' == $wps_set_the_pdf_ticket_template && is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) { ?>
-									<h4 class="wps_etmfw_pdf_text_colour" style="padding: 10px;color: <?php echo esc_attr( get_option( 'wps_etmfw_pdf_text_color' ) ); ?>;">Note</h4>
-									<div class="wps_etmfw_pdf_text_colour" style="padding: 20px;width:auto;text-align:left;vertical-align: middle;color: <?php echo esc_attr( get_option( 'wps_etmfw_pdf_text_color' ) ); ?>;">
-									Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-									Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-									</div>
-							<?php } else { ?>
+	?>
+	<?php if ( '1' == $wps_set_the_pdf_ticket_template && is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) { ?>
+			<h4 class="wps_etmfw_pdf_text_colour" style="padding: 10px;color: <?php echo esc_attr( get_option( 'wps_etmfw_pdf_text_color' ) ); ?>;">Note</h4>
+			<div class="wps_etmfw_pdf_text_colour" style="padding: 20px;width:auto;text-align:left;vertical-align: middle;color: <?php echo esc_attr( get_option( 'wps_etmfw_pdf_text_color' ) ); ?>;">
+			<?php if ( '' != $body ) { 
+				echo $body;
+			} else {
+				?>
+				Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
+				Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
+				<?php
+			}
+			?>
+			</div>
+	<?php } else { ?>
 
-								<h4 class="wps_etmfw_pdf_text_colour" style="padding: 10px;color: <?php echo esc_attr( get_option( 'wps_etmfw_ticket_body_text_color', '' ) ); ?>;">Note</h4>
-									<div class="wps_etmfw_pdf_text_colour" style="padding: 20px;width:auto;text-align:left;vertical-align: middle;color: <?php echo esc_attr( get_option( 'wps_etmfw_ticket_body_text_color', '' ) ); ?>;">
-									Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-									Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-									</div>
-							<?php } ?>
-			<?php } ?>
+		<h4 class="wps_etmfw_pdf_text_colour" style="padding: 10px;color: <?php echo esc_attr( get_option( 'wps_etmfw_ticket_body_text_color', '' ) ); ?>;">Note</h4>
+			<div class="wps_etmfw_pdf_text_colour" style="padding: 20px;width:auto;text-align:left;vertical-align: middle;color: <?php echo esc_attr( get_option( 'wps_etmfw_ticket_body_text_color', '' ) ); ?>;">
+			<?php if ( '' != $body ) { 
+				echo $body;
+			} else {
+				?>
+				Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
+				Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
+				<?php
+			}
+			?>
+			</div>
+	<?php } ?>
 	</div>
 </body>
 </html>

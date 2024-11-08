@@ -220,6 +220,10 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'woocommerce_new_order', $etmfw_plugin_admin, 'wps_etmfw_set_order_as_event_ticket_manager', 10, 2 );
 
 		$this->loader->add_action( 'manage_shop_order_posts_custom_column', $etmfw_plugin_admin, 'etmfw_add_label_for_event_type', 20, 2 );
+
+		// HPOS compatibility.
+		$this->loader->add_action( 'woocommerce_shop_order_list_table_custom_column', $etmfw_plugin_admin, 'etmfw_add_label_for_event_type', 20, 2 );
+		
 		$this->loader->add_action( 'wp_print_scripts', $etmfw_plugin_admin, 'etmfw_dequeque_theme_script', 20 );
 
 		// Code For The Banner Image.
@@ -321,6 +325,9 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		$this->loader->add_action( 'wp_ajax_wps_etmfw_calendar_events_shortcode', $etmfw_plugin_public, 'wps_etmfw_calendar_events_shortcode_callback', 8 );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_calendar_events_shortcode', $etmfw_plugin_public, 'wps_etmfw_calendar_events_shortcode_callback', 8 );
+	
+		// disbale shipping.
+		$this->loader->add_filter( 'wc_shipping_enabled', $etmfw_plugin_public, 'wps_etmfw_wc_shipping_enabled' );
 	}
 	}
 

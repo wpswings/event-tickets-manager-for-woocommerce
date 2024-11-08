@@ -341,8 +341,8 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'value' => get_option( 'wps_etmfwp_include_barcode' ),
 				'class' => 'etmfw-radio-switch-class',
 				'options' => array(
-					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce-pro' ),
-					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce-pro' ),
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
+					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
 				),
 			),
 			array(
@@ -364,39 +364,39 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			),
 
 			array(
-				'title' => __( 'Allow Ticket Transfer', 'event-tickets-manager-for-woocommerce-pro' ),
+				'title' => __( 'Allow Ticket Transfer', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'radio-switch',
-				'description'  => __( 'Enable this option  to share the transfer to another.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description'  => __( 'Enable this option  to share the transfer to another.', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'wps_wet_enable_ticket_sharing',
 				'value' => '',
 				'class' => 'etmfw-radio-switch-class-pro',
 				'options' => array(
-					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce-pro' ),
-					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce-pro' ),
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
+					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
 				),
 			),
 			array(
-				'title' => __( 'Send Ticket During Processing Order', 'event-tickets-manager-for-woocommerce-pro' ),
+				'title' => __( 'Send Ticket During Processing Order', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'radio-switch',
-				'description'  => __( 'Enable this option to send ticket during processing.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description'  => __( 'Enable this option to send ticket during processing.', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'wps_wet_enable_after_payment_done_ticket',
 				'value' => '',
 				'class' => 'etmfw-radio-switch-class-pro',
 				'options' => array(
-					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce-pro' ),
-					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce-pro' ),
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
+					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
 				),
 			),
 			array(
-				'title' => __( 'Include QR code in ticket', 'event-tickets-manager-for-woocommerce-pro' ),
+				'title' => __( 'Include QR code in ticket', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'radio-switch',
-				'description'  => __( 'Enable this option to display qr code in the ticket.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description'  => __( 'Enable this option to display qr code in the ticket.', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'wps_etmfwp_include_qr',
 				'value' => '',
 				'class' => 'etmfw-radio-switch-class-pro',
 				'options' => array(
-					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce-pro' ),
-					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce-pro' ),
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
+					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
 				),
 			),
 			array(
@@ -412,30 +412,30 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				),
 			),
 			array(
-				'title' => __( 'Enable Product Image as Logo', 'event-tickets-manager-for-woocommerce-pro' ),
+				'title' => __( 'Enable Product Image as Logo', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'radio-switch',
-				'description'  => __( 'Enable it to set the product image as logo on PDF Ticket.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description'  => __( 'Enable it to set the product image as logo on PDF Ticket.', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'wps_etmfw_prod_logo_plugin',
 				'value' =>'',
 				'class' => 'etmfw-radio-switch-class-pro',
 				'options' => array(
-					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce-pro' ),
-					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce-pro' ),
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
+					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
 				),
 			)
 			,
 			array(
-				'title' => __( 'Reminder Send Before Event Day', 'event-tickets-manager-for-woocommerce-pro' ),
+				'title' => __( 'Reminder Send Before Event Day', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'number',
 				'min' => '0',
 				'max' => '7',
 				'id'    => 'wps_etmfwp_send_remainder_before_event',
 				'value' => '',
 				'class' => 'etmfw-radio-switch-class-pro',
-				'description'  => __( 'Enter no. of days before event, email should be send as remainder. ', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description'  => __( 'Enter no. of days before event, email should be send as remainder. ', 'event-tickets-manager-for-woocommerce' ),
 			),
 			array(
-				'title' => __( 'Event Date Format On Product Page', 'event-tickets-manager-for-woocommerce-pro' ),
+				'title' => __( 'Event Date Format On Product Page', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'select',
 				'id'    => 'wp_date_time_event_format',
 				'class' => 'etmfw-radio-switch-class-pro',
@@ -452,7 +452,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					'l, F j, Y'   => __( 'Thursday, January 31, 2024', 'event-tickets-manager-for-woocommerce' ),
 					'l, j-F-Y'   => __( 'Thursday, 31-January-2024', 'event-tickets-manager-for-woocommerce' ),
 				),
-				'description'  => __( 'To Set The Date Format Which Will Show On The Product Page', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description'  => __( 'To Set The Date Format Which Will Show On The Product Page', 'event-tickets-manager-for-woocommerce' ),
 			),
 		);
 		$etmfw_settings_general = apply_filters( 'wps_etmfw_extent_general_settings_array', $etmfw_settings_general );
@@ -484,112 +484,148 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'placeholder' => __( 'Google API Key', 'event-tickets-manager-for-woocommerce' ),
 			),
 			array(
-				'title' => __( 'Enable Twilio Integration', 'event-tickets-manager-for-woocommerce-pro' ),
+				'title' => __( 'Enable Twilio Integration', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'radio-switch',
-				'description'  => __( 'Enable this send messages using twilio api.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description'  => __( 'Enable this send messages using twilio api.', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'wps_wet_enable_twilio_integration',
 				'value' => '',
 				'class' => 'etmfw-radio-switch-class-pro',
 				'options' => array(
-					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce-pro' ),
-					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce-pro' ),
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
+					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
 				),
 			),
 			array(
-				'title' => __( 'Enter Twilio API Sid', 'event-tickets-manager-for-woocommerce-pro' ),
+				'title' => __( 'Enter Twilio API Sid', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'text',
-				'description'  => __( 'Enter twilio API sid here', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description'  => __( 'Enter twilio API sid here', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'wps_wet_twilio_sid',
 				'value' => '',
 				'class' => 'etmfw-radio-switch-class-pro',
-				'placeholder' => __( 'Enter twilio API sid', 'event-tickets-manager-for-woocommerce-pro' ),
+				'placeholder' => __( 'Enter twilio API sid', 'event-tickets-manager-for-woocommerce' ),
 			),
 			array(
-				'title' => __( 'Enter Twilio API Token', 'event-tickets-manager-for-woocommerce-pro' ),
+				'title' => __( 'Enter Twilio API Token', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'text',
-				'description'  => __( 'Enable twilio API token here.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description'  => __( 'Enable twilio API token here.', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'wps_wet_twilio_token',
 				'value' => '',
 				'class' => 'etmfw-radio-switch-class-pro',
-				'placeholder' => __( 'Enter twilio API Token', 'event-tickets-manager-for-woocommerce-pro' ),
+				'placeholder' => __( 'Enter twilio API Token', 'event-tickets-manager-for-woocommerce' ),
 			),
 			array(
-				'title' => __( 'Enter Twilio Sending Number', 'event-tickets-manager-for-woocommerce-pro' ),
+				'title' => __( 'Enter Twilio Sending Number', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'text',
-				'description'  => __( 'Enable twilio sending number here.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description'  => __( 'Enable twilio sending number here.', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'wps_wet_twilio_number',
 				'value' => '',
 				'class' => 'etmfw-radio-switch-class-pro',
-				'placeholder' => __( 'Enter twilio api sending number', 'event-tickets-manager-for-woocommerce-pro' ),
+				'placeholder' => __( 'Enter twilio api sending number', 'event-tickets-manager-for-woocommerce' ),
 			),
 			array(
-				'title'       => __( 'Enable Sharing on Facebook', 'event-tickets-manager-for-woocommerce-pro' ),
+				'title' => __( 'Enter Content to send in Sms with ticket', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'textarea',
+				'id'    => 'wps_wet_twilio_sms_content',
+				'value' => '',
+				'description'  => esc_html__( 'Use Placeholders  ', 'event-tickets-manager-for-woocommerce' ) . esc_html( '{event-time}' ) . esc_html__( ' for Event starting - ending time and ', 'event-tickets-manager-for-woocommerce' ) . esc_html( ' {venue} ' ) . esc_html__( ' for event location ,', 'event-tickets-manager-for-woocommerce' ) . esc_html( ' {event-name} ' ) . esc_html__( ' for Event-Name,', 'event-tickets-manager-for-woocommerce' ) . esc_html( ' {customer} ' ) . esc_html__( ' for Customer-Name,', 'event-tickets-manager-for-woocommerce' ) . esc_html( ' {ticket} ' ) . esc_html__( ' for Ticket-Number,', 'event-tickets-manager-for-woocommerce' ),
+				'class' => 'etmfw-radio-switch-class-pro',
+				'placeholder' => __( 'Enter content to send in sms', 'event-tickets-manager-for-woocommerce' ),
+			),
+			array(
+				'title'       => __( 'Enable Sharing on Facebook', 'event-tickets-manager-for-woocommerce' ),
 				'type'        => 'radio-switch',
-				'description' => __( 'Enable this to share booking product on facebook.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description' => __( 'Enable this to share event product on facebook.', 'event-tickets-manager-for-woocommerce' ),
 				'id'          => 'wps_wet_facebook_sharing_enable',
 				'value'       => '',
 				'class'       => 'etmfw-radio-switch-class-pro',
 				'name'        => 'wps_wet_facebook_sharing_enable',
 			),
 			array(
-				'title'            => __( 'Enter Facebook App-Id here', 'event-tickets-manager-for-woocommerce-pro' ),
+				'title'            => __( 'Enter Facebook App-Id here', 'event-tickets-manager-for-woocommerce' ),
 				'type'             => 'text',
-				'description'      => __( 'Enter Facebook app id here. Create an application in Facebook developer profile and enter the credentials here.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description'      => __( 'Enter Facebook app id here. Create an application in Facebook developer profile and enter the credentials here.', 'event-tickets-manager-for-woocommerce' ),
 				'id'               => 'wps_wet_fb_app_id',
 				'value'            => '',
 				'class'            => 'etmfw-radio-switch-class-pro',
 				'name'             => 'wps_wet_fb_app_id',
-				'placeholder'      => __( 'Facebook App Id', 'event-tickets-manager-for-woocommerce-pro' ),
+				'placeholder'      => __( 'Facebook App Id', 'event-tickets-manager-for-woocommerce' ),
 				'custom_attribute' => array( 'autocomplete' => 'new-password' ),
 			),
 			array(
-				'title'            => __( 'Enter Facebook App-Secret here', 'event-tickets-manager-for-woocommerce-pro' ),
+				'title'            => __( 'Enter Facebook App-Secret here', 'event-tickets-manager-for-woocommerce' ),
 				'type'             => 'password',
-				'description'      => __( 'Enter Facebook app secret here. Create an application in Facebook developer profile and enter the credentials here.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description'      => __( 'Enter Facebook app secret here. Create an application in Facebook developer profile and enter the credentials here.', 'event-tickets-manager-for-woocommerce' ),
 				'id'               => 'wps_wet_fb_app_secret',
 				'value'            => '',
 				'class'            => 'etmfw-radio-switch-class-pro',
 				'name'             => 'wps_wet_fb_app_secret',
-				'placeholder'      => __( 'Facebook App Secret', 'event-tickets-manager-for-woocommerce-pro' ),
+				'placeholder'      => __( 'Facebook App Secret', 'event-tickets-manager-for-woocommerce' ),
 				'custom_attribute' => array( 'autocomplete' => 'new-password' ),
 			),
 			array(
-				'title'            => __( 'Enter Facebook Access Token here', 'event-tickets-manager-for-woocommerce-pro' ),
+				'title'            => __( 'Enter Facebook Access Token here', 'event-tickets-manager-for-woocommerce' ),
 				'type'             => 'text',
-				'description'      => __( '<a class="mdc-button generate-token mdc-button--raised mdc-ripple-upgraded" href="https://developers.facebook.com/tools/explorer" target="_blank">Generate Token</a>.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description'      => __( '<a class="mdc-button generate-token mdc-button--raised mdc-ripple-upgraded" href="https://developers.facebook.com/tools/explorer" target="_blank">Generate Token</a>.', 'event-tickets-manager-for-woocommerce' ),
 				'id'               => 'wps_wet_fb_app_access_token',
 				'value'            => '',
 				'class'            => 'etmfw-radio-switch-class-pro',
 				'name'             => 'wps_wet_fb_app_access_token',
-				'placeholder'      => __( 'Facebook Access Token', 'event-tickets-manager-for-woocommerce-pro' ),
+				'placeholder'      => __( 'Facebook Access Token', 'event-tickets-manager-for-woocommerce' ),
 
 			),
 			array(
-				'title'       => __( 'Enable Whatsapp Integration', 'event-tickets-manager-for-woocommerce-pro' ),
+				'title'       => __( 'Enable Whatsapp Integration', 'event-tickets-manager-for-woocommerce' ),
 				'type'        => 'radio-switch',
-				'description' => __( 'Enable this to send message on whatsapp on order notification,  you can go through this <a href="https://developers.facebook.com/docs/whatsapp/cloud-api/get-started" target="_blank">docs</a> you need to register from <a href="https://developers.facebook.com/docs/development/register" target="_blank">here</a>', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description' => __( 'Enable this to send message on whatsapp on order notification,  you can go through this <a href="https://developers.facebook.com/docs/whatsapp/cloud-api/get-started" target="_blank">docs</a> you need to register from <a href="https://developers.facebook.com/docs/development/register" target="_blank">here</a>', 'event-tickets-manager-for-woocommerce' ),
 				'id'          => 'wps_wet_whatsapp_sharing_enable',
-				'value'       => get_option( 'wps_wet_whatsapp_sharing_enable' ),
+				'value'       => '',
 				'class'       => 'etmfw-radio-switch-class-pro',
 				'name'        => 'wps_wet_whatsapp_sharing_enable',
 			),
 			array(
-				'title'       => __( 'Enter Phone number ID', 'event-tickets-manager-for-woocommerce-pro' ),
+				'title'       => __( 'Enter Phone number ID', 'event-tickets-manager-for-woocommerce' ),
 				'type'        => 'text',
-				'description' => __( 'Enter Phone number ID here.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description' => __( 'Enter Phone number ID here.', 'event-tickets-manager-for-woocommerce' ),
 				'id'          => 'wps_wet_whatsapp_phone_number_id',
-				'value'       => get_option( 'wps_wet_whatsapp_phone_number_id' ),
+				'value'       => '',
 				'class'       => 'etmfw-radio-switch-class-pro',
-				'placeholder' => __( 'Enter Phone number ID', 'event-tickets-manager-for-woocommerce-pro' ),
+				'placeholder' => __( 'Enter Phone number ID', 'event-tickets-manager-for-woocommerce' ),
 			),
 			array(
-				'title'       => __( 'Enter Access Token', 'event-tickets-manager-for-woocommerce-pro' ),
+				'title'       => __( 'Enter Access Token', 'event-tickets-manager-for-woocommerce' ),
 				'type'        => 'text',
-				'description' => __( 'Enable Access Token here.', 'event-tickets-manager-for-woocommerce-pro' ),
+				'description' => __( 'Enable Access Token here.', 'event-tickets-manager-for-woocommerce' ),
 				'id'          => 'wps_wet_access_token',
-				'value'       => get_option( 'wps_wet_access_token' ),
+				'value'       => '',
 				'class'       => 'etmfw-radio-switch-class-pro',
-				'placeholder' => __( 'Enter Access Token', 'event-tickets-manager-for-woocommerce-pro' ),
+				'placeholder' => __( 'Enter Access Token', 'event-tickets-manager-for-woocommerce' ),
+			),
+			array(
+				'title'       => __( 'Enable Google Meet Integration', 'event-tickets-manager-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this to send Google Meet link on email to customer for virtual event product,  Make Sure you enable the <a target="_blank" href="https://console.cloud.google.com/apis/library">Google Meet API</a> and <a target="_blank" href="https://console.cloud.google.com/apis/library">Google Calendar API</a> you need to create project from <a href="https://console.cloud.google.com/apis/dashboard" target="_blank">here</a>', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_wet_gmeet_sharing_enable',
+				'value'       => '',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'name'        => 'wps_wet_gmeet_sharing_enable',
+			),
+			array(
+				'title'       => __( 'Enter OAuth 2.0 Client ID', 'event-tickets-manager-for-woocommerce' ),
+				'type'        => 'text',
+				'description' => __( 'You can create from credentials section under the APIs & Services in <a href="https://console.cloud.google.com/apis/dashboard" target="_blank">Google Cloud Console</a>.', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_wet_gmeet_client_id',
+				'value'       => '',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'placeholder' => __( 'Enter Client ID here', 'event-tickets-manager-for-woocommerce' ),
+			),
+			array(
+				'title'       => __( 'Enter OAuth 2.0 Client Secret', 'event-tickets-manager-for-woocommerce' ),
+				'type'        => 'text',
+				'description' => __( 'After Setup, Make sure you have set the scopes( .../auth/calendar, .../auth/calendar.events, ./auth/meetings.space.created ) under the OAuth Consent Screen -> App Registration )  in <a href="https://console.cloud.google.com/apis/dashboard" target="_blank">Google Cloud Console</a>. <p><a class="mdc-button generate-token mdc-button--raised mdc-ripple-upgraded" href="#" target="_blank">Generate Token</a></p>.', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_wet_gmeet_client_secret',
+				'value'       => '',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'placeholder' => __( 'Enable Client Secret here', 'event-tickets-manager-for-woocommerce' ),
 			),
 		);
 		$etmfw_settings_integrations = apply_filters( 'wps_etmfw_extent_integration_settings_array', $etmfw_settings_integrations );
@@ -718,17 +754,6 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 
 			}
 		}
-			$etmfw_email_template_settings[] =
-			array(
-				'title' => __( 'Enter Content to send in Sms with ticket', 'event-tickets-manager-for-woocommerce-pro' ),
-				'type'  => 'textarea',
-				'id'    => 'wps_wet_twilio_sms_content',
-				'value' => '',
-				'description'  => esc_html__( 'Use Placeholders  ', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( '{event-time}' ) . esc_html__( ' for Event starting - ending time and ', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( ' {venue} ' ) . esc_html__( ' for event location ,', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( ' {event-name} ' ) . esc_html__( ' for Event-Name,', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( ' {customer} ' ) . esc_html__( ' for Customer-Name,', 'event-tickets-manager-for-woocommerce-pro' ) . esc_html( ' {ticket} ' ) . esc_html__( ' for Ticket-Number,', 'event-tickets-manager-for-woocommerce-pro' ),
-				'class' => 'etmfw-radio-switch-class-pro',
-				'placeholder' => __( 'Enter content to send in sms', 'event-tickets-manager-for-woocommerce-pro' ),
-			);
-			// );
 			$etmfw_email_template_settings = apply_filters( 'wps_etmfw_extent_email_template_settings_array', $etmfw_email_template_settings );
 			$etmfw_email_template_settings[] = array(
 				'type'  => 'button',
@@ -1076,7 +1101,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 						}
 					}
 
-					$wps_etmfw_product_array['etmfw_attendees/organizer_tab_name'] = isset( $_POST['etmfw_attendees/organizer_tab_name'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_attendees/organizer_tab_name'] ) ) : 'Event Organizer and Attendees';
+					$wps_etmfw_product_array['etmfw_attendees/organizer_tab_name'] = isset( $_POST['etmfw_attendees/organizer_tab_name'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_attendees/organizer_tab_name'] ) ) : __( 'Event Organizer and Attendees', 'event-tickets-manager-for-woocommerce' );
 					$wps_etmfw_product_array['etmfw_display_attendees/organizer'] = isset( $_POST['etmfw_display_attendees/organizer'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_display_attendees/organizer'] ) ) : '';
 					$wps_etmfw_product_array['etmfw_display_organizer'] = isset( $_POST['etmfw_display_organizer'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_display_organizer'] ) ) : '';
 					$wps_etmfw_product_array['wps_organizer_multiselect'] = ! empty( $_POST['wps_event_organizer']['multiselect'] ) ? map_deep( wp_unslash( $_POST['wps_event_organizer']['multiselect'] ), 'sanitize_text_field' ) : array();
@@ -1143,6 +1168,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					do_action( 'wps_etmfw_event_product_type_save_fields', $product_id );
 
 					do_action( 'wps_etmfw_share_event_on_fb', $product_id );
+					do_action( 'wps_etmfw_generate_gmeet_link', $product_id );
 				}
 			}
 		}
@@ -1194,7 +1220,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 
 			<?php if ( is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) { ?>
 				<div class="wps_show_import_set">
-					<button class="button" id="wps_show_attendee_set"><?php esc_html_e( 'Import Bulk Event Order Attendees', 'event-tickets-manager-for-woocommerce-pro' ); ?></button>
+					<button class="button" id="wps_show_attendee_set"><?php esc_html_e( 'Import Bulk Event Order Attendees', 'event-tickets-manager-for-woocommerce' ); ?></button>
 				</div>
 
 				<!-- Add this code to your page or custom template -->
@@ -1202,7 +1228,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					<label for="csv_file">Upload CSV File:</label>
 					<input type="file" name="csv_file" accept=".csv" required />
 					<?php wp_nonce_field( 'name_of_your_action', 'name_of_your_nonce_field' ); ?>
-					<p><?php esc_html_e( 'Download the ', 'event-tickets-manager-for-woocommerce-pro' ); ?><a href="<?php echo esc_url( $url ) . 'admin/resources/icons/wps_import_attendee.csv'; ?>" download><?php esc_html_e( 'Sample CSV.', 'event-tickets-manager-for-woocommerce-pro' ); ?></a> <?php esc_html_e( 'for reference.', 'event-tickets-manager-for-woocommerce-pro' ); ?></p>
+					<p><?php esc_html_e( 'Download the ', 'event-tickets-manager-for-woocommerce' ); ?><a href="<?php echo esc_url( $url ) . 'admin/resources/icons/wps_import_attendee.csv'; ?>" download><?php esc_html_e( 'Sample CSV.', 'event-tickets-manager-for-woocommerce' ); ?></a> <?php esc_html_e( 'for reference.', 'event-tickets-manager-for-woocommerce' ); ?></p>
 					<input type="submit" name="upload_csv" value="Upload CSV" />
 				</form>
 				<?php } ?>
@@ -1354,8 +1380,14 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		$wps_etmfw_enable = get_option( 'wps_etmfw_enable_plugin', false );
 		$wps_etmfw_in_processing = get_option( 'wps_wet_enable_after_payment_done_ticket', false );
 		if ( $wps_etmfw_enable ) {
-			if ( isset( $_GET['post'] ) ) {
-				$order_id = sanitize_text_field( wp_unslash( $_GET['post'] ) );
+			if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+				// HPOS Enabled.
+				$post_id = isset( $_GET['id'] ) ? sanitize_text_field( wp_unslash( $_GET['id'] ) ) : '';
+			} else {
+				$post_id = isset( $_GET['post'] ) ? sanitize_text_field( wp_unslash( $_GET['post'] ) ) : '';
+			}
+			if ( isset( $post_id ) ) {
+				$order_id = $post_id;
 				$order = new WC_Order( $order_id );
 				$order_status = $order->get_status();
 				$temp_status = 'completed';
@@ -1546,7 +1578,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		global $post;
 		if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 			$screen = wc_get_container()->get( CustomOrdersTableController::class )->custom_orders_table_usage_is_enabled() ? wc_get_page_screen_id( 'shop-order' ) : 'shop_order';
-			add_meta_box( 'wps_etmfw_resend_mail', __( 'Resend Ticket PDF Mail', 'giftware' ), array( $this, 'wps_etmfw_resend_mail' ), $screen );
+			add_meta_box( 'wps_etmfw_resend_mail', __( 'Resend Ticket PDF Mail', 'event-tickets-manager-for-woocommerce' ), array( $this, 'wps_etmfw_resend_mail' ), $screen );
 		} else {
 			if ( isset( $post->ID ) && 'shop_order' == $post->post_type ) {
 				$order_id = $post->ID;
@@ -1586,7 +1618,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 
 					if ( $giftcard ) {
 						$screen = wc_get_container()->get( CustomOrdersTableController::class )->custom_orders_table_usage_is_enabled() ? wc_get_page_screen_id( 'shop-order' ) : 'shop_order';
-						add_meta_box( 'wps_etmfw_resend_mail', __( 'Resend Ticket PDF Mail', 'giftware' ), array( $this, 'wps_etmfw_resend_mail' ), $screen );
+						add_meta_box( 'wps_etmfw_resend_mail', __( 'Resend Ticket PDF Mail', 'event-tickets-manager-for-woocommerce' ), array( $this, 'wps_etmfw_resend_mail' ), $screen );
 					}
 				}
 			}
@@ -1611,9 +1643,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				<div id="wps_etmfw_loader" style="display: none;">
 					<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ); ?>admin/src/images/loading.gif">
 				</div>
-				<p><?php esc_html_e( 'If the user is not received a Ticket PDF or PDF is not generated , then PDF Ticket Mail then resend mail.', 'giftware' ); ?> </p>
+				<p><?php esc_html_e( 'If the user is not received a Ticket PDF or PDF is not generated , then PDF Ticket Mail then resend mail.', 'event-tickets-manager-for-woocommerce' ); ?> </p>
 				<p id="wps_etmfw_resend_mail_notification"></p>
-				<input type="button" data-id="<?php echo esc_html( $order_id ); ?>" id="wps_etmfw_resend_mail_button" class="button button-primary" value="<?php esc_html_e( 'Resend Ticket PDF Mail', 'giftware' ); ?>">
+				<input type="button" data-id="<?php echo esc_html( $order_id ); ?>" id="wps_etmfw_resend_mail_button" class="button button-primary" value="<?php esc_html_e( 'Resend Ticket PDF Mail', 'event-tickets-manager-for-woocommerce' ); ?>">
 			<?php
 		}
 	}
@@ -1633,9 +1665,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			$response['result'] = true;
 			$order_id = isset( $_POST['order_id'] ) ? sanitize_text_field( wp_unslash( $_POST['order_id'] ) ) : '';
 			$this->etmfw_public->wps_etmfw_process_event_order( $order_id, $old_status = '', $new_status = '' );
-			$response['message_success'] = __( 'Email Sent Successfully!', 'event-tickets-manager-for-woocommerce-pro' );
+			$response['message_success'] = __( 'Email Sent Successfully!', 'event-tickets-manager-for-woocommerce' );
 		} else {
-			$response['message_error'] = __( 'Email Not Sent!', 'event-tickets-manager-for-woocommerce-pro' );
+			$response['message_error'] = __( 'Email Not Sent!', 'event-tickets-manager-for-woocommerce' );
 		}
 
 		echo wp_json_encode( $response );
