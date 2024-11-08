@@ -28,7 +28,6 @@ Through this [**WooCommerce Events**](https://wpswings.com/product/event-tickets
 [youtube https://youtu.be/xjKPLNhKF1A?si=Zfrkx7Ngyag-67Rn&rel=0]
 
 
-
 == SALIENT FEATURES OF THE  WORDPRESS EVENTS PLUGIN: ==
 
 **1) Barcode Scanning For WooCommerce Event Ticket**: The admins can utilize the WordPress calendar plugin to provide the customers with a safe and secure experience. The unique ticket code can now be shown in the form of a scannable barcode. This helps the admins to prevent any fraudulent activities.
@@ -177,6 +176,9 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
+= 1.3.2 – Released on 08 November 2024 =
+* Fixes: Minor Bug Fixes.
+
 = 1.3.1 – Released on 30 September 2024 =
 * New: Compatibility with latest WP [6.6.2] and WC [9.3.3].
 
@@ -309,5 +311,5 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Upgrade Notice == 
 
-= 1.3.1 – Released on 30 September 2024 =
-* New: Compatibility with latest WP [6.6.2] and WC [9.3.3].
+= 1.3.2 – Released on 08 November 2024 =
+* Fixes: Minor Bug Fixes.
