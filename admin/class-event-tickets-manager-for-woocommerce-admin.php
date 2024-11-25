@@ -797,6 +797,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			} elseif ( isset( $_POST['wps_etmfw_save_integrations_settings'] ) ) {
 				$etmfw_genaral_settings = apply_filters( 'wps_etmfw_integration_settings_array', array() );
 				$etmfw_post_check       = true;
+			} elseif ( isset( $_POST['wps_etmfw_save_other_settings'] ) ) {
+				$etmfw_genaral_settings = apply_filters( 'wps_etmfw_other_settings_array', array() );
+				$etmfw_post_check       = true;
 			}
 
 			if ( $etmfw_post_check ) {
