@@ -926,12 +926,12 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$wps_ticket_details = str_replace( '[EVENTNAME]', $product->get_name(), $wps_ticket_details );
 
 		// Create a DateTime object from the input date
-		$wps_start_date = new DateTime(wps_etmfw_get_date_format( $start ));
-		$wps_end_date = new DateTime(wps_etmfw_get_date_format( $end ));
+		$wps_start_date = strtotime( $start );
+		$wps_end_date = strtotime( $end );
 
 		// Format the date into the desired output format
-		$wps_start_output_date = $wps_start_date->format('F j, Y | h:ia');
-		$wps_end_output_date = $wps_end_date->format('F j, Y | h:ia'); 
+		$wps_start_output_date = gmdate( 'F j, Y | h:ia', $wps_start_date );
+		$wps_end_output_date   = gmdate( 'F j, Y | h:ia', $wps_end_date );
 
 		$wps_ticket_details = str_replace( '[TICKET]', $ticket_number, $wps_ticket_details );
 		$wps_ticket_details = str_replace( '[TICKET1]', $ticket_number1, $wps_ticket_details );
@@ -975,44 +975,22 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		}
 		$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
 
-		// Check if WP_Filesystem is available.
-		if ( function_exists( 'WP_Filesystem' ) ) {
-			// Initialize WP_Filesystem.
-			WP_Filesystem();
-
-			global $wp_filesystem;
-
-			// Check if WP_Filesystem initialization was successful.
-			if ( ! is_wp_error( $wp_filesystem ) ) {
-				// Check if the directory doesn't exist.
-				if ( ! is_dir( $upload_dir_path ) ) {
-					// Create the directory using WP_Filesystem.
-					wp_mkdir_p( $upload_dir_path );
-					// Set permissions using WP_Filesystem.
-					$wp_filesystem->chmod( $upload_dir_path, 0775 );
-				}
-				if ( '5' == $wps_set_the_pdf_ticket_template ) {
-					$dompdf->setPaper( 'A4' );
-				} else {
-					$dompdf->setPaper( 'A4', 'landscape' );
-				}
-				
-				$dompdf->loadHtml( $wps_ticket_content );
-				@ob_end_clean(); // phpcs:ignore.
-				$dompdf->render();
-				$dompdf->set_option( 'isRemoteEnabled', true );
-				$dompdf->setPaper( 'A4', 'landscape' );
-				$output = $dompdf->output();
-
-				$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';
-				// Use WP_Filesystem to write data to the file.
-				$generated_pdf = $wp_filesystem->put_contents( $generated_ticket_pdf, $output );
-
-				if ( false === $generated_pdf ) {
-					echo 'Failed to write data to the file.';
-				}
-			}
+		if ( ! is_dir( $upload_dir_path ) ) {
+			wp_mkdir_p( $upload_dir_path );
+			chmod( $upload_dir_path, 0755 );
 		}
+		
+		$dompdf->loadHtml( $wps_ticket_content );
+		@ob_end_clean(); // phpcs:ignore.
+		$dompdf->render();
+		$dompdf->set_option( 'isRemoteEnabled', true );
+		$dompdf->setPaper( 'A4', 'landscape' );
+		$output = $dompdf->output();
+		
+		$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';
+		$file = fopen( $generated_ticket_pdf, 'w' );
+		fwrite( $file, $output );
+   		fclose( $file );
 
 	}
 
