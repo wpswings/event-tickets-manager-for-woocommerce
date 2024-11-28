@@ -121,3 +121,39 @@ div#wps_etmfw_event_data {
 .wps_etmfwpp_add_fields_title .woocommerce-help-tip {
     vertical-align: top;
 }
+
+#venues_container {
+	margin-left: 10px;
+}
+
+.wps_etmfw_multiple_location_desc span {
+	width: 220px;
+	display: inline-block;
+}
+
+.wps_etmfw_multiple_location {
+	overflow: hidden;
+	margin: 10px 0;
+}
+
+.wps_etmfw_multiple_location input {
+	margin-right: 20px !important;
+	width: 200px !important;
+}
+
+.wps_add_more_location {
+	text-decoration: none;
+}
+
+.wps_remove_more_location {
+	text-decoration: none;
+}
+
+div#wps_etmfw_multiple_location_loader {
+    text-align: center;
+    display: none;
+}
+div#wps_etmfw_multiple_location_loader img {
+    width: 30px;
+    height: 30px;
+}

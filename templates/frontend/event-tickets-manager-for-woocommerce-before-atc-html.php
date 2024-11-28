@@ -48,9 +48,11 @@ if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
 		<div id="wps_etmwf_event_venue" class="wps_etmfw_event_general_info">
 			<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/map_pin.svg' ); ?>" height="20px" width="20px">
 			<span><?php echo esc_html( $event_venue, 'event-tickets-manager-for-woocommerce' ); ?></span>
-			<input type="hidden" name="wps_etmfw_event_venue" value=<?php echo esc_html( $event_venue ); ?>>
+			<input type="hidden" id="wps_etmfw_event_venue" name="wps_etmfw_event_venue" value="<?php echo esc_html( $event_venue ); ?>">
+			<input type="hidden" id="wps_etmfw_event_venue_lat" value="<?php echo esc_html( $etmfw_event_venue_lat ); ?>">
+			<input type="hidden" id="wps_etmfw_event_venue_lng" value="<?php echo esc_html( $etmfw_event_venue_lng ); ?>">
 		</div>
-		<?php do_action( 'wps_etmfw_before_event_general_info', $product_id ); ?>
+		<?php do_action( 'wps_etmfw_after_event_general_info_end', $product_id ); ?>
 	</div>
 	<?php
 	$display_map = isset( $wps_etmfw_product_array['etmfw_display_map'] ) ? $wps_etmfw_product_array['etmfw_display_map'] : 'no';
@@ -60,7 +62,7 @@ if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
 		?>
 		<div class="wps_etmfw_event_map_wrapper">
 			
-			<iframe width="640" height="480" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.it/maps?q=<?php echo esc_html( $event_venue ); ?>&output=embed"></iframe>
+			<iframe id="wps_etmfw_event_map" width="640" height="480" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.it/maps?q=<?php echo esc_html( $event_venue ); ?>&output=embed"></iframe>
 		</div>
 		<?php
 	}
