@@ -547,7 +547,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
 						$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';
 
-						if ( '' === $ticket_number || ! file_exists( $generated_ticket_pdf ) ) {
+						if ( empty( $ticket_number ) ) {
 							$ticket_number = wps_etmfw_ticket_generator();
 
 							if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
@@ -624,6 +624,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		do_action( 'wps_etmfw_send_sms_ticket', $wps_etmfw_mail_template_data );
 		do_action( 'wps_etmfw_send_whatsapp_msg', $wps_etmfw_mail_template_data );
 		do_action( 'wps_etmfw_send_gmeet_invitation', $wps_etmfw_mail_template_data );
+		do_action( 'wps_etmfw_send_zoom_invitation', $wps_etmfw_mail_template_data );
 	}
 
 	/**
@@ -650,6 +651,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		do_action( 'wps_etmfw_send_sms_ticket', $wps_etmfw_mail_template_data );
 		do_action( 'wps_etmfw_send_whatsapp_msg', $wps_etmfw_mail_template_data );
 		do_action( 'wps_etmfw_send_gmeet_invitation', $wps_etmfw_mail_template_data );
+		do_action( 'wps_etmfw_send_zoom_invitation', $wps_etmfw_mail_template_data );
 	}
 
 	/**
@@ -729,6 +731,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
 					foreach ( $order->get_items() as $item_id => $item ) {
 						$product = $item->get_product();
+						$item_meta_data = $item->get_meta_data();
+						$product_id = $product->get_id();
 						if ( isset( $product ) && $product->is_type( 'event_ticket_manager' ) ) {
 
 							if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
@@ -743,11 +747,19 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								foreach ( $ticket_number as $key => $value ) {
 
 									$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $value . '.pdf';
+									if ( ! file_exists( $generated_ticket_pdf ) ) {
+										$wps_ticket_content = $this->wps_etmfw_get_html_content( $item_meta_data, $order, $order_id, $value, $product_id ); // tickt pdf html.
+										$this->wps_etmfw_generate_ticket_pdf( $wps_ticket_content, $order, $order_id, $value );
+									}
 									$attachments[] = $generated_ticket_pdf;
 								}
 							} else {
 
 								$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';
+								if ( ! file_exists( $generated_ticket_pdf ) ) {
+									$wps_ticket_content = $this->wps_etmfw_get_html_content( $item_meta_data, $order, $order_id, $ticket_number, $product_id ); // tickt pdf html.
+									$this->wps_etmfw_generate_ticket_pdf( $wps_ticket_content, $order, $order_id, $ticket_number );
+								}
 								$attachments[] = $generated_ticket_pdf;
 							}
 						}

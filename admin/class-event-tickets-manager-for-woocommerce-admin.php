@@ -1172,6 +1172,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 
 					do_action( 'wps_etmfw_share_event_on_fb', $product_id );
 					do_action( 'wps_etmfw_generate_gmeet_link', $product_id );
+					do_action( 'wps_etmfw_generate_zoom_link', $product_id );
 				}
 			}
 		}
