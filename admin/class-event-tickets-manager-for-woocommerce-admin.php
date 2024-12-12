@@ -1056,7 +1056,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					$price = $product->get_price();
 
 					$wps_etmfw_product_array = array();
-					$wps_etmfw_product_array['etmfw_event_price'] = ! empty( $price ) ? $price : '';
+					$wps_etmfw_product_array['etmfw_event_price'] = ! empty( $price ) ? $price : 0;
 					
 					$plugin = 'tutor-pro/tutor-pro.php'; //Tutor Pro.
 					if (is_plugin_active($plugin)) {
