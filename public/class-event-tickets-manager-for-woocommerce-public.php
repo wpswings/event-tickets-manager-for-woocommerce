@@ -877,52 +877,78 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$wps_etmfw_stock_status = get_post_meta( $product_id, '_manage_stock', true );
 
 		if ( '6' == $wps_set_the_pdf_ticket_template || '7' == $wps_set_the_pdf_ticket_template ) {
+
 			// Additional Info Details.
-			if ( ! empty( $item_meta_data ) && ( ( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) || ( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) ) ) {
-				$additinal_info = "<h4 style='color:#000;font-weight:bold;font-size:18px;margin:0 0 10px;letter-spacing:0.5px;line-height:1;'>" . esc_html__( 'Details:', 'event-tickets-manager-for-woocommerce' ) . "</h4><p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;border-bottom:1px solid #FFC525;padding:5px 0;'>";
+			if ( ! empty( $item_meta_data ) && (
+					( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) ||
+					( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) )
+			) {
+				$additinal_info = "<h4 style='color:#000;font-weight:bold;font-size:18px;margin:0 0 10px;letter-spacing:0.5px;line-height:1;'>"
+								. esc_html__( 'Details:', 'event-tickets-manager-for-woocommerce' )
+								. "</h4><p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;border-bottom:1px solid #FFC525;padding:5px 0;'>";
+
 				foreach ( $item_meta_data as $key => $value ) {
 					if ( isset( $value->key ) && ! empty( $value->value ) ) {
 						if ( '_reduced_stock' === $value->key ) {
 							continue;
 						}
-						$additinal_info .= '<span style="margin:0 10px 0 0;"">';
-						$additinal_info .= '<strong>' . $value->key . ':</strong>  ' . $value->value . '</span>';
+						$additinal_info .= '<span style="margin:0 10px 0 0;">';
+						$additinal_info .= '<strong>' . esc_html( $value->key ) . ':</strong> ' . esc_html( $value->value ) . '</span>';
 					}
 				}
-				$additinal_info .= '</div>';
+				$additinal_info .= '</p>';
 			}
 		} elseif ( '8' == $wps_set_the_pdf_ticket_template ) {
 
-					// Additional Info Details.
-			if ( ! empty( $item_meta_data ) && ( ( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) || ( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) ) ) {
-				$additinal_info = '<table border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;"><tbody><tr><td style="padding: 20px 0 10px;"><h2 style="margin: 0;font-size: 24px;color:black;">Details :-</h2></td></tr>';
+			// Additional Info Details.
+			if ( ! empty( $item_meta_data ) && (
+					( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) ||
+					( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) )
+			) {
+				$additinal_info = '<table border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;"><tbody>'
+								. '<tr><td style="padding: 20px 0 10px;"><h2 style="margin: 0;font-size: 24px;color:black;">Details :-</h2></td></tr>';
+
 				foreach ( $item_meta_data as $key => $value ) {
 					if ( isset( $value->key ) && ! empty( $value->value ) ) {
 						if ( '_reduced_stock' === $value->key ) {
 							continue;
 						}
-						$additinal_info .= '<tr><td style="padding: 5px 0;"><p style="margin: 0;color : black">' . $value->key . ' - ' . $value->value . '</p></td></tr>';
+						$additinal_info .= '<tr><td style="padding: 5px 0;"><p style="margin: 0;color : black">'
+										. esc_html( $value->key ) . ' - ' . esc_html( $value->value ) . '</p></td></tr>';
+					}
+				}
+				$additinal_info .= '</tbody></table>';
+			}
+		} elseif ( empty( $wps_set_the_pdf_ticket_template ) || ( '6' !== $wps_set_the_pdf_ticket_template && '7' !== $wps_set_the_pdf_ticket_template && '8' !== $wps_set_the_pdf_ticket_template ) ) {
+
+			// Additional Info Details.
+			if ( ! empty( $item_meta_data ) && (
+					( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) ||
+					( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) )
+			) {
+				$wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_pdf_text_color' ) )
+										? get_option( 'wps_etmfw_pdf_text_color' )
+										: '#120505';
+
+				$additinal_info = '<table border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;"><tbody>'
+								. '<tr><td style="padding: 20px 0 10px;"><h2 style="margin: 0;font-size: 24px; color:'
+								. esc_attr( $wps_etmfw_text_color ) . ';">Details :-</h2></td></tr>';
+
+				foreach ( $item_meta_data as $key => $value ) {
+					if ( isset( $value->key ) && ! empty( $value->value ) ) {
+						if ( '_reduced_stock' === $value->key ) {
+							continue;
+						}
+						$additinal_info .= '<tr><td style="padding: 5px 0;"><p style="margin: 0;color : '
+										. esc_attr( $wps_etmfw_text_color ) . '">'
+										. esc_html( $value->key ) . ' - ' . esc_html( $value->value ) . '</p></td></tr>';
 					}
 				}
 				$additinal_info .= '</tbody></table>';
 			}
 		} else {
-				// Additional Info Details.
-			if ( ! empty( $item_meta_data ) && ( ( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) || ( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) ) ) {
-
-				$wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_pdf_text_color' ) ) ? get_option( 'wps_etmfw_pdf_text_color' ) : '#120505';
-
-				$additinal_info = '<table border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;"><tbody><tr><td style="padding: 20px 0 10px;"><h2 style="margin: 0;font-size: 24px; color:' . $wps_etmfw_text_color . ';">Details :-</h2></td></tr>';
-				foreach ( $item_meta_data as $key => $value ) {
-					if ( isset( $value->key ) && ! empty( $value->value ) ) {
-						if ( '_reduced_stock' === $value->key ) {
-							continue;
-						}
-						$additinal_info .= '<tr><td style="padding: 5px 0;"><p style="margin: 0;color : ' . $wps_etmfw_text_color . '">' . $value->key . ' - ' . $value->value . '</p></td></tr>';
-					}
-				}
-				$additinal_info .= '</tbody></table>';
-			}
+			// Fallback in case no conditions are met, to avoid undefined variable.
+			$additinal_info = '';
 		}
 
 		$wps_etmfw_logo_size = ! empty( get_option( 'wps_etmfw_logo_size', true ) ) ? get_option( 'wps_etmfw_logo_size', true ) : '180';
