@@ -197,6 +197,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						$start_date = isset( $wps_etmfw_product_array['event_start_date_time'] ) ? $wps_etmfw_product_array['event_start_date_time'] : '';
 						$end_date = isset( $wps_etmfw_product_array['event_end_date_time'] ) ? $wps_etmfw_product_array['event_end_date_time'] : '';
 						$event_venue = isset( $wps_etmfw_product_array['etmfw_event_venue'] ) ? $wps_etmfw_product_array['etmfw_event_venue'] : '';
+						$etmfw_event_venue_lat = isset( $wps_etmfw_product_array['etmfw_event_venue_lat'] ) ? $wps_etmfw_product_array['etmfw_event_venue_lat'] : '';
+						$etmfw_event_venue_lng = isset( $wps_etmfw_product_array['etmfw_event_venue_lng'] ) ? $wps_etmfw_product_array['etmfw_event_venue_lng'] : '';
 						$event_field_array = isset( $wps_etmfw_product_array['wps_etmfw_field_data'] ) ? $wps_etmfw_product_array['wps_etmfw_field_data'] : '';
 						require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'templates/frontend/event-tickets-manager-for-woocommerce-before-atc-html.php';
 					}
@@ -358,7 +360,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 		$field_array = array();
 		$label = '';
-		$discard_keys = array( 'wps_etmfw_event_start', 'wps_etmfw_event_finish', 'wps_etmfw_event_venue' );
+		$discard_keys = array( 'wps_etmfw_event_start', 'wps_etmfw_event_finish' );
 		foreach ( $field_post as $key => $value ) {
 			if ( strpos( $key, 'wps_etmfw_' ) !== false && ! in_array( $key, $discard_keys ) ) {
 				if ( '' == $wps_etmfw_dyn_name && '' == $wps_etmfw_dyn_mail && '' == $wps_etmfw_dyn_contact && '' == $wps_etmfw_dyn_date && '' == $wps_etmfw_dyn_address ) {
@@ -545,7 +547,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
 						$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';
 
-						if ( '' === $ticket_number || ! file_exists( $generated_ticket_pdf ) ) {
+						if ( empty( $ticket_number ) ) {
 							$ticket_number = wps_etmfw_ticket_generator();
 
 							if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
@@ -622,6 +624,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		do_action( 'wps_etmfw_send_sms_ticket', $wps_etmfw_mail_template_data );
 		do_action( 'wps_etmfw_send_whatsapp_msg', $wps_etmfw_mail_template_data );
 		do_action( 'wps_etmfw_send_gmeet_invitation', $wps_etmfw_mail_template_data );
+		do_action( 'wps_etmfw_send_zoom_invitation', $wps_etmfw_mail_template_data );
 	}
 
 	/**
@@ -648,6 +651,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		do_action( 'wps_etmfw_send_sms_ticket', $wps_etmfw_mail_template_data );
 		do_action( 'wps_etmfw_send_whatsapp_msg', $wps_etmfw_mail_template_data );
 		do_action( 'wps_etmfw_send_gmeet_invitation', $wps_etmfw_mail_template_data );
+		do_action( 'wps_etmfw_send_zoom_invitation', $wps_etmfw_mail_template_data );
 	}
 
 	/**
@@ -668,7 +672,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
 			$start = isset( $wps_etmfw_product_array['event_start_date_time'] ) ? $wps_etmfw_product_array['event_start_date_time'] : '';
 			$end = isset( $wps_etmfw_product_array['event_end_date_time'] ) ? $wps_etmfw_product_array['event_end_date_time'] : '';
-			$venue = isset( $wps_etmfw_product_array['etmfw_event_venue'] ) ? $wps_etmfw_product_array['etmfw_event_venue'] : '';
+			$venue = isset( $wps_etmfw_mail_template_data['Event Venue'] ) ? $wps_etmfw_mail_template_data['Event Venue'] : $wps_etmfw_product_array['etmfw_event_venue'];
 			$product = wc_get_product( $product_id );
 			$image = wp_get_attachment_image_url( $product->get_image_id() );
 			if ( '' == $image ) {
@@ -727,6 +731,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
 					foreach ( $order->get_items() as $item_id => $item ) {
 						$product = $item->get_product();
+						$item_meta_data = $item->get_meta_data();
+						$product_id = $product->get_id();
 						if ( isset( $product ) && $product->is_type( 'event_ticket_manager' ) ) {
 
 							if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
@@ -741,11 +747,19 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								foreach ( $ticket_number as $key => $value ) {
 
 									$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $value . '.pdf';
+									if ( ! file_exists( $generated_ticket_pdf ) ) {
+										$wps_ticket_content = $this->wps_etmfw_get_html_content( $item_meta_data, $order, $order_id, $value, $product_id ); // tickt pdf html.
+										$this->wps_etmfw_generate_ticket_pdf( $wps_ticket_content, $order, $order_id, $value );
+									}
 									$attachments[] = $generated_ticket_pdf;
 								}
 							} else {
 
 								$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';
+								if ( ! file_exists( $generated_ticket_pdf ) ) {
+									$wps_ticket_content = $this->wps_etmfw_get_html_content( $item_meta_data, $order, $order_id, $ticket_number, $product_id ); // tickt pdf html.
+									$this->wps_etmfw_generate_ticket_pdf( $wps_ticket_content, $order, $order_id, $ticket_number );
+								}
 								$attachments[] = $generated_ticket_pdf;
 							}
 						}
@@ -757,12 +771,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				}
 			}
 		}
-
-		// Remove all old elements, keeping only the most recent one.
-		// if (count($attachments) > 1) {
-		// 	// Keep only the last element in the array.
-		// 	$attachments = array_slice($attachments, -1);
-		// } 
 
 		return $attachments;
 
@@ -788,9 +796,19 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_etmfw_get_html_content( $item_meta_data, $order, $order_id, $ticket_number, $product_id ) {
+		$venue = '';
+		if ( ! empty( $item_meta_data ) ) {
+			foreach ( $item_meta_data as $key => $value ) {
+				if ( isset( $value->key ) && ! empty( $value->value ) ) {
+					if ( 'Event Venue' == $value->key ) {
+						$venue = $value->value;
+					}
+				}
+			}
+		}
 		ob_start();
 		$wps_is_qr_is_enable = false;
-		$wps_set_the_pdf_ticket_template = get_option( 'wps_etmfw_ticket_template');
+		$wps_set_the_pdf_ticket_template = get_option( 'wps_etmfw_ticket_template' );
 
 		if ( '1' == $wps_set_the_pdf_ticket_template ) {
 			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content.php'; // Zenith.
@@ -828,12 +846,12 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-3.php'; // Mellifluous.
 		} elseif ( '5' == $wps_set_the_pdf_ticket_template ) {
 			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-4.php'; // unknown.
-		} elseif('6' == $wps_set_the_pdf_ticket_template){
-			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-5.php'; //Nexus.
-		} elseif('7' == $wps_set_the_pdf_ticket_template){
-			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-6.php'; //Eclipse.
-		} elseif('8' == $wps_set_the_pdf_ticket_template){
-			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-7.php'; //Fusion.
+		} elseif ( '6' == $wps_set_the_pdf_ticket_template ) {
+			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-5.php'; // Nexus.
+		} elseif ( '7' == $wps_set_the_pdf_ticket_template ) {
+			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-6.php'; // Eclipse.
+		} elseif ( '8' == $wps_set_the_pdf_ticket_template ) {
+			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-7.php'; // Fusion.
 		}
 
 		if ( is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) {
@@ -853,63 +871,85 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
 		$start = isset( $wps_etmfw_product_array['event_start_date_time'] ) ? $wps_etmfw_product_array['event_start_date_time'] : '';
 		$end = isset( $wps_etmfw_product_array['event_end_date_time'] ) ? $wps_etmfw_product_array['event_end_date_time'] : '';
-		$venue = isset( $wps_etmfw_product_array['etmfw_event_venue'] ) ? $wps_etmfw_product_array['etmfw_event_venue'] : '';
+		if ( empty( $venue ) ) {
+			$venue = isset( $wps_etmfw_product_array['etmfw_event_venue'] ) ? $wps_etmfw_product_array['etmfw_event_venue'] : '';
+		}
 		$wps_etmfw_stock_status = get_post_meta( $product_id, '_manage_stock', true );
 
+		if ( '6' == $wps_set_the_pdf_ticket_template || '7' == $wps_set_the_pdf_ticket_template ) {
 
+			// Additional Info Details.
+			if ( ! empty( $item_meta_data ) && (
+					( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) ||
+					( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) )
+			) {
+				$additinal_info = "<h4 style='color:#000;font-weight:bold;font-size:18px;margin:0 0 10px;letter-spacing:0.5px;line-height:1;'>"
+								. esc_html__( 'Details:', 'event-tickets-manager-for-woocommerce' )
+								. "</h4><p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;border-bottom:1px solid #FFC525;padding:5px 0;'>";
 
-		if('6' == $wps_set_the_pdf_ticket_template || '7' == $wps_set_the_pdf_ticket_template){
-		// Additional Info Details.
-		if ( ! empty( $item_meta_data ) && ( ( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) || ( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) ) ) {
-			$additinal_info = "<h4 style='color:#000;font-weight:bold;font-size:18px;margin:0 0 10px;letter-spacing:0.5px;line-height:1;'>" . esc_html__( 'Details:', 'event-tickets-manager-for-woocommerce' ) . "</h4><p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;border-bottom:1px solid #FFC525;padding:5px 0;'>";
-			foreach ( $item_meta_data as $key => $value ) {
-				if ( isset( $value->key ) && ! empty( $value->value ) ) {
-					if ( '_reduced_stock' === $value->key ) {
-						continue;
+				foreach ( $item_meta_data as $key => $value ) {
+					if ( isset( $value->key ) && ! empty( $value->value ) ) {
+						if ( '_reduced_stock' === $value->key ) {
+							continue;
+						}
+						$additinal_info .= '<span style="margin:0 10px 0 0;">';
+						$additinal_info .= '<strong>' . esc_html( $value->key ) . ':</strong> ' . esc_html( $value->value ) . '</span>';
 					}
-					$additinal_info .= '<span style="margin:0 10px 0 0;"">';
-					$additinal_info .= '<strong>'.$value->key.':</strong>'.''.$value->value.'</span>';
 				}
+				$additinal_info .= '</p>';
 			}
-			$additinal_info .= '</div>';
-		}
+		} elseif ( '8' == $wps_set_the_pdf_ticket_template ) {
 
-	} elseif('8' == $wps_set_the_pdf_ticket_template){
+			// Additional Info Details.
+			if ( ! empty( $item_meta_data ) && (
+					( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) ||
+					( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) )
+			) {
+				$additinal_info = '<table border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;"><tbody>'
+								. '<tr><td style="padding: 20px 0 10px;"><h2 style="margin: 0;font-size: 24px;color:black;">Details :-</h2></td></tr>';
 
-					// Additional Info Details.
-					if ( ! empty( $item_meta_data ) && ( ( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) || ( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) ) ) {
-						$additinal_info = '<table border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;"><tbody><tr><td style="padding: 20px 0 10px;"><h2 style="margin: 0;font-size: 24px;color:black;">Details :-</h2></td></tr>';
-						foreach ( $item_meta_data as $key => $value ) {
-							if ( isset( $value->key ) && ! empty( $value->value ) ) {
-								if ( '_reduced_stock' === $value->key ) {
-									continue;
-								}
-								$additinal_info .= '<tr><td style="padding: 5px 0;"><p style="margin: 0;color : black">' . $value->key . ' - ' . $value->value . '</p></td></tr>';
-							}
+				foreach ( $item_meta_data as $key => $value ) {
+					if ( isset( $value->key ) && ! empty( $value->value ) ) {
+						if ( '_reduced_stock' === $value->key ) {
+							continue;
 						}
-						$additinal_info .= '</tbody></table>';
+						$additinal_info .= '<tr><td style="padding: 5px 0;"><p style="margin: 0;color : black">'
+										. esc_html( $value->key ) . ' - ' . esc_html( $value->value ) . '</p></td></tr>';
 					}
-
-	} else{
-				// Additional Info Details.
-				if ( ! empty( $item_meta_data ) && ( ( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) || ( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) ) ) {
-
-					$wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_pdf_text_color' ) ) ? get_option( 'wps_etmfw_pdf_text_color' ) : '#120505';
-
-					$additinal_info = '<table border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;"><tbody><tr><td style="padding: 20px 0 10px;"><h2 style="margin: 0;font-size: 24px; color:' . $wps_etmfw_text_color . ';">Details :-</h2></td></tr>';
-					foreach ( $item_meta_data as $key => $value ) {
-						if ( isset( $value->key ) && ! empty( $value->value ) ) {
-							if ( '_reduced_stock' === $value->key ) {
-								continue;
-							}
-							$additinal_info .= '<tr><td style="padding: 5px 0;"><p style="margin: 0;color : ' . $wps_etmfw_text_color . '">' . $value->key . ' - ' . $value->value . '</p></td></tr>';
-						}
-					}
-					$additinal_info .= '</tbody></table>';
 				}
-	}
+				$additinal_info .= '</tbody></table>';
+			}
+		} elseif ( empty( $wps_set_the_pdf_ticket_template ) || ( '6' !== $wps_set_the_pdf_ticket_template && '7' !== $wps_set_the_pdf_ticket_template && '8' !== $wps_set_the_pdf_ticket_template ) ) {
 
+			// Additional Info Details.
+			if ( ! empty( $item_meta_data ) && (
+					( 'yes' === $wps_etmfw_stock_status && 1 < count( $item_meta_data ) ) ||
+					( 'no' === $wps_etmfw_stock_status && 0 < count( $item_meta_data ) ) )
+			) {
+				$wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_pdf_text_color' ) )
+										? get_option( 'wps_etmfw_pdf_text_color' )
+										: '#120505';
 
+				$additinal_info = '<table border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;"><tbody>'
+								. '<tr><td style="padding: 20px 0 10px;"><h2 style="margin: 0;font-size: 24px; color:'
+								. esc_attr( $wps_etmfw_text_color ) . ';">Details :-</h2></td></tr>';
+
+				foreach ( $item_meta_data as $key => $value ) {
+					if ( isset( $value->key ) && ! empty( $value->value ) ) {
+						if ( '_reduced_stock' === $value->key ) {
+							continue;
+						}
+						$additinal_info .= '<tr><td style="padding: 5px 0;"><p style="margin: 0;color : '
+										. esc_attr( $wps_etmfw_text_color ) . '">'
+										. esc_html( $value->key ) . ' - ' . esc_html( $value->value ) . '</p></td></tr>';
+					}
+				}
+				$additinal_info .= '</tbody></table>';
+			}
+		} else {
+			// Fallback in case no conditions are met, to avoid undefined variable.
+			$additinal_info = '';
+		}
 
 		$wps_etmfw_logo_size = ! empty( get_option( 'wps_etmfw_logo_size', true ) ) ? get_option( 'wps_etmfw_logo_size', true ) : '180';
 
@@ -925,13 +965,13 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$site_logo = '<img id="wps_wem_logo_id" class="wps_wem_logo" src="' . $product_image_url . '" style="width:' . $wps_etmfw_logo_size . 'px;margin-left: 25px">';
 		$wps_ticket_details = str_replace( '[EVENTNAME]', $product->get_name(), $wps_ticket_details );
 
-		// Create a DateTime object from the input date
-		$wps_start_date = new DateTime(wps_etmfw_get_date_format( $start ));
-		$wps_end_date = new DateTime(wps_etmfw_get_date_format( $end ));
+		// Create a DateTime object from the input date.
+		$wps_start_date = strtotime( $start );
+		$wps_end_date = strtotime( $end );
 
-		// Format the date into the desired output format
-		$wps_start_output_date = $wps_start_date->format('F j, Y | h:ia');
-		$wps_end_output_date = $wps_end_date->format('F j, Y | h:ia'); 
+		// Format the date into the desired output format.
+		$wps_start_output_date = gmdate( 'F j, Y | h:ia', $wps_start_date );
+		$wps_end_output_date   = gmdate( 'F j, Y | h:ia', $wps_end_date );
 
 		$wps_ticket_details = str_replace( '[TICKET]', $ticket_number, $wps_ticket_details );
 		$wps_ticket_details = str_replace( '[TICKET1]', $ticket_number1, $wps_ticket_details );
@@ -944,10 +984,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$wps_ticket_details = str_replace( '[LOGO]', $site_logo, $wps_ticket_details );
 		$wps_ticket_details = str_replace( '[TICKET_URL]', $ticket_url, $wps_ticket_details );
 
-		//New Start Code.
+		// New Start Code.
 		$wps_ticket_details = str_replace( '[NEW_START_DATE]', $wps_start_output_date, $wps_ticket_details );
 		$wps_ticket_details = str_replace( '[NEW_END_DATE]', $wps_end_output_date, $wps_ticket_details );
-
 
 		return apply_filters( 'wps_etmfw_ticket_html_content', $wps_ticket_details );
 	}
@@ -975,44 +1014,22 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		}
 		$upload_dir_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_DIR . '/events_pdf';
 
-		// Check if WP_Filesystem is available.
-		if ( function_exists( 'WP_Filesystem' ) ) {
-			// Initialize WP_Filesystem.
-			WP_Filesystem();
-
-			global $wp_filesystem;
-
-			// Check if WP_Filesystem initialization was successful.
-			if ( ! is_wp_error( $wp_filesystem ) ) {
-				// Check if the directory doesn't exist.
-				if ( ! is_dir( $upload_dir_path ) ) {
-					// Create the directory using WP_Filesystem.
-					wp_mkdir_p( $upload_dir_path );
-					// Set permissions using WP_Filesystem.
-					$wp_filesystem->chmod( $upload_dir_path, 0775 );
-				}
-				if ( '5' == $wps_set_the_pdf_ticket_template ) {
-					$dompdf->setPaper( 'A4' );
-				} else {
-					$dompdf->setPaper( 'A4', 'landscape' );
-				}
-				
-				$dompdf->loadHtml( $wps_ticket_content );
-				@ob_end_clean(); // phpcs:ignore.
-				$dompdf->render();
-				$dompdf->set_option( 'isRemoteEnabled', true );
-				$dompdf->setPaper( 'A4', 'landscape' );
-				$output = $dompdf->output();
-
-				$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';
-				// Use WP_Filesystem to write data to the file.
-				$generated_pdf = $wp_filesystem->put_contents( $generated_ticket_pdf, $output );
-
-				if ( false === $generated_pdf ) {
-					echo 'Failed to write data to the file.';
-				}
-			}
+		if ( ! is_dir( $upload_dir_path ) ) {
+			wp_mkdir_p( $upload_dir_path );
+			chmod( $upload_dir_path, 0755 );
 		}
+
+		$dompdf->loadHtml( $wps_ticket_content );
+		@ob_end_clean(); // phpcs:ignore.
+		$dompdf->render();
+		$dompdf->set_option( 'isRemoteEnabled', true );
+		$dompdf->setPaper( 'A4', 'landscape' );
+		$output = $dompdf->output();
+
+		$generated_ticket_pdf = $upload_dir_path . '/events' . $order_id . $ticket_number . '.pdf';
+		$file = fopen( $generated_ticket_pdf, 'w' );
+		fwrite( $file, $output );
+		fclose( $file );
 
 	}
 
@@ -1619,18 +1636,20 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * Unset COD payment gateway for cod.
 	 *
 	 * @since 1.0.0
-	 * @name wps_etmfw_unset_cod_payment_gateway_for_event().
+	 * @name restrict_cod_for_specific_product_types().
 	 * @param array $available_gateways Available payment gateways.
 	 * @author WPSwings<ticket@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
-	function restrict_cod_for_specific_product_types( $available_gateways ) {
-		if ( is_admin() ) return $available_gateways;
-	
-		// Define the product types for which COD should be restricted
+	public function restrict_cod_for_specific_product_types( $available_gateways ) {
+		if ( is_admin() ) {
+			return $available_gateways;
+		}
+
+		// Define the product types for which COD should be restricted.
 		$restricted_product_types = array( 'event_ticket_manager' );
-	
-		// Check the cart for products of the restricted types
+
+		// Check the cart for products of the restricted types.
 		$whole_cart = WC()->cart;
 		if ( isset( $whole_cart ) && ! empty( $whole_cart ) ) {
 			foreach ( $whole_cart->get_cart() as $cart_item ) {
@@ -2408,8 +2427,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$wps_product_image_src = ( is_array( $image ) && isset( $image[0] ) ) ? $image[0] : null;
 				$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
 
-				$wps_event_start_date_time = new DateTime( $wps_etmfw_product_array['event_start_date_time'] );
-				$wps_event_end_date_time = new DateTime( $wps_etmfw_product_array['event_end_date_time'] );
+				$wps_event_start_date_time = strtotime( $wps_etmfw_product_array['event_start_date_time'] );
+				$wps_event_end_date_time = strtotime( $wps_etmfw_product_array['event_end_date_time'] );
 
 				$events[] = array(
 					'product' => $product,
@@ -2439,8 +2458,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$wps_event_end_date_time = $event['end_date'];
 				$wps_etmfw_product_array = $event['event_data'];
 
-				$wps_event_formated_start_date_time = $wps_event_start_date_time->format( 'F j, Y' );
-				$wps_event_formated_end_date_time = $wps_event_end_date_time->format( 'F j, Y' );
+				// Format the date into the desired output format.
+				$wps_event_formated_start_date_time = gmdate( 'F j, Y | h:ia', $wps_event_start_date_time );
+				$wps_event_formated_end_date_time   = gmdate( 'F j, Y | h:ia', $wps_event_end_date_time );
 
 				$html .= '<div class ="wps-etmw_single-event">';
 				$html .= '<img src="' . $wps_product_image_src . '" />';
@@ -2545,8 +2565,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	/**
 	 * This function is used to disable shipping.
 	 *
-	 * @param object $show_shipping shipping Object.
-	 * @name disable_shipping_calc_on_cart
+	 * @param object $enable shipping Object.
+	 * @name wps_etmfw_wc_shipping_enabled
 	 * @since 1.0.2
 	 */
 	public function wps_etmfw_wc_shipping_enabled( $enable ) {

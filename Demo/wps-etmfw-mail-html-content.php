@@ -2,6 +2,7 @@
 /**
  * Exit if accessed directly
  * Zenith Template
+ *
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/emails/templates
  */
@@ -115,7 +116,7 @@ $wps_set_the_pdf_ticket_template = get_option( 'wps_etmfw_ticket_template', '1' 
 												<?php } else { ?>
 
 												<td style="text-align: center;">
-												<h3 id = "wps_not_change_color" class="wps_etmfw_pdf_text_colour"  style="color:<?php echo esc_attr('white' ); ?>;">Your Ticket</h3>
+												<h3 id = "wps_not_change_color" class="wps_etmfw_pdf_text_colour"  style="color:<?php echo esc_attr( 'white' ); ?>;">Your Ticket</h3>
 												</td>
 												<?php } ?>
 											</tr>
@@ -173,8 +174,16 @@ $wps_set_the_pdf_ticket_template = get_option( 'wps_etmfw_ticket_template', '1' 
 	<?php if ( '1' == $wps_set_the_pdf_ticket_template && is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) { ?>
 			<h4 class="wps_etmfw_pdf_text_colour" style="padding: 10px;color: <?php echo esc_attr( get_option( 'wps_etmfw_pdf_text_color' ) ); ?>;">Note</h4>
 			<div class="wps_etmfw_pdf_text_colour" style="padding: 20px;width:auto;text-align:left;vertical-align: middle;color: <?php echo esc_attr( get_option( 'wps_etmfw_pdf_text_color' ) ); ?>;">
-			<?php if ( '' != $body ) { 
-				echo $body;
+			<?php
+			if ( '' != $body ) {
+				echo wp_kses(
+					$body,
+					array(
+						'span' => array(
+							'style' => array(),
+						),
+					)
+				);
 			} else {
 				?>
 				Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
@@ -187,8 +196,16 @@ $wps_set_the_pdf_ticket_template = get_option( 'wps_etmfw_ticket_template', '1' 
 
 		<h4 class="wps_etmfw_pdf_text_colour" style="padding: 10px;color: <?php echo esc_attr( get_option( 'wps_etmfw_ticket_body_text_color', '' ) ); ?>;">Note</h4>
 			<div class="wps_etmfw_pdf_text_colour" style="padding: 20px;width:auto;text-align:left;vertical-align: middle;color: <?php echo esc_attr( get_option( 'wps_etmfw_ticket_body_text_color', '' ) ); ?>;">
-			<?php if ( '' != $body ) { 
-				echo $body;
+			<?php
+			if ( '' != $body ) {
+				echo wp_kses(
+					$body,
+					array(
+						'span' => array(
+							'style' => array(),
+						),
+					)
+				);
 			} else {
 				?>
 				Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley

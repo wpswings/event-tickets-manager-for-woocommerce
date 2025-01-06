@@ -442,15 +442,19 @@ class Event_Tickets_Manager_For_Woocommerce {
 			'title'       => esc_html__( 'Ticket Setting', 'event-tickets-manager-for-woocommerce' ),
 			'name'        => 'event-tickets-manager-for-woocommerce-email-template',
 		);
-		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-integrations'] = array(
-			'title'       => esc_html__( 'Integrations', 'event-tickets-manager-for-woocommerce' ),
-			'name'        => 'event-tickets-manager-for-woocommerce-integrations',
-		);
 		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-ticket-layout-setting'] = array(
 			'title'       => esc_html__( 'PDF Ticket Layout Setting', 'event-tickets-manager-for-woocommerce' ),
 			'name'        => 'event-tickets-manager-for-woocommerce-ticket-layout-setting',
 		);
+
 		$etmfw_default_tabs = apply_filters( 'wps_etmfw_etmfw_plugin_standard_admin_settings_tabs', $etmfw_default_tabs );
+
+		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-integrations'] = array(
+			'title'       => esc_html__( 'Integrations', 'event-tickets-manager-for-woocommerce' ),
+			'name'        => 'event-tickets-manager-for-woocommerce-integrations',
+		);
+
+		$etmfw_default_tabs = apply_filters( 'wps_etmfw_etmfw_plugin_standard_admin_settings_after_integrations', $etmfw_default_tabs );
 
 		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-system-status'] = array(
 			'title'       => esc_html__( 'System Status', 'event-tickets-manager-for-woocommerce' ),

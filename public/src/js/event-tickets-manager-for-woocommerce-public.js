@@ -97,7 +97,7 @@
 	 });
 
 
-	 jQuery(window).load( function(){
+	 jQuery(window).on('load', function() {
 	 	var event_view = etmfw_public_param.event_view;
 	 	if( event_view == 'calendar') {
 	 		var data = {
@@ -134,18 +134,24 @@
 	
 	})( jQuery );
 	function initMap() {
-		let event_lat = parseInt( document.getElementById('etmfw_event_lat').value );
-		let event_lng = parseInt( document.getElementById('etmfw_event_lng').value );
-		const myLatLng = { lat: event_lat, lng: event_lng };
-			const map = new google.maps.Map(document.getElementById("wps_etmfw_event_map"), {
-			zoom: 4,
-			center: myLatLng,
-			});
-			new google.maps.Marker({
-			position: myLatLng,
-			map,
-			title: "Event!",
-		});
+		const latInput = document.getElementById('wps_etmfw_event_venue_lat');
+        const lngInput = document.getElementById('wps_etmfw_event_venue_lng');
+		if (latInput && lngInput) {
+            let event_lat = parseFloat(latInput.value);
+            let event_lng = parseFloat(lngInput.value);
+            const myLatLng = { lat: event_lat, lng: event_lng };
+            const map = new google.maps.Map(document.getElementById("wps_etmfw_event_map"), {
+                zoom: 4,
+                center: myLatLng,
+            });
+            new google.maps.Marker({
+                position: myLatLng,
+                map,
+                title: "Event!",
+            });
+        } else {
+            console.error('Latitude or longitude inputs not found!');
+        }
 	}
 
 jQuery(document).on('click', '#wps_etmfwp_event_transfer_button', function (e) {
@@ -304,7 +310,7 @@ jQuery(document).ready(function(){
 // Js For Calendar Shortcode  start here.//
 jQuery(document).ready(function () {
 	
-	jQuery(window).load(function () {
+	jQuery(window).on('load', function() {
 		var event_view = etmfw_public_param.wps_is_event_in_calender_shortcode;
 		if (event_view && 'yes' == etmfw_public_param.wps_is_pro_active) {
 			var data = {
