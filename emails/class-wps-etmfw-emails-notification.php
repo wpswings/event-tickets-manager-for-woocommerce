@@ -90,7 +90,7 @@ if ( ! class_exists( 'Wps_Etmfw_Emails_Notification' ) ) {
 		 * @param string $wps_etmfw_email_subject Email Subject.
 		 * @param object $order Order Object.
 		 */
-		public function trigger( $user_email, $email_content, $wps_etmfw_email_subject, $order ) {
+		public function trigger( $user_email, $email_content, $wps_etmfw_email_subject, $order, $attachments = [] ) {
 			$this->setup_locale();
 
 			if ( is_a( $order, 'WC_Order' ) ) {
@@ -102,7 +102,7 @@ if ( ! class_exists( 'Wps_Etmfw_Emails_Notification' ) ) {
 			}
 
 			if ( $this->is_enabled() && $this->get_recipient() ) {
-				$this->send( $this->get_recipient(), $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
+				$this->send( $this->get_recipient(), $this->get_subject(), $this->get_content(), $this->get_headers(), $attachments );
 			}
 			$this->restore_locale();
 		}
