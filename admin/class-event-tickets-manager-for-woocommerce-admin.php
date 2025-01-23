@@ -422,17 +422,6 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
 					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
 				),
-			)
-			,
-			array(
-				'title' => __( 'Reminder Send Before Event Day', 'event-tickets-manager-for-woocommerce' ),
-				'type'  => 'number',
-				'min' => '0',
-				'max' => '7',
-				'id'    => 'wps_etmfwp_send_remainder_before_event',
-				'value' => '',
-				'class' => 'etmfw-radio-switch-class-pro',
-				'description'  => __( 'Enter no. of days before event, email should be send as remainder. ', 'event-tickets-manager-for-woocommerce' ),
 			),
 			array(
 				'title' => __( 'Event Date Format On Product Page', 'event-tickets-manager-for-woocommerce' ),
