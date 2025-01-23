@@ -187,6 +187,17 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 	}
 
 	/**
+	 * Extra box for Export Report.
+	 *
+	 * @param  array $which location.
+	 */
+	public function extra_tablenav( $which ) {
+		if ( 'top' === $which ) {
+        	do_action( 'wps_etmfw_event_export_extra_tablenav', $which );
+		}
+    }
+
+	/**
 	 * This function return the attendees generated.
 	 *
 	 * @name get_attendees_data.
@@ -379,10 +390,10 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 		}
 		$event_attendees_details = apply_filters( 'wps_etmfw_unfiltered_events_data', $event_attendees_details );
 		$filtered_data = array();
-		$secure_nonce      = wp_create_nonce( 'wps-upsell-auth-nonce' );
-        $id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
+		$secure_nonce      = wp_create_nonce( 'wps-event-auth-nonce' );
+        $id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-event-auth-nonce' );
         if ( ! $id_nonce_verified ) {
-            wp_die( esc_html__( 'Nonce Not verified', 'upsell-order-bump-offer-for-woocommerce' ) );
+            wp_die( esc_html__( 'Nonce Not verified', 'event-tickets-manager-for-woocommerce' ) );
         }
 		if ( isset( $_REQUEST['s'] ) && '' !== $_REQUEST['s'] ) {
 			$data           = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );

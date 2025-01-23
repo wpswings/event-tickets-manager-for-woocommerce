@@ -1227,10 +1227,10 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				<form method="post">
 				<?php
 				do_action( 'wps_etmfw_support_csv' );
-				$secure_nonce      = wp_create_nonce( 'wps-upsell-auth-nonce' );
-				$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
+				$secure_nonce      = wp_create_nonce( 'wps-event-auth-nonce' );
+				$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-event-auth-nonce' );
 				if ( ! $id_nonce_verified ) {
-					wp_die( esc_html__( 'Nonce Not verified', 'upsell-order-bump-offer-for-woocommerce' ) );
+					wp_die( esc_html__( 'Nonce Not verified', 'event-tickets-manager-for-woocommerce' ) );
 				}
 				$current_page = isset( $_REQUEST['page'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) : '';
 				?>
@@ -1363,10 +1363,10 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		if ( ! current_user_can( 'edit_shop_orders' ) ) {
 			return;
 		}
-		$secure_nonce      = wp_create_nonce( 'wps-upsell-auth-nonce' );
-		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
+		$secure_nonce      = wp_create_nonce( 'wps-event-auth-nonce' );
+		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-event-auth-nonce' );
 		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', 'upsell-order-bump-offer-for-woocommerce' ) );
+			wp_die( esc_html__( 'Nonce Not verified', 'event-tickets-manager-for-woocommerce' ) );
 		}
 		$wps_etmfw_enable = get_option( 'wps_etmfw_enable_plugin', false );
 		$wps_etmfw_in_processing = get_option( 'wps_wet_enable_after_payment_done_ticket', false );

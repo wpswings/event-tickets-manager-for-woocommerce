@@ -691,10 +691,10 @@ if ( $activated ) {
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
 		}
-		$secure_nonce      = wp_create_nonce( 'wps-upsell-auth-nonce' );
-		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
+		$secure_nonce      = wp_create_nonce( 'wps-event-auth-nonce' );
+		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-event-auth-nonce' );
 		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', 'upsell-order-bump-offer-for-woocommerce' ) );
+			wp_die( esc_html__( 'Nonce Not verified', 'event-tickets-manager-for-woocommerce' ) );
 		}
 		if ( ( isset( $_GET['page'] ) && 'event_tickets_manager_for_woocommerce_menu' === $_GET['page'] ) ) {
 			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
