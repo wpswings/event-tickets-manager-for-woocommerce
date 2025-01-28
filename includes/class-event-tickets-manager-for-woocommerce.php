@@ -664,6 +664,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 									type="<?php echo esc_attr( $etmfw_component['type'] ); ?>"
 									value="<?php echo ( isset( $etmfw_component['value'] ) ? esc_attr( $etmfw_component['value'] ) : '' ); ?>"
 									placeholder="<?php echo ( isset( $etmfw_component['placeholder'] ) ? esc_attr( $etmfw_component['placeholder'] ) : '' ); ?>"
+									<?php echo ( isset( $etmfw_component['required'] ) && 'yes' == $etmfw_component['required'] ) ? 'required' : ''; ?>
 									min = 0
 									>
 								</label>
@@ -723,7 +724,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 										<span class="mdc-notched-outline__trailing"></span>
 									</span>
 									<span class="mdc-text-field__resizer">
-										<textarea class="mdc-text-field__input <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>" rows="2" cols="25" aria-label="Label" name="<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : esc_html( $etmfw_component['id'] ) ); ?>" id="<?php echo esc_attr( $etmfw_component['id'] ); ?>" placeholder="<?php echo ( isset( $etmfw_component['placeholder'] ) ? esc_attr( $etmfw_component['placeholder'] ) : '' ); ?>"><?php echo ( isset( $etmfw_component['value'] ) ? esc_textarea( $etmfw_component['value'] ) : '' ); // WPCS: XSS ok. ?></textarea>
+										<textarea class="mdc-text-field__input <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>" rows="2" cols="25" aria-label="Label" name="<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : esc_html( $etmfw_component['id'] ) ); ?>" id="<?php echo esc_attr( $etmfw_component['id'] ); ?>" placeholder="<?php echo ( isset( $etmfw_component['placeholder'] ) ? esc_attr( $etmfw_component['placeholder'] ) : '' ); ?>"<?php echo ( isset( $etmfw_component['required'] ) && 'yes' == $etmfw_component['required'] ) ? 'required' : ''; ?>><?php echo ( isset( $etmfw_component['value'] ) ? esc_textarea( $etmfw_component['value'] ) : '' ); // WPCS: XSS ok. ?></textarea>
 									</span>
 
 								</label>
@@ -819,11 +820,13 @@ class Event_Tickets_Manager_For_Woocommerce {
 										<div class="mdc-form-field">
 											<div class="mdc-radio">
 												<input
+												id = "<?php echo esc_attr( $etmfw_component['id'] ); ?>"
 												name="<?php echo ( isset( $etmfw_component['name'] ) ? esc_html( $etmfw_component['name'] ) : esc_html( $etmfw_component['id'] ) ); ?>"
 												value="<?php echo esc_attr( $etmfw_radio_key ); ?>"
 												type="radio"
 												class="mdc-radio__native-control <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>"
 												<?php checked( $etmfw_radio_key, $etmfw_component['value'] ); ?>
+												<?php echo ( isset( $etmfw_component['required'] ) && 'yes' == $etmfw_component['required'] ) ? 'required' : ''; ?>
 												>
 												<div class="mdc-radio__background">
 													<div class="mdc-radio__outer-circle"></div>

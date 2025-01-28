@@ -75,12 +75,12 @@ if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
 		<?php } ?>
 		<?php if ( true == $wps_is_pro_active ) { ?>
 			<?php if ( '' != $wps_etmfw_dyn_name || '' != $wps_etmfw_dyn_mail || '' != $wps_etmfw_dyn_contact || '' != $wps_etmfw_dyn_date || '' != $wps_etmfw_dyn_address ) { ?>
-		<div id = 'wps_add_more_people_wrapper' class = 'wps_class_add_more_people'>
-		<span id = 'wps_add_more_people' class="button"><?php esc_html_e( ' Add Participants', 'event-tickets-manager-for-woocommerce' ); ?></span>
-		</div>
 		<div id = 'wps_etmfw_dynamic_form_fr_<?php echo esc_attr( $product_id ); ?>'></div>
 	   <div id = 'wps_etmfw_total_member' class='wps_class_etmfw_total_member'><span id='wps_total_member'></span></div>
 	   <div id = 'wps_etmfw_total_price' class='wps_class_etmfw_total_price'><span id='wps_total_price'></span></div>
+	   <div id = 'wps_add_more_people_wrapper' class = 'wps_class_add_more_people'>
+		<span id = 'wps_add_more_people' class="button"><?php esc_html_e( ' Add Participants', 'event-tickets-manager-for-woocommerce' ); ?></span>
+		</div>
 				<?php
 			}
 		}

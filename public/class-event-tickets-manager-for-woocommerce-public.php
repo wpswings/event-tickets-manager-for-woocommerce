@@ -1511,6 +1511,18 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					'terms'    => 'event_ticket_manager',
 				),
 			),
+			'meta_query'     => array(
+				'relation' => 'OR',
+				array(
+					'key'     => 'product_has_recurring',
+					'compare' => 'NOT EXISTS',
+				),
+				array(
+					'key'     => 'product_has_recurring',
+					'value'   => 'yes',
+					'compare' => '!=',
+				),
+			),
 		);
 
 		$query_data = new WP_Query( $query_args );
@@ -1606,6 +1618,18 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					'taxonomy' => 'product_type',
 					'field'    => 'slug',
 					'terms'    => 'event_ticket_manager',
+				),
+			),
+			'meta_query'     => array(
+				'relation' => 'OR',
+				array(
+					'key'     => 'product_has_recurring',
+					'compare' => 'NOT EXISTS',
+				),
+				array(
+					'key'     => 'product_has_recurring',
+					'value'   => 'yes',
+					'compare' => '!=',
 				),
 			),
 		);
