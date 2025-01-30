@@ -43,7 +43,7 @@ if ( is_plugin_active( $plugin_path ) ) {
 		<span>|</span>
 		<?php } ?>
 		<?php if (  $wps_pro_is_active ) { ?>
-		<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-doc&utm_medium=events-pro-page&utm_campaign=documentation" target="_blank" class="wps-link"><?php esc_html_e( 'Documentation', 'event-tickets-manager-for-woocommerce' ); ?></a>
+		<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-pro-page&utm_campaign=documentation" target="_blank" class="wps-link"><?php esc_html_e( 'Documentation', 'event-tickets-manager-for-woocommerce' ); ?></a>
 		<?php } else { ?>
 		<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-org-backend&utm_campaign=documentation" target="_blank" class="wps-link"><?php esc_html_e( 'Documentation', 'event-tickets-manager-for-woocommerce' ); ?></a>
 		<?php } ?>

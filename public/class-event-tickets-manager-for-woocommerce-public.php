@@ -661,6 +661,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @param object $order Order.
 	 * @param array  $wps_etmfw_mail_template_data Mail Template data.
 	 * @param string $user_email Mail of receiver.
+	 * @param array  $attachments Mail Pdf Attachment.
 	 * @author WPSwings<ticket@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */

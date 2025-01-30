@@ -89,6 +89,7 @@ if ( ! class_exists( 'Wps_Etmfw_Emails_Notification' ) ) {
 		 * @param string $email_content Email content.
 		 * @param string $wps_etmfw_email_subject Email Subject.
 		 * @param object $order Order Object.
+		 * @param array  $attachments Mail Pdf Attachment.
 		 */
 		public function trigger( $user_email, $email_content, $wps_etmfw_email_subject, $order, $attachments = [] ) {
 			$this->setup_locale();

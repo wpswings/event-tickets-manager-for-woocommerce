@@ -186,9 +186,18 @@ div#wps_etmwf_event_date img , div#wps_etmwf_event_time img , div#wps_etmwf_even
   margin-bottom: 3px;
 }
 
-form.cart {
+/* form.cart {
   flex-direction: column;
   align-content: flex-start;
+} */
+
+.wps_etmfw_product_wrapper {
+    flex: 1 0 100%;
+}
+
+.product-type-event_ticket_manager form.cart {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .woocommerce-message,
