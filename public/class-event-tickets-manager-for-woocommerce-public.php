@@ -323,10 +323,17 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						if ( ! empty( $val ) ) {
 							$info_array = $this->wps_etmfw_generate_key_value_pair( $val );
 							foreach ( $info_array as $info_key => $info_value ) {
-								$item_meta[] = array(
-									'name'  => esc_html( $info_key ),
-									'value' => stripslashes( $info_value ),
-								);
+								if ( 'Event Venue' == $info_key ) {
+									$item_meta[] = array(
+										'name'  => esc_html__( 'Event Venue', 'event-tickets-manager-for-woocommerce' ),
+										'value' => stripslashes( $info_value ),
+									);
+								} else {
+									$item_meta[] = array(
+										'name'  => esc_html( $info_key ),
+										'value' => stripslashes( $info_value ),
+									);
+								}
 							}
 						}
 					}
@@ -402,6 +409,21 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				}
 			}
 		}
+	}
+
+	/**
+	 * This function is used to make the meta keys translatable
+	 *
+	 * @name wps_etmfw_woocommerce_order_item_display_meta_key
+	 * @param string $display_key show display key.
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link http://www.wpswings.com/
+	 */
+	public function wps_etmfw_woocommerce_order_item_display_meta_key( $display_key ) {
+		if ( 'Event Venue' == $display_key ) {
+			$display_key = __( 'Event Venue', 'event-tickets-manager-for-woocommerce' );
+		}
+		return $display_key;
 	}
 
 	/**
