@@ -73,7 +73,6 @@
 
     function check() {
       var startDate = $("#etmfw_start_date_time").val();
-      var startTime = startDate.split(" ");
 
       $("#etmfw_end_date_time").datetimepicker({
         format: "Y-m-d g:i a",
@@ -81,7 +80,6 @@
         validateOnBlur: false,
         startDate: startDate,
         minDate: startDate,
-        minTime: startTime[1],
       });
     }
 

@@ -18,11 +18,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $etmfw_wps_etmfw_obj, $error_notice;
 $etmfw_active_tab   = isset( $_GET['etmfw_tab'] ) ? sanitize_key( $_GET['etmfw_tab'] ) : 'event-tickets-manager-for-woocommerce-general';
-$secure_nonce      = wp_create_nonce( 'wps-upsell-auth-nonce' );
-$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
+$secure_nonce      = wp_create_nonce( 'wps-event-auth-nonce' );
+$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-event-auth-nonce' );
 
 if ( ! $id_nonce_verified ) {
-	wp_die( esc_html__( 'Nonce Not verified', 'upsell-order-bump-offer-for-woocommerce' ) );
+	wp_die( esc_html__( 'Nonce Not verified', 'event-tickets-manager-for-woocommerce' ) );
 }
 $etmfw_default_tabs = $etmfw_wps_etmfw_obj->wps_etmfw_plug_default_tabs();
 $plugin_path = 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php';
@@ -43,7 +43,7 @@ if ( is_plugin_active( $plugin_path ) ) {
 		<span>|</span>
 		<?php } ?>
 		<?php if (  $wps_pro_is_active ) { ?>
-		<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-doc&utm_medium=events-pro-page&utm_campaign=documentation" target="_blank" class="wps-link"><?php esc_html_e( 'Documentation', 'event-tickets-manager-for-woocommerce' ); ?></a>
+		<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-pro-page&utm_campaign=documentation" target="_blank" class="wps-link"><?php esc_html_e( 'Documentation', 'event-tickets-manager-for-woocommerce' ); ?></a>
 		<?php } else { ?>
 		<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-org-backend&utm_campaign=documentation" target="_blank" class="wps-link"><?php esc_html_e( 'Documentation', 'event-tickets-manager-for-woocommerce' ); ?></a>
 		<?php } ?>

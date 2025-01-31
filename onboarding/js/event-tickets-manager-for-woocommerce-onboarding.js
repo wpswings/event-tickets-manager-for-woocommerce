@@ -158,5 +158,16 @@ jQuery(document).ready(function($) {
         });
     }
 
+    jQuery("#wps-etmfw-deactivation-reason-text").parent().hide();
+    jQuery(document).on( 'change', '#wps-etmfw-deactivation-reason', function(e) {
+        console.log(this.value);
+        if (this.value == 'other'){
+            jQuery("#wps-etmfw-deactivation-reason-text").parent().show();
+        } else {
+            jQuery("#wps-etmfw-deactivation-reason-text").parent().hide();
+        }
+        
+    });
+
     // End of scripts.
 });
