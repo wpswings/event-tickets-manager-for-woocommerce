@@ -98,38 +98,41 @@
 
 
 	 jQuery(window).on('load', function() {
-	 	var event_view = etmfw_public_param.event_view;
-	 	if( event_view == 'calendar') {
-	 		var data = {
-	 			action:'wps_etmfw_get_calendar_events',
-	 			wps_nonce:etmfw_public_param.wps_etmfw_public_nonce
+		var event_view = etmfw_public_param.event_view;
+		if (event_view === 'calendar') {
+			var data = {
+				action: 'wps_etmfw_get_calendar_events',
+				wps_nonce: etmfw_public_param.wps_etmfw_public_nonce
+			};
+			$.ajax({
+				type: 'POST',
+				url: etmfw_public_param.ajaxurl,
+				data: data,
+				dataType: 'json',
+				success: function(response) {
+					var calendarEl = document.getElementById('wps-calendar');
 
-	 		};
-	 		$.ajax({
-	 			type: 'POST',
-	 			url: etmfw_public_param.ajaxurl,
-	 			data: data,
-	 			dataType: 'json',
-	 			success: function(response) {
-	 				var calendarEl = document.getElementById('wps-calendar');
-	 				var calendar = new FullCalendar.Calendar(calendarEl, {
-	 					initialView: 'dayGridMonth',
-	 					initialDate: new Date(),
-	 					headerToolbar: {
-	 						left: 'prev,next today',
-	 						center: 'title',
-	 						right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-	 					},
-	 					events: response.result
-	 				});
-	 				calendar.render();
-	 			},
-	 			error: function(response) {
-
-	 			}
-	 		});
-	 	}
-	 })
+					if (!calendarEl) {
+						return;
+					}
+	
+					var calendar = new FullCalendar.Calendar(calendarEl, {
+						initialView: 'dayGridMonth',
+						initialDate: new Date(),
+						headerToolbar: {
+							left: 'prev,next today',
+							center: 'title',
+							right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+						},
+						events: response.result
+					});
+					calendar.render();
+				},
+				error: function(response) {
+				}
+			});
+		}
+	});	
 	
 	
 	})( jQuery );

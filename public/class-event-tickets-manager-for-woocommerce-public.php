@@ -1576,40 +1576,44 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$event_array = array();
 		$current_timestamp = current_time( 'timestamp' );
 		$wps_etmfw_product_array = get_post_meta( $product->get_id(), 'wps_etmfw_product_array', true );
-		$start_date = isset( $wps_etmfw_product_array['event_start_date_time'] ) ? $wps_etmfw_product_array['event_start_date_time'] : '';
-		$end_date = isset( $wps_etmfw_product_array['event_end_date_time'] ) ? $wps_etmfw_product_array['event_end_date_time'] : '';
-		$end_date_timestamp = strtotime( gmdate( 'Y-m-d', strtotime( $end_date ) ) );
-		$start_date_timestamp = strtotime( gmdate( 'Y-m-d', strtotime( $start_date ) ) );
-		$current_timestamp = strtotime( gmdate( 'Y-m-d', $current_timestamp ) );
+		$start_date_time = isset( $wps_etmfw_product_array['event_start_date_time'] ) ? $wps_etmfw_product_array['event_start_date_time'] : '';
+		$end_date_time = isset( $wps_etmfw_product_array['event_end_date_time'] ) ? $wps_etmfw_product_array['event_end_date_time'] : '';
+		$start_timestamp = strtotime( $start_date_time );
+		$end_timestamp = strtotime( $end_date_time );
+		$start_iso = gmdate( 'Y-m-d\TH:i:s', $start_timestamp );
+		$end_iso = gmdate( 'Y-m-d\TH:i:s', $end_timestamp );
 		switch ( $filter_duration ) {
 			case 'all':
 				$event_array = array(
 					'title' => $product->get_title(),
-					'start' => gmdate( 'Y-m-d', strtotime( $start_date ) ),
-					'end' => gmdate( 'Y-m-d', strtotime( $end_date . ' +1 day' ) ),
-					'url'   => get_permalink( $product->get_id() ),
+					'start' => $start_iso,
+					'end' => $end_iso,
+					'url' => get_permalink( $product->get_id() ),
+					'allDay' => false
 				);
 
 				break;
 
 			case 'future':
-				if ( $end_date_timestamp > $current_timestamp ) {
+				if ( $end_timestamp > $current_timestamp ) {
 					$event_array = array(
 						'title' => $product->get_title(),
-						'start' => gmdate( 'Y-m-d', strtotime( $start_date ) ),
-						'end' => gmdate( 'Y-m-d', strtotime( $end_date . ' +1 day' ) ),
-						'url'   => get_permalink( $product->get_id() ),
+						'start' => $start_iso,
+						'end' => $end_iso,
+						'url' => get_permalink( $product->get_id() ),
+						'allDay' => false
 					);
 				}
 				break;
 
 			case 'past':
-				if ( $end_date_timestamp < $current_timestamp ) {
+				if ( $end_timestamp < $current_timestamp ) {
 					$event_array = array(
 						'title' => $product->get_title(),
-						'start' => gmdate( 'Y-m-d', strtotime( $start_date ) ),
-						'end' => gmdate( 'Y-m-d', strtotime( $end_date . ' +1 day' ) ),
-						'url'   => get_permalink( $product->get_id() ),
+						'start' => $start_iso,
+						'end' => $end_iso,
+						'url' => get_permalink( $product->get_id() ),
+						'allDay' => false
 					);
 				}
 				break;
@@ -1618,7 +1622,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				break;
 		}
 		return $event_array;
-	}
+	}	
 
 	/**
 	 * Get events for calendar.
