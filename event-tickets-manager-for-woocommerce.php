@@ -568,16 +568,6 @@ if ( $activated ) {
 		return date_i18n( get_option( 'time_format' ), strtotime( $date ) );// get format from WordPress settings.
 	}
 
-	/**
-	 * Function to register event widget.
-	 */
-	function wps_etmfw_register_widget() {
-		register_widget( 'event_tickets_manager_for_woocommerce_widget' );
-	}
-	add_action( 'widgets_init', 'wps_etmfw_register_widget' );
-
-	require plugin_dir_path( __FILE__ ) . 'includes/class-event-tickets-manager-for-woocommerce-widget.php';
-
 	add_action( 'admin_init', 'wps_etmfw_migration_code' );
 
 	/**

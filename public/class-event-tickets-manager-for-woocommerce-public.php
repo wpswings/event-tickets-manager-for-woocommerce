@@ -64,11 +64,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @since    1.0.0
 	 */
 	public function etmfw_public_enqueue_styles() {
-		 $event_view = get_option( 'wps_etmfw_event_view', 'list' );
-		if ( 'calendar' === $event_view ) {
-			wp_enqueue_style( 'wps-etmfw-fullcalendar-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/fullcalendar/main.min.css', array(), time(), 'all' );
-		}
-
 		wp_enqueue_style( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/scss/event-tickets-manager-for-woocommerce-public.css', array(), $this->version, 'all' );
 	}
 
@@ -78,8 +73,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @since    1.0.0
 	 */
 	public function etmfw_public_enqueue_scripts() {
-		$event_view = get_option( 'wps_etmfw_event_view', 'list' );
-
 		$wps_plugin_list = get_option( 'active_plugins' );
 		$wps_is_pro_active = 'no';
 		$wps_plugin = 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php';
@@ -95,25 +88,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$wps_etmfw_dyn_contact = isset( $wps_etmfw_product_array['wps_etmfw_dyn_contact'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_contact'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_contact'] : '';
 		$wps_etmfw_dyn_date = isset( $wps_etmfw_product_array['wps_etmfw_dyn_date'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_date'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_date'] : '';
 		$wps_etmfw_dyn_address = isset( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_address'] : '';
-		// Get the Details For the Dynamic Form End Here.
-		 $wps_is_event_in_calender_shortcode = false;
-		// Check if the current page has a specific shortcode called 'wps_event_in_calender'.
-		$post = get_post();
-		if ( $post && property_exists( $post, 'post_content' ) && has_shortcode( $post->post_content, 'wps_event_in_calender' ) && ( 'list' !== $event_view ) ) {
-			$wps_is_event_in_calender_shortcode = true;
-			wp_enqueue_script( 'wps-etmfw-fullcalendar-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/fullcalendar/fullcalendar.min.js', array( 'jquery' ), $this->version, false );
-			wp_register_script( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-public.js', array( 'jquery', 'wps-etmfw-fullcalendar-js' ), $this->version, false );
-		}
-
-		if ( 'calendar' === $event_view ) {
-			wp_enqueue_script( 'wps-etmfw-fullcalendar-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/fullcalendar/fullcalendar.min.js', array( 'jquery' ), $this->version, false );
-			wp_register_script( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-public.js', array( 'jquery', 'wps-etmfw-fullcalendar-js' ), $this->version, false );
-		} else {
-			wp_register_script( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-public.js', array( 'jquery' ), $this->version, false );
-		}
+		
+		wp_register_script( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-public.js', array( 'jquery' ), $this->version, false );
 		$public_param_data = array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
-			'event_view' => $event_view,
 			'wps_etmfw_public_nonce' => wp_create_nonce( 'wps-etmfw-verify-public-nonce' ),
 			'is_required' => __( ' Is Required', 'event-tickets-manager-for-woocommerce' ),
 			'wps_etmfw_dyn_name' => $wps_etmfw_dyn_name,
@@ -122,7 +100,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			'wps_etmfw_dyn_date' => $wps_etmfw_dyn_date,
 			'wps_etmfw_dyn_address' => $wps_etmfw_dyn_address,
 			'wps_is_pro_active' => $wps_is_pro_active,
-			'wps_is_event_in_calender_shortcode' => $wps_is_event_in_calender_shortcode,
 			'wps_dyn_name' => __( ' Name', 'event-tickets-manager-for-woocommerce' ),
 			'wps_dyn_mail' => __( ' EMail', 'event-tickets-manager-for-woocommerce' ),
 			'wps_dyn_contact' => __( ' Contact', 'event-tickets-manager-for-woocommerce' ),
@@ -1506,171 +1483,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				}
 			}
 		}
-		echo wp_json_encode( $response );
-		wp_die();
-	}
-
-	/**
-	 * Get events for calendar.
-	 *
-	 * @since 1.0.0
-	 * @name wps_etmfw_get_calendar_widget_data().
-	 * @author WPSwings<ticket@wpswings.com>
-	 * @link https://www.wpswings.com/
-	 */
-	public function wps_etmfw_get_calendar_widget_data() {
-		check_ajax_referer( 'wps-etmfw-verify-public-nonce', 'wps_nonce' );
-
-		$calendar_data = array();
-		$filter_duration = get_option( 'wps_etmfw_display_duration', 'all' );
-		$query_args = array(
-			'post_type'      => 'product',
-			'post_status'    => 'publish',
-			'posts_per_page'    => -1,
-			'tax_query'      => array(
-				array(
-					'taxonomy' => 'product_type',
-					'field'    => 'slug',
-					'terms'    => 'event_ticket_manager',
-				),
-			),
-			'meta_query'     => array(
-				'relation' => 'OR',
-				array(
-					'key'     => 'product_has_recurring',
-					'compare' => 'NOT EXISTS',
-				),
-				array(
-					'key'     => 'product_has_recurring',
-					'value'   => 'yes',
-					'compare' => '!=',
-				),
-			),
-		);
-
-		$query_data = new WP_Query( $query_args );
-		if ( $query_data->have_posts() ) {
-			while ( $query_data->have_posts() ) {
-				$query_data->the_post();
-				$calendar_data[] = $this->wps_generate_list_view( $filter_duration, $calendar_data );
-			}
-		}
-
-		wp_reset_postdata();
-		$response['result'] = $calendar_data;
-		echo wp_json_encode( $response );
-		wp_die();
-	}
-
-	/**
-	 * Generate list view for event.
-	 *
-	 * @since 1.0.0
-	 * @name wps_generate_list_view().
-	 * @param string $filter_duration Duration on the basis of filter.
-	 * @author WPSwings<ticket@wpswings.com>
-	 * @link https://www.wpswings.com/
-	 */
-	public function wps_generate_list_view( $filter_duration ) {
-		global $product;
-		$event_array = array();
-		$current_timestamp = current_time( 'timestamp' );
-		$wps_etmfw_product_array = get_post_meta( $product->get_id(), 'wps_etmfw_product_array', true );
-		$start_date_time = isset( $wps_etmfw_product_array['event_start_date_time'] ) ? $wps_etmfw_product_array['event_start_date_time'] : '';
-		$end_date_time = isset( $wps_etmfw_product_array['event_end_date_time'] ) ? $wps_etmfw_product_array['event_end_date_time'] : '';
-		$start_timestamp = strtotime( $start_date_time );
-		$end_timestamp = strtotime( $end_date_time );
-		$start_iso = gmdate( 'Y-m-d\TH:i:s', $start_timestamp );
-		$end_iso = gmdate( 'Y-m-d\TH:i:s', $end_timestamp );
-		switch ( $filter_duration ) {
-			case 'all':
-				$event_array = array(
-					'title' => $product->get_title(),
-					'start' => $start_iso,
-					'end' => $end_iso,
-					'url' => get_permalink( $product->get_id() ),
-					'allDay' => false
-				);
-
-				break;
-
-			case 'future':
-				if ( $end_timestamp > $current_timestamp ) {
-					$event_array = array(
-						'title' => $product->get_title(),
-						'start' => $start_iso,
-						'end' => $end_iso,
-						'url' => get_permalink( $product->get_id() ),
-						'allDay' => false
-					);
-				}
-				break;
-
-			case 'past':
-				if ( $end_timestamp < $current_timestamp ) {
-					$event_array = array(
-						'title' => $product->get_title(),
-						'start' => $start_iso,
-						'end' => $end_iso,
-						'url' => get_permalink( $product->get_id() ),
-						'allDay' => false
-					);
-				}
-				break;
-
-			default:
-				break;
-		}
-		return $event_array;
-	}	
-
-	/**
-	 * Get events for calendar.
-	 *
-	 * @since 1.0.0
-	 * @name wps_etmfw_calendar_events_shortcode_callback().
-	 * @author WPSwings<ticket@wpswings.com>
-	 * @link https://www.wpswings.com/
-	 */
-	public function wps_etmfw_calendar_events_shortcode_callback() {
-		check_ajax_referer( 'wps-etmfw-verify-public-nonce', 'wps_nonce' );
-		$calendar_data = array();
-		$filter_duration = 'all';
-		$query_args = array(
-			'post_type'      => 'product',
-			'post_status'    => 'publish',
-			'posts_per_page'    => -1,
-			'tax_query'      => array(
-				array(
-					'taxonomy' => 'product_type',
-					'field'    => 'slug',
-					'terms'    => 'event_ticket_manager',
-				),
-			),
-			'meta_query'     => array(
-				'relation' => 'OR',
-				array(
-					'key'     => 'product_has_recurring',
-					'compare' => 'NOT EXISTS',
-				),
-				array(
-					'key'     => 'product_has_recurring',
-					'value'   => 'yes',
-					'compare' => '!=',
-				),
-			),
-		);
-
-		$query_data = new WP_Query( $query_args );
-		if ( $query_data->have_posts() ) {
-			while ( $query_data->have_posts() ) {
-				$query_data->the_post();
-				$calendar_data[] = $this->wps_generate_list_view( $filter_duration, $calendar_data );
-			}
-		}
-
-		wp_reset_postdata();
-		$response['result'] = $calendar_data;
 		echo wp_json_encode( $response );
 		wp_die();
 	}

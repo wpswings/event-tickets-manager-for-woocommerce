@@ -281,8 +281,6 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_make_user_checkin', $etmfw_plugin_public, 'wps_etmfw_make_user_checkin_for_event' );
 		$this->loader->add_action( 'wp_ajax_wps_etmfw_edit_user_info', $etmfw_plugin_public, 'wps_etmfw_edit_user_info_for_event' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_edit_user_info', $etmfw_plugin_public, 'wps_etmfw_edit_user_info_for_event' );
-		$this->loader->add_action( 'wp_ajax_wps_etmfw_get_calendar_events', $etmfw_plugin_public, 'wps_etmfw_get_calendar_widget_data' );
-		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_get_calendar_events', $etmfw_plugin_public, 'wps_etmfw_get_calendar_widget_data' );
 		$this->loader->add_action( 'woocommerce_available_payment_gateways', $etmfw_plugin_public, 'wps_etmfw_unset_cod_payment_gateway_for_event' );
 		$this->loader->add_filter( 'woocommerce_available_payment_gateways', $etmfw_plugin_public , 'restrict_cod_for_specific_product_types', 10,1 );
 		$this->loader->add_filter( 'woocommerce_is_purchasable', $etmfw_plugin_public, 'wps_etmfw_handle_expired_events', 10, 2 );
@@ -313,6 +311,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_resend_mail_pdf_order_deatails', $etmfw_plugin_public, 'wps_etmfw_resend_mail_pdf_order_deatails', 11 );
 		}
 
+		// Event Listing shortcode.
 		$this->loader->add_action( 'init', $etmfw_plugin_public, 'wp_shortcode_init_callback' );
 		$this->loader->add_action( 'wp_ajax_wps_filter_event_search', $etmfw_plugin_public, 'wps_filter_event_search_callback', 11 );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_filter_event_search', $etmfw_plugin_public, 'wps_filter_event_search_callback', 11 );
@@ -323,9 +322,6 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_wps_select_event_listing_type', $etmfw_plugin_public, 'wps_select_event_listing_type_callback', 11 );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_select_event_listing_type', $etmfw_plugin_public, 'wps_select_event_listing_type_callback', 11 );
 
-		$this->loader->add_action( 'wp_ajax_wps_etmfw_calendar_events_shortcode', $etmfw_plugin_public, 'wps_etmfw_calendar_events_shortcode_callback', 8 );
-		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_calendar_events_shortcode', $etmfw_plugin_public, 'wps_etmfw_calendar_events_shortcode_callback', 8 );
-	
 		// disbale shipping.
 		$this->loader->add_filter( 'wc_shipping_enabled', $etmfw_plugin_public, 'wps_etmfw_wc_shipping_enabled' );
 	}

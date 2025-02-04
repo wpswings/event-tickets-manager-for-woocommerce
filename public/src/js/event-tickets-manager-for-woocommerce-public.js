@@ -96,45 +96,6 @@
 	 		);
 	 });
 
-
-	 jQuery(window).on('load', function() {
-		var event_view = etmfw_public_param.event_view;
-		if (event_view === 'calendar') {
-			var data = {
-				action: 'wps_etmfw_get_calendar_events',
-				wps_nonce: etmfw_public_param.wps_etmfw_public_nonce
-			};
-			$.ajax({
-				type: 'POST',
-				url: etmfw_public_param.ajaxurl,
-				data: data,
-				dataType: 'json',
-				success: function(response) {
-					var calendarEl = document.getElementById('wps-calendar');
-
-					if (!calendarEl) {
-						return;
-					}
-	
-					var calendar = new FullCalendar.Calendar(calendarEl, {
-						initialView: 'dayGridMonth',
-						initialDate: new Date(),
-						headerToolbar: {
-							left: 'prev,next today',
-							center: 'title',
-							right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-						},
-						events: response.result
-					});
-					calendar.render();
-				},
-				error: function(response) {
-				}
-			});
-		}
-	});	
-	
-	
 	})( jQuery );
 	function initMap() {
 		const latInput = document.getElementById('wps_etmfw_event_venue_lat');
@@ -309,41 +270,3 @@ jQuery(document).ready(function(){
 }
 });
 ///// ---- Js For The Dynamic Form End Here ----- //////
-
-// Js For Calendar Shortcode  start here.//
-jQuery(document).ready(function () {
-	
-	jQuery(window).on('load', function() {
-		var event_view = etmfw_public_param.wps_is_event_in_calender_shortcode;
-		if (event_view && 'yes' == etmfw_public_param.wps_is_pro_active) {
-			var data = {
-				action: 'wps_etmfw_calendar_events_shortcode',
-				wps_nonce: etmfw_public_param.wps_etmfw_public_nonce
-			};
-			jQuery.ajax({
-				type: 'POST',
-				url: etmfw_public_param.ajaxurl,
-				data: data,
-				dataType: 'json',
-				success: function (response) {
-					var calendarEl = document.getElementById('wps_event_listing_in_calender');
-					var calendar = new FullCalendar.Calendar(calendarEl, {
-						initialView: 'dayGridMonth',
-						initialDate: new Date(),
-						headerToolbar: {
-							left: 'prev,next today',
-							center: 'title',
-							right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-						},
-						events: response.result
-					});
-					calendar.render();
-				},
-				error: function (response) {
-
-				}
-			});
-		}
-	})
-});
-// Js For Calendar Shortcode end here.//
