@@ -1914,7 +1914,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$ticket_num = isset( $_REQUEST['ticket_num'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['ticket_num'] ) ) : '';
 		$user_email = isset( $_REQUEST['user_email'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['user_email'] ) ) : '';
 
-		// ==> Define HERE the statuses of that orders.
 		$wps_etmfw_in_processing = get_option( 'wps_wet_enable_after_payment_done_ticket', false );
 		if ( 'on' == $wps_etmfw_in_processing ) {
 			$order_statuses = array( 'wc-completed', 'wc-processing' );
@@ -1922,17 +1921,16 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			$order_statuses = array( 'wc-completed' );
 		}
 
-			// ==> Define HERE the customer ID.
-			$customer_user_id = get_current_user_id(); // current user ID here for example.
+		$customer_user_id = get_current_user_id();
 
-			// Getting current customer orders.
-			$customer_orders = new WC_Order_Query(
-				array(
-					'customer_id' => $customer_user_id,
-					'status' => $order_statuses,
-					'return' => 'ids',
-				)
-			);
+		$customer_orders = new WC_Order_Query(
+			array(
+				'customer_id' => $customer_user_id,
+				'status' => $order_statuses,
+				'return' => 'ids',
+				'limit' => -1,
+			)
+		);
 
 		$generated_tickets = get_post_meta( $product_id, 'wps_etmfw_generated_tickets', true );
 		$user_id = get_current_user_id();
@@ -1953,13 +1951,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				}
 			}
 
-			// Loop through each customer WC_Order objects.
 			$order_id = array();
-
-			foreach ( $customer_orders as $order ) {
-				$order_id[] = $order->get_id();
-			}
-
 			$order_id = $customer_orders->get_orders();
 
 			if ( in_array( $current_ticket_order_id, $order_id ) && ( false == $wps_is_tranfered ) && ( $user_email != $wps_assignee_mail ) ) {
@@ -2485,4 +2477,91 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		}
 		return $enable;
 	}
+
+	/**
+	 * This function is used to set User Role to see Points Tab in MY ACCOUNT Page.
+	 *
+	 * @name wps_wpr_points_dashboard
+	 * @since    1.0.0
+	 * @link https://www.wpswings.com/
+	 * @param array $items array of the items.
+	 */
+	public function etmfwp_event_dashboard( $items ) {
+		$items['event-ticket'] = __( 'Event Transfer Ticket', 'event-tickets-manager-for-woocommerce' );
+		return $items;
+	}
+
+	/**
+	 * This function is show the Html on tab on my account.
+	 *
+	 * @name wps_wpr_account_event.
+	 * @since    1.0.0
+	 * @link https://www.wpswings.com/
+	 */
+	public function wps_wpr_account_event() {
+		$query_args = array(
+			'post_type'          => 'product',
+			'post_status'        => 'publish',
+			'posts_per_page'     => -1,
+			'tax_query' => array(
+				array(
+					'taxonomy' => 'product_type',
+					'field'    => 'slug',
+					'terms'    => 'event_ticket_manager',
+				),
+			),
+		);
+
+		$product_array = new WP_Query( $query_args );
+		?>
+		<div id='wps_share_ticket_lable'><?php esc_html_e( 'Transfer Tickets', 'event-tickets-manager-for-woocommerce' ); ?></div>
+		<div class="wps_etmfw_checkin_wrapper">
+			<form method="post">
+			<div id="wps_etmfw_error_message"></div>
+			<div class="wps_etmfw_events_section">
+				<label> <?php esc_html_e( 'For', 'event-tickets-manager-for-woocommerce' ); ?> </label>
+			<?php
+			if ( $product_array->have_posts() ) {
+				if ( isset( $product_array->posts ) && ! empty( $product_array->posts ) ) {
+					?>
+				<select id="wps_etmfw_event_selected"> 
+					<?php
+					foreach ( $product_array->posts as $event_per_product ) {
+						?>
+					<option value="<?php echo esc_attr( $event_per_product->ID ); ?>" ><?php echo esc_html( $event_per_product->post_title ); ?>  </option> 
+												<?php
+					}
+					?>
+				</select> 
+					<?php
+				}
+			}
+			require plugin_dir_path( __FILE__ ) . 'partials/event-tickets-myaccount-template.php';
+	}
+
+	/**
+	 * This function is used to construct Points Tab in MY ACCOUNT Page.
+	 *
+	 * @name wps_wpr_add_my_account_endpoint
+	 * @since    1.0.0
+	 * @link http://www.wpswings.com/
+	 */
+	public function etmfwp_add_my_account_endpoint() {
+		add_rewrite_endpoint( 'event-ticket', EP_ROOT | EP_PAGES );
+		flush_rewrite_rules();
+	}
+
+	/**
+	 * This function is used to add endpoints on account page.
+	 *
+	 * @since 1.1.4
+	 * @name wps_wpr_custom_endpoint_query_vars
+	 * @param array $vars array.
+	 * @link https://wpswings.com
+	 */
+	public function etmfwp_custom_endpoint_query_vars( $vars ) {
+		$vars[] = 'event-ticket';
+		return $vars;
+	}
+
 }

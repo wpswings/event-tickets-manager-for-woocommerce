@@ -333,6 +333,20 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
 				),
 			),
+
+			array(
+				'title' => __( 'Allow Ticket Transfer', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'radio-switch',
+				'description'  => __( 'Enable this option  to transfer the tickets to another.', 'event-tickets-manager-for-woocommerce' ),
+				'id'    => 'wps_wet_enable_ticket_sharing',
+				'value' => get_option( 'wps_wet_enable_ticket_sharing' ),
+				'class' => 'etmfw-radio-switch-class',
+				'options' => array(
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
+					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
+				),
+			),
+
 			array(
 				'title' => __( 'Include Barcode in ticket', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'radio-switch',
@@ -363,18 +377,6 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'value' => '',
 			),
 
-			array(
-				'title' => __( 'Allow Ticket Transfer', 'event-tickets-manager-for-woocommerce' ),
-				'type'  => 'radio-switch',
-				'description'  => __( 'Enable this option  to share the transfer to another.', 'event-tickets-manager-for-woocommerce' ),
-				'id'    => 'wps_wet_enable_ticket_sharing',
-				'value' => '',
-				'class' => 'etmfw-radio-switch-class-pro',
-				'options' => array(
-					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
-					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
-				),
-			),
 			array(
 				'title' => __( 'Send Ticket During Processing Order', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'radio-switch',
