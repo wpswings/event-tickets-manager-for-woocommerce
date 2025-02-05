@@ -189,7 +189,7 @@ $wps_ubo_selected_template = ! empty( get_option( 'wps_etmfw_ticket_template' ) 
 							<input type="hidden" id="wps_etmfw_ticket_template" name='wps_etmfw_ticket_template' />
 							<p class="wps_etmfw_template_name" ><strong><?php esc_html_e( 'Zenith', 'event-tickets-manager-for-woocommerce' ); ?></strong></p>
 							<a href="javascript:void" class="wps_etmfw_template_link" data_link = '1' >
-								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-1.png' ); ?>">
+								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-1.jpg' ); ?>">
 							</a>
 						</div>
 
@@ -198,7 +198,7 @@ $wps_ubo_selected_template = ! empty( get_option( 'wps_etmfw_ticket_template' ) 
 						<?php echo esc_html( 5 === (int) $wps_ubo_selected_template ? 'wps_etmfw_selected_class' : '' ); ?>">
 						<p class="wps_etmfw_template_name" ><strong><?php esc_html_e( 'Vertico', 'event-tickets-manager-for-woocommerce' ); ?></strong></p>
 							<a href="javascript:void" class="wps_etmfw_template_link" data_link = '5' >
-								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-5.png' ); ?>">
+								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-5.jpg' ); ?>">
 							</a>
 						</div>
 
@@ -207,7 +207,7 @@ $wps_ubo_selected_template = ! empty( get_option( 'wps_etmfw_ticket_template' ) 
 						<?php echo esc_html( 6 === (int) $wps_ubo_selected_template ? 'wps_etmfw_selected_class' : '' ); ?>">
 						<p class="wps_etmfw_template_name" ><strong><?php esc_html_e( 'Nexus', 'event-tickets-manager-for-woocommerce' ); ?></strong></p>
 							<a href="javascript:void" class="wps_etmfw_template_link" data_link = '6' >
-								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template_6.png' ); ?>">
+								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template_6.jpg' ); ?>">
 							</a>
 						</div>
 						<!-- Template 6 Start End-->
@@ -234,7 +234,7 @@ $wps_ubo_selected_template = ! empty( get_option( 'wps_etmfw_ticket_template' ) 
 								echo 'wps_etmfw_template_link_pro'; }
 							?>
 																" data_link = '7' >
-								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template_7.png' ); ?>">
+								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template_7.jpg' ); ?>">
 							</a>
 						</div>
 						<!-- New Template Pro 1 End -->
@@ -262,7 +262,7 @@ $wps_ubo_selected_template = ! empty( get_option( 'wps_etmfw_ticket_template' ) 
 								echo 'wps_etmfw_template_link_pro'; }
 							?>
 																" data_link = '8' >
-								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template_8.png' ); ?>">
+								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template_8.jpg' ); ?>">
 							</a>
 						</div>
 						<!-- New Template Pro 2 End -->
@@ -290,7 +290,7 @@ $wps_ubo_selected_template = ! empty( get_option( 'wps_etmfw_ticket_template' ) 
 								echo 'wps_etmfw_template_link_pro'; }
 							?>
 																" data_link = '2' >
-								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-2.png' ); ?>">
+								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-2.jpg' ); ?>">
 							</a>
 						</div>
 
@@ -316,7 +316,7 @@ $wps_ubo_selected_template = ! empty( get_option( 'wps_etmfw_ticket_template' ) 
 								echo 'wps_etmfw_template_link_pro'; }
 							?>
 																" data_link = '3' >
-								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-3.png' ); ?>">
+								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-3.jpg' ); ?>">
 							</a>
 						</div>
 						
@@ -342,7 +342,7 @@ $wps_ubo_selected_template = ! empty( get_option( 'wps_etmfw_ticket_template' ) 
 								echo 'wps_etmfw_template_link_pro'; }
 							?>
 							" data_link = '4' >
-								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-4.png' ); ?>">
+								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/template-4.jpg' ); ?>">
 							</a>
 						</div>
 					</div>

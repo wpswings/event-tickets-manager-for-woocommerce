@@ -38,7 +38,7 @@ if ( ! empty( $wps_etmfw_background_image ) ) {
 	$wps_image_att_etmfw_demo = $image_attributes[0];
 } else {
 
-	$wps_image_att_etmfw_demo = esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/bg-image.png' );
+	$wps_image_att_etmfw_demo = esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/bg-image.jpg' );
 }
 
 ?>

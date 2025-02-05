@@ -704,7 +704,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			$product = wc_get_product( $product_id );
 			$image = wp_get_attachment_image_url( $product->get_image_id() );
 			if ( '' == $image ) {
-				$image = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/placeholder.png';
+				$image = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/placeholder.jpg';
 			}
 		}
 		$template_html = array();
