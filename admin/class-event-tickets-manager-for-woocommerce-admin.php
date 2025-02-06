@@ -348,6 +348,19 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			),
 
 			array(
+				'title' => __( 'Send Ticket During Processing Order', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'radio-switch',
+				'description'  => __( 'Enable this option to send ticket during processing.', 'event-tickets-manager-for-woocommerce' ),
+				'id'    => 'wps_wet_enable_after_payment_done_ticket',
+				'value' => get_option( 'wps_wet_enable_after_payment_done_ticket' ),
+				'class' => 'etmfw-radio-switch-class',
+				'options' => array(
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
+					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
+				),
+			),
+
+			array(
 				'title' => __( 'Include Barcode in ticket', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'radio-switch',
 				'description'  => __( 'Enable this option to display Ticket code as Bar code in the ticket.', 'event-tickets-manager-for-woocommerce' ),
@@ -375,19 +388,6 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'id'    => 'wps_event_calender',
 				'class' => 'etmfw-radio-switch-class-pro',
 				'value' => '',
-			),
-
-			array(
-				'title' => __( 'Send Ticket During Processing Order', 'event-tickets-manager-for-woocommerce' ),
-				'type'  => 'radio-switch',
-				'description'  => __( 'Enable this option to send ticket during processing.', 'event-tickets-manager-for-woocommerce' ),
-				'id'    => 'wps_wet_enable_after_payment_done_ticket',
-				'value' => '',
-				'class' => 'etmfw-radio-switch-class-pro',
-				'options' => array(
-					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
-					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
-				),
 			),
 			array(
 				'title' => __( 'Include QR code in ticket', 'event-tickets-manager-for-woocommerce' ),
