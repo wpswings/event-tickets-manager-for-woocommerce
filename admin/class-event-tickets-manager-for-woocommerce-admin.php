@@ -1765,4 +1765,144 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			}
 		}
 	}
+
+	/**
+	 * Add tab in plugin setting.
+	 *
+	 * @param array $etmfw_settings_other default setting tabs.
+	 * @return array
+	 */
+	public function wps_etmfw_other_settings_page( $etmfw_settings_other ) {
+		$etmfw_settings_other = array(
+			array(
+				'title' => __( 'Reminder Send Before Event Day', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'number',
+				'min' => '0',
+				'max' => '7',
+				'id'    => 'wps_etmfwp_send_remainder_before_event',
+				'value' => get_option( 'wps_etmfwp_send_remainder_before_event' ),
+				'class' => 'wps_etmfw_remainder_field',
+				'description'  => __( 'Enter no. of days before event, email should be send as remainder. ', 'event-tickets-manager-for-woocommerce' ),
+			),
+			array(
+				'title'       => __( 'Reminder Email Subject', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_etmfw_reminder_email_subject',
+				'type'        => 'text',
+				'description' => __( 'Subject for reminder emails.', 'event-tickets-manager-for-woocommerce' ),
+				'placeholder' => __('Reminder Subject','event-tickets-manager-for-woocommerce' ),
+				'value'       => get_option( 'wps_etmfw_reminder_email_subject', 'Reminder' ),
+			),
+			array(
+				'title'       => __( 'Reminder Email Body', 'event-tickets-manager-for-woocommerce' ),
+				'type'        => 'wp_editor',
+				'description' => __( 'Use [SITENAME] and [PRODUCTNAME] shortcode as the name of the site and product name respectively.', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_etmfw_reminder_email_body',
+				'value'       => get_option( 'wps_etmfw_reminder_email_body', 'Hello, This is a short Reminder for your Event which is start from [STARTDATE]. Enjoy your day!' ),
+			),
+			array(
+				'title'       => __( 'Enable Subscribe Checkbox', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_etmfw_enable_subscribe_checkbox',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable subscribe checkbox on the checkout page.', 'event-tickets-manager-for-woocommerce' ),
+				'value'       => '',
+			),
+			array(
+				'title'       => __( 'Email Subject', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_etmfw_subscribe_email_subject',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'type'        => 'text',
+				'description' => __( 'Subject for subscription emails.', 'event-tickets-manager-for-woocommerce' ),
+				'value'       => '',
+			),
+			array(
+				'title'       => __( 'Email Body', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_etmfw_subscribe_email_body',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'type'        => 'wp_editor',
+				'description' => __( 'Use [SITENAME] and [PRODUCTNAME] shortcode as the name of the site and product name respectively.', 'event-tickets-manager-for-woocommerce' ),
+				'value'       => '',
+			),
+		);
+
+		$etmfw_settings_other = apply_filters( 'wps_etmfw_extent_other_settings_array', $etmfw_settings_other );
+		$etmfw_settings_other[] = array(
+			'type'  => 'button',
+			'id'    => 'wps_etmfw_save_other_settings',
+			'button_text' => __( 'Save', 'event-tickets-manager-for-woocommerce' ),
+			'class' => 'etmfw-button-class',
+		);
+
+		return $etmfw_settings_other;
+	}
+
+	/**
+	 * Send Remainder.
+	 *
+	 * @return void
+	 */
+	public function wps_etmfwp_send_email_reminder() {
+		$no_of_days = get_option( 'wps_etmfwp_send_remainder_before_event' );
+
+		if ( empty( $no_of_days ) || '' == $no_of_days ) {
+			return;
+		}
+
+		$shop_orders = wc_get_orders(
+			array(
+				'status'       => array( 'wc-completed', 'wc-processing' ),
+				'return' => 'ids',
+			)
+		);
+		if ( isset( $shop_orders ) && ! empty( $shop_orders ) ) {
+			foreach ( $shop_orders as $shop_order ) {
+				$order_id = $shop_order;
+				$order = wc_get_order( $order_id );
+				foreach ( $order->get_items() as $item_id => $item ) {
+					$product = $item->get_product();
+					$product_title = $item->get_name();
+
+					if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
+
+						if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+							// HPOS usage is enabled.
+							$ticket = $order->get_meta( "event_ticket#$order_id#$item_id", true );
+						} else {
+							$ticket = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+						}
+						if ( '' !== $ticket ) {
+							if ( ! empty( $product ) ) {
+								$pro_id = $product->get_id();
+							}
+							$wps_etmfw_product_array = get_post_meta( $pro_id, 'wps_etmfw_product_array', true );
+							$start = isset( $wps_etmfw_product_array['event_start_date_time'] ) ? $wps_etmfw_product_array['event_start_date_time'] : '';
+							$start_timestamp = strtotime( $start );
+
+							$current_date_time = strtotime( gmdate( 'Y-m-d h:i ', time() ) );
+							$diff = (int) $start_timestamp - $current_date_time;
+							$no_of_days_to_seconds = $no_of_days * 86400;
+							$user_id = get_post_meta( $order_id, '_customer_user', true );
+							$customer = new WC_Customer( $user_id );
+							$user_email   = $order->get_billing_email();
+
+							if ( $diff >= 0 && $diff <= $no_of_days_to_seconds ) {
+								$mailer = WC()->mailer();
+								$subject = get_option( 'wps_etmfw_reminder_email_subject', 'Reminder' );
+								$message = get_option( 'wps_etmfw_reminder_email_body', 'Hello, This is a short Reminder for your Event which is start from [STARTDATE]. Enjoy your day!' );
+
+								$message = str_replace( '[SITENAME]', get_bloginfo(), $message );
+								$message = str_replace( '[STARTDATE]', $start, $message );
+								$message = str_replace( '[PRODUCTNAME]', $product_title, $message );
+								$wc_email = new WC_Email();
+
+								$html_message = $wc_email->style_inline( $message );
+
+								$mailer->send( $user_email, $subject, $html_message, HTML_EMAIL_HEADERS );
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }

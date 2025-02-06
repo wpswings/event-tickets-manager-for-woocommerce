@@ -710,6 +710,20 @@ if ( $activated ) {
 			}
 		}
 	}
+
+	/**
+	 * Function for sending remainder.
+	 *
+	 * @return void
+	 */
+	function wps_event_reminder_checking() {
+		if ( ! wp_next_scheduled( 'wps_event_tickets_manager_for_woocommerce_reminder_send' ) ) {
+			wp_schedule_event( strtotime( 'tomorrow' ), 'daily', 'wps_event_tickets_manager_for_woocommerce_reminder_send' );
+		}
+	}
+
+	add_action( 'init', 'wps_event_reminder_checking' );
+
 } else {
 
 	/**

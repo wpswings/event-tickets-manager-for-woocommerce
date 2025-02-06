@@ -1338,3 +1338,14 @@ a.wps-rma__popup-for-pro-link:hover {
   }
   
   /* Color fixes end */
+
+    /* Floating Save Button */
+
+    .wps-form-group.wps_center_save_changes {
+        position: sticky;
+        bottom: 0;
+        background: #fff;
+        padding: 10px 0;
+    }
+
+    /* Floating Save Button */

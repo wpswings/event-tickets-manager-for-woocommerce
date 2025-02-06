@@ -240,6 +240,13 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'wps_etmfw_import_attendess_callbck', 11 );
 		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'wps_etmfw_css_control_callbck', 11 );
+
+		// add other setting tab.
+		$this->loader->add_filter( 'wps_etmfw_other_settings_array', $etmfw_plugin_admin, 'wps_etmfw_other_settings_page' );
+
+		// reminder mail.
+		$this->loader->add_action( 'wps_event_tickets_manager_for_woocommerce_reminder_send', $etmfwp_plugin_admin, 'wps_etmfwp_send_email_reminder' );
+
 	}
 
 	/**
@@ -449,6 +456,10 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-ticket-layout-setting'] = array(
 			'title'       => esc_html__( 'PDF Ticket Layout Setting', 'event-tickets-manager-for-woocommerce' ),
 			'name'        => 'event-tickets-manager-for-woocommerce-ticket-layout-setting',
+		);
+		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-other-settings'] = array(
+			'title'       => esc_html__( 'Other Settings', 'event-tickets-manager-for-woocommerce' ),
+			'name'        => 'event-tickets-manager-for-woocommerce-other-settings',
 		);
 
 		$etmfw_default_tabs = apply_filters( 'wps_etmfw_etmfw_plugin_standard_admin_settings_tabs', $etmfw_default_tabs );
@@ -1014,7 +1025,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 								wp_editor( $content, $editor_id, $settings );
 								?>
 							</label>
-							<div class="mdc-text-field-helper-line">
+							<div class="mdc-text-field-helper-line <?php echo esc_attr( $etmfw_component['class'] ); ?>">
 								<div class="mdc-text-field-helper-text--persistent wps-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( $etmfw_component['description'] ); ?></div>
 							</div>
 						</div>
