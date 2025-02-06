@@ -245,7 +245,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_filter( 'wps_etmfw_other_settings_array', $etmfw_plugin_admin, 'wps_etmfw_other_settings_page' );
 
 		// reminder mail.
-		$this->loader->add_action( 'wps_event_tickets_manager_for_woocommerce_reminder_send', $etmfwp_plugin_admin, 'wps_etmfwp_send_email_reminder' );
+		$this->loader->add_action( 'wps_event_tickets_manager_for_woocommerce_reminder_send', $etmfw_plugin_admin, 'wps_etmfwp_send_email_reminder' );
 
 	}
 
@@ -1025,7 +1025,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 								wp_editor( $content, $editor_id, $settings );
 								?>
 							</label>
-							<div class="mdc-text-field-helper-line <?php echo esc_attr( $etmfw_component['class'] ); ?>">
+							<div class="mdc-text-field-helper-line <?php echo ( isset( $etmfw_component['class'] ) ? esc_attr( $etmfw_component['class'] ) : '' ); ?>">
 								<div class="mdc-text-field-helper-text--persistent wps-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( $etmfw_component['description'] ); ?></div>
 							</div>
 						</div>

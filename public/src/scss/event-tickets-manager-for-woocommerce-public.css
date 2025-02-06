@@ -163,7 +163,9 @@ form.wps_etmfw_show_ticket_form {
   display: block !important;
 }
 
-div#wps_etmwf_event_date img , div#wps_etmwf_event_time img , div#wps_etmwf_event_venue img {
+div#wps_etmwf_event_date img,
+div#wps_etmwf_event_time img,
+div#wps_etmwf_event_venue img {
   display: inline-block;
   margin-right: 5px;
   max-width: 24px;
@@ -192,7 +194,7 @@ div#wps_etmwf_event_date img , div#wps_etmwf_event_time img , div#wps_etmwf_even
 } */
 
 .wps_etmfw_product_wrapper {
-    flex: 1 0 100%;
+  flex: 1 0 100%;
 }
 
 .product-type-event_ticket_manager form.cart {
@@ -445,28 +447,29 @@ input#wps_etmfw_imput_ticket {
 }
 
 .wps-etmw_prod-desc h4 {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 600;
   margin: 0;
 }
 
 .wps-etmw_prod-price {
-  font-weight: 600;
-  font-size: 32px;
-  line-height: 1.25;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1.5;
 }
 
 .wps-etmw_prod-btn a.button {
-  min-width: 120px;
-  min-height: 40px;
-  padding: 10px;
-  font-size: 16px;
-  margin: 10px 0 0;
+  min-width: 80px;
+  min-height: 30px;
+  padding: 5px 10px;
+  font-size: 14px;
+  margin: 0;
   cursor: pointer;
   line-height: 1.25;
   display: inline-block;
   text-decoration: none;
   text-align: center;
+  border-radius: 5px;
 }
 
 #wps-search-results img {
@@ -477,7 +480,7 @@ input#wps_etmfw_imput_ticket {
 }
 
 #wps-search-results.wps_list .wps-etmw_single-event {
-  grid-template-columns: 30% 1fr;
+  grid-template-columns: 180px 1fr;
   display: grid;
   gap: 20px;
 }
@@ -530,3 +533,15 @@ input#wps_etmfw_imput_ticket {
 /* Event Listing using shortcode end */
 
 /* Event tab in My account page end */
+
+ .wps-etmw_prod-desc {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.wps-etmw_start-time, .wps-etmw_end-time,.wps-etmw_prod-venue {
+  font-size: 14px;
+  line-height: 1.5;
+  display: inline-block;
+}

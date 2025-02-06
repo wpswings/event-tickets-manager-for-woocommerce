@@ -2184,7 +2184,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$product_price = $product->get_price();
 				$image = wp_get_attachment_image_src( get_post_thumbnail_id( $product_id ), 'single-post-thumbnail' );
 				$product_url = get_permalink( $product_id );
-				$wps_product_image_src = ( is_array( $image ) && isset( $image[0] ) ) ? $image[0] : null;
+				$wps_product_image_src = ( is_array( $image ) && isset( $image[0] ) ) ? $image[0] : EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/placeholder.jpg';
 				$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
 
 				$wps_event_start_date_time = strtotime( $wps_etmfw_product_array['event_start_date_time'] );

@@ -96,10 +96,13 @@
 
       var tbody = document.querySelector('.wps_etmfw_field_body');
 
-        // Get all existing field rows
         var rows = tbody.querySelectorAll('.wps_etmfw_field_wrap');
+
+        if (rows.length >= 2 && ! etmfw_edit_prod_param.is_pro_active) {
+          alert('You can only add up to 2 fields.');
+          return;
+        }
         
-        // Check if all previous inputs are filled
         var allFilled = true;
         rows.forEach(function(row) {
             var labelInput = row.querySelector('.wps_etmfw_field_label');
@@ -110,7 +113,6 @@
             }
         });
 
-        // If all previous inputs are filled, add a new row
       if (allFilled) {
           
         var fieldsetId = $(document)
@@ -362,6 +364,41 @@
           alert('Negative input is not allowed');
         }
     });
+  });
+
+  $(document).on('click', '.wps_etmfwppp_user_add_fields_button', function () {
+               
+    var tbody = document.querySelector('.wps_etmfwpp_user_field_body');
+    var rows = tbody.querySelectorAll('.wps_etmfwpp_user_field_wrap');
+    
+    if (rows.length >= 2 && ! etmfw_edit_prod_param.is_pro_active) {
+      alert('You can only add up to 2 fields.');
+      return;
+    }
+
+    var allFilled = true;
+    rows.forEach(function(row) {
+        var labelInput = row.querySelector('.wps_etmfwpp_field_label');
+        var priceInput = row.querySelector('.wps_etmfwpp_field_price');
+        if (labelInput.value.trim() === '' || priceInput.value.trim() === '') {
+            allFilled = false;
+        }
+    });
+
+    if (allFilled) {
+      var fieldsetId = $(document).find('.wps_etmfwpp_user_field_table').find('.wps_etmfwpp_user_field_wrap').last().attr('data-id');
+      fieldsetId = fieldsetId?fieldsetId.replace(/[^0-9]/gi, ''):0;
+      let mainId = Number(fieldsetId) + 1;
+      var field_html = '<tr class="wps_etmfwpp_user_field_wrap" data-id="'+mainId+'"><td class="etmfwpp-user-drag-icon"><i class="dashicons dashicons-move"></i></td><td class="form-field wps_etmfwpp_label_fields"><input type="text" class="wps_etmfwpp_field_label" min = 0 style="" name="etmfwppp_fields['+mainId+'][_label]" id="label_fields_'+mainId+'" value="" placeholder="" required></td><td class="form-field wps_etmfwpp_price_fields"><input type="number" class="wps_etmfwpp_field_price" min = 0 id ="wps_recurring_value_id" name="etmfwppp_fields['+mainId+'][_price]" id="price_fields_'+mainId+'" required></td><td class="wps_etmfwpp_remove_row"><input type="button" name="wps_user_type_remove" class="wps_user_type_remove" value="Remove"></td></tr>';
+      $(document).find('.wps_etmfwpp_user_field_body').append( field_html );
+    } else {
+        alert('Please fill out all previous inputs before adding a new row. 1');
+    }
+  });
+
+  $(document).on("click", ".wps_user_type_remove", function(e){
+      e.preventDefault();
+      $(this).parents(".wps_etmfwpp_user_field_wrap").remove();
   });
 
 })(jQuery);

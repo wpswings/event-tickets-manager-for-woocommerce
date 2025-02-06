@@ -106,6 +106,13 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	 */
 	public function etmfw_admin_enqueue_scripts( $hook ) {
 
+		$wps_plugin_list = get_option( 'active_plugins' );
+		$wps_is_pro_active = false;
+		$wps_plugin = 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php';
+		if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
+			$wps_is_pro_active = true;
+		}
+
 		$screen = get_current_screen();
 		if ( isset( $screen->id ) && 'wp-swings_page_event_tickets_manager_for_woocommerce_menu' == $screen->id ) {
 			wp_enqueue_script( 'thickbox' );
@@ -120,13 +127,6 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			wp_register_script( $this->plugin_name . 'admin-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/js/event-tickets-manager-for-woocommerce-admin.js', array( 'jquery', 'wps-etmfw-select2', 'wps-etmfw-metarial-js', 'wps-etmfw-metarial-js2', 'wps-etmfw-metarial-lite', 'wp-color-picker' ), $this->version, false );
 
 			$wps_etmfw_selected_template = get_option( 'wps_etmfw_ticket_template', '1' );
-
-			$wps_plugin_list = get_option( 'active_plugins' );
-			$wps_is_pro_active = false;
-			$wps_plugin = 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php';
-			if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
-				$wps_is_pro_active = true;
-			}
 
 			wp_localize_script(
 				$this->plugin_name . 'admin-js',
@@ -154,6 +154,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				array(
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'wps_etmfw_edit_prod_nonce' => wp_create_nonce( 'wps-etmfw-verify-edit-prod-nonce' ),
+					'is_pro_active' => $wps_is_pro_active,
 				)
 			);
 
@@ -1008,6 +1009,13 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				);
 			}
 			do_action( 'wps_etmfw_edit_product_settings', $product_id );
+
+			require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'templates/backend/event-tickets-manager-for-woocommerce-recurring-event.php';
+
+			require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'templates/backend/event-tickets-manager-for-woocommerce-user-type-product-price.php';
+			
+			do_action( 'wps_etmfw_edit_product_settings_extend', $product_id );
+			
 			require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'templates/backend/event-tickets-manager-for-woocommerce-add-ticket-dynamic-fields.php';
 
 			wp_nonce_field( 'wps_etmfw_lite_nonce', 'wps_etmfw_product_nonce_field' );
@@ -1817,9 +1825,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			),
 			array(
 				'title'       => __( 'Email Body', 'event-tickets-manager-for-woocommerce' ),
-				'id'          => 'wps_etmfw_subscribe_email_body',
+				'id'          => 'wps_etmfw_subscribe_email_bodys',
 				'class'       => 'etmfw-radio-switch-class-pro',
-				'type'        => 'wp_editor',
+				'type'        => 'textarea',
 				'description' => __( 'Use [SITENAME] and [PRODUCTNAME] shortcode as the name of the site and product name respectively.', 'event-tickets-manager-for-woocommerce' ),
 				'value'       => '',
 			),
