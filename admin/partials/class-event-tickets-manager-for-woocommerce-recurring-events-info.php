@@ -63,13 +63,14 @@ class Event_Tickets_Manager_For_Woocommerce_Recurring_Events_Info extends WP_Lis
 	 * @param array $item array of the items.
 	 */
 	public function column_wps_recurring_title( $item ) {
-		$edit_link = get_edit_post_link( $item['id'] );
-		$view_link = get_permalink( $item['id'] );
-		$actions = array(
-			'edit' => sprintf( '<a href="%s">%s</a>', esc_url( $edit_link ), __( 'Edit', 'event-tickets-manager-for-woocommerce' ) ),
-			'view' => sprintf( '<a href="%s" target="_blank">%s</a>', esc_url( $view_link ), __( 'View', 'event-tickets-manager-for-woocommerce' ) )
-		);
-		return sprintf( '%1$s %2$s', '<b>' . esc_html( $item['wps_recurring_title'] ) . '</b>', $this->row_actions( $actions ) );
+
+        $item = apply_filters( 'wps_etmfw_view_edit_options_recurring_event', $item );
+
+        if ( is_array( $item ) ) {
+            return '<b>' . esc_html( $item['wps_recurring_title'] ) . '</b>';
+        }
+    
+        return $item;
 	}
 
 	/**

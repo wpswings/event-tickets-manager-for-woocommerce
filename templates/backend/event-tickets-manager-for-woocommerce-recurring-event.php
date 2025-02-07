@@ -14,6 +14,13 @@
 $wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
 $wps_is_product_is_recurring = get_post_meta( $product_id, 'is_recurring_' . $product_id, '' );
 
+$wps_plugin_list = get_option( 'active_plugins' );
+$wps_is_pro_active = false;
+$wps_plugin = 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php';
+if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
+    $wps_is_pro_active = true;
+}
+
 if ( is_array( $wps_etmfw_product_array ) && ! empty( $wps_etmfw_product_array ) && empty( $wps_is_product_is_recurring ) ) {
 
 	$wps_event_recurring_type = isset( $wps_etmfw_product_array['wps_event_recurring_type'] ) ? $wps_etmfw_product_array['wps_event_recurring_type'] : '';
@@ -51,22 +58,18 @@ if ( is_array( $wps_etmfw_product_array ) && ! empty( $wps_etmfw_product_array )
 					<label for="wps_recurring_value_id"><?php esc_html_e( 'The event recurrs every', 'event-tickets-manager-for-woocommerce' ); ?></label>
 					<input type="number" min = 0 name="wps_recurring_value" id="wps_recurring_value_id" value="<?php echo esc_attr( $wps_event_recurring_value ); ?>" />
 					<select id="wps_recurring_type" name="wps_recurring_type">
-						<option 
-						<?php
-						if ( 'daily' == $wps_event_recurring_type ) {
-							?>
-								 selected="true" <?php }; ?> value="daily"><?php esc_html_e( 'Daily', 'event-tickets-manager-for-woocommerce' ); ?></option>
-						<option 
-						<?php
-						if ( 'weekly' == $wps_event_recurring_type ) {
-							?>
-								 selected="true" <?php }; ?> value="weekly"><?php esc_html_e( 'Weekly', 'event-tickets-manager-for-woocommerce' ); ?></option>
-						<option 
-						<?php
-						if ( 'monthly' == $wps_event_recurring_type ) {
-							?>
-								 selected="true" <?php }; ?> value="monthly"><?php esc_html_e( 'Monthly', 'event-tickets-manager-for-woocommerce' ); ?></option>
-					</select>
+						<option
+						<?php if ( 'daily' == $wps_event_recurring_type ) { echo 'selected="true"'; } ?> value="daily"><?php esc_html_e( 'Daily', 'event-tickets-manager-for-woocommerce' ); ?>
+                        </option>
+							
+                        <option
+                        <?php if ( 'weekly' == $wps_event_recurring_type ) { echo 'selected="true"'; } ?> value="weekly" <?php if ( ! $wps_is_pro_active ) { echo 'disabled'; } ?> ><?php esc_html_e( 'Weekly', 'event-tickets-manager-for-woocommerce' ); ?>
+                        </option>
+                        
+                        <option
+                        <?php if ( 'monthly' == $wps_event_recurring_type ) { echo 'selected="true"'; } ?> value="monthly" <?php if ( ! $wps_is_pro_active ) { echo 'disabled'; } ?> ><?php esc_html_e( 'Monthly', 'event-tickets-manager-for-woocommerce' ); ?>
+                        </option>
+                    </select>
 				</div>
 				<div class="wps_event_daily_duration_wrap">
 

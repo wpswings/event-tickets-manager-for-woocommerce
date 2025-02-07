@@ -99,7 +99,7 @@
         var rows = tbody.querySelectorAll('.wps_etmfw_field_wrap');
 
         if (rows.length >= 2 && ! etmfw_edit_prod_param.is_pro_active) {
-          alert('You can only add up to 2 fields.');
+          alert('You can only add up to 2 fields. Upgrade to Pro Plugin');
           return;
         }
         
@@ -372,7 +372,7 @@
     var rows = tbody.querySelectorAll('.wps_etmfwpp_user_field_wrap');
     
     if (rows.length >= 2 && ! etmfw_edit_prod_param.is_pro_active) {
-      alert('You can only add up to 2 fields.');
+      alert('You can only add up to 2 fields. Upgrade to Pro Plugin');
       return;
     }
 
