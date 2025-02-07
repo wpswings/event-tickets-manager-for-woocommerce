@@ -351,6 +351,18 @@ class Event_Tickets_Manager_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_wps_etmfwp_transfer_ticket_org', $etmfw_plugin_public, 'wps_etmfwp_sharing_tickets_org', 11 );
 			$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfwp_transfer_ticket_org', $etmfw_plugin_public, 'wps_etmfwp_sharing_tickets_org', 11 );
 		}
+
+		// Ajax For User Type Pricing.
+		$this->loader->add_action( 'wp_ajax_wps_etmfwp_user_type_fun_calbck', $etmfw_plugin_public, 'wps_user_type_ajax_callbck', 10 );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfwp_user_type_fun_calbck', $etmfw_plugin_public, 'wps_user_type_ajax_callbck', 10 );
+		$this->loader->add_action( 'woocommerce_before_calculate_totals', $etmfw_plugin_public, 'wps_user_type_cart_total_price', 10, 1 );
+		$this->loader->add_filter( 'woocommerce_widget_cart_item_quantity', $etmfw_plugin_public, 'wps_user_type_widget_mini_cart', 10, 3 );
+
+		// Adding Additional User Type Data to cart.
+		$this->loader->add_filter( 'woocommerce_add_cart_item_data', $etmfw_plugin_public, 'wps_user_type_add_moredata_on_cart', 10, 3 );
+		$this->loader->add_filter( 'woocommerce_get_item_data', $etmfw_plugin_public, 'wps_user_type_add_metadataset_cart', 10, 2 );
+		$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $etmfw_plugin_public, 'wps_user_type_checkout_order_dataset', 10, 4 );
+		
 	}
 	}
 

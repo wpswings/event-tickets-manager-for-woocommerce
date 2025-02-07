@@ -12,7 +12,7 @@
  */
 
 ?>
-<p>
+<!-- <p> -->
 	<?php
 	switch ( $value['type'] ) {
 		case 'text':
@@ -149,4 +149,4 @@
 	}
 	do_action( 'wps_etmfw_after_input_fields', $value );
 	?>
-</p>
+<!-- </p> -->

@@ -2482,4 +2482,154 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		return $vars;
 	}
 
+	/**
+	 * This is function is used to set the ticket price on user type.
+	 *
+	 * @name wps_user_type_ajax_callbck.
+	 * @link http://www.wpswings.com/
+	 */
+	public function wps_user_type_ajax_callbck() {
+		check_ajax_referer( 'wps-etmfw-verify-public-nonce', 'wps_nonce' );
+		$wps_product_id = isset( $_REQUEST['event_product_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['event_product_id'] ) ) : '';
+		$wps_etmfw_product_array = get_post_meta( $wps_product_id, 'wps_etmfw_product_array', true );
+		$wps_base_price_condition = isset( $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] ) ? $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] : array();
+
+		if ( 'base_price' == $wps_base_price_condition ) {
+			$wps_total_price = get_option( 'wps_total_increased_value' );
+
+		} elseif ( 'not_base_price' == $wps_base_price_condition ) {
+			$wps_total_price = 0;
+		}
+
+		$product_price_on_user_select = isset( $_REQUEST['user_type_value_data'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['user_type_value_data'] ) ) : '';
+		$wps_product_type_name = isset( $_REQUEST['user_type_name_data'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['user_type_name_data'] ) ) : '';
+		$final_price = ( $product_price_on_user_select + $wps_total_price );
+		$response = wc_price( $final_price );
+		echo wp_json_encode( $response );
+		update_option( 'wps_user_type_value', $product_price_on_user_select );
+		update_option( 'wps_user_type_text', $wps_product_type_name );
+		wp_die();
+	}
+
+	/**
+	 * This is function is used to set the cart price on user type.
+	 *
+	 * @param object $cart is an object of cart.
+	 * @return void
+	 */
+	public function wps_user_type_cart_total_price( $cart ) {
+		if ( did_action( 'woocommerce_before_calculate_totals' ) >= 2 ) {
+			return;
+		}
+		$cart_data = $cart->get_cart();
+		foreach ( $cart_data as $cart ) {
+			if ( 'event_ticket_manager' === $cart['data']->get_type() && isset( $cart['event_role'] ) ) {
+				$product = $cart['data'];
+				if ( isset( $product ) && is_object( $product ) ) {
+					$price_html        = $cart['data']->get_price();
+					$custom_cart_data = $cart['event_role'];
+					$product_id = $product->get_id();
+					$etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
+
+					if ( ! empty( $etmfw_product_array ) && is_array( $etmfw_product_array ) && array_key_exists( 'wps_etmfw_field_user_type_price_data', $etmfw_product_array ) && array_key_exists( 'etmfw_event_price', $etmfw_product_array ) ) {
+						$wps_etmfw_field_days_price_data = $etmfw_product_array['wps_etmfw_field_user_type_price_data'];
+						if ( ! empty( $wps_etmfw_field_days_price_data ) && is_array( $wps_etmfw_field_days_price_data ) ) {
+							$price_html = $custom_cart_data['price'];
+						}
+					}
+
+					$wps_base_price_condition = isset( $etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] ) && ! empty( $etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] ) ? $etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] : array();
+
+					if ( 'base_price' == $wps_base_price_condition ) {
+						$wps_total_price = get_option( 'wps_total_increased_value' );
+					} elseif ( 'not_base_price' == $wps_base_price_condition ) {
+						$wps_total_price = 0;
+					}
+
+					$price_html = $price_html + $wps_total_price;
+					$cart['data']->set_price( $price_html );
+				}
+			}
+				delete_option( 'wps_user_type_value' );
+				delete_option( 'wps_user_type_text' );
+		}
+	}
+
+	/**
+	 * This is function is used to set the mini cart  on user type.
+	 *
+	 * @param string $output is an output.
+	 * @param object $cart_item is cart item object.
+	 * @param string $cart_item_key is key.
+	 * @return string
+	 */
+	public function wps_user_type_widget_mini_cart( $output, $cart_item, $cart_item_key ) {
+
+		return sprintf( '<span class="quantity">%1$s &times; <span class="woocommerce-Price-amount amount">%1$s</span>', $cart_item['quantity'] );
+	}
+
+	/**
+	 * This is function is used to add additional data in  cart  on user type.
+	 *
+	 * @param array $cart_item_data array containing cart items.
+	 * @param int   $product_id product id of the added prouct.
+	 * @param int   $variation_id variation product id.
+	 * @return array
+	 */
+	public function wps_user_type_add_moredata_on_cart( $cart_item_data, $product_id, $variation_id ) {
+
+		$engraving_text = get_option( 'wps_user_type_text' );
+		$price = get_option( 'wps_user_type_value' );
+
+		if ( empty( $engraving_text ) ) {
+			return $cart_item_data;
+		}
+		if ( 'Select User Type' !== $engraving_text ) {
+				$custom_data = array(
+					'role' => $engraving_text,
+					'price'   => $price,
+				);
+
+				$cart_item_data['event_role'] = $custom_data;
+		}
+		return $cart_item_data;
+	}
+
+	/**
+	 * This is function is used to set the mini cart  on user type.
+	 *
+	 * @param array $item_data array containing other data.
+	 * @param array $cart_item array containing cart items.
+	 * @return array
+	 */
+	public function wps_user_type_add_metadataset_cart( $item_data, $cart_item ) {
+
+		if ( isset( $cart_item['event_role'] ) && 'Select User Type' !== $cart_item['event_role']['role'] ) {
+			$custom_cart_data = $cart_item['event_role'];
+			$item_data[] = array(
+				'key'     => __( 'User Type', 'event-tickets-manager-for-woocommerce-pro' ),
+				'value'   => wc_clean( $custom_cart_data['role'] ),
+				'display' => '',
+			);
+		}
+		return $item_data;
+	}
+
+	/**
+	 * This is function is used to set data on checkout and order edit page on user type.
+	 *
+	 * @param object $item object containing the item details.
+	 * @param string $cart_item_key string containing arbitrary key of cart items.
+	 * @param array  $values array containing the values for the cart item key.
+	 * @param object $order current order object.
+	 * @return void
+	 */
+	public function wps_user_type_checkout_order_dataset( $item, $cart_item_key, $values, $order ) {
+		$custom_values = $item->legacy_values;
+		if ( isset( $custom_values['event_role'] ) && 'Select User Type' !== $custom_values['event_role']['role'] ) {
+			$custom_cart_data = $custom_values['event_role'];
+			$item->add_meta_data( __( 'User Type', 'event-tickets-manager-for-woocommerce-pro' ), $custom_cart_data['role'] );
+		}
+	}
+
 }
