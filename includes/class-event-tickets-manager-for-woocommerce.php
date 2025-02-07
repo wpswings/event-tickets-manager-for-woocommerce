@@ -247,6 +247,18 @@ class Event_Tickets_Manager_For_Woocommerce {
 		// reminder mail.
 		$this->loader->add_action( 'wps_event_tickets_manager_for_woocommerce_reminder_send', $etmfw_plugin_admin, 'wps_etmfwp_send_email_reminder' );
 
+		// Ajax For Create Recurring Events.
+		$this->loader->add_action( 'wp_ajax_wps_etmfw_create_recurring_event', $etmfw_plugin_admin, 'wps_etmfw_create_recurring_event_callbck', 10 );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_create_recurring_event', $etmfw_plugin_admin, 'wps_etmfw_create_recurring_event_callbck', 10 );
+
+		// Ajax Delete The Recurring Events.
+		$this->loader->add_action( 'wp_ajax_wps_etmfw_delete_recurring_event', $etmfw_plugin_admin, 'wps_etmfw_delete_recurring_event_callbck', 10 );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_delete_recurring_event', $etmfw_plugin_admin, 'wps_etmfw_delete_recurring_event_callbck', 10 );
+
+		// Submenu For The Recurring Event Info.
+		$this->loader->add_action( 'wps_etmfw_admin_sub_menu', $etmfw_plugin_admin, 'wps_etmfw_admin_recurring_submenu', 10 );
+		$this->loader->add_action( 'pre_get_posts', $etmfw_plugin_admin, 'wps_exclude_recurring_products_from_product_listing', 10 );
+	
 	}
 
 	/**

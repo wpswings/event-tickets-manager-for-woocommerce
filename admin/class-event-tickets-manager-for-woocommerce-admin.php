@@ -920,6 +920,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
 		$wps_etmfw_field_data = isset( $wps_etmfw_product_array['wps_etmfw_field_data'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_field_data'] ) ? $wps_etmfw_product_array['wps_etmfw_field_data'] : array();
 
+		$wps_is_product_is_recurring = get_post_meta( $product_id, 'is_recurring_' . $product_id, '' );
 		?>
 		<div id="wps_etmfw_event_data" class="panel woocommerce_options_panel">
 			<?php
@@ -1009,6 +1010,19 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				);
 			}
 			do_action( 'wps_etmfw_edit_product_settings', $product_id );
+
+			if ( empty( $wps_is_product_is_recurring ) ) {
+				woocommerce_wp_checkbox(
+					array(
+						'id' => 'etmfwp_recurring_event_enable',
+						'wrapper_class' => 'show_if_event_ticket_manager',
+						'label' => __( 'Recurring Event', 'event-tickets-manager-for-woocommerce' ),
+						'value' => isset( $wps_etmfw_product_array['etmfwp_recurring_event_enable'] ) ? $wps_etmfw_product_array['etmfwp_recurring_event_enable'] : true,
+						'desc_tip'    => true,
+						'description' => __( 'Makes this event as recurring event.', 'event-tickets-manager-for-woocommerce' ),
+					)
+				);
+			}
 
 			require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'templates/backend/event-tickets-manager-for-woocommerce-recurring-event.php';
 
@@ -1152,6 +1166,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					$wps_etmfw_product_array['wps_etmfw_field_data'] = $wps_etmfw_field_data_array;
 					$etmfw_display_map = isset( $_POST['etmfw_display_map'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_display_map'] ) ) : 'no';
 					$wps_etmfw_product_array['etmfw_display_map'] = $etmfw_display_map;
+					$wps_etmfw_product_array['etmfwp_recurring_event_enable'] = isset( $_POST['etmfwp_recurring_event_enable'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfwp_recurring_event_enable'] ) ) : 'no';
 					$wps_etmfw_product_array = apply_filters( 'wps_etmfw_product_pricing', $wps_etmfw_product_array, $_POST );
 					update_post_meta( $product_id, 'wps_etmfw_product_array', $wps_etmfw_product_array );
 					do_action( 'wps_etmfw_event_product_type_save_fields', $product_id );
@@ -1911,6 +1926,343 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					}
 				}
 			}
+		}
+	}
+
+	/**
+	 * Create the Recurrence Event here.
+	 *
+	 * @return void
+	 */
+	public function wps_etmfw_create_recurring_event_callbck() {
+		check_ajax_referer( 'wps-etmfw-verify-edit-prod-nonce', 'nonce' );
+		$wps_event_product_id  = isset( $_POST['product_id'] ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : '';
+
+		$wps_is_error = false;
+
+		if ( ! empty( $wps_event_product_id ) && isset( $wps_event_product_id ) ) {
+
+			$product_data = get_post_meta( $wps_event_product_id, 'wps_etmfw_product_array', array() );
+			$wps_recurring_event_enable = $product_data[0]['etmfwp_recurring_event_enable'];
+
+			$wps_event_recurring_type = $product_data[0]['wps_event_recurring_type'];
+			$wps_event_recurring_value = $product_data[0]['wps_event_recurring_value'];
+
+			$end_date = $product_data[0]['event_end_date_time']; // Replace with the desired end date.
+			$start_date = $product_data[0]['event_start_date_time'];
+
+			$start_date_time = new DateTime( $start_date );
+			$end_date_time = new DateTime( $end_date );
+			// Calculate the difference between the two dates.
+			$interval = $start_date_time->diff( $end_date_time );
+
+			// Check if the difference is exactly one week (7 days) and 0 hours, 0 minutes, and 0 seconds.
+			if ( ( $interval->days < 7 && ( 'weekly' === $wps_event_recurring_type ) ) || ( $interval->days < 30 && ( 'monthly' === $wps_event_recurring_type ) ) || ( $interval->days < 1 && ( 'daily' === $wps_event_recurring_type ) ) ) {
+				$wps_is_error = true;
+			}
+
+			$timestamp = strtotime( $end_date );
+
+			if ( false != $timestamp ) {
+				$wps_formatted_end_date = gmdate( 'Y-m-d', $timestamp );
+			}
+
+			$timestamp_start = strtotime( $start_date );
+
+			if ( false != $timestamp_start ) {
+				$wps_formatted_start_date = gmdate( 'Y-m-d', $timestamp_start );
+			}
+
+			if ( empty( $wps_event_recurring_type ) || empty( $wps_event_recurring_value || empty( $end_date ) || empty( $start_date ) ) || ( $wps_is_error ) ) {
+
+				$wps_is_error = true;
+			} else {
+
+				$this->convert_to_recurring_event( $wps_event_product_id, $wps_event_recurring_type, $wps_formatted_end_date, $wps_formatted_start_date, $wps_event_recurring_value, $product_data );
+			}
+		}
+		echo wp_json_encode( $wps_is_error );
+		wp_die();
+	}
+
+	/**
+	 * Creae the Recurrence Event Callback.
+	 *
+	 * @param int   $event_id is a eventproduct id.
+	 * @param int   $recurring_type is a recurring type.
+	 * @param int   $end_date is a end date.
+	 * @param int   $start_date is a start date.
+	 * @param int   $recurring_value is a recurring value.
+	 * @param array $product_data is a product value.
+	 * @return void
+	 */
+	public function convert_to_recurring_event( $event_id, $recurring_type, $end_date, $start_date, $recurring_value, $product_data ) {
+
+		$product = wc_get_product( $event_id );
+		$thumbnail_id = get_post_thumbnail_id( $event_id );
+		$event_title = get_the_title( $event_id );
+
+		$wps_event_venue = $product_data[0]['etmfw_event_venue'];
+		$wps_event_map = $product_data[0]['etmfw_display_map'];
+		$wps_event_lat = $product_data[0]['etmfw_event_venue_lat'];
+		$wps_event_log = $product_data[0]['etmfw_event_venue_lng'];
+
+		if ( 'daily' === $recurring_type ) {
+			$wps_daily_event_start_time = $product_data[0]['wps_event_recurring_daily_start_time'];
+			$wps_daily_event_end_time = $product_data[0]['wps_event_recurring_daily_end_time'];
+
+			// Split the time string into hour and minute using explode.
+			list($hour, $minute) = explode( ':', $wps_daily_event_start_time );
+
+			// Convert the hour and minute components to integers.
+			$hour = (int) $hour;
+			$minute = (int) $minute;
+
+			$date = new DateTime( $product_data[0]['event_start_date_time'] );
+			$date->setTime( $hour, $minute );
+			$wps_start_date = $date->format( 'Y-m-d g:i a' );
+
+			// Split the time string into hour and minute using explode.
+			list($hour, $minute) = explode( ':', $wps_daily_event_end_time );
+
+			// Convert the hour and minute components to integers.
+			$hour = (int) $hour;
+			$minute = (int) $minute;
+
+			$date = new DateTime( $product_data[0]['event_end_date_time'] );
+			$date->setTime( $hour, $minute );
+			// Format the DateTime object as a string in the desired format.
+			$wps_end_date = $date->format( 'Y-m-d g:i a' );
+		} else {
+
+			$wps_start_date = $product_data[0]['event_start_date_time'];
+			$wps_end_date = $product_data[0]['event_end_date_time'];
+		}
+
+		$wps_event_trash = $product_data[0]['etmfw_event_trash_event'];
+		$wps_event_fb_share = $product_data[0]['etmfwp_share_on_fb'];
+
+		// Parse the input date using strtotime for start date.
+		$start_date_timestamp = strtotime( $wps_start_date );
+		$start_formatted_date = gmdate( 'Y-m-d H:i:s', $start_date_timestamp );
+
+		// Parse the input date using strtotime for end date.
+		$end_date_timestamp = strtotime( $wps_end_date );
+		$end_formatted_date = gmdate( 'Y-m-d H:i:s', $end_date_timestamp );
+
+		// Set end date.
+		$wps_event_set_end_formatted_time = gmdate( '(H, i, s)', $end_date_timestamp );
+
+		// Remove the parentheses and split the string by commas.
+		$time_parts = explode( ',', str_replace( array( '(', ')', ' ' ), '', $wps_event_set_end_formatted_time ) );
+
+		// Extract the individual time components (hours, minutes, seconds).
+		$hours = (int) trim( $time_parts[0] );
+		$minutes = (int) trim( $time_parts[1] );
+		$seconds = (int) trim( $time_parts[2] );
+
+		$current_date = new DateTime( $start_formatted_date );
+		$end_date_obj = new DateTime( $end_formatted_date );
+		update_post_meta( $event_id, 'product_has_recurring', 'yes' );
+
+		while ( $current_date <= $end_date_obj ) {
+
+			// Calculate end date for the current instance based on recurring type.
+			$current_end_date = clone $current_date;
+			if ( 'weekly' === $recurring_type ) {
+				$current_end_date->modify( '+6 days' );
+				$current_end_date->setTime( $hours, $minutes, $seconds );
+			} elseif ( 'monthly' === $recurring_type ) {
+				$current_end_date->modify( 'last day of this month' );
+				$current_end_date->setTime( $hours, $minutes, $seconds );
+			}
+			$current_end_date->setTime( $hours, $minutes, $seconds );
+
+			$timestamp = strtotime( $current_date->format( 'Y-m-d' ) );
+			$formatted_date = gmdate( 'j M Y', $timestamp );
+
+			// Create a new event post for each recurring instance.
+			$new_event_id = wp_insert_post(
+				array(
+					'post_title' => $event_title . ' (' . $formatted_date . ')',
+					'post_type' => 'product',
+					'post_status' => 'publish',
+				)
+			);
+
+			// Define the array data for your recurring product (replace with your actual data).
+			$recurring_product_data = array(
+				'etmfw_event_price' => $product->get_price(),
+				'event_start_date_time' => $current_date->format( 'Y-m-d H:i:s' ),
+				'wps_etmfw_field_user_type_price_data_baseprice' => 'base_price',
+				'event_end_date_time' => $current_end_date->format( 'Y-m-d H:i:s' ),
+				'etmfw_event_venue' => $wps_event_venue,
+				'etmfw_event_venue_lat' => $wps_event_lat,
+				'etmfw_event_venue_lng' => $wps_event_log,
+				'etmfw_event_trash_event' => $wps_event_trash,
+				'wps_etmfw_dyn_name' => $product_data[0]['wps_etmfw_dyn_name'],
+				'wps_etmfw_dyn_mail' => $product_data[0]['wps_etmfw_dyn_mail'],
+				'wps_etmfw_dyn_contact' => $product_data[0]['wps_etmfw_dyn_contact'],
+				'wps_etmfw_dyn_date' => $product_data[0]['wps_etmfw_dyn_date'],
+				'wps_etmfw_dyn_address' => $product_data[0]['wps_etmfw_dyn_address'],
+				'wps_etmfw_field_user_type_price_data' => $product_data[0]['wps_etmfw_field_user_type_price_data'],
+				'wps_etmfw_field_days_price_data' => $product_data[0]['wps_etmfw_field_days_price_data'],
+				'wps_etmfw_field_stock_price_data' => $product_data[0]['wps_etmfw_field_stock_price_data'],
+				'wps_etmfw_field_data' => $product_data[0]['wps_etmfw_field_data'],
+				'etmfw_display_map' => $wps_event_map,
+				'etmfwp_share_on_fb' => $wps_event_fb_share,
+				'etmfwp_recurring_event_enable' => 'no',
+			);
+
+			// Assuming $product_id contains the ID of the created recurring product.
+			if ( $new_event_id ) {
+
+				$categories = wp_get_object_terms( $event_id, 'product_cat', array( 'fields' => 'ids' ) );
+				$tags = wp_get_object_terms( $event_id, 'product_tag', array( 'fields' => 'ids' ) );
+
+				if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) {
+					wp_set_object_terms( $new_event_id, $categories, 'product_cat' );
+				}
+
+				if ( ! is_wp_error( $tags ) && ! empty( $tags ) ) {
+					wp_set_object_terms( $new_event_id, $tags, 'product_tag' );
+				}
+
+				$manage_stock = get_post_meta( $event_id, '_manage_stock', true );
+				$stock = get_post_meta( $event_id, '_stock', true );
+				$stock_status = get_post_meta( $event_id, '_stock_status', true );
+
+				// Inherit stock management settings from the parent event.
+				update_post_meta( $new_event_id, '_manage_stock', $manage_stock );
+				update_post_meta( $new_event_id, '_stock', $stock );
+				update_post_meta( $new_event_id, '_stock_status', $$stock_status );
+				
+				// Save the array as post meta for the product.
+				wp_set_object_terms( $new_event_id, 'event_ticket_manager', 'product_type' );
+				update_post_meta( $new_event_id, 'wps_etmfw_product_array', $recurring_product_data );
+				update_post_meta( $new_event_id, '_price', $product->get_price() );
+				update_post_meta( $new_event_id, '_featured', 'yes' );
+				update_post_meta( $new_event_id, '_sku', $product->get_sku() );
+				update_post_meta( $new_event_id, '_thumbnail_id', $thumbnail_id );
+				update_post_meta( $new_event_id, 'is_recurring_' . $new_event_id, 'yes' );
+				update_post_meta( $new_event_id, 'parent_of_recurring', $event_id );
+			}
+			// Move to the next recurring date.
+			if ( 'daily' === $recurring_type ) {
+				$current_date->modify( "+$recurring_value day" );
+			} elseif ( 'weekly' === $recurring_type ) {
+				$current_date->modify( "+$recurring_value week" );
+			} elseif ( 'monthly' === $recurring_type ) {
+				$current_date->modify( "+$recurring_value month" );
+			}
+		}
+	}
+
+	/**
+	 * Delete the Recurrence Event here.
+	 *
+	 * @return void
+	 */
+	public function wps_etmfw_delete_recurring_event_callbck() {
+		check_ajax_referer( 'wps-etmfw-verify-edit-prod-nonce', 'nonce' );
+		$wps_event_product_id  = isset( $_POST['product_id'] ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : '';
+		delete_post_meta( $wps_event_product_id, 'product_has_recurring' );
+		$wps_is_error = false;
+		$args = array(
+			'post_type' => 'product',
+			'posts_per_page' => -1,
+			'meta_query' => array(
+				array(
+					'key' => 'parent_of_recurring',
+					'value' => $wps_event_product_id,
+					'compare' => '=',
+					'type' => 'NUMERIC',
+				),
+			),
+		);
+
+		$products_query = new WP_Query( $args );
+
+		if ( $products_query->have_posts() ) {
+			while ( $products_query->have_posts() ) {
+				$products_query->the_post();
+
+				$post_id = get_the_ID();
+				// Delete the post.
+				wp_delete_post( $post_id, true ); // Set the second parameter to true to force deletion.
+
+				// Delete all associated meta values.
+				$meta_keys = get_post_custom_keys( $post_id );
+				if ( ! empty( $meta_keys ) ) {
+					foreach ( $meta_keys as $meta_key ) {
+						delete_post_meta( $post_id, $meta_key );
+					}
+				}
+				wp_reset_postdata();
+			}
+			echo wp_json_encode( $wps_is_error );
+		}
+	}
+
+	/**
+	 * Dsiplay the Recurrence Event here.
+	 *
+	 * @return void
+	 */
+	public function wps_etmfw_admin_recurring_submenu() {
+		add_submenu_page( 'woocommerce', __( 'Events Recurring', 'event-tickets-manager-for-woocommerce' ), __( 'Events Recurring', 'event-tickets-manager-for-woocommerce' ), 'manage_options', 'wps-etmfw-recurring-events-info', array( $this, 'wps_etmfw_display_recurring_event_info' ) );
+	}
+
+	/**
+	 * Display  The Recurrence Event here.
+	 *
+	 * @return void
+	 */
+	public function wps_etmfw_display_recurring_event_info() {
+		$secure_nonce      = wp_create_nonce( 'wps-event-auth-nonce' );
+		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-event-auth-nonce' );
+		if ( ! $id_nonce_verified ) {
+			wp_die( esc_html__( 'Nonce Not verified', 'event-tickets-manager-for-woocommerce' ) );
+		}
+		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/class-event-tickets-manager-for-woocommerce-recurring-events-info.php';
+		$wp_list_table = new Event_Tickets_Manager_For_Woocommerce_Recurring_Events_Info();
+		$current_page = isset( $_REQUEST['page'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) : '';
+		?>
+		<div>
+			<form id="wps-events-filter" method="get">
+				<?php wp_nonce_field( 'wps-etmfw-events', 'wps-etmfw-events' ); ?>
+				<input type="hidden" name="page" value="<?php echo esc_attr( $current_page ); ?>" />
+				<?php $wp_list_table->prepare_items(); ?>
+				<?php $wp_list_table->search_box( __( 'Search ', 'event-tickets-manager-for-woocommerce' ), 'wps-etmfw-recurring-events' ); ?>
+				<?php $wp_list_table->display(); ?>
+			</form>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Display  The Recurrence Event here.
+	 *
+	 * @param array $query is a  listing data.
+	 * @return void
+	 */
+	public function wps_exclude_recurring_products_from_product_listing( $query ) {
+
+		try {
+			if ( is_admin() && $query->is_main_query() && $query->get( 'post_type' ) === 'product' ) {
+				$query->set(
+					'meta_query',
+					array(
+						array(
+							'key' => 'parent_of_recurring',
+							'compare' => 'NOT EXISTS',
+						),
+					)
+				);
+			}
+		} catch ( Exception $e ) {
+			// Handle the exception here, e.g., log the error or display an error message.
+			error_log( 'Error: ' . $e->getMessage() );
 		}
 	}
 }

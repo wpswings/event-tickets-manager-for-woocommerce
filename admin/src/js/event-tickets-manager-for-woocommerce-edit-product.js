@@ -401,4 +401,59 @@
       $(this).parents(".wps_etmfwpp_user_field_wrap").remove();
   });
 
+  $(document).on('click', '#wps_etmfw_create_recurring_id', function (e) {
+    e.preventDefault();
+    var button = document.getElementById('wps_etmfw_create_recurring_id');
+    const numberInput = parseFloat(document.getElementById('wps_recurring_value_id').value);
+
+    var wps_product_id = button.getAttribute('value');
+
+    if (numberInput < 0) {
+      alert('Please enter a non-negative number in event recurring input box.');
+    } else {
+      $("#wps_recurring_loader").removeClass("wps_recurring_loader_main");
+      $.ajax({
+          url: etmfw_edit_prod_param.ajaxurl,
+          type: 'POST',
+          data: {
+                action: 'wps_etmfw_create_recurring_event',
+                product_id: wps_product_id,
+                nonce: etmfw_edit_prod_param.wps_etmfw_edit_prod_nonce
+          },
+          datatType: 'JSON',
+          success: function (response) {
+                $("#wps_recurring_loader").addClass("wps_recurring_loader_main");
+                var result = JSON.parse(response);
+                if (result) {
+                    alert('Something Went Wrong.Please Check Settings.');
+                } else {
+                    alert('Recurring Event Products Are Created');
+                }
+          }
+      });
+    }
+  })
+
+  $(document).on('click', '#wps_etmfw_delete_create_recurring_id', function (e) {
+      e.preventDefault();
+      var button = document.getElementById('wps_etmfw_create_recurring_id');
+
+      var wps_product_id = button.getAttribute('value');
+      $("#wps_recurring_loader").removeClass("wps_recurring_loader_main");
+      $.ajax({
+          url: etmfw_edit_prod_param.ajaxurl,
+          type: 'POST',
+          data: {
+                action : 'wps_etmfw_delete_recurring_event',
+                product_id : wps_product_id,
+                nonce : etmfw_edit_prod_param.wps_etmfw_edit_prod_nonce
+          },
+          datatType: 'JSON',
+          success: function (response) {
+                $("#wps_recurring_loader").addClass("wps_recurring_loader_main");
+                alert('All Recurring Event Products Are Deleted');
+          }
+      });
+  })
+
 })(jQuery);
