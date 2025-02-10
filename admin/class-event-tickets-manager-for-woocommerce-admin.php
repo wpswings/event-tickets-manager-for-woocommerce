@@ -2087,6 +2087,8 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					'post_title' => $event_title . ' (' . $formatted_date . ')',
 					'post_type' => 'product',
 					'post_status' => 'publish',
+					'post_excerpt' => get_post_field( 'post_excerpt', $event_id ),
+					'post_content' => get_post_field( 'post_content', $event_id ),
 				)
 			);
 
