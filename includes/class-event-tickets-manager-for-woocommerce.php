@@ -328,8 +328,6 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		// Event Listing shortcode.
 		$this->loader->add_action( 'init', $etmfw_plugin_public, 'wp_shortcode_init_callback' );
-		$this->loader->add_action( 'wp_ajax_wps_filter_event_search', $etmfw_plugin_public, 'wps_filter_event_search_callback', 11 );
-		$this->loader->add_action( 'wp_ajax_nopriv_wps_filter_event_search', $etmfw_plugin_public, 'wps_filter_event_search_callback', 11 );
 
 		$this->loader->add_action( 'wp_ajax_wps_default_filter_product_search', $etmfw_plugin_public, 'wps_default_filter_product_search_callback', 11 );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_default_filter_product_search', $etmfw_plugin_public, 'wps_default_filter_product_search_callback', 11 );
