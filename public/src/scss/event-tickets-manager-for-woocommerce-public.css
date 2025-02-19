@@ -829,3 +829,76 @@ input#wps_etmfw_imput_ticket {
 }
 
 /* Event Listing using shortcode end */
+
+/* Form layout fixes start */
+.wps_etmfw_event_info_section,
+.wps_etmfw_addition_info_section {
+    margin-bottom: 15px;
+}
+
+.wps_etmfw_sub_wrapper {
+    position: relative;
+    padding: 10px;
+    border: 1px solid #dcdcdc;
+    margin: 10px 0 0;
+}
+
+.wps_etmfw_div_close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 24px;
+    transform: rotate(45deg);
+    line-height: 0;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #f00;
+    cursor: pointer;
+}
+
+.wps_etmfw_product_wrapper .wps_etmfw_addition_info_section input,
+.wps_etmfw_product_wrapper .wps_etmfw_addition_info_section textarea {
+    width: 100%;
+    margin: 0 0 10px;
+    min-height: 30px;
+    font-size: 16px;
+    padding: 8px 10px;
+    line-height: 1.25;
+}
+
+.wps_class_add_more_people {
+    display: block;
+    width: 100%;
+    min-height: 30px;
+    cursor: pointer;
+    margin: 15px 0;
+}
+
+.wps_class_add_more_people span {
+    font-size: 16px;
+    border: 1px solid;
+    display: inline-block;
+    padding: 5px 10px;
+}
+
+.wps_etmfw_addition_info_section input[type="text"], .wps_etmfw_addition_info_section input[type="email"], .wps_etmfw_addition_info_section textarea, .wps_etmfw_addition_info_section input[type="number"], .wps_etmfw_addition_info_section input[type="date"] {
+  max-width: 400px !important;
+  display: block;
+}
+.wps_etmfw_addition_info_section input[type="radio"] {
+  margin: 0;
+}
+
+.wps_etmfw_addition_info_section .wps-form-group {
+  margin: 0 0 10px;
+}
+
+.wps_etmfw_sub_wrapper {
+  display: inline-block;
+  width: 100%;
+  max-width: 400px;
+}
+/* Form layout fixes end */
