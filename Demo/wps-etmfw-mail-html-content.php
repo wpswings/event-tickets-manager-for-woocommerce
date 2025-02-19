@@ -56,9 +56,8 @@ $wps_set_the_pdf_ticket_template = get_option( 'wps_etmfw_ticket_template', '1' 
 								</td>
 								<?php
 									  $bg_color = ! empty( get_option( 'wps_etmfw_ticket_bg_color', '' ) ) ? get_option( 'wps_etmfw_ticket_bg_color' ) : '#2196f3';
-									  $text_color = ! empty( get_option( 'wps_etmfw_ticket_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_text_color' ) : '#ffffff';
 								?>
-								<td style="width: 60%;background: <?php echo esc_attr( $wps_etmfw_background_color ); ?>">
+								<td style="width: 60%;background: <?php echo esc_attr( $bg_color ); ?>">
 									<table class="wps_etmfw_ticket_body" style="padding: 20px; table-layout: auto; width: 100%;">
 										<tbody>
 											<tr>

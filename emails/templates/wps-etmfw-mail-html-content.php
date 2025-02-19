@@ -16,7 +16,7 @@ if ( is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-
 } else {
 	$wps_etmfw_background_color = ! empty( get_option( 'wps_etmfw_ticket_bg_color', '' ) ) ? get_option( 'wps_etmfw_ticket_bg_color' ) : '#f5ebeb';
 	$wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_ticket_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_text_color', '' ) : '#f5ebeb';
-	$wps_etmfw_body_text_color = ! empty( get_option( 'wps_etmfw_ticket_body_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_body_text_color', '' ) : '#f5ebeb';
+	$wps_etmfw_body_text_color = ! empty( get_option( 'wps_etmfw_ticket_body_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_body_text_color', '' ) : '';
 
 }
 
@@ -58,9 +58,8 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 								</td>
 								<?php
 									  $bg_color = ! empty( get_option( 'wps_etmfw_ticket_bg_color', '' ) ) ? get_option( 'wps_etmfw_ticket_bg_color' ) : '#2196f3';
-									  $text_color = ! empty( get_option( 'wps_etmfw_ticket_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_text_color' ) : '#ffffff';
 								?>
-								<td style="width: 60%;background: <?php echo esc_attr( $wps_etmfw_background_color ); ?>">
+								<td style="width: 60%;background: <?php echo esc_attr( $bg_color ); ?>">
 									<table class="wps_etmfw_ticket_body" style="padding: 20px; table-layout: auto; width: 100%;">
 										<tbody>
 											<tr>

@@ -90,7 +90,7 @@ if ( ! $error_notice ) {
 	</nav>
 
 	<section class="wps-section">
-	<div class="wps-rma__popup-for-pro-wrap">
+		<div class="wps-rma__popup-for-pro-wrap">
 			<div class="wps-rma__popup-for-pro-shadow"></div>
 			<div class="wps-rma__popup-for-pro">
 				<span class="wps-rma__popup-for-pro-close">+</span>

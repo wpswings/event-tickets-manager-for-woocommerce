@@ -99,7 +99,8 @@
         var rows = tbody.querySelectorAll('.wps_etmfw_field_wrap');
 
         if (rows.length >= 2 && ! etmfw_edit_prod_param.is_pro_active) {
-          alert('You can only add up to 2 fields. Upgrade to Pro Plugin');
+          $('.wps-rma__popup-for-pro-shadow').show();
+          $('.wps-rma__popup-for-pro').addClass('active-pro');
           return;
         }
         
@@ -303,6 +304,15 @@
     } else {
       $('.wps_event_daily_duration_wrap').hide(1000);
     }
+
+    $('#wps_recurring_type').on('change', function () {
+      if ($(this).find(':selected').hasClass('disabled-pro-option')) {
+          $('.wps-rma__popup-for-pro-shadow').show();
+          $('.wps-rma__popup-for-pro').addClass('active-pro');
+
+          $(this).val('daily');
+      }
+  });
   });
 
   $(document).ready(function () {
@@ -352,18 +362,24 @@
     });
 
     var input = document.getElementById("etmfw_set_limit_qty");
-    input.setAttribute("type", "number");
-    input.setAttribute("min", "1"); // Set the minimum value to 1.
-        // Check if input value is empty, then set it to 1
-        if (input.value === "") {
-          input.value = "1";
-        }
+    if (input) {
+      input.setAttribute("type", "number");
+      input.setAttribute("min", "1"); // Set the minimum value to 1.
+  
+      // Check if input value is empty, then set it to 1
+      if (input.value === "") {
+        input.value = "1";
+      }
+    }
     
-      document.getElementById('wps_recurring_value_id').addEventListener('input', function (e) {
+    var recurringInput = document.getElementById("wps_recurring_value_id");
+    if (recurringInput) {
+      recurringInput.addEventListener("input", function (e) {
         if (e.target.value < 0) {
-          alert('Negative input is not allowed');
+          alert("Negative input is not allowed");
         }
-    });
+      });
+    }
   });
 
   $(document).on('click', '.wps_etmfwppp_user_add_fields_button', function () {
@@ -372,7 +388,8 @@
     var rows = tbody.querySelectorAll('.wps_etmfwpp_user_field_wrap');
     
     if (rows.length >= 2 && ! etmfw_edit_prod_param.is_pro_active) {
-      alert('You can only add up to 2 fields. Upgrade to Pro Plugin');
+      $('.wps-rma__popup-for-pro-shadow').show();
+      $('.wps-rma__popup-for-pro').addClass('active-pro');
       return;
     }
 

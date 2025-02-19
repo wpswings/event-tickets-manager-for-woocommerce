@@ -97,6 +97,7 @@ if ( $activated ) {
 		event_tickets_manager_for_woocommerce_constants( 'CLIENT_ID', get_option( 'wps_etmfw_google_client_id', '' ) );
 		event_tickets_manager_for_woocommerce_constants( 'CLIENT_SECRET', get_option( 'wps_etmfw_google_client_secret', '' ) );
 		event_tickets_manager_for_woocommerce_constants( 'CLIENT_REDIRECT_URL', get_option( 'wps_etmfw_google_redirect_url', '' ) );
+		event_tickets_manager_for_woocommerce_constants( 'HTML_EMAIL_HEADERS', array( 'Content-Type: text/html; charset=UTF-8' ) );
 
 	}
 

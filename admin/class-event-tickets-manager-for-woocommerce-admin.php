@@ -169,6 +169,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			array(
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 				'wps_etmfw_edit_prod_nonce'   => wp_create_nonce( 'wps-etmfw-verify-edit-prod-nonce' ),
+				'is_pro_active' => $wps_is_pro_active,
 			)
 		);
 		wp_enqueue_media();

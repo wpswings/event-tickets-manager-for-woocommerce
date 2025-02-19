@@ -791,7 +791,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		} elseif ( '4' == $wps_set_the_pdf_ticket_template ) {
 			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-3.php'; // Mellifluous.
 		} elseif ( '5' == $wps_set_the_pdf_ticket_template ) {
-			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-4.php'; // unknown.
+			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-4.php'; // Vertico.
 		} elseif ( '6' == $wps_set_the_pdf_ticket_template ) {
 			include EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'emails/templates/wps-etmfw-mail-html-content-5.php'; // Nexus.
 		} elseif ( '7' == $wps_set_the_pdf_ticket_template ) {
@@ -2607,6 +2607,89 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			$custom_cart_data = $custom_values['event_role'];
 			$item->add_meta_data( __( 'User Type', 'event-tickets-manager-for-woocommerce-pro' ), $custom_cart_data['role'] );
 		}
+	}
+	
+	/**
+	 * Change event price.
+	 *
+	 * @param string $price_html is a price value.
+	 * @param object $product is a object.
+	 * @return string
+	 */
+	public function wps_etmfwp_change_event_price( $price_html, $product ) {
+		if ( isset( $product ) && is_object( $product ) && is_product() ) {
+			if ( $product->is_type( 'event_ticket_manager' ) ) {
+				$product_id = $product->get_id();
+				$etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
+				$stock = $product->get_stock_quantity();
+				$wps_days_price = 0;
+				$wps_stock_price = 0;
+				$orig_price = 0;
+
+				$wps_etmfw_field_days_price_data = $etmfw_product_array['wps_etmfw_field_days_price_data'];
+				if ( ! empty( $etmfw_product_array ) && is_array( $etmfw_product_array ) ) {
+
+					if ( ! empty( $etmfw_product_array ) && is_array( $etmfw_product_array ) && array_key_exists( 'wps_etmfw_field_stock_price_data', $etmfw_product_array ) && array_key_exists( 'etmfw_event_price', $etmfw_product_array ) ) {
+						$wps_etmfw_field_stock_price_data = $etmfw_product_array['wps_etmfw_field_stock_price_data'];
+						$orig_price = $etmfw_product_array['etmfw_event_price'];
+						if ( ! empty( $wps_etmfw_field_stock_price_data ) && is_array( $wps_etmfw_field_stock_price_data ) ) {
+							foreach ( $wps_etmfw_field_stock_price_data as $key => $value ) {
+								if ( 0 != $stock ) {
+
+									if ( $stock == $value['label'] ) {
+										$wps_stock_price = 0;
+
+										if ( 'fixed' == $value['type'] ) {
+
+											$wps_stock_price  = ( $wps_stock_price + $value['price'] );
+										} else if ( 'percentage' == $value['type'] ) {
+											$wps_stock_price = $wps_stock_price + ( ( $orig_price * $value['price'] ) / 100 );
+										}
+									}
+								}
+							}
+						}
+					}
+					if ( ! empty( $etmfw_product_array ) && is_array( $etmfw_product_array ) && array_key_exists( 'wps_etmfw_field_days_price_data', $etmfw_product_array ) && array_key_exists( 'etmfw_event_price', $etmfw_product_array ) ) {
+						$wps_etmfw_field_days_price_data = $etmfw_product_array['wps_etmfw_field_days_price_data'];
+						$orig_price = $etmfw_product_array['etmfw_event_price'];
+						$start_date = $etmfw_product_array['event_start_date_time'];
+						$start_timestamp = strtotime( $start_date );
+						$current_date_time = strtotime( gmdate( 'Y-m-d h:i ', time() ) );
+						$diff = (int) $start_timestamp - $current_date_time;
+						if ( ! empty( $wps_etmfw_field_days_price_data ) && is_array( $wps_etmfw_field_days_price_data ) ) {
+							foreach ( $wps_etmfw_field_days_price_data as $key => $value ) {
+								$no_of_days = $value['label'];
+								$no_of_days_to_seconds = ( (int) $no_of_days + 1 ) * 86400;
+								if ( 0 != $no_of_days ) {
+									$wps_days_price = 0;
+									if ( $diff <= $no_of_days_to_seconds ) {
+
+										if ( 'fixed' == $value['type'] ) {
+
+											$wps_days_price = $wps_days_price + $value['price'];
+										} else if ( 'percentage' == $value['type'] ) {
+											$wps_days_price = $wps_days_price + ( ( $orig_price * $value['price'] ) / 100 );
+										}
+									}
+								}
+							}
+						}
+					}
+					$wps_total_price = (float) $wps_days_price + (float) $wps_stock_price + (float) $orig_price;
+					update_option( 'wps_total_increased_value', $wps_total_price );
+					$price_html = wc_price( (float) $wps_days_price + (float) $wps_stock_price + (float) $orig_price );
+					return $price_html;
+				} else {
+					return $price_html;
+				}
+			} else {
+				return $price_html;
+			}
+		} else {
+			return $price_html;
+		}
+
 	}
 
 }
