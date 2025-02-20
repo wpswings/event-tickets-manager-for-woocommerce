@@ -202,6 +202,14 @@ div#wps_etmwf_event_venue img {
   flex-wrap: wrap;
 }
 
+.woocommerce .product-type-event_ticket_manager form.cart .wps_etmfw_product_wrapper+div.quantity {
+  margin: 0 10px 0 0;
+}
+
+.woocommerce .product-type-event_ticket_manager form.cart .wps_etmfw_product_wrapper+div.quantity input,.woocommerce .product-type-event_ticket_manager form.cart .wps_etmfw_product_wrapper~button {
+  margin: 0;
+}
+
 .woocommerce-message,
 .woocommerce-info,
 .woocommerce-error,
