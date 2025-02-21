@@ -38,7 +38,7 @@ $etmfw_tab_key = '';
 				'etmfw_home_settings_array',
 				array(
 					array(
-						'title' => __( 'Enable Tracking', 'subscriptions-for-woocommerce' ),
+						'title' => __( 'Enable Tracking', 'event-tickets-manager-for-woocommerce' ),
 						'type'  => 'radio-switch',
 						'id'    => 'wps_etmfw_enable_tracking',
 						'value' => get_option( 'wps_etmfw_enable_tracking' ),

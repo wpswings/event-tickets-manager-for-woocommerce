@@ -1170,6 +1170,12 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					$wps_etmfw_product_array['etmfwp_recurring_event_enable'] = isset( $_POST['etmfwp_recurring_event_enable'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfwp_recurring_event_enable'] ) ) : 'no';
 					$wps_etmfw_product_array = apply_filters( 'wps_etmfw_product_pricing', $wps_etmfw_product_array, $_POST );
 					update_post_meta( $product_id, 'wps_etmfw_product_array', $wps_etmfw_product_array );
+
+					if ( 'yes' === $wps_etmfw_product_array['etmfwp_recurring_event_enable'] ) {
+						update_post_meta( $product_id, 'product_has_recurring', 'yes');
+					} else {
+						update_post_meta( $product_id, 'product_has_recurring', 'no');
+					}
 					do_action( 'wps_etmfw_event_product_type_save_fields', $product_id );
 
 					do_action( 'wps_etmfw_share_event_on_fb', $product_id );
@@ -2265,7 +2271,6 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			}
 		} catch ( Exception $e ) {
 			// Handle the exception here, e.g., log the error or display an error message.
-			error_log( 'Error: ' . $e->getMessage() );
 		}
 	}
 }

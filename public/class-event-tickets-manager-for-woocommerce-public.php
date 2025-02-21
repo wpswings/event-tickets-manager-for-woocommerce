@@ -737,6 +737,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @param int    $order_id Order Id.
 	 * @param string $ticket_number Ticket Number.
 	 * @param int    $product_id Product Id.
+	 * @param int    $j Count.
 	 * @return string $wps_ticket_details Ticket Details.
 	 * @author WPSwings<ticket@wpswings.com>
 	 * @link https://www.wpswings.com/
@@ -2076,11 +2077,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		check_ajax_referer( 'wps-etmfw-verify-public-nonce', 'wps_nonce' );
 		$search_term = isset( $_POST['search_term'] ) ? sanitize_text_field( wp_unslash( $_POST['search_term'] ) ) : '';
 
-		// Get the current page from AJAX request, default to page 1
+		// Get the current page from AJAX request, default to page 1.
 		$paged = isset( $_POST['page'] ) ? absint( $_POST['page'] ) : 1;
 		$posts_per_page = 12;
 	
-		// Get total number of products
+		// Get total number of products.
 		$total_products = count( wc_get_products( array(
 			'limit'    => -1,
 			'status'   => 'publish',
@@ -2146,7 +2147,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$wps_event_start_date_time = $event['start_date'];
 				$wps_etmfw_product_array = $event['event_data'];
 
-				// Format the date
+				// Format the date.
 				$wps_event_formated_start_date_time = gmdate( 'F j, Y | h:ia', $wps_event_start_date_time );
 				$wps_event_formated_start_day       = gmdate( 'l', $wps_event_start_date_time );
 				$wps_event_formated_start_date      = gmdate( 'j', $wps_event_start_date_time );
@@ -2203,7 +2204,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						$html .= '<li><a class="page-numbers" data-page="' . $i . '">' . $i . '</a></li>';
 					}
 				}
-				elseif ( $i == 3 && $paged > 3 ) {
+				elseif ( 3 == $i && $paged > 3 ) {
 					$html .= '<li class="page-numbers_static">...</li>';
 				}
 				elseif ( $i == $total_pages - 2 && $paged < $total_pages - 3 ) {
@@ -2585,7 +2586,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		if ( isset( $cart_item['event_role'] ) && 'Select User Type' !== $cart_item['event_role']['role'] ) {
 			$custom_cart_data = $cart_item['event_role'];
 			$item_data[] = array(
-				'key'     => __( 'User Type', 'event-tickets-manager-for-woocommerce-pro' ),
+				'key'     => __( 'User Type', 'event-tickets-manager-for-woocommerce' ),
 				'value'   => wc_clean( $custom_cart_data['role'] ),
 				'display' => '',
 			);
@@ -2606,7 +2607,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$custom_values = $item->legacy_values;
 		if ( isset( $custom_values['event_role'] ) && 'Select User Type' !== $custom_values['event_role']['role'] ) {
 			$custom_cart_data = $custom_values['event_role'];
-			$item->add_meta_data( __( 'User Type', 'event-tickets-manager-for-woocommerce-pro' ), $custom_cart_data['role'] );
+			$item->add_meta_data( __( 'User Type', 'event-tickets-manager-for-woocommerce' ), $custom_cart_data['role'] );
 		}
 	}
 	
