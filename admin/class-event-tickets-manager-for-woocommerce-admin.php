@@ -2271,6 +2271,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			}
 		} catch ( Exception $e ) {
 			// Handle the exception here, e.g., log the error or display an error message.
+			update_option( 'wps_query_error', $e->getMessage() );
 		}
 	}
 }

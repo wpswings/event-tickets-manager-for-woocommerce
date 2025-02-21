@@ -3,9 +3,9 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: event registration, calendar, RSVP, wp events plugin, tickets
 Requires at least: 6.1
-Tested up to: 6.7.1
+Tested up to: 6.7.2
 WC requires at least: 6.1
-WC tested up to: 9.6.0
+WC tested up to: 9.6.2
 Stable tag: 1.4.2
 Requires PHP: 7.4
 License: GNU General Public License v3.0
