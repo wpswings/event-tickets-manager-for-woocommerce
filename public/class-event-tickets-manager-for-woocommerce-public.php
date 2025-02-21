@@ -2117,7 +2117,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$wps_product_image_src = ( is_array( $image ) && isset( $image[0] ) ) ? $image[0] : EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/placeholder.jpg';
 				$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
 
-				$wps_event_start_date_time = strtotime( $wps_etmfw_product_array['event_start_date_time'] );
+				$event_start_date_time = isset( $wps_etmfw_product_array['event_start_date_time'] ) ? $wps_etmfw_product_array['event_start_date_time'] : '';
+				$wps_event_start_date_time = strtotime( $event_start_date_time );
 
 				$events[] = array(
 					'product' => $product,
@@ -2626,7 +2627,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$wps_stock_price = 0;
 				$orig_price = 0;
 
-				$wps_etmfw_field_days_price_data = $etmfw_product_array['wps_etmfw_field_days_price_data'];
 				if ( ! empty( $etmfw_product_array ) && is_array( $etmfw_product_array ) ) {
 
 					if ( ! empty( $etmfw_product_array ) && is_array( $etmfw_product_array ) && array_key_exists( 'wps_etmfw_field_stock_price_data', $etmfw_product_array ) && array_key_exists( 'etmfw_event_price', $etmfw_product_array ) ) {
