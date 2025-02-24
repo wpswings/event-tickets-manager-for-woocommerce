@@ -16,7 +16,7 @@ if ( is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-
 } else {
 	$wps_etmfw_background_color = ! empty( get_option( 'wps_etmfw_ticket_bg_color', '' ) ) ? get_option( 'wps_etmfw_ticket_bg_color' ) : '#f5ebeb';
 	$wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_ticket_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_text_color', '' ) : '#f5ebeb';
-	$wps_etmfw_body_text_color = ! empty( get_option( 'wps_etmfw_ticket_body_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_body_text_color', '' ) : '#f5ebeb';
+	$wps_etmfw_body_text_color = ! empty( get_option( 'wps_etmfw_ticket_body_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_body_text_color', '' ) : '';
 
 }
 
@@ -46,10 +46,10 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 	</style>	
 </head>
 <body>	
-	<table cellspacing="0" class="wps_etmfw_border_color" id = "wps_etmfw_parent_wrapper" cellpadding="0" style="padding: 20px;table-layout: auto; width: 100%;border:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>"> 
+	<table cellspacing="0" class="wps_etmfw_border_color" id = "wps_etmfw_parent_wrapper" cellpadding="0" style="padding: 20px;table-layout: auto; width: 100%;border:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>;margin:0;"> 
 		<tbody>
 			<tr>
-				<td style="padding: 20px;">
+				<td style="padding: 20px;border-bottom:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>;">
 					<table cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;">
 						<tbody>
 							<tr style="width: 100%;">
@@ -58,9 +58,8 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 								</td>
 								<?php
 									  $bg_color = ! empty( get_option( 'wps_etmfw_ticket_bg_color', '' ) ) ? get_option( 'wps_etmfw_ticket_bg_color' ) : '#2196f3';
-									  $text_color = ! empty( get_option( 'wps_etmfw_ticket_text_color', '' ) ) ? get_option( 'wps_etmfw_ticket_text_color' ) : '#ffffff';
 								?>
-								<td style="width: 60%;background: <?php echo esc_attr( $wps_etmfw_background_color ); ?>">
+								<td style="width: 60%;background: <?php echo esc_attr( $bg_color ); ?>">
 									<table class="wps_etmfw_ticket_body" style="padding: 20px; table-layout: auto; width: 100%;">
 										<tbody>
 											<tr>
@@ -135,33 +134,41 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 					[ADDITIONALINFO]
 				</td>
 			</tr>
-		</tbody>
-	</table>
 	<?php if ( is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) {  ?>
-	<div id="wps_etmfw_parent_wrapper_2" class="wps_etmfw_border_color" style="margin-right:0px;margin-left:0px;border:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>">
-	<?php
-	$body = get_option( 'wps_etmfw_email_body_content', '' );
-	if ( '' != $body ) {
-		?>
-									<h4 style="padding: 10px;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>">Note</h4>
-									<div style="padding: 20px;width:auto;text-align:left;vertical-align: middle;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?> ! important; ">
-									[EMAILBODYCONTENT]
-									</div>
-									<?php } ?>
-	</div>
+			<tr>
+				<td style="padding: 0 10px;border-top:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>;">
+				<div id="wps_etmfw_parent_wrapper_2" class="wps_etmfw_border_color" style="width:100%;margin-right:0px;margin-left:0px;">
+				<?php
+				$body = get_option( 'wps_etmfw_email_body_content', '' );
+				if ( '' != $body ) {
+					?>
+												<h4 style="font-weight:600;padding: 10px 10px 0;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;margin:0;">Note</h4>
+												<div style="padding: 10px;width:auto;text-align:left;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?> ! important; ">
+												[EMAILBODYCONTENT]
+												</div>
+												<?php } ?>
+				</div>
+				</td>
+			</tr>
 <?php } else { ?>
-	<div id="wps_etmfw_parent_wrapper_2" class="wps_etmfw_border_color" style="margin-right:0px;margin-left:0px;border:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>">
-	<?php
-	$body = get_option( 'wps_etmfw_email_body_content', '' );
-	if ( '' != $body ) {
-		?>
-									<h4 style="padding: 10px;color: <?php echo esc_attr( $wps_etmfw_body_text_color ); ?>">Note</h4>
-									<div style="padding: 20px;width:auto;text-align:left;vertical-align: middle;color: <?php echo esc_attr( $wps_etmfw_body_text_color ); ?> ! important; ">
-									[EMAILBODYCONTENT]
-									</div>
-									<?php } ?>
-	</div>
-
-<?php } ?>
+			<tr>
+				<td style="padding: 0 10px;border-top:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>;">
+					<div id="wps_etmfw_parent_wrapper_2" class="wps_etmfw_border_color" style="width:100%;margin-right:0px;margin-left:0px;">
+					<?php
+					$body = get_option( 'wps_etmfw_email_body_content', '' );
+					if ( '' != $body ) {
+						?>
+													<h4 style="font-weight:600;padding: 10px 10px 0;color: <?php echo esc_attr( $wps_etmfw_body_text_color ); ?>;margin:0;">Note</h4>
+													<div style="padding: 10px;width:auto;text-align:left;color: <?php echo esc_attr( $wps_etmfw_body_text_color ); ?> ! important; ">
+													[EMAILBODYCONTENT]
+													</div>
+													<?php } ?>
+					</div>
+					
+				</td>
+		</tr>
+					<?php } ?>
+	</tbody>
+</table>
 </body>
 </html>

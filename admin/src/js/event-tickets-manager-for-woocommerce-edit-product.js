@@ -96,10 +96,14 @@
 
       var tbody = document.querySelector('.wps_etmfw_field_body');
 
-        // Get all existing field rows
         var rows = tbody.querySelectorAll('.wps_etmfw_field_wrap');
+
+        if (rows.length >= 2 && ! etmfw_edit_prod_param.is_pro_active) {
+          $('.wps-rma__popup-for-pro-shadow').show();
+          $('.wps-rma__popup-for-pro').addClass('active-pro');
+          return;
+        }
         
-        // Check if all previous inputs are filled
         var allFilled = true;
         rows.forEach(function(row) {
             var labelInput = row.querySelector('.wps_etmfw_field_label');
@@ -110,7 +114,6 @@
             }
         });
 
-        // If all previous inputs are filled, add a new row
       if (allFilled) {
           
         var fieldsetId = $(document)
@@ -301,6 +304,15 @@
     } else {
       $('.wps_event_daily_duration_wrap').hide(1000);
     }
+
+    $('#wps_recurring_type').on('change', function () {
+      if ($(this).find(':selected').hasClass('disabled-pro-option')) {
+          $('.wps-rma__popup-for-pro-shadow').show();
+          $('.wps-rma__popup-for-pro').addClass('active-pro');
+
+          $(this).val('daily');
+      }
+  });
   });
 
   $(document).ready(function () {
@@ -350,18 +362,115 @@
     });
 
     var input = document.getElementById("etmfw_set_limit_qty");
-    input.setAttribute("type", "number");
-    input.setAttribute("min", "1"); // Set the minimum value to 1.
-        // Check if input value is empty, then set it to 1
-        if (input.value === "") {
-          input.value = "1";
-        }
+    if (input) {
+      input.setAttribute("type", "number");
+      input.setAttribute("min", "1"); // Set the minimum value to 1.
+  
+      // Check if input value is empty, then set it to 1
+      if (input.value === "") {
+        input.value = "1";
+      }
+    }
     
-      document.getElementById('wps_recurring_value_id').addEventListener('input', function (e) {
+    var recurringInput = document.getElementById("wps_recurring_value_id");
+    if (recurringInput) {
+      recurringInput.addEventListener("input", function (e) {
         if (e.target.value < 0) {
-          alert('Negative input is not allowed');
+          alert("Negative input is not allowed");
+        }
+      });
+    }
+  });
+
+  $(document).on('click', '.wps_etmfwppp_user_add_fields_button', function () {
+               
+    var tbody = document.querySelector('.wps_etmfwpp_user_field_body');
+    var rows = tbody.querySelectorAll('.wps_etmfwpp_user_field_wrap');
+    
+    if (rows.length >= 2 && ! etmfw_edit_prod_param.is_pro_active) {
+      $('.wps-rma__popup-for-pro-shadow').show();
+      $('.wps-rma__popup-for-pro').addClass('active-pro');
+      return;
+    }
+
+    var allFilled = true;
+    rows.forEach(function(row) {
+        var labelInput = row.querySelector('.wps_etmfwpp_field_label');
+        var priceInput = row.querySelector('.wps_etmfwpp_field_price');
+        if (labelInput.value.trim() === '' || priceInput.value.trim() === '') {
+            allFilled = false;
         }
     });
+
+    if (allFilled) {
+      var fieldsetId = $(document).find('.wps_etmfwpp_user_field_table').find('.wps_etmfwpp_user_field_wrap').last().attr('data-id');
+      fieldsetId = fieldsetId?fieldsetId.replace(/[^0-9]/gi, ''):0;
+      let mainId = Number(fieldsetId) + 1;
+      var field_html = '<tr class="wps_etmfwpp_user_field_wrap" data-id="'+mainId+'"><td class="etmfwpp-user-drag-icon"><i class="dashicons dashicons-move"></i></td><td class="form-field wps_etmfwpp_label_fields"><input type="text" class="wps_etmfwpp_field_label" min = 0 style="" name="etmfwppp_fields['+mainId+'][_label]" id="label_fields_'+mainId+'" value="" placeholder="" required></td><td class="form-field wps_etmfwpp_price_fields"><input type="number" class="wps_etmfwpp_field_price" min = 0 id ="wps_recurring_value_id" name="etmfwppp_fields['+mainId+'][_price]" id="price_fields_'+mainId+'" required></td><td class="wps_etmfwpp_remove_row"><input type="button" name="wps_user_type_remove" class="wps_user_type_remove" value="Remove"></td></tr>';
+      $(document).find('.wps_etmfwpp_user_field_body').append( field_html );
+    } else {
+        alert('Please fill out all previous inputs before adding a new row. 1');
+    }
   });
+
+  $(document).on("click", ".wps_user_type_remove", function(e){
+      e.preventDefault();
+      $(this).parents(".wps_etmfwpp_user_field_wrap").remove();
+  });
+
+  $(document).on('click', '#wps_etmfw_create_recurring_id', function (e) {
+    e.preventDefault();
+    var button = document.getElementById('wps_etmfw_create_recurring_id');
+    const numberInput = parseFloat(document.getElementById('wps_recurring_value_id').value);
+
+    var wps_product_id = button.getAttribute('value');
+
+    if (numberInput < 0) {
+      alert('Please enter a non-negative number in event recurring input box.');
+    } else {
+      $("#wps_recurring_loader").removeClass("wps_recurring_loader_main");
+      $.ajax({
+          url: etmfw_edit_prod_param.ajaxurl,
+          type: 'POST',
+          data: {
+                action: 'wps_etmfw_create_recurring_event',
+                product_id: wps_product_id,
+                nonce: etmfw_edit_prod_param.wps_etmfw_edit_prod_nonce
+          },
+          datatType: 'JSON',
+          success: function (response) {
+                $("#wps_recurring_loader").addClass("wps_recurring_loader_main");
+                var result = JSON.parse(response);
+                if (result) {
+                    alert('Something Went Wrong.Please Check Settings.');
+                } else {
+                    alert('Recurring Event Products Are Created');
+                }
+          }
+      });
+    }
+  })
+
+  $(document).on('click', '#wps_etmfw_delete_create_recurring_id', function (e) {
+      e.preventDefault();
+      var button = document.getElementById('wps_etmfw_create_recurring_id');
+
+      var wps_product_id = button.getAttribute('value');
+      $("#wps_recurring_loader").removeClass("wps_recurring_loader_main");
+      $.ajax({
+          url: etmfw_edit_prod_param.ajaxurl,
+          type: 'POST',
+          data: {
+                action : 'wps_etmfw_delete_recurring_event',
+                product_id : wps_product_id,
+                nonce : etmfw_edit_prod_param.wps_etmfw_edit_prod_nonce
+          },
+          datatType: 'JSON',
+          success: function (response) {
+                $("#wps_recurring_loader").addClass("wps_recurring_loader_main");
+                alert('All Recurring Event Products Are Deleted');
+          }
+      });
+  })
 
 })(jQuery);

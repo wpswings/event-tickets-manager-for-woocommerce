@@ -15,7 +15,7 @@
  * Plugin Name:          Event Tickets Manager for WooCommerce
  * Plugin URI:           https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/
  * Description:          <code><strong>Event Tickets Manager for WooCommerce</strong></code> is all-in-one solution to create an event , manage ticket stocks download ticket as PDFs & much more. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-events&utm_medium=events-org-backend&utm_campaign=official">Elevate your e-commerce store by exploring more on <strong>WP Swings</strong></a>
- * Version:              1.4.1
+ * Version:              1.4.2
  * Author:               WP Swings
  * Author URI:           https://wpswings.com/?utm_source=wpswings-events-official&utm_medium=events-org-page&utm_campaign=official
  * Text Domain:          event-tickets-manager-for-woocommerce
@@ -23,9 +23,9 @@
  *
  * Requires Plugins:  woocommerce
  * Requires at least:    5.2.4
- * Tested up to:         6.7.1
+ * Tested up to:         6.7.2
  * WC requires at least: 6.1
- * WC tested up to:      9.6.0
+ * WC tested up to:      9.6.2
  * License:              GNU General Public License v3.0
  * License URI:          http://www.gnu.org/licenses/gpl-3.0.html
  */
@@ -86,7 +86,7 @@ if ( $activated ) {
 	 */
 	function define_event_tickets_manager_for_woocommerce_constants() {
 
-		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION', '1.4.1' );
+		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION', '1.4.2' );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com' );
@@ -97,6 +97,7 @@ if ( $activated ) {
 		event_tickets_manager_for_woocommerce_constants( 'CLIENT_ID', get_option( 'wps_etmfw_google_client_id', '' ) );
 		event_tickets_manager_for_woocommerce_constants( 'CLIENT_SECRET', get_option( 'wps_etmfw_google_client_secret', '' ) );
 		event_tickets_manager_for_woocommerce_constants( 'CLIENT_REDIRECT_URL', get_option( 'wps_etmfw_google_redirect_url', '' ) );
+		event_tickets_manager_for_woocommerce_constants( 'HTML_EMAIL_HEADERS', array( 'Content-Type: text/html; charset=UTF-8' ) );
 
 	}
 
@@ -568,16 +569,6 @@ if ( $activated ) {
 		return date_i18n( get_option( 'time_format' ), strtotime( $date ) );// get format from WordPress settings.
 	}
 
-	/**
-	 * Function to register event widget.
-	 */
-	function wps_etmfw_register_widget() {
-		register_widget( 'event_tickets_manager_for_woocommerce_widget' );
-	}
-	add_action( 'widgets_init', 'wps_etmfw_register_widget' );
-
-	require plugin_dir_path( __FILE__ ) . 'includes/class-event-tickets-manager-for-woocommerce-widget.php';
-
 	add_action( 'admin_init', 'wps_etmfw_migration_code' );
 
 	/**
@@ -720,6 +711,20 @@ if ( $activated ) {
 			}
 		}
 	}
+
+	/**
+	 * Function for sending remainder.
+	 *
+	 * @return void
+	 */
+	function wps_event_reminder_checking() {
+		if ( ! wp_next_scheduled( 'wps_event_tickets_manager_for_woocommerce_reminder_send' ) ) {
+			wp_schedule_event( strtotime( 'tomorrow' ), 'daily', 'wps_event_tickets_manager_for_woocommerce_reminder_send' );
+		}
+	}
+
+	add_action( 'init', 'wps_event_reminder_checking' );
+
 } else {
 
 	/**

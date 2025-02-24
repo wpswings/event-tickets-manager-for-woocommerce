@@ -71,18 +71,15 @@
              var wps_search_input = $(this).val().trim();
              var wps_search_word = wps_input_value.split("");
 
-            // Check if the search input is empty.
             if (wps_search_input === "") {
-                // Display the default product listing.
                 wps_display_default_product_listing();
 
             }else {
-                // Check if there are at least three words in the input.
                 if (wps_search_word.length >= 3) {
                   $("#wps-loader").show();
         
                   var data = {
-                    action: "wps_filter_event_search",
+                    action: "wps_default_filter_product_search",
                     search_term: wps_input_value,
                     wps_nonce:etmfw_org_custom_param_public.wps_etmfw_public_nonce
                   };
@@ -90,7 +87,6 @@
                     type: "POST",
                     url: etmfw_org_custom_param_public.ajaxurl,
                     data: data,
-                    // dataType: 'json',
                     success: function (response) {
                       $("#wps-search-results").html(response);
 
@@ -129,7 +125,7 @@
             }); 
          }
          
-         $('select[name="wps_select_event_listing_type"]').change(function () {
+         $('input[name="wps_select_event_listing_type"]').change(function () {
             var wps_selected_value = $(this).val();
              var data = {
                 action: "wps_select_event_listing_type",
@@ -151,6 +147,32 @@
                 },
             });  
          });
+
+        $(document).on('click', '.wps_woocommerce-pagination a.page-numbers', function(e) {
+            e.preventDefault();
+            var page = $(this).data('page');
+            var search_term = $('#wps-search-event').val();
+            var data = {
+                action: 'wps_default_filter_product_search',
+                wps_nonce: etmfw_org_custom_param_public.wps_etmfw_public_nonce,
+                page: page,
+                search_term: search_term,
+            };
+            console.log(data);
+
+            $.ajax({
+                type: "POST",
+                url: etmfw_org_custom_param_public.ajaxurl,
+                data: data,
+                success: function (response) {
+                  $('#wps-search-results').html(response);
+                },
+                error: function (response) {
+                  console.log("ajax fails");
+                },
+            });
+        });
+      
      });
 
     })( jQuery );

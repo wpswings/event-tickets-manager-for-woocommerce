@@ -106,6 +106,13 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	 */
 	public function etmfw_admin_enqueue_scripts( $hook ) {
 
+		$wps_plugin_list = get_option( 'active_plugins' );
+		$wps_is_pro_active = false;
+		$wps_plugin = 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php';
+		if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
+			$wps_is_pro_active = true;
+		}
+
 		$screen = get_current_screen();
 		if ( isset( $screen->id ) && 'wp-swings_page_event_tickets_manager_for_woocommerce_menu' == $screen->id ) {
 			wp_enqueue_script( 'thickbox' );
@@ -120,13 +127,6 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			wp_register_script( $this->plugin_name . 'admin-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/js/event-tickets-manager-for-woocommerce-admin.js', array( 'jquery', 'wps-etmfw-select2', 'wps-etmfw-metarial-js', 'wps-etmfw-metarial-js2', 'wps-etmfw-metarial-lite', 'wp-color-picker' ), $this->version, false );
 
 			$wps_etmfw_selected_template = get_option( 'wps_etmfw_ticket_template', '1' );
-
-			$wps_plugin_list = get_option( 'active_plugins' );
-			$wps_is_pro_active = false;
-			$wps_plugin = 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php';
-			if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
-				$wps_is_pro_active = true;
-			}
 
 			wp_localize_script(
 				$this->plugin_name . 'admin-js',
@@ -154,6 +154,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				array(
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'wps_etmfw_edit_prod_nonce' => wp_create_nonce( 'wps-etmfw-verify-edit-prod-nonce' ),
+					'is_pro_active' => $wps_is_pro_active,
 				)
 			);
 
@@ -168,6 +169,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			array(
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 				'wps_etmfw_edit_prod_nonce'   => wp_create_nonce( 'wps-etmfw-verify-edit-prod-nonce' ),
+				'is_pro_active' => $wps_is_pro_active,
 			)
 		);
 		wp_enqueue_media();
@@ -333,6 +335,33 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
 				),
 			),
+
+			array(
+				'title' => __( 'Allow Ticket Transfer', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'radio-switch',
+				'description'  => __( 'Enable this option  to transfer the tickets to another.', 'event-tickets-manager-for-woocommerce' ),
+				'id'    => 'wps_wet_enable_ticket_sharing',
+				'value' => get_option( 'wps_wet_enable_ticket_sharing' ),
+				'class' => 'etmfw-radio-switch-class',
+				'options' => array(
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
+					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
+				),
+			),
+
+			array(
+				'title' => __( 'Send Ticket During Processing Order', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'radio-switch',
+				'description'  => __( 'Enable this option to send ticket during processing.', 'event-tickets-manager-for-woocommerce' ),
+				'id'    => 'wps_wet_enable_after_payment_done_ticket',
+				'value' => get_option( 'wps_wet_enable_after_payment_done_ticket' ),
+				'class' => 'etmfw-radio-switch-class',
+				'options' => array(
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
+					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
+				),
+			),
+
 			array(
 				'title' => __( 'Include Barcode in ticket', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'radio-switch',
@@ -361,31 +390,6 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'id'    => 'wps_event_calender',
 				'class' => 'etmfw-radio-switch-class-pro',
 				'value' => '',
-			),
-
-			array(
-				'title' => __( 'Allow Ticket Transfer', 'event-tickets-manager-for-woocommerce' ),
-				'type'  => 'radio-switch',
-				'description'  => __( 'Enable this option  to share the transfer to another.', 'event-tickets-manager-for-woocommerce' ),
-				'id'    => 'wps_wet_enable_ticket_sharing',
-				'value' => '',
-				'class' => 'etmfw-radio-switch-class-pro',
-				'options' => array(
-					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
-					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
-				),
-			),
-			array(
-				'title' => __( 'Send Ticket During Processing Order', 'event-tickets-manager-for-woocommerce' ),
-				'type'  => 'radio-switch',
-				'description'  => __( 'Enable this option to send ticket during processing.', 'event-tickets-manager-for-woocommerce' ),
-				'id'    => 'wps_wet_enable_after_payment_done_ticket',
-				'value' => '',
-				'class' => 'etmfw-radio-switch-class-pro',
-				'options' => array(
-					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
-					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
-				),
 			),
 			array(
 				'title' => __( 'Include QR code in ticket', 'event-tickets-manager-for-woocommerce' ),
@@ -917,6 +921,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
 		$wps_etmfw_field_data = isset( $wps_etmfw_product_array['wps_etmfw_field_data'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_field_data'] ) ? $wps_etmfw_product_array['wps_etmfw_field_data'] : array();
 
+		$wps_is_product_is_recurring = get_post_meta( $product_id, 'is_recurring_' . $product_id, '' );
 		?>
 		<div id="wps_etmfw_event_data" class="panel woocommerce_options_panel">
 			<?php
@@ -1006,6 +1011,26 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				);
 			}
 			do_action( 'wps_etmfw_edit_product_settings', $product_id );
+
+			if ( empty( $wps_is_product_is_recurring ) ) {
+				woocommerce_wp_checkbox(
+					array(
+						'id' => 'etmfwp_recurring_event_enable',
+						'wrapper_class' => 'show_if_event_ticket_manager',
+						'label' => __( 'Recurring Event', 'event-tickets-manager-for-woocommerce' ),
+						'value' => isset( $wps_etmfw_product_array['etmfwp_recurring_event_enable'] ) ? $wps_etmfw_product_array['etmfwp_recurring_event_enable'] : true,
+						'desc_tip'    => true,
+						'description' => __( 'Makes this event as recurring event.', 'event-tickets-manager-for-woocommerce' ),
+					)
+				);
+			}
+
+			require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'templates/backend/event-tickets-manager-for-woocommerce-recurring-event.php';
+
+			require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'templates/backend/event-tickets-manager-for-woocommerce-user-type-product-price.php';
+			
+			do_action( 'wps_etmfw_edit_product_settings_extend', $product_id );
+			
 			require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'templates/backend/event-tickets-manager-for-woocommerce-add-ticket-dynamic-fields.php';
 
 			wp_nonce_field( 'wps_etmfw_lite_nonce', 'wps_etmfw_product_nonce_field' );
@@ -1142,8 +1167,15 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					$wps_etmfw_product_array['wps_etmfw_field_data'] = $wps_etmfw_field_data_array;
 					$etmfw_display_map = isset( $_POST['etmfw_display_map'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_display_map'] ) ) : 'no';
 					$wps_etmfw_product_array['etmfw_display_map'] = $etmfw_display_map;
+					$wps_etmfw_product_array['etmfwp_recurring_event_enable'] = isset( $_POST['etmfwp_recurring_event_enable'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfwp_recurring_event_enable'] ) ) : 'no';
 					$wps_etmfw_product_array = apply_filters( 'wps_etmfw_product_pricing', $wps_etmfw_product_array, $_POST );
 					update_post_meta( $product_id, 'wps_etmfw_product_array', $wps_etmfw_product_array );
+
+					if ( 'yes' === $wps_etmfw_product_array['etmfwp_recurring_event_enable'] ) {
+						update_post_meta( $product_id, 'product_has_recurring', 'yes');
+					} else {
+						update_post_meta( $product_id, 'product_has_recurring', 'no');
+					}
 					do_action( 'wps_etmfw_event_product_type_save_fields', $product_id );
 
 					do_action( 'wps_etmfw_share_event_on_fb', $product_id );
@@ -1441,11 +1473,11 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	public function wps_etmfw_plugin_row_meta( $links, $file ) {
 		if ( strpos( $file, 'event-tickets-manager-for-woocommerce/event-tickets-manager-for-woocommerce.php' ) !== false ) {
 			$new_links = array(
-				'demo' => '<a href="https://demo.wpswings.com/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-demo&utm_medium=events-org-backend&utm_campaign=demo" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Demo.svg"  style="margin-right: 6px;margin-top: -3px;max-width: 15px;">Demo</a>',
-				'documentation' => '<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-org-backend&utm_campaign=documentation" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Documentation.svg" style="margin-right: 6px;margin-top: -3px;max-width: 15px;" >Documentation</a>',
-				'video' => '<a href="https://www.youtube.com/embed/9KyB4qpal6M" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/video.png" style="margin-right: 6px;margin-top: -3px;max-width: 15px;" >Video</a>',
-				'support' => '<a href="https://wpswings.com/submit-query/?utm_source=wpswings-events-support&utm_medium=events-org-backend&utm_campaign=support" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Support.svg" style="margin-right: 6px;margin-top: -3px;max-width: 15px;" >Support</a>',
-				'services' => '<a href="https://wpswings.com/woocommerce-services/?utm_source=wpswings-events-services&utm_medium=events-org-backend&utm_campaign=woocommerce-services" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/services.svg" class="wps-info-img" style="margin-right: 6px;margin-top: -3px;max-width: 15px;" alt="Services image">' . __( 'Services', 'mwb-bookings-for-woocommerce' ) . '</a>',
+				'demo' => '<a href="https://demo.wpswings.com/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-demo&utm_medium=events-org-backend&utm_campaign=demo" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Demo.svg"  style="margin-right: 6px;margin-top: -3px;max-width: 15px;">' . __( 'Demo' , 'event-tickets-manager-for-woocommerce' ) . '</a>',
+				'documentation' => '<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-org-backend&utm_campaign=documentation" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Documentation.svg" style="margin-right: 6px;margin-top: -3px;max-width: 15px;" >' . __( 'Documentation', 'event-tickets-manager-for-woocommerce' ) . '</a>',
+				'video' => '<a href="https://www.youtube.com/embed/9KyB4qpal6M" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/video.png" style="margin-right: 6px;margin-top: -3px;max-width: 15px;" >' . __( 'Video', 'event-tickets-manager-for-woocommerce' ) . '</a>',
+				'support' => '<a href="https://wpswings.com/submit-query/?utm_source=wpswings-events-support&utm_medium=events-org-backend&utm_campaign=support" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Support.svg" style="margin-right: 6px;margin-top: -3px;max-width: 15px;" >' . __( 'Support', 'event-tickets-manager-for-woocommerce' ) . '</a>',
+				'services' => '<a href="https://wpswings.com/woocommerce-services/?utm_source=wpswings-events-services&utm_medium=events-org-backend&utm_campaign=woocommerce-services" target="_blank"><img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/services.svg" class="wps-info-img" style="margin-right: 6px;margin-top: -3px;max-width: 15px;" alt="Services image">' . __( 'Services', 'event-tickets-manager-for-woocommerce' ) . '</a>',
 			);
 
 			$links = array_merge( $links, $new_links );
@@ -1761,6 +1793,485 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		</style>
 				<?php
 			}
+		}
+	}
+
+	/**
+	 * Add tab in plugin setting.
+	 *
+	 * @param array $etmfw_settings_other default setting tabs.
+	 * @return array
+	 */
+	public function wps_etmfw_other_settings_page( $etmfw_settings_other ) {
+		$etmfw_settings_other = array(
+			array(
+				'title' => __( 'Reminder Send Before Event Day', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'number',
+				'min' => '0',
+				'max' => '7',
+				'id'    => 'wps_etmfwp_send_remainder_before_event',
+				'value' => get_option( 'wps_etmfwp_send_remainder_before_event' ),
+				'class' => 'wps_etmfw_remainder_field',
+				'description'  => __( 'Enter no. of days before event, email should be send as remainder. ', 'event-tickets-manager-for-woocommerce' ),
+			),
+			array(
+				'title'       => __( 'Reminder Email Subject', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_etmfw_reminder_email_subject',
+				'type'        => 'text',
+				'description' => __( 'Subject for reminder emails.', 'event-tickets-manager-for-woocommerce' ),
+				'placeholder' => __('Reminder Subject','event-tickets-manager-for-woocommerce' ),
+				'value'       => get_option( 'wps_etmfw_reminder_email_subject', 'Reminder' ),
+			),
+			array(
+				'title'       => __( 'Reminder Email Body', 'event-tickets-manager-for-woocommerce' ),
+				'type'        => 'wp_editor',
+				'description' => __( 'Use [SITENAME] and [PRODUCTNAME] shortcode as the name of the site and product name respectively.', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_etmfw_reminder_email_body',
+				'value'       => get_option( 'wps_etmfw_reminder_email_body', 'Hello, This is a short Reminder for your Event which is start from [STARTDATE]. Enjoy your day!' ),
+			),
+			array(
+				'title'       => __( 'Enable Subscribe Checkbox', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_etmfw_enable_subscribe_checkbox',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable subscribe checkbox on the checkout page.', 'event-tickets-manager-for-woocommerce' ),
+				'value'       => '',
+			),
+			array(
+				'title'       => __( 'Email Subject', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_etmfw_subscribe_email_subject',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'type'        => 'text',
+				'description' => __( 'Subject for subscription emails.', 'event-tickets-manager-for-woocommerce' ),
+				'value'       => '',
+			),
+			array(
+				'title'       => __( 'Email Body', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_etmfw_subscribe_email_bodys',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'type'        => 'textarea',
+				'description' => __( 'Use [SITENAME] and [PRODUCTNAME] shortcode as the name of the site and product name respectively.', 'event-tickets-manager-for-woocommerce' ),
+				'value'       => '',
+			),
+		);
+
+		$etmfw_settings_other = apply_filters( 'wps_etmfw_extent_other_settings_array', $etmfw_settings_other );
+		$etmfw_settings_other[] = array(
+			'type'  => 'button',
+			'id'    => 'wps_etmfw_save_other_settings',
+			'button_text' => __( 'Save', 'event-tickets-manager-for-woocommerce' ),
+			'class' => 'etmfw-button-class',
+		);
+
+		return $etmfw_settings_other;
+	}
+
+	/**
+	 * Send Remainder.
+	 *
+	 * @return void
+	 */
+	public function wps_etmfwp_send_email_reminder() {
+		$no_of_days = get_option( 'wps_etmfwp_send_remainder_before_event' );
+
+		if ( empty( $no_of_days ) || '' == $no_of_days ) {
+			return;
+		}
+
+		$shop_orders = wc_get_orders(
+			array(
+				'status'       => array( 'wc-completed', 'wc-processing' ),
+				'return' => 'ids',
+			)
+		);
+		if ( isset( $shop_orders ) && ! empty( $shop_orders ) ) {
+			foreach ( $shop_orders as $shop_order ) {
+				$order_id = $shop_order;
+				$order = wc_get_order( $order_id );
+				foreach ( $order->get_items() as $item_id => $item ) {
+					$product = $item->get_product();
+					$product_title = $item->get_name();
+
+					if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
+
+						if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+							// HPOS usage is enabled.
+							$ticket = $order->get_meta( "event_ticket#$order_id#$item_id", true );
+						} else {
+							$ticket = get_post_meta( $order_id, "event_ticket#$order_id#$item_id", true );
+						}
+						if ( '' !== $ticket ) {
+							if ( ! empty( $product ) ) {
+								$pro_id = $product->get_id();
+							}
+							$wps_etmfw_product_array = get_post_meta( $pro_id, 'wps_etmfw_product_array', true );
+							$start = isset( $wps_etmfw_product_array['event_start_date_time'] ) ? $wps_etmfw_product_array['event_start_date_time'] : '';
+							$start_timestamp = strtotime( $start );
+
+							$current_date_time = strtotime( gmdate( 'Y-m-d h:i ', time() ) );
+							$diff = (int) $start_timestamp - $current_date_time;
+							$no_of_days_to_seconds = $no_of_days * 86400;
+							$user_id = get_post_meta( $order_id, '_customer_user', true );
+							$customer = new WC_Customer( $user_id );
+							$user_email   = $order->get_billing_email();
+
+							if ( $diff >= 0 && $diff <= $no_of_days_to_seconds ) {
+								$mailer = WC()->mailer();
+								$subject = get_option( 'wps_etmfw_reminder_email_subject', 'Reminder' );
+								$message = get_option( 'wps_etmfw_reminder_email_body', 'Hello, This is a short Reminder for your Event which is start from [STARTDATE]. Enjoy your day!' );
+
+								$message = str_replace( '[SITENAME]', get_bloginfo(), $message );
+								$message = str_replace( '[STARTDATE]', $start, $message );
+								$message = str_replace( '[PRODUCTNAME]', $product_title, $message );
+								$wc_email = new WC_Email();
+
+								$html_message = $wc_email->style_inline( $message );
+
+								$mailer->send( $user_email, $subject, $html_message, HTML_EMAIL_HEADERS );
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Create the Recurrence Event here.
+	 *
+	 * @return void
+	 */
+	public function wps_etmfw_create_recurring_event_callbck() {
+		check_ajax_referer( 'wps-etmfw-verify-edit-prod-nonce', 'nonce' );
+		$wps_event_product_id  = isset( $_POST['product_id'] ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : '';
+
+		$wps_is_error = false;
+
+		if ( ! empty( $wps_event_product_id ) && isset( $wps_event_product_id ) ) {
+
+			$product_data = get_post_meta( $wps_event_product_id, 'wps_etmfw_product_array', array() );
+			$wps_recurring_event_enable = $product_data[0]['etmfwp_recurring_event_enable'];
+
+			$wps_event_recurring_type = $product_data[0]['wps_event_recurring_type'];
+			$wps_event_recurring_value = $product_data[0]['wps_event_recurring_value'];
+
+			$end_date = $product_data[0]['event_end_date_time']; // Replace with the desired end date.
+			$start_date = $product_data[0]['event_start_date_time'];
+
+			$start_date_time = new DateTime( $start_date );
+			$end_date_time = new DateTime( $end_date );
+			// Calculate the difference between the two dates.
+			$interval = $start_date_time->diff( $end_date_time );
+
+			// Check if the difference is exactly one week (7 days) and 0 hours, 0 minutes, and 0 seconds.
+			if ( ( $interval->days < 7 && ( 'weekly' === $wps_event_recurring_type ) ) || ( $interval->days < 30 && ( 'monthly' === $wps_event_recurring_type ) ) || ( $interval->days < 1 && ( 'daily' === $wps_event_recurring_type ) ) ) {
+				$wps_is_error = true;
+			}
+
+			$timestamp = strtotime( $end_date );
+
+			if ( false != $timestamp ) {
+				$wps_formatted_end_date = gmdate( 'Y-m-d', $timestamp );
+			}
+
+			$timestamp_start = strtotime( $start_date );
+
+			if ( false != $timestamp_start ) {
+				$wps_formatted_start_date = gmdate( 'Y-m-d', $timestamp_start );
+			}
+
+			if ( empty( $wps_event_recurring_type ) || empty( $wps_event_recurring_value || empty( $end_date ) || empty( $start_date ) ) || ( $wps_is_error ) ) {
+
+				$wps_is_error = true;
+			} else {
+
+				$this->convert_to_recurring_event( $wps_event_product_id, $wps_event_recurring_type, $wps_formatted_end_date, $wps_formatted_start_date, $wps_event_recurring_value, $product_data );
+			}
+		}
+		echo wp_json_encode( $wps_is_error );
+		wp_die();
+	}
+
+	/**
+	 * Creae the Recurrence Event Callback.
+	 *
+	 * @param int   $event_id is a eventproduct id.
+	 * @param int   $recurring_type is a recurring type.
+	 * @param int   $end_date is a end date.
+	 * @param int   $start_date is a start date.
+	 * @param int   $recurring_value is a recurring value.
+	 * @param array $product_data is a product value.
+	 * @return void
+	 */
+	public function convert_to_recurring_event( $event_id, $recurring_type, $end_date, $start_date, $recurring_value, $product_data ) {
+
+		$product = wc_get_product( $event_id );
+		$thumbnail_id = get_post_thumbnail_id( $event_id );
+		$event_title = get_the_title( $event_id );
+
+		$wps_event_venue = $product_data[0]['etmfw_event_venue'];
+		$wps_event_map = $product_data[0]['etmfw_display_map'];
+		$wps_event_lat = $product_data[0]['etmfw_event_venue_lat'];
+		$wps_event_log = $product_data[0]['etmfw_event_venue_lng'];
+
+		if ( 'daily' === $recurring_type ) {
+			$wps_daily_event_start_time = $product_data[0]['wps_event_recurring_daily_start_time'];
+			$wps_daily_event_end_time = $product_data[0]['wps_event_recurring_daily_end_time'];
+
+			// Split the time string into hour and minute using explode.
+			list($hour, $minute) = explode( ':', $wps_daily_event_start_time );
+
+			// Convert the hour and minute components to integers.
+			$hour = (int) $hour;
+			$minute = (int) $minute;
+
+			$date = new DateTime( $product_data[0]['event_start_date_time'] );
+			$date->setTime( $hour, $minute );
+			$wps_start_date = $date->format( 'Y-m-d g:i a' );
+
+			// Split the time string into hour and minute using explode.
+			list($hour, $minute) = explode( ':', $wps_daily_event_end_time );
+
+			// Convert the hour and minute components to integers.
+			$hour = (int) $hour;
+			$minute = (int) $minute;
+
+			$date = new DateTime( $product_data[0]['event_end_date_time'] );
+			$date->setTime( $hour, $minute );
+			// Format the DateTime object as a string in the desired format.
+			$wps_end_date = $date->format( 'Y-m-d g:i a' );
+		} else {
+
+			$wps_start_date = $product_data[0]['event_start_date_time'];
+			$wps_end_date = $product_data[0]['event_end_date_time'];
+		}
+
+		$wps_event_trash = $product_data[0]['etmfw_event_trash_event'];
+		$wps_event_fb_share = $product_data[0]['etmfwp_share_on_fb'];
+
+		// Parse the input date using strtotime for start date.
+		$start_date_timestamp = strtotime( $wps_start_date );
+		$start_formatted_date = gmdate( 'Y-m-d H:i:s', $start_date_timestamp );
+
+		// Parse the input date using strtotime for end date.
+		$end_date_timestamp = strtotime( $wps_end_date );
+		$end_formatted_date = gmdate( 'Y-m-d H:i:s', $end_date_timestamp );
+
+		// Set end date.
+		$wps_event_set_end_formatted_time = gmdate( '(H, i, s)', $end_date_timestamp );
+
+		// Remove the parentheses and split the string by commas.
+		$time_parts = explode( ',', str_replace( array( '(', ')', ' ' ), '', $wps_event_set_end_formatted_time ) );
+
+		// Extract the individual time components (hours, minutes, seconds).
+		$hours = (int) trim( $time_parts[0] );
+		$minutes = (int) trim( $time_parts[1] );
+		$seconds = (int) trim( $time_parts[2] );
+
+		$current_date = new DateTime( $start_formatted_date );
+		$end_date_obj = new DateTime( $end_formatted_date );
+		update_post_meta( $event_id, 'product_has_recurring', 'yes' );
+
+		while ( $current_date <= $end_date_obj ) {
+
+			// Calculate end date for the current instance based on recurring type.
+			$current_end_date = clone $current_date;
+			if ( 'weekly' === $recurring_type ) {
+				$current_end_date->modify( '+6 days' );
+				$current_end_date->setTime( $hours, $minutes, $seconds );
+			} elseif ( 'monthly' === $recurring_type ) {
+				$current_end_date->modify( 'last day of this month' );
+				$current_end_date->setTime( $hours, $minutes, $seconds );
+			}
+			$current_end_date->setTime( $hours, $minutes, $seconds );
+
+			$timestamp = strtotime( $current_date->format( 'Y-m-d' ) );
+			$formatted_date = gmdate( 'j M Y', $timestamp );
+
+			// Create a new event post for each recurring instance.
+			$new_event_id = wp_insert_post(
+				array(
+					'post_title' => $event_title . ' (' . $formatted_date . ')',
+					'post_type' => 'product',
+					'post_status' => 'publish',
+					'post_excerpt' => get_post_field( 'post_excerpt', $event_id ),
+					'post_content' => get_post_field( 'post_content', $event_id ),
+				)
+			);
+
+			// Define the array data for your recurring product (replace with your actual data).
+			$recurring_product_data = array(
+				'etmfw_event_price' => $product->get_price(),
+				'event_start_date_time' => $current_date->format( 'Y-m-d H:i:s' ),
+				'wps_etmfw_field_user_type_price_data_baseprice' => 'base_price',
+				'event_end_date_time' => $current_end_date->format( 'Y-m-d H:i:s' ),
+				'etmfw_event_venue' => $wps_event_venue,
+				'etmfw_event_venue_lat' => $wps_event_lat,
+				'etmfw_event_venue_lng' => $wps_event_log,
+				'etmfw_event_trash_event' => $wps_event_trash,
+				'wps_etmfw_dyn_name' => $product_data[0]['wps_etmfw_dyn_name'],
+				'wps_etmfw_dyn_mail' => $product_data[0]['wps_etmfw_dyn_mail'],
+				'wps_etmfw_dyn_contact' => $product_data[0]['wps_etmfw_dyn_contact'],
+				'wps_etmfw_dyn_date' => $product_data[0]['wps_etmfw_dyn_date'],
+				'wps_etmfw_dyn_address' => $product_data[0]['wps_etmfw_dyn_address'],
+				'wps_etmfw_field_user_type_price_data' => $product_data[0]['wps_etmfw_field_user_type_price_data'],
+				'wps_etmfw_field_days_price_data' => $product_data[0]['wps_etmfw_field_days_price_data'],
+				'wps_etmfw_field_stock_price_data' => $product_data[0]['wps_etmfw_field_stock_price_data'],
+				'wps_etmfw_field_data' => $product_data[0]['wps_etmfw_field_data'],
+				'etmfw_display_map' => $wps_event_map,
+				'etmfwp_share_on_fb' => $wps_event_fb_share,
+				'etmfwp_recurring_event_enable' => 'no',
+			);
+
+			// Assuming $product_id contains the ID of the created recurring product.
+			if ( $new_event_id ) {
+
+				$categories = wp_get_object_terms( $event_id, 'product_cat', array( 'fields' => 'ids' ) );
+				$tags = wp_get_object_terms( $event_id, 'product_tag', array( 'fields' => 'ids' ) );
+
+				if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) {
+					wp_set_object_terms( $new_event_id, $categories, 'product_cat' );
+				}
+
+				if ( ! is_wp_error( $tags ) && ! empty( $tags ) ) {
+					wp_set_object_terms( $new_event_id, $tags, 'product_tag' );
+				}
+
+				$manage_stock = get_post_meta( $event_id, '_manage_stock', true );
+				$stock = get_post_meta( $event_id, '_stock', true );
+				$stock_status = get_post_meta( $event_id, '_stock_status', true );
+
+				// Inherit stock management settings from the parent event.
+				update_post_meta( $new_event_id, '_manage_stock', $manage_stock );
+				update_post_meta( $new_event_id, '_stock', $stock );
+				update_post_meta( $new_event_id, '_stock_status', $$stock_status );
+				
+				// Save the array as post meta for the product.
+				wp_set_object_terms( $new_event_id, 'event_ticket_manager', 'product_type' );
+				update_post_meta( $new_event_id, 'wps_etmfw_product_array', $recurring_product_data );
+				update_post_meta( $new_event_id, '_price', $product->get_price() );
+				update_post_meta( $new_event_id, '_featured', 'yes' );
+				update_post_meta( $new_event_id, '_sku', $product->get_sku() );
+				update_post_meta( $new_event_id, '_thumbnail_id', $thumbnail_id );
+				update_post_meta( $new_event_id, 'is_recurring_' . $new_event_id, 'yes' );
+				update_post_meta( $new_event_id, 'parent_of_recurring', $event_id );
+			}
+			// Move to the next recurring date.
+			if ( 'daily' === $recurring_type ) {
+				$current_date->modify( "+$recurring_value day" );
+			} elseif ( 'weekly' === $recurring_type ) {
+				$current_date->modify( "+$recurring_value week" );
+			} elseif ( 'monthly' === $recurring_type ) {
+				$current_date->modify( "+$recurring_value month" );
+			}
+		}
+	}
+
+	/**
+	 * Delete the Recurrence Event here.
+	 *
+	 * @return void
+	 */
+	public function wps_etmfw_delete_recurring_event_callbck() {
+		check_ajax_referer( 'wps-etmfw-verify-edit-prod-nonce', 'nonce' );
+		$wps_event_product_id  = isset( $_POST['product_id'] ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : '';
+		delete_post_meta( $wps_event_product_id, 'product_has_recurring' );
+		$wps_is_error = false;
+		$args = array(
+			'post_type' => 'product',
+			'posts_per_page' => -1,
+			'meta_query' => array(
+				array(
+					'key' => 'parent_of_recurring',
+					'value' => $wps_event_product_id,
+					'compare' => '=',
+					'type' => 'NUMERIC',
+				),
+			),
+		);
+
+		$products_query = new WP_Query( $args );
+
+		if ( $products_query->have_posts() ) {
+			while ( $products_query->have_posts() ) {
+				$products_query->the_post();
+
+				$post_id = get_the_ID();
+				// Delete the post.
+				wp_delete_post( $post_id, true ); // Set the second parameter to true to force deletion.
+
+				// Delete all associated meta values.
+				$meta_keys = get_post_custom_keys( $post_id );
+				if ( ! empty( $meta_keys ) ) {
+					foreach ( $meta_keys as $meta_key ) {
+						delete_post_meta( $post_id, $meta_key );
+					}
+				}
+				wp_reset_postdata();
+			}
+			echo wp_json_encode( $wps_is_error );
+		}
+	}
+
+	/**
+	 * Dsiplay the Recurrence Event here.
+	 *
+	 * @return void
+	 */
+	public function wps_etmfw_admin_recurring_submenu() {
+		add_submenu_page( 'woocommerce', __( 'Events Recurring', 'event-tickets-manager-for-woocommerce' ), __( 'Events Recurring', 'event-tickets-manager-for-woocommerce' ), 'manage_options', 'wps-etmfw-recurring-events-info', array( $this, 'wps_etmfw_display_recurring_event_info' ) );
+	}
+
+	/**
+	 * Display  The Recurrence Event here.
+	 *
+	 * @return void
+	 */
+	public function wps_etmfw_display_recurring_event_info() {
+		$secure_nonce      = wp_create_nonce( 'wps-event-auth-nonce' );
+		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-event-auth-nonce' );
+		if ( ! $id_nonce_verified ) {
+			wp_die( esc_html__( 'Nonce Not verified', 'event-tickets-manager-for-woocommerce' ) );
+		}
+		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/class-event-tickets-manager-for-woocommerce-recurring-events-info.php';
+		$wp_list_table = new Event_Tickets_Manager_For_Woocommerce_Recurring_Events_Info();
+		$current_page = isset( $_REQUEST['page'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) : '';
+		?>
+		<div>
+			<form id="wps-events-filter" method="get">
+				<?php wp_nonce_field( 'wps-etmfw-events', 'wps-etmfw-events' ); ?>
+				<input type="hidden" name="page" value="<?php echo esc_attr( $current_page ); ?>" />
+				<?php $wp_list_table->prepare_items(); ?>
+				<?php $wp_list_table->search_box( __( 'Search ', 'event-tickets-manager-for-woocommerce' ), 'wps-etmfw-recurring-events' ); ?>
+				<?php $wp_list_table->display(); ?>
+			</form>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Display  The Recurrence Event here.
+	 *
+	 * @param array $query is a  listing data.
+	 * @return void
+	 */
+	public function wps_exclude_recurring_products_from_product_listing( $query ) {
+
+		try {
+			if ( is_admin() && $query->is_main_query() && $query->get( 'post_type' ) === 'product' ) {
+				$query->set(
+					'meta_query',
+					array(
+						array(
+							'key' => 'parent_of_recurring',
+							'compare' => 'NOT EXISTS',
+						),
+					)
+				);
+			}
+		} catch ( Exception $e ) {
+			// Handle the exception here, e.g., log the error or display an error message.
+			update_option( 'wps_query_error', $e->getMessage() );
 		}
 	}
 }
