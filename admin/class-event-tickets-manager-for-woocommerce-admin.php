@@ -1825,7 +1825,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			array(
 				'title'       => __( 'Reminder Email Body', 'event-tickets-manager-for-woocommerce' ),
 				'type'        => 'wp_editor',
-				'description' => __( 'Use [SITENAME] and [PRODUCTNAME] shortcode as the name of the site and product name respectively.', 'event-tickets-manager-for-woocommerce' ),
+				'description' => __( 'Use [STARTDATE], [SITENAME] and [PRODUCTNAME] shortcode as the start date of the event, name of the site and product name respectively.', 'event-tickets-manager-for-woocommerce' ),
 				'id'          => 'wps_etmfw_reminder_email_body',
 				'value'       => get_option( 'wps_etmfw_reminder_email_body', 'Hello, This is a short Reminder for your Event which is start from [STARTDATE]. Enjoy your day!' ),
 			),
