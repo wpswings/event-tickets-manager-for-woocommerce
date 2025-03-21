@@ -1698,6 +1698,8 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		if ( ! wp_next_scheduled( 'wps_wgm_check_for_notification_update' ) ) {
 			wp_schedule_event( $wps_sfw_time, 'daily', 'wps_wgm_check_for_notification_update' );
 		}
+
+		$this->wps_etmfw_list_shortcode_in_gutenburg_block();
 	}
 
 		/**
@@ -2273,5 +2275,15 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			// Handle the exception here, e.g., log the error or display an error message.
 			update_option( 'wps_query_error', $e->getMessage() );
 		}
+	}
+
+	/**
+	 * This function is used to list shortcodes in Gutenburg.
+	 *
+	 * @return void
+	 */
+	public function wps_etmfw_list_shortcode_in_gutenburg_block() {
+		wp_register_script( 'google-embeds-org-block-event', plugins_url( 'src/js/event-tickets-manager-for-woocommerce-org-custom-admin.js', __FILE__ ), array( 'wp-blocks', 'wp-editor', 'wp-element', 'wp-components' ), $this->version, false );
+		register_block_type( 'wpswings/googles-embed-org-event', array( 'editor_script' => 'google-embeds-org-block-event') );
 	}
 }

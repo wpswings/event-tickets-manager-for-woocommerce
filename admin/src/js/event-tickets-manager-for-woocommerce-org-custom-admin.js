@@ -131,5 +131,55 @@
 			$('.button_wps_rma_pro_div').css('pointer-events','none');
 		//-------------------------------Pop-up For Pro Tags End -------------------------------------------//
 
+		const { registerBlockType }      = wp.blocks;
+		const { TextControl, PanelBody } = wp.components;
+		const { useState }               = wp.element;
+		const { useBlockProps }          = wp.blockEditor;
+
+		registerBlockType('event/checkin-page', {
+			title      : 'WPSwings Event Checkin Shortcode',
+			icon       : 'media-document',
+			category   : 'widgets',
+			attributes : {
+				shortcode : { type: 'string', default: '[wps_etmfw_event_checkin_page]' }
+			},
+			edit: function(props) {
+				return wp.element.createElement('div', useBlockProps(),
+					wp.element.createElement(TextControl, {
+						label       : 'Enter Shortcode',
+						value       : props.attributes.shortcode,
+						onChange    : function(shortcode) { props.setAttributes({ shortcode: shortcode }) },
+						placeholder : '[wps_etmfw_event_checkin_page]'
+					}),
+					wp.element.createElement('p', {}, 'Shortcode Output: ' + props.attributes.shortcode)
+				);
+			},
+			save: function(props) {
+				return wp.element.createElement('div', useBlockProps.save(), props.attributes.shortcode);
+			}
+		});
+
+		registerBlockType('event/all-event-list', {
+			title      : 'WPSwings Event Listing Shortcode',
+			icon       : 'media-document',
+			category   : 'widgets',
+			attributes : {
+				shortcode : { type: 'string', default: '[wps_my_all_event_list]' }
+			},
+			edit: function(props) {
+				return wp.element.createElement('div', useBlockProps(),
+					wp.element.createElement(TextControl, {
+						label       : 'Enter Shortcode',
+						value       : props.attributes.shortcode,
+						onChange    : function(shortcode) { props.setAttributes({ shortcode: shortcode }) },
+						placeholder : '[wps_my_all_event_list]'
+					}),
+					wp.element.createElement('p', {}, 'Shortcode Output: ' + props.attributes.shortcode)
+				);
+			},
+			save: function(props) {
+				return wp.element.createElement('div', useBlockProps.save(), props.attributes.shortcode);
+			}
+		});
 	});
  })( jQuery );
