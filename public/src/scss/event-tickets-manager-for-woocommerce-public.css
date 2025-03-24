@@ -910,3 +910,10 @@ input#wps_etmfw_imput_ticket {
   max-width: 400px;
 }
 /* Form layout fixes end */
+
+/* copy to clipboard url */
+button#wps-etmfw-copy-event-url {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+}

@@ -362,6 +362,9 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $etmfw_plugin_public, 'wps_user_type_checkout_order_dataset', 10, 4 );
 		
 		$this->loader->add_filter( 'woocommerce_get_price_html', $etmfw_plugin_public, 'wps_etmfwp_change_event_price', 10, 2 );
+
+		$this->loader->add_action( 'woocommerce_after_add_to_cart_form', $etmfw_plugin_public, 'wps_etmfwp_show_social_share_link', 10 );
+
 	}
 	}
 

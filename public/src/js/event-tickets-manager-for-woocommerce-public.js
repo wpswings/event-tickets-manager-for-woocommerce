@@ -120,6 +120,18 @@
 			);
 	
 		});
+
+		jQuery('#wps-etmfw-copy-event-url').on('click', function() {
+			var productUrl = etmfw_public_param.wps_event_product_url;
+            if (productUrl) {
+                navigator.clipboard.writeText(productUrl).then(function() {
+                    jQuery("#myTooltip").text("Copied to clipboard");
+                    setTimeout(function() {
+                        jQuery("#myTooltip").text("Copy to Clipboard");
+                    }, 3000);
+                });
+            }
+        });
 	 });
 
 	})( jQuery );

@@ -90,6 +90,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$wps_etmfw_dyn_address = isset( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_address'] : '';
 		
 		wp_register_script( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-public.js', array( 'jquery' ), $this->version, false );
+
+		$wps_event_product_url = is_product() ? get_permalink() : '';
 		$public_param_data = array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'wps_etmfw_public_nonce' => wp_create_nonce( 'wps-etmfw-verify-public-nonce' ),
@@ -105,6 +107,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			'wps_dyn_contact' => __( ' Contact', 'event-tickets-manager-for-woocommerce' ),
 			'wps_dyn_date' => __( ' Date', 'event-tickets-manager-for-woocommerce' ),
 			'wps_dyn_address' => __( ' Address', 'event-tickets-manager-for-woocommerce' ),
+			'wps_event_product_url' => $wps_event_product_url,
 		);
 
 		wp_localize_script( $this->plugin_name, 'etmfw_public_param', $public_param_data );
@@ -2693,4 +2696,25 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 	}
 
+	public function wps_etmfwp_show_social_share_link() {
+		if ( is_single() ) {
+			$product_id = get_the_ID();
+			if ( ! empty( $product_id ) && ! is_null( $product_id ) ) {
+				$page_permalink = get_permalink( $product_id );
+				$product_types = wp_get_object_terms( $product_id, 'product_type' );
+				if ( isset( $product_types[0] ) ) {
+					$product_type = $product_types[0]->slug;
+					if ( 'event_ticket_manager' == $product_type && ! empty( $page_permalink ) && ! is_null( $page_permalink ) ) {
+						do_action( 'wps_etmfw_show_social_share_link', $page_permalink );
+						?>
+						<button id="wps-etmfw-copy-event-url" class="wps-etmfw-copy-event-url wps_tooltip" title="Copy to clipboard" aria-label="copied">
+							<span class="wps_tooltiptext_url" id="myTooltip"><?php esc_html_e( 'Copy to Clipboard', 'event-tickets-manager-for-woocommerce-pro' ); ?></span>
+							<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/copy.png' ); ?>" alt="Copy to clipboard">
+						</button>
+						<?php
+					}
+				}
+			}
+		}
+	}
 }
