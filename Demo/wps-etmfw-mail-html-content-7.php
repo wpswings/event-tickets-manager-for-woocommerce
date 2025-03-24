@@ -39,6 +39,7 @@ if ( ! empty( $wps_etmfw_background_image ) ) {
 
 	$wps_image_att_etmfw_demo = esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/bg-image.jpg' );
 }
+$wps_etmfw_hide_details_pdf_ticket = get_option( 'wps_wet_hide_details_pdf_ticket' );
 ?>
 <!-- Template Start -->
 
@@ -81,6 +82,9 @@ if ( ! empty( $wps_etmfw_background_image ) ) {
 					<?php } ?>
 				</div>
 			</td>
+			<?php
+			if ( 'on' != $wps_etmfw_hide_details_pdf_ticket ) {
+				?>
 			<td style='width:35%;padding:10px;background:#FFC525;'>
 				<h4 style='color:#000;font-weight:bold;font-size:18px;margin:0 0 10px;letter-spacing:0.5px;line-height:1;'><?php esc_html_e( 'Details:', 'event-tickets-manager-for-woocommerce' ); ?></h4>
 				<div>
@@ -90,6 +94,9 @@ if ( ! empty( $wps_etmfw_background_image ) ) {
 					<p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;padding:5px 0 0;'><span style="margin:0 10px 0 0;"><strong>Email ID: </strong>anvi2015@gmail.com</span></p>
 				</div>
 			</td>
+			<?php
+			}
+			?>
 		</tr>
 		<?php
 		$body = $wps_etmfw_email_body_content;

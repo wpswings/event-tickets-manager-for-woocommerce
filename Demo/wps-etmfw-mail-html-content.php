@@ -33,6 +33,7 @@ $wps_etmfw_logo_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' 
 $wps_etmfw_email_body_content = ! empty( get_option( 'wps_etmfw_email_body_content' ) ) ? get_option( 'wps_etmfw_email_body_content' ) : '';
 $wps_etmfw_qr_code_is_enable = ! empty( get_option( 'wps_etmfwp_include_qr' ) ) ? get_option( 'wps_etmfwp_include_qr' ) : '';
 $wps_set_the_pdf_ticket_template = get_option( 'wps_etmfw_ticket_template', '1' );
+$wps_etmfw_hide_details_pdf_ticket = get_option( 'wps_wet_hide_details_pdf_ticket' );
 ?>
 <!DOCTYPE html>
 <html>
@@ -143,24 +144,27 @@ $wps_set_the_pdf_ticket_template = get_option( 'wps_etmfw_ticket_template', '1' 
 						</tbody>
 					</table>
 
-					<?php if ( '1' == $wps_set_the_pdf_ticket_template && is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) { ?>
-					<table border="0" class="wps_etmfw_pdf_text_colour" cellpadding="0" style="table-layout: auto; width: 100%;color: <?php echo esc_attr( get_option( 'wps_etmfw_pdf_text_color' ) ); ?>;"><tbody><tr><td style="padding: 20px 0 10px;"><h2 class="wps_etmfw_pdf_text_colour" style="margin: 0;font-size: 24px; color: <?php echo esc_attr( get_option( 'wps_etmfw_pdf_text_color' ) ); ?>;">Details :-</h2></td></tr>
-					<tr><td style="padding: 5px 0;">
-					<p>Name - John Doe</p>
-					<p>Mob No - 978xxxxxx</p>
-					<p>Do You Have Tickets?-yes</p>
-					</td></tr>
-					</tbody></table>
-				   <?php } else { ?>
+					<?php
+					if ( 'on' != $wps_etmfw_hide_details_pdf_ticket ) {
+						if ( '1' == $wps_set_the_pdf_ticket_template && is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) { ?>
+						<table border="0" class="wps_etmfw_pdf_text_colour" cellpadding="0" style="table-layout: auto; width: 100%;color: <?php echo esc_attr( get_option( 'wps_etmfw_pdf_text_color' ) ); ?>;"><tbody><tr><td style="padding: 20px 0 10px;"><h2 class="wps_etmfw_pdf_text_colour" style="margin: 0;font-size: 24px; color: <?php echo esc_attr( get_option( 'wps_etmfw_pdf_text_color' ) ); ?>;">Details :-</h2></td></tr>
+						<tr><td style="padding: 5px 0;">
+						<p>Name - John Doe</p>
+						<p>Mob No - 978xxxxxx</p>
+						<p>Do You Have Tickets?-yes</p>
+						</td></tr>
+						</tbody></table>
+					<?php } else { ?>
 
-					<table border="0" class="wps_etmfw_pdf_text_colour" cellpadding="0" style="table-layout: auto; width: 100%;color: <?php echo esc_attr( get_option( 'wps_etmfw_ticket_body_text_color', '' ) ); ?>;"><tbody><tr><td style="padding: 20px 0 10px;"><h2 class="wps_etmfw_pdf_text_colour" style="margin: 0;font-size: 24px; color: <?php echo esc_attr( get_option( 'wps_etmfw_ticket_body_text_color', '' ) ); ?>;">Details :-</h2></td></tr>
-					<tr><td style="padding: 5px 0;">
-					<p>Name - John Doe</p>
-					<p>Mob No - 978xxxxxx</p>
-					<p>Do You Have Tickets?-yes</p>
-					</td></tr>
-					</tbody></table>
-					<?php } ?>
+						<table border="0" class="wps_etmfw_pdf_text_colour" cellpadding="0" style="table-layout: auto; width: 100%;color: <?php echo esc_attr( get_option( 'wps_etmfw_ticket_body_text_color', '' ) ); ?>;"><tbody><tr><td style="padding: 20px 0 10px;"><h2 class="wps_etmfw_pdf_text_colour" style="margin: 0;font-size: 24px; color: <?php echo esc_attr( get_option( 'wps_etmfw_ticket_body_text_color', '' ) ); ?>;">Details :-</h2></td></tr>
+						<tr><td style="padding: 5px 0;">
+						<p>Name - John Doe</p>
+						<p>Mob No - 978xxxxxx</p>
+						<p>Do You Have Tickets?-yes</p>
+						</td></tr>
+						</tbody></table>
+						<?php }
+					} ?>
 
 				</td>
 			</tr>

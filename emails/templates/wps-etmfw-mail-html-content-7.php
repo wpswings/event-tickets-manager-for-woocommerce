@@ -39,7 +39,7 @@ if ( 'on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ) {
 } else {
 	$product_image_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' ) ) ? get_option( 'wps_etmfw_mail_setting_upload_logo' ) : '';
 }
-
+$wps_etmfw_hide_details_pdf_ticket = get_option( 'wps_wet_hide_details_pdf_ticket' );
 ?>
 <!-- Template Start -->
 
@@ -82,9 +82,15 @@ if ( 'on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ) {
 					<?php } ?>
 				</div>
 			</td>
-			<td style='width:35%;padding:10px;background:#FFC525;'>
-				[ADDITIONALINFO]
-			</td>
+			<?php
+			if ( 'on' != $wps_etmfw_hide_details_pdf_ticket ) {
+			?>
+				<td style='width:35%;padding:10px;background:#FFC525;'>
+					[ADDITIONALINFO]
+				</td>
+				<?php
+			}
+			?>
 		</tr>
 		<tr>
 			<td colspan="3" style='padding-top:10px;'>

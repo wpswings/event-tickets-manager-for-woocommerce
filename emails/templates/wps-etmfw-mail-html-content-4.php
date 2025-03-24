@@ -34,6 +34,7 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 	$product_image_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' ) ) ? get_option( 'wps_etmfw_mail_setting_upload_logo' ) : '';
 	}
 	
+	$wps_etmfw_hide_details_pdf_ticket = get_option( 'wps_wet_hide_details_pdf_ticket' );
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,11 +69,14 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 			<div class="ticket-code wps_etmfw_pdf_text_colour" style="flex: 1; padding: 20px; text-align: center; border: 2px dashed #ddd;">
 				<p style="font-size: 24px; margin: 0; padding: 10px;"><?php esc_html_e('Ticket Code: ', 'event-tickets-manager-for-woocommerce'); ?> [TICKET]</p>
 			</div>
+		<?php } 
+		if ( 'on' != $wps_etmfw_hide_details_pdf_ticket ) {
+			?>
+				<div class="participant-details" style="padding: 20px; border-top: 2px solid #ddd; text-align: left; overflow-y: auto;">
+				[ADDITIONALINFO]
+					<!-- Add more participant details here if needed -->
+				</div>
 		<?php } ?>
-		<div class="participant-details" style="padding: 20px; border-top: 2px solid #ddd; text-align: left; overflow-y: auto;">
-		[ADDITIONALINFO]
-			<!-- Add more participant details here if needed -->
-		</div>
 		<div class="ticket-footer wps_etmfw_ticket_body" style="padding: 20px;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>; text-align: center; background-color: <?php echo esc_attr( $wps_etmfw_background_color ); ?>; border-top: 2px solid #ddd;">
 			<p style="margin: 10px 0; font-size: 14px; color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>!important;">[EMAILBODYCONTENT]</p>
 		</div>

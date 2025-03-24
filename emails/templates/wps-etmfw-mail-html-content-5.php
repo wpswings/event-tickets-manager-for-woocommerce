@@ -46,6 +46,7 @@ if ( ! empty( $wps_etmfw_background_image ) ) {
 } else {
 	$wps_image_att_etmfw = esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/bg-image.jpg' );
 }
+$wps_etmfw_hide_details_pdf_ticket = get_option( 'wps_wet_hide_details_pdf_ticket' );
 ?>
 <!-- Template Start -->
 <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='width: 100%;font-family:Arial, Helvetica, sans-serif;border:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>'>
@@ -83,9 +84,15 @@ if ( ! empty( $wps_etmfw_background_image ) ) {
 			</td>
 		</tr>
 		<tr>
+			<?php
+		if ( 'on' != $wps_etmfw_hide_details_pdf_ticket ) {
+			?>
 			<td colspan='2' style='padding: 20px;background: #fff;'>
 				[ADDITIONALINFO]
 			</td>
+			<?php 
+		}
+		?>
 		</tr>
 		<tr>
 			<td colspan='2'>

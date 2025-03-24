@@ -694,6 +694,18 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'class' => 'wps_etmfw_mail_setting_upload_logo_box',
 				'description' => __( 'Upload the image which is used as a logo on your Email Template.', 'event-tickets-manager-for-woocommerce' ),
 			),
+			array(
+				'title' => __( 'Hide Details on PDF Ticket', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'radio-switch',
+				'description'  => __( 'Enable this option to hide details on PDF tickets.', 'event-tickets-manager-for-woocommerce' ),
+				'id'    => 'wps_wet_hide_details_pdf_ticket',
+				'value' => get_option( 'wps_wet_hide_details_pdf_ticket' ),
+				'class' => 'etmfw-radio-switch-class',
+				'options' => array(
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
+					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
+				),
+			),
 		);
 		if ( ! is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) {
 

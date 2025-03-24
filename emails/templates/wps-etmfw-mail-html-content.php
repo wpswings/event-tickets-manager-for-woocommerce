@@ -35,6 +35,7 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 	} else {
 	$product_image_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' ) ) ? get_option( 'wps_etmfw_mail_setting_upload_logo' ) : '';
 	}
+	$wps_etmfw_hide_details_pdf_ticket = get_option( 'wps_wet_hide_details_pdf_ticket' );
 ?>
 <!DOCTYPE html>
 <html>
@@ -131,7 +132,13 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 							</tr>
 						</tbody>
 					</table>
-					[ADDITIONALINFO]
+					<?php
+					if ( 'on' != $wps_etmfw_hide_details_pdf_ticket ) {
+					?>
+						[ADDITIONALINFO]
+						<?php
+					}
+					?>
 				</td>
 			</tr>
 	<?php if ( is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) {  ?>

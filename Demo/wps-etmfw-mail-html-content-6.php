@@ -28,7 +28,7 @@ $wps_etmfw_qr_size = ! empty( get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 
 $wps_etmfw_qr_code_is_enable = ! empty( get_option( 'wps_etmfwp_include_qr' ) ) ? get_option( 'wps_etmfwp_include_qr' ) : '';
 $wps_etmfw_logo_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' ) ) ? get_option( 'wps_etmfw_mail_setting_upload_logo' ) : '';
 $wps_etmfw_barcode_enable = ! empty( get_option( 'wps_etmfwp_include_barcode' ) ) ? get_option( 'wps_etmfwp_include_barcode' ) : '';
-
+$wps_etmfw_hide_details_pdf_ticket = get_option( 'wps_wet_hide_details_pdf_ticket' );
 $wps_qr_image = esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/qr_image.png' );
 ?>
 <!-- Template Start -->
@@ -70,8 +70,14 @@ $wps_qr_image = esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/
 		</tr>
 		<tr>
 			<td colspan="2" style='padding: 20px 0 0;background: #fff;'>
+			<?php
+			if ( 'on' != $wps_etmfw_hide_details_pdf_ticket ) {
+				?>
 				<h4 style='color:#000;font-weight:bold;font-size:18px;margin:0 0 10px;letter-spacing:0.5px;line-height:1;'><?php esc_html_e( 'Details:', 'event-tickets-manager-for-woocommerce' ); ?></h4>
 				<p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;border-bottom:1px solid #bc8a00;padding:5px 0;'><span style="margin:0 10px 0 0;"><strong>&#8226; Name: </strong> Anvi Tiwari</span><span style="margin:0 10px 0 0;"><strong>&#8226; Mob No.: </strong>+91 8004589657</span><span style="margin:0 10px 0 0;"><strong>&#8226; Date: </strong>August 24, 2024</span><span style="margin:0 10px 0 0;"><strong>&#8226; Email ID: </strong>anvi2015@gmail.com</span></p>
+			<?php
+			}
+			?>
 			</td>
 		</tr>
 		<?php

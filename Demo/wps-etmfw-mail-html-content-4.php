@@ -27,6 +27,8 @@ $wps_etmfw_logo_size = ! empty( get_option( 'wps_etmfw_logo_size', true ) ) ? ge
 $wps_etmfw_qr_size = ! empty( get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 'wps_etmfw_qr_size' ) : '180';
 $wps_etmfw_qr_code_is_enable = ! empty( get_option( 'wps_etmfwp_include_qr' ) ) ? get_option( 'wps_etmfwp_include_qr' ) : '';
 $wps_etmfw_logo_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' ) ) ? get_option( 'wps_etmfw_mail_setting_upload_logo' ) : '';
+$wps_etmfw_hide_details_pdf_ticket = get_option( 'wps_wet_hide_details_pdf_ticket' );
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -172,15 +174,18 @@ $wps_etmfw_logo_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' 
 			<p><?php esc_html_e( 'Ticket Code', 'event-tickets-manager-for-woocommerce' ); ?>: ABC123</p>
 		</div>
 
-		<?php } ?>
-		<div class="participant-details">
-			<p><strong>Name:</strong> John Doe</p>
-			<p><strong>Email:</strong> johndoe@example.com</p>
-			<p><strong>Phone:</strong> +1 (123) 456-7890</p>
-			<p><strong>Address:</strong> 123 Main Street, City, Country</p>
-			<!-- Add more participant details here if needed -->
-		</div>
+		<?php }
+		if ( 'on' != $wps_etmfw_hide_details_pdf_ticket ) {
+			?>
+			<div class="participant-details">
+				<p><strong>Name:</strong> John Doe</p>
+				<p><strong>Email:</strong> johndoe@example.com</p>
+				<p><strong>Phone:</strong> +1 (123) 456-7890</p>
+				<p><strong>Address:</strong> 123 Main Street, City, Country</p>
+				<!-- Add more participant details here if needed -->
+			</div>
 		<?php
+		}
 		$body = $wps_etmfw_email_body_content;
 		?>
 		<div class="ticket-footer wps_etmfw_ticket_body" style="background-color:<?php echo esc_attr( $wps_etmfw_background_color ); ?>;">
