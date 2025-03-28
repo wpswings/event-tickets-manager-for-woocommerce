@@ -1,7 +1,7 @@
 <?php
 /**
  * Exit if accessed directly
- *
+ * Fusion
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/emails/templates
  */
@@ -27,10 +27,13 @@ $wps_etmfw_qr_size = ! empty( get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 
 $wps_etmfw_qr_code_is_enable = ! empty( get_option( 'wps_etmfwp_include_qr' ) ) ? get_option( 'wps_etmfwp_include_qr' ) : '';
 $wps_etmfw_barcode_enable = ! empty( get_option( 'wps_etmfwp_include_barcode' ) ) ? get_option( 'wps_etmfwp_include_barcode' ) : '';
 
-$image_attributes = '';
+$wps_image_att_etmfw_demo = '';
 $wps_etmfw_background_image = ! empty( get_option( 'wps_etmfw_background_image' ) ) ? get_option( 'wps_etmfw_background_image' ) : '';
 if ( ! empty( $wps_etmfw_background_image ) ) {
 	$image_attributes = wp_get_attachment_image_src( $wps_etmfw_background_image, 'thumbnail' );
+	$wps_image_att_etmfw_demo = $image_attributes[0];
+} else {
+	$wps_image_att_etmfw_demo = esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/bg-image.jpg' );
 }
 
 $image = wp_get_attachment_image_src( get_post_thumbnail_id( $product_id ), 'single-post-thumbnail' );
@@ -47,21 +50,21 @@ $wps_etmfw_hide_details_pdf_ticket = get_option( 'wps_wet_hide_details_pdf_ticke
 	<tbody>
 		<tr>
 			<td colspan="3" style='padding: 0 0 10px;'>
-				<div style="padding:20px;background-image:url(<?php echo esc_url( $image_attributes[0] ); ?>);background-size: cover;background-position:center center;background-repeat: no-repeat;">
+				<div style="padding:20px;background-image:url(<?php echo esc_url( $wps_image_att_etmfw_demo ); ?>);background-size: cover;background-position:center center;background-repeat: no-repeat;">
 					<div style="background-image: url(<?php echo esc_url( $product_image_url ); ?>); height: 40px; background-size: contain; background-position: center; background-repeat: no-repeat"></div>
 					<div style='color:#FFC525;font-size:32px;font-weight:bold;margin:10px 0 0;letter-spacing:0.5px;line-height:1.25;text-align:center;'>[EVENTNAME]</div>
 				</div>
 			</td>
 		</tr>
 		<tr>
-			<td style="width:35%;padding:10px;background:#FFC525;">
+			<td style="width:<?php ( 'on' != $wps_etmfw_hide_details_pdf_ticket ) ? '35%' : '50%'; ?>; padding:10px;background:#FFC525;">
 				<div style='color:#000;'>
 					<h3 style='color:#000;font-size:14px;font-weight:normal;margin:0 0 8px;letter-spacing:0.5px;'><strong style='color:#000;'><?php echo esc_html__( 'From:', 'event-tickets-manager-for-woocommerce' ); ?></strong>[NEW_START_DATE]</h3>
 					<h3 style='color:#000;font-size:14px;font-weight:normal;margin:0 0 8px;letter-spacing:0.5px;'><strong style='color:#000;'><?php echo esc_html__( 'To:', 'event-tickets-manager-for-woocommerce' ); ?> </strong>[NEW_END_DATE]</h3>
 					<h3 style='color:#000;font-size:14px;font-weight:normal;margin:0;letter-spacing:0.5px;'><strong style='color:#000;'><?php echo esc_html__( 'Venue:', 'event-tickets-manager-for-woocommerce' ); ?> </strong>[VENUE]</h4>
 				</div>
 			</td>
-			<td style="width:30%;background:#fff;">
+			<td style="width:<?php ( 'on' != $wps_etmfw_hide_details_pdf_ticket ) ? '30%' : '50%'; ?>; background:#fff;">
 				<div style='text-align:center;padding:20px;'>
 					<h4 style='color:#000;font-size: 20px;font-weight:bold;line-height:20px;border-bottom:1px solid #f4f4f4;margin: 0 0 5px;padding:0 0 10px;text-align: center;letter-spacing:0.5px;'><?php esc_html_e( 'Ticket Code', 'event-tickets-manager-for-woocommerce' ); ?></h4>
 

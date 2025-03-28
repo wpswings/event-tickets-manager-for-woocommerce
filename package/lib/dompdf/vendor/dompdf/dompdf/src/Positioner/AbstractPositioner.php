@@ -1,9 +1,11 @@
 <?php
 /**
  * @package dompdf
- * @link    https://github.com/dompdf/dompdf
+ * @link    http://dompdf.github.com/
+ * @author  Benj Carson <benjcarson@digitaljunkies.ca>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
+
 namespace Dompdf\Positioner;
 
 use Dompdf\FrameDecorator\AbstractFrameDecorator;
@@ -11,8 +13,9 @@ use Dompdf\FrameDecorator\AbstractFrameDecorator;
 /**
  * Base AbstractPositioner class
  *
- * Defines positioner interface
+ * Defines postioner interface
  *
+ * @access  private
  * @package dompdf
  */
 abstract class AbstractPositioner
@@ -20,22 +23,19 @@ abstract class AbstractPositioner
 
     /**
      * @param AbstractFrameDecorator $frame
+     * @return mixed
      */
-    abstract function position(AbstractFrameDecorator $frame): void;
+    abstract function position(AbstractFrameDecorator $frame);
 
     /**
      * @param AbstractFrameDecorator $frame
-     * @param float                  $offset_x
-     * @param float                  $offset_y
-     * @param bool                   $ignore_self
+     * @param $offset_x
+     * @param $offset_y
+     * @param bool $ignore_self
      */
-    function move(
-        AbstractFrameDecorator $frame,
-        float $offset_x,
-        float $offset_y,
-        bool $ignore_self = false
-    ): void {
-        [$x, $y] = $frame->get_position();
+    function move(AbstractFrameDecorator $frame, $offset_x, $offset_y, $ignore_self = false)
+    {
+        list($x, $y) = $frame->get_position();
 
         if (!$ignore_self) {
             $frame->set_position($x + $offset_x, $y + $offset_y);

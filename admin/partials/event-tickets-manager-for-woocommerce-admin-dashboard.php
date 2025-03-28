@@ -104,6 +104,7 @@ if ( ! $error_notice ) {
 
 		<div>
 			<?php
+				do_action( 'wps_etmfw_settings_saved' );
 				do_action( 'wps_etmfw_before_general_settings_form' );
 				// if submenu is directly clicked on woocommerce.
 			if ( empty( $etmfw_active_tab ) ) {

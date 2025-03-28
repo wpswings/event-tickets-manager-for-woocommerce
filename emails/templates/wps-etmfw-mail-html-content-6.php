@@ -1,7 +1,7 @@
 <?php
 /**
  * Exit if accessed directly
- *
+ * Eclipse
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/emails/templates
  */
@@ -82,15 +82,15 @@ $wps_etmfw_hide_details_pdf_ticket = get_option( 'wps_wet_hide_details_pdf_ticke
 			</td>
 		</tr>
 		<tr>
-		<?php
-		if ( 'on' != $wps_etmfw_hide_details_pdf_ticket ) {
-			?>
 			<td colspan="2" style='padding: 20px 0 0;background: #fff;'>
-			[ADDITIONALINFO]
-			</td>
 			<?php
-		}
-		?>
+			if ( 'on' != $wps_etmfw_hide_details_pdf_ticket ) {
+				?>
+				[ADDITIONALINFO]
+				<?php
+			}
+			?>
+			</td>
 		</tr>
 		<tr>
 			<td colspan="2" style='padding: 20px 0 0;background: #fff;'>

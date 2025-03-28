@@ -1559,10 +1559,12 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		$order_items = $order->get_items();
 		foreach ( $order_items as $item ) {
 			$product = $item->get_product();
-			if ( 'event_ticket_manager' === $product->get_type() ) {
-				$order->update_meta_data( 'wps_order_type', 'event' );
-				$order->save();
-				break;
+			if ( $product && is_object( $product ) && method_exists( $product, 'get_type' ) ) {
+				if ( 'event_ticket_manager' === $product->get_type() ) {
+					$order->update_meta_data( 'wps_order_type', 'event' );
+					$order->save();
+					break;
+				}
 			}
 		}
 	}

@@ -1,9 +1,4 @@
 <?php
-/**
- * @package dompdf
- * @link    https://github.com/dompdf/dompdf
- * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
- */
 namespace Dompdf\Frame;
 
 use Iterator;
@@ -14,6 +9,7 @@ use Dompdf\Frame;
  *
  * Returns frames in preorder traversal order (parent then children)
  *
+ * @access private
  * @package dompdf
  */
 class FrameTreeIterator implements Iterator
@@ -24,7 +20,7 @@ class FrameTreeIterator implements Iterator
     protected $_root;
 
     /**
-     * @var Frame[]
+     * @var array
      */
     protected $_stack = [];
 
@@ -42,7 +38,10 @@ class FrameTreeIterator implements Iterator
         $this->_num = 0;
     }
 
-    public function rewind(): void
+    /**
+     *
+     */
+    public function rewind()
     {
         $this->_stack = [$this->_root];
         $this->_num = 0;
@@ -51,7 +50,7 @@ class FrameTreeIterator implements Iterator
     /**
      * @return bool
      */
-    public function valid(): bool
+    public function valid()
     {
         return count($this->_stack) > 0;
     }
@@ -59,7 +58,7 @@ class FrameTreeIterator implements Iterator
     /**
      * @return int
      */
-    public function key(): int
+    public function key()
     {
         return $this->_num;
     }
@@ -67,14 +66,20 @@ class FrameTreeIterator implements Iterator
     /**
      * @return Frame
      */
-    public function current(): Frame
+    public function current()
     {
         return end($this->_stack);
     }
 
-    public function next(): void
+    /**
+     * @return Frame
+     */
+    public function next()
     {
-        $b = array_pop($this->_stack);
+        $b = end($this->_stack);
+
+        // Pop last element
+        unset($this->_stack[key($this->_stack)]);
         $this->_num++;
 
         // Push all children onto the stack in reverse order
@@ -84,5 +89,8 @@ class FrameTreeIterator implements Iterator
                 $this->_stack[] = $c;
             }
         }
+
+        return $b;
     }
 }
+

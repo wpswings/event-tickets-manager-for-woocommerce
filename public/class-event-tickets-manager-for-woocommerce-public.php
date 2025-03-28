@@ -103,7 +103,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			'wps_etmfw_dyn_address' => $wps_etmfw_dyn_address,
 			'wps_is_pro_active' => $wps_is_pro_active,
 			'wps_dyn_name' => __( ' Name', 'event-tickets-manager-for-woocommerce' ),
-			'wps_dyn_mail' => __( ' EMail', 'event-tickets-manager-for-woocommerce' ),
+			'wps_dyn_mail' => __( ' Email', 'event-tickets-manager-for-woocommerce' ),
 			'wps_dyn_contact' => __( ' Contact', 'event-tickets-manager-for-woocommerce' ),
 			'wps_dyn_date' => __( ' Date', 'event-tickets-manager-for-woocommerce' ),
 			'wps_dyn_address' => __( ' Address', 'event-tickets-manager-for-woocommerce' ),
@@ -452,7 +452,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$wps_etmfw_mail_template_data = array();
 		foreach ( $order->get_items() as $item_id => $item ) {
 			$product = $item->get_product();
-			if ( isset( $product ) && $product->is_type( 'event_ticket_manager' ) ) {
+			if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
 
 				if ( isset( $product ) ) {
 					$item_quantity = wc_get_order_item_meta( $item_id, '_qty', true );
@@ -1364,7 +1364,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$order = wc_get_order( $order_id );
 		foreach ( $order->get_items() as $item_id => $item ) {
 			$product = $item->get_product();
-			if ( isset( $product ) && $product->is_type( 'event_ticket_manager' ) ) {
+			if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
 				if ( count( $posted_value ) > 0 ) {
 
 					foreach ( $posted_value as $key => $value ) {
@@ -1757,7 +1757,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$order_items = $order->get_items();
 		foreach ( $order_items as $item ) {
 			$product = $item->get_product();
-			if ( 'event_ticket_manager' === $product->get_type() ) {
+			if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
 				$order->update_meta_data( 'wps_order_type', 'event' );
 				$order->save();
 				break;

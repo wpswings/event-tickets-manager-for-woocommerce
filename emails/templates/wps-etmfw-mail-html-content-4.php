@@ -1,7 +1,7 @@
 <?php
 /**
  * Exit if accessed directly
- *
+ * Vertico
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/emails/templates
  */
@@ -48,22 +48,30 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 		<div class="ticket-header" style="background-color:  <?php echo esc_attr( $wps_etmfw_header_background_color ); ?>;">  <!-- Add different color section -->
 			<h1 class="wps_etmfw_pdf_text_colour" style="text-align: center;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">[EVENTNAME]</h1>
 		</div>
-		<div class="ticket-info" style="padding: 20px; text-align: left; display: flex;">
-			<img class="logo" id="wps_wem_logo_id" style="width: <?php echo esc_attr( $wps_etmfw_logo_size . 'px' ); ?>; height: auto; margin-right: 20px;" src = <?php echo esc_url($product_image_url); ?>  alt="Event Logo">
-			<div style="text-align: center;">
-				<p><strong><?php esc_html_e('Event Name', 'event-tickets-manager-for-woocommerce'); ?>: </strong>[EVENTNAME]</p>
-				<p><strong><?php echo esc_html__( 'Start Date', 'event-tickets-manager-for-woocommerce' ); ?>:</strong> [STARTDATE]</p>
-				<p><strong><?php echo esc_html__( 'End Date', 'event-tickets-manager-for-woocommerce' ); ?>:</strong> [ENDDATE]</p>
-				<p><strong><?php echo esc_html__( 'Venue', 'event-tickets-manager-for-woocommerce' ); ?>:</strong> [VENUE]</p>
-			</div>
-		</div>
+		<table style="width:100%; margin:0 0 50px;">
+			<tr style="padding: 20px; text-align: left;">
+				<td style="width:32%; text-align:center; vertical-align:top;">
+					<img class="logo" id="wps_wem_logo_id" style="width: <?php echo esc_attr( $wps_etmfw_logo_size . 'px' ); ?>; height: auto; margin-right: 20px;" src = <?php echo esc_url($product_image_url); ?>  alt="Event Logo">
+				</td>
+				<td>
+					<div style="text-align: left;">
+						<p><strong><?php esc_html_e('Event Name', 'event-tickets-manager-for-woocommerce'); ?>: </strong>[EVENTNAME]</p>
+						<p><strong><?php echo esc_html__( 'Start Date', 'event-tickets-manager-for-woocommerce' ); ?>:</strong> [STARTDATE]</p>
+						<p><strong><?php echo esc_html__( 'End Date', 'event-tickets-manager-for-woocommerce' ); ?>:</strong> [ENDDATE]</p>
+						<p><strong><?php echo esc_html__( 'Venue', 'event-tickets-manager-for-woocommerce' ); ?>:</strong> [VENUE]</p>
+					</div>
+				</td>
+			</tr>
+		</table>
 		<?php if ( 'on' == $wps_etmfw_qr_code_is_enable ) { ?>
-			<div class="ticket-qrcode" style="text-align: center;">
+			<div class="ticket-qrcode" style="text-align: center; margin:20px 0px;">
 			[TICKET]
 			</div>
 		<?php } elseif ( 'on' == get_option( 'wps_etmfwp_include_barcode' ) ) { ?>
-			<div class="ticket-qrcode" style="text-align: center; padding: 20px;">
-				<img id="wps_qr_image" style="max-width: 200px; height: auto; width: <?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?>; height: <?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?>;" src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/barcode.png' ); ?>">
+			<div style="text-align: center; margin:20px 0px;">
+				<span style="background:white; text-align: center; margin:auto; padding:10px; max-width:220px; display:inline-block;">
+					<img style="max-height:120px; max-width:200px;" src="[TICKET_URL]" alt="">
+				</span>
 			</div>
 		<?php } else { ?>
 			<div class="ticket-code wps_etmfw_pdf_text_colour" style="flex: 1; padding: 20px; text-align: center; border: 2px dashed #ddd;">

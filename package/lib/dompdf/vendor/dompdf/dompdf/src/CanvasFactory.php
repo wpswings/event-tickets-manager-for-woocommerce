@@ -1,7 +1,8 @@
 <?php
 /**
  * @package dompdf
- * @link    https://github.com/dompdf/dompdf
+ * @link    http://dompdf.github.com/
+ * @author  Benj Carson <benjcarson@digitaljunkies.ca>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 namespace Dompdf;
@@ -24,14 +25,14 @@ class CanvasFactory
     }
 
     /**
-     * @param Dompdf         $dompdf
-     * @param string|float[] $paper
-     * @param string         $orientation
-     * @param string|null    $class
+     * @param Dompdf $dompdf
+     * @param string|array $paper
+     * @param string $orientation
+     * @param string $class
      *
      * @return Canvas
      */
-    static function get_instance(Dompdf $dompdf, $paper, string $orientation, ?string $class = null)
+    static function get_instance(Dompdf $dompdf, $paper = null, $orientation = null, $class = null)
     {
         $backend = strtolower($dompdf->getOptions()->getPdfBackend());
 

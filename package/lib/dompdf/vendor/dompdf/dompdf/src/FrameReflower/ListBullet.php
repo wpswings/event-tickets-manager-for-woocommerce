@@ -1,13 +1,14 @@
 <?php
 /**
  * @package dompdf
- * @link    https://github.com/dompdf/dompdf
+ * @link    http://dompdf.github.com/
+ * @author  Benj Carson <benjcarson@digitaljunkies.ca>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 namespace Dompdf\FrameReflower;
 
 use Dompdf\FrameDecorator\Block as BlockFrameDecorator;
-use Dompdf\FrameDecorator\ListBullet as ListBulletFrameDecorator;
+use Dompdf\FrameDecorator\AbstractFrameDecorator;
 
 /**
  * Reflows list bullets
@@ -19,9 +20,9 @@ class ListBullet extends AbstractFrameReflower
 
     /**
      * ListBullet constructor.
-     * @param ListBulletFrameDecorator $frame
+     * @param AbstractFrameDecorator $frame
      */
-    function __construct(ListBulletFrameDecorator $frame)
+    function __construct(AbstractFrameDecorator $frame)
     {
         parent::__construct($frame);
     }
@@ -29,23 +30,16 @@ class ListBullet extends AbstractFrameReflower
     /**
      * @param BlockFrameDecorator|null $block
      */
-    function reflow(?BlockFrameDecorator $block = null)
+    function reflow(BlockFrameDecorator $block = null)
     {
-        if ($block === null) {
-            return;
-        }
+        $style = $this->_frame->get_style();
 
-        /** @var ListBulletFrameDecorator */
-        $frame = $this->_frame;
-        $style = $frame->get_style();
-
-        $style->set_used("width", $frame->get_width());
-        $frame->position();
+        $style->width = $this->_frame->get_width();
+        $this->_frame->position();
 
         if ($style->list_style_position === "inside") {
-            $block->add_frame_to_line($frame);
-        } else {
-            $block->add_dangling_marker($frame);
+            $p = $this->_frame->find_block_parent();
+            $p->add_frame_to_line($this->_frame);
         }
     }
 }

@@ -1089,6 +1089,39 @@ class Event_Tickets_Manager_For_Woocommerce {
 							<?php
 							break;
 
+						case 'wps-new-checkbox':
+							?>
+							<div class="wps-form-group" >
+								<div class="wps-form-group__label">
+									<label for="" class="wps-form-label"><?php echo ( isset( $etmfw_component['title'] ) ? esc_html( $etmfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+								</div>
+								<div class="wps-form-group__control">
+									<div class="wps_main_social_wrapp">
+										<div class="wps_social-checkbox-container">
+											<input type="checkbox" id="wps_etmfw_social_share_facebook" name="wps_etmfw_social_share_facebook" <?php checked( get_option( 'wps_etmfw_social_share_facebook' ), 'on' ); ?>>
+											<label for="wps_etmfw_social_share_facebook"><?php echo esc_html__( 'Facebook', 'event-tickets-manager-for-woocommerce-pro' ); ?></label>
+										</div>
+										<div class="wps_social-checkbox-container">
+											<input type="checkbox" id="wps_etmfw_social_share_twitter" name="wps_etmfw_social_share_twitter" <?php checked( get_option( 'wps_etmfw_social_share_twitter' ), 'on' ); ?>>
+											<label for="wps_etmfw_social_share_twitter"><?php echo esc_html__( 'X', 'event-tickets-manager-for-woocommerce-pro' ); ?></label>
+										</div>
+										<div class="wps_social-checkbox-container">
+											<input type="checkbox" id="wps_etmfw_social_share_gmail" name="wps_etmfw_social_share_gmail" <?php checked( get_option( 'wps_etmfw_social_share_gmail' ), 'on' ); ?>>
+											<label for="wps_etmfw_social_share_gmail"><?php echo esc_html__( 'Gmail', 'event-tickets-manager-for-woocommerce-pro' ); ?></label>
+										</div>
+										<div class="wps_social-checkbox-container">
+											<input type="checkbox" id="wps_etmfw_social_share_whatsapp" name="wps_etmfw_social_share_whatsapp" <?php checked( get_option( 'wps_etmfw_social_share_whatsapp' ), 'on' ); ?>>
+											<label for="wps_etmfw_social_share_whatsapp"><?php echo esc_html__( 'Whatsapp', 'event-tickets-manager-for-woocommerce-pro' ); ?></label>
+										</div>
+										<div class="wps_social-checkbox-container">
+											<input type="checkbox" id="wps_etmfw_social_share_pinterest" name="wps_etmfw_social_share_pinterest" <?php checked( get_option( 'wps_etmfw_social_share_pinterest' ), 'on' ); ?>>
+											<label for="wps_etmfw_social_share_pinterest"><?php echo esc_html__( 'Pinterest', 'event-tickets-manager-for-woocommerce-pro' ); ?></label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<?php
+							break;
 						default:
 							break;
 					}

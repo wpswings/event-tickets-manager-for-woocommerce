@@ -1,9 +1,4 @@
 <?php
-/**
- * @package dompdf
- * @link    https://github.com/dompdf/dompdf
- * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
- */
 namespace Dompdf;
 
 class Options
@@ -18,7 +13,7 @@ class Options
     /**
      * The location of a temporary directory.
      *
-     * The directory specified must be writable by the executing process.
+     * The directory specified must be writable by the webserver process.
      * The temporary directory is required to download remote images and when
      * using the PFDLib back end.
      *
@@ -30,7 +25,7 @@ class Options
      * The location of the DOMPDF font directory
      *
      * The location of the directory where DOMPDF will store fonts and font metrics
-     * Note: This directory must exist and be writable by the executing process.
+     * Note: This directory must exist and be writable by the webserver process.
      *
      * @var string
      */
@@ -42,7 +37,7 @@ class Options
      * This directory contains the cached font metrics for the fonts used by DOMPDF.
      * This directory can be the same as $fontDir
      *
-     * Note: This directory must exist and be writable by the executing process.
+     * Note: This directory must exist and be writable by the webserver process.
      *
      * @var string
      */
@@ -51,10 +46,10 @@ class Options
     /**
      * dompdf's "chroot"
      *
-     * Utilized by Dompdf's default file:// protocol URI validation rule.
-     * All local files opened by dompdf must be in a subdirectory of the directory
-     * or directories specified by this option.
-     * DO NOT set this value to '/' since this could allow an attacker to use dompdf to
+     * Prevents dompdf from accessing system files or other files on the webserver.
+     * All local files opened by dompdf must be in a subdirectory of this directory
+     * or array of directories.
+     * DO NOT set it to '/' since this could allow an attacker to use dompdf to
      * read any files on the server.  This should be an absolute path.
      *
      * ==== IMPORTANT ====
@@ -68,38 +63,19 @@ class Options
     private $chroot;
 
     /**
-    * Protocol whitelist
-    *
-    * Protocols and PHP wrappers allowed in URIs, and the validation rules
-    * that determine if a resource may be loaded. Full support is not guaranteed
-    * for the protocols/wrappers specified
-    * by this array.
-    *
-    * @var array
-    */
-    private $allowedProtocols = [
-        "data://" => ["rules" => []],
-        "file://" => ["rules" => []],
-        "http://" => ["rules" => []],
-        "https://" => ["rules" => []]
-    ];
-
-    /**
-    * Operational artifact (log files, temporary files) path validation
-    *
-    * @var callable
-    */
-    private $artifactPathValidation = null;
-
-    /**
      * @var string
      */
-    private $logOutputFile = '';
+    private $logOutputFile;
 
     /**
-     * Styles targeted to this media type are applied to the document.
-     * This is on top of the media types that are always applied:
-     *    all, static, visual, bitmap, paged, dompdf
+     * html target media view which should be rendered into pdf.
+     * List of types and parsing rules for future extensions:
+     * http://www.w3.org/TR/REC-html40/types.html
+     *   screen, tty, tv, projection, handheld, print, braille, aural, all
+     * Note: aural is deprecated in CSS 2.1 because it is replaced by speech in CSS 3.
+     * Note, even though the generated pdf file is intended for print output,
+     * the desired content might be different (e.g. screen or projection view of html file).
+     * Therefore allow specification of content here.
      *
      * @var string
      */
@@ -111,7 +87,7 @@ class Options
      * North America standard is "letter"; other countries generally "a4"
      * @see \Dompdf\Adapter\CPDF::PAPER_SIZES for valid sizes
      *
-     * @var string|float[]
+     * @var string
      */
     private $defaultPaperSize = "letter";
 
@@ -207,54 +183,21 @@ class Options
     private $isRemoteEnabled = false;
 
     /**
-     * List of allowed remote hosts
-     *
-     * Each value of the array must be a valid hostname.
-     *
-     * This will be used to filter which resources can be loaded in combination with
-     * isRemoteEnabled. If isRemoteEnabled is FALSE, then this will have no effect.
-     *
-     * Leave to NULL to allow any remote host.
-     *
-     * @var array|null
-     */
-    private $allowedRemoteHosts = null;
-
-    /**
-     * Enable PDF/A-3 compliance mode
-     *
-     * ==== EXPERIMENTAL ====
-     * This feature is currently only supported with the CPDF backend and will
-     * have no effect if used with any other.
-     *
-     * Currently this mode only takes care of adding the necessary metadata, output intents, etc.
-     * It does not enforce font embedding, it's up to you to embed the fonts you plan on using.
-     *
-     * @var bool
-     */
-    private $isPdfAEnabled = false;
-
-    /**
-     * Enable inline JavaScript
+     * Enable inline Javascript
      *
      * If this setting is set to true then DOMPDF will automatically insert
-     * JavaScript code contained within <script type="text/javascript"> ... </script>
-     * tags as written into the PDF.
-     *
-     * NOTE: This is PDF-based JavaScript to be executed by the PDF viewer,
-     * not browser-based JavaScript executed by Dompdf.
+     * JavaScript code contained within <script type="text/javascript"> ... </script> tags.
      *
      * @var bool
      */
     private $isJavascriptEnabled = true;
 
     /**
-     * Use the HTML5 Lib parser
+     * Use the more-than-experimental HTML5 Lib parser
      *
-     * @deprecated
      * @var bool
      */
-    private $isHtml5ParserEnabled = true;
+    private $isHtml5ParserEnabled = false;
 
     /**
      * Whether to enable font subsetting or not.
@@ -333,19 +276,9 @@ class Options
     private $pdflibLicense = "";
 
     /**
-     * HTTP context created with stream_context_create()
-     * Will be used for file_get_contents
-     *
-     * @link https://www.php.net/manual/context.php
-     *
-     * @var resource
-     */
-    private $httpContext;
-
-    /**
      * @param array $attributes
      */
-    public function __construct(?array $attributes = null)
+    public function __construct(array $attributes = null)
     {
         $rootDir = realpath(__DIR__ . "/../");
         $this->setChroot(array($rootDir));
@@ -353,25 +286,7 @@ class Options
         $this->setTempDir(sys_get_temp_dir());
         $this->setFontDir($rootDir . "/lib/fonts");
         $this->setFontCache($this->getFontDir());
-
-        $ver = "";
-        $versionFile = realpath(__DIR__ . '/../VERSION');
-        if (($version = file_get_contents($versionFile)) !== false) {
-            $version = trim($version);
-            if ($version !== '$Format:<%h>$') {
-                $ver = "/$version";
-            }
-        }
-        $this->setHttpContext([
-            "http" => [
-                "follow_location" => false,
-                "user_agent" => "Dompdf$ver https://github.com/dompdf/dompdf"
-            ]
-        ]);
-
-        $this->setAllowedProtocols(["data://", "file://", "http://", "https://"]);
-
-        $this->setArtifactPathValidation([$this, "validateArtifactPath"]);
+        $this->setLogOutputFile($this->getTempDir() . "/log.htm");
 
         if (null !== $attributes) {
             $this->set($attributes);
@@ -397,10 +312,6 @@ class Options
                 $this->setFontCache($value);
             } elseif ($key === 'chroot') {
                 $this->setChroot($value);
-            } elseif ($key === 'allowedProtocols' || $key === 'allowed_protocols') {
-                $this->setAllowedProtocols($value);
-            } elseif ($key === 'artifactPathValidation') {
-                $this->setArtifactPathValidation($value);
             } elseif ($key === 'logOutputFile' || $key === 'log_output_file') {
                 $this->setLogOutputFile($value);
             } elseif ($key === 'defaultMediaType' || $key === 'default_media_type') {
@@ -419,10 +330,6 @@ class Options
                 $this->setIsPhpEnabled($value);
             } elseif ($key === 'isRemoteEnabled' || $key === 'is_remote_enabled' || $key === 'enable_remote') {
                 $this->setIsRemoteEnabled($value);
-            } elseif ($key === 'allowedRemoteHosts' || $key === 'allowed_remote_hosts') {
-                $this->setAllowedRemoteHosts($value);
-            } elseif ($key === 'isPdfAEnabled' || $key === 'is_pdf_a_enabled' || $key === 'enable_pdf_a') {
-                $this->setIsPdfAEnabled($value);
             } elseif ($key === 'isJavascriptEnabled' || $key === 'is_javascript_enabled' || $key === 'enable_javascript') {
                 $this->setIsJavascriptEnabled($value);
             } elseif ($key === 'isHtml5ParserEnabled' || $key === 'is_html5_parser_enabled' || $key === 'enable_html5_parser') {
@@ -449,8 +356,6 @@ class Options
                 $this->setPdfBackend($value);
             } elseif ($key === 'pdflibLicense' || $key === 'pdflib_license') {
                 $this->setPdflibLicense($value);
-            } elseif ($key === 'httpContext' || $key === 'http_context') {
-                $this->setHttpContext($value);
             }
         }
         return $this;
@@ -470,10 +375,6 @@ class Options
             return $this->getFontCache();
         } elseif ($key === 'chroot') {
             return $this->getChroot();
-        } elseif ($key === 'allowedProtocols' || $key === 'allowed_protocols') {
-            return $this->getAllowedProtocols();
-        } elseif ($key === 'artifactPathValidation') {
-            return $this->getArtifactPathValidation();
         } elseif ($key === 'logOutputFile' || $key === 'log_output_file') {
             return $this->getLogOutputFile();
         } elseif ($key === 'defaultMediaType' || $key === 'default_media_type') {
@@ -492,10 +393,6 @@ class Options
             return $this->getIsPhpEnabled();
         } elseif ($key === 'isRemoteEnabled' || $key === 'is_remote_enabled' || $key === 'enable_remote') {
             return $this->getIsRemoteEnabled();
-        } elseif ($key === 'allowedRemoteHosts' || $key === 'allowed_remote_hosts') {
-            return $this->getAllowedProtocols();
-        } elseif ($key === 'isPdfAEnabled' || $key === 'is_pdf_a_enabled' || $key === 'enable_pdf_a') {
-            $this->getIsPdfAEnabled();
         } elseif ($key === 'isJavascriptEnabled' || $key === 'is_javascript_enabled' || $key === 'enable_javascript') {
             return $this->getIsJavascriptEnabled();
         } elseif ($key === 'isHtml5ParserEnabled' || $key === 'is_html5_parser_enabled' || $key === 'enable_html5_parser') {
@@ -522,8 +419,6 @@ class Options
             return $this->getPdfBackend();
         } elseif ($key === 'pdflibLicense' || $key === 'pdflib_license') {
             return $this->getPdflibLicense();
-        } elseif ($key === 'httpContext' || $key === 'http_context') {
-            return $this->getHttpContext();
         }
         return null;
     }
@@ -575,90 +470,6 @@ class Options
         } elseif (is_array($chroot)) {
             $this->chroot = $chroot;
         }
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getAllowedProtocols()
-    {
-        return $this->allowedProtocols;
-    }
-
-    /**
-     * @param array $allowedProtocols The protocols to allow, as an array
-     * formatted as ["protocol://" => ["rules" => [callable]], ...]
-     * or ["protocol://", ...]
-     *
-     * @return $this
-     */
-    public function setAllowedProtocols(array $allowedProtocols)
-    {
-        $protocols = [];
-        foreach ($allowedProtocols as $protocol => $config) {
-            if (is_string($protocol)) {
-                $protocols[$protocol] = [];
-                if (is_array($config)) {
-                    $protocols[$protocol] = $config;
-                }
-            } elseif (is_string($config)) {
-                $protocols[$config] = [];
-            }
-        }
-        $this->allowedProtocols = [];
-        foreach ($protocols as $protocol => $config) {
-            $this->addAllowedProtocol($protocol, ...($config["rules"] ?? []));
-        }
-        return $this;
-    }
-
-    /**
-     * Adds a new protocol to the allowed protocols collection
-     *
-     * @param string $protocol The scheme to add (e.g. "http://")
-     * @param callable $rule A callable that validates the protocol
-     * @return $this
-     */
-    public function addAllowedProtocol(string $protocol, callable ...$rules)
-    {
-        $protocol = strtolower($protocol);
-        if (empty($rules)) {
-            $rules = [];
-            switch ($protocol) {
-                case "data://":
-                    break;
-                case "file://":
-                    $rules[] = [$this, "validateLocalUri"];
-                    break;
-                case "http://":
-                case "https://":
-                    $rules[] = [$this, "validateRemoteUri"];
-                    break;
-                case "phar://":
-                    $rules[] = [$this, "validatePharUri"];
-                    break;
-            }
-        }
-        $this->allowedProtocols[$protocol] = ["rules" => $rules];
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getArtifactPathValidation()
-    {
-        return $this->artifactPathValidation;
-    }
-
-    /**
-     * @param callable $validator
-     * @return $this
-     */
-    public function setArtifactPathValidation($validator)
-    {
-        $this->artifactPathValidation = $validator;
         return $this;
     }
 
@@ -824,11 +635,7 @@ class Options
      */
     public function setDefaultFont($defaultFont)
     {
-        if (!($defaultFont === null || trim($defaultFont) === "")) {
-            $this->defaultFont = $defaultFont;
-        } else {
-            $this->defaultFont = "serif";
-        }
+        $this->defaultFont = $defaultFont;
         return $this;
     }
 
@@ -859,10 +666,10 @@ class Options
     }
 
     /**
-     * @param string|float[] $defaultPaperSize
+     * @param string $defaultPaperSize
      * @return $this
      */
-    public function setDefaultPaperSize($defaultPaperSize): self
+    public function setDefaultPaperSize($defaultPaperSize)
     {
         $this->defaultPaperSize = $defaultPaperSize;
         return $this;
@@ -872,14 +679,14 @@ class Options
      * @param string $defaultPaperOrientation
      * @return $this
      */
-    public function setDefaultPaperOrientation(string $defaultPaperOrientation): self
+    public function setDefaultPaperOrientation($defaultPaperOrientation)
     {
         $this->defaultPaperOrientation = $defaultPaperOrientation;
         return $this;
     }
 
     /**
-     * @return string|float[]
+     * @return string
      */
     public function getDefaultPaperSize()
     {
@@ -889,7 +696,7 @@ class Options
     /**
      * @return string
      */
-    public function getDefaultPaperOrientation(): string
+    public function getDefaultPaperOrientation()
     {
         return $this->defaultPaperOrientation;
     }
@@ -918,9 +725,7 @@ class Options
      */
     public function setFontCache($fontCache)
     {
-        if (!is_callable($this->artifactPathValidation) || ($this->artifactPathValidation)($fontCache, "fontCache") === true) {
-            $this->fontCache = $fontCache;
-        }
+        $this->fontCache = $fontCache;
         return $this;
     }
 
@@ -938,9 +743,7 @@ class Options
      */
     public function setFontDir($fontDir)
     {
-        if (!is_callable($this->artifactPathValidation) || ($this->artifactPathValidation)($fontDir, "fontDir") === true) {
-            $this->fontDir = $fontDir;
-        }
+        $this->fontDir = $fontDir;
         return $this;
     }
 
@@ -997,7 +800,6 @@ class Options
     }
 
     /**
-     * @deprecated
      * @param boolean $isHtml5ParserEnabled
      * @return $this
      */
@@ -1008,7 +810,6 @@ class Options
     }
 
     /**
-     * @deprecated
      * @return boolean
      */
     public function getIsHtml5ParserEnabled()
@@ -1017,7 +818,6 @@ class Options
     }
 
     /**
-     * @deprecated
      * @return boolean
      */
     public function isHtml5ParserEnabled()
@@ -1104,67 +904,12 @@ class Options
     }
 
     /**
-     * @param array|null $allowedRemoteHosts
-     * @return $this
-     */
-    public function setAllowedRemoteHosts($allowedRemoteHosts)
-    {
-        if (is_array($allowedRemoteHosts)) {
-            // Set hosts to lowercase
-            foreach ($allowedRemoteHosts as &$host) {
-                $host = mb_strtolower($host);
-            }
-
-            unset($host);
-        }
-
-        $this->allowedRemoteHosts = $allowedRemoteHosts;
-        return $this;
-    }
-
-    /**
-     * @return array|null
-     */
-    public function getAllowedRemoteHosts()
-    {
-        return $this->allowedRemoteHosts;
-    }
-
-    /**
-     * @param boolean $isRemoteEnabled
-     * @return $this
-     */
-    public function setIsPdfAEnabled($isPdfAEnabled)
-    {
-        $this->isPdfAEnabled = $isPdfAEnabled;
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getIsPdfAEnabled()
-    {
-        return $this->isPdfAEnabled;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isPdfAEnabled()
-    {
-        return $this->getIsPdfAEnabled();
-    }
-
-    /**
      * @param string $logOutputFile
      * @return $this
      */
     public function setLogOutputFile($logOutputFile)
     {
-        if (!is_callable($this->artifactPathValidation) || ($this->artifactPathValidation)($logOutputFile, "logOutputFile") === true) {
-            $this->logOutputFile = $logOutputFile;
-        }
+        $this->logOutputFile = $logOutputFile;
         return $this;
     }
 
@@ -1182,9 +927,7 @@ class Options
      */
     public function setTempDir($tempDir)
     {
-        if (!is_callable($this->artifactPathValidation) || ($this->artifactPathValidation)($tempDir, "tempDir") === true) {
-            $this->tempDir = $tempDir;
-        }
+        $this->tempDir = $tempDir;
         return $this;
     }
 
@@ -1202,9 +945,7 @@ class Options
      */
     public function setRootDir($rootDir)
     {
-        if (!is_callable($this->artifactPathValidation) || ($this->artifactPathValidation)($rootDir, "rootDir") === true) {
-            $this->rootDir = $rootDir;
-        }
+        $this->rootDir = $rootDir;
         return $this;
     }
 
@@ -1214,101 +955,5 @@ class Options
     public function getRootDir()
     {
         return $this->rootDir;
-    }
-
-    /**
-     * Sets the HTTP context
-     *
-     * @param resource|array $httpContext
-     * @return $this
-     */
-    public function setHttpContext($httpContext)
-    {
-        $this->httpContext = is_array($httpContext) ? stream_context_create($httpContext) : $httpContext;
-        return $this;
-    }
-
-    /**
-     * Returns the HTTP context
-     *
-     * @return resource
-     */
-    public function getHttpContext()
-    {
-        return $this->httpContext;
-    }
-
-
-    public function validateArtifactPath(?string $path, string $option)
-    {
-        if ($path === null) {
-            return true;
-        }
-        $parsed_uri = parse_url($path);
-        if ($parsed_uri === false || (array_key_exists("scheme", $parsed_uri) && strtolower($parsed_uri["scheme"]) === "phar")) {
-            return false;
-        }
-        return true;
-    }
-
-    public function validateLocalUri(string $uri)
-    {
-        if ($uri === null || strlen($uri) === 0) {
-            return [false, "The URI must not be empty."];
-        }
-
-        $realfile = realpath(str_replace("file://", "", $uri));
-
-        $dirs = $this->chroot;
-        $dirs[] = $this->rootDir;
-        $chrootValid = false;
-        foreach ($dirs as $chrootPath) {
-            $chrootPath = realpath($chrootPath);
-            if ($chrootPath !== false && strpos($realfile, $chrootPath) === 0) {
-                $chrootValid = true;
-                break;
-            }
-        }
-        if ($chrootValid !== true) {
-            return [false, "Permission denied. The file could not be found under the paths specified by Options::chroot."];
-        }
-
-        if (!$realfile) {
-            return [false, "File not found."];
-        }
-
-        return [true, null];
-    }
-
-    public function validatePharUri(string $uri)
-    {
-        if ($uri === null || strlen($uri) === 0) {
-            return [false, "The URI must not be empty."];
-        }
-
-        $file = substr(substr($uri, 0, strpos($uri, ".phar") + 5), 7);
-        return $this->validateLocalUri($file);
-    }
-
-    public function validateRemoteUri(string $uri)
-    {
-        if ($uri === null || strlen($uri) === 0) {
-            return [false, "The URI must not be empty."];
-        }
-
-        if (!$this->isRemoteEnabled) {
-            return [false, "Remote file requested, but remote file download is disabled."];
-        }
-
-        if (is_array($this->allowedRemoteHosts) && count($this->allowedRemoteHosts) > 0) {
-            $host = parse_url($uri, PHP_URL_HOST);
-            $host = mb_strtolower($host);
-
-            if (!in_array($host, $this->allowedRemoteHosts, true)) {
-                return [false, "Remote host is not in allowed list: " . $host];
-            }
-        }
-
-        return [true, null];
     }
 }
