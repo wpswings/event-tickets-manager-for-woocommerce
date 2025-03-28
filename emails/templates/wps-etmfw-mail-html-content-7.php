@@ -57,20 +57,24 @@ $wps_etmfw_hide_details_pdf_ticket = get_option( 'wps_wet_hide_details_pdf_ticke
 			</td>
 		</tr>
 		<tr>
-			<td style="width:<?php ( 'on' != $wps_etmfw_hide_details_pdf_ticket ) ? '35%' : '50%'; ?>; padding:10px;background:#FFC525;">
+			<td style="width:<?php echo ( 'on' != $wps_etmfw_hide_details_pdf_ticket ) ? '35%' : '50%'; ?>; padding:10px;background:#FFC525;">
 				<div style='color:#000;'>
 					<h3 style='color:#000;font-size:14px;font-weight:normal;margin:0 0 8px;letter-spacing:0.5px;'><strong style='color:#000;'><?php echo esc_html__( 'From:', 'event-tickets-manager-for-woocommerce' ); ?></strong>[NEW_START_DATE]</h3>
 					<h3 style='color:#000;font-size:14px;font-weight:normal;margin:0 0 8px;letter-spacing:0.5px;'><strong style='color:#000;'><?php echo esc_html__( 'To:', 'event-tickets-manager-for-woocommerce' ); ?> </strong>[NEW_END_DATE]</h3>
 					<h3 style='color:#000;font-size:14px;font-weight:normal;margin:0;letter-spacing:0.5px;'><strong style='color:#000;'><?php echo esc_html__( 'Venue:', 'event-tickets-manager-for-woocommerce' ); ?> </strong>[VENUE]</h4>
 				</div>
 			</td>
-			<td style="width:<?php ( 'on' != $wps_etmfw_hide_details_pdf_ticket ) ? '30%' : '50%'; ?>; background:#fff;">
+			<td style="width:<?php echo ( 'on' != $wps_etmfw_hide_details_pdf_ticket ) ? '30%' : '50%'; ?>; background:#fff;">
 				<div style='text-align:center;padding:20px;'>
 					<h4 style='color:#000;font-size: 20px;font-weight:bold;line-height:20px;border-bottom:1px solid #f4f4f4;margin: 0 0 5px;padding:0 0 10px;text-align: center;letter-spacing:0.5px;'><?php esc_html_e( 'Ticket Code', 'event-tickets-manager-for-woocommerce' ); ?></h4>
 
 					<?php if ( ( 'on' == $wps_etmfw_barcode_enable ) && ( ( '' == $wps_etmfw_qr_code_is_enable ) ) ) { ?>
 					<!-- BAR CODE START-->
-					<div style="background-image: url([TICKET_URL]); height: 40px; background-size: contain; background-position: center center; background-repeat: no-repeat"></div>
+					<div style="text-align: center; margin:20px 0px;">
+						<span style="background:white; text-align: center; margin:auto; padding:10px; max-width:220px; display:inline-block;">
+							<img style="max-height:120px; max-width:200px;" src="[TICKET_URL]" alt="">
+						</span>
+					</div>
 					<!-- BAR CODE END -->
 					<?php } ?>
 
