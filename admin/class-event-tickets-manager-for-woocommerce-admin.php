@@ -1873,6 +1873,13 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'value'       => get_option( 'wps_etmfw_reminder_email_body', 'Hello, This is a short Reminder for your Event which is start from [STARTDATE]. Enjoy your day!' ),
 			),
 			array(
+				'title'       => __( 'Copy to Clipboard Button', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_etmfw_copy_to_clipboard',
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable Copy to Clipboard button on product page.', 'event-tickets-manager-for-woocommerce' ),
+				'value'       => get_option( 'wps_etmfw_copy_to_clipboard', '' ),
+			),
+			array(
 				'title'       => __( 'Enable Subscribe Checkbox', 'event-tickets-manager-for-woocommerce' ),
 				'id'          => 'wps_etmfw_enable_subscribe_checkbox',
 				'class'       => 'etmfw-radio-switch-class-pro',
