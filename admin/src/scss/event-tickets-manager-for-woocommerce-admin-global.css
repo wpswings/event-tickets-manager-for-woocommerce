@@ -85,7 +85,7 @@ html {
 }
 
 body {
-    background-color: #E5F4FE;
+    background-color: #E5F4FE !important;
 }
 
 *,

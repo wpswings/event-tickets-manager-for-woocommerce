@@ -126,8 +126,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 		global $wp_query;
 		$checkin_page_id = get_option( 'event_checkin_page_created', '' );
+		$post = get_post();
 		if ( '' !== $checkin_page_id ) {
-			if ( isset( $wp_query->post ) && $wp_query->post->ID == $checkin_page_id ) {
+			if ( $post && property_exists( $post, 'post_content' ) && has_shortcode( $post->post_content, 'wps_etmfw_event_checkin_page' ) ) {
 				wp_register_script( $this->plugin_name . '-checkin-page', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-checkin-page.js', array( 'jquery' ), $this->version, false );
 				$param_data = array(
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
@@ -2696,6 +2697,12 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 	}
 
+	/**
+	 * This is function is used to show social link on product page.
+	 *
+	 * @name wps_etmfwp_show_social_share_link.
+	 * @link http://www.wpswings.com/
+	 */
 	public function wps_etmfwp_show_social_share_link() {
 		if ( is_single() ) {
 			$product_id = get_the_ID();
