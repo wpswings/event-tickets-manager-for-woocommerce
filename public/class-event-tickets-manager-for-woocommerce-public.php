@@ -2708,7 +2708,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						do_action( 'wps_etmfw_show_social_share_link', $page_permalink );
 						?>
 						<button id="wps-etmfw-copy-event-url" class="wps-etmfw-copy-event-url wps_tooltip" title="Copy to clipboard" aria-label="copied">
-							<span class="wps_tooltiptext_url" id="myTooltip"><?php esc_html_e( 'Copy to Clipboard', 'event-tickets-manager-for-woocommerce-pro' ); ?></span>
+							<span class="wps_tooltiptext_url" id="myTooltip"><?php esc_html_e( 'Copy to Clipboard', 'event-tickets-manager-for-woocommerce' ); ?></span>
 							<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/copy.png' ); ?>" alt="Copy to clipboard">
 						</button>
 						<?php

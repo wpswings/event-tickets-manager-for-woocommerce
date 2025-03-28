@@ -620,6 +620,33 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'class'       => 'etmfw-radio-switch-class-pro',
 				'placeholder' => __( 'Enable Client Secret here', 'event-tickets-manager-for-woocommerce' ),
 			),
+			array(
+				'title'       => __( 'Enable Zoom Integration', 'event-tickets-manager-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this to send zoom link on email to customer for virtual event product', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_wet_zoom_meeting_enable',
+				'value'       => '',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'name'        => 'wps_wet_zoom_meeting_enable',
+			),
+			array(
+				'title'       => __( 'Enter Client ID', 'event-tickets-manager-for-woocommerce' ),
+				'type'        => 'text',
+				'description' => __( 'You can generate credentials from <a href="https://marketplace.zoom.us/" target="_blank">Zoom Market Place</a> after sign in, click on Develop and choose build app.', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_wet_zoom_meeting_client_id',
+				'value'       => '',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'placeholder' => __( 'Enter Client ID here', 'event-tickets-manager-for-woocommerce' ),
+			),
+			array(
+				'title'       => __( 'Enter Client Secret', 'event-tickets-manager-for-woocommerce' ),
+				'type'        => 'text',
+				'description' => __( 'Make sure you have set the scopes( meeting:write and user:read or user:write ). Make Sure you enable the <a target="_blank" href="https://console.cloud.google.com/apis/library">Google Calendar API</a> so that zoom meeting link will be added to Google Calendar also. <p><a class="mdc-button generate-token mdc-button--raised mdc-ripple-upgraded" href="#" target="_blank">Generate Token</a></p>.', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_wet_zoom_meeting_client_secret',
+				'value'       => '',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'placeholder' => __( 'Enable Client Secret here', 'event-tickets-manager-for-woocommerce' ),
+			),
 		);
 		$etmfw_settings_integrations = apply_filters( 'wps_etmfw_extent_integration_settings_array', $etmfw_settings_integrations );
 		$etmfw_settings_integrations[] = array(
@@ -1868,6 +1895,22 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'type'        => 'textarea',
 				'description' => __( 'Use [SITENAME] and [PRODUCTNAME] shortcode as the name of the site and product name respectively.', 'event-tickets-manager-for-woocommerce' ),
 				'value'       => '',
+			),
+			array(
+				'title'         => __( 'Enable Social Share Settings', 'event-tickets-manager-for-woocommerce' ),
+				'id'            => 'wps_etmfw_enable_social_sharing',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'type'          => 'radio-switch',
+				'description'   => __( 'You can display social sharing icons to share event products.', 'event-tickets-manager-for-woocommerce' ),
+				'value'         => '',
+			),
+			array(
+				'title'         => __( 'Enable Social Share Name', 'event-tickets-manager-for-woocommerce' ),
+				'id'            => 'wps_etmfw_enable_social_share_name',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'type'          => '',
+				'description'   => __( 'You can display social sharing icons to share event products.', 'event-tickets-manager-for-woocommerce' ),
+				'value'         => '',
 			),
 		);
 
