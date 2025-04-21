@@ -172,6 +172,8 @@
                 },
             });
         });
+
+        $(':root').get(0).style.setProperty( '--wps-etmfw-primary', etmfw_org_custom_param_public.wps_etmfw_event_dashboard_color );
       
      });
 

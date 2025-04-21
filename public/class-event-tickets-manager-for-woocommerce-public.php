@@ -155,6 +155,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 				'nonce'   => wp_create_nonce( 'wps_wet_custom_ajax_nonce' ),
 				'wps_etmfw_public_nonce' => wp_create_nonce( 'wps-etmfw-verify-public-nonce' ),
+				'wps_etmfw_event_dashboard_color' => get_option( 'wps_etmfw_event_dashboard_color' ),
 			)
 		);
 	}
@@ -2370,7 +2371,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			<div class="wps-etmfw_md-in">
 				<section class="wps-etmfw_mdi-sec wps-etmfw_mdis-head">
 					<h2><?php esc_html_e( 'Events Dashboard', 'event-tickets-manager-for-woocommerce' ); ?></h2>
-					<p><?php esc_html_e( 'Manage and transfer events seamlessly for better organization, scheduling, and efficient event handling.', 'event-tickets-manager-for-woocommerce' ); ?></p>
+					<p><?php echo get_option( 'wps_etmfw_event_dashboard' ); ?></p>
 				</section>
 				<section class="wps-etmfw_mdi-sec wps-etmfw_mdis-main">
 					<article class="wps-etmfw_mdis-art wps-etmfw_mdis-nav">
