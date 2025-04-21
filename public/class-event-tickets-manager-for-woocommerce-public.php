@@ -1771,60 +1771,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	}
 
 	/**
-	 * Register Endpoint for My Event Tab.
-	 */
-	public function wps_my_event_register_endpoint() {
-		add_rewrite_endpoint( 'wps-myevent-tab', EP_PERMALINK | EP_PAGES );
-		flush_rewrite_rules();
-	}
-
-	/**
-	 * Adding a query variable for the Endpoint.
-	 *
-	 * @param array $vars An array of query variables.
-	 */
-	public function wps_myevent_endpoint_query_var( $vars ) {
-
-		$vars[] = 'wps-myevent-tab';
-
-		/**
-		 * Filter for endpoints.
-		 *
-		 * @since 1.0.0
-		 */
-		$vars = apply_filters( 'wps_myevent_endpoint_query_var', $vars );
-
-		return $vars;
-	}
-
-	/**
-	 * Inserting custom membership endpoint.
-	 *
-	 * @param array $items An array of all menu items on My Account page.
-	 */
-	public function wps_event_add_myevent_tab( $items ) {
-		// Placing the custom tab just above logout tab.
-		$items['wps-myevent-tab'] = esc_html__( 'My Event', 'event-tickets-manager-for-woocommerce' );
-
-		/**
-		 * Filter for my event tab.
-		 *
-		 * @since 1.0.0
-		 */
-		$items = apply_filters( 'wps_event_add_myevent_tab', $items );
-
-		return $items;
-	}
-
-	/**
-	 * Add content to My Event details tab.
-	 *
-	 * @return void
-	 */
-	public function wps_myevent_populate_tab() {
-		require plugin_dir_path( __FILE__ ) . 'partials/wps-myevent-details-tab.php';
-	}
-	/**
 	 * This is function is used to share the tickets in Mail.
 	 *
 	 * @name wps_etmfwp_sharing_tickets.
@@ -2392,7 +2338,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @param array $items array of the items.
 	 */
 	public function etmfwp_event_dashboard( $items ) {
-		$items['event-ticket'] = __( 'Event Transfer Ticket', 'event-tickets-manager-for-woocommerce' );
+		$items['event-ticket'] = __( 'My Event Tickets', 'event-tickets-manager-for-woocommerce' );
 		return $items;
 	}
 
@@ -2419,29 +2365,274 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 		$product_array = new WP_Query( $query_args );
 		?>
-		<div id='wps_share_ticket_lable'><?php esc_html_e( 'Transfer Tickets', 'event-tickets-manager-for-woocommerce' ); ?></div>
-		<div class="wps_etmfw_checkin_wrapper">
-			<form method="post">
-			<div id="wps_etmfw_error_message"></div>
-			<div class="wps_etmfw_events_section">
-				<label> <?php esc_html_e( 'For', 'event-tickets-manager-for-woocommerce' ); ?> </label>
-			<?php
-			if ( $product_array->have_posts() ) {
-				if ( isset( $product_array->posts ) && ! empty( $product_array->posts ) ) {
-					?>
-				<select id="wps_etmfw_event_selected"> 
-					<?php
-					foreach ( $product_array->posts as $event_per_product ) {
+		<!-- New Layout For Event Start -->
+		<div class="wps-etmfw_modern-dashboard" id="wps-etmfw_modern-dashboard">
+			<div class="wps-etmfw_md-in">
+				<section class="wps-etmfw_mdi-sec wps-etmfw_mdis-head">
+					<h2><?php esc_html_e( 'Events Dashboard', 'event-tickets-manager-for-woocommerce' ); ?></h2>
+					<p><?php esc_html_e( 'Manage and transfer events seamlessly for better organization, scheduling, and efficient event handling.', 'event-tickets-manager-for-woocommerce' ); ?></p>
+				</section>
+				<section class="wps-etmfw_mdi-sec wps-etmfw_mdis-main">
+					<article class="wps-etmfw_mdis-art wps-etmfw_mdis-nav">
+						<span class="wps-etmfw_mdisan-item wps-etmfw_mdisant-events wps-etmfw_mdisan-item--active">
+							<?php esc_html_e( 'All Events', 'event-tickets-manager-for-woocommerce' ); ?>
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M19.6 3.20001H4.2C2.98497 3.20001 2 4.18499 2 5.40001V20.8C2 22.015 2.98497 23 4.2 23H19.6C20.815 23 21.8 22.015 21.8 20.8V5.40001C21.8 4.18499 20.815 3.20001 19.6 3.20001Z" stroke="#4BB543" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								<path d="M16.3 1V5.4" stroke="#4BB543" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								<path d="M7.5 1V5.4" stroke="#4BB543" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								<path d="M2 9.79999H21.8" stroke="#4BB543" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</span>
+						<?php
+						if ( 'on' === get_option( 'wps_wet_enable_ticket_sharing' ) && 'on' === get_option( 'wps_etmfw_enable_plugin', false ) ) {
 						?>
-					<option value="<?php echo esc_attr( $event_per_product->ID ); ?>" ><?php echo esc_html( $event_per_product->post_title ); ?>  </option> 
+							<span class="wps-etmfw_mdisan-item wps-etmfw_mdisant-trans">
+								<?php esc_html_e( 'Transfer', 'event-tickets-manager-for-woocommerce' ); ?>
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path d="M23 16.2778V20.5556C23 21.2039 22.7425 21.8256 22.284 22.284C21.8256 22.7425 21.2039 23 20.5556 23H3.44444C2.79614 23 2.17438 22.7425 1.71596 22.284C1.25754 21.8256 1 21.2039 1 20.5556V3.44444C1 2.79614 1.25754 2.17438 1.71596 1.71596C2.17438 1.25754 2.79614 1 3.44444 1H8.94444" stroke="#4BB543" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+									<path d="M10.7777 13.2222L21.7777 2.22223" stroke="#4BB543" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+									<path d="M15.6665 1H22.9998V8.33333" stroke="#4BB543" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								</svg>
+							</span>
+							<?php
+						}
+						?>
+					</article>
+					<article class="wps-etmfw_mdis-art wps-etmfw_mdisa-cont">
+						<div class="wps-etmfw_mdisa-item wps-etmfw_mdisa-trans">
+							<div class="wps-etmfw_mdisai-cont">
+								<div class="wps_etmfw_checkin_wrapper">
+									<div id="wps_etmfw_error_message"></div>
+									<form method="post">
+										<div class="wps_etmfw_events_section">
+											<label><?php esc_html_e( 'For', 'event-tickets-manager-for-woocommerce' ); ?></label>
+											<?php
+											if ( $product_array->have_posts() ) {
+												if ( isset( $product_array->posts ) && ! empty( $product_array->posts ) ) {
+													?>
+												<select id="wps_etmfw_event_selected"> 
+													<?php
+													foreach ( $product_array->posts as $event_per_product ) {
+														?>
+													<option value="<?php echo esc_attr( $event_per_product->ID ); ?>" ><?php echo esc_html( $event_per_product->post_title ); ?>  </option> 
+																				<?php
+													}
+													?>
+												</select> 
+													<?php
+												}
+											}
+											?>
+										</div>
+										<div class="wps_etmfw_input_ticket_section">
+											<label><?php esc_html_e( 'Ticket Number *', 'event-tickets-manager-for-woocommerce' ); ?></label>
+											<input type="text" name="wps_etmfw_imput_ticket" id="wps_etmfw_imput_ticket">
+										</div>
+										<div class="wps_etmfw_input_ticket_section">
+											<label><?php esc_html_e( 'Enter Email *', 'event-tickets-manager-for-woocommerce' ); ?></label>
+											<input type="email" name="wps_etmfw_chckin_email" id="wps_etmfw_chckin_email">
+										</div>
+
+
+										<div class="wps_etmfw--loader-btn-wrapper">
+											<div class="wps_etmfw_checkin_button_section">
+												<input type="submit" name="wps_etmfw_checkin_button" id="wps_etmfwp_event_transfer_button" value="Transfer">
+											</div>
+											<div class="wps_etmfw_loader" id="wps_etmfw_checkin_loader">
+												<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/loading.gif' ); // phpcs:ignore. ?>">
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						<?php
+						$event_attendees_details = array();
+						$customer = wp_get_current_user(); // do this when user is logged in.
+
+						$args = array(
+							'status' => array( 'wc-processing', 'wc-completed' ),
+							'return' => 'ids',
+							'customer_id' => get_current_user_id(),
+						);
+						$shop_orders = wc_get_orders( $args );
+
+						$user_orders = array();
+
+						foreach ( $shop_orders as $order_id ) {
+							$order_obj = wc_get_order( $order_id );
+
+							foreach ( $order_obj->get_items() as $item_id => $item ) {
+								$product = $item->get_product();
+								$orderme = $order_obj->get_id();
+								if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
+									if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+										// HPOS usage is enabled.
+										$ticket = $order_obj->get_meta( "event_ticket#$orderme#$item_id", true );
+									} else {
+										$ticket = get_post_meta( $order_obj->get_id(), "event_ticket#$orderme#$item_id", true );
+									}
+									if ( is_array( $ticket ) && ! empty( $ticket ) ) {
+										$length = count( $ticket );
+										for ( $i = 0;$i < $length; $i++ ) {
+
+											if ( ! empty( $product ) ) {
+												$pro_id = $product->get_id();
+											}
+											$wps_etmfw_product_array = get_post_meta( $pro_id, 'wps_etmfw_product_array', true );
+											$wps_etmfw_product_array = get_post_meta( $pro_id, 'wps_etmfw_product_array', true );
+											$start = isset( $wps_etmfw_product_array['event_start_date_time'] ) ? $wps_etmfw_product_array['event_start_date_time'] : '';
+											$end = isset( $wps_etmfw_product_array['event_end_date_time'] ) ? $wps_etmfw_product_array['event_end_date_time'] : '';
+											$venue = isset( $wps_etmfw_product_array['etmfw_event_venue'] ) ? $wps_etmfw_product_array['etmfw_event_venue'] : '';
+											$order_date = $order_obj->get_date_created()->date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) );
+											$user_id = ( 0 != $order_obj->get_user_id() ) ? '#' . $order_obj->get_user_id() : 'Guest';
+											$checkin_status = '';
+											$upload_dir_path = '';
+
+											$generated_tickets = get_post_meta( $pro_id, 'wps_etmfw_generated_tickets', true );
+
+											if ( ! empty( $generated_tickets ) ) {
+												foreach ( $generated_tickets as $key => $value ) {
+													if ( $ticket[ $i ] == $value['ticket'] ) {
+														$checkin_status = $value['status'];
+														if ( 'checked_in' === $checkin_status ) :
+															$upload_dir_path  = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_URL . '/events_pdf/events' . $value['order_id'] . $value['ticket'] . '.pdf';
+															$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/checked.png" width="20" height="20" title="' . esc_html__( 'Checked-In', 'event-tickets-manager-for-woocommerce' ) . '">';
+														else :
+															$upload_dir_path  = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_URL . '/events_pdf/events' . $value['order_id'] . $value['ticket'] . '.pdf';
+															$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/pending.svg" width="20" height="20" title="' . esc_html__( 'Pending', 'event-tickets-manager-for-woocommerce' ) . '">';
+														endif;
+													}
+												}
+											}
+											$order_received_url = wc_get_endpoint_url( 'order-received', $order_obj->get_id(), wc_get_checkout_url() );
+											$order_received_url = add_query_arg( 'key', $order_obj->get_order_key(), $order_received_url );
+
+											$event_attendees_details[] = array(
+												'id'                => $order_obj->get_id(),
+												'check_in_status'   => $checkin_status,
+												'event'            => $item->get_name(),
+												'ticket'            => $ticket,
+												'price'              => $item->get_total(),
+												'order'             => '<a title="Ticket Order Detail" href="' . esc_url( $order_received_url ) . '">' . esc_html__( 'View', 'event-tickets-manager-for-woocommerce' ) . '</a>',
+												'user'              => $user_id,
+												'venue'             => $venue,
+												'purchase_date'     => $order_date,
+												'schedule'          => wps_etmfw_get_date_format( $start ) . '-' . wps_etmfw_get_date_format( $end ),
+												'action'            => '<a title="Download Ticket" href="' . $upload_dir_path . '" target="_blank"><img src="' . esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/file.svg' ) . '" alt="export"></a>',
+											);
+
+
+										}
+									} else if ( '' !== $ticket ) {
+										if ( ! empty( $product ) ) {
+											$pro_id = $product->get_id();
+										}
+										$wps_etmfw_product_array = get_post_meta( $pro_id, 'wps_etmfw_product_array', true );
+										$start = isset( $wps_etmfw_product_array['event_start_date_time'] ) ? $wps_etmfw_product_array['event_start_date_time'] : '';
+										$end = isset( $wps_etmfw_product_array['event_end_date_time'] ) ? $wps_etmfw_product_array['event_end_date_time'] : '';
+										$venue = isset( $wps_etmfw_product_array['etmfw_event_venue'] ) ? $wps_etmfw_product_array['etmfw_event_venue'] : '';
+										$order_date = $order_obj->get_date_created()->date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) );
+										$user_id = ( 0 != $order_obj->get_user_id() ) ? '#' . $order_obj->get_user_id() : 'Guest';
+										$checkin_status = '';
+										$upload_dir_path = '';
+										$generated_tickets = get_post_meta( $pro_id, 'wps_etmfw_generated_tickets', true );
+										$orderme = $order_obj->get_id();
+
+										if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+											// HPOS usage is enabled.
+											$ticket = $order_obj->get_meta( "event_ticket#$orderme#$item_id", true );
+										} else {
+											$ticket = get_post_meta( $order_obj->get_id(), "event_ticket#$orderme#$item_id", true );
+										}
+
+										if ( ! empty( $generated_tickets ) ) {
+											foreach ( $generated_tickets as $key => $value ) {
+												if ( $ticket == $value['ticket'] ) {
+													$checkin_status = $value['status'];
+
+													if ( 'checked_in' === $checkin_status && $order_obj->get_id() == $value['order_id'] ) {
+														$upload_dir_path  = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_URL . '/events_pdf/events' . $value['order_id'] . $value['ticket'] . '.pdf';
+														$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/checked.png" width="20" height="20" title="' . esc_html__( 'Checked-In', 'event-tickets-manager-for-woocommerce' ) . '">';
+													} else {
+														$upload_dir_path  = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_UPLOAD_URL . '/events_pdf/events' . $value['order_id'] . $value['ticket'] . '.pdf';
+														$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/pending.svg" width="20" height="20" title="' . esc_html__( 'Pending', 'event-tickets-manager-for-woocommerce' ) . '">';
+													}
+												}
+											}
+										}
+
+										$order_received_url = wc_get_endpoint_url( 'order-received', $order_obj->get_id(), wc_get_checkout_url() );
+										$order_received_url = add_query_arg( 'key', $order_obj->get_order_key(), $order_received_url );
+
+										$event_attendees_details[] = array(
+											'id'                => $order_obj->get_id(),
+											'check_in_status'   => $checkin_status,
+											'event'             => $item->get_name(),
+											'ticket'            => $ticket,
+											'price'             => $item->get_total(),
+											'order'             => '<a title="Ticket Order Detail" href="' . esc_url( $order_received_url ) . '">' . esc_html__( 'View', 'event-tickets-manager-for-woocommerce' ) . '</a>',
+											'user'              => $user_id,
+											'venue'             => $venue,
+											'purchase_date'     => $order_date,
+											'schedule'          => wps_etmfw_get_date_format( $start ) . '-' . wps_etmfw_get_date_format( $end ),
+											'action'            => '<a title="Download Ticket" href="' . $upload_dir_path . '" target="_blank"><img src="' . esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/file.svg' ) . '" alt="export"></a>',
+										);
+									}
+								}
+							}
+						}
+						?>
+						<div class="wps-etmfw_mdisa-item wps-etmfw_mdisa-events wps-etmfw_mdisa-item--active">
+							<h3><?php esc_html_e( 'All Events', 'event-tickets-manager-for-woocommerce' ); ?> <span><?php esc_html_e( '14 Events', 'event-tickets-manager-for-woocommerce' ); ?></span></h3>
+							<div class="wps-etmfw_mdisai-cont">
+								<!-- Dummy HTML Cloneed from All Events tab Start -->
+								<table class="woocommerce-orders-table woocommerce-MyAccount-orders shop_table shop_table_responsive my_account_orders account-orders-table" id="wps_myevent_table_id">
+									<thead>
+										<tr>
+											<th class="woocommerce-orders-table__header"><?php echo esc_html__( 'Event', 'event-tickets-manager-for-woocommerce' ); ?></th>
+											<th class="woocommerce-orders-table__header"><?php echo esc_html__( 'Event Date', 'event-tickets-manager-for-woocommerce' ); ?></th>
+											<th class="woocommerce-orders-table__header status-th"><?php echo esc_html__( 'Event Status', 'event-tickets-manager-for-woocommerce' ); ?></th>
+											<th class="woocommerce-orders-table__header"><?php echo esc_html__( 'Event Price', 'event-tickets-manager-for-woocommerce' ); ?></th>
+											<th class="woocommerce-orders-table__header"><?php echo esc_html__( 'Action', 'event-tickets-manager-for-woocommerce' ); ?></th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php
+											if ( ! empty( $event_attendees_details ) && is_array( $event_attendees_details ) ) {
+												foreach ( $event_attendees_details as $mks ) {
+												?>
+											<tr>
+												<td data-title="Event"><?php echo rtrim( $mks['event'] ); ?></td>
+												<td data-title="Date"><?php echo rtrim( $mks['schedule'] ); ?></td>
+												<td data-title="Status" class="status-td"><span class="#" title="Pending"><?php echo rtrim( $mks['check_in_status'] ); ?></span></td>
+												<td data-title="Price"><span class="woocommerce-Price-amount amount"><?php echo wc_price( rtrim( $mks['price'] ) ); ?></span></td>
+												<td data-title="Action"><?php echo rtrim( $mks['order'] ) . rtrim( $mks['action'] ); ?></td>
+											</tr>
+											<?php
+												}
+											} else {
+												?>
+												<tr>
+													<td colspan="5" style="text-align:center; display:table-cell;">
+														<?php
+														esc_html_e( 'No Event Ticket has been purchased yet.', 'event-tickets-manager-for-woocommerce' );
+														?>
+													</td>
+												</tr>
 												<?php
-					}
-					?>
-				</select> 
-					<?php
-				}
-			}
-			require plugin_dir_path( __FILE__ ) . 'partials/event-tickets-myaccount-template.php';
+											}
+										?>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</article>
+				</section>
+			<sv>
+		</div>
+		<!-- New Layout For Event End -->
+		<?php
 	}
 
 	/**

@@ -132,6 +132,19 @@
                 });
             }
         });
+
+		jQuery(document).on('click','.wps-etmfw_mdisant-trans',function(){
+			jQuery('.wps-etmfw_mdisan-item').removeClass('wps-etmfw_mdisan-item--active');
+			jQuery(this).addClass('wps-etmfw_mdisan-item--active');
+			jQuery('.wps-etmfw_mdisa-item').removeClass('wps-etmfw_mdisa-item--active');
+			jQuery('.wps-etmfw_mdisa-trans').addClass('wps-etmfw_mdisa-item--active');
+		});
+		jQuery(document).on('click','.wps-etmfw_mdisant-events',function(){
+			jQuery('.wps-etmfw_mdisan-item').removeClass('wps-etmfw_mdisan-item--active');
+			jQuery(this).addClass('wps-etmfw_mdisan-item--active');
+			jQuery('.wps-etmfw_mdisa-item').removeClass('wps-etmfw_mdisa-item--active');
+			jQuery('.wps-etmfw_mdisa-events').addClass('wps-etmfw_mdisa-item--active');
+		});
 	 });
 
 	})( jQuery );

@@ -309,13 +309,10 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		$this->loader->add_action( 'woocommerce_new_order', $etmfw_plugin_public, 'wps_etmfw_set_order_as_event_ticket_manager', 10, 2 );
 		// Register Endpoint For "MY Event" tab.
-		$this->loader->add_action( 'init', $etmfw_plugin_public, 'wps_my_event_register_endpoint' );
-		// Add query variable.
-		$this->loader->add_action( 'query_vars', $etmfw_plugin_public, 'wps_myevent_endpoint_query_var', 0 );
-		// Inserting custom My Event tab.
-		$this->loader->add_action( 'woocommerce_account_menu_items', $etmfw_plugin_public, 'wps_event_add_myevent_tab', 1, 1 );
-		// Populate mmbership details tab.
-		$this->loader->add_action( 'woocommerce_account_wps-myevent-tab_endpoint', $etmfw_plugin_public, 'wps_myevent_populate_tab' );
+		$this->loader->add_action( 'init', $etmfw_plugin_public, 'etmfwp_add_my_account_endpoint' );
+		$this->loader->add_action( 'query_vars', $etmfw_plugin_public, 'etmfwp_custom_endpoint_query_vars', 0 );
+		$this->loader->add_action( 'woocommerce_account_menu_items', $etmfw_plugin_public, 'etmfwp_event_dashboard', 1, 1 );
+		$this->loader->add_action( 'woocommerce_account_event-ticket_endpoint', $etmfw_plugin_public, 'wps_wpr_account_event' );
 
 		if ( 'on' == $etmfw_resend_pdf_ticket_public && $wps_is_pro_active ) {
 			// Function to resend the PDF Ticket By Customer Itself.
@@ -337,18 +334,10 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		// disbale shipping.
 		$this->loader->add_filter( 'wc_shipping_enabled', $etmfw_plugin_public, 'wps_etmfw_wc_shipping_enabled' );
-
-		// ticket sharing.
-		if ( 'on' === get_option( 'wps_wet_enable_ticket_sharing' ) && 'on' === get_option( 'wps_etmfw_enable_plugin', false ) ) {
-			$this->loader->add_filter( 'woocommerce_account_menu_items', $etmfw_plugin_public, 'etmfwp_event_dashboard' );
-			$this->loader->add_action( 'woocommerce_account_event-ticket_endpoint', $etmfw_plugin_public, 'wps_wpr_account_event' );
-			$this->loader->add_action( 'init', $etmfw_plugin_public, 'etmfwp_add_my_account_endpoint' );
-			$this->loader->add_filter( 'query_vars', $etmfw_plugin_public, 'etmfwp_custom_endpoint_query_vars' );
-
-			// Ajax For sharing the tickets.
-			$this->loader->add_action( 'wp_ajax_wps_etmfwp_transfer_ticket_org', $etmfw_plugin_public, 'wps_etmfwp_sharing_tickets_org', 11 );
-			$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfwp_transfer_ticket_org', $etmfw_plugin_public, 'wps_etmfwp_sharing_tickets_org', 11 );
-		}
+		
+		// Ajax For sharing the tickets.
+		$this->loader->add_action( 'wp_ajax_wps_etmfwp_transfer_ticket_org', $etmfw_plugin_public, 'wps_etmfwp_sharing_tickets_org', 11 );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfwp_transfer_ticket_org', $etmfw_plugin_public, 'wps_etmfwp_sharing_tickets_org', 11 );
 
 		// Ajax For User Type Pricing.
 		$this->loader->add_action( 'wp_ajax_wps_etmfwp_user_type_fun_calbck', $etmfw_plugin_public, 'wps_user_type_ajax_callbck', 10 );
