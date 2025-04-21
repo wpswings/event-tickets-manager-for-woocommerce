@@ -1,7 +1,7 @@
 <?php
 /**
  * Exit if accessed directly
- *
+ * Nexus
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/emails/templates
  */
@@ -46,6 +46,7 @@ if ( ! empty( $wps_etmfw_background_image ) ) {
 } else {
 	$wps_image_att_etmfw = esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/offer-templates/bg-image.jpg' );
 }
+$wps_etmfw_hide_details_pdf_ticket = get_option( 'wps_wet_hide_details_pdf_ticket' );
 ?>
 <!-- Template Start -->
 <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='width: 100%;font-family:Arial, Helvetica, sans-serif;border:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>'>
@@ -66,7 +67,11 @@ if ( ! empty( $wps_etmfw_background_image ) ) {
 
 					<?php if ( ( 'on' == $wps_etmfw_barcode_enable ) && ( ( '' == $wps_etmfw_qr_code_is_enable ) ) ) { ?>
 						<!-- BAR CODE START-->
-						<div style="background-image: url([TICKET_URL]); height: 40px; background-size: contain; background-position: center center; background-repeat: no-repeat"></div>
+						<div style="text-align: center; margin:20px 0px;">
+							<span style="background:white; text-align: center; margin:auto; padding:10px; max-width:220px; display:inline-block;">
+								<img style="max-height:120px; max-width:200px;" src="[TICKET_URL]" alt="">
+							</span>
+						</div>
 						<!-- BAR CODE END -->
 					<?php } ?>
 
@@ -84,7 +89,13 @@ if ( ! empty( $wps_etmfw_background_image ) ) {
 		</tr>
 		<tr>
 			<td colspan='2' style='padding: 20px;background: #fff;'>
+				<?php
+			if ( 'on' != $wps_etmfw_hide_details_pdf_ticket ) {
+				?>
 				[ADDITIONALINFO]
+				<?php 
+			}
+			?>
 			</td>
 		</tr>
 		<tr>

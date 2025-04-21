@@ -1,7 +1,7 @@
 <?php
 /**
  * Exit if accessed directly
- *
+ * Eclipse
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/emails/templates
  */
@@ -42,6 +42,7 @@ if ( 'on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ) {
 } else {
 	$product_image_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' ) ) ? get_option( 'wps_etmfw_mail_setting_upload_logo' ) : '';
 }
+$wps_etmfw_hide_details_pdf_ticket = get_option( 'wps_wet_hide_details_pdf_ticket' );
 ?>
 <!-- Template Start -->
 
@@ -54,7 +55,11 @@ if ( 'on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ) {
 
 					<?php if ( ( 'on' == $wps_etmfw_barcode_enable ) && ( ( '' == $wps_etmfw_qr_code_is_enable ) ) ) { ?>
 					<!-- BAR CODE START-->
-					<div style="background-image: url([TICKET_URL]); height: 40px; background-size: contain; background-position: center center; background-repeat: no-repeat"></div>
+					<div style="text-align: center; margin:20px 0px;">
+						<span style="background:white; text-align: center; margin:auto; padding:10px; max-width:220px; display:inline-block;">
+							<img style="max-height:120px; max-width:200px;" src="[TICKET_URL]" alt="">
+						</span>
+					</div>
 					<!-- BAR CODE END -->
 					<?php } ?>
 
@@ -82,7 +87,13 @@ if ( 'on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ) {
 		</tr>
 		<tr>
 			<td colspan="2" style='padding: 20px 0 0;background: #fff;'>
-			[ADDITIONALINFO]
+			<?php
+			if ( 'on' != $wps_etmfw_hide_details_pdf_ticket ) {
+				?>
+				[ADDITIONALINFO]
+				<?php
+			}
+			?>
 			</td>
 		</tr>
 		<tr>

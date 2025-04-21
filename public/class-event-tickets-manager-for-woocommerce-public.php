@@ -90,6 +90,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$wps_etmfw_dyn_address = isset( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_address'] : '';
 		
 		wp_register_script( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-public.js', array( 'jquery' ), $this->version, false );
+
+		$wps_event_product_url = is_product() ? get_permalink() : '';
 		$public_param_data = array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'wps_etmfw_public_nonce' => wp_create_nonce( 'wps-etmfw-verify-public-nonce' ),
@@ -101,10 +103,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			'wps_etmfw_dyn_address' => $wps_etmfw_dyn_address,
 			'wps_is_pro_active' => $wps_is_pro_active,
 			'wps_dyn_name' => __( ' Name', 'event-tickets-manager-for-woocommerce' ),
-			'wps_dyn_mail' => __( ' EMail', 'event-tickets-manager-for-woocommerce' ),
+			'wps_dyn_mail' => __( ' Email', 'event-tickets-manager-for-woocommerce' ),
 			'wps_dyn_contact' => __( ' Contact', 'event-tickets-manager-for-woocommerce' ),
 			'wps_dyn_date' => __( ' Date', 'event-tickets-manager-for-woocommerce' ),
 			'wps_dyn_address' => __( ' Address', 'event-tickets-manager-for-woocommerce' ),
+			'wps_event_product_url' => $wps_event_product_url,
 		);
 
 		wp_localize_script( $this->plugin_name, 'etmfw_public_param', $public_param_data );
@@ -123,8 +126,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 		global $wp_query;
 		$checkin_page_id = get_option( 'event_checkin_page_created', '' );
+		$post = get_post();
 		if ( '' !== $checkin_page_id ) {
-			if ( isset( $wp_query->post ) && $wp_query->post->ID == $checkin_page_id ) {
+			if ( $post && property_exists( $post, 'post_content' ) && has_shortcode( $post->post_content, 'wps_etmfw_event_checkin_page' ) ) {
 				wp_register_script( $this->plugin_name . '-checkin-page', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-checkin-page.js', array( 'jquery' ), $this->version, false );
 				$param_data = array(
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
@@ -253,15 +257,15 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 */
 	public function wps_etmfw_cart_item_data( $the_cart_data, $product_id, $variation_id ) {
 
-		if ( ! isset( $_POST['wps_etwmfw_atc_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_etwmfw_atc_nonce'] ) ), 'wps_etwmfw_atc_nonce' ) ) {
-			return;
-		}
 		$wps_etmfw_enable = get_option( 'wps_etmfw_enable_plugin', false );
 		if ( $wps_etmfw_enable ) {
 			$product_types = wp_get_object_terms( $product_id, 'product_type' );
 			if ( isset( $product_types[0] ) ) {
 				$product_type = $product_types[0]->slug;
 				if ( 'event_ticket_manager' == $product_type ) {
+					if ( ! isset( $_POST['wps_etwmfw_atc_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_etwmfw_atc_nonce'] ) ), 'wps_etwmfw_atc_nonce' ) ) {
+						return;
+					}
 
 					$cart_values = ! empty( $_POST ) ? map_deep( wp_unslash( $_POST ), 'sanitize_text_field' ) : array();
 
@@ -449,7 +453,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$wps_etmfw_mail_template_data = array();
 		foreach ( $order->get_items() as $item_id => $item ) {
 			$product = $item->get_product();
-			if ( isset( $product ) && $product->is_type( 'event_ticket_manager' ) ) {
+			if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
 
 				if ( isset( $product ) ) {
 					$item_quantity = wc_get_order_item_meta( $item_id, '_qty', true );
@@ -1361,7 +1365,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$order = wc_get_order( $order_id );
 		foreach ( $order->get_items() as $item_id => $item ) {
 			$product = $item->get_product();
-			if ( isset( $product ) && $product->is_type( 'event_ticket_manager' ) ) {
+			if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
 				if ( count( $posted_value ) > 0 ) {
 
 					foreach ( $posted_value as $key => $value ) {
@@ -1754,7 +1758,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$order_items = $order->get_items();
 		foreach ( $order_items as $item ) {
 			$product = $item->get_product();
-			if ( 'event_ticket_manager' === $product->get_type() ) {
+			if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
 				$order->update_meta_data( 'wps_order_type', 'event' );
 				$order->save();
 				break;
@@ -2693,4 +2697,33 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 	}
 
+	/**
+	 * This is function is used to show social link on product page.
+	 *
+	 * @name wps_etmfwp_show_social_share_link.
+	 * @link http://www.wpswings.com/
+	 */
+	public function wps_etmfwp_show_social_share_link() {
+		if ( is_single() ) {
+			$product_id = get_the_ID();
+			if ( ! empty( $product_id ) && ! is_null( $product_id ) ) {
+				$page_permalink = get_permalink( $product_id );
+				$product_types = wp_get_object_terms( $product_id, 'product_type' );
+				if ( isset( $product_types[0] ) ) {
+					$product_type = $product_types[0]->slug;
+					if ( 'event_ticket_manager' == $product_type && ! empty( $page_permalink ) && ! is_null( $page_permalink ) ) {
+						do_action( 'wps_etmfw_show_social_share_link', $page_permalink );
+						if ( 'on' === get_option( 'wps_etmfw_copy_to_clipboard' ) ) {
+						?>
+							<button id="wps-etmfw-copy-event-url" class="wps-etmfw-copy-event-url wps_tooltip" title="Copy to clipboard" aria-label="copied">
+								<span class="wps_tooltiptext_url" id="myTooltip"><?php esc_html_e( 'Copy to Clipboard', 'event-tickets-manager-for-woocommerce' ); ?></span>
+								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/copy.png' ); ?>" alt="Copy to clipboard">
+							</button>
+						<?php
+						}
+					}
+				}
+			}
+		}
+	}
 }

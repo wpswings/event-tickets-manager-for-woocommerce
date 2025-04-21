@@ -1,7 +1,7 @@
 <?php
 /**
  * Exit if accessed directly
- *
+ * Mellifluous
  * @package    Event_Tickets_Manager_For_Woocommerce
  * @subpackage Event_Tickets_Manager_For_Woocommerce/emails/templates
  */
@@ -22,6 +22,7 @@ $wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_pdf_text_color' ) ) ? ge
 
 $wps_etmfw_border_type = ! empty( get_option( 'wps_etmfw_border_type' ) ) ? get_option( 'wps_etmfw_border_type' ) : 'none';
 $wps_etmfw_border_color = ! empty( get_option( 'wps_etmfw_pdf_border_color' ) ) ? get_option( 'wps_etmfw_pdf_border_color' ) : '#000000';
+$wps_etmfw_hide_details_pdf_ticket = get_option( 'wps_wet_hide_details_pdf_ticket' );
 ?>
 <!DOCTYPE html>
 <html>
@@ -120,8 +121,10 @@ $wps_etmfw_border_color = ! empty( get_option( 'wps_etmfw_pdf_border_color' ) ) 
 			<?php
 				$body = get_option( 'wps_etmfw_email_body_content', '' );
 			if ( '' != $body ) {
-				?>
-			[ADDITIONALINFO]
+				if ( 'on' != $wps_etmfw_hide_details_pdf_ticket ) {
+					?>
+						[ADDITIONALINFO]
+			<?php } ?>
 			<h4 style="margin-top: 0px; margin-bottom: 10px; font-size: 24px; color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">Note</h4>
 			<div style="width:auto;text-align:left;vertical-align: top;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?> ! important; ">
 			[EMAILBODYCONTENT]

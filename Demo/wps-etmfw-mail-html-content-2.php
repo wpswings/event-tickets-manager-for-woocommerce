@@ -25,6 +25,7 @@ $wps_etmfw_text_color = ! empty( get_option( 'wps_etmfw_pdf_text_color' ) ) ? ge
 $wps_etmfw_border_type = ! empty( get_option( 'wps_etmfw_border_type' ) ) ? get_option( 'wps_etmfw_border_type' ) : 'none';
 $wps_etmfw_border_color = ! empty( get_option( 'wps_etmfw_pdf_border_color' ) ) ? get_option( 'wps_etmfw_pdf_border_color' ) : '#000000';
 $wps_etmfw_logo_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' ) ) ? get_option( 'wps_etmfw_mail_setting_upload_logo' ) : '';
+$wps_etmfw_hide_details_pdf_ticket = get_option( 'wps_wet_hide_details_pdf_ticket' );
 
 // Inline style used for sending in email.
 ?>
@@ -113,14 +114,18 @@ $wps_etmfw_logo_url = ! empty( get_option( 'wps_etmfw_mail_setting_upload_logo' 
 		<div class="wps_etmfw_border_color wps_etmfw_ticket_body" id = "wps_etmfw_parent_wrapper_2" style="padding: 15px; background-color:<?php echo esc_attr( $wps_etmfw_background_color ); ?>; margin: 0 auto; margin-top: 20px; box-sizing: border-box;border:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>">
 			<?php
 				$body = $wps_etmfw_email_body_content;
-			?>
-				<table class="wps_etmfw_pdf_text_colour" border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;"><tbody><tr><td style="padding: 20px 0 10px;"><h2 class="wps_etmfw_pdf_text_colour" style="margin: 0;font-size: 24px; color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">Details :-</h2></td></tr>
-				<tr><td style="padding: 5px 0;">
-				<p>Name - John Doe</p>
-				<p>Mob No - 978xxxxxx</p>
-				<p>Do You Have Tickets?-yes</p>
-				</td></tr>
-				</tbody></table>
+				if ( 'on' != $wps_etmfw_hide_details_pdf_ticket ) {
+					?>
+					<table class="wps_etmfw_pdf_text_colour" border="0" cellspacing="0" cellpadding="0" style="table-layout: auto; width: 100%;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;"><tbody><tr><td style="padding: 20px 0 10px;"><h2 class="wps_etmfw_pdf_text_colour" style="margin: 0;font-size: 24px; color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">Details :-</h2></td></tr>
+					<tr><td style="padding: 5px 0;">
+					<p>Name - John Doe</p>
+					<p>Mob No - 978xxxxxx</p>
+					<p>Do You Have Tickets?-yes</p>
+					</td></tr>
+					</tbody></table>
+					<?php
+				}
+				?>
 			<h4 class="wps_etmfw_pdf_text_colour" style="margin-top: 0px; margin-bottom: 0px; font-size: 24px; color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">Note</h4>
 			<div class="wps_etmfw_pdf_text_colour" style="width:auto;text-align:left;vertical-align: top;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">
 			<?php

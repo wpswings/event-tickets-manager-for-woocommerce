@@ -620,6 +620,33 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'class'       => 'etmfw-radio-switch-class-pro',
 				'placeholder' => __( 'Enable Client Secret here', 'event-tickets-manager-for-woocommerce' ),
 			),
+			array(
+				'title'       => __( 'Enable Zoom Integration', 'event-tickets-manager-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this to send zoom link on email to customer for virtual event product', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_wet_zoom_meeting_enable',
+				'value'       => '',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'name'        => 'wps_wet_zoom_meeting_enable',
+			),
+			array(
+				'title'       => __( 'Enter Client ID', 'event-tickets-manager-for-woocommerce' ),
+				'type'        => 'text',
+				'description' => __( 'You can generate credentials from <a href="https://marketplace.zoom.us/" target="_blank">Zoom Market Place</a> after sign in, click on Develop and choose build app.', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_wet_zoom_meeting_client_id',
+				'value'       => '',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'placeholder' => __( 'Enter Client ID here', 'event-tickets-manager-for-woocommerce' ),
+			),
+			array(
+				'title'       => __( 'Enter Client Secret', 'event-tickets-manager-for-woocommerce' ),
+				'type'        => 'text',
+				'description' => __( 'Make sure you have set the scopes( meeting:write and user:read or user:write ). Make Sure you enable the <a target="_blank" href="https://console.cloud.google.com/apis/library">Google Calendar API</a> so that zoom meeting link will be added to Google Calendar also. <p><a class="mdc-button generate-token mdc-button--raised mdc-ripple-upgraded" href="#" target="_blank">Generate Token</a></p>.', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_wet_zoom_meeting_client_secret',
+				'value'       => '',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'placeholder' => __( 'Enable Client Secret here', 'event-tickets-manager-for-woocommerce' ),
+			),
 		);
 		$etmfw_settings_integrations = apply_filters( 'wps_etmfw_extent_integration_settings_array', $etmfw_settings_integrations );
 		$etmfw_settings_integrations[] = array(
@@ -693,6 +720,18 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				),
 				'class' => 'wps_etmfw_mail_setting_upload_logo_box',
 				'description' => __( 'Upload the image which is used as a logo on your Email Template.', 'event-tickets-manager-for-woocommerce' ),
+			),
+			array(
+				'title' => __( 'Hide Details on PDF Ticket', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'radio-switch',
+				'description'  => __( 'Enable this option to hide details on PDF tickets.', 'event-tickets-manager-for-woocommerce' ),
+				'id'    => 'wps_wet_hide_details_pdf_ticket',
+				'value' => get_option( 'wps_wet_hide_details_pdf_ticket' ),
+				'class' => 'etmfw-radio-switch-class',
+				'options' => array(
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
+					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
+				),
 			),
 		);
 		if ( ! is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) {
@@ -1547,10 +1586,12 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		$order_items = $order->get_items();
 		foreach ( $order_items as $item ) {
 			$product = $item->get_product();
-			if ( 'event_ticket_manager' === $product->get_type() ) {
-				$order->update_meta_data( 'wps_order_type', 'event' );
-				$order->save();
-				break;
+			if ( $product && is_object( $product ) && method_exists( $product, 'get_type' ) ) {
+				if ( 'event_ticket_manager' === $product->get_type() ) {
+					$order->update_meta_data( 'wps_order_type', 'event' );
+					$order->save();
+					break;
+				}
 			}
 		}
 	}
@@ -1698,6 +1739,8 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		if ( ! wp_next_scheduled( 'wps_wgm_check_for_notification_update' ) ) {
 			wp_schedule_event( $wps_sfw_time, 'daily', 'wps_wgm_check_for_notification_update' );
 		}
+
+		$this->wps_etmfw_list_shortcode_in_gutenburg_block();
 	}
 
 		/**
@@ -1825,9 +1868,16 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			array(
 				'title'       => __( 'Reminder Email Body', 'event-tickets-manager-for-woocommerce' ),
 				'type'        => 'wp_editor',
-				'description' => __( 'Use [SITENAME] and [PRODUCTNAME] shortcode as the name of the site and product name respectively.', 'event-tickets-manager-for-woocommerce' ),
+				'description' => __( 'Use [STARTDATE], [SITENAME] and [PRODUCTNAME] shortcode as the start date of the event, name of the site and product name respectively.', 'event-tickets-manager-for-woocommerce' ),
 				'id'          => 'wps_etmfw_reminder_email_body',
 				'value'       => get_option( 'wps_etmfw_reminder_email_body', 'Hello, This is a short Reminder for your Event which is start from [STARTDATE]. Enjoy your day!' ),
+			),
+			array(
+				'title'       => __( 'Copy to Clipboard Button', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_etmfw_copy_to_clipboard',
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable Copy to Clipboard button on product page.', 'event-tickets-manager-for-woocommerce' ),
+				'value'       => get_option( 'wps_etmfw_copy_to_clipboard', '' ),
 			),
 			array(
 				'title'       => __( 'Enable Subscribe Checkbox', 'event-tickets-manager-for-woocommerce' ),
@@ -1852,6 +1902,22 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'type'        => 'textarea',
 				'description' => __( 'Use [SITENAME] and [PRODUCTNAME] shortcode as the name of the site and product name respectively.', 'event-tickets-manager-for-woocommerce' ),
 				'value'       => '',
+			),
+			array(
+				'title'         => __( 'Enable Social Share Settings', 'event-tickets-manager-for-woocommerce' ),
+				'id'            => 'wps_etmfw_enable_social_sharing',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'type'          => 'radio-switch',
+				'description'   => __( 'You can display social sharing icons to share event products.', 'event-tickets-manager-for-woocommerce' ),
+				'value'         => '',
+			),
+			array(
+				'title'         => __( 'Enable Social Share Name', 'event-tickets-manager-for-woocommerce' ),
+				'id'            => 'wps_etmfw_enable_social_share_name',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'type'          => '',
+				'description'   => __( 'You can display social sharing icons to share event products.', 'event-tickets-manager-for-woocommerce' ),
+				'value'         => '',
 			),
 		);
 
@@ -2273,5 +2339,15 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			// Handle the exception here, e.g., log the error or display an error message.
 			update_option( 'wps_query_error', $e->getMessage() );
 		}
+	}
+
+	/**
+	 * This function is used to list shortcodes in Gutenburg.
+	 *
+	 * @return void
+	 */
+	public function wps_etmfw_list_shortcode_in_gutenburg_block() {
+		wp_register_script( 'google-embeds-org-block-event', plugins_url( 'src/js/event-tickets-manager-for-woocommerce-org-custom-admin.js', __FILE__ ), array( 'wp-blocks', 'wp-editor', 'wp-element', 'wp-components' ), $this->version, false );
+		register_block_type( 'wpswings/googles-embed-org-event', array( 'editor_script' => 'google-embeds-org-block-event') );
 	}
 }
