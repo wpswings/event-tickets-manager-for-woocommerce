@@ -83,7 +83,6 @@
 													$typeselected = "selected='selected'";
 												endif;
 												?>
-												?>
 												<option value="<?php echo esc_attr( $key ); ?>"<?php echo esc_attr( $typeselected ); ?>><?php echo esc_attr( $value ); ?></option>
 											<?php endforeach; ?> 
 										</select>

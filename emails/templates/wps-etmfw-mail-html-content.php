@@ -57,10 +57,7 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 								<td style="width: 20%;background: #000000;">
 								<img id="wps_wem_logo_id" class="wps_wem_logo" src="<?php echo esc_url( $product_image_url ); ?>" style="width:<?php echo esc_attr( $wps_etmfw_logo_size . 'px' ); ?>;margin-left: 25px">
 								</td>
-								<?php
-									  $bg_color = ! empty( get_option( 'wps_etmfw_ticket_bg_color', '' ) ) ? get_option( 'wps_etmfw_ticket_bg_color' ) : '#2196f3';
-								?>
-								<td style="width: 60%;background: <?php echo esc_attr( $bg_color ); ?>">
+								<td style="width: 60%;background: <?php echo esc_attr( $wps_etmfw_background_color ); ?>">
 									<table class="wps_etmfw_ticket_body" style="padding: 20px; table-layout: auto; width: 100%;">
 										<tbody>
 											<tr>

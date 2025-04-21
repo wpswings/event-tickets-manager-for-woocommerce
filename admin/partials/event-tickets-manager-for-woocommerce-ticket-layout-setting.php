@@ -24,7 +24,7 @@ if ( isset( $_POST['wps_etmfw_new_layout_setting_save'] ) ) {
 		update_option( 'wps_etmfw_ticket_template', $wps_selected_pdf_ticket_template );
 
 
-		if ( 1 === (int) $wps_ubo_selected_template ) {
+		if ( 1 === (int) $wps_selected_pdf_ticket_template ) {
 
 			update_option( 'wps_etmfw_logo_size', '133' );
 			update_option( 'wps_etmfw_qr_size', '133' );
@@ -35,7 +35,7 @@ if ( isset( $_POST['wps_etmfw_new_layout_setting_save'] ) ) {
 	   }
    
    
-	   if ( 2 === (int) $wps_ubo_selected_template ) {
+	   if ( 2 === (int) $wps_selected_pdf_ticket_template ) {
    
 		   update_option( 'wps_etmfw_logo_size', '133' );
 		   update_option( 'wps_etmfw_qr_size', '133' );
@@ -45,7 +45,7 @@ if ( isset( $_POST['wps_etmfw_new_layout_setting_save'] ) ) {
 		   update_option( 'wps_etmfw_pdf_border_color', 'black' );
 	   }
    
-	   if ( 3 === (int) $wps_ubo_selected_template ) {
+	   if ( 3 === (int) $wps_selected_pdf_ticket_template ) {
    
 		   update_option( 'wps_etmfw_logo_size', '133' );
 		   update_option( 'wps_etmfw_qr_size', '133' );
@@ -56,7 +56,7 @@ if ( isset( $_POST['wps_etmfw_new_layout_setting_save'] ) ) {
 	   } // Demure.
    
    
-	   if ( 4 === (int) $wps_ubo_selected_template ) {
+	   if ( 4 === (int) $wps_selected_pdf_ticket_template ) {
    
 		   update_option( 'wps_etmfw_logo_size', '133' );
 		   update_option( 'wps_etmfw_qr_size', '133' );
@@ -65,8 +65,8 @@ if ( isset( $_POST['wps_etmfw_new_layout_setting_save'] ) ) {
 		   update_option( 'wps_etmfw_border_type', 'none' );
 		   update_option( 'wps_etmfw_pdf_border_color', 'black' );
 	   } // Mellifluous.
-   
-	   if ( 5 === (int) $wps_ubo_selected_template ) {
+
+	   if ( 5 === (int) $wps_selected_pdf_ticket_template ) {
    
 		   update_option( 'wps_etmfw_logo_size', '133' );
 		   update_option( 'wps_etmfw_qr_size', '133' );
@@ -96,59 +96,6 @@ if ( isset( $_POST['wps_etmfw_new_layout_setting_save_2'] ) ) {
 	update_option( 'wps_etmfw_qr_size', $wps_etmfw_qr_size );
 	update_option( 'wps_etmfw_background_image', $wps_etmfw_background_image );
 	update_option( 'wps_etmfw_pdf_header_background_color', $wps_etmfw_header_background_color );
-
-
-	if ( 1 === (int) $wps_ubo_selected_template ) {
-
-		update_option( 'wps_etmfw_logo_size', '133' );
-		update_option( 'wps_etmfw_qr_size', '133' );
-		update_option( 'wps_etmfw_pdf_background_color', '#2196f3' );
-		update_option( 'wps_etmfw_pdf_text_color', '#0f0b0b' );
-		update_option( 'wps_etmfw_border_type', 'solid' );
-		update_option( 'wps_etmfw_pdf_border_color', 'black' );
-   }
-
-
-   if ( 2 === (int) $wps_ubo_selected_template ) {
-
-	   update_option( 'wps_etmfw_logo_size', '133' );
-	   update_option( 'wps_etmfw_qr_size', '133' );
-	   update_option( 'wps_etmfw_pdf_background_color', '#f5ebeb' );
-	   update_option( 'wps_etmfw_pdf_text_color', '#000000' );
-	   update_option( 'wps_etmfw_border_type', 'none' );
-	   update_option( 'wps_etmfw_pdf_border_color', 'black' );
-   }
-
-   if ( 3 === (int) $wps_ubo_selected_template ) {
-
-	   update_option( 'wps_etmfw_logo_size', '133' );
-	   update_option( 'wps_etmfw_qr_size', '133' );
-	   update_option( 'wps_etmfw_pdf_background_color', '#D77565' );
-	   update_option( 'wps_etmfw_pdf_text_color', '#000000' );
-	   update_option( 'wps_etmfw_border_type', 'none' );
-	   update_option( 'wps_etmfw_pdf_border_color', 'black' );
-   } // Demure.
-
-
-   if ( 4 === (int) $wps_ubo_selected_template ) {
-
-	   update_option( 'wps_etmfw_logo_size', '133' );
-	   update_option( 'wps_etmfw_qr_size', '133' );
-	   update_option( 'wps_etmfw_pdf_background_color', '#FFE6EA' );
-	   update_option( 'wps_etmfw_pdf_text_color', '#333333' );
-	   update_option( 'wps_etmfw_border_type', 'none' );
-	   update_option( 'wps_etmfw_pdf_border_color', 'black' );
-   } // Mellifluous.
-
-   if ( 5 === (int) $wps_ubo_selected_template ) {
-
-	   update_option( 'wps_etmfw_logo_size', '133' );
-	   update_option( 'wps_etmfw_qr_size', '133' );
-	   update_option( 'wps_etmfw_pdf_background_color', '#000000' );
-	   update_option( 'wps_etmfw_pdf_text_color', '#ffffff' );
-	   update_option( 'wps_etmfw_border_type', 'none' );
-	   update_option( 'wps_etmfw_pdf_border_color', 'black' );
-   }
 
 }
 

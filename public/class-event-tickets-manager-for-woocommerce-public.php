@@ -88,7 +88,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$wps_etmfw_dyn_contact = isset( $wps_etmfw_product_array['wps_etmfw_dyn_contact'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_contact'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_contact'] : '';
 		$wps_etmfw_dyn_date = isset( $wps_etmfw_product_array['wps_etmfw_dyn_date'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_date'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_date'] : '';
 		$wps_etmfw_dyn_address = isset( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_dyn_address'] ) ? $wps_etmfw_product_array['wps_etmfw_dyn_address'] : '';
-		
+		$wps_limit_user_purchase_event = isset( $wps_etmfw_product_array['wps_limit_user_purchase_event'] ) && ! empty( $wps_etmfw_product_array['wps_limit_user_purchase_event'] ) ? $wps_etmfw_product_array['wps_limit_user_purchase_event'] : '';
+		$etmfw_set_limit_qty = isset( $wps_etmfw_product_array['etmfw_set_limit_qty'] ) && ! empty( $wps_etmfw_product_array['etmfw_set_limit_qty'] ) ? $wps_etmfw_product_array['etmfw_set_limit_qty'] : '';
+
 		wp_register_script( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-public.js', array( 'jquery' ), $this->version, false );
 
 		$wps_event_product_url = is_product() ? get_permalink() : '';
@@ -108,6 +110,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			'wps_dyn_date' => __( ' Date', 'event-tickets-manager-for-woocommerce' ),
 			'wps_dyn_address' => __( ' Address', 'event-tickets-manager-for-woocommerce' ),
 			'wps_event_product_url' => $wps_event_product_url,
+			'wps_event_purchase_limit' => $wps_limit_user_purchase_event,
+			'wps_etmfw_set_limit_qty' => $etmfw_set_limit_qty,
 		);
 
 		wp_localize_script( $this->plugin_name, 'etmfw_public_param', $public_param_data );
