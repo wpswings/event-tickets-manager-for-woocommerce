@@ -1141,3 +1141,45 @@ button#wps-etmfw-copy-event-url {
 }
 
 /* My Account Redesign */
+
+#wps_etmfw_title_and_social_share_icon {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  position: relative;
+}
+
+.wps-etmfw-share-btn,.wps-etmfw-copy-event-url {
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 34px;
+  height: 34px;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wps-etmfw-share-btn:focus,.wps-etmfw-copy-event-url:focus {
+  outline: none;
+}
+
+.wps-etmfw-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.wps_etmfw_social_share_wrapper {
+  margin: 0;
+  position: unset !important;
+  text-align: right;
+  flex: 0;
+}
+
+#wps_etmfw_title_and_social_share_icon h1 {
+  flex: 1;
+}

@@ -2900,26 +2900,36 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link http://www.wpswings.com/
 	 */
 	public function wps_etmfwp_show_social_share_link() {
+		global $product;
 		if ( is_single() ) {
-			$product_id = get_the_ID();
-			if ( ! empty( $product_id ) && ! is_null( $product_id ) ) {
-				$page_permalink = get_permalink( $product_id );
-				$product_types = wp_get_object_terms( $product_id, 'product_type' );
-				if ( isset( $product_types[0] ) ) {
-					$product_type = $product_types[0]->slug;
-					if ( 'event_ticket_manager' == $product_type && ! empty( $page_permalink ) && ! is_null( $page_permalink ) ) {
-						do_action( 'wps_etmfw_show_social_share_link', $page_permalink );
-						if ( 'on' === get_option( 'wps_etmfw_copy_to_clipboard' ) ) {
-						?>
-							<button id="wps-etmfw-copy-event-url" class="wps-etmfw-copy-event-url wps_tooltip" title="Copy to clipboard" aria-label="copied">
-								<span class="wps_tooltiptext_url" id="myTooltip"><?php esc_html_e( 'Copy to Clipboard', 'event-tickets-manager-for-woocommerce' ); ?></span>
-								<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/copy.png' ); ?>" alt="Copy to clipboard">
-							</button>
-						<?php
-						}
-					}
-				}
+			if ( ! is_product() || ! $product instanceof WC_Product ) {
+				return;
 			}
+	
+			?>
+			<div id="wps_etmfw_title_and_social_share_icon" class="wps_etmfw_title_and_social_share_icon">
+				<?php
+				the_title( '<h1 class="product_title entry-title">', '</h1>' );
+				$product_id = get_the_ID();
+				$product_types = wp_get_object_terms( $product_id, 'product_type' );
+		
+				if ( isset( $product_types[0] ) && $product_types[0]->slug === 'event_ticket_manager' ) {
+					$page_permalink = get_permalink( $product_id );
+		
+					echo '<div class="wps_etmfw_social_share_wrapper">';
+
+					if ( 'on' === get_option( 'wps_etmfw_copy_to_clipboard' ) ) {
+						echo '<button class="wps-etmfw-copy-event-url" onclick="wpsEtmfwCopyToClipboard(\'' . esc_js( $page_permalink ) . '\')">
+						<img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/copy.svg" alt="copy""></button>';
+					}
+
+					do_action( 'wps_etmfw_show_social_share_link', $page_permalink );
+
+					echo '</div>';
+				}
+				?>
+			</div>
+			<?php
 		}
 	}
 }

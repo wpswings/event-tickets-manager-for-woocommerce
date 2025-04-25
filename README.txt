@@ -5,7 +5,7 @@ Tags: event registration, calendar, RSVP, location, tickets
 Requires at least: 6.1
 Tested up to: 6.8
 WC requires at least: 6.1
-WC tested up to: 9.8.1
+WC tested up to: 9.8.2
 Stable tag: 1.4.4
 Requires PHP: 7.4
 License: GNU General Public License v3.0

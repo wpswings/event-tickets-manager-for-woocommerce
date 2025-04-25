@@ -352,7 +352,10 @@ class Event_Tickets_Manager_For_Woocommerce {
 		
 		$this->loader->add_filter( 'woocommerce_get_price_html', $etmfw_plugin_public, 'wps_etmfwp_change_event_price', 10, 2 );
 
-		$this->loader->add_action( 'woocommerce_after_add_to_cart_form', $etmfw_plugin_public, 'wps_etmfwp_show_social_share_link', 10 );
+		add_action( 'wp', function() {
+			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_title', 5 );
+		});
+		$this->loader->add_action( 'woocommerce_single_product_summary', $etmfw_plugin_public, 'wps_etmfwp_show_social_share_link', 5 );
 
 	}
 	}
