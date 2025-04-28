@@ -796,13 +796,6 @@ img.wps_resend_image {
 }
 /* Form layout fixes end */
 
-/* copy to clipboard url */
-button#wps-etmfw-copy-event-url {
-  display: inline-flex;
-  gap: 10px;
-  align-items: center;
-}
-
 /* My account Redesign */
 
 :root {
@@ -1004,7 +997,8 @@ button#wps-etmfw-copy-event-url {
   line-height: 1.25;
   border: 1px solid;
   margin: 0;
-    box-shadow: none;
+  box-shadow: none;
+  cursor: pointer;
 }
 
 #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form .wps_etmfw_checkin_button_section {
@@ -1125,6 +1119,11 @@ button#wps-etmfw-copy-event-url {
   overflow: auto;
 }
 
+.theme-twentytwentyfive #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div input[type=text], .theme-twentytwentyfive #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div input[type=email], .theme-twentytwentyfour #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div input[type=text], .theme-twentytwentyfour #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div input[type=email], .theme-twentytwentythree #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div input[type=text], .theme-twentytwentythree #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div input[type=email], .theme-twentytwentytwo #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div input[type=text], .theme-twentytwentytwo #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div input[type=email] {
+  width: calc(100% - 22px);
+  min-height: 21px;
+}
+
 @container eventDashboard (width < 400px) {
   #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form{
     grid-template-columns: 1fr;
@@ -1142,11 +1141,29 @@ button#wps-etmfw-copy-event-url {
 
 /* My Account Redesign */
 
+/* copy to clipboard url */
+
+.wps_etmfw_social_share_wrapper button img {
+  width: 24px!important;
+  height: 24px!important;
+}
+
+.single .product{
+  position: relative;
+}
+
 #wps_etmfw_title_and_social_share_icon {
   display: flex;
   align-items: flex-start;
   gap: 15px;
-  position: relative;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  z-index: 9;
+}
+
+.wp-theme-flatsome #wps_etmfw_title_and_social_share_icon {
+  left: 25px;
 }
 
 .wps-etmfw-share-btn,.wps-etmfw-copy-event-url {
@@ -1156,10 +1173,11 @@ button#wps-etmfw-copy-event-url {
   cursor: pointer;
   width: 34px;
   height: 34px;
-  background: transparent;
+  background: #fff;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  margin: 0;
 }
 
 .wps-etmfw-share-btn:focus,.wps-etmfw-copy-event-url:focus {
@@ -1175,11 +1193,10 @@ button#wps-etmfw-copy-event-url {
 
 .wps_etmfw_social_share_wrapper {
   margin: 0;
-  position: unset !important;
+  position: relative !important;
   text-align: right;
   flex: 0;
-}
-
-#wps_etmfw_title_and_social_share_icon h1 {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }

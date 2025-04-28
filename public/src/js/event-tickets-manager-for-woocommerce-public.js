@@ -322,6 +322,8 @@ jQuery(document).ready(function(){
 				return childDivs.length;
 			}
 
+			var social_share_event = jQuery( '#wps_etmfw_title_and_social_share_icon').detach();
+			jQuery('.product-type-event_ticket_manager .woocommerce-product-gallery').append(social_share_event);
 		}
 	}
 });

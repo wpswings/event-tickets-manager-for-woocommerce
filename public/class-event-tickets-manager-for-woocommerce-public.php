@@ -2407,22 +2407,22 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 									<form method="post">
 										<div class="wps_etmfw_events_section">
 											<label><?php esc_html_e( 'For', 'event-tickets-manager-for-woocommerce' ); ?></label>
+											<select id="wps_etmfw_event_selected"> 
+												<option value="#" ><?php echo esc_html( 'Select Event', 'event-tickets-manager-for-woocommerce' ); ?>  </option> 
 											<?php
 											if ( $product_array->have_posts() ) {
 												if ( isset( $product_array->posts ) && ! empty( $product_array->posts ) ) {
-													?>
-												<select id="wps_etmfw_event_selected"> 
-													<?php
+													
 													foreach ( $product_array->posts as $event_per_product ) {
 														?>
 													<option value="<?php echo esc_attr( $event_per_product->ID ); ?>" ><?php echo esc_html( $event_per_product->post_title ); ?>  </option> 
-																				<?php
+														<?php
 													}
-													?>
-												</select> 
-													<?php
 												}
 											}
+											?>
+											</select> 
+												<?php
 											?>
 										</div>
 										<div class="wps_etmfw_input_ticket_section">
@@ -2585,7 +2585,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						}
 						?>
 						<div class="wps-etmfw_mdisa-item wps-etmfw_mdisa-events wps-etmfw_mdisa-item--active">
-							<h3><?php esc_html_e( 'All Events', 'event-tickets-manager-for-woocommerce' ); ?> <span><?php esc_html_e( '14 Events', 'event-tickets-manager-for-woocommerce' ); ?></span></h3>
+							<h3><?php esc_html_e( 'All Events', 'event-tickets-manager-for-woocommerce' ); ?> <span><?php echo count( $event_attendees_details ) . esc_html__( ' Events', 'event-tickets-manager-for-woocommerce' ); ?></span></h3>
 							<div class="wps-etmfw_mdisai-cont">
 								<!-- Dummy HTML Cloneed from All Events tab Start -->
 								<table class="woocommerce-orders-table woocommerce-MyAccount-orders shop_table shop_table_responsive my_account_orders account-orders-table" id="wps_myevent_table_id">
@@ -2909,7 +2909,6 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			?>
 			<div id="wps_etmfw_title_and_social_share_icon" class="wps_etmfw_title_and_social_share_icon">
 				<?php
-				the_title( '<h1 class="product_title entry-title">', '</h1>' );
 				$product_id = get_the_ID();
 				$product_types = wp_get_object_terms( $product_id, 'product_type' );
 		
