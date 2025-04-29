@@ -67,12 +67,12 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 											</tr>
 											<tr>
 												<td style="color: #ffffff;padding: 10px 0;">
-													<h3 class="wps_etmfw_pdf_text_colour" style="margin: 0;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">Venue - [VENUE]</h3>
+													<h3 class="wps_etmfw_pdf_text_colour" style="margin: 0;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;"><?php esc_html_e( 'Venue', 'event-tickets-manager-for-woocommerce' ); ?> - [VENUE]</h3>
 												</td>
 											</tr>
 											<tr>
 												<td style="color: #ffffff;padding: 10px 0;">									
-													<h3 class="wps_etmfw_pdf_text_colour" style="margin: 0;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">Date - [STARTDATE] To [ENDDATE]</h3>						
+													<h3 class="wps_etmfw_pdf_text_colour" style="margin: 0;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;"><?php esc_html_e( 'Date', 'event-tickets-manager-for-woocommerce' ); ?> - [STARTDATE] To [ENDDATE]</h3>						
 												</td>
 											</tr>
 											<?php
@@ -87,7 +87,7 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 															?>
 														<tr>
 															<td style="color: <?php echo esc_attr( $wps_etmfw_background_color ); ?>;padding: 10px 0;">									
-																<h3 class="wps_etmfw_pdf_text_colour" style="margin: 0;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">Ticket - <span style="color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">[TICKET1]</span></h3>						
+																<h3 class="wps_etmfw_pdf_text_colour" style="margin: 0;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;"><?php esc_html_e( 'Ticket', 'event-tickets-manager-for-woocommerce' ); ?> - <span style="color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">[TICKET1]</span></h3>						
 															</td>
 														</tr>
 															<?php
@@ -110,11 +110,11 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 											<tr>
 											<?php if('on' == get_option( 'wps_etmfwp_include_barcode' )){ ?>
 												<td style="text-align: center;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">
-													<h3 class="wps_etmfw_pdf_text_colour"  style="color: <?php echo esc_attr( 'black' ); ?>;">Your Ticket</h3>
+													<h3 class="wps_etmfw_pdf_text_colour"  style="color: <?php echo esc_attr( 'black' ); ?>;"><?php esc_html_e( 'Your Ticket', 'event-tickets-manager-for-woocommerce' ); ?></h3>
 												</td>
 												<?php } else { ?>
 													<td style="text-align: center;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">
-													<h3 class="wps_etmfw_pdf_text_colour"  style="color: <?php echo esc_attr( 'White' ); ?>;">Your Ticket</h3>
+													<h3 class="wps_etmfw_pdf_text_colour"  style="color: <?php echo esc_attr( 'White' ); ?>;"><?php esc_html_e( 'Your Ticket', 'event-tickets-manager-for-woocommerce' ); ?></h3>
 												</td>	
 												<?php } ?>
 											</tr>
@@ -146,7 +146,7 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 				$body = get_option( 'wps_etmfw_email_body_content', '' );
 				if ( '' != $body ) {
 					?>
-												<h4 style="font-weight:600;padding: 10px 10px 0;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;margin:0;">Note</h4>
+												<h4 style="font-weight:600;padding: 10px 10px 0;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;margin:0;"><?php esc_html_e( 'Note', 'event-tickets-manager-for-woocommerce' ); ?></h4>
 												<div style="padding: 10px;width:auto;text-align:left;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?> ! important; ">
 												[EMAILBODYCONTENT]
 												</div>
@@ -162,7 +162,7 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 					$body = get_option( 'wps_etmfw_email_body_content', '' );
 					if ( '' != $body ) {
 						?>
-													<h4 style="font-weight:600;padding: 10px 10px 0;color: <?php echo esc_attr( $wps_etmfw_body_text_color ); ?>;margin:0;">Note</h4>
+													<h4 style="font-weight:600;padding: 10px 10px 0;color: <?php echo esc_attr( $wps_etmfw_body_text_color ); ?>;margin:0;"><?php esc_html_e( 'Note', 'event-tickets-manager-for-woocommerce' ); ?></h4>
 													<div style="padding: 10px;width:auto;text-align:left;color: <?php echo esc_attr( $wps_etmfw_body_text_color ); ?> ! important; ">
 													[EMAILBODYCONTENT]
 													</div>

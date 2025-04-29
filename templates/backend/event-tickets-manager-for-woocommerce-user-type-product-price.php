@@ -14,9 +14,9 @@
 $wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
 $wps_etmfw_field_user_type_price_data = isset( $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data'] ) ? $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data'] : array();
 $wps_etmfw_field_user_type_price_base_price_condition = isset( $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] ) ? $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] : 'base_price';
-$wps_etmfw_tip_1 = esc_attr( 'Show the price by adding the set price with the  regular/sale price of the product', 'event-tickets-manager-for-woocommerce' );
-$wps_etmfw_tip_2 = esc_attr( 'Show the price without adding the set price with the  regular/sale price of the product', 'event-tickets-manager-for-woocommerce' );
-$wps_etmfw_tip_3  = esc_attr( 'Create the event user type with specific price for the product', 'event-tickets-manager-for-woocommerce' );
+$wps_etmfw_tip_1 = esc_attr__( 'Show the price by adding the set price with the regular/sale price of the product', 'event-tickets-manager-for-woocommerce' );
+$wps_etmfw_tip_2 = esc_attr__( 'Show the price without adding the set price with the  regular/sale price of the product', 'event-tickets-manager-for-woocommerce' );
+$wps_etmfw_tip_3 = esc_attr__( 'Create the event user type with specific price for the product', 'event-tickets-manager-for-woocommerce' );
 $allowed_html = array(
 	'span' => array(
 		'class'    => array(),
