@@ -2607,7 +2607,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 												<td data-title="Event"><?php echo esc_html( rtrim( $mks['event'] ) ); ?></td>
 												<td data-title="Date"><?php echo esc_html( rtrim( $mks['schedule'] ) ); ?></td>
 												<td data-title="Status" class="status-td"><span class="#" title="Pending"><?php echo wp_kses_post( rtrim( $mks['check_in_status'] ) ); ?></span></td>
-												<td data-title="Price"><span class="woocommerce-Price-amount amount"><?php echo wc_price( floatval( rtrim( $mks['price'] ) ) ); ?></span></td>
+												<td data-title="Price"><span class="woocommerce-Price-amount amount"><?php echo wp_kses_post( wc_price( floatval( rtrim( $mks['price'] ) ) ) ); ?></span></td>
 												<td data-title="Action">
 													<?php
 													echo wp_kses_post( rtrim( $mks['order'] ) . rtrim( $mks['action'] ) );
