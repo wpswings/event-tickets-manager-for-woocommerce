@@ -8,11 +8,6 @@
   float: none !important;
 }
 
-div#wps_etmfw_checkin_loader img {
-  width: 25px;
-  height: auto;
-}
-
 div#wps_etmfw_edit_info_loader img {
   width: 25px;
   height: auto;
@@ -1200,3 +1195,79 @@ img.wps_resend_image {
   flex-direction: column;
   gap: 10px;
 }
+
+/* checkin start */
+
+.wps_etmfw_events_section,
+ .wps_etmfw_input_ticket_section {
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+   margin-bottom: 10px;
+ }
+ 
+ .wps_etmfw_events_section label,
+ .wps_etmfw_input_ticket_section label {
+   flex: 0 0 25%;
+   max-width: 25%;
+ }
+ 
+ select#wps_etmfw_event_selected {
+   flex: 0 0 75%;
+   max-width: 75%;
+ }
+ 
+ input#wps_etmfw_imput_ticket {
+   flex: 0 0 75%;
+   max-width: 75%;
+   margin: 0;
+ }
+ 
+ input#wps_etmfw_chckin_email {
+   flex: 0 0 75%;
+   max-width: 75%;
+   margin: 0;
+ }
+ 
+ .wps_etmfw--loader-btn-wrapper {
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+ }
+ 
+ .wps_etmfw_checkin_button_section {
+   flex: 0 0 15%;
+   max-width: 115px;
+ }
+ 
+ div#wps_etmfw_checkin_loader img {
+   width: 25px;
+   height: auto;
+   margin-left: 20px;
+ }
+ 
+ .wps_check_in_error {
+   /* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
+   background: #e2401c;
+   padding: 16px 20px;
+   color: #ffffff;
+   font-size: 16px;
+   font-weight: bold;
+   margin: 20px 0;
+ }
+ 
+ .wps_check_in_success {
+   /* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
+   background: #1a6f1a;
+   padding: 16px 20px;
+   color: #ffffff;
+   font-size: 16px;
+   font-weight: bold;
+   margin: 20px 0;
+ }
+
+#wps_etmfw_event_selected {
+  min-height: 40px;
+  margin: 0;
+}
+ /* Checkin end */
