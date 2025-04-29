@@ -2339,7 +2339,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @param array $items array of the items.
 	 */
 	public function etmfwp_event_dashboard( $items ) {
-		$items['event-ticket'] = __( 'My Event Tickets', 'event-tickets-manager-for-woocommerce' );
+		$items['event-ticket'] = __( 'Event Tickets', 'event-tickets-manager-for-woocommerce' );
 		return $items;
 	}
 

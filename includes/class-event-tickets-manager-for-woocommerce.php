@@ -308,7 +308,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'plugins_loaded', $etmfw_plugin_public, 'wps_wgc_register_event_ticket_manager_product_types' );
 
 		$this->loader->add_action( 'woocommerce_new_order', $etmfw_plugin_public, 'wps_etmfw_set_order_as_event_ticket_manager', 10, 2 );
-		// Register Endpoint For "MY Event" tab.
+		// Register Endpoint For "Event Ticket" tab.
 		$this->loader->add_action( 'init', $etmfw_plugin_public, 'etmfwp_add_my_account_endpoint' );
 		$this->loader->add_action( 'query_vars', $etmfw_plugin_public, 'etmfwp_custom_endpoint_query_vars', 0 );
 		$this->loader->add_action( 'woocommerce_account_menu_items', $etmfw_plugin_public, 'etmfwp_event_dashboard', 1, 1 );
