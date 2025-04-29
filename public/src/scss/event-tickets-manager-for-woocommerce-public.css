@@ -238,12 +238,6 @@ div#wps_etmfw_event_map {
   content: "\f274";
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
 img.wps_resend_image {
   background: #70b3b5;
   width: 45px;
