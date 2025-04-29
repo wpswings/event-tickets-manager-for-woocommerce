@@ -2371,7 +2371,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			<div class="wps-etmfw_md-in">
 				<section class="wps-etmfw_mdi-sec wps-etmfw_mdis-head">
 					<h2><?php esc_html_e( 'Events Dashboard', 'event-tickets-manager-for-woocommerce' ); ?></h2>
-					<p><?php echo get_option( 'wps_etmfw_event_dashboard' ); ?></p>
+					<p><?php echo esc_html( get_option( 'wps_etmfw_event_dashboard' ) ); ?></p>
 				</section>
 				<section class="wps-etmfw_mdi-sec wps-etmfw_mdis-main">
 					<article class="wps-etmfw_mdis-art wps-etmfw_mdis-nav">
@@ -2604,11 +2604,15 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 												foreach ( $event_attendees_details as $mks ) {
 												?>
 											<tr>
-												<td data-title="Event"><?php echo rtrim( $mks['event'] ); ?></td>
-												<td data-title="Date"><?php echo rtrim( $mks['schedule'] ); ?></td>
-												<td data-title="Status" class="status-td"><span class="#" title="Pending"><?php echo rtrim( $mks['check_in_status'] ); ?></span></td>
-												<td data-title="Price"><span class="woocommerce-Price-amount amount"><?php echo wc_price( rtrim( $mks['price'] ) ); ?></span></td>
-												<td data-title="Action"><?php echo rtrim( $mks['order'] ) . rtrim( $mks['action'] ); ?></td>
+												<td data-title="Event"><?php echo esc_html( rtrim( $mks['event'] ) ); ?></td>
+												<td data-title="Date"><?php echo esc_html( rtrim( $mks['schedule'] ) ); ?></td>
+												<td data-title="Status" class="status-td"><span class="#" title="Pending"><?php echo wp_kses_post( rtrim( $mks['check_in_status'] ) ); ?></span></td>
+												<td data-title="Price"><span class="woocommerce-Price-amount amount"><?php echo wc_price( floatval( rtrim( $mks['price'] ) ) ); ?></span></td>
+												<td data-title="Action">
+													<?php
+													echo wp_kses_post( rtrim( $mks['order'] ) . rtrim( $mks['action'] ) );
+													?>
+												</td>
 											</tr>
 											<?php
 												}
@@ -2912,14 +2916,14 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$product_id = get_the_ID();
 				$product_types = wp_get_object_terms( $product_id, 'product_type' );
 		
-				if ( isset( $product_types[0] ) && $product_types[0]->slug === 'event_ticket_manager' ) {
+				if ( isset( $product_types[0] ) && 'event_ticket_manager' === $product_types[0]->slug ) {
 					$page_permalink = get_permalink( $product_id );
 		
 					echo '<div class="wps_etmfw_social_share_wrapper">';
 
 					if ( 'on' === get_option( 'wps_etmfw_copy_to_clipboard' ) ) {
 						echo '<button class="wps-etmfw-copy-event-url" onclick="wpsEtmfwCopyToClipboard(\'' . esc_js( $page_permalink ) . '\')">
-						<img src="' . EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/copy.svg" alt="copy""></button>';
+						<img src="' . esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/copy.svg' ) . '" alt="copy""></button>';
 					}
 
 					do_action( 'wps_etmfw_show_social_share_link', $page_permalink );
