@@ -1192,55 +1192,55 @@ img.wps_resend_image {
 
 /* checkin start */
 
-.wps_etmfw_events_section,
- .wps_etmfw_input_ticket_section {
+.wps_etmfw_checkin_wrapper .wps_etmfw_events_section,
+.wps_etmfw_checkin_wrapper .wps_etmfw_input_ticket_section {
    display: flex;
    flex-wrap: wrap;
    align-items: center;
    margin-bottom: 10px;
  }
  
- .wps_etmfw_events_section label,
- .wps_etmfw_input_ticket_section label {
+ .wps_etmfw_checkin_wrapper .wps_etmfw_events_section label,
+ .wps_etmfw_checkin_wrapper .wps_etmfw_input_ticket_section label {
    flex: 0 0 25%;
    max-width: 25%;
  }
  
- select#wps_etmfw_event_selected {
+ .wps_etmfw_checkin_wrapper select#wps_etmfw_event_selected {
    flex: 0 0 75%;
    max-width: 75%;
  }
  
- input#wps_etmfw_imput_ticket {
-   flex: 0 0 75%;
-   max-width: 75%;
-   margin: 0;
- }
- 
- input#wps_etmfw_chckin_email {
+ .wps_etmfw_checkin_wrapper input#wps_etmfw_imput_ticket {
    flex: 0 0 75%;
    max-width: 75%;
    margin: 0;
  }
  
- .wps_etmfw--loader-btn-wrapper {
+ .wps_etmfw_checkin_wrapper input#wps_etmfw_chckin_email {
+   flex: 0 0 75%;
+   max-width: 75%;
+   margin: 0;
+ }
+ 
+ .wps_etmfw_checkin_wrapper .wps_etmfw--loader-btn-wrapper {
    display: flex;
    flex-wrap: wrap;
    align-items: center;
  }
  
- .wps_etmfw_checkin_button_section {
+ .wps_etmfw_checkin_wrapper .wps_etmfw_checkin_button_section {
    flex: 0 0 15%;
    max-width: 115px;
  }
  
- div#wps_etmfw_checkin_loader img {
+ .wps_etmfw_checkin_wrapper div#wps_etmfw_checkin_loader img {
    width: 25px;
    height: auto;
    margin-left: 20px;
  }
  
- .wps_check_in_error {
+ .wps_etmfw_checkin_wrapper .wps_check_in_error {
    /* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
    background: #e2401c;
    padding: 16px 20px;
@@ -1250,7 +1250,7 @@ img.wps_resend_image {
    margin: 20px 0;
  }
  
- .wps_check_in_success {
+ .wps_etmfw_checkin_wrapper .wps_check_in_success {
    /* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
    background: #1a6f1a;
    padding: 16px 20px;
@@ -1260,7 +1260,7 @@ img.wps_resend_image {
    margin: 20px 0;
  }
 
-#wps_etmfw_event_selected {
+ .wps_etmfw_checkin_wrapper #wps_etmfw_event_selected {
   min-height: 40px;
   margin: 0;
 }

@@ -2402,7 +2402,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					<article class="wps-etmfw_mdis-art wps-etmfw_mdisa-cont">
 						<div class="wps-etmfw_mdisa-item wps-etmfw_mdisa-trans">
 							<div class="wps-etmfw_mdisai-cont">
-								<div class="wps_etmfw_checkin_wrapper">
+								<div class="wps_etmfw_transfer_wrapper">
 									<div id="wps_etmfw_error_message"></div>
 									<form method="post">
 										<div class="wps_etmfw_events_section">
