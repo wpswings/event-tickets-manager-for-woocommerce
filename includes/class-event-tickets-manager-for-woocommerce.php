@@ -308,14 +308,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'plugins_loaded', $etmfw_plugin_public, 'wps_wgc_register_event_ticket_manager_product_types' );
 
 		$this->loader->add_action( 'woocommerce_new_order', $etmfw_plugin_public, 'wps_etmfw_set_order_as_event_ticket_manager', 10, 2 );
-		// Register Endpoint For "MY Event" tab.
-		$this->loader->add_action( 'init', $etmfw_plugin_public, 'wps_my_event_register_endpoint' );
-		// Add query variable.
-		$this->loader->add_action( 'query_vars', $etmfw_plugin_public, 'wps_myevent_endpoint_query_var', 0 );
-		// Inserting custom My Event tab.
-		$this->loader->add_action( 'woocommerce_account_menu_items', $etmfw_plugin_public, 'wps_event_add_myevent_tab', 1, 1 );
-		// Populate mmbership details tab.
-		$this->loader->add_action( 'woocommerce_account_wps-myevent-tab_endpoint', $etmfw_plugin_public, 'wps_myevent_populate_tab' );
+		// Register Endpoint For "Event Ticket" tab.
+		$this->loader->add_action( 'init', $etmfw_plugin_public, 'etmfwp_add_my_account_endpoint' );
+		$this->loader->add_action( 'query_vars', $etmfw_plugin_public, 'etmfwp_custom_endpoint_query_vars', 0 );
+		$this->loader->add_action( 'woocommerce_account_menu_items', $etmfw_plugin_public, 'etmfwp_event_dashboard', 1, 1 );
+		$this->loader->add_action( 'woocommerce_account_event-ticket_endpoint', $etmfw_plugin_public, 'wps_wpr_account_event' );
 
 		if ( 'on' == $etmfw_resend_pdf_ticket_public && $wps_is_pro_active ) {
 			// Function to resend the PDF Ticket By Customer Itself.
@@ -337,18 +334,10 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		// disbale shipping.
 		$this->loader->add_filter( 'wc_shipping_enabled', $etmfw_plugin_public, 'wps_etmfw_wc_shipping_enabled' );
-
-		// ticket sharing.
-		if ( 'on' === get_option( 'wps_wet_enable_ticket_sharing' ) && 'on' === get_option( 'wps_etmfw_enable_plugin', false ) ) {
-			$this->loader->add_filter( 'woocommerce_account_menu_items', $etmfw_plugin_public, 'etmfwp_event_dashboard' );
-			$this->loader->add_action( 'woocommerce_account_event-ticket_endpoint', $etmfw_plugin_public, 'wps_wpr_account_event' );
-			$this->loader->add_action( 'init', $etmfw_plugin_public, 'etmfwp_add_my_account_endpoint' );
-			$this->loader->add_filter( 'query_vars', $etmfw_plugin_public, 'etmfwp_custom_endpoint_query_vars' );
-
-			// Ajax For sharing the tickets.
-			$this->loader->add_action( 'wp_ajax_wps_etmfwp_transfer_ticket_org', $etmfw_plugin_public, 'wps_etmfwp_sharing_tickets_org', 11 );
-			$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfwp_transfer_ticket_org', $etmfw_plugin_public, 'wps_etmfwp_sharing_tickets_org', 11 );
-		}
+		
+		// Ajax For sharing the tickets.
+		$this->loader->add_action( 'wp_ajax_wps_etmfwp_transfer_ticket_org', $etmfw_plugin_public, 'wps_etmfwp_sharing_tickets_org', 11 );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfwp_transfer_ticket_org', $etmfw_plugin_public, 'wps_etmfwp_sharing_tickets_org', 11 );
 
 		// Ajax For User Type Pricing.
 		$this->loader->add_action( 'wp_ajax_wps_etmfwp_user_type_fun_calbck', $etmfw_plugin_public, 'wps_user_type_ajax_callbck', 10 );
@@ -363,7 +352,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 		
 		$this->loader->add_filter( 'woocommerce_get_price_html', $etmfw_plugin_public, 'wps_etmfwp_change_event_price', 10, 2 );
 
-		$this->loader->add_action( 'woocommerce_after_add_to_cart_form', $etmfw_plugin_public, 'wps_etmfwp_show_social_share_link', 10 );
+		$this->loader->add_action( 'woocommerce_before_single_product_summary', $etmfw_plugin_public, 'wps_etmfwp_show_social_share_link', 5 );
 
 	}
 	}
@@ -1099,23 +1088,23 @@ class Event_Tickets_Manager_For_Woocommerce {
 									<div class="wps_main_social_wrapp">
 										<div class="wps_social-checkbox-container">
 											<input type="checkbox" id="wps_etmfw_social_share_facebook" name="wps_etmfw_social_share_facebook" <?php checked( get_option( 'wps_etmfw_social_share_facebook' ), 'on' ); ?>>
-											<label for="wps_etmfw_social_share_facebook"><?php echo esc_html__( 'Facebook', 'event-tickets-manager-for-woocommerce-pro' ); ?></label>
+											<label for="wps_etmfw_social_share_facebook"><?php echo esc_html__( 'Facebook', 'event-tickets-manager-for-woocommerce' ); ?></label>
 										</div>
 										<div class="wps_social-checkbox-container">
 											<input type="checkbox" id="wps_etmfw_social_share_twitter" name="wps_etmfw_social_share_twitter" <?php checked( get_option( 'wps_etmfw_social_share_twitter' ), 'on' ); ?>>
-											<label for="wps_etmfw_social_share_twitter"><?php echo esc_html__( 'X', 'event-tickets-manager-for-woocommerce-pro' ); ?></label>
+											<label for="wps_etmfw_social_share_twitter"><?php echo esc_html__( 'X', 'event-tickets-manager-for-woocommerce' ); ?></label>
 										</div>
 										<div class="wps_social-checkbox-container">
 											<input type="checkbox" id="wps_etmfw_social_share_gmail" name="wps_etmfw_social_share_gmail" <?php checked( get_option( 'wps_etmfw_social_share_gmail' ), 'on' ); ?>>
-											<label for="wps_etmfw_social_share_gmail"><?php echo esc_html__( 'Gmail', 'event-tickets-manager-for-woocommerce-pro' ); ?></label>
+											<label for="wps_etmfw_social_share_gmail"><?php echo esc_html__( 'Gmail', 'event-tickets-manager-for-woocommerce' ); ?></label>
 										</div>
 										<div class="wps_social-checkbox-container">
 											<input type="checkbox" id="wps_etmfw_social_share_whatsapp" name="wps_etmfw_social_share_whatsapp" <?php checked( get_option( 'wps_etmfw_social_share_whatsapp' ), 'on' ); ?>>
-											<label for="wps_etmfw_social_share_whatsapp"><?php echo esc_html__( 'Whatsapp', 'event-tickets-manager-for-woocommerce-pro' ); ?></label>
+											<label for="wps_etmfw_social_share_whatsapp"><?php echo esc_html__( 'Whatsapp', 'event-tickets-manager-for-woocommerce' ); ?></label>
 										</div>
 										<div class="wps_social-checkbox-container">
 											<input type="checkbox" id="wps_etmfw_social_share_pinterest" name="wps_etmfw_social_share_pinterest" <?php checked( get_option( 'wps_etmfw_social_share_pinterest' ), 'on' ); ?>>
-											<label for="wps_etmfw_social_share_pinterest"><?php echo esc_html__( 'Pinterest', 'event-tickets-manager-for-woocommerce-pro' ); ?></label>
+											<label for="wps_etmfw_social_share_pinterest"><?php echo esc_html__( 'Pinterest', 'event-tickets-manager-for-woocommerce' ); ?></label>
 										</div>
 									</div>
 								</div>

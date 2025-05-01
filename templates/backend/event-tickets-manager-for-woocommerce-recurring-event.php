@@ -37,7 +37,7 @@ if ( is_array( $wps_etmfw_product_array ) && ! empty( $wps_etmfw_product_array )
 		$wps_event_start_date = ! empty( $wps_etmfw_product_array['event_start_date_time'] ) ? strtotime( $wps_etmfw_product_array['event_start_date_time'] ) : '';
 		$wps_event_end_date = ! empty( $wps_etmfw_product_array['event_end_date_time'] ) ? strtotime( $wps_etmfw_product_array['event_end_date_time'] ) : '';
 
-		if ( ! empty( $wps_event_start_dat ) && ! empty( $wps_event_end_date ) ) {
+		if ( ! empty( $wps_event_start_date ) && ! empty( $wps_event_end_date ) ) {
 			$wps_event_set = true;
 		}
 	}
@@ -47,10 +47,12 @@ if ( is_array( $wps_etmfw_product_array ) && ! empty( $wps_etmfw_product_array )
 			<div class="wps_main_header">
 				<h2><strong><?php esc_html_e( 'Recurring Event Settings', 'event-tickets-manager-for-woocommerce' ); ?></strong></h2>
 			</div>
-			<?php if ( ! $wps_event_set ) { ?>
+			<?php if ( $wps_event_set ) { ?>
 				<div class="wps_apply_recurrence_message wps_main_recurring_common">
 					<i> * <?php esc_html_e( 'Any Changes in date or venue after creating the recurring event will not be reflect in already create recurring event , you have to delete those event and create new recurring events.', 'event-tickets-manager-for-woocommerce' ); ?> </i>
-					<i> * <?php esc_html_e( 'Current Recurrence Pattern: Every', 'event-tickets-manager-for-woocommerce' ); ?> <?php echo esc_attr( $wps_event_recurring_value ); ?> <?php echo esc_attr( str_replace( 'i', 'y', rtrim( $wps_event_recurring_type, 'ly' ) ) ); ?> <?php esc_html_e( 'within', 'event-tickets-manager-for-woocommerce' ); ?> <?php echo esc_attr( gmdate( 'F j, Y g:i A', $wps_event_start_date ) ); ?>, <?php esc_html_e( 'to', 'event-tickets-manager-for-woocommerce' ); ?> <?php echo esc_attr( gmdate( 'F j, Y g:i A', $wps_event_end_date ) ); ?> .</i><?php } ?>
+					<i> * <?php esc_html_e( 'Current Recurrence Pattern: Every', 'event-tickets-manager-for-woocommerce' ); ?> <?php echo esc_attr( $wps_event_recurring_value ); ?> <?php echo esc_attr( str_replace( 'i', 'y', rtrim( $wps_event_recurring_type, 'ly' ) ) ); ?> <?php esc_html_e( 'within', 'event-tickets-manager-for-woocommerce' ); ?> <?php echo esc_attr( gmdate( 'F j, Y g:i A', $wps_event_start_date ) ); ?>, <?php esc_html_e( 'to', 'event-tickets-manager-for-woocommerce' ); ?> <?php echo esc_attr( gmdate( 'F j, Y g:i A', $wps_event_end_date ) ); ?> .</i>
+					<?php 
+				} ?>
 				</div>
 				<div class="wps_recurring_description_section wps_main_recurring_common"><i>* <?php esc_html_e( 'Within the specified date range, an one-day event will be generated for each recurring date of the recurring event.', 'event-tickets-manager-for-woocommerce' ); ?></i></div>
 
@@ -97,7 +99,8 @@ if ( is_array( $wps_etmfw_product_array ) && ! empty( $wps_etmfw_product_array )
 						<button id="wps_etmfw_delete_create_recurring_id" class="button" type="submit" value=<?php echo esc_attr( $product_id ); ?>><?php esc_html_e( 'Delete All Attached Recurring Event', 'event-tickets-manager-for-woocommerce' ); ?></button>
 						<span><img id ='wps_recurring_loader' class="wps_recurring_loader_main" src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/loading.gif' ); ?>" alt="Girl in a jacket" width="" height="30px"></span>
 					</div>
-				<?php } ?>
+				<?php }
+			?>
 		</div>
 		<?php
 	}

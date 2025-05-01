@@ -121,17 +121,24 @@
 	
 		});
 
-		jQuery('#wps-etmfw-copy-event-url').on('click', function() {
-			var productUrl = etmfw_public_param.wps_event_product_url;
-            if (productUrl) {
-                navigator.clipboard.writeText(productUrl).then(function() {
-                    jQuery("#myTooltip").text("Copied to clipboard");
-                    setTimeout(function() {
-                        jQuery("#myTooltip").text("Copy to Clipboard");
-                    }, 3000);
-                });
-            }
-        });
+		window.wpsEtmfwCopyToClipboard = function(text) {
+			navigator.clipboard.writeText(text).then(function () {
+				alert('Copied to clipboard!');
+			});
+		};
+
+		jQuery(document).on('click','.wps-etmfw_mdisant-trans',function(){
+			jQuery('.wps-etmfw_mdisan-item').removeClass('wps-etmfw_mdisan-item--active');
+			jQuery(this).addClass('wps-etmfw_mdisan-item--active');
+			jQuery('.wps-etmfw_mdisa-item').removeClass('wps-etmfw_mdisa-item--active');
+			jQuery('.wps-etmfw_mdisa-trans').addClass('wps-etmfw_mdisa-item--active');
+		});
+		jQuery(document).on('click','.wps-etmfw_mdisant-events',function(){
+			jQuery('.wps-etmfw_mdisan-item').removeClass('wps-etmfw_mdisan-item--active');
+			jQuery(this).addClass('wps-etmfw_mdisan-item--active');
+			jQuery('.wps-etmfw_mdisa-item').removeClass('wps-etmfw_mdisa-item--active');
+			jQuery('.wps-etmfw_mdisa-events').addClass('wps-etmfw_mdisa-item--active');
+		});
 	 });
 
 	})( jQuery );
@@ -258,34 +265,45 @@ jQuery(document).ready(function(){
 
 			}
 
+			var is_purchaseLimit = etmfw_public_param.wps_event_purchase_limit;
+			var purchaseLimit = etmfw_public_param.wps_etmfw_set_limit_qty;
 
-			jQuery('#wps_add_more_people').on('click', function(){
-				const randomInteger = Math.floor(Math.random() * 100) + 1;
+			jQuery('#wps_add_more_people').on('click', function () {
+				var currentParticipants = countChildDivs();
 
-				var i = countChildDivs();
-				wps_add_more_form(i);
+				if (is_purchaseLimit) {
+					if (currentParticipants < purchaseLimit) {
+						wps_add_more_form(currentParticipants);
+						document.querySelector('.qty').value = countChildDivs();
+					}
 
-				console.log(countChildDivs());
-				const inputElement = document.querySelector('.qty');
-				inputElement.value = countChildDivs();
+					if (countChildDivs() >= purchaseLimit) {
+						jQuery('#wps_add_more_people').prop('disabled', true).addClass('disabled');
+					}
+				} else {
+					wps_add_more_form(currentParticipants);
+					document.querySelector('.qty').value = countChildDivs();
+				}
+
 				document.querySelector('.single_add_to_cart_button').style.opacity = '1';
 				document.querySelector('.single_add_to_cart_button').style.cursor = 'pointer';
 				document.querySelector('.single_add_to_cart_button').style.display = 'block';
 
 			});
 
-
-			jQuery(document).on('click','.wps_etmfw_div_close', function(){
-				jQuery(this).parent().remove()
-				const inputElement = document.querySelector('.qty');
+			jQuery(document).on('click', '.wps_etmfw_div_close', function () {
+				jQuery(this).parent().remove();
 				var qty_no = countChildDivs();
-				inputElement.value = qty_no --;
+				document.querySelector('.qty').value = qty_no;
 
-				if((inputElement.value) <= 0){
-				document.querySelector('.single_add_to_cart_button').style.opacity = '0.5';
+				if (is_purchaseLimit && qty_no < purchaseLimit) {
+					jQuery('#wps_add_more_people').prop('disabled', false).removeClass('disabled');
+				}
+
+				if (qty_no <= 0) {
+					document.querySelector('.single_add_to_cart_button').style.opacity = '0.5';
 					document.querySelector('.single_add_to_cart_button').style.cursor = 'none';
 					document.querySelector('.single_add_to_cart_button').style.display = 'none';
-
 				}
 			});
 
@@ -304,6 +322,8 @@ jQuery(document).ready(function(){
 				return childDivs.length;
 			}
 
+			var social_share_event = jQuery( '#wps_etmfw_title_and_social_share_icon').detach();
+			jQuery('.product-type-event_ticket_manager .woocommerce-product-gallery').append(social_share_event);
 		}
 	}
 });

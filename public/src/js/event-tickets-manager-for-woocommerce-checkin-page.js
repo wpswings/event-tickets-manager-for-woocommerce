@@ -42,6 +42,9 @@
 				if (for_event == null || for_event == "" || ticket_num == null || ticket_num == "" || user_email == null || user_email == "" ) {
 					$("#wps_etmfw_error_message").html(etmfw_checkin_param.wps_etmfw_require_text);
 					$("#wps_etmfw_error_message").addClass("wps_check_in_error");
+					setTimeout( function() {
+						$("#wps_etmfw_checkin_loader").hide();
+					}, 500 );
 					return false;
 				}
 				var pat = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(user_email);
@@ -49,6 +52,10 @@
 					$('#wps_etmfw_error_message').html(etmfw_checkin_param.wps_etmfw_email_text);
 					$('#wps_etmfw_chckin_email').focus();
 					$('#wps_etmfw_chckin_email').css("border", "2px solid red");
+					$("#wps_etmfw_error_message").addClass("wps_check_in_error");
+					setTimeout( function() {
+						$("#wps_etmfw_checkin_loader").hide();
+					}, 500 );
 					return;
 				 }
 				 else {

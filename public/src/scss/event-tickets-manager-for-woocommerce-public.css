@@ -8,54 +8,6 @@
   float: none !important;
 }
 
-.wps_etmfw_events_section,
-.wps_etmfw_input_ticket_section {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.wps_etmfw_events_section label,
-.wps_etmfw_input_ticket_section label {
-  flex: 0 0 25%;
-  max-width: 25%;
-}
-
-select#wps_etmfw_event_selected {
-  flex: 0 0 75%;
-  max-width: 75%;
-}
-
-input#wps_etmfw_imput_ticket {
-  flex: 0 0 75%;
-  max-width: 75%;
-  margin: 0;
-}
-
-input#wps_etmfw_chckin_email {
-  flex: 0 0 75%;
-  max-width: 75%;
-  margin: 0;
-}
-
-.wps_etmfw--loader-btn-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.wps_etmfw_checkin_button_section {
-  flex: 0 0 15%;
-  max-width: 115px;
-}
-
-div#wps_etmfw_checkin_loader img {
-  width: 25px;
-  height: auto;
-  margin-left: 50px;
-}
-
 div#wps_etmfw_edit_info_loader img {
   width: 25px;
   height: auto;
@@ -75,26 +27,6 @@ div#wps_etmfw_edit_info_loader img {
   width: 60%;
   height: 350px;
   margin-bottom: 10px;
-}
-
-.wps_check_in_error {
-  /* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
-  background: #e2401c;
-  padding: 16px 20px;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: bold;
-  margin: 20px 0;
-}
-
-.wps_check_in_success {
-  /* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
-  background: #1a6f1a;
-  padding: 16px 20px;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: bold;
-  margin: 20px 0;
 }
 
 .wps_etmfw_addition_info_section input {
@@ -306,12 +238,6 @@ div#wps_etmfw_event_map {
   content: "\f274";
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
 img.wps_resend_image {
   background: #70b3b5;
   width: 45px;
@@ -321,28 +247,6 @@ img.wps_resend_image {
   font-size: 24px;
   font-weight: 600;
   margin: 0 0 15px;
-}
-
-#wps_etmfw_error_message {
-  font-size: 12px;
-  color: white;
-  margin: 10px 0;
-}
-
-.wps_etmfw_events_section,
-.wps_etmfw_input_ticket_section {
-  margin: 0 0 15px;
-  flex-wrap: nowrap;
-}
-
-.wps_etmfw_events_section label,
-.wps_etmfw_input_ticket_section label {
-  font-size: 18px;
-}
-
-#wps_etmfw_event_selected {
-  min-height: 40px;
-  margin: 0;
 }
 
 #wps_select_user {
@@ -355,39 +259,9 @@ img.wps_resend_image {
   padding: 10px;
 }
 
-input#wps_etmfw_chckin_email,
-input#wps_etmfw_imput_ticket {
-  min-height: 40px;
-}
-
 @media screen and (max-width: 580px) {
 
-  .wps_etmfw_events_section,
-  .wps_etmfw_input_ticket_section {
-    align-items: flex-start;
-    flex-direction: column;
-    margin: 0 0 15px;
-  }
 
-  .wps_etmfw_events_section label,
-  .wps_etmfw_input_ticket_section label {
-    flex: 1;
-    max-width: 100%;
-    font-size: 18px;
-  }
-
-  select#wps_etmfw_event_selected {
-    flex: 1;
-    max-width: 100%;
-    width: 100%;
-  }
-
-  input#wps_etmfw_chckin_email,
-  input#wps_etmfw_imput_ticket {
-    width: 100%;
-    flex: 1;
-    max-width: 100%;
-  }
 }
 
 /* Event Listing using shortcode start */
@@ -911,9 +785,483 @@ input#wps_etmfw_imput_ticket {
 }
 /* Form layout fixes end */
 
-/* copy to clipboard url */
-button#wps-etmfw-copy-event-url {
-  display: inline-flex;
-  gap: 10px;
-  align-items: center;
+/* My account Redesign */
+
+:root {
+  --wps-etmfw-primary: #0095eb;
 }
+
+#wps-etmfw_modern-dashboard {
+  container-name: eventDashboard;
+    container-type: inline-size;
+  padding: 0 20px;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdis-head h2 {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+  margin: 0 0 5px;
+  color: #000;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdis-head p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  max-width: 450px;
+  margin: 0 auto 20px;
+  color: #696969;
+}
+
+.wps-etmfw_mdisa-item.wps-etmfw_mdisa-item--active {
+  opacity: 1;
+  height: auto;
+  visibility: visible;
+}
+
+.wps-etmfw_mdisa-item {
+  opacity: 0;
+  height: 0;
+  visibility: hidden;
+  transition: opacity 0.3s linear;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdis-nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 0 0 40px;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisan-item {
+  display: inline-flex;
+  background: transparent;
+  color: var(--wps-etmfw-primary);
+  padding: 15px 24px;
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border: 1px solid var(--wps-etmfw-primary);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  flex: 1 0 40%;
+  max-width: 200px;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisan-item.wps-etmfw_mdisan-item--active {
+  background: var(--wps-etmfw-primary);
+  color: #fff;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisan-item path {
+  stroke: var(--wps-etmfw-primary);
+}
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisan-item.wps-etmfw_mdisan-item--active path {
+  stroke: #fff;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisan-item:after {
+  position: absolute;
+  content: '';
+  width: 15px;
+  top: -40px;
+  bottom: -40px;
+  transform: translate(-50%,0) rotate(45deg);
+  left: 50%;
+  background: #fff;
+  opacity: 0.08;
+  transition: 0.2s all linear;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisan-item:hover::after {
+  background: var(--wps-etmfw-primary);
+  left: 45%;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-item h3 {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0 0 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-item h3 span {
+  font-size: 14px;
+  color: #3f3f3f;
+  display: inline-block;
+  font-weight: 400;
+}
+
+#wps-etmfw_modern-dashboard #wps_etmfw_error_message {
+  border-radius: 5px;
+  font-weight: 400;
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.25;
+  margin: 15px 0;
+}
+
+#wps-etmfw_modern-dashboard #wps_etmfw_error_message.wps_check_in_error {
+  /* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
+  background:#e2401c11;
+  padding: 8px 12px;
+  color: #e2401c;
+}
+
+#wps-etmfw_modern-dashboard #wps_etmfw_error_message.wps_check_in_success {
+  /* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
+  background:#1a6f1a11;
+  padding: 8px 12px;
+  color: #1a6f1a;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 15px;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div select,#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div input[type=text],#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div input[type=email] {
+  min-height: 44px;
+  padding: 10px;
+  width: 100%;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: none;
+  background: transparent;
+  font-size: 14px;
+  line-height: 1.25;
+  font-weight: 400;
+  height: auto;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
+  margin: 0;
+  line-height: 1.25;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div select:focus, #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div input[type=text]:focus, #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div input[type=email]:focus {
+  outline: none;
+  border-color: var(--wps-etmfw-primary);
+  background: transparent!important;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form #wps_etmfwp_event_transfer_button:focus {
+  outline: none;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form #wps_etmfwp_event_transfer_button {
+  border-radius: 5px;
+  background: var(--wps-etmfw-primary);
+  color: #fff;
+  flex: 1;
+  min-height: 44px;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+  border: 1px solid;
+  margin: 0;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form .wps_etmfw_checkin_button_section {
+  display: flex;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form .wps_etmfw--loader-btn-wrapper {
+  position: relative;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form #wps_etmfw_checkin_loader {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  filter: invert(1);
+  line-height: 0;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-events table {
+  border: none;
+  margin: 0 0 15px;
+  border-collapse: collapse;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-events table thead tr th {
+  background: var(--wps-etmfw-primary);
+  color: #fff;
+  text-align: left;
+  border: none;
+  line-height: 1.25;
+  padding: 10px;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-events table thead tr th:nth-of-type(1) {
+  border-radius: 5px 0 0 5px;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-events table thead tr th:last-of-type {
+  border-radius: 0 5px 5px 0;
+  min-width: 120px;
+  text-align: center;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-events table tr {
+  border: none;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-events table tbody tr td {
+  border: none;
+  color: #000;
+  padding: 10px;
+  background: transparent;
+  text-align: left;
+  line-height: 1.25;
+  vertical-align: top;
+  font-size: 14px;
+  box-shadow: none;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-events table tbody tr td:nth-of-type(1) {
+  text-align: left;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-events table tbody tr:nth-of-type(even) {
+  background: #f5f5f5;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-events table tbody tr td:last-of-type {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-events table tbody tr td:last-of-type::after,#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-events table tbody tr td:last-of-type::before {
+  display: none;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-events table tbody tr td a img {
+  max-width: 20px;
+  vertical-align: middle;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-events table tbody tr td a {
+  color: var(--wps-etmfw-primary);
+  text-decoration: underline;
+  margin: 0;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-events table tbody tr td .status.pending:after {
+  background: orange;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-events table tbody tr td .status.complete:after {
+  background: green;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-events table tbody tr td .status {
+  position: relative;
+  display: inline-block;
+  padding-left: 15px;
+  text-transform: capitalize;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-events table tbody tr td .status:after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background: #888;
+  position: absolute;
+  left: 0;
+  top: 4px;
+  border-radius: 50px;
+}
+
+#wps-etmfw_modern-dashboard .wps-etmfw_mdisa-events .wps-etmfw_mdisai-cont {
+  max-height: 610px;
+  overflow: auto;
+}
+
+.theme-twentytwentyfive #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div input[type=text], .theme-twentytwentyfive #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div input[type=email], .theme-twentytwentyfour #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div input[type=text], .theme-twentytwentyfour #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div input[type=email], .theme-twentytwentythree #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div input[type=text], .theme-twentytwentythree #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div input[type=email], .theme-twentytwentytwo #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div input[type=text], .theme-twentytwentytwo #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form>div input[type=email] {
+  width: calc(100% - 22px);
+  min-height: 21px;
+}
+
+@container eventDashboard (width < 400px) {
+  #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-trans form{
+    grid-template-columns: 1fr;
+  }
+
+  #wps-etmfw_modern-dashboard .wps-etmfw_mdisan-item {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  #wps-etmfw_modern-dashboard .wps-etmfw_mdisa-events table tr {
+    border-top: 1px solid #ccc;
+  }
+}
+
+/* My Account Redesign */
+
+/* copy to clipboard url */
+
+.wps_etmfw_social_share_wrapper button img {
+  width: 24px!important;
+  height: 24px!important;
+}
+
+.single .product{
+  position: relative;
+}
+
+#wps_etmfw_title_and_social_share_icon {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  z-index: 9;
+}
+
+.wp-theme-flatsome #wps_etmfw_title_and_social_share_icon {
+  left: 25px;
+}
+
+.wps-etmfw-share-btn,.wps-etmfw-copy-event-url {
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 34px;
+  height: 34px;
+  background: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.wps-etmfw-share-btn:focus,.wps-etmfw-copy-event-url:focus {
+  outline: none;
+}
+
+.wps-etmfw-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.wps_etmfw_social_share_wrapper {
+  margin: 0;
+  position: relative !important;
+  text-align: right;
+  flex: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* checkin start */
+
+.wps_etmfw_checkin_wrapper .wps_etmfw_events_section,
+.wps_etmfw_checkin_wrapper .wps_etmfw_input_ticket_section {
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+   margin-bottom: 10px;
+ }
+ 
+ .wps_etmfw_checkin_wrapper .wps_etmfw_events_section label,
+ .wps_etmfw_checkin_wrapper .wps_etmfw_input_ticket_section label {
+   flex: 0 0 25%;
+   max-width: 25%;
+ }
+ 
+ .wps_etmfw_checkin_wrapper select#wps_etmfw_event_selected {
+   flex: 0 0 75%;
+   max-width: 75%;
+ }
+ 
+ .wps_etmfw_checkin_wrapper input#wps_etmfw_imput_ticket {
+   flex: 0 0 75%;
+   max-width: 75%;
+   margin: 0;
+ }
+ 
+ .wps_etmfw_checkin_wrapper input#wps_etmfw_chckin_email {
+   flex: 0 0 75%;
+   max-width: 75%;
+   margin: 0;
+ }
+ 
+ .wps_etmfw_checkin_wrapper .wps_etmfw--loader-btn-wrapper {
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+ }
+ 
+ .wps_etmfw_checkin_wrapper .wps_etmfw_checkin_button_section {
+   flex: 0 0 15%;
+   max-width: 115px;
+ }
+ 
+ .wps_etmfw_checkin_wrapper div#wps_etmfw_checkin_loader img {
+   width: 25px;
+   height: auto;
+   margin-left: 20px;
+ }
+ 
+ .wps_etmfw_checkin_wrapper .wps_check_in_error {
+   /* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
+   background: #e2401c;
+   padding: 16px 20px;
+   color: #ffffff;
+   font-size: 16px;
+   font-weight: bold;
+   margin: 20px 0;
+ }
+ 
+ .wps_etmfw_checkin_wrapper .wps_check_in_success {
+   /* this class should be added only when the message is displayed otherwise the bs color is visible everytym*/
+   background: #1a6f1a;
+   padding: 16px 20px;
+   color: #ffffff;
+   font-size: 16px;
+   font-weight: bold;
+   margin: 20px 0;
+ }
+
+ .wps_etmfw_checkin_wrapper #wps_etmfw_event_selected {
+  min-height: 40px;
+  margin: 0;
+}
+ /* Checkin end */

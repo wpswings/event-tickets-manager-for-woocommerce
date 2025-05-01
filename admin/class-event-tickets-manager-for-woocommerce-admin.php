@@ -339,7 +339,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			array(
 				'title' => __( 'Allow Ticket Transfer', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'radio-switch',
-				'description'  => __( 'Enable this option  to transfer the tickets to another.', 'event-tickets-manager-for-woocommerce' ),
+				'description'  => __( 'Enable this option  to transfer the tickets to another on my account section - my event tickets tab.', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'wps_wet_enable_ticket_sharing',
 				'value' => get_option( 'wps_wet_enable_ticket_sharing' ),
 				'class' => 'etmfw-radio-switch-class',
@@ -347,6 +347,26 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
 					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
 				),
+			),
+
+			array(
+				'title' => __( 'Events Dashboard Content', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'text',
+				'description'  => __( 'This content will display in the my account section - My Event Tickets Tab.', 'event-tickets-manager-for-woocommerce' ),
+				'id'    => 'wps_etmfw_event_dashboard',
+				'value' => get_option( 'wps_etmfw_event_dashboard', 'View and transfer events tickets seamlessly for better organization and efficient event handling.' ),
+				'class' => 'etmfw-text-class',
+				'placeholder' => __( 'Events Dashboard Content', 'event-tickets-manager-for-woocommerce' ),
+			),
+
+			array(
+				'title' => __( 'Event Dashboard Colour', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'text',
+				'description'  => __( 'Select the colour code( e.g. #0000FF ).', 'event-tickets-manager-for-woocommerce' ),
+				'id'    => 'wps_etmfw_event_dashboard_color',
+				'value' => get_option( 'wps_etmfw_event_dashboard_color', '#0095eb' ),
+				'class' => 'wps_etmfw_colorpicker',
+				'placeholder' => __( 'Enter colour/colour code', 'event-tickets-manager-for-woocommerce' ),
 			),
 
 			array(
