@@ -699,7 +699,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			array(
 				'title' => __( 'Event Ticket Email Subject', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'text',
-				'description'  => __( 'Email Subject to notify receiver about the event ticket received. Use [SITENAME] shortcode as the name of the site.', 'event-tickets-manager-for-woocommerce' ),
+				'description'  => __( 'Email Subject to notify receiver about the event ticket received. Use [SITENAME] and [PRODUCTNAME] shortcode as the name of the site and product name respectively.', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'wps_etmfw_email_subject',
 				'value' => get_option( 'wps_etmfw_email_subject', '' ),
 				'class' => 'etmfw-text-class',

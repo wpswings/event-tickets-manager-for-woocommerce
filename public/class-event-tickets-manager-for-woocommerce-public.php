@@ -655,6 +655,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			}
 			$attachments[] = $generated_ticket_pdf;
 		}
+		$product_name = $wps_etmfw_mail_template_data['product_name'];
+		$wps_etmfw_email_subject = str_replace( '[PRODUCTNAME]', $product_name, $wps_etmfw_email_subject );
 		$wps_etmfw_email_subject = str_replace( '[SITENAME]', get_bloginfo(), $wps_etmfw_email_subject );
 		$email_status = $mailer_obj->trigger( $user_email, $wps_etmfw_email_discription, $wps_etmfw_email_subject, $order, $attachments );
 		do_action( 'wps_etmfw_send_sms_ticket', $wps_etmfw_mail_template_data );
@@ -683,6 +685,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		if ( '' === $wps_etmfw_email_subject ) {
 			$wps_etmfw_email_subject = 'Your ticket is here.';
 		}
+		$product_name = $wps_etmfw_mail_template_data['product_name'];
+		$wps_etmfw_email_subject = str_replace( '[PRODUCTNAME]', $product_name, $wps_etmfw_email_subject );
 		$wps_etmfw_email_subject = str_replace( '[SITENAME]', get_bloginfo(), $wps_etmfw_email_subject );
 		$email_status = $mailer_obj->trigger( $user_email, $wps_etmfw_email_discription, $wps_etmfw_email_subject, $order, $attachments );
 		do_action( 'wps_etmfw_send_sms_ticket', $wps_etmfw_mail_template_data );
