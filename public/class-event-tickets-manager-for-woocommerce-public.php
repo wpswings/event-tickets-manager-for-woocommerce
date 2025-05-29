@@ -484,7 +484,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						}
 					}
 
-					$is_waiting = isset( $wps_etmfw_mail_template_data['Waiting List Backorder Check'] ) ? $wps_etmfw_mail_template_data['Waiting List Backorder Check'] : '';
+					$ticket_status = isset( $wps_etmfw_mail_template_data['Ticket Status'] ) ? $wps_etmfw_mail_template_data['Ticket Status'] : '';
 					$waiting_list_count = (int) ( get_post_meta( $product_id, 'wps_etmfw_waiting_list_count', true ) ) ?? 0;
 
 					if ( 1 < $item_quantity ) {
@@ -518,7 +518,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								update_post_meta( $order_id, "event_ticket#$order_id#$item_id", $ticket_number );
 							}
 
-							if ( 'yes' === $is_waiting ) {
+							if ( 'Waiting' === $ticket_status ) {
 								update_post_meta( $product_id, 'wps_etmfw_waiting_list_count', $waiting_list_count + $item_quantity );
 							}
 						}
@@ -534,7 +534,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 									$generated_tickets[] = array(
 										'ticket' => $value,
 										'status' => 'pending',
-										'is_waiting' => $is_waiting,
+										'ticket_status' => $ticket_status,
 										'order_id' => $order_id,
 										'item_id' => $item_id,
 										'email'   => $billing_email,
@@ -550,7 +550,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 									$generated_tickets[] = array(
 										'ticket' => $value,
 										'status' => 'pending',
-										'is_waiting' => $is_waiting,
+										'ticket_status' => $ticket_status,
 										'order_id' => $order_id,
 										'item_id' => $item_id,
 										'email'   => $billing_email,
@@ -595,7 +595,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 									$generated_tickets[] = array(
 										'ticket' => $ticket_number,
 										'status' => 'pending',
-										'is_waiting' => $is_waiting,
+										'ticket_status' => $ticket_status,
 										'order_id' => $order_id,
 										'item_id' => $item_id,
 										'email'   => $billing_email,
@@ -607,7 +607,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 									$generated_tickets[] = array(
 										'ticket' => $ticket_number,
 										'status' => 'pending',
-										'is_waiting' => $is_waiting,
+										'ticket_status' => $ticket_status,
 										'order_id' => $order_id,
 										'item_id' => $item_id,
 										'email'   => $billing_email,
@@ -618,7 +618,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								}
 							}
 
-							if ( 'yes' === $is_waiting ) {
+							if ( 'Waiting' === $ticket_status ) {
 								update_post_meta( $product_id, 'wps_etmfw_waiting_list_count', $waiting_list_count + 1 );
 							}
 						}
@@ -1340,7 +1340,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			foreach ( $generated_tickets as $key => $value ) {
 				if ( $ticket_num == $value['ticket'] ) {
 					if ( $user_email === $value['email'] ) {
-						if ( ! isset( $value['is_waiting'] ) || 'yes' !== $value['is_waiting'] ) {
+						if ( isset( $value['ticket_status'] ) && 'Cancelled' === $value['ticket_status'] ) {
+							$response['message'] = __( 'This ticket has been cancelled.', 'event-tickets-manager-for-woocommerce' );
+						} elseif ( isset( $value['ticket_status'] ) && 'Waiting' === $value['ticket_status'] ) {
+							$response['message'] = __( 'User is in waiting list.', 'event-tickets-manager-for-woocommerce' );
+						} else {
 							if ( 'pending' === $value['status'] ) {
 								$post = get_post( $value['order_id'] );
 								if ( 'trash' !== $post->post_status ) {
@@ -1363,13 +1367,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 										$response['message'] = __( 'Event Expired!', 'event-tickets-manager-for-woocommerce' );
 									}
 								} else {
-									$response['message'] = __( 'Order not exist.', 'event-tickets-manager-for-woocommerce' );
+									$response['message'] = __( 'Order does not exist.', 'event-tickets-manager-for-woocommerce' );
 								}
 							} else {
 								$response['message'] = __( 'User has already checked in for the event.', 'event-tickets-manager-for-woocommerce' );
 							}
-						} else {
-							$response['message'] = __( 'User is in waiting list.', 'event-tickets-manager-for-woocommerce' );
 						}
 					} else {
 						$response['message'] = __( 'Please Enter the correct email.', 'event-tickets-manager-for-woocommerce' );

@@ -2370,4 +2370,47 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		wp_register_script( 'google-embeds-org-block-event', plugins_url( 'src/js/event-tickets-manager-for-woocommerce-org-custom-admin.js', __FILE__ ), array( 'wp-blocks', 'wp-editor', 'wp-element', 'wp-components' ), $this->version, false );
 		register_block_type( 'wpswings/googles-embed-org-event', array( 'editor_script' => 'google-embeds-org-block-event') );
 	}
+
+	/**
+	 * This function is used to modify event data with get prefix.
+	 * 
+	 * @param array $event_data Event data.
+	 * @return array
+	 */
+	public function wps_event_modify_event_data_with_get_prefix($event_data){
+        $fields= [
+            'etmfw_event_price',
+            'event_start_date_time',
+            'event_end_date_time',
+            'wps_etmfw_field_user_type_price_data_baseprice',
+            'etmfw_event_venue',
+            'etmfw_event_venue_lat',
+            'etmfw_event_venue_lng',
+            'etmfw_event_trash_event',
+            'wps_etmfw_dyn_name',
+            'wps_etmfw_dyn_mail',
+            'wps_etmfw_dyn_contact',
+            'wps_etmfw_dyn_date',
+            'wps_etmfw_dyn_address',
+            'etmfw_attendees/organizer_tab_name',
+            'etmfw_display_attendees/organizer',
+            'etmfw_display_organizer',
+            'wps_organizer_multiselect',
+            'wps_event_recurring_type',
+            'wps_event_recurring_value',
+            'wps_limit_user_purchase_event',
+            'etmfw_set_limit_qty',
+            'wps_event_recurring_daily_start_time',
+            'wps_event_recurring_daily_end_time',
+            'wps_etmfw_field_user_type_price_data',
+            'wps_etmfw_field_days_price_data',
+            'wps_etmfw_field_stock_price_data',
+            'wps_etmfw_field_data',
+            'etmfw_display_map',
+            'etmfwp_recurring_event_enable'
+        ];
+        
+        $event_data = apply_filters('wps_etmfw_zoho_crm_custom_event_data_add_fields',$fields);
+        return $event_data;
+    }
 }

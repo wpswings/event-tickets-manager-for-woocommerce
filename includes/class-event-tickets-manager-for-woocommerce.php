@@ -259,6 +259,8 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'wps_etmfw_admin_sub_menu', $etmfw_plugin_admin, 'wps_etmfw_admin_recurring_submenu', 10 );
 		$this->loader->add_action( 'pre_get_posts', $etmfw_plugin_admin, 'wps_exclude_recurring_products_from_product_listing', 10 );
 	
+		// Compatibilty with Zoho CRM.
+		$this->loader->add_filter( 'wps_zoho_crm_custom_event_data', $etmfw_plugin_admin, 'wps_event_modify_event_data_with_get_prefix', 10, 1);
 	}
 
 	/**
