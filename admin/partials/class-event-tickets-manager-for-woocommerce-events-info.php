@@ -271,7 +271,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 									foreach ( $generated_tickets as $key => $value ) {
 										if ( $ticket[ $i ] == $value['ticket'] ) {
 											$checkin_status = $value['status'];
-											$ticket_status  = isset( $value['ticket_status'] ) ? $value['ticket_status'] : __( 'Confirmed', 'event-tickets-manager-for-woocommerce' );
+											$ticket_status  = ! empty( $value['ticket_status'] ) ? $value['ticket_status'] : __( 'Confirmed', 'event-tickets-manager-for-woocommerce' );
 											if ( 'checked_in' === $checkin_status ) :
 												$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/checked.png" width="20" height="20" title="' . esc_html__( 'Checked-In', 'event-tickets-manager-for-woocommerce' ) . '">';
 												else :
@@ -339,7 +339,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 								foreach ( $generated_tickets as $key => $value ) {
 									if ( $ticket == $value['ticket'] ) {
 										$checkin_status = $value['status'];
-										$ticket_status  = isset( $value['ticket_status'] ) ? $value['ticket_status'] : __( 'Confirmed', 'event-tickets-manager-for-woocommerce' );
+										$ticket_status  = ! empty( $value['ticket_status'] ) ? $value['ticket_status'] : __( 'Confirmed', 'event-tickets-manager-for-woocommerce' );
 										if ( 'checked_in' === $checkin_status ) :
 											$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/checked.png" width="20" height="20" title="' . esc_html__( 'Checked-In', 'event-tickets-manager-for-woocommerce' ) . '">';
 											else :
