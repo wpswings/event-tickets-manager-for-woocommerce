@@ -54,6 +54,7 @@ if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
 		</div>
 	</div>
 	<?php
+	do_action( 'wps_etmfw_waiting_list_backorder', $product_id ); 
 	$display_map = isset( $wps_etmfw_product_array['etmfw_display_map'] ) ? $wps_etmfw_product_array['etmfw_display_map'] : 'no';
 	$location_site = get_option( 'wps_etmfw_enabe_location_site', 'off' );
 	$map_api_key = get_option( 'wps_etmfw_google_maps_api_key', '' );

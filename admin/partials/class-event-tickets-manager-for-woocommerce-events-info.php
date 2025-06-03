@@ -47,6 +47,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 			'check_in_status'   => __( 'Check-In Status', 'event-tickets-manager-for-woocommerce' ),
 			'event'             => __( 'Event', 'event-tickets-manager-for-woocommerce' ),
 			'ticket'            => __( 'Ticket', 'event-tickets-manager-for-woocommerce' ),
+			'ticket_status'     => __( 'Ticket Status', 'event-tickets-manager-for-woocommerce' ),
 			'order'             => __( 'Order', 'event-tickets-manager-for-woocommerce' ),
 			'user'              => __( 'User', 'event-tickets-manager-for-woocommerce' ),
 			'venue'             => __( 'Venue', 'event-tickets-manager-for-woocommerce' ),
@@ -76,6 +77,8 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 				return '<b>' . $item[ $column_name ] . '</b>';
 			case 'ticket':
 				return '<b>' . $item[ $column_name ] . '</b>';
+			case 'ticket_status':
+				return '<b>' . $item[ $column_name ] . '</b>';
 			case 'order':
 				return '<b>' . $item[ $column_name ] . '</b>';
 			case 'user':
@@ -87,7 +90,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 			case 'schedule':
 				return '<b>' . $item[ $column_name ] . '</b>';
 			case 'event_subscribe':
-					return '<b>' . $item[ $column_name ] . '</b>';
+				return '<b>' . $item[ $column_name ] . '</b>';
 			case 'action':
 				return '<b>' . $item[ $column_name ] . '</b>';
 			default:
@@ -211,11 +214,12 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 		$order_statuses = array(
 			'wc-completed'  => __( 'Completed', 'event-tickets-manager-for-woocommerce' ),
 			'wc-processing'  => __( 'Processing', 'event-tickets-manager-for-woocommerce' ),
-
+			'wc-cancelled'  => __( 'Cancelled', 'event-tickets-manager-for-woocommerce' ),
+			'wc-refunded'   => __( 'Refunded', 'event-tickets-manager-for-woocommerce' ),
 		);
 
 		$args = array(
-			'status' => array( 'wc-processing', 'wc-completed' ),
+			'status' => array( 'wc-processing', 'wc-completed', 'wc-cancelled', 'wc-refunded' ),
 			'return' => 'ids',
 			'limit' => -1,
 		);
@@ -267,6 +271,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 									foreach ( $generated_tickets as $key => $value ) {
 										if ( $ticket[ $i ] == $value['ticket'] ) {
 											$checkin_status = $value['status'];
+											$ticket_status  = ! empty( $value['ticket_status'] ) ? $value['ticket_status'] : __( 'Confirmed', 'event-tickets-manager-for-woocommerce' );
 											if ( 'checked_in' === $checkin_status ) :
 												$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/checked.png" width="20" height="20" title="' . esc_html__( 'Checked-In', 'event-tickets-manager-for-woocommerce' ) . '">';
 												else :
@@ -303,8 +308,9 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 								$event_attendees_details[] = array(
 									'id'                => $order_id,
 									'check_in_status'   => $checkin_status,
-									'event'            => $item->get_name(),
+									'event'             => $item->get_name(),
 									'ticket'            => $ticket[ $i ],
+									'ticket_status'     => $ticket_status,
 									'order'             => '<a href="' . admin_url( 'post.php?post=' . $order_id . '&action=edit' ) . '">#' . $order_id . '</a>',
 									'user'              => $user_id,
 									'venue'             => $venue,
@@ -333,6 +339,7 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 								foreach ( $generated_tickets as $key => $value ) {
 									if ( $ticket == $value['ticket'] ) {
 										$checkin_status = $value['status'];
+										$ticket_status  = ! empty( $value['ticket_status'] ) ? $value['ticket_status'] : __( 'Confirmed', 'event-tickets-manager-for-woocommerce' );
 										if ( 'checked_in' === $checkin_status ) :
 											$checkin_status = '<img src="' . esc_attr( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . '/admin/src/images/checked.png" width="20" height="20" title="' . esc_html__( 'Checked-In', 'event-tickets-manager-for-woocommerce' ) . '">';
 											else :
@@ -372,8 +379,9 @@ class Event_Tickets_Manager_For_Woocommerce_Events_Info extends WP_List_Table {
 							$event_attendees_details[] = array(
 								'id'                => $order_id,
 								'check_in_status'   => $checkin_status,
-								'event'            => $item->get_name(),
+								'event'             => $item->get_name(),
 								'ticket'            => $ticket,
+								'ticket_status'     => $ticket_status,
 								'order'             => '<a href="' . admin_url( 'post.php?post=' . $order_id . '&action=edit' ) . '">#' . $order_id . '</a>',
 								'user'              => $user_id,
 								'venue'             => $venue,
