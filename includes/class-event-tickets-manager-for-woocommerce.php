@@ -243,6 +243,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		// add other setting tab.
 		$this->loader->add_filter( 'wps_etmfw_other_settings_array', $etmfw_plugin_admin, 'wps_etmfw_other_settings_page' );
+		$this->loader->add_action( 'wps_etmfw_dashboard_settings_array', $etmfw_plugin_admin, 'wps_etmfw_save_dashboard_settings' );
 
 		// reminder mail.
 		$this->loader->add_action( 'wps_event_tickets_manager_for_woocommerce_reminder_send', $etmfw_plugin_admin, 'wps_etmfwp_send_email_reminder' );
@@ -477,6 +478,10 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-other-settings'] = array(
 			'title'       => esc_html__( 'Other Settings', 'event-tickets-manager-for-woocommerce' ),
 			'name'        => 'event-tickets-manager-for-woocommerce-other-settings',
+		);
+		$etmfw_default_tabs['event-tickets-manager-for-woocommerce-dashboard-settings'] = array(
+			'title'       => esc_html__( 'Dashboard Settings', 'event-tickets-manager-for-woocommerce' ),
+			'name'        => 'event-tickets-manager-for-woocommerce-dashboard-settings',
 		);
 
 		$etmfw_default_tabs = apply_filters( 'wps_etmfw_etmfw_plugin_standard_admin_settings_tabs', $etmfw_default_tabs );
