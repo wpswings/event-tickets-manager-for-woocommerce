@@ -2965,4 +2965,50 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			<?php
 		}
 	}
+
+	/**
+	 *  This function is used to validate offset start and end days.
+	 *  @param bool   $passed is a boolean value.
+  	 *  @param int    $product_id is the product id.
+  	 *  @param int    $quantity is the quantity of the product.
+	 *  @return bool
+	 */
+	public function wps_validate_offset_start_end( $passed, $product_id, $quantity ) {
+		$product = wc_get_product( $product_id );
+
+		if ( ! $product || ! $product->is_type( 'event_ticket_manager' ) ) {
+			return $passed;
+		}
+
+		$current_date            = current_time( 'Y-m-d' );
+		$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
+		$offset_start_days       = ! empty( $wps_etmfw_product_array['etmfw_booking_offset_start_days'] ) ? $wps_etmfw_product_array['etmfw_booking_offset_start_days']: '';
+		$offset_end_days         = ! empty( $wps_etmfw_product_array['etmfw_booking_offset_end_days'] ) ? $wps_etmfw_product_array['etmfw_booking_offset_end_days']: '';
+		$wps_event_start_date    = ! empty( $wps_etmfw_product_array['event_start_date_time'] ) ? strtotime( $wps_etmfw_product_array['event_start_date_time'] ) : '';
+		$wps_event_end_date      = ! empty( $wps_etmfw_product_array['event_end_date_time'] ) ? strtotime( $wps_etmfw_product_array['event_end_date_time'] ) : '';
+
+		if ( $offset_start_days && $wps_event_start_date ) {
+			$offset_start_timestamp = strtotime( "+{$offset_start_days} days", strtotime( $current_date ) );
+			if ( $offset_start_timestamp > $wps_event_start_date ) {
+				wc_add_notice( sprintf(
+					__( 'You must book this event at least %d day(s) before it starts.', 'event-tickets-manager-for-woocommerce' ),
+					$offset_start_days
+				), 'error' );
+				return false;
+			}
+		}
+
+		if ( $offset_end_days && $wps_event_end_date ) {
+			$offset_end_timestamp = strtotime( "+{$offset_end_days} days", strtotime( $current_date ) );
+			if ( $offset_end_timestamp > $wps_event_end_date ) {
+				wc_add_notice( sprintf(
+					__( 'You must book this event at least %d day(s) before it ends.', 'event-tickets-manager-for-woocommerce' ),
+					$offset_end_days
+				), 'error' );
+				return false;
+			}
+		}
+
+		return $passed;
+	}
 }

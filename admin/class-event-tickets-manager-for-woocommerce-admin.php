@@ -966,6 +966,20 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				)
 			);
 
+			woocommerce_wp_text_input( array(
+				'id'            => 'etmfw_booking_offset_start_days',
+				'wrapper_class' => 'show_if_event_ticket_manager',
+				'label'         => __( 'Booking Offset (before Start Date)', 'event-tickets-manager-for-woocommerce' ),
+				'value'         => isset( $wps_etmfw_product_array['etmfw_booking_offset_start_days'] ) ? $wps_etmfw_product_array['etmfw_booking_offset_start_days'] : '',
+				'description'   => __( 'Users must book at least this many days before the event starts.', 'event-tickets-manager-for-woocommerce' ),
+				'desc_tip'      => true,
+				'type'          => 'number',
+				'custom_attributes' => array(
+					'min'  => '0',
+					'step' => '1',
+				),
+			) );
+
 			woocommerce_wp_text_input(
 				array(
 					'id'            => 'etmfw_end_date_time',
@@ -977,6 +991,20 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					'description' => __( 'Enter the date and time when the event will end.', 'event-tickets-manager-for-woocommerce' ),
 				)
 			);
+
+			woocommerce_wp_text_input( array(
+				'id'            => 'etmfw_booking_offset_end_days',
+				'wrapper_class' => 'show_if_event_ticket_manager',
+				'label'         => __( 'Booking Offset (before End Date)', 'event-tickets-manager-for-woocommerce' ),
+				'value'         => isset( $wps_etmfw_product_array['etmfw_booking_offset_end_days'] ) ? $wps_etmfw_product_array['etmfw_booking_offset_end_days'] : '',
+				'description'   => __( 'Users must book at least this many days before the event ends.', 'event-tickets-manager-for-woocommerce' ),
+				'desc_tip'      => true,
+				'type'          => 'number',
+				'custom_attributes' => array(
+					'min'  => '0',
+					'step' => '1',
+				),
+			) );
 
 			woocommerce_wp_text_input(
 				array(
@@ -1197,6 +1225,8 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					$etmfw_display_map = isset( $_POST['etmfw_display_map'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfw_display_map'] ) ) : 'no';
 					$wps_etmfw_product_array['etmfw_display_map'] = $etmfw_display_map;
 					$wps_etmfw_product_array['etmfwp_recurring_event_enable'] = isset( $_POST['etmfwp_recurring_event_enable'] ) ? sanitize_text_field( wp_unslash( $_POST['etmfwp_recurring_event_enable'] ) ) : 'no';
+					$wps_etmfw_product_array['etmfw_booking_offset_start_days'] = isset( $_POST['etmfw_booking_offset_start_days'] ) ? sanitize_text_field( wp_unslash( absint( $_POST['etmfw_booking_offset_start_days'] ) ) ) : '';
+					$wps_etmfw_product_array['etmfw_booking_offset_end_days'] = isset( $_POST['etmfw_booking_offset_end_days'] ) ? sanitize_text_field( wp_unslash( absint( $_POST['etmfw_booking_offset_end_days'] ) ) ) : '';
 					$wps_etmfw_product_array = apply_filters( 'wps_etmfw_product_pricing', $wps_etmfw_product_array, $_POST );
 					update_post_meta( $product_id, 'wps_etmfw_product_array', $wps_etmfw_product_array );
 
