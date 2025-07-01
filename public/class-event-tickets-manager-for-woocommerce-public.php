@@ -2060,6 +2060,14 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 */
 	public function wps_default_filter_product_search_callback() {
 		check_ajax_referer( 'wps-etmfw-verify-public-nonce', 'wps_nonce' );
+
+		$wps_plugin_list = get_option( 'active_plugins' );
+		$wps_is_pro_active = false;
+		$wps_plugin = 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php';
+		if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
+			$wps_is_pro_active = true;
+		}
+
 		$search_term = isset( $_POST['search_term'] ) ? sanitize_text_field( wp_unslash( $_POST['search_term'] ) ) : '';
 
 		// Get the current page from AJAX request, default to page 1.
@@ -2106,11 +2114,22 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$event_start_date_time = isset( $wps_etmfw_product_array['event_start_date_time'] ) ? $wps_etmfw_product_array['event_start_date_time'] : '';
 				$wps_event_start_date_time = strtotime( $event_start_date_time );
 
+				$waiting_enabled = isset( $wps_etmfw_product_array['etmfw_enable_waiting_list'] ) ? $wps_etmfw_product_array['etmfw_enable_waiting_list'] : 'no';
+				$waiting_limit = (int) isset( $wps_etmfw_product_array['etmfw_waiting_limit'] ) ? $wps_etmfw_product_array['etmfw_waiting_limit'] : 0;
+				$current_waiting_count = (int) get_post_meta($product_id, 'wps_etmfw_waiting_list_count', true);
+				$join_waiting_list = false;
+				if ( $product->managing_stock() && $product->is_on_backorder(1) ) {
+					if ( 'yes' === $waiting_enabled && $current_waiting_count < $waiting_limit ) {
+						$join_waiting_list = true;
+					}
+				}
+
 				$events[] = array(
 					'product' => $product,
 					'start_date' => $wps_event_start_date_time,
 					'image_src' => $wps_product_image_src,
 					'event_data' => $wps_etmfw_product_array,
+					'join_waiting_list' => $join_waiting_list,
 				);
 			}
 
@@ -2131,6 +2150,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$wps_product_image_src = $event['image_src'];
 				$wps_event_start_date_time = $event['start_date'];
 				$wps_etmfw_product_array = $event['event_data'];
+				$join_waiting_list = $event['join_waiting_list'];
 
 				// Format the date.
 				$wps_event_formated_start_date_time = gmdate( 'F j, Y | h:ia', $wps_event_start_date_time );
@@ -2151,9 +2171,22 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 									<img src="' . esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . 'public/src/image/calendar.svg" alt="date" class="date">
 									' . esc_html( $wps_event_formated_start_date_time ) . ' ' . esc_html__( 'Onwards', 'event-tickets-manager-for-woocommerce' ) . '
 								</span>
-							</div>
-							<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>
-						</div>
+							</div>';
+							if ( $join_waiting_list && $wps_is_pro_active ) {
+								$html .= '<div class="wps-etmw_waiting-list-wrap">';
+								$html .= '<div class="wps-etmw_event-wait">' . intval( $current_waiting_count ) . ' ' . esc_html__( 'People are Waiting for this Event', 'event-tickets-manager-for-woocommerce' ) . '</div>';
+
+								$html .= '<div class="wps-etmw_prod-price-btn-wrap">';
+								$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
+								$html .= '<div class="wps-etmw_event-join">' . esc_html__( 'Join Waiting List', 'event-tickets-manager-for-woocommerce' ) . '</div>';
+								$html .= '</div></div>';
+							} else {
+								$html .= '<div class="wps-etmw_prod-price-btn-wrap">';
+								$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
+									$html .= '<div class="wps-etmw_event-btn">' . esc_html__( 'View Event', 'event-tickets-manager-for-woocommerce' ) . '</div>';
+								$html .= '</div>';
+							}
+						$html .= '</div>
 						<div class="wps-etmw_prod-date">
 							<div class="wps-etmw_prod-date-in">
 								<span class="wps-etmw_start-time-day">' . esc_html( substr( $wps_event_formated_start_day, 0, 3 ) ) . '</span>
