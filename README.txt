@@ -5,7 +5,7 @@ Tags: event booking, event calendar, event schedule, event manager, tickets
 Requires at least: 6.1
 Tested up to: 6.8.1
 WC requires at least: 6.1
-WC tested up to: 9.9.4
+WC tested up to: 9.9.5
 Stable tag: 1.4.6
 Requires PHP: 7.4
 License: GNU General Public License v3.0

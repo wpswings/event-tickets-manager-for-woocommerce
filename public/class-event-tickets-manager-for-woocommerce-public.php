@@ -3023,6 +3023,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		if ( $offset_start_days && $wps_event_start_date ) {
 			$offset_start_timestamp = strtotime( "+{$offset_start_days} days", strtotime( $current_date ) );
 			if ( $offset_start_timestamp > $wps_event_start_date ) {
+				// translators: %d is the number of days required before the event starts to allow booking.
 				wc_add_notice( sprintf(
 					__( 'You must book this event at least %d day(s) before it starts.', 'event-tickets-manager-for-woocommerce' ),
 					$offset_start_days
@@ -3034,6 +3035,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		if ( $offset_end_days && $wps_event_end_date ) {
 			$offset_end_timestamp = strtotime( "+{$offset_end_days} days", strtotime( $current_date ) );
 			if ( $offset_end_timestamp > $wps_event_end_date ) {
+				// translators: %d is the number of days required before the event ends to allow booking.
 				wc_add_notice( sprintf(
 					__( 'You must book this event at least %d day(s) before it ends.', 'event-tickets-manager-for-woocommerce' ),
 					$offset_end_days

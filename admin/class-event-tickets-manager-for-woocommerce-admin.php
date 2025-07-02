@@ -2414,6 +2414,12 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
         return $event_data;
     }
 
+	/**
+	 * This function is used to save the dashboard settings.
+	 * 
+	 * @param array $etmfw_settings_dashboard event data.
+	 * @return array
+	 */
 	public function wps_etmfw_save_dashboard_settings( $etmfw_settings_dashboard ) {
 		$etmfw_settings_dashboard = array(
 			array(
