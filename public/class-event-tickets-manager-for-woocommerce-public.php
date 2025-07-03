@@ -409,6 +409,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		if ( 'Event Venue' == $display_key ) {
 			$display_key = __( 'Event Venue', 'event-tickets-manager-for-woocommerce' );
 		}
+		if ( 'Ticket Status' == $display_key ) {
+			$display_key = __( 'Ticket Status', 'event-tickets-manager-for-woocommerce' );
+		}
 		return $display_key;
 	}
 
