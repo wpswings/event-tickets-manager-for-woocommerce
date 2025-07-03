@@ -2180,12 +2180,12 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 								$html .= '<div class="wps-etmw_prod-price-btn-wrap">';
 								$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
-								$html .= '<div class="wps-etmw_event-join">' . esc_html__( 'Join Waiting List', 'event-tickets-manager-for-woocommerce' ) . '</div>';
+								$html .= '<div class="wps-etmw_event-join"><button>' . esc_html__( 'Join Waiting List', 'event-tickets-manager-for-woocommerce' ) . '</button></div>';
 								$html .= '</div></div>';
 							} else {
 								$html .= '<div class="wps-etmw_prod-price-btn-wrap">';
 								$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
-									$html .= '<div class="wps-etmw_event-btn">' . esc_html__( 'View Event', 'event-tickets-manager-for-woocommerce' ) . '</div>';
+								$html .= '<div class="wps-etmw_event-btn"><button>' . esc_html__( 'View Event', 'event-tickets-manager-for-woocommerce' ) . '</button></div>';
 								$html .= '</div>';
 							}
 						$html .= '</div>
