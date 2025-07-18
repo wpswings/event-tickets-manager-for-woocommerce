@@ -2,11 +2,11 @@
 Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: event booking, event calendar, event schedule, event manager, tickets
-Requires at least: 6.1
-Tested up to: 6.8.1
-WC requires at least: 6.1
-WC tested up to: 9.9.5
-Stable tag: 1.4.6
+Requires at least: 6.7
+Tested up to: 6.8.2
+WC requires at least: 6.5
+WC tested up to: 10.0.2
+Stable tag: 1.4.7
 Requires PHP: 7.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
