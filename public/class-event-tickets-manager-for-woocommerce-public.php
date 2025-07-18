@@ -409,6 +409,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		if ( 'Event Venue' == $display_key ) {
 			$display_key = __( 'Event Venue', 'event-tickets-manager-for-woocommerce' );
 		}
+		if ( 'Ticket Status' == $display_key ) {
+			$display_key = __( 'Ticket Status', 'event-tickets-manager-for-woocommerce' );
+		}
 		return $display_key;
 	}
 
@@ -2060,6 +2063,14 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 */
 	public function wps_default_filter_product_search_callback() {
 		check_ajax_referer( 'wps-etmfw-verify-public-nonce', 'wps_nonce' );
+
+		$wps_plugin_list = get_option( 'active_plugins' );
+		$wps_is_pro_active = false;
+		$wps_plugin = 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php';
+		if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
+			$wps_is_pro_active = true;
+		}
+
 		$search_term = isset( $_POST['search_term'] ) ? sanitize_text_field( wp_unslash( $_POST['search_term'] ) ) : '';
 
 		// Get the current page from AJAX request, default to page 1.
@@ -2106,11 +2117,23 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$event_start_date_time = isset( $wps_etmfw_product_array['event_start_date_time'] ) ? $wps_etmfw_product_array['event_start_date_time'] : '';
 				$wps_event_start_date_time = strtotime( $event_start_date_time );
 
+				$waiting_enabled = isset( $wps_etmfw_product_array['etmfw_enable_waiting_list'] ) ? $wps_etmfw_product_array['etmfw_enable_waiting_list'] : 'no';
+				$waiting_limit = (int) isset( $wps_etmfw_product_array['etmfw_waiting_limit'] ) ? $wps_etmfw_product_array['etmfw_waiting_limit'] : 0;
+				$current_waiting_count = (int) get_post_meta($product_id, 'wps_etmfw_waiting_list_count', true);
+				$join_waiting_list = false;
+				if ( $product->managing_stock() && $product->is_on_backorder(1) ) {
+					if ( 'yes' === $waiting_enabled && $current_waiting_count < $waiting_limit ) {
+						$join_waiting_list = true;
+					}
+				}
+
 				$events[] = array(
 					'product' => $product,
 					'start_date' => $wps_event_start_date_time,
 					'image_src' => $wps_product_image_src,
 					'event_data' => $wps_etmfw_product_array,
+					'join_waiting_list' => $join_waiting_list,
+					'current_waiting_count' => $current_waiting_count,
 				);
 			}
 
@@ -2131,6 +2154,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$wps_product_image_src = $event['image_src'];
 				$wps_event_start_date_time = $event['start_date'];
 				$wps_etmfw_product_array = $event['event_data'];
+				$join_waiting_list = $event['join_waiting_list'];
+				$current_waiting_count = $event['current_waiting_count'];
 
 				// Format the date.
 				$wps_event_formated_start_date_time = gmdate( 'F j, Y | h:ia', $wps_event_start_date_time );
@@ -2151,9 +2176,22 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 									<img src="' . esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . 'public/src/image/calendar.svg" alt="date" class="date">
 									' . esc_html( $wps_event_formated_start_date_time ) . ' ' . esc_html__( 'Onwards', 'event-tickets-manager-for-woocommerce' ) . '
 								</span>
-							</div>
-							<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>
-						</div>
+							</div>';
+							if ( $join_waiting_list && $wps_is_pro_active ) {
+								$html .= '<div class="wps-etmw_waiting-list-wrap">';
+								$html .= '<div class="wps-etmw_event-wait">' . intval( $current_waiting_count ) . ' ' . esc_html__( 'People are Waiting for this Event', 'event-tickets-manager-for-woocommerce' ) . '</div>';
+
+								$html .= '<div class="wps-etmw_prod-price-btn-wrap">';
+								$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
+								$html .= '<div class="wps-etmw_event-join"><button>' . esc_html__( 'Join Waiting List', 'event-tickets-manager-for-woocommerce' ) . '</button></div>';
+								$html .= '</div></div>';
+							} else {
+								$html .= '<div class="wps-etmw_prod-price-btn-wrap">';
+								$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
+								$html .= '<div class="wps-etmw_event-btn"><button>' . esc_html__( 'View Event', 'event-tickets-manager-for-woocommerce' ) . '</button></div>';
+								$html .= '</div>';
+							}
+						$html .= '</div>
 						<div class="wps-etmw_prod-date">
 							<div class="wps-etmw_prod-date-in">
 								<span class="wps-etmw_start-time-day">' . esc_html( substr( $wps_event_formated_start_day, 0, 3 ) ) . '</span>
@@ -2964,5 +3002,53 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			</div>
 			<?php
 		}
+	}
+
+	/**
+	 *  This function is used to validate offset start and end days.
+	 *  @param bool   $passed is a boolean value.
+  	 *  @param int    $product_id is the product id.
+  	 *  @param int    $quantity is the quantity of the product.
+	 *  @return bool
+	 */
+	public function wps_validate_offset_start_end( $passed, $product_id, $quantity ) {
+		$product = wc_get_product( $product_id );
+
+		if ( ! $product || ! $product->is_type( 'event_ticket_manager' ) ) {
+			return $passed;
+		}
+
+		$current_date            = current_time( 'Y-m-d' );
+		$wps_etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
+		$offset_start_days       = ! empty( $wps_etmfw_product_array['etmfw_booking_offset_start_days'] ) ? $wps_etmfw_product_array['etmfw_booking_offset_start_days']: '';
+		$offset_end_days         = ! empty( $wps_etmfw_product_array['etmfw_booking_offset_end_days'] ) ? $wps_etmfw_product_array['etmfw_booking_offset_end_days']: '';
+		$wps_event_start_date    = ! empty( $wps_etmfw_product_array['event_start_date_time'] ) ? strtotime( $wps_etmfw_product_array['event_start_date_time'] ) : '';
+		$wps_event_end_date      = ! empty( $wps_etmfw_product_array['event_end_date_time'] ) ? strtotime( $wps_etmfw_product_array['event_end_date_time'] ) : '';
+
+		if ( $offset_start_days && $wps_event_start_date ) {
+			$offset_start_timestamp = strtotime( "+{$offset_start_days} days", strtotime( $current_date ) );
+			if ( $offset_start_timestamp > $wps_event_start_date ) {
+				wc_add_notice( sprintf(
+					// translators: %d is the number of days required before the event starts to allow booking.
+					__( 'You must book this event at least %d day(s) before it starts.', 'event-tickets-manager-for-woocommerce' ),
+					$offset_start_days
+				), 'error' );
+				return false;
+			}
+		}
+
+		if ( $offset_end_days && $wps_event_end_date ) {
+			$offset_end_timestamp = strtotime( "+{$offset_end_days} days", strtotime( $current_date ) );
+			if ( $offset_end_timestamp > $wps_event_end_date ) {
+				wc_add_notice( sprintf(
+					// translators: %d is the number of days required before the event ends to allow booking.
+					__( 'You must book this event at least %d day(s) before it ends.', 'event-tickets-manager-for-woocommerce' ),
+					$offset_end_days
+				), 'error' );
+				return false;
+			}
+		}
+
+		return $passed;
 	}
 }

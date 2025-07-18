@@ -647,6 +647,11 @@ img.wps_resend_image {
 
 }
 
+#wps-search-results.wps_list .wps-etmw_single-event .wps-etmw_event-btn button, #wps-search-results.wps_list .wps-etmw_single-event .wps-etmw_event-join button {
+  padding: 8px 15px;
+  margin: 10px 0 2px 0;
+}
+
 @container card-container (max-width: 992px) {
 
   /* List */
