@@ -2446,7 +2446,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			),
 
 			array(
-				'title' => __( 'Event Dashboard Colour', 'event-tickets-manager-for-woocommerce' ),
+				'title' => __( 'Event Dashboard/Listing Colour', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'text',
 				'description'  => __( 'Select the colour code( e.g. #0000FF ).', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'wps_etmfw_event_dashboard_color',
@@ -2454,6 +2454,16 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'class' => 'wps_etmfw_colorpicker',
 				'placeholder' => __( 'Enter colour/colour code', 'event-tickets-manager-for-woocommerce' ),
 			),
+
+			array(
+				'title' => __( 'Enter External Css', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'textarea',
+				'id'    => 'wps_etmfw_external_css',
+				'value' => get_option( 'wps_etmfw_external_css', '' ),
+				'class' => 'etmfw-text-class',
+				'placeholder' => __( 'Add External Css for the site.', 'event-tickets-manager-for-woocommerce' ),
+			),
+
 		);
 
 		$etmfw_settings_dashboard = apply_filters( 'wps_etmfw_extent_dashboard_settings_array', $etmfw_settings_dashboard );

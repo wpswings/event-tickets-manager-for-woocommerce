@@ -3051,4 +3051,18 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 		return $passed;
 	}
+
+	/**
+	 * This function is used to apply external CSS sitewide.
+	 *
+	 * @since 1.0.0
+	 * @name wps_etmfw_apply_external_css_sitewide
+	 */
+	public function wps_etmfw_apply_external_css_sitewide() {
+		$external_css = get_option( 'wps_etmfw_external_css', '' );
+
+		if ( ! empty( $external_css ) ) {
+			echo '<style type="text/css">' . esc_html( $external_css ) . '</style>';
+		}
+	}
 }

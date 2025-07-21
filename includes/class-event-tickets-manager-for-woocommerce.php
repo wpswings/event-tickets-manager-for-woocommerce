@@ -358,6 +358,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_action( 'woocommerce_before_single_product_summary', $etmfw_plugin_public, 'wps_etmfwp_show_social_share_link', 5 );
 
 		$this->loader->add_action( 'woocommerce_add_to_cart_validation', $etmfw_plugin_public, 'wps_validate_offset_start_end', 10, 3 );
+		$this->loader->add_action( 'wp_head', $etmfw_plugin_public, 'wps_etmfw_apply_external_css_sitewide', 10, 1 );
 	}
 	}
 
