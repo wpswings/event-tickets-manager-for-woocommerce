@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div class="wps_etmfw_table_wrapper wps_etmfw_overview-wrapper">
 	<div class="wps_etmfw_overview_banner-img">
-		<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/banner-img.jpg' ); ?>">
+		<img src="<?php echo esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/banner-img.jpeg' ); ?>">
 	</div>
 	<div class="wps_etmfw_overview_content">
 		<h4 class="wps_etmfw_overview_heading"><?php esc_html_e( 'What is an Event Tickets Manager For WooCommerce?', 'event-tickets-manager-for-woocommerce' ); ?></h4>

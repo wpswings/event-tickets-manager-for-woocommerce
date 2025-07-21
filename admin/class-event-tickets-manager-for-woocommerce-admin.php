@@ -1780,7 +1780,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			update_option( 'wps_wgm_notify_new_banner_image', $banner_image );
 			update_option( 'wps_wgm_notify_new_banner_url', $banner_url );
 			if ( 'regular' == $banner_type ) {
-				update_option( 'wps_wgm_notify_hide_baneer_notification', '' );
+				update_option( 'wps_wgm_notify_hide_baneer_notification', 0 );
 			}
 		}
 	}
