@@ -2127,6 +2127,17 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					}
 				}
 
+				$wps_etmfw_generated_tickets = get_post_meta($product_id, 'wps_etmfw_generated_tickets', true);
+
+				$checkin_count = 0;
+				$total_tickets_count = is_array( $wps_etmfw_generated_tickets ) ? count( $wps_etmfw_generated_tickets ) : 0;
+
+				foreach ( $wps_etmfw_generated_tickets as $ticket ) {
+					if ( isset( $ticket['status'] ) && 'checked_in' === $ticket['status'] ) {
+						$checkin_count++;
+					}
+				}
+
 				$events[] = array(
 					'product' => $product,
 					'start_date' => $wps_event_start_date_time,
@@ -2134,6 +2145,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					'event_data' => $wps_etmfw_product_array,
 					'join_waiting_list' => $join_waiting_list,
 					'current_waiting_count' => $current_waiting_count,
+					'checkin_count' => $checkin_count,
+					'total_tickets_count' => $total_tickets_count,
 				);
 			}
 
@@ -2156,6 +2169,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$wps_etmfw_product_array = $event['event_data'];
 				$join_waiting_list = $event['join_waiting_list'];
 				$current_waiting_count = $event['current_waiting_count'];
+				$checkin_count = $event['checkin_count'];
+				$total_tickets_count = $event['total_tickets_count'];
 
 				// Format the date.
 				$wps_event_formated_start_date_time = gmdate( 'F j, Y | h:ia', $wps_event_start_date_time );
@@ -2189,6 +2204,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								$html .= '<div class="wps-etmw_prod-price-btn-wrap">';
 								$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
 								$html .= '<div class="wps-etmw_event-btn"><button>' . esc_html__( 'View Event', 'event-tickets-manager-for-woocommerce' ) . '</button></div>';
+								$html .= '</div>';
+							}
+							if ( $wps_is_pro_active ) {
+								$html .= '<div class="wps-etmw_prod-checkin-count">';
+								$html .= '<div>' . esc_html__( 'Checkin Count', 'event-tickets-manager-for-woocommerce' ) . ' : ' . $checkin_count . '/' . $total_tickets_count . '</div>';
 								$html .= '</div>';
 							}
 						$html .= '</div>
