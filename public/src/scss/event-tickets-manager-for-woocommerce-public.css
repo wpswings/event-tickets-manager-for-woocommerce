@@ -266,6 +266,10 @@ img.wps_resend_image {
 
 /* Event Listing using shortcode start */
 
+.wps_list .wps-etmw_event-btn {
+    justify-content: flex-start;
+}
+
 #wps-product-loader {
   position: absolute;
   left: 50%;
@@ -513,6 +517,14 @@ img.wps_resend_image {
 }
 
 /* Card*/
+
+.wps-etmw_event-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
 
 #wps-search-results.wps_card {
   grid-template-columns: 1fr 1fr 1fr;

@@ -83,3 +83,17 @@ span.wps-etmfw-event-product-order-listing {
 .wps_show_import_set {
   margin-bottom: 10px;
 }
+
+.wps_etmfw_event_display_wrapper .wps-etmfw-checkin-count-wrapper {
+    display: inline-block;
+    margin-left: 5px;
+    padding: 5px 20px;
+    background: #fff;
+    border-left: 3px solid green;
+}
+
+.wps_etmfw_event_display_wrapper .wps-etmfw-checkin-count-wrapper p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+}

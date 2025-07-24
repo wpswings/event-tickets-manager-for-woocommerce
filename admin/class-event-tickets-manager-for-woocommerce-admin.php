@@ -1662,7 +1662,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 
 					$giftcard = false;
 					foreach ( $order->get_items() as $item_id => $item ) {
-						if ( $woo_ver < '3.0.0' ) {
+						if ( version_compare( $woo_ver, '3.0.0', '<' ) ) {
 							$_product = apply_filters( 'woocommerce_order_item_product', $order->get_product_from_item( $item ), $item );
 						} else {
 							$_product = apply_filters( 'woocommerce_order_item_product', $item->get_product(), $item );

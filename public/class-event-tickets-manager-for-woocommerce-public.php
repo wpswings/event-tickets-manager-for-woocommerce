@@ -2194,21 +2194,26 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 							</div>';
 							if ( $join_waiting_list && $wps_is_pro_active ) {
 								$html .= '<div class="wps-etmw_waiting-list-wrap">';
-								$html .= '<div class="wps-etmw_event-wait">' . intval( $current_waiting_count ) . ' ' . esc_html__( 'People are Waiting for this Event', 'event-tickets-manager-for-woocommerce' ) . '</div>';
-
-								$html .= '<div class="wps-etmw_prod-price-btn-wrap">';
-								$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
-								$html .= '<div class="wps-etmw_event-join"><button>' . esc_html__( 'Join Waiting List', 'event-tickets-manager-for-woocommerce' ) . '</button></div>';
-								$html .= '</div></div>';
+									$html .= '<div class="wps-etmw_event-wait">' . intval( $current_waiting_count ) . ' ' . esc_html__( 'People are Waiting for this Event', 'event-tickets-manager-for-woocommerce' ) . '</div>';
+									$html .= '<div class="wps-etmw_prod-price-btn-wrap">';
+										$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
+										$html .= '<div class="wps-etmw_event-join"><button>' . esc_html__( 'Join Waiting List', 'event-tickets-manager-for-woocommerce' ) . '</button>';
+											$html .= '<div class="wps-etmw_prod-checkin-count">';
+												$html .= '<div>' . esc_html__( 'Checkin Count', 'event-tickets-manager-for-woocommerce' ) . ' : ' . $checkin_count . '/' . $total_tickets_count . '</div>';
+											$html .= '</div>';
+										$html .= '</div>';
+									$html .= '</div>';
+								$html .= '</div>';
 							} else {
 								$html .= '<div class="wps-etmw_prod-price-btn-wrap">';
-								$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
-								$html .= '<div class="wps-etmw_event-btn"><button>' . esc_html__( 'View Event', 'event-tickets-manager-for-woocommerce' ) . '</button></div>';
-								$html .= '</div>';
-							}
-							if ( $wps_is_pro_active ) {
-								$html .= '<div class="wps-etmw_prod-checkin-count">';
-								$html .= '<div>' . esc_html__( 'Checkin Count', 'event-tickets-manager-for-woocommerce' ) . ' : ' . $checkin_count . '/' . $total_tickets_count . '</div>';
+									$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
+									$html .= '<div class="wps-etmw_event-btn"><button>' . esc_html__( 'View Event', 'event-tickets-manager-for-woocommerce' ) . '</button>';
+										if ( $wps_is_pro_active ) {
+											$html .= '<div class="wps-etmw_prod-checkin-count">';
+												$html .= '<div>' . esc_html__( 'Checkin Count', 'event-tickets-manager-for-woocommerce' ) . ' : ' . $checkin_count . '/' . $total_tickets_count . '</div>';
+											$html .= '</div>';	
+										}
+									$html .= '</div>';
 								$html .= '</div>';
 							}
 						$html .= '</div>
