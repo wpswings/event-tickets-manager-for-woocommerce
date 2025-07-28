@@ -266,7 +266,7 @@ img.wps_resend_image {
 
 /* Event Listing using shortcode start */
 
-.wps_list .wps-etmw_event-btn {
+.wps_list .wps-etmw_event-btn, .wps_list .wps-etmw_event-join {
     justify-content: flex-start;
 }
 
@@ -518,7 +518,7 @@ img.wps_resend_image {
 
 /* Card*/
 
-.wps-etmw_event-btn {
+.wps-etmw_event-btn, .wps-etmw_event-join {
     display: flex;
     justify-content: space-between;
     align-items: center;

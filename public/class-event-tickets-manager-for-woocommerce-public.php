@@ -2127,14 +2127,25 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					}
 				}
 
-				$wps_etmfw_generated_tickets = get_post_meta($product_id, 'wps_etmfw_generated_tickets', true);
+				$wps_etmfw_get_attendees_data = array();
+
+				if ( class_exists( 'Event_Tickets_Manager_For_Woocommerce_Pro_Admin' ) ) {
+					$instance = new Event_Tickets_Manager_For_Woocommerce_Pro_Admin( $this->plugin_name, $this->version );
+					$wps_etmfw_get_attendees_data = $instance->wps_etmfw_get_attendees_data();
+				}
 
 				$checkin_count = 0;
-				$total_tickets_count = is_array( $wps_etmfw_generated_tickets ) ? count( $wps_etmfw_generated_tickets ) : 0;
+				$total_tickets_count = 0;
 
-				foreach ( $wps_etmfw_generated_tickets as $ticket ) {
-					if ( isset( $ticket['status'] ) && 'checked_in' === $ticket['status'] ) {
-						$checkin_count++;
+				if ( ! empty( $wps_etmfw_get_attendees_data) ) {
+					foreach ( $wps_etmfw_get_attendees_data as $event_attendees_detail ) {
+						$event = isset( $event_attendees_detail['event'] ) ? $event_attendees_detail['event'] : '';
+						if ( ! empty( $event ) && $event == $product_name ) {
+							$total_tickets_count++;
+							if ( isset( $event_attendees_detail['check_in_status'] ) && 'Checked-In' === $event_attendees_detail['check_in_status'] ) {
+								$checkin_count++;
+							}
+						}
 					}
 				}
 
