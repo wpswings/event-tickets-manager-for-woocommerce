@@ -1662,7 +1662,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 
 					$giftcard = false;
 					foreach ( $order->get_items() as $item_id => $item ) {
-						if ( $woo_ver < '3.0.0' ) {
+						if ( version_compare( $woo_ver, '3.0.0', '<' ) ) {
 							$_product = apply_filters( 'woocommerce_order_item_product', $order->get_product_from_item( $item ), $item );
 						} else {
 							$_product = apply_filters( 'woocommerce_order_item_product', $item->get_product(), $item );
@@ -1780,7 +1780,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			update_option( 'wps_wgm_notify_new_banner_image', $banner_image );
 			update_option( 'wps_wgm_notify_new_banner_url', $banner_url );
 			if ( 'regular' == $banner_type ) {
-				update_option( 'wps_wgm_notify_hide_baneer_notification', '' );
+				update_option( 'wps_wgm_notify_hide_baneer_notification', 0 );
 			}
 		}
 	}
@@ -2446,7 +2446,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			),
 
 			array(
-				'title' => __( 'Event Dashboard Colour', 'event-tickets-manager-for-woocommerce' ),
+				'title' => __( 'Event Dashboard/Listing Colour', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'text',
 				'description'  => __( 'Select the colour code( e.g. #0000FF ).', 'event-tickets-manager-for-woocommerce' ),
 				'id'    => 'wps_etmfw_event_dashboard_color',
@@ -2454,6 +2454,16 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'class' => 'wps_etmfw_colorpicker',
 				'placeholder' => __( 'Enter colour/colour code', 'event-tickets-manager-for-woocommerce' ),
 			),
+
+			array(
+				'title' => __( 'Enter External Css', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'textarea',
+				'id'    => 'wps_etmfw_external_css',
+				'value' => get_option( 'wps_etmfw_external_css', '' ),
+				'class' => 'etmfw-text-class',
+				'placeholder' => __( 'Add External Css for the site.', 'event-tickets-manager-for-woocommerce' ),
+			),
+
 		);
 
 		$etmfw_settings_dashboard = apply_filters( 'wps_etmfw_extent_dashboard_settings_array', $etmfw_settings_dashboard );

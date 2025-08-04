@@ -2127,6 +2127,28 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					}
 				}
 
+				$wps_etmfw_get_attendees_data = array();
+
+				if ( class_exists( 'Event_Tickets_Manager_For_Woocommerce_Pro_Admin' ) ) {
+					$instance = new Event_Tickets_Manager_For_Woocommerce_Pro_Admin( $this->plugin_name, $this->version );
+					$wps_etmfw_get_attendees_data = $instance->wps_etmfw_get_attendees_data();
+				}
+
+				$checkin_count = 0;
+				$total_tickets_count = 0;
+
+				if ( ! empty( $wps_etmfw_get_attendees_data) ) {
+					foreach ( $wps_etmfw_get_attendees_data as $event_attendees_detail ) {
+						$event = isset( $event_attendees_detail['event'] ) ? $event_attendees_detail['event'] : '';
+						if ( ! empty( $event ) && $event == $product_name ) {
+							$total_tickets_count++;
+							if ( isset( $event_attendees_detail['check_in_status'] ) && 'Checked-In' === $event_attendees_detail['check_in_status'] ) {
+								$checkin_count++;
+							}
+						}
+					}
+				}
+
 				$events[] = array(
 					'product' => $product,
 					'start_date' => $wps_event_start_date_time,
@@ -2134,6 +2156,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					'event_data' => $wps_etmfw_product_array,
 					'join_waiting_list' => $join_waiting_list,
 					'current_waiting_count' => $current_waiting_count,
+					'checkin_count' => $checkin_count,
+					'total_tickets_count' => $total_tickets_count,
 				);
 			}
 
@@ -2156,6 +2180,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$wps_etmfw_product_array = $event['event_data'];
 				$join_waiting_list = $event['join_waiting_list'];
 				$current_waiting_count = $event['current_waiting_count'];
+				$checkin_count = $event['checkin_count'];
+				$total_tickets_count = $event['total_tickets_count'];
 
 				// Format the date.
 				$wps_event_formated_start_date_time = gmdate( 'F j, Y | h:ia', $wps_event_start_date_time );
@@ -2179,16 +2205,26 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 							</div>';
 							if ( $join_waiting_list && $wps_is_pro_active ) {
 								$html .= '<div class="wps-etmw_waiting-list-wrap">';
-								$html .= '<div class="wps-etmw_event-wait">' . intval( $current_waiting_count ) . ' ' . esc_html__( 'People are Waiting for this Event', 'event-tickets-manager-for-woocommerce' ) . '</div>';
-
-								$html .= '<div class="wps-etmw_prod-price-btn-wrap">';
-								$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
-								$html .= '<div class="wps-etmw_event-join"><button>' . esc_html__( 'Join Waiting List', 'event-tickets-manager-for-woocommerce' ) . '</button></div>';
-								$html .= '</div></div>';
+									$html .= '<div class="wps-etmw_event-wait">' . intval( $current_waiting_count ) . ' ' . esc_html__( 'People are Waiting for this Event', 'event-tickets-manager-for-woocommerce' ) . '</div>';
+									$html .= '<div class="wps-etmw_prod-price-btn-wrap">';
+										$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
+										$html .= '<div class="wps-etmw_event-join"><button>' . esc_html__( 'Join Waiting List', 'event-tickets-manager-for-woocommerce' ) . '</button>';
+											$html .= '<div class="wps-etmw_prod-checkin-count">';
+												$html .= '<div>' . esc_html__( 'Checkin Count', 'event-tickets-manager-for-woocommerce' ) . ' : ' . $checkin_count . '/' . $total_tickets_count . '</div>';
+											$html .= '</div>';
+										$html .= '</div>';
+									$html .= '</div>';
+								$html .= '</div>';
 							} else {
 								$html .= '<div class="wps-etmw_prod-price-btn-wrap">';
-								$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
-								$html .= '<div class="wps-etmw_event-btn"><button>' . esc_html__( 'View Event', 'event-tickets-manager-for-woocommerce' ) . '</button></div>';
+									$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
+									$html .= '<div class="wps-etmw_event-btn"><button>' . esc_html__( 'View Event', 'event-tickets-manager-for-woocommerce' ) . '</button>';
+										if ( $wps_is_pro_active ) {
+											$html .= '<div class="wps-etmw_prod-checkin-count">';
+												$html .= '<div>' . esc_html__( 'Checkin Count', 'event-tickets-manager-for-woocommerce' ) . ' : ' . $checkin_count . '/' . $total_tickets_count . '</div>';
+											$html .= '</div>';	
+										}
+									$html .= '</div>';
 								$html .= '</div>';
 							}
 						$html .= '</div>
@@ -3050,5 +3086,19 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		}
 
 		return $passed;
+	}
+
+	/**
+	 * This function is used to apply external CSS sitewide.
+	 *
+	 * @since 1.0.0
+	 * @name wps_etmfw_apply_external_css_sitewide
+	 */
+	public function wps_etmfw_apply_external_css_sitewide() {
+		$external_css = get_option( 'wps_etmfw_external_css', '' );
+
+		if ( ! empty( $external_css ) ) {
+			echo '<style type="text/css">' . esc_html( $external_css ) . '</style>';
+		}
 	}
 }
