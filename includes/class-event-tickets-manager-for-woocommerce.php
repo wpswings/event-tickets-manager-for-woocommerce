@@ -200,7 +200,6 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_filter( 'wps_etmfw_integration_settings_array', $etmfw_plugin_admin, 'wps_etmfw_admin_integration_settings_page', 10 );
 		$this->loader->add_filter( 'wps_etmfw_email_template_settings_array', $etmfw_plugin_admin, 'wps_etmfw_admin_email_template_settings_page', 10 );
 		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'wps_etmfw_admin_save_tab_settings' );
-		$this->loader->add_filter( 'product_type_selector', $etmfw_plugin_admin, 'wps_etmfw_event_ticket_product' );
 		$wps_etmfw_enable_plugin = get_option( 'wps_etmfw_enable_plugin', false );
 
 		if ( 'on' == $wps_etmfw_enable_plugin ) {
@@ -306,6 +305,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_filter( 'woocommerce_available_payment_gateways', $etmfw_plugin_public , 'restrict_cod_for_specific_product_types', 10,1 );
 		$this->loader->add_filter( 'woocommerce_is_purchasable', $etmfw_plugin_public, 'wps_etmfw_handle_expired_events', 10, 2 );
 		$this->loader->add_action( 'woocommerce_product_meta_start', $etmfw_plugin_public, 'wps_etmfw_show_expired_message' );
+		$this->loader->add_filter( 'product_type_selector', $etmfw_plugin_public, 'wps_etmfw_event_ticket_product' );
 
 		// Custom product type.
 		$this->loader->add_action( 'plugins_loaded', $etmfw_plugin_public, 'wps_wgc_register_event_ticket_manager_product_types' );
