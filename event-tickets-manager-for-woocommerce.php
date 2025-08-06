@@ -646,9 +646,8 @@ if ( $activated ) {
 			}
 
 			$target_screens = array( 'plugins', 'dashboard', 'wp-swings_page_home' );
-        	$page_param     = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 
-			if ( 'wc-settings' === $page_param || in_array( $pagescreen, $target_screens, true ) ) {
+			if ( in_array( $pagescreen, $target_screens, true ) ) {
 				$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
 				if ( isset( $banner_id ) && '' !== $banner_id ) {
 					$hidden_banner_id            = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
