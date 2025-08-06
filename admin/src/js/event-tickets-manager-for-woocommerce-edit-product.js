@@ -39,6 +39,7 @@
 
   $(document).ready(function () {
 
+    $("#general_product_data .options_group.show_if_simple.show_if_external.show_if_variable" ).addClass("show_if_event_ticket_manager").show();
     //for General tab.
     $(".options_group.pricing").addClass("show_if_event_ticket_manager").show();
     //for Inventory tab.
