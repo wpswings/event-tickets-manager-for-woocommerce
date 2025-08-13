@@ -58,7 +58,7 @@ if ( $activated ) {
 
 	add_action( 'before_woocommerce_init', 'wps_etmfw_declare_hpos_compatibility' );
 	/**
-	 * Hpos and cart/checkout block and product block editor compatibility.
+	 * Hpos and cart/checkout block compatibility.
 	 */
 	function wps_etmfw_declare_hpos_compatibility() {
 		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
@@ -66,9 +66,6 @@ if ( $activated ) {
 		}
 		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
 			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
-		}
-		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'product_block_editor', __FILE__, true );
 		}
 	}
 
