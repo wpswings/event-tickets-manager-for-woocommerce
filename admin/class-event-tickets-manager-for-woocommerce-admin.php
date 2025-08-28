@@ -379,6 +379,18 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'value' => '',
 			),
 			array(
+				'title' => __( 'Enable Check-in Count Show on Event Listing Page', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'radio-switch',
+				'description'  => __( 'Enable this option to display Check-in Count', 'event-tickets-manager-for-woocommerce' ),
+				'id'    => 'wps_etmfwp_checkin_count',
+				'value' => '',
+				'class' => 'etmfw-radio-switch-class-pro',
+				'options' => array(
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
+					'no' => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
+				),
+			),
+			array(
 				'title' => __( 'Include QR code in ticket', 'event-tickets-manager-for-woocommerce' ),
 				'type'  => 'radio-switch',
 				'description'  => __( 'Enable this option to display qr code in the ticket.', 'event-tickets-manager-for-woocommerce' ),
@@ -888,24 +900,6 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	}
 
 	/**
-	 * Create a custom Product Type for Event Ticket Manager
-	 *
-	 * @since 1.0.0
-	 * @name wps_etmfw_event_ticket_product()
-	 * @param array $types product types.
-	 * @return $types.
-	 * @author WPSwings<ticket@wpswings.com>
-	 * @link https://wpswings.com/
-	 */
-	public function wps_etmfw_event_ticket_product( $types ) {
-		$wps_etmfw_enable = get_option( 'wps_etmfw_enable_plugin', false );
-		if ( $wps_etmfw_enable ) {
-			$types['event_ticket_manager'] = __( 'Events', 'event-tickets-manager-for-woocommerce' );
-		}
-		return $types;
-	}
-
-	/**
 	 * Create a tab for Event Ticket Manager
 	 *
 	 * @since 1.0.0
@@ -919,7 +913,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		if ( isset( $tabs ) && ! empty( $tabs ) ) {
 			foreach ( $tabs as $key => $tab ) {
 				if ( 'general' != $key && 'inventory' != $key ) {
-					$tabs[ $key ]['class'][] = 'hide_if_event_ticket_manager';
+					if ( isset( $tabs[ $key ]['class'] ) && is_array( $tabs[ $key ]['class'] ) ) {
+						array_push( $tabs[ $key ]['class'], 'hide_if_event_ticket_manager' );
+					}
 				}
 			}
 		}
@@ -1934,10 +1930,37 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			array(
 				'title'         => __( 'Enable Social Share Name', 'event-tickets-manager-for-woocommerce' ),
 				'id'            => 'wps_etmfw_enable_social_share_name',
-				'class'       => 'etmfw-radio-switch-class-pro',
+				'class'         => 'etmfw-radio-switch-class-pro',
 				'type'          => '',
 				'description'   => __( 'You can display social sharing icons to share event products.', 'event-tickets-manager-for-woocommerce' ),
 				'value'         => '',
+			),
+			array(
+				'title'         => __( 'Delay Feedback email by a Day after event ends', 'event-tickets-manager-for-woocommerce' ),
+				'type'          => 'number',
+				'min'           => '0',
+				'max'           => '15',
+				'id'            => 'wps_etmfwp_send_email_day_after_event',
+				'class'         => 'etmfw-radio-switch-class-pro',
+				'value'         => '',
+				'description'   => __( 'Enter no. of days after event ends, post feedback email should be send. ', 'event-tickets-manager-for-woocommerce' ),
+			),
+			array(
+				'title'       => __( 'Post Event Feedback Email Subject', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_etmfw_post_event_feedback_email_subject',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'type'        => 'text',
+				'description' => __( 'Subject for Post Event Feedback. Use [EVENTNAME] shortcode as event name', 'event-tickets-manager-for-woocommerce' ),
+				'placeholder' => __("We'd love your feedback on [EVENTNAME]!",'event-tickets-manager-for-woocommerce' ),
+				'value'       => '',
+			),
+			array(
+				'title'       => __( 'Post Event Feedback Email Body', 'event-tickets-manager-for-woocommerce' ),
+				'type'        => 'wp_editor',
+				'description' => __( 'Use [USERNAME], [EVENTNAME], [FEEDBACKFORMLINK] and [SITENAME] shortcode as customer name, event name, feedback form link and site name respectively.', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_etmfw_post_event_feedback_email_body',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'value'       => '',
 			),
 		);
 

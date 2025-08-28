@@ -2065,6 +2065,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		check_ajax_referer( 'wps-etmfw-verify-public-nonce', 'wps_nonce' );
 
 		$wps_plugin_list = get_option( 'active_plugins' );
+		$wps_etmfwp_checkin_count = get_option( 'wps_etmfwp_checkin_count' );
 		$wps_is_pro_active = false;
 		$wps_plugin = 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php';
 		if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
@@ -2209,9 +2210,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 									$html .= '<div class="wps-etmw_prod-price-btn-wrap">';
 										$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
 										$html .= '<div class="wps-etmw_event-join"><button>' . esc_html__( 'Join Waiting List', 'event-tickets-manager-for-woocommerce' ) . '</button>';
+											if ( 'on' === $wps_etmfwp_checkin_count ) {
 											$html .= '<div class="wps-etmw_prod-checkin-count">';
 												$html .= '<div>' . esc_html__( 'Checkin Count', 'event-tickets-manager-for-woocommerce' ) . ' : ' . $checkin_count . '/' . $total_tickets_count . '</div>';
 											$html .= '</div>';
+											}
 										$html .= '</div>';
 									$html .= '</div>';
 								$html .= '</div>';
@@ -2219,7 +2222,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								$html .= '<div class="wps-etmw_prod-price-btn-wrap">';
 									$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
 									$html .= '<div class="wps-etmw_event-btn"><button>' . esc_html__( 'View Event', 'event-tickets-manager-for-woocommerce' ) . '</button>';
-										if ( $wps_is_pro_active ) {
+										if ( $wps_is_pro_active && 'on' === $wps_etmfwp_checkin_count ) {
 											$html .= '<div class="wps-etmw_prod-checkin-count">';
 												$html .= '<div>' . esc_html__( 'Checkin Count', 'event-tickets-manager-for-woocommerce' ) . ' : ' . $checkin_count . '/' . $total_tickets_count . '</div>';
 											$html .= '</div>';	
@@ -3100,5 +3103,23 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		if ( ! empty( $external_css ) ) {
 			echo '<style type="text/css">' . esc_html( $external_css ) . '</style>';
 		}
+	}
+
+	/**
+	 * Create a custom Product Type for Event Ticket Manager
+	 *
+	 * @since 1.0.0
+	 * @name wps_etmfw_event_ticket_product()
+	 * @param array $types product types.
+	 * @return $types.
+	 * @author WPSwings<ticket@wpswings.com>
+	 * @link https://wpswings.com/
+	 */
+	public function wps_etmfw_event_ticket_product( $types ) {
+		$wps_etmfw_enable = get_option( 'wps_etmfw_enable_plugin', false );
+		if ( $wps_etmfw_enable ) {
+			$types['event_ticket_manager'] = __( 'Events', 'event-tickets-manager-for-woocommerce' );
+		}
+		return $types;
 	}
 }

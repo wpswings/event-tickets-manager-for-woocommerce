@@ -15,7 +15,7 @@
  * Plugin Name:          Event Tickets Manager for WooCommerce
  * Plugin URI:           https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/
  * Description:          <code><strong>Event Tickets Manager for WooCommerce</strong></code> is all-in-one solution to create an event , manage ticket stocks download ticket as PDFs & much more. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-events&utm_medium=events-org-backend&utm_campaign=official">Elevate your e-commerce store by exploring more on <strong>WP Swings</strong></a>
- * Version:              1.4.7
+ * Version:              1.4.8
  * Author:               WP Swings
  * Author URI:           https://wpswings.com/?utm_source=wpswings-events-official&utm_medium=events-org-page&utm_campaign=official
  * Text Domain:          event-tickets-manager-for-woocommerce
@@ -24,7 +24,7 @@
  * Requires Plugins:  woocommerce
  * Tested up to:         6.8.2
  * Requires at least:    6.7
- * WC tested up to:      10.0.4
+ * WC tested up to:      10.1.0
  * WC requires at least: 6.5
  * Requires PHP:         7.4
  * License:              GNU General Public License v3.0
@@ -56,29 +56,18 @@ if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 
 if ( $activated ) {
 
-	// HPOS Compatibility.
-	add_action(
-		'before_woocommerce_init',
-		function() {
-			if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
-			}
+	add_action( 'before_woocommerce_init', 'wps_etmfw_declare_hpos_compatibility' );
+	/**
+	 * Hpos and cart/checkout block compatibility.
+	 */
+	function wps_etmfw_declare_hpos_compatibility() {
+		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
 		}
-	);
-
-	// Cart and Checkout Block Comaptibility.
-	add_action(
-		'before_woocommerce_init',
-		function() {
-
-			if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
-
-				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
-
-			}
-
+		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
 		}
-	);
+	}
 
 	/**
 	 * Define plugin constants.
@@ -87,7 +76,7 @@ if ( $activated ) {
 	 */
 	function define_event_tickets_manager_for_woocommerce_constants() {
 
-		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION', '1.4.7' );
+		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION', '1.4.8' );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com' );
@@ -646,9 +635,8 @@ if ( $activated ) {
 			}
 
 			$target_screens = array( 'plugins', 'dashboard', 'wp-swings_page_home' );
-        	$page_param     = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 
-			if ( 'wc-settings' === $page_param || in_array( $pagescreen, $target_screens, true ) ) {
+			if ( in_array( $pagescreen, $target_screens, true ) ) {
 				$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
 				if ( isset( $banner_id ) && '' !== $banner_id ) {
 					$hidden_banner_id            = get_option( 'wps_wgm_notify_hide_baneer_notification', false );

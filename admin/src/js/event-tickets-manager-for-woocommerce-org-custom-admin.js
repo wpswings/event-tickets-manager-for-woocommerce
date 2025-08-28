@@ -69,25 +69,21 @@
 					'#dismiss-banner',
 					function(e){
 						e.preventDefault();
-						if ( wet_org_custom_param.is_pro_active ) {
-							var data = {
-								action:'wps_sfw_dismiss_notice_banner',
-								wps_nonce:wet_org_custom_param.wps_etmfw_edit_prod_nonce
-							};
-							$.ajax(
+						var data = {
+							action:'wps_sfw_dismiss_notice_banner',
+							wps_nonce:wet_org_custom_param.wps_etmfw_edit_prod_nonce
+						};
+						$.ajax(
+							{
+								url: wet_org_custom_param.ajaxurl,
+								type: "POST",
+								data: data,
+								success: function(response)
 								{
-									url: wet_org_custom_param.ajaxurl,
-									type: "POST",
-									data: data,
-									success: function(response)
-									{
-										window.location.reload();
-									}
+									window.location.reload();
 								}
-							);
-						} else {
-							jQuery(document).find('.wps-offer-notice').hide();
-						}
+							}
+						);
 					}
 				);
 			}
