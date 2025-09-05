@@ -3033,7 +3033,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						<img src="' . esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/copy.svg' ) . '" alt="copy""></button>';
 					}
 
-					do_action( 'wps_etmfw_show_social_share_link', $page_permalink );
+					do_action( 'wps_etmfw_show_social_share_link', $page_permalink, $product_id );
 
 					echo '</div>';
 				}
