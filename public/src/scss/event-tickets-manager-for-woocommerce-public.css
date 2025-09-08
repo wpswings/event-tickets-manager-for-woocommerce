@@ -1190,13 +1190,13 @@ img.wps_resend_image {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 35px;
 }
 
 .wps_etmfw_social_share_wrapper {
   margin: 0;
   position: relative !important;
-  text-align: right;
+  text-align: center;
   flex: 0;
   display: flex;
   flex-direction: column;

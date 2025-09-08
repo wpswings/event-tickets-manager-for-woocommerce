@@ -3012,6 +3012,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 */
 	public function wps_etmfwp_show_social_share_link() {
 		global $product;
+		$plugin_path = 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php';
+		$wps_pro_is_active = false;
+		if ( is_plugin_active( $plugin_path ) ) {
+			$wps_pro_is_active = true;
+		}
 		if ( is_single() ) {
 			if ( ! is_product() || ! $product instanceof WC_Product ) {
 				return;
@@ -3028,7 +3033,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		
 					echo '<div class="wps_etmfw_social_share_wrapper">';
 
-					if ( 'on' === get_option( 'wps_etmfw_copy_to_clipboard' ) ) {
+					if ( 'on' === get_option( 'wps_etmfw_copy_to_clipboard' ) && ! $wps_pro_is_active ) {
 						echo '<button class="wps-etmfw-copy-event-url" onclick="wpsEtmfwCopyToClipboard(\'' . esc_js( $page_permalink ) . '\')">
 						<img src="' . esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/image/copy.svg' ) . '" alt="copy""></button>';
 					}
