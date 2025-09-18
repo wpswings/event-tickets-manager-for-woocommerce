@@ -1161,7 +1161,7 @@ img.wps_resend_image {
   position: absolute;
   left: 10px;
   top: 10px;
-  z-index: 9;
+  z-index: 99;
 }
 
 .wp-theme-flatsome #wps_etmfw_title_and_social_share_icon {
