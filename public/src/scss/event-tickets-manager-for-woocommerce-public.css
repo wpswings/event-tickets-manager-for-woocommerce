@@ -200,6 +200,11 @@ div#wps_etmfw_event_map {
   input#coupon_code {
     margin-bottom: 20px;
   }
+
+  .theme-oceanwp #wps_etmfw_title_and_social_share_icon {
+    top: 55px;
+  }
+
 }
 
 @media only screen and (max-width: 540px) {

@@ -33,5 +33,6 @@ class WC_Product_Event_Ticket_Manager extends WC_Product {
 	 */
 	public function __construct( $product ) {
 		parent::__construct( $product );
+		$this->set_virtual( true );
 	}
 }
