@@ -1956,9 +1956,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			),
 			array(
 				'title'       => __( 'Post Event Feedback Email Body', 'event-tickets-manager-for-woocommerce' ),
-				'type'        => 'wp_editor',
+				'type'        => 'textarea',
 				'description' => __( 'Use [USERNAME], [EVENTNAME], [FEEDBACKFORMLINK] and [SITENAME] shortcode as customer name, event name, feedback form link and site name respectively.', 'event-tickets-manager-for-woocommerce' ),
-				'id'          => 'wps_etmfw_post_event_feedback_email_body',
+				'id'          => 'wps_etmfw_post_event_feedback_email_bodys',
 				'class'       => 'etmfw-radio-switch-class-pro',
 				'value'       => '',
 			),
