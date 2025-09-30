@@ -200,6 +200,11 @@ div#wps_etmfw_event_map {
   input#coupon_code {
     margin-bottom: 20px;
   }
+
+  .theme-oceanwp #wps_etmfw_title_and_social_share_icon {
+    top: 55px;
+  }
+
 }
 
 @media only screen and (max-width: 540px) {
@@ -1161,7 +1166,7 @@ img.wps_resend_image {
   position: absolute;
   left: 10px;
   top: 10px;
-  z-index: 9;
+  z-index: 99;
 }
 
 .wp-theme-flatsome #wps_etmfw_title_and_social_share_icon {
@@ -1190,13 +1195,13 @@ img.wps_resend_image {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 35px;
 }
 
 .wps_etmfw_social_share_wrapper {
   margin: 0;
   position: relative !important;
-  text-align: right;
+  text-align: center;
   flex: 0;
   display: flex;
   flex-direction: column;

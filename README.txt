@@ -1,12 +1,12 @@
-=== Event Tickets Manager for WooCommerce - Enable and Manage Events, Tickets On Your WooCommerce Store ===
+=== Event Tickets Manager for WooCommerce - Manage Events, Tickets And List Your Events On The Events Calendar ===
 Contributors: wpswings
 Donate link: https://wpswings.com/
-Tags: event booking, event calendar, event schedule, event manager, tickets
+Tags: event booking, wordpress calendar, event schedule, zoom integration, tickets
 Requires at least: 6.7
 Tested up to: 6.8.2
 WC requires at least: 6.5
-WC tested up to: 10.1.0
-Stable tag: 1.4.8
+WC tested up to: 10.2.2
+Stable tag: 1.4.9
 Requires PHP: 7.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -14,12 +14,11 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Enable this Event WordPress plugin to create event based products. Manage your event, check-in, recurring event, events location & much more.
 
 == Description ==
-
-**EVENT TICKETS MANAGER ALLOWS YOU TO DISPLAY EVENTS AND SELL YOUR EVENT'S TICKETS. THIS PLUGIN ENABLES YOUR WOOCOMMERCE STORE TO ACCEPT YOUR EVENT'S BOOKINGS EASILY. ATTRIBUTE YOUR WOOCOMMERCE STORE'S SUCCESS WITH THIS POWERFULL WORDPRESS EVENT PLUGIN.**
+**Enable this event WordPress plugin to create event-based products. With features like The events calendar, Check-in management, Recurring events, Event locations, and more, you can manage everything with ease.**
 
 WordPress event plugin can quickly create and manage events on your website. You can create both real and virtual events as well as selling tickets on your WooCommerce stores. This WordPress tickets plugin is capable of easy event creation and its management, displaying your [event's live location](https://demo.wpswings.com/event-tickets-manager-for-woocommerce-pro/product/portrait-sketching-online-live-session/?utm_source=wpswings-giftcards-org&utm_medium=referral&utm_campaign=gift-cards-demo) over product page, letting you conveniently set the [event recurring date and time](https://demo.wpswings.com/event-tickets-manager-for-woocommerce-pro/all-event-listing/?utm_source=wpswings-giftcards-org&utm_medium=referral&utm_campaign=gift-cards-demo) for any event, [easy check-in](https://demo.wpswings.com/event-tickets-manager-for-woocommerce-pro/shop/?utm_source=wpswings-giftcards-org&utm_medium=referral&utm_campaign=gift-cards-demo) process by using a QR Code and various other enticing features that will satisfy all your event management needs.
 
-Go for the Premium [**WooCommerce event Plugin**]((https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=events-org-page&utm_medium=referral&utm_campaign=events-pro)) if you are seeking for the additional features like **event alerts**, **display your events on multiple location**, **recurring [daily, weekly and monthly] events**, **show organizer/attendees details**, **share events on facebook**, **track ticket status** etc.
+Go for the Premium [**WooCommerce event Plugin**]((https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=events-org-page&utm_medium=referral&utm_campaign=events-pro)) if you are seeking for the additional features like  **Google meet integration**, **Zoom integration**, **Google map integration**, **event alerts**, **display your events on multiple location**, **recurring [daily, weekly and monthly] events**, **show organizer/attendees details**, **share events on facebook**, **track ticket status** etc.
 
 This plugin is one of the best WordPress events plugin, merchants can manage their entire process from WooCommerce store and be their own boss.
 
@@ -256,6 +255,9 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
+= 1.4.9 – Released on 30 September 2025 =
+* New : Latest Compatibility With WP [ 6.8.2 ] and WC [ 10.2.2 ].
+
 = 1.4.8 – Released on 14 August 2025 =
 * New : Latest Compatibility with WP [ 6.8.2 ] and WC [ 10.1.0 ].
 * New : Add Tax Fields - Tax Status and Tax Class on product edit for Event Product Type.
@@ -445,7 +447,5 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Upgrade Notice == 
 
-= 1.4.8 – Released on 14 August 2025 =
-* New : Latest Compatibility with WP [ 6.8.2 ] and WC [ 10.1.0 ].
-* New : Add Tax Fields - Tax Status and Tax Class on product edit for Event Product Type.
-* Fix : Banner Condition for Org Removed.
+= 1.4.9 – Released on 30 September 2025 =
+* New : Latest Compatibility with WP [ 6.8.2 ] and WC [ 10.2.2 ].

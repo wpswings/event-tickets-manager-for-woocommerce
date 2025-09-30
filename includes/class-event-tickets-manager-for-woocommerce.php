@@ -337,6 +337,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 			// disbale shipping.
 			$this->loader->add_filter( 'wc_shipping_enabled', $etmfw_plugin_public, 'wps_etmfw_wc_shipping_enabled' );
+			$this->loader->add_filter( 'woocommerce_cart_needs_shipping', $etmfw_plugin_public, 'wps_etmfw_wc_shipping_enabled' );
 			
 			// Ajax For sharing the tickets.
 			$this->loader->add_action( 'wp_ajax_wps_etmfwp_transfer_ticket_org', $etmfw_plugin_public, 'wps_etmfwp_sharing_tickets_org', 11 );
