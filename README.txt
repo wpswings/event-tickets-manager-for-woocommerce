@@ -1,4 +1,4 @@
-=== Event Tickets Manager for WooCommerce - Manage Events, Tickets And List Your Events On The Events Calendar ===
+=== Event Tickets Manager for WooCommerce - Event Creation & management (single / recurring), Sell Tickets And List Your Events On The Events Calendar ===
 Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: event booking, wordpress calendar, event schedule, zoom integration, tickets
@@ -11,7 +11,7 @@ Requires PHP: 7.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Enable this Event WordPress plugin to create event based products. Manage your event, check-in, recurring event, events location & much more.
+Use the best WordPress event plugin to create/sell event-based products, ticketing, check-ins, recurring schedules, venues, and attendee details.
 
 == Description ==
 **Enable this event WordPress plugin to create event-based products. With features like The events calendar, Check-in management, Recurring events, Event locations, and more, you can manage everything with ease.**
@@ -255,8 +255,11 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
-= 1.4.9 – Released on 30 September 2025 =
-* New : Latest Compatibility With WP [ 6.8.2 ] and WC [ 10.2.2 ].
+= 1.5.0 – Released on 15 October 2025 =
+* New : Latest Compatibility with WP [ 6.8.3 ] and WC [ 10.2.2 ].
+
+= 1.4.9 – Released on 2 September 2025 =
+* New : Latest Compatibility With WP [ 6.8.2 ] and WC [ 10.1.2].
 
 = 1.4.8 – Released on 14 August 2025 =
 * New : Latest Compatibility with WP [ 6.8.2 ] and WC [ 10.1.0 ].
@@ -447,5 +450,5 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Upgrade Notice == 
 
-= 1.4.9 – Released on 30 September 2025 =
-* New : Latest Compatibility with WP [ 6.8.2 ] and WC [ 10.2.2 ].
+= 1.5.0 – Released on 15 October 2025 =
+* New : Latest Compatibility with WP [ 6.8.3 ] and WC [ 10.2.2 ].
