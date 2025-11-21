@@ -50,18 +50,18 @@ div#wps_etmfw_edit_info_loader img {
 .wps_etmfw_view_ticket_section,
 .wps_etmfw_calendar_section {
   display: inline-block;
-  margin: 5px 0;
+  margin: 15px 0 0;
 }
-
-/* .wps_etmfw_view_ticket_section {
-  margin-right: 5px;
-} */
-
+ 
 .wps_etmfw_view_ticket_section a,
 .wps_etmfw_calendar_section a {
   padding: 7px 25px;
   border: 2px solid #28303d;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-top: 15px;
 }
+
 
 .wps_etmfw_view_ticket_section a:hover,
 .wps_etmfw_calendar_section a:hover {
