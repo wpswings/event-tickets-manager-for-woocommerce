@@ -1889,6 +1889,30 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'value'       => get_option( 'wps_etmfw_reminder_email_body', 'Hello, This is a short Reminder for your Event which is start from [STARTDATE]. Enjoy your day!' ),
 			),
 			array(
+				'title'       => __( 'Enable Schedule Change Emails Globally', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_etmfw_schedule_change_emails',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'type'        => 'radio-switch',
+				'description' => __( 'Send schedule change notifications for all tickets.', 'event-tickets-manager-for-woocommerce' ),
+				'value'       => '',
+				'options'     => array(
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
+					'no'  => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
+				),
+			),
+			array(
+				'title'       => __( 'Notify Pending/On-Hold Orders Too', 'event-tickets-manager-for-woocommerce' ),
+				'id'          => 'wps_etmfw_schedule_change_pending_onhold',
+				'class'       => 'etmfw-radio-switch-class-pro',
+				'type'        => 'radio-switch',
+				'description' => __( 'Include pending and on-hold orders when sending schedule change emails.', 'event-tickets-manager-for-woocommerce' ),
+				'value'       => '',
+				'options'     => array(
+					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
+					'no'  => __( 'NO', 'event-tickets-manager-for-woocommerce' ),
+				),
+			),
+			array(
 				'title'       => __( 'Copy to Clipboard Button', 'event-tickets-manager-for-woocommerce' ),
 				'id'          => 'wps_etmfw_copy_to_clipboard',
 				'type'        => 'radio-switch',

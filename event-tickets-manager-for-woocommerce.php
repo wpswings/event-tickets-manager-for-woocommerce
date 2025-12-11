@@ -24,7 +24,7 @@
  * Requires Plugins:  woocommerce
  * Tested up to:         6.9.0
  * Requires at least:    6.7
- * WC tested up to:      10.3.6
+ * WC tested up to:      10.4.0
  * WC requires at least: 6.5
  * Requires PHP:         7.4
  * License:              GNU General Public License v3.0
