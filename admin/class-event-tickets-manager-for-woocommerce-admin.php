@@ -1905,7 +1905,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'id'          => 'wps_etmfw_schedule_change_pending_onhold',
 				'class'       => 'etmfw-radio-switch-class-pro',
 				'type'        => 'radio-switch',
-				'description' => __( 'Include pending and on-hold orders when sending schedule change emails.', 'event-tickets-manager-for-woocommerce' ),
+				'description' => __( 'If enabled, schedule change emails also go to pending and on-hold orders (unpaid). Keep off to notify only completed/processing orders.', 'event-tickets-manager-for-woocommerce' ),
 				'value'       => '',
 				'options'     => array(
 					'yes' => __( 'YES', 'event-tickets-manager-for-woocommerce' ),
