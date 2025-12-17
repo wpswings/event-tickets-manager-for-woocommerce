@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -1890,7 +1889,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				'value'       => get_option( 'wps_etmfw_reminder_email_body', 'Hello, This is a short Reminder for your Event which is start from [STARTDATE]. Enjoy your day!' ),
 			),
 			array(
-				'title'       => __( 'Notify purchasers when events are rescheduled', 'event-tickets-manager-for-woocommerce' ),
+				'title'       => __( 'Event Reschedule Notification', 'event-tickets-manager-for-woocommerce' ),
 				'id'          => 'wps_etmfw_schedule_change_emails',
 				'class'       => 'etmfw-radio-switch-class-pro',
 				'type'        => 'radio-switch',
