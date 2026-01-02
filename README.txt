@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: event booking, wordpress calendar, event schedule, zoom integration, tickets
 Requires at least: 6.7
-Tested up to: 6.8.3
+Tested up to: 6.9.0
 WC requires at least: 6.5
-WC tested up to: 10.3.5
-Stable tag: 1.5.1
+WC tested up to: 10.4.2
+Stable tag: 1.5.2
 Requires PHP: 7.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -255,6 +255,10 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
+= 1.5.2 – Released on 9 January 2026 =
+* New : Compatibility with latest WP (6.9.0) and WC (10.4.2).
+* Fixes : Deprecated function updation to latest one.
+
 = 1.5.1 – Released on 21 November 2025 =
 * New : Compatibility with latest  WP [6.8.3] and WC [10.3.5].
 
@@ -453,5 +457,6 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Upgrade Notice == 
 
-= 1.5.1 – Released on 21 November 2025 =
-* New : Compatibility with latest  WP [6.8.3] and WC [10.3.5].
+= 1.5.2 – Released on 9 January 2026 =
+* New : Compatibility with latest WP (6.9.0) and WC (10.4.2).
+* Fixes : Deprecated function updation to latest one.
