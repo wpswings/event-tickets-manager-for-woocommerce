@@ -15,16 +15,16 @@
  * Plugin Name:          Event Tickets Manager for WooCommerce
  * Plugin URI:           https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/
  * Description:          <code><strong>Event Tickets Manager for WooCommerce</strong></code> is all-in-one solution to create an event , manage ticket stocks download ticket as PDFs & much more. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-events&utm_medium=events-org-backend&utm_campaign=official">Elevate your e-commerce store by exploring more on <strong>WP Swings</strong></a>
- * Version:              1.5.1
+ * Version:              1.5.2
  * Author:               WP Swings
  * Author URI:           https://wpswings.com/?utm_source=wpswings-events-official&utm_medium=events-org-page&utm_campaign=official
  * Text Domain:          event-tickets-manager-for-woocommerce
  * Domain Path:          /languages
  *
  * Requires Plugins:  woocommerce
- * Tested up to:         6.8.3
+ * Tested up to:         6.9.0
  * Requires at least:    6.7
- * WC tested up to:      10.3.5
+ * WC tested up to:      10.4.2
  * WC requires at least: 6.5
  * Requires PHP:         7.4
  * License:              GNU General Public License v3.0
@@ -35,6 +35,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
+
 use Automattic\WooCommerce\Utilities\OrderUtil;
 
 $activated      = false;
@@ -51,7 +52,7 @@ if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 		$activated = true;
 	}
 } elseif ( file_exists( WP_PLUGIN_DIR . '/woocommerce/woocommerce.php' ) && in_array( 'woocommerce/woocommerce.php', $active_plugins, true ) ) {
-		$activated = true;
+	$activated = true;
 }
 
 if ( $activated ) {
@@ -75,8 +76,7 @@ if ( $activated ) {
 	 * @since             1.0.0
 	 */
 	function define_event_tickets_manager_for_woocommerce_constants() {
-
-		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION', '1.5.1' );
+		 event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION', '1.5.2' );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		event_tickets_manager_for_woocommerce_constants( 'EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com' );
@@ -88,7 +88,6 @@ if ( $activated ) {
 		event_tickets_manager_for_woocommerce_constants( 'CLIENT_SECRET', get_option( 'wps_etmfw_google_client_secret', '' ) );
 		event_tickets_manager_for_woocommerce_constants( 'CLIENT_REDIRECT_URL', get_option( 'wps_etmfw_google_redirect_url', '' ) );
 		event_tickets_manager_for_woocommerce_constants( 'HTML_EMAIL_HEADERS', array( 'Content-Type: text/html; charset=UTF-8' ) );
-
 	}
 
 	if ( ! function_exists( 'wps_etmfw_check_multistep' ) ) {
@@ -118,7 +117,7 @@ if ( $activated ) {
 		 * @since 1.0.2
 		 */
 		function wps_etmfw_is_enable_usage_tracking() {
-			$is_enable = false;
+			 $is_enable = false;
 			$wps_wps_enable = get_option( 'wps_etmfw_enable_tracking', '' );
 			if ( 'on' == $wps_wps_enable ) {
 				$is_enable = true;
@@ -132,14 +131,13 @@ if ( $activated ) {
 		add_action( 'wpswings_tracker_send_event', 'wps_sfw_wpswings_tracker_send_event' );
 	}
 
-		/**
-		 * Function is used for the sending the track data
-		 *
-		 * @name wps_sfw_wpswings_tracker_send_event
-		 * @since 1.0.0
-		 */
+	/**
+	 * Function is used for the sending the track data
+	 *
+	 * @name wps_sfw_wpswings_tracker_send_event
+	 * @since 1.0.0
+	 */
 	function wps_sfw_wpswings_tracker_send_event() {
-
 		require WC()->plugin_path() . '/includes/class-wc-tracker.php';
 
 		$last_send = get_option( 'wpswings_tracker_last_send' );
@@ -172,17 +170,16 @@ if ( $activated ) {
 				'body'        => wp_json_encode( $params ),
 			)
 		);
-
 	}
 
 
-		/**
-		 * Get the updated time.
-		 *
-		 * @name wps_etmfw_last_send_time
-		 *
-		 * @since 1.0.0
-		 */
+	/**
+	 * Get the updated time.
+	 *
+	 * @name wps_etmfw_last_send_time
+	 *
+	 * @since 1.0.0
+	 */
 	function wps_etmfw_last_send_time() {
 		return apply_filters( 'wpswings_tracker_last_send_time', get_option( 'wpswings_tracker_last_send', false ) );
 	}
@@ -221,7 +218,6 @@ if ( $activated ) {
 			wp_mkdir_p( $upload_dir );
 			chmod( $upload_dir, 0775 );
 		}
-
 	}
 
 	/**
@@ -229,7 +225,7 @@ if ( $activated ) {
 	 * This action is documented in includes/class-event-tickets-manager-for-woocommerce-activator.php
 	 */
 	function activate_event_tickets_manager_for_woocommerce() {
-		require_once plugin_dir_path( __FILE__ ) . 'includes/class-event-tickets-manager-for-woocommerce-activator.php';
+		 require_once plugin_dir_path( __FILE__ ) . 'includes/class-event-tickets-manager-for-woocommerce-activator.php';
 		Event_Tickets_Manager_For_Woocommerce_Activator::event_tickets_manager_for_woocommerce_activate();
 		$wps_etmfw_active_plugin = get_option( 'wps_all_plugins_active', false );
 		if ( is_array( $wps_etmfw_active_plugin ) && ! empty( $wps_etmfw_active_plugin ) ) {
@@ -358,13 +354,12 @@ if ( $activated ) {
 				restore_current_blog();
 			}
 		} else {
-				$checkin_pageid = get_option( 'event_checkin_page_created', false );
+			$checkin_pageid = get_option( 'event_checkin_page_created', false );
 			if ( $checkin_pageid ) {
 				wp_delete_post( $checkin_pageid );
 				delete_option( 'event_checkin_page_created' );
 			}
 		}
-
 	}
 
 	register_activation_hook( __FILE__, 'wps_etmfw_create_checkin_page' );
@@ -451,7 +446,6 @@ if ( $activated ) {
 		$etmfw_etmfw_plugin_standard->etmfw_run();
 		$GLOBALS['etmfw_wps_etmfw_obj'] = $etmfw_etmfw_plugin_standard;
 		$GLOBALS['error_notice'] = true;
-
 	}
 	run_event_tickets_manager_for_woocommerce();
 
@@ -520,7 +514,7 @@ if ( $activated ) {
 	 * @link https://wpswings.com/
 	 */
 	function wps_etmfw_get_date_format( $date ) {
-		return date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime( $date ) );// get format from WordPress settings.
+		return date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime( $date ) ); // get format from WordPress settings.
 	}
 
 	/**
@@ -541,7 +535,7 @@ if ( $activated ) {
 			// Return the date in the custom format.
 			return date_i18n( $wps_custom_date_format, strtotime( $date ) );
 		} else {
-			return date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime( $date ) );// get format from WordPress settings.
+			return date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime( $date ) ); // get format from WordPress settings.
 		}
 	}
 
@@ -556,7 +550,7 @@ if ( $activated ) {
 	 * @link https://wpswings.com/
 	 */
 	function wps_etmfw_get_only_time_format( $date ) {
-		return date_i18n( get_option( 'time_format' ), strtotime( $date ) );// get format from WordPress settings.
+		return date_i18n( get_option( 'time_format' ), strtotime( $date ) ); // get format from WordPress settings.
 	}
 
 	add_action( 'admin_init', 'wps_etmfw_migration_code' );
@@ -571,10 +565,8 @@ if ( $activated ) {
 			include_once plugin_dir_path( __FILE__ ) . 'includes/class-event-tickets-manager-for-woocommerce-activator.php';
 			Event_Tickets_Manager_For_Woocommerce_Activator::upgrade_wp_etmfw_postmeta();
 			Event_Tickets_Manager_For_Woocommerce_Activator::upgrade_wp_etmfw_options();
-
 		}
 		update_option( 'is_wps_etmfw_migration_done', 'done' );
-
 	}
 
 	/**
@@ -628,7 +620,6 @@ if ( $activated ) {
 		 * @return void
 		 */
 		function wps_banner_notification_plugin_html() {
-
 			$screen = get_current_screen();
 			if ( isset( $screen->id ) ) {
 				$pagescreen = $screen->id;
@@ -647,13 +638,13 @@ if ( $activated ) {
 						if ( ! empty( $banner_image ) && ! empty( $banner_url ) ) {
 
 							?>
-						   <div class="wps-offer-notice notice notice-warning is-dismissible">
-							   <div class="notice-container">
-								   <a href="<?php echo esc_url( $banner_url ); ?>" target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Events cards"/></a>
-							   </div>
-							   <button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
-						   </div>
-						  
+							<div class="wps-offer-notice notice notice-warning is-dismissible">
+								<div class="notice-container">
+									<a href="<?php echo esc_url( $banner_url ); ?>" target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Events cards" /></a>
+								</div>
+								<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+							</div>
+
 							<?php
 						}
 					}
@@ -669,8 +660,7 @@ if ( $activated ) {
 	 * @return void
 	 */
 	function wps_etmfw_banner_notification_html() {
-
-		$screen = get_current_screen();
+		 $screen = get_current_screen();
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
 		}
@@ -690,13 +680,13 @@ if ( $activated ) {
 					if ( '' !== $banner_image && '' !== $banner_url ) {
 
 						?>
-							<div class="wps-offer-notice notice notice-warning is-dismissible">
-								<div class="notice-container">
-									<a href="<?php echo esc_url( $banner_url ); ?>"target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
-								</div>
-								<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+						<div class="wps-offer-notice notice notice-warning is-dismissible">
+							<div class="notice-container">
+								<a href="<?php echo esc_url( $banner_url ); ?>" target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards" /></a>
 							</div>
-						   
+							<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+						</div>
+
 						<?php
 					}
 				}
@@ -716,14 +706,12 @@ if ( $activated ) {
 	}
 
 	add_action( 'init', 'wps_event_reminder_checking' );
-
 } else {
 
 	/**
 	 * Show warning message if woocommerce if not activated.
 	 */
 	function wps_etmfw_plugin_error_notice() {
-
 		unset( $_GET['activate'] );
 		?>
 		<div class="error notice is-dismissible">
@@ -749,6 +737,4 @@ if ( $activated ) {
 	 * Register the action with WordPress.
 	 */
 	add_action( 'admin_init', 'wps_etmfw_plugin_deactivate' );
-
 }
-
