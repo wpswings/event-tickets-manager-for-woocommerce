@@ -46,6 +46,14 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	private $version;
 
 	/**
+	 * Prevent recursion when splitting user type items in the cart.
+	 *
+	 * @since 1.0.0
+	 * @var bool
+	 */
+	private $etmfw_user_type_multi_add = false;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -275,8 +283,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					$cart_values = ! empty( $_POST ) ? map_deep( wp_unslash( $_POST ), 'sanitize_text_field' ) : array();
 
 					foreach ( $cart_values as $key => $value ) {
-						if ( false !== strpos( $key, 'wps_etmfw_' ) && 'wps_etmfw_single_nonce_field' !== $key ) {
-							if ( isset( $key ) && ! empty( $value ) ) {
+						if ( false !== strpos( $key, 'wps_etmfw_' ) && 'wps_etmfw_single_nonce_field' !== $key && 'wps_etmfw_user_type_qty' !== $key ) {
+							if ( isset( $key ) && ! empty( $value ) && ! is_array( $value ) ) {
 								$item_meta['wps_etmfw_field_info'][ $key ] = isset( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : '';
 							}
 						}
@@ -353,9 +361,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 		$field_array = array();
 		$label = '';
-		$discard_keys = array( 'wps_etmfw_event_start', 'wps_etmfw_event_finish' );
+		$discard_keys = array( 'wps_etmfw_event_start', 'wps_etmfw_event_finish', 'wps_etmfw_user_type_qty' );
 		foreach ( $field_post as $key => $value ) {
-			if ( strpos( $key, 'wps_etmfw_' ) !== false && ! in_array( $key, $discard_keys ) ) {
+			if ( strpos( $key, 'wps_etmfw_' ) !== false && ! in_array( $key, $discard_keys ) && ! is_array( $value ) ) {
 				if ( '' == $wps_etmfw_dyn_name && '' == $wps_etmfw_dyn_mail && '' == $wps_etmfw_dyn_contact && '' == $wps_etmfw_dyn_date && '' == $wps_etmfw_dyn_address ) {
 					$key = ucwords( str_replace( '_', ' ', substr( $key, 10 ) ) );
 					$field_array[ $key ] = $value;
@@ -2802,6 +2810,149 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	}
 
 	/**
+	 * Get selected user type quantities from the request for a product.
+	 *
+	 * @param int $product_id Product ID.
+	 * @return array
+	 */
+	private function wps_etmfw_get_user_type_quantities( $product_id ) {
+		if ( empty( $_POST['wps_etmfw_user_type_qty'] ) || ! is_array( $_POST['wps_etmfw_user_type_qty'] ) ) {
+			return array();
+		}
+
+		$etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
+		$user_type_data = isset( $etmfw_product_array['wps_etmfw_field_user_type_price_data'] ) ? $etmfw_product_array['wps_etmfw_field_user_type_price_data'] : array();
+		if ( empty( $user_type_data ) || ! is_array( $user_type_data ) ) {
+			return array();
+		}
+
+		$raw_quantities = map_deep( wp_unslash( $_POST['wps_etmfw_user_type_qty'] ), 'absint' );
+		$items = array();
+
+		foreach ( $raw_quantities as $key => $qty ) {
+			if ( $qty <= 0 || ! array_key_exists( $key, $user_type_data ) ) {
+				continue;
+			}
+
+			$label = isset( $user_type_data[ $key ]['label'] ) ? $user_type_data[ $key ]['label'] : '';
+			$price = isset( $user_type_data[ $key ]['price'] ) ? $user_type_data[ $key ]['price'] : '';
+			if ( '' === $label ) {
+				continue;
+			}
+
+			$items[] = array(
+				'label' => $label,
+				'price' => $price,
+				'qty'   => $qty,
+			);
+		}
+
+		return $items;
+	}
+
+	/**
+	 * Validate user type quantities before add to cart.
+	 *
+	 * @param bool $passed Result so far.
+	 * @param int  $product_id Product ID.
+	 * @param int  $quantity Quantity.
+	 * @return bool
+	 */
+	public function wps_etmfw_validate_user_type_quantities( $passed, $product_id, $quantity ) {
+		if ( $this->etmfw_user_type_multi_add || empty( $_POST['wps_etmfw_user_type_qty'] ) ) {
+			return $passed;
+		}
+
+		$product = wc_get_product( $product_id );
+		if ( ! $product || ! $product->is_type( 'event_ticket_manager' ) ) {
+			return $passed;
+		}
+
+		$items = $this->wps_etmfw_get_user_type_quantities( $product_id );
+		$total = 0;
+		foreach ( $items as $item ) {
+			$total += $item['qty'];
+		}
+
+		if ( $total <= 0 ) {
+			wc_add_notice( __( 'Please select at least one ticket quantity.', 'event-tickets-manager-for-woocommerce' ), 'error' );
+			return false;
+		}
+
+		return $passed;
+	}
+
+	/**
+	 * Override add to cart quantity based on user type quantities.
+	 *
+	 * @param int $quantity Quantity.
+	 * @param int $product_id Product ID.
+	 * @return int
+	 */
+	public function wps_etmfw_set_user_type_total_quantity( $quantity, $product_id ) {
+		if ( $this->etmfw_user_type_multi_add || empty( $_POST['wps_etmfw_user_type_qty'] ) ) {
+			return $quantity;
+		}
+
+		$product = wc_get_product( $product_id );
+		if ( ! $product || ! $product->is_type( 'event_ticket_manager' ) ) {
+			return $quantity;
+		}
+
+		$items = $this->wps_etmfw_get_user_type_quantities( $product_id );
+		$total = 0;
+		foreach ( $items as $item ) {
+			$total += $item['qty'];
+		}
+
+		return ( $total > 0 ) ? $total : $quantity;
+	}
+
+	/**
+	 * Split add to cart into multiple user type line items.
+	 *
+	 * @param string $cart_item_key Cart item key.
+	 * @param int    $product_id Product ID.
+	 * @param int    $quantity Quantity.
+	 * @param int    $variation_id Variation ID.
+	 * @param array  $variation Variation data.
+	 * @param array  $cart_item_data Cart item data.
+	 * @return void
+	 */
+	public function wps_etmfw_add_user_type_items_on_add_to_cart( $cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data ) {
+		if ( $this->etmfw_user_type_multi_add || empty( $_POST['wps_etmfw_user_type_qty'] ) ) {
+			return;
+		}
+
+		$product = wc_get_product( $product_id );
+		if ( ! $product || ! $product->is_type( 'event_ticket_manager' ) ) {
+			return;
+		}
+
+		$items = $this->wps_etmfw_get_user_type_quantities( $product_id );
+		if ( empty( $items ) ) {
+			return;
+		}
+
+		$this->etmfw_user_type_multi_add = true;
+
+		if ( WC()->cart ) {
+			WC()->cart->remove_cart_item( $cart_item_key );
+			foreach ( $items as $item ) {
+				$custom_data = array(
+					'event_role' => array(
+						'role'  => $item['label'],
+						'price' => $item['price'],
+					),
+				);
+				WC()->cart->add_to_cart( $product_id, $item['qty'], $variation_id, $variation, $custom_data );
+			}
+		}
+
+		$this->etmfw_user_type_multi_add = false;
+	}
+
+	/**
 	 * This is function is used to set the cart price on user type.
 	 *
 	 * @param object $cart is an object of cart.
@@ -2903,6 +3054,31 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			);
 		}
 		return $item_data;
+	}
+
+	/**
+	 * Remove user type quantity meta from cart display.
+	 *
+	 * @param array $item_data Item data.
+	 * @param array $cart_item Cart item.
+	 * @return array
+	 */
+	public function wps_etmfw_hide_user_type_qty_item_data( $item_data, $cart_item ) {
+		foreach ( $item_data as $index => $data ) {
+			$key = isset( $data['key'] ) ? $data['key'] : '';
+			$value = isset( $data['value'] ) ? $data['value'] : '';
+			$display = isset( $data['display'] ) ? $data['display'] : '';
+			$key_normalized = strtolower( trim( $key ) );
+			if ( 'user type qty' === $key_normalized || 'wps_etmfw_user_type_qty' === $key_normalized ) {
+				unset( $item_data[ $index ] );
+				continue;
+			}
+			if ( '' === $value && '' === $display && ( 'user type qty' === $key_normalized || 'wps_etmfw_user_type_qty' === $key_normalized ) ) {
+				unset( $item_data[ $index ] );
+			}
+		}
+
+		return array_values( $item_data );
 	}
 
 	/**

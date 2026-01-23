@@ -65,14 +65,19 @@ if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
 		$current_product_price = 0;
 		?>
 		<p>
-		<div class ='wps_user_type_label wps-form-group__label' ><strong><?php esc_html_e( 'Select Ticket User Type', 'event-tickets-manager-for-woocommerce' ); ?></strong></div>
-		<div class='wps-form-group__control'>
-		<select name='user_type' id='wps_select_user' class='wps-select-user-type' style='width:200px;'>
-		<option value='<?php echo esc_attr( $current_product_price ); ?>' selected><?php esc_html_e( 'Select User Type', 'event-tickets-manager-for-woocommerce' ); ?></option>
-					<?php foreach ( $wps_etmfw_field_user_type_price_data as $key => $value ) { ?>
-			<option value = <?php echo esc_attr( $value['price'] ); ?> ><?php echo esc_html( $value['label'] ); ?></option>
+		<div class ='wps_user_type_label wps-form-group__label' ><strong><?php esc_html_e( 'Choose Ticket Type', 'event-tickets-manager-for-woocommerce' ); ?></strong></div>
+		<div class='wps_etmfw_user_type_list'>
+			<?php foreach ( $wps_etmfw_field_user_type_price_data as $key => $value ) { ?>
+				<div class="wps_etmfw_user_type_row">
+					<div class="wps_etmfw_user_type_name"><?php echo esc_html( $value['label'] ); ?></div>
+					<div class="wps_etmfw_user_type_price"><?php echo wp_kses_post( wc_price( $value['price'] ) ); ?></div>
+					<div class="wps-etmfw-user-type-qty quantity">
+						<button type="button" class="minus">-</button>
+						<input type="number" class="qty" min="0" step="1" inputmode="numeric" name="wps_etmfw_user_type_qty[<?php echo esc_attr( $key ); ?>]" value="0">
+						<button type="button" class="plus">+</button>
+					</div>
+				</div>
 			<?php } ?>
-		</select>
 		</div>
 		</p>
 		<?php
@@ -84,7 +89,7 @@ if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
 			$this->wps_etmfw_generate_addional_fields( $product_id, $event_field_array );
 			do_action( 'wps_etmfw_after_more_info', $product_id ); 
 		?>
-		<?php if ( true == $wps_is_pro_active ) { ?>
+		<?php if ( true == $wps_is_pro_active && empty( $wps_etmfw_field_user_type_price_data ) ) { ?>
 			<?php if ( '' != $wps_etmfw_dyn_name || '' != $wps_etmfw_dyn_mail || '' != $wps_etmfw_dyn_contact || '' != $wps_etmfw_dyn_date || '' != $wps_etmfw_dyn_address ) { ?>
 				<div id = 'wps_etmfw_dynamic_form_fr_<?php echo esc_attr( $product_id ); ?>'></div>
 				<div id = 'wps_etmfw_total_member' class='wps_class_etmfw_total_member'><span id='wps_total_member'></span></div>
@@ -113,7 +118,7 @@ if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
 	}
 	?>
 </div>
-<?php if ( true == $wps_is_pro_active ) { ?>
+<?php if ( true == $wps_is_pro_active && empty( $wps_etmfw_field_user_type_price_data ) ) { ?>
 	<?php if ( '' != $wps_etmfw_dyn_name || '' != $wps_etmfw_dyn_mail || '' != $wps_etmfw_dyn_contact || '' != $wps_etmfw_dyn_date || '' != $wps_etmfw_dyn_address ) { ?>
 <style>
  .single_add_to_cart_button{
