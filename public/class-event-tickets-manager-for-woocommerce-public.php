@@ -2623,13 +2623,15 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 											}
 											$order_received_url = wc_get_endpoint_url( 'order-received', $order_obj->get_id(), wc_get_checkout_url() );
 											$order_received_url = add_query_arg( 'key', $order_obj->get_order_key(), $order_received_url );
+											$item_qty = max( 1, (int) $item->get_quantity() );
+											$item_price_per_ticket = $item->get_total() / $item_qty;
 
 											$event_attendees_details[] = array(
 												'id'                => $order_obj->get_id(),
 												'check_in_status'   => $checkin_status,
 												'event'            => $item->get_name(),
 												'ticket'            => $ticket,
-												'price'              => $item->get_total(),
+												'price'              => $item_price_per_ticket,
 												'order'             => '<a title="Ticket Order Detail" href="' . esc_url( $order_received_url ) . '">' . esc_html__( 'View', 'event-tickets-manager-for-woocommerce' ) . '</a>',
 												'user'              => $user_id,
 												'venue'             => $venue,
@@ -2680,13 +2682,15 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 										$order_received_url = wc_get_endpoint_url( 'order-received', $order_obj->get_id(), wc_get_checkout_url() );
 										$order_received_url = add_query_arg( 'key', $order_obj->get_order_key(), $order_received_url );
+										$item_qty = max( 1, (int) $item->get_quantity() );
+										$item_price_per_ticket = $item->get_total() / $item_qty;
 
 										$event_attendees_details[] = array(
 											'id'                => $order_obj->get_id(),
 											'check_in_status'   => $checkin_status,
 											'event'             => $item->get_name(),
 											'ticket'            => $ticket,
-											'price'             => $item->get_total(),
+											'price'             => $item_price_per_ticket,
 											'order'             => '<a title="Ticket Order Detail" href="' . esc_url( $order_received_url ) . '">' . esc_html__( 'View', 'event-tickets-manager-for-woocommerce' ) . '</a>',
 											'user'              => $user_id,
 											'venue'             => $venue,
