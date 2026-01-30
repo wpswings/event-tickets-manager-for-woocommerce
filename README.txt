@@ -1,4 +1,4 @@
-=== Event Tickets Manager for WooCommerce - Event Creation & management (single / recurring), Sell Tickets And List Your Events On The Events Calendar ===
+=== Event Tickets Manager for WooCommerce ===
 Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: event booking, wordpress calendar, event schedule, zoom integration, tickets
@@ -11,7 +11,7 @@ Requires PHP: 7.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Use the best WordPress event plugin to create/sell event-based products, ticketing, check-ins, recurring schedules, venues, and attendee details.
+Use this powerful WordPress event plugin to create and sell events, manage tickets, check-ins, recurring schedules, venues, and attendee details with ease.
 
 == Description ==
 **Enable this event WordPress plugin to create event-based products. With features like The events calendar, Check-in management, Recurring events, Event locations, and more, you can manage everything with ease.**
@@ -20,7 +20,7 @@ WordPress event plugin can quickly create and manage events on your website. You
 
 Go for the Premium [**WooCommerce event Plugin**]((https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=events-org-page&utm_medium=referral&utm_campaign=events-pro)) if you are seeking for the additional features like  **Google meet integration**, **Zoom integration**, **Google map integration**, **event alerts**, **display your events on multiple location**, **recurring [daily, weekly and monthly] events**, **show organizer/attendees details**, **share events on facebook**, **track ticket status** etc.
 
-This plugin is one of the best WordPress events plugin, merchants can manage their entire process from WooCommerce store and be their own boss.
+This plugin is one of the excellent WordPress events plugin, merchants can manage their entire process from WooCommerce store and be their own boss.
 
 🧐**Want to explore more???** 
 
@@ -59,8 +59,7 @@ The administrator can utilize this setting to add custom fields to any specific 
 
 ####7) Set Price for Specific User Type: 
 
-Set the price on the user type and add/remove the base price. WordPress events feature allows you to create user types like adult, child, teacher, and student. 
-
+Set the price on the user type and add/remove the base price. WordPress events feature allows you to create user types like adult, child, teacher, and student.  After the enhancement, customers can easily purchase tickets for different user types at the same time. 
 
 **NOTE:** The admin can add only two user types if you have the free version of the WooCommerce events plugin.
 
@@ -255,8 +254,11 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
+= 1.5.3 – Released on 30 January 2026 =
+* New   : Multi Select number of ticket according to user type.
+
 = 1.5.2 – Released on 9 January 2026 =
-* New : Compatibility with latest WP (6.9.0) and WC (10.4.2).
+* New : Compatibility with latest WP (6.9.0) and WC (10.4.3).
 * Fixes : Deprecated function updation to latest one.
 
 = 1.5.1 – Released on 21 November 2025 =
@@ -456,7 +458,5 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 * First version
 
 == Upgrade Notice == 
-
-= 1.5.2 – Released on 9 January 2026 =
-* New : Compatibility with latest WP (6.9.0) and WC (10.4.2).
-* Fixes : Deprecated function updation to latest one.
+= 1.5.3 – Released on 30 January 2026 =
+* New   : Multi Select number of ticket according to user type.
