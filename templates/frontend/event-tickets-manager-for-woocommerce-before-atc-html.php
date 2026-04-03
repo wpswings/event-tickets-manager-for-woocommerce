@@ -71,10 +71,10 @@ if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
 				<div class="wps_etmfw_user_type_row">
 					<div class="wps_etmfw_user_type_name"><?php echo esc_html( $value['label'] ); ?></div>
 					<div class="wps_etmfw_user_type_price"><?php echo wp_kses_post( wc_price( $value['price'] ) ); ?></div>
-					<div class="wps-etmfw-user-type-qty quantity">
-						<button type="button" class="minus">-</button>
+					<div class="wps-etmfw-user-type-qty">
+						<button type="button" class="wps-etmfw-minus">-</button>
 						<input type="number" class="qty" min="0" step="1" inputmode="numeric" name="wps_etmfw_user_type_qty[<?php echo esc_attr( $key ); ?>]" value="0">
-						<button type="button" class="plus">+</button>
+						<button type="button" class="wps-etmfw-plus">+</button>
 					</div>
 				</div>
 			<?php } ?>

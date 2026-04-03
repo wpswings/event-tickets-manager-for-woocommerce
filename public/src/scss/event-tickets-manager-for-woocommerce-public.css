@@ -305,8 +305,8 @@ img.wps_resend_image {
   text-align: center;
 }
 
-.wps-etmfw-user-type-qty .plus,
-.wps-etmfw-user-type-qty .minus {
+.wps-etmfw-user-type-qty .wps-etmfw-plus,
+.wps-etmfw-user-type-qty .wps-etmfw-minus {
   background: var(--wps-etmfw-user-type-accent);
   border: 1px solid var(--wps-etmfw-user-type-accent);
   border-radius: 8px;
@@ -315,8 +315,8 @@ img.wps_resend_image {
   transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
-.wps-etmfw-user-type-qty .plus:hover,
-.wps-etmfw-user-type-qty .minus:hover {
+.wps-etmfw-user-type-qty .wps-etmfw-plus:hover,
+.wps-etmfw-user-type-qty .wps-etmfw-minus:hover {
   opacity: 0.9;
   transform: translateY(-1px);
 }
