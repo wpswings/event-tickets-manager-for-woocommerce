@@ -2792,19 +2792,47 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 */
 	public function wps_user_type_ajax_callbck() {
 		check_ajax_referer( 'wps-etmfw-verify-public-nonce', 'wps_nonce' );
-		$wps_product_id = isset( $_REQUEST['event_product_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['event_product_id'] ) ) : '';
+		$wps_product_id = isset( $_REQUEST['event_product_id'] ) ? absint( $_REQUEST['event_product_id'] ) : 0;
+
+		if ( ! $wps_product_id ) {
+			wp_send_json_error( array( 'message' => 'Invalid product.' ) );
+		}
+
 		$wps_etmfw_product_array = get_post_meta( $wps_product_id, 'wps_etmfw_product_array', true );
+
+		// Validate submitted price and label against the product's configured user types.
+		$user_type_data = isset( $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data'] )
+			? $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data']
+			: array();
+
+		$product_price_on_user_select = isset( $_REQUEST['user_type_value_data'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['user_type_value_data'] ) ) : '';
+		$wps_product_type_name = isset( $_REQUEST['user_type_name_data'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['user_type_name_data'] ) ) : '';
+
+		if ( ! empty( $user_type_data ) && is_array( $user_type_data ) ) {
+			$is_valid_selection = false;
+			foreach ( $user_type_data as $type ) {
+				if ( isset( $type['label'], $type['price'] )
+					&& $type['label'] === $wps_product_type_name
+					&& (string) $type['price'] === (string) $product_price_on_user_select ) {
+					$is_valid_selection = true;
+					break;
+				}
+			}
+			if ( ! $is_valid_selection ) {
+				wp_send_json_error( array( 'message' => 'Invalid user type selection.' ) );
+			}
+		}
+
 		$wps_base_price_condition = isset( $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] ) ? $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] : array();
 
 		if ( 'base_price' == $wps_base_price_condition ) {
 			$wps_total_price = get_option( 'wps_total_increased_value' );
-
 		} elseif ( 'not_base_price' == $wps_base_price_condition ) {
+			$wps_total_price = 0;
+		} else {
 			$wps_total_price = 0;
 		}
 
-		$product_price_on_user_select = isset( $_REQUEST['user_type_value_data'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['user_type_value_data'] ) ) : '';
-		$wps_product_type_name = isset( $_REQUEST['user_type_name_data'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['user_type_name_data'] ) ) : '';
 		$final_price = ( $product_price_on_user_select + $wps_total_price );
 		$response = wc_price( $final_price );
 		echo wp_json_encode( $response );
