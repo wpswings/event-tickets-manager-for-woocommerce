@@ -352,12 +352,16 @@ class Event_Tickets_Manager_For_Woocommerce {
 			// Adding Additional User Type Data to cart.
 			$this->loader->add_filter( 'woocommerce_add_cart_item_data', $etmfw_plugin_public, 'wps_user_type_add_moredata_on_cart', 10, 3 );
 			$this->loader->add_filter( 'woocommerce_get_item_data', $etmfw_plugin_public, 'wps_user_type_add_metadataset_cart', 10, 2 );
+			$this->loader->add_filter( 'woocommerce_get_item_data', $etmfw_plugin_public, 'wps_etmfw_hide_user_type_qty_item_data', 20, 2 );
 			$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $etmfw_plugin_public, 'wps_user_type_checkout_order_dataset', 10, 4 );
+			$this->loader->add_filter( 'woocommerce_add_to_cart_quantity', $etmfw_plugin_public, 'wps_etmfw_set_user_type_total_quantity', 10, 2 );
+			$this->loader->add_action( 'woocommerce_add_to_cart', $etmfw_plugin_public, 'wps_etmfw_add_user_type_items_on_add_to_cart', 10, 6 );
 			
 			$this->loader->add_filter( 'woocommerce_get_price_html', $etmfw_plugin_public, 'wps_etmfwp_change_event_price', 10, 2 );
 
 			$this->loader->add_action( 'woocommerce_before_single_product_summary', $etmfw_plugin_public, 'wps_etmfwp_show_social_share_link', 5 );
 
+			$this->loader->add_action( 'woocommerce_add_to_cart_validation', $etmfw_plugin_public, 'wps_etmfw_validate_user_type_quantities', 9, 3 );
 			$this->loader->add_action( 'woocommerce_add_to_cart_validation', $etmfw_plugin_public, 'wps_validate_offset_start_end', 10, 3 );
 			$this->loader->add_action( 'wp_head', $etmfw_plugin_public, 'wps_etmfw_apply_external_css_sitewide', 10, 1 );
 		}

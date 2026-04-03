@@ -2277,7 +2277,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				// Inherit stock management settings from the parent event.
 				update_post_meta( $new_event_id, '_manage_stock', $manage_stock );
 				update_post_meta( $new_event_id, '_stock', $stock );
-				update_post_meta( $new_event_id, '_stock_status', $$stock_status );
+				update_post_meta( $new_event_id, '_stock_status', $stock_status );
 
 				// Save the array as post meta for the product.
 				wp_set_object_terms( $new_event_id, 'event_ticket_manager', 'product_type' );

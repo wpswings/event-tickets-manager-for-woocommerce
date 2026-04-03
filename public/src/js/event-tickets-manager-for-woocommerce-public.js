@@ -36,10 +36,16 @@
 	 		$("#wps_etmfw_edit_ticket_form").toggleClass("wps_etmfw_show_ticket_form");
 	 	});
 	 });
-	 jQuery( document ).ready( function($){
-	 	$( document ).on(
-	 		'click',
-	 		'#wps_etmfw_save_edit_ticket_info_btn',
+	jQuery( document ).ready( function($){
+		if ( $('.wps_etmfw_user_type_list').length ) {
+			var $form = $('.wps_etmfw_user_type_list').closest('form.cart');
+			$form.addClass('wps-etmfw-has-user-types');
+			$form.find('.quantity').not('.wps-etmfw-user-type-qty').hide();
+		}
+
+		$( document ).on(
+			'click',
+			'#wps_etmfw_save_edit_ticket_info_btn',
 	 		function(e){
 	 			var check_validation = false;
 
@@ -119,6 +125,20 @@
 				}
 			);
 	
+		});
+
+		jQuery(document).on('click', '.wps-etmfw-user-type-qty .plus, .wps-etmfw-user-type-qty .minus', function() {
+			var $wrapper = jQuery(this).closest('.wps-etmfw-user-type-qty');
+			var $input = $wrapper.find('input.qty');
+			var current = parseInt($input.val(), 10);
+			if (isNaN(current)) {
+				current = 0;
+			}
+			if (jQuery(this).hasClass('plus')) {
+				$input.val(current + 1).trigger('change');
+			} else {
+				$input.val(Math.max(0, current - 1)).trigger('change');
+			}
 		});
 		 
    		window.wpsEtmfwCopyToClipboard = function(text) {
