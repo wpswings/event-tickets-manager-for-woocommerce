@@ -601,6 +601,23 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			'class' => 'etmfw-button-class',
 		);
 
+		if ( $this->etmfw_is_pro_active() ) {
+			$etmfw_settings_general = array_filter(
+				$etmfw_settings_general,
+				function( $field ) {
+					if ( empty( $field['class'] ) ) {
+						return true;
+					}
+
+					if ( false !== strpos( $field['class'], 'class-pro' ) ) {
+						return false;
+					}
+
+					return true;
+				}
+			);
+		}
+
 		return $etmfw_settings_general;
 	}
 
@@ -1430,11 +1447,13 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					$wps_etmfw_field_days_user_type_data_array = array();
 					if ( is_array( $wps_etmfw_field_user_type_price_data ) && ! empty( $wps_etmfw_field_user_type_price_data ) ) {
 						if ( '' !== $wps_etmfw_field_user_type_price_data[0]['_label'] ) {
-							foreach ( $wps_etmfw_field_user_type_price_data as $key => $value ) {
+						foreach ( $wps_etmfw_field_user_type_price_data as $key => $value ) {
 								$wps_etmfw_field_days_user_type_data_array[] = array(
 									'label' => $value['_label'],
 									'type' => $value['_type'],
 									'price' => $value['_price'],
+									'inventory_min' => isset( $value['_inventory_min'] ) ? $value['_inventory_min'] : '',
+									'inventory_max' => isset( $value['_inventory_max'] ) ? $value['_inventory_max'] : '',
 								);
 							}
 						}

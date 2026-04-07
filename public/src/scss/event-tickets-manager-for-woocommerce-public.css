@@ -437,236 +437,193 @@ form.cart.wps-etmfw-has-user-types .quantity:not(.wps-etmfw-user-type-qty) {
   filter: invert(1);
 }
 
-/* List */
+/* Event listing cards */
 
 #wps-search-results {
   display: grid;
-  gap: 30px;
+  gap: 28px;
   margin: 60px 0 0;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
-#wps-search-results>a {
-  background: transparent;
-  padding: 10px;
+.wps-etmw-card-link {
   text-decoration: none;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border: none;
-  margin: 0;
-  border-radius: 5px;
-  transition: transform 0.2s ease-in-out;
 }
 
-#wps-search-results>a:hover {
-  transform: scale(1.02);
-}
-
-#wps-search-results>a:after {
-  display: none;
-}
-
-#wps-search-results>a:focus {
-  outline: none;
-}
-
-#wps-search-results .wps-etmw_single-event {
-  display: flex;
-  gap: 30px;
-}
-
-#wps-search-results .wps-etmw_single-event img {
-  max-width: 140px;
-  aspect-ratio: 1;
-  object-fit: cover;
-  flex: 0 0 140px;
-  border-radius: 5px;
-}
-
-#wps-search-results .wps-etmw_single-event .wps-etmw_prod-desc {
-  flex: 1;
+.wps-etmw-card {
+  background: linear-gradient(180deg, #fff 0%, #fefefe 50%, #fff 100%);
+  border-radius: 36px;
+  padding: 22px;
+  min-height: 100%;
+  box-shadow: 0 20px 45px rgba(55, 35, 112, 0.14);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 5px;
+  gap: 18px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
-#wps-search-results .wps-etmw_single-event .wps-etmw_prod-desc h4 {
-  font-size: 18px;
-  margin: 0;
+.wps-etmw-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 35px 65px rgba(55, 35, 112, 0.2);
+}
+
+.wps-etmw-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.wps-etmw-card-badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  padding: 10px 16px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #ff8d00, #ffc34d);
+  color: #1c113c;
   font-weight: 600;
-  line-height: 1.25;
-  max-width: 400px;
-  text-align: left;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  box-shadow: 0 15px 35px rgba(255, 125, 0, 0.25);
 }
 
-#wps-search-results .wps-etmw_single-event .wps-etmw_prod-venue,
-#wps-search-results.wps_card .wps-etmw_single-event .wps-etmw_all-date {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.5;
-  text-align: left;
+.wps-etmw-card-badge .wps-etmw-card-date-day {
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: 1px;
 }
 
-#wps-search-results .wps-etmw_single-event .wps-etmw_prod-venue img,
-#wps-search-results .wps-etmw_single-event .wps-etmw_all-date img {
-  height: 16px;
-  width: 16px;
-  margin: 2px 5px 0 0;
-  display: inline-block;
-  vertical-align: text-bottom;
-}
-
-#wps-search-results .wps-etmw_single-event .wps-etmw_prod-price {
-  text-align: left;
-  margin-top: 10px;
-}
-
-#wps-search-results .wps-etmw_single-event .wps-etmw_prod-price span {
-  font-size: 18px;
-  line-height: 1.25;
-  font-weight: 900;
-  color: var(--wps-etmfw-primary);
-  margin: 0;
-  display: inline-block;
-}
-
-#wps-search-results .wps-etmw_single-event .wps-etmw_all-date {
-  display: flex;
-  align-items: center;
-  gap: 100px;
-  font-size: 14px;
-  color: #333;
-  font-weight: 400;
-}
-
-#wps-search-results .wps-etmw_single-event .wps-etmw_all-date span {
-  position: relative;
-  display: inline-block;
-}
-
-#wps-search-results .wps-etmw_prod-date {
+.wps-etmw-card-endcap {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  align-items: center;
-  text-align: center;
-  font-weight: 400;
-  justify-content: center;
-}
-
-#wps-search-results .wps-etmw_prod-date .wps-etmw_prod-date-in {
-  flex: 1;
-  padding: 13px 20px;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-  max-height: 106px;
+  align-items: flex-end;
   gap: 4px;
-  justify-content: center;
-  min-width: 96px;
-  /* aspect-ratio: 1; */
-}
-
-#wps-search-results .wps-etmw_prod-date .wps-etmw_start-time-day {
-  font-size: 24px;
-  color: #7C7C7C;
-}
-
-#wps-search-results .wps-etmw_prod-date .wps-etmw_start-time-date {
-  font-size: 44px;
-  color: var(--wps-etmfw-primary);
-}
-
-#wps-search-results .wps-etmw_prod-date span {
-  display: inline-block;
-  line-height: 1;
-}
-
-#wps-search-results.wps_card .wps-etmw_single-event .wps-etmw_start-time-month {
-  line-height: 1;
-  display: inline-block;
-  font-size: 14px;
-}
-
-#wps-search-results .wps-etmw_single-event .wps-etmw_all-date span {
-  line-height: 1.5;
-  text-transform: capitalize;
-  text-align: left;
-}
-
-/* Card*/
-
-.wps-etmw_event-btn, .wps-etmw_event-join {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-#wps-search-results.wps_card {
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 30px;
-}
-
-#wps-search-results.wps_card .wps-etmw_single-event {
-  flex-direction: column;
-  gap: 20px;
-  position: relative;
-  height: 100%;
-}
-
-#wps-search-results.wps_card .wps-etmw_single-event img {
-  max-width: 100%;
-  flex: 1;
-  aspect-ratio: 1.5;
-}
-
-#wps-search-results.wps_card .wps-etmw_single-event .wps-etmw_prod-desc h4 {
-  font-size: 18px;
-}
-
-#wps-search-results.wps_card .wps-etmw_single-event .wps-etmw_prod-date {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 5px;
-  gap: 0;
-}
-
-#wps-search-results.wps_card .wps-etmw_single-event .wps-etmw_prod-date-in {
-  border: none;
-  border-bottom: 1px solid #fff;
-  border-radius: 0;
-}
-
-#wps-search-results.wps_card .wps-etmw_single-event .wps-etmw_start-time-month {
-  color: #fff;
-  padding: 8px 5px;
-}
-
-#wps-search-results.wps_card .wps-etmw_single-event .wps-etmw_start-time-day {
-  color: #fff;
-}
-
-#wps-search-results.wps_card .wps-etmw_single-event .wps-etmw_prod-price {
   font-size: 12px;
-  border-top: 1px solid #f0f0f0;
-  padding: 15px 0 10px;
-  border-radius: 0;
-  line-height: 1;
+  text-align: right;
 }
 
-#wps-search-results.wps_card .wps-etmw_single-event .wps-etmw_prod-desc h4 {
-  margin: 0;
+.wps-etmw-card-tag {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  color: #9f6ef0;
+}
+
+.wps-etmw-card-time {
+  font-size: 13px;
+  color: #5d5777;
+}
+
+.wps-etmw-card-body {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.wps-etmw-card-image {
+  width: 120px;
+  height: 96px;
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+  border: 1px solid rgba(236, 231, 255, 0.7);
+}
+
+.wps-etmw-card-meta {
   flex: 1;
 }
 
-#wps-search-results.wps_card .wps-etmw_single-event .wps-etmw_prod-price span {
-  font-size: 18px;
-  line-height: 1;
-  display: inline-block;
+.wps-etmw-card-meta h4 {
+  margin: 0 0 4px;
+  font-size: 20px;
+  color: #1a0f3c;
+  font-weight: 700;
+}
+
+.wps-etmw-card-venue {
+  font-size: 14px;
+  color: #4c4468;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wps-etmw-card-venue img {
+  width: 16px;
+  height: 16px;
+  filter: opacity(0.7);
+}
+
+.wps-etmw-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.wps-etmw-card-price-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wps-etmw-card-price {
+  font-size: 22px;
+  font-weight: 900;
+  color: #1f0f4b;
+}
+
+.wps-etmw-card-waiting {
+  font-size: 12px;
+  color: #f17e00;
+}
+
+.wps-etmw-card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+}
+
+.wps-etmw-card-actions button {
+  border: none;
+  padding: 10px 28px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #7f1dff, #3b088f);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 14px 28px rgba(71, 8, 142, 0.35);
+}
+
+.wps-etmw-card-actions button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 30px rgba(71, 8, 142, 0.45);
+}
+
+.wps-etmw-card-checkin {
+  font-size: 12px;
+  color: #7b6bcf;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 780px) {
+  .wps-etmw-card-body {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .wps-etmw-card-actions {
+    align-items: flex-start;
+  }
 }
 
 

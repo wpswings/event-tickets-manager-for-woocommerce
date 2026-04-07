@@ -71,9 +71,13 @@ if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
 				<div class="wps_etmfw_user_type_row">
 					<div class="wps_etmfw_user_type_name"><?php echo esc_html( $value['label'] ); ?></div>
 					<div class="wps_etmfw_user_type_price"><?php echo wp_kses_post( wc_price( $value['price'] ) ); ?></div>
-					<div class="wps-etmfw-user-type-qty">
+				<div class="wps-etmfw-user-type-qty">
 						<button type="button" class="wps-etmfw-minus">-</button>
-						<input type="number" class="qty" min="0" step="1" inputmode="numeric" name="wps_etmfw_user_type_qty[<?php echo esc_attr( $key ); ?>]" value="0">
+						<?php
+						$inventory_min = isset( $value['inventory_min'] ) && '' !== $value['inventory_min'] ? max( 0, (int) $value['inventory_min'] ) : 0;
+						$inventory_max = isset( $value['inventory_max'] ) && '' !== $value['inventory_max'] ? max( 0, (int) $value['inventory_max'] ) : '';
+						?>
+						<input type="number" class="qty" min="<?php echo esc_attr( $inventory_min ); ?>" <?php echo '' !== $inventory_max ? 'max="' . esc_attr( $inventory_max ) . '"' : ''; ?> step="1" inputmode="numeric" name="wps_etmfw_user_type_qty[<?php echo esc_attr( $key ); ?>]" value="<?php echo esc_attr( $inventory_min ); ?>">
 						<button type="button" class="wps-etmfw-plus">+</button>
 					</div>
 				</div>

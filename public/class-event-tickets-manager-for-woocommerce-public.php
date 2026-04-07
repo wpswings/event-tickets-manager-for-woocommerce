@@ -2207,56 +2207,55 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$wps_event_formated_start_date      = gmdate( 'j', $wps_event_start_date_time );
 				$wps_event_formated_start_month     = gmdate( 'F', $wps_event_start_date_time ); 
 
-				$html .= '<a href="' . esc_url( $product_url ) . '" class="button btn" id="wps-etmw_list-card">
-					<div class="wps-etmw_single-event">
-						<img src="' . esc_url( $wps_product_image_src ) . '" />
-						<div class="wps-etmw_prod-desc">
-							<h4>' . esc_html( $product_name ) . '</h4>
-							<div class="wps-etmw_prod-venue">
-								<img src="' . esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . 'public/src/image/map_pin.svg" alt="venue" class="venue">' . esc_html( $wps_etmfw_product_array['etmfw_event_venue'] ) . '
+				$date_label = substr( $wps_event_formated_start_day, 0, 3 );
+				$date_month_short = substr( $wps_event_formated_start_month, 0, 3 );
+				$image_style = 'background-image:url(' . esc_url( $wps_product_image_src ) . ');';
+
+				$html .= '<a href="' . esc_url( $product_url ) . '" class="wps-etmw-card-link" id="wps-etmw_list-card">
+					<article class="wps-etmw-card">
+						<header class="wps-etmw-card-top">
+							<div class="wps-etmw-card-badge">
+								<span class="wps-etmw-card-day-short">' . esc_html( $date_label ) . '</span>
+								<span class="wps-etmw-card-date-day">' . esc_html( $wps_event_formated_start_date ) . '</span>
+								<span class="wps-etmw-card-date-month">' . esc_html( $date_month_short ) . '</span>
 							</div>
-							<div class="wps-etmw_all-date">
-								<span class="wps-etmw_start-time">
-									<img src="' . esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . 'public/src/image/calendar.svg" alt="date" class="date">
+							<div class="wps-etmw-card-endcap">
+								<span class="wps-etmw-card-tag">' . esc_html__( 'Event Tickets', 'event-tickets-manager-for-woocommerce' ) . '</span>
+								<span class="wps-etmw-card-time">
 									' . esc_html( $wps_event_formated_start_date_time ) . ' ' . esc_html__( 'Onwards', 'event-tickets-manager-for-woocommerce' ) . '
 								</span>
-							</div>';
-							if ( $join_waiting_list && $wps_is_pro_active ) {
-								$html .= '<div class="wps-etmw_waiting-list-wrap">';
-									$html .= '<div class="wps-etmw_event-wait">' . intval( $current_waiting_count ) . ' ' . esc_html__( 'People are Waiting for this Event', 'event-tickets-manager-for-woocommerce' ) . '</div>';
-									$html .= '<div class="wps-etmw_prod-price-btn-wrap">';
-										$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
-										$html .= '<div class="wps-etmw_event-join"><button>' . esc_html__( 'Join Waiting List', 'event-tickets-manager-for-woocommerce' ) . '</button>';
-											if ( 'on' === $wps_etmfwp_checkin_count ) {
-											$html .= '<div class="wps-etmw_prod-checkin-count">';
-												$html .= '<div>' . esc_html__( 'Checkin Count', 'event-tickets-manager-for-woocommerce' ) . ' : ' . $checkin_count . '/' . $total_tickets_count . '</div>';
-											$html .= '</div>';
-											}
-										$html .= '</div>';
-									$html .= '</div>';
-								$html .= '</div>';
-							} else {
-								$html .= '<div class="wps-etmw_prod-price-btn-wrap">';
-									$html .= '<div class="wps-etmw_prod-price">' . wc_price( $product_price ) . '</div>';
-									$html .= '<div class="wps-etmw_event-btn"><button>' . esc_html__( 'View Event', 'event-tickets-manager-for-woocommerce' ) . '</button>';
-										if ( $wps_is_pro_active && 'on' === $wps_etmfwp_checkin_count ) {
-											$html .= '<div class="wps-etmw_prod-checkin-count">';
-												$html .= '<div>' . esc_html__( 'Checkin Count', 'event-tickets-manager-for-woocommerce' ) . ' : ' . $checkin_count . '/' . $total_tickets_count . '</div>';
-											$html .= '</div>';	
-										}
-									$html .= '</div>';
-								$html .= '</div>';
-							}
-						$html .= '</div>
-						<div class="wps-etmw_prod-date">
-							<div class="wps-etmw_prod-date-in">
-								<span class="wps-etmw_start-time-day">' . esc_html( substr( $wps_event_formated_start_day, 0, 3 ) ) . '</span>
-								<span class="wps-etmw_start-time-date">' . esc_html( $wps_event_formated_start_date ) . '</span>
 							</div>
-							<span class="wps-etmw_start-time-month">' . esc_html( $wps_event_formated_start_month ) . '</span>
+						</header>
+
+						<div class="wps-etmw-card-body">
+							<figure class="wps-etmw-card-image" style="' . esc_attr( $image_style ) . '" aria-hidden="true"></figure>
+							<div class="wps-etmw-card-meta">
+								<h4>' . esc_html( $product_name ) . '</h4>
+								<p class="wps-etmw-card-venue">
+									<img src="' . esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . 'public/src/image/map_pin.svg" alt="" />
+									' . esc_html( $wps_etmfw_product_array['etmfw_event_venue'] ) . '
+								</p>
+							</div>
 						</div>
-					</div>
+
+						<footer class="wps-etmw-card-footer">
+							<div class="wps-etmw-card-price-wrap">
+								<span class="wps-etmw-card-price">' . wc_price( $product_price ) . '</span>';
+								if ( $join_waiting_list && $wps_is_pro_active ) {
+									$html .= '<span class="wps-etmw-card-waiting">' . intval( $current_waiting_count ) . ' ' . esc_html__( 'Waiting', 'event-tickets-manager-for-woocommerce' ) . '</span>';
+								}
+							$html .= '</div>
+							<div class="wps-etmw-card-actions">
+								<button type="button">' . ( $join_waiting_list && $wps_is_pro_active ? esc_html__( 'Join Waiting List', 'event-tickets-manager-for-woocommerce' ) : esc_html__( 'View Event', 'event-tickets-manager-for-woocommerce' ) ) . '</button>';
+								if ( $wps_is_pro_active && 'on' === $wps_etmfwp_checkin_count ) {
+									$html .= '<span class="wps-etmw-card-checkin">' . esc_html__( 'Checkin Count', 'event-tickets-manager-for-woocommerce' ) . ' : ' . intval( $checkin_count ) . '/' . intval( $total_tickets_count ) . '</span>';
+								}
+							$html .= '</div>
+						</footer>
+					</article>
 				</a>';
+					
+			
 			}
 	
 			$html .= '<nav class="wps_woocommerce-pagination"><ul class="page-numbers">';
@@ -3021,12 +3020,13 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			return;
 		}
 		$cart_data = $cart->get_cart();
-		foreach ( $cart_data as $cart ) {
-			if ( 'event_ticket_manager' === $cart['data']->get_type() && isset( $cart['event_role'] ) ) {
-				$product = $cart['data'];
+		$base_price_applied = array();
+		foreach ( $cart_data as $cart_item_key => $cart_item ) {
+			if ( 'event_ticket_manager' === $cart_item['data']->get_type() && isset( $cart_item['event_role'] ) ) {
+				$product = $cart_item['data'];
 				if ( isset( $product ) && is_object( $product ) ) {
-					$price_html        = $cart['data']->get_price();
-					$custom_cart_data = $cart['event_role'];
+					$price_html        = $cart_item['data']->get_price();
+					$custom_cart_data = $cart_item['event_role'];
 					$product_id = $product->get_id();
 					$etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
 
@@ -3038,19 +3038,25 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 					}
 
 					$wps_base_price_condition = isset( $etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] ) && ! empty( $etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] ) ? $etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] : array();
-
-					if ( 'base_price' == $wps_base_price_condition ) {
-						$wps_total_price = get_option( 'wps_total_increased_value' );
-					} elseif ( 'not_base_price' == $wps_base_price_condition ) {
-						$wps_total_price = 0;
+					$apply_base_price = false;
+					if ( 'base_price' === $wps_base_price_condition && empty( $base_price_applied[ $product_id ] ) ) {
+						$apply_base_price = true;
 					}
 
-					$price_html = $price_html + $wps_total_price;
-					$cart['data']->set_price( $price_html );
+					if ( $apply_base_price ) {
+						// Only apply the base price once per product so the total equals base price plus the type totals.
+						$wps_total_price = get_option( 'wps_total_increased_value', 0 );
+						$quantity        = isset( $cart_item['quantity'] ) ? max( 1, (int) $cart_item['quantity'] ) : 1;
+						$line_total      = ( $price_html * $quantity ) + $wps_total_price;
+						$price_html      = $line_total / $quantity;
+						$base_price_applied[ $product_id ] = true;
+					}
+
+					$cart_item['data']->set_price( $price_html );
 				}
 			}
-				delete_option( 'wps_user_type_value' );
-				delete_option( 'wps_user_type_text' );
+			delete_option( 'wps_user_type_value' );
+			delete_option( 'wps_user_type_text' );
 		}
 	}
 

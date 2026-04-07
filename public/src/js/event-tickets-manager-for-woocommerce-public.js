@@ -130,15 +130,23 @@
 		jQuery(document).on('click', '.wps-etmfw-user-type-qty .wps-etmfw-plus, .wps-etmfw-user-type-qty .wps-etmfw-minus', function() {
 			var $wrapper = jQuery(this).closest('.wps-etmfw-user-type-qty');
 			var $input = $wrapper.find('input.qty');
-			var current = parseInt($input.val(), 10);
-			if (isNaN(current)) {
-				current = 0;
+		var current = parseInt($input.val(), 10);
+		if (isNaN(current)) {
+			current = 0;
+		}
+		var minVal = parseInt( $input.attr('min'), 10 );
+		minVal = isNaN( minVal ) ? 0 : minVal;
+		var maxVal = parseInt( $input.attr('max'), 10 );
+		maxVal = isNaN( maxVal ) ? null : maxVal;
+		if (jQuery(this).hasClass('wps-etmfw-plus')) {
+			var nextVal = current + 1;
+			if ( null !== maxVal ) {
+				nextVal = Math.min( nextVal, maxVal );
 			}
-			if (jQuery(this).hasClass('wps-etmfw-plus')) {
-				$input.val(current + 1).trigger('change');
-			} else {
-				$input.val(Math.max(0, current - 1)).trigger('change');
-			}
+			$input.val( nextVal ).trigger('change');
+		} else {
+			$input.val( Math.max( minVal, current - 1 ) ).trigger('change');
+		}
 		});
 		 
    		window.wpsEtmfwCopyToClipboard = function(text) {
