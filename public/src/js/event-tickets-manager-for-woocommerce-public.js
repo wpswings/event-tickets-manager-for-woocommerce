@@ -169,13 +169,17 @@
 
 		jQuery(document).on('click','.wps-etmfw_mdisant-trans',function(){
 			jQuery('.wps-etmfw_mdisan-item').removeClass('wps-etmfw_mdisan-item--active');
+			jQuery('.wps-etmfw_mdisan-item').attr('aria-selected', 'false');
 			jQuery(this).addClass('wps-etmfw_mdisan-item--active');
+			jQuery(this).attr('aria-selected', 'true');
 			jQuery('.wps-etmfw_mdisa-item').removeClass('wps-etmfw_mdisa-item--active');
 			jQuery('.wps-etmfw_mdisa-trans').addClass('wps-etmfw_mdisa-item--active');
 		});
 		jQuery(document).on('click','.wps-etmfw_mdisant-events',function(){
 			jQuery('.wps-etmfw_mdisan-item').removeClass('wps-etmfw_mdisan-item--active');
+			jQuery('.wps-etmfw_mdisan-item').attr('aria-selected', 'false');
 			jQuery(this).addClass('wps-etmfw_mdisan-item--active');
+			jQuery(this).attr('aria-selected', 'true');
 			jQuery('.wps-etmfw_mdisa-item').removeClass('wps-etmfw_mdisa-item--active');
 			jQuery('.wps-etmfw_mdisa-events').addClass('wps-etmfw_mdisa-item--active');
 		});
@@ -206,6 +210,7 @@
 jQuery(document).on('click', '#wps_etmfwp_event_transfer_button', function (e) {
 		e.preventDefault();
 		jQuery("#wps_etmfw_checkin_loader").show();
+		jQuery("#wps_etmfw_error_message").removeClass("wps_check_in_success wps_check_in_error").html("");
 		var user_email =  jQuery('#wps_etmfw_chckin_email').val();
 		var for_event = jQuery('#wps_etmfw_event_selected').val();
 		var ticket_num = jQuery('#wps_etmfw_imput_ticket').val();

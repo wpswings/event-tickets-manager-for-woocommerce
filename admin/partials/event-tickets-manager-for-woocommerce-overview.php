@@ -14,6 +14,10 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+$tab_context = Event_Tickets_Manager_For_Woocommerce_Admin_UI::get_tab_context( 'event-tickets-manager-for-woocommerce-overview' );
+
+ob_start();
 ?>
 <div class="wps_etmfw_table_wrapper wps_etmfw_overview-wrapper">
 	<div class="wps_etmfw_overview_banner-img">
@@ -87,4 +91,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 </div>
 <?php
+$content = ob_get_clean();
 
+Event_Tickets_Manager_For_Woocommerce_Admin_Layout::render_content_card( $tab_context, $content );
