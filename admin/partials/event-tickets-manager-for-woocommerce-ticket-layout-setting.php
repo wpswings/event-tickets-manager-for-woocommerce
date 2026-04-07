@@ -114,6 +114,9 @@ $allowed_html = array(
 );
 
 $wps_ubo_selected_template = ! empty( get_option( 'wps_etmfw_ticket_template' ) ) ? get_option( 'wps_etmfw_ticket_template' ) : '1';
+$tab_context               = Event_Tickets_Manager_For_Woocommerce_Admin_UI::get_tab_context( 'event-tickets-manager-for-woocommerce-ticket-layout-setting' );
+
+ob_start();
 ?>
 <form action="" method="POST">
 
@@ -584,3 +587,7 @@ if ( isset( $_POST['reset_wps'] ) ) {
 		update_option( 'wps_etmfw_pdf_border_color', 'black' );
 	}
 }
+
+$content = ob_get_clean();
+
+Event_Tickets_Manager_For_Woocommerce_Admin_Layout::render_content_card( $tab_context, $content );

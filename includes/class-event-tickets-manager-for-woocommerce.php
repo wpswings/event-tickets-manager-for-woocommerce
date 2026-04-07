@@ -130,6 +130,10 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		if ( is_admin() ) {
 
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/ui/components/class-event-tickets-manager-for-woocommerce-ui-components.php';
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/ui/layouts/class-event-tickets-manager-for-woocommerce-admin-layout.php';
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/ui/class-event-tickets-manager-for-woocommerce-admin-ui.php';
+
 			// The class responsible for defining all actions that occur in the admin area.
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-event-tickets-manager-for-woocommerce-admin.php';
 
@@ -199,6 +203,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_filter( 'wps_etmfw_general_settings_array', $etmfw_plugin_admin, 'wps_etmfw_admin_general_settings_page', 10 );
 		$this->loader->add_filter( 'wps_etmfw_integration_settings_array', $etmfw_plugin_admin, 'wps_etmfw_admin_integration_settings_page', 10 );
 		$this->loader->add_filter( 'wps_etmfw_email_template_settings_array', $etmfw_plugin_admin, 'wps_etmfw_admin_email_template_settings_page', 10 );
+		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'wps_etmfw_register_settings_api_fields', 5 );
 		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'wps_etmfw_admin_save_tab_settings' );
 		$wps_etmfw_enable_plugin = get_option( 'wps_etmfw_enable_plugin', false );
 

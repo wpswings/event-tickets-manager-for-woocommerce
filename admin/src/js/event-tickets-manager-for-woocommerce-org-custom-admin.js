@@ -98,37 +98,42 @@
 		);
 
 		//-------------------------------Pop-up For Pro Tags start -------------------------------------------//
-			var wps_event_pro_is_enable = wet_org_custom_param.is_pro_active;
-			if(1 == wps_event_pro_is_enable){
-				jQuery('.etmfw-radio-switch-class-pro').closest('.wps-form-group').addClass('wps-etmfw-radio-switch-class-pro-tag').hide();  
+		var wps_event_pro_is_enable = wet_org_custom_param.is_pro_active;
+		var proFields = jQuery('.etmfw-radio-switch-class-pro').closest('.wps-etmfw-ui-field');
+		if ( proFields.length ) {
+			proFields.addClass('wps-etmfw-radio-switch-class-pro-tag');
+			if ( 1 == wps_event_pro_is_enable ) {
+				proFields.show();
 			} else {
-				jQuery('.etmfw-radio-switch-class-pro').closest('.wps-form-group').addClass('wps-etmfw-radio-switch-class-pro-tag').show();
+				proFields.hide();
 			}
-			jQuery('.etmfw-radio-switch-class-pro').closest('.wps-form-group').addClass('wps-etmfw-radio-switch-class-pro-tag');
+		}
 
+		if ( 1 !== wps_event_pro_is_enable ) {
 			$('.wps_rma_pro_class_wrap label,.wps_rma_pro_div label').attr('for', '');
 
 			$(document).on('click', '.wps-etmfw-radio-switch-class-pro-tag', function() {
-				$('.wps-rma__popup-for-pro-shadow').show();
-				$('.wps-rma__popup-for-pro').addClass('active-pro');
-			})
-		
-			$(document).on('click', '.wps-rma__popup-for-pro-close', function() {
-				$('.wps-rma__popup-for-pro-shadow').hide();
-				$('.wps-rma__popup-for-pro').removeClass('active-pro');
-			})
-		
-			$(document).on('click', '.wps-rma__popup-for-pro-shadow', function() {
-				$(this).hide();
-				$('.wps-rma__popup-for-pro').removeClass('active-pro');
-			})
-		
-			$(document).on('click', '.wps_go_pro_link', function(e) {
-				e.preventDefault();
-				$('.wps-rma__popup-for-pro-shadow').show();
-				$('.wps-rma__popup-for-pro').addClass('active-pro');
-			})
-			$('.button_wps_rma_pro_div').css('pointer-events','none');
+					$('.wps-rma__popup-for-pro-shadow').show();
+					$('.wps-rma__popup-for-pro').addClass('active-pro');
+				})
+			
+				$(document).on('click', '.wps-rma__popup-for-pro-close', function() {
+					$('.wps-rma__popup-for-pro-shadow').hide();
+					$('.wps-rma__popup-for-pro').removeClass('active-pro');
+				})
+			
+				$(document).on('click', '.wps-rma__popup-for-pro-shadow', function() {
+					$(this).hide();
+					$('.wps-rma__popup-for-pro').removeClass('active-pro');
+				})
+			
+				$(document).on('click', '.wps_go_pro_link', function(e) {
+					e.preventDefault();
+					$('.wps-rma__popup-for-pro-shadow').show();
+					$('.wps-rma__popup-for-pro').addClass('active-pro');
+				})
+				$('.button_wps_rma_pro_div').css('pointer-events','none');
+		}
 		//-------------------------------Pop-up For Pro Tags End -------------------------------------------//
 
 		if (typeof wp !== 'undefined' && typeof wp.blocks !== 'undefined') {

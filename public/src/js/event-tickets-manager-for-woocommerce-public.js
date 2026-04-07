@@ -130,15 +130,23 @@
 		jQuery(document).on('click', '.wps-etmfw-user-type-qty .wps-etmfw-plus, .wps-etmfw-user-type-qty .wps-etmfw-minus', function() {
 			var $wrapper = jQuery(this).closest('.wps-etmfw-user-type-qty');
 			var $input = $wrapper.find('input.qty');
-			var current = parseInt($input.val(), 10);
-			if (isNaN(current)) {
-				current = 0;
+		var current = parseInt($input.val(), 10);
+		if (isNaN(current)) {
+			current = 0;
+		}
+		var minVal = parseInt( $input.attr('min'), 10 );
+		minVal = isNaN( minVal ) ? 0 : minVal;
+		var maxVal = parseInt( $input.attr('max'), 10 );
+		maxVal = isNaN( maxVal ) ? null : maxVal;
+		if (jQuery(this).hasClass('wps-etmfw-plus')) {
+			var nextVal = current + 1;
+			if ( null !== maxVal ) {
+				nextVal = Math.min( nextVal, maxVal );
 			}
-			if (jQuery(this).hasClass('wps-etmfw-plus')) {
-				$input.val(current + 1).trigger('change');
-			} else {
-				$input.val(Math.max(0, current - 1)).trigger('change');
-			}
+			$input.val( nextVal ).trigger('change');
+		} else {
+			$input.val( Math.max( minVal, current - 1 ) ).trigger('change');
+		}
 		});
 		 
    		window.wpsEtmfwCopyToClipboard = function(text) {
@@ -169,13 +177,17 @@
 
 		jQuery(document).on('click','.wps-etmfw_mdisant-trans',function(){
 			jQuery('.wps-etmfw_mdisan-item').removeClass('wps-etmfw_mdisan-item--active');
+			jQuery('.wps-etmfw_mdisan-item').attr('aria-selected', 'false');
 			jQuery(this).addClass('wps-etmfw_mdisan-item--active');
+			jQuery(this).attr('aria-selected', 'true');
 			jQuery('.wps-etmfw_mdisa-item').removeClass('wps-etmfw_mdisa-item--active');
 			jQuery('.wps-etmfw_mdisa-trans').addClass('wps-etmfw_mdisa-item--active');
 		});
 		jQuery(document).on('click','.wps-etmfw_mdisant-events',function(){
 			jQuery('.wps-etmfw_mdisan-item').removeClass('wps-etmfw_mdisan-item--active');
+			jQuery('.wps-etmfw_mdisan-item').attr('aria-selected', 'false');
 			jQuery(this).addClass('wps-etmfw_mdisan-item--active');
+			jQuery(this).attr('aria-selected', 'true');
 			jQuery('.wps-etmfw_mdisa-item').removeClass('wps-etmfw_mdisa-item--active');
 			jQuery('.wps-etmfw_mdisa-events').addClass('wps-etmfw_mdisa-item--active');
 		});
@@ -206,6 +218,7 @@
 jQuery(document).on('click', '#wps_etmfwp_event_transfer_button', function (e) {
 		e.preventDefault();
 		jQuery("#wps_etmfw_checkin_loader").show();
+		jQuery("#wps_etmfw_error_message").removeClass("wps_check_in_success wps_check_in_error").html("");
 		var user_email =  jQuery('#wps_etmfw_chckin_email').val();
 		var for_event = jQuery('#wps_etmfw_event_selected').val();
 		var ticket_num = jQuery('#wps_etmfw_imput_ticket').val();
