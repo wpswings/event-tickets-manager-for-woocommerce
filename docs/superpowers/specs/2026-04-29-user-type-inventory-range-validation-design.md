@@ -34,6 +34,25 @@ The save flow currently maps `etmfwppp_fields` directly into the product meta pa
 
 The fix should keep the validation rule narrow and local to the user-type pricing table instead of adding broad product-level restrictions.
 
+## Scope Guardrail
+
+This work must stay limited to the specific inventory range validation feature only.
+
+Allowed changes:
+
+- validation for `Inventory Min` and `Inventory Max` in user-type pricing rows
+- the smallest related PHP save-path changes required to reject invalid data
+- the smallest related product edit JavaScript/UI changes required to block invalid submission and show the error
+- a narrow regression check for this validation if practical
+
+Not allowed:
+
+- unrelated styling changes
+- unrelated product edit behavior changes
+- changes to other pricing features
+- changes to frontend pricing logic beyond protecting saved admin data from invalid min/max ranges
+- refactors outside the code required for this validation rule
+
 ## Components Affected
 
 ### 1. PHP Save Validation
