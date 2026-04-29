@@ -443,13 +443,23 @@ form.cart.wps-etmfw-has-user-types .quantity:not(.wps-etmfw-user-type-qty) {
   display: grid;
   gap: 28px;
   margin: 60px 0 0;
+}
+
+#wps-search-results.wps_card {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+#wps-search-results.wps_list {
+  grid-template-columns: 1fr;
+  gap: 20px;
 }
 
 .wps-etmw-card-link,
 .wps-etmw-card-link:hover,
 .wps-etmw-card-link:focus,
 .wps-etmw-card-link:active {
+  display: block;
+  height: 100%;
   text-decoration: none !important;
 }
 
@@ -461,11 +471,7 @@ form.cart.wps-etmfw-has-user-types .quantity:not(.wps-etmfw-user-type-qty) {
   background: linear-gradient(180deg, #fff 0%, #fefefe 50%, #fff 100%);
   border-radius: 36px;
   padding: 22px;
-  min-height: 100%;
   box-shadow: 0 20px 45px rgba(55, 35, 112, 0.14);
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
 }
@@ -475,11 +481,18 @@ form.cart.wps-etmfw-has-user-types .quantity:not(.wps-etmfw-user-type-qty) {
   box-shadow: 0 35px 65px rgba(55, 35, 112, 0.2);
 }
 
-.wps-etmw-card-top {
+#wps-search-results.wps_card .wps-etmw-card {
+  min-height: 100%;
   display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+#wps-search-results.wps_card .wps-etmw-card-top {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  gap: 18px;
 }
 
 .wps-etmw-card-badge {
@@ -507,10 +520,11 @@ form.cart.wps-etmfw-has-user-types .quantity:not(.wps-etmfw-user-type-qty) {
 .wps-etmw-card-endcap {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 4px;
+  align-items: flex-start;
+  gap: 6px;
   font-size: 12px;
-  text-align: right;
+  min-width: 0;
+  text-align: left;
 }
 
 .wps-etmw-card-tag {
@@ -523,17 +537,20 @@ form.cart.wps-etmfw-has-user-types .quantity:not(.wps-etmfw-user-type-qty) {
 .wps-etmw-card-time {
   font-size: 13px;
   color: #5d5777;
+  line-height: 1.5;
 }
 
-.wps-etmw-card-body {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
+#wps-search-results.wps_card .wps-etmw-card-body {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
 }
 
 .wps-etmw-card-image {
   width: 120px;
   height: 96px;
+  margin: 0;
   border-radius: 20px;
   background-size: cover;
   background-position: center;
@@ -542,22 +559,29 @@ form.cart.wps-etmfw-has-user-types .quantity:not(.wps-etmfw-user-type-qty) {
 }
 
 .wps-etmw-card-meta {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   flex: 1;
 }
 
 .wps-etmw-card-meta h4 {
-  margin: 0 0 4px;
+  margin: 0;
   font-size: 20px;
   color: #1a0f3c;
   font-weight: 700;
+  line-height: 1.25;
 }
 
 .wps-etmw-card-venue {
+  margin: 0;
   font-size: 14px;
   color: #4c4468;
   display: flex;
   align-items: center;
   gap: 6px;
+  line-height: 1.5;
 }
 
 .wps-etmw-card-venue img {
@@ -566,18 +590,18 @@ form.cart.wps-etmfw-has-user-types .quantity:not(.wps-etmfw-user-type-qty) {
   filter: opacity(0.7);
 }
 
-.wps-etmw-card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
+#wps-search-results.wps_card .wps-etmw-card-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 16px;
 }
 
 .wps-etmw-card-price-wrap {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
 }
 
 .wps-etmw-card-price {
@@ -591,14 +615,19 @@ form.cart.wps-etmfw-has-user-types .quantity:not(.wps-etmfw-user-type-qty) {
   color: #f17e00;
 }
 
-.wps-etmw-card-actions {
+#wps-search-results.wps_card .wps-etmw-card-actions {
   display: flex;
   flex-direction: column;
   gap: 6px;
   align-items: flex-end;
+  justify-self: end;
 }
 
 .wps-etmw-card-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 136px;
   border: none;
   padding: 10px 28px;
   border-radius: 999px;
@@ -620,16 +649,120 @@ form.cart.wps-etmfw-has-user-types .quantity:not(.wps-etmfw-user-type-qty) {
   font-size: 12px;
   color: #7b6bcf;
   font-weight: 600;
+  line-height: 1.4;
+  text-align: right;
+}
+
+#wps-search-results.wps_list .wps-etmw-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 220px);
+  grid-template-areas:
+    "top footer"
+    "body footer";
+  gap: 18px 28px;
+  align-items: center;
+}
+
+#wps-search-results.wps_list .wps-etmw-card-top {
+  grid-area: top;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 18px;
+}
+
+#wps-search-results.wps_list .wps-etmw-card-body {
+  grid-area: body;
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+}
+
+#wps-search-results.wps_list .wps-etmw-card-footer {
+  grid-area: footer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+#wps-search-results.wps_list .wps-etmw-card-price-wrap {
+  align-items: flex-end;
+}
+
+#wps-search-results.wps_list .wps-etmw-card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: stretch;
+  width: 100%;
+}
+
+#wps-search-results.wps_list .wps-etmw-card-actions button {
+  width: 100%;
+}
+
+#wps-search-results.wps_list .wps-etmw-card-checkin {
+  text-align: right;
 }
 
 @media screen and (max-width: 780px) {
-  .wps-etmw-card-body {
-    flex-direction: column;
+  #wps-search-results.wps_card .wps-etmw-card-top,
+  #wps-search-results.wps_card .wps-etmw-card-body {
+    grid-template-columns: 1fr;
     align-items: flex-start;
   }
 
-  .wps-etmw-card-actions {
+  #wps-search-results.wps_card .wps-etmw-card-footer {
+    grid-template-columns: 1fr;
     align-items: flex-start;
+  }
+
+  #wps-search-results.wps_card .wps-etmw-card-actions {
+    align-items: flex-start;
+    justify-self: start;
+  }
+
+  #wps-search-results.wps_card .wps-etmw-card-checkin {
+    text-align: left;
+  }
+
+  #wps-search-results.wps_list .wps-etmw-card {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "top"
+      "body"
+      "footer";
+    gap: 18px;
+  }
+
+  #wps-search-results.wps_list .wps-etmw-card-top,
+  #wps-search-results.wps_list .wps-etmw-card-body {
+    grid-template-columns: 1fr;
+    align-items: flex-start;
+  }
+
+  #wps-search-results.wps_list .wps-etmw-card-footer {
+    align-items: flex-start;
+  }
+
+  #wps-search-results.wps_list .wps-etmw-card-price-wrap {
+    align-items: flex-start;
+  }
+
+  #wps-search-results.wps_list .wps-etmw-card-actions {
+    align-items: flex-start;
+  }
+
+  #wps-search-results.wps_list .wps-etmw-card-actions button {
+    width: auto;
+  }
+
+  #wps-search-results.wps_list .wps-etmw-card-checkin {
+    text-align: left;
   }
 }
 
