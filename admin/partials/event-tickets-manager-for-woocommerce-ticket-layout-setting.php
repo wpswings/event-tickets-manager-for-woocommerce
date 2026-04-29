@@ -367,7 +367,7 @@ ob_start();
 				<?php if ( ( 1 == (int) $wps_ubo_selected_template ) || 2 == (int) $wps_ubo_selected_template || 3 == (int) $wps_ubo_selected_template || 4 == (int) $wps_ubo_selected_template || ( 5 == (int) $wps_ubo_selected_template ) ) { ?>
 				<tr valign="top">
 					<th><?php esc_html_e( 'Select Background Color', 'event-tickets-manager-for-woocommerce' ); ?></th>
-					<td>
+						<td>
 					<?php
 					$attribute_description = esc_html__( 'Select different background color for PDF Ticket.', 'event-tickets-manager-for-woocommerce' );
 					$wps_etmfw_background_color = ! empty( get_option( 'wps_etmfw_pdf_background_color' ) ) ? get_option( 'wps_etmfw_pdf_background_color' ) : '';
@@ -397,8 +397,16 @@ ob_start();
 					$attribute_description = esc_html__( 'Select different logo size for PDF Ticket.', 'event-tickets-manager-for-woocommerce' );
 					$wps_etmfw_logo_size = ! empty( get_option( 'wps_etmfw_logo_size' ) ) ? get_option( 'wps_etmfw_logo_size' ) : '';
 					?>
-					<input type="range" min="100" value="<?php echo esc_attr( $wps_etmfw_logo_size ); ?>"  max="200" value="" name='wps_etmfw_logo_size' class="wps_etmfw_logo_size_slider" />
-					<span class="wps_etmfw_logo_size_slider_span" ><?php echo esc_attr( $wps_etmfw_logo_size . 'px' ); ?></span>
+					<div class="wps-etmfw-size-slider wps-etmfw-size-slider--logo">
+						<div class="wps-etmfw-size-slider__top">
+							<input type="range" min="100" value="<?php echo esc_attr( $wps_etmfw_logo_size ); ?>" max="200" name="wps_etmfw_logo_size" class="wps_etmfw_logo_size_slider wps-etmfw-size-slider__range" />
+							<span class="wps_etmfw_logo_size_slider_span wps-etmfw-size-slider__value"><?php echo esc_attr( $wps_etmfw_logo_size . 'px' ); ?></span>
+						</div>
+						<div class="wps-etmfw-size-slider__scale">
+							<span><?php esc_html_e( '100px', 'event-tickets-manager-for-woocommerce' ); ?></span>
+							<span><?php esc_html_e( '200px', 'event-tickets-manager-for-woocommerce' ); ?></span>
+						</div>
+					</div>
 					<span class="wps_etmfw_helper_text"><?php echo esc_html( $attribute_description ); ?></span>
 				</td>
 				</tr>
@@ -411,8 +419,16 @@ ob_start();
 					$attribute_description = esc_html__( 'Select different QR size for PDF Ticket.', 'event-tickets-manager-for-woocommerce' );
 					$wps_etmfw_qr_size = ! empty( get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 'wps_etmfw_qr_size' ) : '';
 					?>
-					<input type="range" min="100" value="<?php echo esc_attr( $wps_etmfw_qr_size ); ?>"  max="220" value="" name='wps_etmfw_qr_size' class="wps_etmfw_qr_size_slider" />
-					<span class="wps_etmfw_qr_size_slider_span" ><?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?></span>
+					<div class="wps-etmfw-size-slider wps-etmfw-size-slider--qr">
+						<div class="wps-etmfw-size-slider__top">
+							<input type="range" min="100" value="<?php echo esc_attr( $wps_etmfw_qr_size ); ?>" max="220" name="wps_etmfw_qr_size" class="wps_etmfw_qr_size_slider wps-etmfw-size-slider__range" />
+							<span class="wps_etmfw_qr_size_slider_span wps-etmfw-size-slider__value"><?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?></span>
+						</div>
+						<div class="wps-etmfw-size-slider__scale">
+							<span><?php esc_html_e( '100px', 'event-tickets-manager-for-woocommerce' ); ?></span>
+							<span><?php esc_html_e( '220px', 'event-tickets-manager-for-woocommerce' ); ?></span>
+						</div>
+					</div>
 					<span class="wps_etmfw_helper_text"><?php echo esc_html( $attribute_description ); ?></span>
 				</td>
 				</tr>
@@ -475,12 +491,12 @@ ob_start();
 				</div>
 				<!-- Preview end -->
 			</div>
-				<div class="wps-form-group wps_center_save_changes" >
+				<div class="wps-form-group wps_center_save_changes wps-etmfw-layout-actions" >
 							<div class="wps-form-group__control">
-								<button class="mdc-button mdc-button--raised" name= "wps_etmfw_new_layout_setting_save_2" ><span class="mdc-button__ripple"></span>
+								<button class="mdc-button mdc-button--raised wps-etmfw-layout-button" name= "wps_etmfw_new_layout_setting_save_2" ><span class="mdc-button__ripple"></span>
 									<span class="mdc-button__label"><?php echo 'Save'; ?></span>
 								</button>
-								<button class="mdc-button mdc-button--raised" name= "reset_wps" ><span class="mdc-button__ripple"></span>
+								<button class="mdc-button mdc-button--raised wps-etmfw-layout-button" name= "reset_wps" ><span class="mdc-button__ripple"></span>
 									<span class="mdc-button__label"><?php echo 'Reset'; ?></span>
 								</button>
 							</div>
@@ -589,5 +605,4 @@ if ( isset( $_POST['reset_wps'] ) ) {
 }
 
 $content = ob_get_clean();
-
 Event_Tickets_Manager_For_Woocommerce_Admin_Layout::render_content_card( $tab_context, $content );

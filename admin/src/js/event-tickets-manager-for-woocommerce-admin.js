@@ -46,98 +46,94 @@
             });
 
         wps_etmfw_hide_bck_ground_image_setting();
-        // Available Ticket Template Change - Start.
-        $('.wps_etmfw_colorpicker').wpColorPicker();
+        if ( typeof window.etmfwInitColorPickers === 'function' ) {
+            window.etmfwInitColorPickers( document );
+        }
 
         //Dynamic text color for pdf ticket start here.
-        var wps_etmfw_text_color_change = $('.wps_etmfw_pdf_text_color'); // Select color picker element
-        var wps_etmfw_text_color = ''; // Variable to store selected color
-        var wps_etmfw_text_color_selector = $('.wps_etmfw_pdf_text_colour'); // Select elements to change text color
-        
-        wps_etmfw_text_color_change.wpColorPicker({ // Initialize color picker
-            change: function(event, ui) { // Event listener for color change
-                wps_etmfw_text_color = ui.color.toString(); // Get selected color
-                wps_etmfw_text_color_selector.css('color', wps_etmfw_text_color); // Apply selected color to text
-                $('#wps_not_change_color').css('color','white');
-            }
-        });
+        function wps_etmfw_apply_text_color() {
+            var wps_etmfw_text_color = $('.wps_etmfw_pdf_text_color').val() || '';
+            $('.wps_etmfw_pdf_text_colour').css('color', wps_etmfw_text_color);
+            $('#wps_not_change_color').css('color', 'white');
+        }
+
+        $(document).on('change input', '.wps_etmfw_pdf_text_color', wps_etmfw_apply_text_color);
+        wps_etmfw_apply_text_color();
         //Dynamic text color for pdf ticket end here.
         //Dynamic color change for border start here.
-        var wps_etmfw_border_color_change = $('.wps_etmfw_select_ticket_border_color'); //1.1.5.
-        var wps_etmfw_border_color = '';
-        var wps_etmfw_border_color_selector = $('.wps_etmfw_border_color');//1.1.5.
+        function wps_etmfw_apply_border_preview_color() {
+            var wps_etmfw_border_color = $('.wps_etmfw_select_ticket_border_color').val() || '';
+            $('.wps_etmfw_border_color').css('border-color', wps_etmfw_border_color);
+        }
 
-        wps_etmfw_border_color_change.wpColorPicker({ //1.1.5.
-            change: (event, ui) => {
-
-                wps_etmfw_border_color = ui.color.toString();
-                wps_etmfw_border_color_selector.css('border-color', wps_etmfw_border_color);
-            }
+        $(document).on('change input', '.wps_etmfw_select_ticket_border_color', function() {
+            wps_etmfw_apply_border_preview_color();
+            wps_etmfw_apply_border_styling();
         });
+        wps_etmfw_apply_border_preview_color();
         //Dynamic color change for border ends here.
 
 
         //Dynamic Changes for background start Here.
-        var wps_etmfw_background_color_change = $('.wps_etmfw_select_ticket_background'); //1.1.5.
-        var wps_etmfw_background_color = '';
-        var wps_etmfw_background_selector = $('.wps_etmfw_ticket_body'); //1.1.5.
+        function wps_etmfw_apply_background_color() {
+            var wps_etmfw_background_color = $('.wps_etmfw_select_ticket_background').val() || '';
+            $('.wps_etmfw_ticket_body').css('background-color', wps_etmfw_background_color);
+            $('#wps_etmfw_parent_wrapper_3').css('background-color', 'white');
+        }
 
-        wps_etmfw_background_color_change.wpColorPicker({ //1.1.5.
-            change: (event, ui) => {
-                wps_etmfw_background_color = ui.color.toString();
-                wps_etmfw_background_selector.css('background-color', wps_etmfw_background_color);
-                $('#wps_etmfw_parent_wrapper_3').css('background-color', 'white');
-            }
-        });
+        $(document).on('change input', '.wps_etmfw_select_ticket_background', wps_etmfw_apply_background_color);
+        wps_etmfw_apply_background_color();
         //Dynamic Changes for background end Here.
 
 
         //Dynamic Changes for header background color start Here.
-        var wps_etmfw_header_background_color_change = $('.wps_etmfw_select_ticket_header_background'); //1.1.5.
-        var wps_etmfw_header_background_color = '';
-        var wps_etmfw_header_background_selector = $('.ticket-header');//1.1.5.
+        function wps_etmfw_apply_header_background_color() {
+            var wps_etmfw_header_background_color = $('.wps_etmfw_select_ticket_header_background').val() || '';
+            $('.ticket-header').css('background-color', wps_etmfw_header_background_color);
+        }
 
-        wps_etmfw_header_background_color_change.wpColorPicker({ //1.1.5.
-            change: (event, ui) => {
-
-                wps_etmfw_header_background_color = ui.color.toString();
-                wps_etmfw_header_background_selector.css('background-color', wps_etmfw_header_background_color);
-            }
-        });
+        $(document).on('change input', '.wps_etmfw_select_ticket_header_background', wps_etmfw_apply_header_background_color);
+        wps_etmfw_apply_header_background_color();
         //Dynamic Changes for header background color end Here.
 
 
         //Dynamic Changes for logo size start Here.
-        var VerticalSpacingTop = '';
-        var VerticalSpacingTop1 = '';
+        function wps_etmfw_sync_size_slider($input, valueSelector) {
+            var value = parseInt($input.val(), 10) || 0;
+            var min = parseInt($input.attr('min'), 10) || 0;
+            var max = parseInt($input.attr('max'), 10) || 100;
+            var progress = 0;
 
-        $('.wps_etmfw_logo_size_slider').on('change', function() {
-
-            VerticalSpacingTop = $(this).val();
-            console.log(VerticalSpacingTop);
-
-            var yourImg = document.getElementById('wps_wem_logo_id');
-            if (yourImg && yourImg.style) {
-                yourImg.style.width = VerticalSpacingTop + 'px';
+            if ( max > min ) {
+                progress = ((value - min) / (max - min)) * 100;
             }
 
-            $('.wps_etmfw_logo_size_slider_span').html(VerticalSpacingTop + 'px');
+            $input.closest('.wps-etmfw-size-slider').css('--etmfw-slider-progress', progress + '%');
+            $(valueSelector).html(value + 'px');
+            return value;
+        }
+
+        $('.wps_etmfw_logo_size_slider').on('input change', function() {
+            var value = wps_etmfw_sync_size_slider($(this), '.wps_etmfw_logo_size_slider_span');
+            var yourImg = document.getElementById('wps_wem_logo_id');
+            if (yourImg && yourImg.style) {
+                yourImg.style.width = value + 'px';
+            }
+        }).each(function() {
+            wps_etmfw_sync_size_slider($(this), '.wps_etmfw_logo_size_slider_span');
         });
         //Dynamic Changes for logo end Here.
 
         //Dyanmic chnages for the QR Image start here.
-        $('.wps_etmfw_qr_size_slider').on('change', function() {
-
-            VerticalSpacingTop1 = $(this).val();
-            console.log(VerticalSpacingTop1);
-
+        $('.wps_etmfw_qr_size_slider').on('input change', function() {
+            var value = wps_etmfw_sync_size_slider($(this), '.wps_etmfw_qr_size_slider_span');
             var yourImg = document.getElementById('wps_qr_image');
             if (yourImg && yourImg.style) {
-                yourImg.style.width = VerticalSpacingTop1 + 'px';
-                yourImg.style.height = VerticalSpacingTop1 + 'px';
+                yourImg.style.width = value + 'px';
+                yourImg.style.height = value + 'px';
             }
-
-            $('.wps_etmfw_qr_size_slider_span').html(VerticalSpacingTop1 + 'px');
+        }).each(function() {
+            wps_etmfw_sync_size_slider($(this), '.wps_etmfw_qr_size_slider_span');
         });
         //Dyanmic chnages for the QR Image end here.
 
@@ -390,6 +386,4 @@
                 $('.wps_etmfw_hide_setting').hide();
             }
         }
-
-        $('.wps_etmfw_colorpicker').wpColorPicker();
 })(jQuery);

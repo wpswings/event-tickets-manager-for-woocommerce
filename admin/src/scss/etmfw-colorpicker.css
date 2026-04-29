@@ -1,0 +1,194 @@
+.wps-etmfw-picker {
+    --etmfw-picked-color: #000000;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 0;
+    max-width: 990px;
+    padding: 12px 16px;
+    border: 1px solid #f1dfcd;
+    border-radius: 18px;
+    background: #fffdf9;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.wps-etmfw-picker.has-color-value {
+    background: #fffdfa;
+}
+
+.wps-etmfw-picker:focus-within {
+    border-color: #d9be99;
+    box-shadow: 0 0 0 3px rgba(230, 202, 167, 0.32);
+}
+
+.wps-etmfw-picker .wp-color-result {
+    position: relative;
+    width: 36px;
+    min-width: 36px;
+    height: 36px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 9px;
+    background: var(--etmfw-picked-color);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+
+.wps-etmfw-picker .wp-color-result:focus {
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12), 0 0 0 2px rgba(36, 24, 63, 0.12);
+}
+
+.wps-etmfw-picker .wp-color-result::after {
+    display: none;
+}
+
+.wps-etmfw-picker .wp-color-result-text {
+    display: none;
+}
+
+.wps-etmfw-picker-meta {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    gap: 4px;
+}
+
+.wps-etmfw-picker-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.wps-etmfw-picker-title {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 24px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: #fbe6c6;
+    color: #2e2414;
+    font-family: 'NunitoSans-Bold', sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    line-height: 1;
+}
+
+.wps-etmfw-picker-hex {
+    min-width: 0;
+    color: #000000;
+    font-family: 'NunitoSans-Bold', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0;
+    line-height: 1;
+}
+
+.wps-etmfw-picker-description {
+    min-width: 0;
+}
+
+.wps-etmfw-picker-description-text {
+    display: block;
+    margin: 0;
+    color: #907d69;
+    font-family: 'NunitoSans-Regular', sans-serif;
+    font-size: 13px;
+    line-height: 1.35;
+}
+
+.wps-etmfw-picker .wp-picker-input-wrap {
+    display: none !important;
+}
+
+.wps-etmfw-picker .wp-picker-holder {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    z-index: 40;
+    margin: 0;
+}
+
+.wps-etmfw-picker .iris-picker {
+    border: 1px solid #eadbc6;
+    border-radius: 16px;
+    box-shadow: 0 18px 38px rgba(48, 17, 77, 0.12);
+    overflow: hidden;
+}
+
+.wps-etmfw-picker .wp-picker-clear,
+.wps-etmfw-picker .wp-picker-default,
+.wps-etmfw-picker .wp-picker-open,
+.wps-etmfw-picker .wp-picker-toggle {
+    display: none !important;
+}
+
+.wps_etmfw_creation_setting td .wps-etmfw-picker {
+    gap: 10px;
+    max-width: 255px;
+    padding: 10px 12px;
+    border-radius: 16px;
+}
+
+.wps_etmfw_creation_setting td .wps-etmfw-picker .wp-color-result {
+    width: 34px;
+    min-width: 34px;
+    height: 34px;
+    border-radius: 8px;
+}
+
+.wps_etmfw_creation_setting td .wps-etmfw-picker-head {
+    gap: 8px;
+}
+
+.wps_etmfw_creation_setting td .wps-etmfw-picker-title {
+    min-height: 22px;
+    padding: 0 9px;
+    font-size: 9px;
+}
+
+.wps_etmfw_creation_setting td .wps-etmfw-picker-hex {
+    font-size: 18px;
+}
+
+.wps_etmfw_creation_setting td .wps-etmfw-picker-description-text {
+    font-size: 12px;
+    line-height: 1.25;
+}
+
+@media screen and (max-width: 782px) {
+    .wps-etmfw-picker {
+        padding: 11px 14px;
+    }
+
+    .wps-etmfw-picker-hex {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .wps-etmfw-picker {
+        align-items: flex-start;
+        min-height: 0;
+    }
+
+    .wps-etmfw-picker-head {
+        flex-wrap: wrap;
+        gap: 8px 10px;
+    }
+
+    .wps-etmfw-picker-hex {
+        font-size: 18px;
+    }
+
+    .wps-etmfw-picker-description-text {
+        font-size: 12px;
+    }
+}

@@ -158,6 +158,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			array(
 				'event-tickets-manager-for-woocommerce-email-template',
 				'event-tickets-manager-for-woocommerce-ticket-layout-setting',
+				'event-tickets-manager-for-woocommerce-dashboard-settings',
 			),
 			true
 		);
@@ -213,6 +214,11 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			wp_enqueue_style( 'wps-etmfw-meterial-lite', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.css', array(), $this->version, 'all' );
 			wp_enqueue_style( 'wps-etmfw-meterial-icons-css', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/icon.css', array(), $this->version, 'all' );
 			wp_enqueue_style( $this->plugin_name . '-admin-global', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/event-tickets-manager-for-woocommerce-admin-global.css', array( 'wps-etmfw-meterial-icons-css' ), $this->version, 'all' );
+			if ( $this->etmfw_tab_requires_color_picker( $active_tab ) ) {
+				wp_enqueue_style( 'wp-color-picker' );
+				wp_register_style( $this->plugin_name . '-colorpicker-pill', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/etmfw-colorpicker.css', array( $this->plugin_name . '-admin-global' ), $this->version, 'all' );
+				wp_enqueue_style( $this->plugin_name . '-colorpicker-pill' );
+			}
 			wp_enqueue_style( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/event-tickets-manager-for-woocommerce-admin.scss', array(), $this->version, 'all' );
 		}
 		if ( $this->etmfw_is_product_related_screen( $screen_id ) ) {
@@ -247,6 +253,11 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			wp_enqueue_script( 'wp-color-picker' );
 
 			wp_register_script( $this->plugin_name . 'admin-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/js/event-tickets-manager-for-woocommerce-admin.js', array( 'jquery', 'wps-etmfw-select2', 'wps-etmfw-metarial-js', 'wps-etmfw-metarial-js2', 'wps-etmfw-metarial-lite', 'wp-color-picker' ), $this->version, true );
+
+			if ( $this->etmfw_tab_requires_color_picker( $active_tab ) ) {
+				wp_register_script( $this->plugin_name . '-colorpicker-init', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/js/etmfw-colorpicker-init.js', array( 'jquery', 'wp-color-picker' ), $this->version, true );
+				wp_enqueue_script( $this->plugin_name . '-colorpicker-init' );
+			}
 
 			$wps_etmfw_selected_template = get_option( 'wps_etmfw_ticket_template', '1' );
 
@@ -307,19 +318,30 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function etmfw_hide_pro_only_settings() {
-		if ( $this->etmfw_is_pro_active() ) {
-			return;
-		}
-
 		$screen_id = $this->etmfw_get_current_screen_id();
 		if ( ! $this->etmfw_is_plugin_admin_screen( $screen_id ) ) {
 			return;
 		}
 
+		// If Pro is active: disable the CSS pseudo-element that prints the "PRO"
+		// badge (so Pro users don't see a 'PRO' marker). If Pro is not active,
+		// keep hiding pro-only controls so free users can't access them.
+		if ( $this->etmfw_is_pro_active() ) {
+			// Hide any visual "Pro" markers for pro users so they don't see
+			// promotional ribbons or pseudo-elements that were intended for
+			// free users. This keeps the admin UI clean for paid installs.
+			echo '<style>';
+			echo '.wps_etmfw_creation_setting td:before{display:none!important;}';
+			echo '.wps_etmfw_premium_strip, .wps_etmfw_premium_strip:after{display:none!important;}';
+			echo '.wps-etmfw-radio-switch-class-pro-tag, .wps-etmfw-radio-switch-class-pro-tag .wps-form-group__label:before{display:none!important;}';
+			echo '</style>';
+			return;
+		}
+
 		echo '<style>
-.etmfw-radio-switch-class-pro,.wps-etmfw-radio-switch-class-pro-tag{display:none!important;}
-.wps-form-group[class*="class-pro"],.wps-form-group [class*="-class-pro"],.wps-form-group [class*="class-pro"]{display:none!important;}
-</style>';
+			.etmfw-radio-switch-class-pro,.wps-etmfw-radio-switch-class-pro-tag{display:none!important;}
+			.wps-form-group[class*="class-pro"],.wps-form-group [class*="-class-pro"],.wps-form-group [class*="class-pro"]{display:none!important;}
+			</style>';
 	}
 
 	/**

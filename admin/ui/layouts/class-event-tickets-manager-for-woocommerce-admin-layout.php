@@ -15,6 +15,47 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Event_Tickets_Manager_For_Woocommerce_Admin_Layout {
 
 	/**
+	 * Render the shared intro card used above each selected tab.
+	 *
+	 * @param array $args Intro card arguments.
+	 * @return void
+	 */
+	private static function render_intro_card( $args = array() ) {
+		$defaults = array(
+			'eyebrow'             => '',
+			'title'               => '',
+			'description'         => '',
+			'documentation_label' => __( 'Read Documentation', 'event-tickets-manager-for-woocommerce' ),
+			'documentation_url'   => '',
+		);
+		$args = wp_parse_args( $args, $defaults );
+
+		if ( empty( $args['eyebrow'] ) && empty( $args['title'] ) && empty( $args['description'] ) && empty( $args['documentation_url'] ) ) {
+			return;
+		}
+
+		echo '<section class="wps-etmfw-ui-card wps-etmfw-ui-intro-card">';
+		echo '<div class="wps-etmfw-ui-card__header">';
+		echo '<div class="wps-etmfw-ui-card__heading">';
+		if ( $args['eyebrow'] ) {
+			echo '<span class="wps-etmfw-ui-card__eyebrow">' . esc_html( $args['eyebrow'] ) . '</span>';
+		}
+		if ( $args['title'] ) {
+			echo '<h2>' . esc_html( $args['title'] ) . '</h2>';
+		}
+		if ( $args['description'] ) {
+			echo '<p>' . esc_html( $args['description'] ) . '</p>';
+		}
+		echo '</div>';
+
+		if ( $args['documentation_url'] ) {
+			echo '<a class="wps-etmfw-ui-button wps-etmfw-ui-button--primary" href="' . esc_url( $args['documentation_url'] ) . '" target="_blank" rel="noreferrer noopener">' . esc_html( $args['documentation_label'] ) . '</a>';
+		}
+		echo '</div>';
+		echo '</section>';
+	}
+
+	/**
 	 * Render the top header bar.
 	 *
 	 * @param array $args Header arguments.
@@ -128,25 +169,9 @@ class Event_Tickets_Manager_For_Woocommerce_Admin_Layout {
 		);
 		$args     = wp_parse_args( $args, $defaults );
 
-		echo '<section class="wps-etmfw-ui-card">';
-		echo '<div class="wps-etmfw-ui-card__header">';
-		echo '<div class="wps-etmfw-ui-card__heading">';
-		if ( $args['eyebrow'] ) {
-			echo '<span class="wps-etmfw-ui-card__eyebrow">' . esc_html( $args['eyebrow'] ) . '</span>';
-		}
-		if ( $args['title'] ) {
-			echo '<h2>' . esc_html( $args['title'] ) . '</h2>';
-		}
-		if ( $args['description'] ) {
-			echo '<p>' . esc_html( $args['description'] ) . '</p>';
-		}
-		echo '</div>';
+		self::render_intro_card( $args );
 
-			if ( $args['documentation_url'] ) {
-				echo '<a class="wps-etmfw-ui-button wps-etmfw-ui-button--primary" href="' . esc_url( $args['documentation_url'] ) . '" target="_blank" rel="noreferrer noopener">' . esc_html( $args['documentation_label'] ) . '</a>';
-			}
-		echo '</div>';
-
+		echo '<section class="wps-etmfw-ui-card wps-etmfw-ui-card--section">';
 		echo '<form action="" method="post" class="wps-etmfw-ui-form ' . esc_attr( $args['form_class'] ) . '">';
 		if ( $args['nonce_name'] && $args['nonce_action'] ) {
 			printf(
@@ -192,28 +217,14 @@ class Event_Tickets_Manager_For_Woocommerce_Admin_Layout {
 			'show_header'       => true,
 		);
 		$args     = wp_parse_args( $args, $defaults );
-		$card_class = trim( 'wps-etmfw-ui-card ' . $args['card_class'] );
+		if ( $args['show_header'] ) {
+			self::render_intro_card( $args );
+		}
+
+		$card_class = trim( 'wps-etmfw-ui-card wps-etmfw-ui-card--section ' . $args['card_class'] );
 		$content_class = trim( 'wps-etmfw-ui-card__content ' . $args['content_class'] );
 
 		echo '<section class="' . esc_attr( $card_class ) . '">';
-		if ( $args['show_header'] ) {
-			echo '<div class="wps-etmfw-ui-card__header">';
-			echo '<div class="wps-etmfw-ui-card__heading">';
-			if ( $args['eyebrow'] ) {
-				echo '<span class="wps-etmfw-ui-card__eyebrow">' . esc_html( $args['eyebrow'] ) . '</span>';
-			}
-			if ( $args['title'] ) {
-				echo '<h2>' . esc_html( $args['title'] ) . '</h2>';
-			}
-			if ( $args['description'] ) {
-				echo '<p>' . esc_html( $args['description'] ) . '</p>';
-			}
-			echo '</div>';
-				if ( $args['documentation_url'] ) {
-					echo '<a class="wps-etmfw-ui-button wps-etmfw-ui-button--primary" href="' . esc_url( $args['documentation_url'] ) . '" target="_blank" rel="noreferrer noopener">' . esc_html( $args['documentation_label'] ) . '</a>';
-				}
-			echo '</div>';
-		}
 		echo '<div class="' . esc_attr( $content_class ) . '">' . $content . '</div>';
 		echo '</section>';
 	}

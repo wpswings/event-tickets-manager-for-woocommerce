@@ -74,8 +74,8 @@
 ===================================*/
 
 :root {
-    --mdc-theme-primary: #2196f3;
-    --mdc-theme-secondary: #2196f3;
+    --mdc-theme-primary: #000000;
+    --mdc-theme-secondary: #000000;
 }
 
 body,
@@ -85,7 +85,7 @@ html {
 }
 
 body {
-    background-color: #E5F4FE !important;
+    background-color: #F7F1FF !important;
 }
 
 *,
@@ -220,10 +220,10 @@ select {
     font-family: "NunitoSans-ExtraBold";
     font-style: normal;
     font-weight: 800;
-    font-size: 20px;
-    line-height: 24px;
+    font-size: 24px;
+    line-height: 1.2;
     letter-spacing: 0.3px;
-    color: #2196f3;
+    color: #24183f;
     flex: 1 0 50%;
     max-width: calc(100% - 200px);
 }
@@ -291,6 +291,29 @@ select {
     border-radius: 35px !important;
     padding: 12px 24px !important;
     height: 100%;
+}
+
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .mdc-button--raised,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .generate-token,
+.wp-swings_page_home .mdc-button--raised,
+.wp-swings_page_home .generate-token {
+    background: #000000 !important;
+    border-color: #000000 !important;
+    color: #ffffff !important;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.16);
+}
+
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .mdc-button--raised:hover,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .mdc-button--raised:focus,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .generate-token:hover,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .generate-token:focus,
+.wp-swings_page_home .mdc-button--raised:hover,
+.wp-swings_page_home .mdc-button--raised:focus,
+.wp-swings_page_home .generate-token:hover,
+.wp-swings_page_home .generate-token:focus {
+    background: #1a1a1a !important;
+    border-color: #1a1a1a !important;
+    color: #ffffff !important;
 }
 
 #wps-etmfw-table-inner-container {
@@ -421,8 +444,8 @@ select {
 
 .wps-btn-primary {
     color: #ffffff;
-    background-color: #6200ee;
-    border-color: #004EB6;
+    background-color: #000000;
+    border-color: #000000;
 }
 
 .wps-btn {
@@ -444,10 +467,14 @@ select {
     border-radius: 35px;
     letter-spacing: 0.3px;
     text-transform: capitalize;
+    background-color: #000000;
+    border-color: #000000;
 }
 
 .wps-btn-primary:hover {
     color: #fff;
+    background-color: #1a1a1a;
+    border-color: #1a1a1a;
 }
 
 .wps-shadow-panel h3 {
@@ -830,6 +857,41 @@ button#wps_etmfw_mail_setting_upload_logo_button {
     margin-top: 15px !important;
 }
 
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .button-primary,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .button.button-primary,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu input[type="submit"]:not(.wps_hide_save_button),
+.wp-swings_page_home .button-primary,
+.wp-swings_page_home .button.button-primary,
+.wp-swings_page_home input[type="submit"]:not(.wps_hide_save_button),
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu a.wps-wpr-go-pro,
+.wp-swings_page_home a.wps-wpr-go-pro {
+    background: #000000 !important;
+    border-color: #000000 !important;
+    color: #ffffff !important;
+    box-shadow: none;
+}
+
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .button-primary:hover,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .button-primary:focus,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .button.button-primary:hover,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .button.button-primary:focus,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu input[type="submit"]:not(.wps_hide_save_button):hover,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu input[type="submit"]:not(.wps_hide_save_button):focus,
+.wp-swings_page_home .button-primary:hover,
+.wp-swings_page_home .button-primary:focus,
+.wp-swings_page_home .button.button-primary:hover,
+.wp-swings_page_home .button.button-primary:focus,
+.wp-swings_page_home input[type="submit"]:not(.wps_hide_save_button):hover,
+.wp-swings_page_home input[type="submit"]:not(.wps_hide_save_button):focus,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu a.wps-wpr-go-pro:hover,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu a.wps-wpr-go-pro:focus,
+.wp-swings_page_home a.wps-wpr-go-pro:hover,
+.wp-swings_page_home a.wps-wpr-go-pro:focus {
+    background: #1a1a1a !important;
+    border-color: #1a1a1a !important;
+    color: #ffffff !important;
+}
+
 .wps-etmfw-number .mdc-text-field {
     max-width: 500px;
 }
@@ -1034,24 +1096,54 @@ a.wps_etmfw_template_link_pro img {
 /* backend design starts  */
 
 .wps-etmfw-appearance-nav-tab {
-    border-bottom: 1px solid var(--mdc-theme-primary);
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    border-bottom: 1px solid #ddd6f3;
+    padding-bottom: 0;
 }
 
 .wps-etmfw-appearance-nav-tab a.nav-tab.nav-tab {
-    background: none;
-    border: 1px solid var(--mdc-theme-primary);
-    border-bottom: none;
-    color: var(--mdc-theme-primary);
-    margin: 0 5px 0 0;
+    min-height: 42px;
+    padding: 0 20px;
+    border: 1px solid #d9cff2;
+    border-bottom-color: #ddd6f3;
+    border-radius: 14px 14px 0 0;
+    background: #fbf8ff;
+    color: #6a5a88;
+    font-family: 'NunitoSans-Bold', sans-serif;
+    font-size: 14px;
+    line-height: 40px;
+    margin: 0;
     float: unset;
-    padding: 5px 10px;
     display: inline-block;
+    box-shadow: none;
+    position: relative;
+    top: 1px;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .wps-etmfw-appearance-nav-tab a.nav-tab.nav-tab-active {
-    background: var(--mdc-theme-primary);
-    border: none;
-    color: #fff;
+    background: #ffffff;
+    border-color: #d9cff2;
+    border-bottom-color: #ffffff;
+    color: #24183f;
+    box-shadow: inset 0 3px 0 #000000;
+}
+
+.wps-etmfw-appearance-nav-tab a.nav-tab.nav-tab:hover,
+.wps-etmfw-appearance-nav-tab a.nav-tab.nav-tab:focus {
+    background: #ffffff;
+    border-color: #c9b9ea;
+    color: #24183f;
+}
+
+.wps-etmfw-appearance-nav-tab a.nav-tab.nav-tab-active:hover,
+.wps-etmfw-appearance-nav-tab a.nav-tab.nav-tab-active:focus {
+    background: #ffffff;
+    border-color: #d9cff2;
+    border-bottom-color: #ffffff;
+    color: #24183f;
 }
 
 .wps_etmfw_ticket_layout_div_wrapper {
@@ -1083,6 +1175,31 @@ h3.wps_ubo_offer_preview_heading {
     text-transform: uppercase;
     font-size: 24px;
     font-weight: 600;
+}
+
+select.wps_etmfw_preview_select_border_type {
+    width: 100%;
+    max-width: 205px;
+    min-height: 52px;
+    padding: 0 46px 0 16px !important;
+    border: 1px solid #d8cfed !important;
+    border-radius: 14px;
+    background-color: #ffffff;
+    color: #24183f !important;
+    font-family: 'NunitoSans-SemiBold', sans-serif;
+    font-size: 15px;
+    line-height: 50px;
+    box-shadow: 0 10px 22px rgba(98, 74, 146, 0.08);
+}
+
+select.wps_etmfw_preview_select_border_type:hover {
+    border-color: #c4b0eb !important;
+    color: #24183f !important;
+}
+
+select.wps_etmfw_preview_select_border_type:focus {
+    border-color: #b697f2 !important;
+    box-shadow: 0 0 0 3px rgba(182, 151, 242, 0.18) !important;
 }
 
 .wps_etmfw_offer_preview_in table {
@@ -1130,6 +1247,135 @@ h3.wps_ubo_offer_preview_heading {
     font-size: 12px;
     margin-top: 5px;
     display: inline-block;
+}
+
+.wps-etmfw-size-slider {
+    --etmfw-slider-progress: 40%;
+    max-width: 255px;
+    padding: 10px 12px 12px;
+    border: 1px solid #e7def7;
+    border-radius: 16px;
+    background: linear-gradient(180deg, #ffffff 0%, #fcfaff 100%);
+    box-shadow: 0 8px 18px rgba(90, 67, 140, 0.06);
+}
+
+.wps-etmfw-size-slider__top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.wps-etmfw-size-slider__range {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 1 1 auto;
+    width: 100%;
+    height: 6px;
+    margin: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #4f46e5 0%, #4f46e5 var(--etmfw-slider-progress), #ddd6f3 var(--etmfw-slider-progress), #ddd6f3 100%);
+    outline: none;
+}
+
+.wps-etmfw-size-slider__range::-webkit-slider-runnable-track {
+    height: 6px;
+    border-radius: 999px;
+    background: transparent;
+}
+
+.wps-etmfw-size-slider__range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    margin-top: -6px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #4f46e5;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.28);
+    cursor: pointer;
+}
+
+.wps-etmfw-size-slider__range::-moz-range-track {
+    height: 6px;
+    border: 0;
+    border-radius: 999px;
+    background: #ddd6f3;
+}
+
+.wps-etmfw-size-slider__range::-moz-range-progress {
+    height: 6px;
+    border-radius: 999px;
+    background: #4f46e5;
+}
+
+.wps-etmfw-size-slider__range::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #4f46e5;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.28);
+    cursor: pointer;
+}
+
+.wps-etmfw-size-slider__value {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 58px;
+    min-height: 30px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: #eef2ff;
+    color: #312e81;
+    font-family: 'NunitoSans-Bold', sans-serif;
+    font-size: 13px;
+    line-height: 1;
+}
+
+.wps-etmfw-size-slider__scale {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
+    color: #8879a8;
+    font-size: 11px;
+    line-height: 1;
+}
+
+.wps-etmfw-layout-actions .wps-form-group__control {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.wps-etmfw-layout-button.mdc-button {
+    min-width: 84px;
+    min-height: 44px;
+    padding: 0 20px !important;
+    border: 1px solid #000000 !important;
+    border-radius: 999px !important;
+    background: #000000 !important;
+    color: #ffffff !important;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.16);
+}
+
+.wps-etmfw-layout-button.mdc-button .mdc-button__label {
+    color: inherit;
+    font-family: 'NunitoSans-Bold', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.wps-etmfw-layout-button.mdc-button:hover,
+.wps-etmfw-layout-button.mdc-button:focus {
+    background: #1f1f1f !important;
+    border-color: #1f1f1f !important;
+    color: #ffffff !important;
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.2);
 }
 
 .wps_etmfw_creation_setting td:before {
