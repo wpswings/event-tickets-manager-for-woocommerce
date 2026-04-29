@@ -244,6 +244,19 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			$active_tab = $this->etmfw_get_active_admin_tab();
 
 			wp_enqueue_script( $this->plugin_name . '-admin-ui', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/event-tickets-manager-for-woocommerce-admin-ui.js', array(), $this->version, true );
+			wp_localize_script(
+				$this->plugin_name . '-admin-ui',
+				'etmfw_admin_ui',
+				array(
+					'ajaxurl' => admin_url( 'admin-ajax.php' ),
+					'nonce'   => wp_create_nonce( 'wps_etmfw_growth_lead_nonce' ),
+					'action'  => 'wps_pgfw_submit_talk_to_expert',
+					'strings' => array(
+						'genericError' => __( 'Something went wrong while submitting the form. Please try again.', 'event-tickets-manager-for-woocommerce' ),
+						'defaultSuccess' => __( 'Thank you for submitting your request.', 'event-tickets-manager-for-woocommerce' ),
+					),
+				)
+			);
 			wp_enqueue_script( 'thickbox' );
 			wp_enqueue_script( 'wps-etmfw-select2', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/event-tickets-manager-for-woocommerce-select2.js', array( 'jquery' ), $this->version, true );
 			wp_enqueue_script( 'wps-etmfw-metarial-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.js', array(), $this->version, true );

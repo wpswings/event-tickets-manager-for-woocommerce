@@ -130,6 +130,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		if ( is_admin() ) {
 
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-event-tickets-manager-for-woocommerce-for-wp-talk-to-expert-form.php';
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/ui/components/class-event-tickets-manager-for-woocommerce-ui-components.php';
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/ui/layouts/class-event-tickets-manager-for-woocommerce-admin-layout.php';
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/ui/class-event-tickets-manager-for-woocommerce-admin-ui.php';
@@ -182,7 +183,8 @@ class Event_Tickets_Manager_For_Woocommerce {
 	 */
 	private function event_tickets_manager_for_woocommerce_admin_hooks() {
 
-		$etmfw_plugin_admin = new Event_Tickets_Manager_For_Woocommerce_Admin( $this->etmfw_get_plugin_name(), $this->etmfw_get_version() );
+		$etmfw_plugin_admin        = new Event_Tickets_Manager_For_Woocommerce_Admin( $this->etmfw_get_plugin_name(), $this->etmfw_get_version() );
+		$etmfw_talk_to_expert_form = new Event_Tickets_Manager_For_Woocommerce_For_Wp_Talk_To_Expert_Form();
 		$etmfw_resend_pdf_ticket_admin = get_option( 'wps_etmfw_resend_plugin', '' );
 		$wps_plugin_list = get_option( 'active_plugins' );
 		$wps_is_pro_active = false;
@@ -218,6 +220,8 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_filter( 'plugin_row_meta', $etmfw_plugin_admin, 'wps_etmfw_plugin_row_meta', 10, 2 );
 		$this->loader->add_action( 'wp_ajax_wps_etmfw_get_event_geocode', $etmfw_plugin_admin, 'wps_etmfw_get_event_geocode_value' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_get_event_geocode', $etmfw_plugin_admin, 'wps_etommfw_get_event_geocode_value' );
+		$this->loader->add_action( 'wp_ajax_wps_pgfw_submit_talk_to_expert', $etmfw_talk_to_expert_form, 'wps_etmfw_submit_talk_to_expert' );
+		$this->loader->add_action( 'wp_ajax_wps_etmfw_submit_talk_to_expert', $etmfw_talk_to_expert_form, 'wps_etmfw_submit_talk_to_expert' );
 		// Custom product type.
 		$this->loader->add_action( 'plugins_loaded', $etmfw_plugin_admin, 'wps_wgc_register_event_ticket_manager_product_type' );
 

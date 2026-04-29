@@ -21,12 +21,22 @@ class Event_Tickets_Manager_For_Woocommerce_Admin_UI {
 	 */
 	public static function get_header_config() {
 		$is_pro_active = self::is_pro_active();
+		$active_tab    = isset( $_GET['etmfw_tab'] ) ? sanitize_key( wp_unslash( $_GET['etmfw_tab'] ) ) : 'event-tickets-manager-for-woocommerce-general'; // phpcs:ignore WordPress.Security.NonceVerification
+		$expert_url    = admin_url( 'admin.php?page=event_tickets_manager_for_woocommerce_menu&etmfw_tab=' . rawurlencode( $active_tab ) . '&etmfw_open=talk-to-expert' );
 
 		return array(
 			'badge'   => $is_pro_active ? __( 'PRO ACTIVE', 'event-tickets-manager-for-woocommerce' ) : __( 'FREE ACTIVE', 'event-tickets-manager-for-woocommerce' ),
 			'title'   => __( 'Event Tickets Manager for WooCommerce', 'event-tickets-manager-for-woocommerce' ),
 			'subtitle' => $is_pro_active ? __( 'Pro admin workspace', 'event-tickets-manager-for-woocommerce' ) : __( 'Core admin workspace', 'event-tickets-manager-for-woocommerce' ),
-			'actions' => array(),
+			'actions' => array(
+				array(
+					'label'  => __( 'Talk to an Expert', 'event-tickets-manager-for-woocommerce' ),
+					'url'    => $expert_url,
+					'class'  => 'wps-etmfw-ui-button--primary',
+					'target' => '_self',
+					'rel'    => '',
+				),
+			),
 		);
 	}
 
@@ -37,6 +47,12 @@ class Event_Tickets_Manager_For_Woocommerce_Admin_UI {
 	 */
 	public static function get_sidebar_config() {
 		return array(
+			'growth_card' => array(
+				'eyebrow'      => __( 'Growth Services', 'event-tickets-manager-for-woocommerce' ),
+				'title'        => __( 'Grow Your Store with WP Swings', 'event-tickets-manager-for-woocommerce' ),
+				'description'  => __( 'Expert solutions to boost your store\'s performance.', 'event-tickets-manager-for-woocommerce' ),
+				'button_label' => __( 'Talk to an Expert', 'event-tickets-manager-for-woocommerce' ),
+			),
 			'help_links' => array(
 				array(
 					'label' => __( 'Watch Video', 'event-tickets-manager-for-woocommerce' ),
