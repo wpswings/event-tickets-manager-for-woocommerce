@@ -446,8 +446,15 @@ form.cart.wps-etmfw-has-user-types .quantity:not(.wps-etmfw-user-type-qty) {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
-.wps-etmw-card-link {
-  text-decoration: none;
+.wps-etmw-card-link,
+.wps-etmw-card-link:hover,
+.wps-etmw-card-link:focus,
+.wps-etmw-card-link:active {
+  text-decoration: none !important;
+}
+
+.wps-etmw-card-link * {
+  text-decoration: none !important;
 }
 
 .wps-etmw-card {
