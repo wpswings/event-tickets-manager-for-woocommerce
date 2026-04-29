@@ -39,6 +39,61 @@
 
   $(document).ready(function () {
 
+    function wpsEtmfwValidateUserTypeInventoryRows() {
+      var $table = $(".wps_etmfwpp_user_field_table");
+      var $errorBox = $(".wps_etmfwpp_inventory_error");
+      var isValid = true;
+
+      if (!$table.length) {
+        return true;
+      }
+
+      $table.find(".wps_etmfwpp_user_field_wrap").each(function () {
+        var $row = $(this);
+        var $minInput = $row.find('input[name*="[_inventory_min]"]');
+        var $maxInput = $row.find('input[name*="[_inventory_max]"]');
+        var minValue = $.trim($minInput.val());
+        var maxValue = $.trim($maxInput.val());
+
+        $row.removeAttr("data-inventory-range-invalid");
+
+        $minInput.css({
+          borderColor: "",
+          boxShadow: "",
+        });
+        $maxInput.css({
+          borderColor: "",
+          boxShadow: "",
+        });
+
+        if (minValue !== "" && maxValue !== "") {
+          var parsedMin = parseInt(minValue, 10);
+          var parsedMax = parseInt(maxValue, 10);
+
+          if (!Number.isNaN(parsedMin) && !Number.isNaN(parsedMax) && parsedMin > parsedMax) {
+            isValid = false;
+            $row.attr("data-inventory-range-invalid", "true");
+            $minInput.css({
+              borderColor: "#b32d2e",
+              boxShadow: "0 0 0 1px #b32d2e",
+            });
+            $maxInput.css({
+              borderColor: "#b32d2e",
+              boxShadow: "0 0 0 1px #b32d2e",
+            });
+          }
+        }
+      });
+
+      if (!isValid) {
+        $errorBox.text("Inventory Min cannot be greater than Inventory Max.").show();
+      } else {
+        $errorBox.text("").hide();
+      }
+
+      return isValid;
+    }
+
     $("#general_product_data .options_group.show_if_simple.show_if_external.show_if_variable" ).addClass("show_if_event_ticket_manager").show();
     //for General tab.
     $(".options_group.pricing").addClass("show_if_event_ticket_manager").show();
@@ -201,6 +256,25 @@
         $('#wps_limit_user_purchase_event_wc').show();
       } else {
         $('#wps_limit_user_purchase_event_wc').hide();
+      }
+    });
+
+    $(document).on("input change", ".wps_etmfwpp_field_inventory", function () {
+      wpsEtmfwValidateUserTypeInventoryRows();
+    });
+
+    $(document).on("submit", "#post", function (e) {
+      if ($("#product-type").val() !== "event_ticket_manager") {
+        return true;
+      }
+
+      if (!wpsEtmfwValidateUserTypeInventoryRows()) {
+        e.preventDefault();
+        var $firstInvalidField = $(".wps_etmfwpp_user_field_wrap[data-inventory-range-invalid='true']").first().find('input[name*="[_inventory_min]"]').first();
+
+        if ($firstInvalidField.length) {
+          $firstInvalidField.trigger("focus");
+        }
       }
     });
   });

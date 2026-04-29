@@ -1466,6 +1466,11 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					}
 
 					$wps_etmfw_field_user_type_price_data = ! empty( $_POST['etmfwppp_fields'] ) ? map_deep( wp_unslash( $_POST['etmfwppp_fields'] ), 'sanitize_text_field' ) : array();
+					$wps_etmfw_inventory_range_validation = self::validate_user_type_inventory_ranges( $wps_etmfw_field_user_type_price_data );
+					if ( ! $wps_etmfw_inventory_range_validation['is_valid'] ) {
+						WC_Admin_Meta_Boxes::add_error( __( 'Inventory Min cannot be greater than Inventory Max.', 'event-tickets-manager-for-woocommerce' ) );
+						return;
+					}
 					$wps_etmfw_field_days_user_type_data_array = array();
 					if ( is_array( $wps_etmfw_field_user_type_price_data ) && ! empty( $wps_etmfw_field_user_type_price_data ) ) {
 						if ( '' !== $wps_etmfw_field_user_type_price_data[0]['_label'] ) {
@@ -1505,6 +1510,38 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Validate inventory min/max ranges for user-type pricing rows.
+	 *
+	 * @param array $rows Submitted user-type pricing rows.
+	 * @return array{is_valid: bool, row: int|null}
+	 */
+	private static function validate_user_type_inventory_ranges( $rows ) {
+		if ( ! is_array( $rows ) ) {
+			return array(
+				'is_valid' => true,
+				'row'      => null,
+			);
+		}
+
+		foreach ( $rows as $index => $row ) {
+			$inventory_min = isset( $row['_inventory_min'] ) && '' !== $row['_inventory_min'] ? (int) $row['_inventory_min'] : null;
+			$inventory_max = isset( $row['_inventory_max'] ) && '' !== $row['_inventory_max'] ? (int) $row['_inventory_max'] : null;
+
+			if ( null !== $inventory_min && null !== $inventory_max && $inventory_min > $inventory_max ) {
+				return array(
+					'is_valid' => false,
+					'row'      => is_numeric( $index ) ? (int) $index : null,
+				);
+			}
+		}
+
+		return array(
+			'is_valid' => true,
+			'row'      => null,
+		);
 	}
 
 		/**

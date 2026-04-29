@@ -101,6 +101,7 @@ $allowed_html = array(
 					</tfoot>
 			</tbody>
 		</table>
+		<div class="wps_etmfwpp_inventory_error" style="display:none;color:#b32d2e;font-weight:600;margin-top:10px;"></div>
 </div>
 </div>
 </div>

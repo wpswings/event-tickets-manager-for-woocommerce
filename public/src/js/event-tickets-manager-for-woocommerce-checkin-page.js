@@ -35,6 +35,7 @@
 			'#wps_etmfw_checkin_button',
 			function(e){
 				e.preventDefault();
+				debugger;
 				$("#wps_etmfw_checkin_loader").show();
 				var for_event = $('#wps_etmfw_event_selected').val();
 				var ticket_num = $('#wps_etmfw_imput_ticket').val();
