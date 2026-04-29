@@ -1452,7 +1452,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 										if ( $current_timestamp > $start_date_timestamp ) {
 											$response['result'] = true;
 											$generated_tickets[ $key ]['status'] = 'checked_in';
-											update_post_meta( $product_id, 'wps_etmfw_generated_tickets', $generated_tickets );
+										update_post_meta( $product_id, 'wps_etmfw_generated_tickets', $generated_tickets );
 											$response['message'] = __( 'User checked in successfully.', 'event-tickets-manager-for-woocommerce' );
 											$response['notice_class'] = 'wps_check_in_notice';
 										} else {

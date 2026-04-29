@@ -511,6 +511,11 @@
 .wps-etmfw-ui-field--actions {
 	grid-template-columns: 1fr;
 	padding-top: 24px;
+	position: sticky;
+	bottom: 0;
+	z-index: 5;
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #ffffff 22px);
+	padding-bottom: 16px;
 }
 
 .wps-etmfw-ui-field__label {
