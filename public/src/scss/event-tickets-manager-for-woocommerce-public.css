@@ -1352,6 +1352,10 @@ form.cart.wps-etmfw-has-user-types .quantity:not(.wps-etmfw-user-type-qty) {
 	font-weight: 600;
 }
 
+.wps-etmfw-checkin-form__message.wps_check_in_notice {
+	color: #15803d;
+}
+
 .wps-etmfw-checkin-form__field label {
 	display: block;
 	margin-bottom: 6px;

@@ -900,6 +900,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 						'id' => 'wps_etmfw_mail_setting_remove_logo',
 						'imgId' => 'wps_etmfw_mail_setting_upload_image',
 						'spanX' => 'wps_etmfw_mail_setting_remove_logo_span',
+						'button_text' => __( 'Remove Logo', 'event-tickets-manager-for-woocommerce' ),
 					),
 				),
 				'class' => 'wps_etmfw_mail_setting_upload_logo_box',

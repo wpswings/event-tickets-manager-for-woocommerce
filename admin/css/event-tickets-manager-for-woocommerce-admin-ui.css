@@ -623,20 +623,26 @@
 }
 
 .wps-etmfw-ui-control-box--note {
-	display: flex;
-	align-items: center;
+	display: block;
 	font-size: 13px;
 	line-height: 1.6;
 	color: var(--wps-etmfw-ui-muted);
 }
 
 .wps-etmfw-ui-control-box--note code {
+	display: inline-block;
 	padding: 2px 8px;
+	margin: 0 6px;
 	border-radius: 999px;
 	background: #fff7dc;
 	color: var(--wps-etmfw-ui-text);
 	font-size: 12px;
 	font-weight: 700;
+	white-space: nowrap;
+}
+
+.wps-etmfw-ui-field--wps_simple_text .wps-etmfw-ui-control-box {
+	width: min(540px, calc(100vw - 64px));
 }
 
 .wps-etmfw-email-template-section-form .wps-etmfw-ui-field:first-child .wps-etmfw-ui-field__description {

@@ -1280,6 +1280,84 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	}
 
 	/**
+	 * Get the list of events available for manual check-in.
+	 *
+	 * The primary lookup uses the event product type term. A secondary lookup
+	 * includes products carrying saved event configuration so the frontend
+	 * selector still populates on sites with older or partially-migrated data.
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
+	private function wps_etmfw_get_checkin_events() {
+		$event_ids = array();
+		$events    = array();
+
+		$type_matched_ids = get_posts(
+			array(
+				'post_type'      => 'product',
+				'post_status'    => 'publish',
+				'posts_per_page' => -1,
+				'fields'         => 'ids',
+				'orderby'        => 'title',
+				'order'          => 'ASC',
+				'tax_query'      => array(
+					array(
+						'taxonomy' => 'product_type',
+						'field'    => 'slug',
+						'terms'    => 'event_ticket_manager',
+					),
+				),
+			)
+		);
+
+		$meta_matched_ids = get_posts(
+			array(
+				'post_type'      => 'product',
+				'post_status'    => 'publish',
+				'posts_per_page' => -1,
+				'fields'         => 'ids',
+				'orderby'        => 'title',
+				'order'          => 'ASC',
+				'meta_query'     => array(
+					array(
+						'key'     => 'wps_etmfw_product_array',
+						'compare' => 'EXISTS',
+					),
+				),
+			)
+		);
+
+		if ( ! empty( $type_matched_ids ) && is_array( $type_matched_ids ) ) {
+			$event_ids = array_merge( $event_ids, $type_matched_ids );
+		}
+
+		if ( ! empty( $meta_matched_ids ) && is_array( $meta_matched_ids ) ) {
+			$event_ids = array_merge( $event_ids, $meta_matched_ids );
+		}
+
+		$event_ids = array_unique( array_map( 'absint', $event_ids ) );
+
+		foreach ( $event_ids as $candidate_id ) {
+			$product    = wc_get_product( $candidate_id );
+			$event_meta = get_post_meta( $candidate_id, 'wps_etmfw_product_array', true );
+
+			$is_event_product = ( $product instanceof WC_Product ) && $product->is_type( 'event_ticket_manager' );
+			$has_event_meta   = ! empty( $event_meta ) && is_array( $event_meta );
+
+			if ( ! $is_event_product && ! $has_event_meta ) {
+				continue;
+			}
+
+			$events[] = array(
+				'id'    => $candidate_id,
+				'title' => get_the_title( $candidate_id ),
+			);
+		}
+
+		return $events;
+	}
+
+	/**
 	 * This is function is used to display event check in page.
 	 *
 	 * @name wps_etmfw_create_event_checkin_page
@@ -1287,19 +1365,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link http://www.wpswings.com/
 	 */
 	public function wps_etmfw_create_event_checkin_page() {
-		$query_args = array(
-			'post_type'          => 'product',
-			'post_status'        => 'publish',
-			'posts_per_page'     => -1,
-			'tax_query' => array(
-				array(
-					'taxonomy' => 'product_type',
-					'field'    => 'slug',
-					'terms'    => 'event_ticket_manager',
-				),
-			),
-		);
-		$product_array = new WP_Query( $query_args );
+		$checkin_events = $this->wps_etmfw_get_checkin_events();
 		$html = '<div class="wps-etmfw-checkin-hero">
 			<div class="wps-etmfw-checkin-card">
 				<div class="wps-etmfw-checkin-card__intro">
@@ -1310,18 +1376,19 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				<form method="post" class="wps-etmfw-checkin-form">
 					<div id="wps_etmfw_error_message" class="wps-etmfw-checkin-form__message"></div>
 					<div class="wps-etmfw-checkin-form__field">
-						<label>' . __( 'For', 'event-tickets-manager-for-woocommerce' ) . '</label>';
-		if ( $product_array->have_posts() ) {
-			if ( isset( $product_array->posts ) && ! empty( $product_array->posts ) ) {
-				$html .= '<select id="wps_etmfw_event_selected">';
-				foreach ( $product_array->posts as $event_per_product ) {
-					$html .= '<option value="' . $event_per_product->ID . '">' . $event_per_product->post_title . '</option>';
-				}
-				$html .= '</select>';
+						<label>' . __( 'For', 'event-tickets-manager-for-woocommerce' ) . '</label>
+						<select id="wps_etmfw_event_selected" name="wps_etmfw_event_selected">';
+		if ( ! empty( $checkin_events ) ) {
+			$html .= '<option value="" selected="selected" disabled="disabled">' . __( 'Select an event', 'event-tickets-manager-for-woocommerce' ) . '</option>';
+			foreach ( $checkin_events as $checkin_event ) {
+				$html .= '<option value="' . absint( $checkin_event['id'] ) . '">' . esc_html( $checkin_event['title'] ) . '</option>';
 			}
+		} else {
+			$html .= '<option value="" selected="selected" disabled="disabled">' . __( 'No events available', 'event-tickets-manager-for-woocommerce' ) . '</option>';
 		}
 
-		$html .= '</div>
+		$html .= '</select>
+					</div>
 					<div class="wps-etmfw-checkin-form__field">
 						<label>' . __( 'Ticket Number *', 'event-tickets-manager-for-woocommerce' ) . '</label>
 						<input type="text" name="wps_etmfw_imput_ticket" id="wps_etmfw_imput_ticket">
@@ -1358,6 +1425,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		check_ajax_referer( 'wps-etmfw-verify-checkin-nonce', 'wps_nonce' );
 		$response['result'] = false;
 		$response['message'] = 'No tickets found for the event.';
+		$response['notice_class'] = 'wps_check_in_error';
 		$product_id = isset( $_REQUEST['for_event'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['for_event'] ) ) : '';
 		$ticket_num = isset( $_REQUEST['ticket_num'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['ticket_num'] ) ) : '';
 		$user_email = isset( $_REQUEST['user_email'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['user_email'] ) ) : '';
@@ -1386,8 +1454,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 											$generated_tickets[ $key ]['status'] = 'checked_in';
 											update_post_meta( $product_id, 'wps_etmfw_generated_tickets', $generated_tickets );
 											$response['message'] = __( 'User checked in successfully.', 'event-tickets-manager-for-woocommerce' );
+											$response['notice_class'] = 'wps_check_in_notice';
 										} else {
 											$response['message'] = __( 'Event has not started yet.', 'event-tickets-manager-for-woocommerce' );
+											$response['notice_class'] = 'wps_check_in_notice';
+											
 										}
 									} else {
 										$response['message'] = __( 'Event Expired!', 'event-tickets-manager-for-woocommerce' );

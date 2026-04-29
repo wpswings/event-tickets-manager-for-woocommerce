@@ -35,7 +35,7 @@
 			'#wps_etmfw_checkin_button',
 			function(e){
 				e.preventDefault();
-				debugger;
+				$("#wps_etmfw_error_message").removeClass("wps_check_in_success wps_check_in_error wps_check_in_notice").html("");
 				$("#wps_etmfw_checkin_loader").show();
 				var for_event = $('#wps_etmfw_event_selected').val();
 				var ticket_num = $('#wps_etmfw_imput_ticket').val();
@@ -78,12 +78,10 @@
 						success: function(response)
 						{
 							$("#wps_etmfw_checkin_loader").hide();
-							$("#wps_etmfw_error_message").html(response.message);
-							if( response.result ){
-								$("#wps_etmfw_error_message").addClass("wps_check_in_success");
-							} else{
-								$("#wps_etmfw_error_message").addClass("wps_check_in_error");
-							}
+							$("#wps_etmfw_error_message")
+								.removeClass("wps_check_in_success wps_check_in_error wps_check_in_notice")
+								.html(response.message)
+								.addClass(response.notice_class ? response.notice_class : ( response.result ? "wps_check_in_success" : "wps_check_in_error" ));
 						}
 					}
 				);

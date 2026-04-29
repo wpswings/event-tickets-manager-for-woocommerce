@@ -686,6 +686,46 @@ button#wps_etmfw_mail_setting_upload_logo_button {
     right: -170px;
 }
 
+.wps_etmfw_mail_setting_upload_logo_box .wps-etmfw-ui-composed-control {
+    width: min(520px, calc(100vw - 64px));
+    align-items: center;
+}
+
+.wps_etmfw_mail_setting_upload_logo_box button#wps_etmfw_mail_setting_upload_logo_button {
+    position: static;
+    right: auto;
+}
+
+.wps_etmfw_mail_setting_upload_logo_box #wps_etmfw_mail_setting_remove_logo {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    flex-wrap: wrap;
+    position: static;
+    top: auto;
+    right: auto;
+    height: auto;
+    min-height: 80px;
+}
+
+.wps_etmfw_mail_setting_upload_logo_box .wps-etmfw-ui-preview-remove {
+    position: static;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: 40px;
+    padding: 0 16px;
+    border: 1px solid #e7d8f4;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #111111;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+}
+
 @media only screen and (max-width: 992px) {
 
     .wps_etmfw_plugin_benefit ol li,

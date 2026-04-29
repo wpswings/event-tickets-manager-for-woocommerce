@@ -435,7 +435,7 @@ class Event_Tickets_Manager_For_Woocommerce_UI_Components {
 			} elseif ( 'paragraph' === $item_type ) {
 				echo '<div id="' . esc_attr( isset( $item['id'] ) ? $item['id'] : '' ) . '" class="wps-etmfw-ui-preview-box">';
 				echo '<img src="" id="' . esc_attr( isset( $item['imgId'] ) ? $item['imgId'] : '' ) . '" alt="" />';
-				echo '<button type="button" class="wps-etmfw-ui-preview-remove ' . esc_attr( isset( $item['spanX'] ) ? $item['spanX'] : '' ) . '">x</button>';
+				echo '<button type="button" class="wps-etmfw-ui-preview-remove ' . esc_attr( isset( $item['spanX'] ) ? $item['spanX'] : '' ) . '">' . esc_html( isset( $item['button_text'] ) ? $item['button_text'] : __( 'Remove', 'event-tickets-manager-for-woocommerce' ) ) . '</button>';
 				echo '</div>';
 			}
 		}
