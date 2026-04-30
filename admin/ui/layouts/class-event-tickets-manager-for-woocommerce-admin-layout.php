@@ -81,21 +81,6 @@ class Event_Tickets_Manager_For_Woocommerce_Admin_Layout {
 			echo '</div>';
 		echo '</div>';
 
-		if ( ! empty( $args['actions'] ) ) {
-			echo '<div class="wps-etmfw-ui-hero__actions">';
-			foreach ( $args['actions'] as $action ) {
-				if ( empty( $action['url'] ) || empty( $action['label'] ) ) {
-					continue;
-				}
-
-				$class  = ! empty( $action['class'] ) ? $action['class'] : 'wps-etmfw-ui-button--ghost';
-				$target = ! empty( $action['target'] ) ? $action['target'] : '_blank';
-				$rel    = array_key_exists( 'rel', $action ) ? $action['rel'] : ( '_blank' === $target ? 'noreferrer noopener' : '' );
-				echo '<a class="wps-etmfw-ui-button ' . esc_attr( $class ) . '" href="' . esc_url( $action['url'] ) . '" target="' . esc_attr( $target ) . '"' . ( '' !== $rel ? ' rel="' . esc_attr( $rel ) . '"' : '' ) . '>' . esc_html( $action['label'] ) . '</a>';
-			}
-			echo '</div>';
-		}
-
 		echo '</section>';
 	}
 
