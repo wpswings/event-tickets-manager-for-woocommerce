@@ -88,7 +88,17 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	 * @return bool
 	 */
 	private function etmfw_is_plugin_admin_screen( $screen_id ) {
-		return in_array( $screen_id, array( 'wp-swings_page_event_tickets_manager_for_woocommerce_menu', 'wp-swings_page_home' ), true );
+		return in_array(
+			$screen_id,
+			array(
+				'wp-swings_page_event_tickets_manager_for_woocommerce_menu',
+				'wpswings_page_event_tickets_manager_for_woocommerce_pro_menu',
+				'wp-swings_page_event_tickets_manager_for_woocommerce_pro_menu',
+				'wp-swings_page_home',
+				'wpswings_page_home',
+			),
+			true
+		);
 	}
 
 	/**
@@ -346,7 +356,8 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			echo '<style>';
 			echo '.wps_etmfw_creation_setting td:before{display:none!important;}';
 			echo '.wps_etmfw_premium_strip, .wps_etmfw_premium_strip:after{display:none!important;}';
-			echo '.wps-etmfw-radio-switch-class-pro-tag, .wps-etmfw-radio-switch-class-pro-tag .wps-form-group__label:before{display:none!important;}';
+			echo '.wps-etmfw-radio-switch-class-pro-tag .wps-form-group__label:before{display:none!important;}';
+			echo '.wps-etmfw-radio-switch-class-pro-tag .wps-form-group__control:before{display:none!important;}';
 			echo '</style>';
 			return;
 		}
@@ -932,54 +943,51 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				),
 			),
 		);
-		if ( ! is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' ) ) {
+		$wps_set_the_pdf_ticket_template = get_option( 'wps_etmfw_ticket_template', '1' );
 
-			$wps_set_the_pdf_ticket_template = get_option( 'wps_etmfw_ticket_template', '1' );
+		$etmfw_email_template_settings[] =
+			array(
+				'title' => __( 'Ticket Background Colour', 'event-tickets-manager-for-woocommerce' ),
+				'type'  => 'text',
+				'description'  => __( 'Select the colour code( e.g. #0000FF ).', 'event-tickets-manager-for-woocommerce' ),
+				'id'    => 'wps_etmfw_ticket_bg_color',
+				'value' => get_option( 'wps_etmfw_ticket_bg_color', '' ),
+				'class' => 'wps_etmfw_colorpicker',
+				'placeholder' => __( 'Enter colour/colour code', 'event-tickets-manager-for-woocommerce' ),
+			);
 
+		if ( '5' == $wps_set_the_pdf_ticket_template ) {
 			$etmfw_email_template_settings[] =
 				array(
-					'title' => __( 'Ticket Background Colour', 'event-tickets-manager-for-woocommerce' ),
+					'title' => __( 'Ticket Text Colour', 'event-tickets-manager-for-woocommerce' ),
 					'type'  => 'text',
-					'description'  => __( 'Select the colour code( e.g. #0000FF ).', 'event-tickets-manager-for-woocommerce' ),
-					'id'    => 'wps_etmfw_ticket_bg_color',
-					'value' => get_option( 'wps_etmfw_ticket_bg_color', '' ),
+					'description'  => __( 'Select the colour code( e.g. #FFFFFF ).', 'event-tickets-manager-for-woocommerce' ),
+					'id'    => 'wps_etmfw_ticket_text_color',
+					'value' => get_option( 'wps_etmfw_ticket_text_color', '' ),
 					'class' => 'wps_etmfw_colorpicker',
 					'placeholder' => __( 'Enter colour/colour code', 'event-tickets-manager-for-woocommerce' ),
 				);
-
-			if ( '5' == $wps_set_the_pdf_ticket_template ) {
-				$etmfw_email_template_settings[] =
-					array(
-						'title' => __( 'Ticket Text Colour', 'event-tickets-manager-for-woocommerce' ),
-						'type'  => 'text',
-						'description'  => __( 'Select the colour code( e.g. #FFFFFF ).', 'event-tickets-manager-for-woocommerce' ),
-						'id'    => 'wps_etmfw_ticket_text_color',
-						'value' => get_option( 'wps_etmfw_ticket_text_color', '' ),
-						'class' => 'wps_etmfw_colorpicker',
-						'placeholder' => __( 'Enter colour/colour code', 'event-tickets-manager-for-woocommerce' ),
-					);
-			} else {
-				$etmfw_email_template_settings[] =
-					array(
-						'title' => __( 'Ticket Header Text Colour', 'event-tickets-manager-for-woocommerce' ),
-						'type'  => 'text',
-						'description'  => __( 'Select the colour code( e.g. #FFFFFF ).', 'event-tickets-manager-for-woocommerce' ),
-						'id'    => 'wps_etmfw_ticket_text_color',
-						'value' => get_option( 'wps_etmfw_ticket_text_color', '' ),
-						'class' => 'wps_etmfw_colorpicker',
-						'placeholder' => __( 'Enter colour/colour code', 'event-tickets-manager-for-woocommerce' ),
-					);
-				$etmfw_email_template_settings[] =
-					array(
-						'title' => __( 'Ticket Body Text Colour', 'event-tickets-manager-for-woocommerce' ),
-						'type'  => 'text',
-						'description'  => __( 'Select the colour code( e.g. #FFFFFF ).', 'event-tickets-manager-for-woocommerce' ),
-						'id'    => 'wps_etmfw_ticket_body_text_color',
-						'value' => get_option( 'wps_etmfw_ticket_body_text_color', '' ),
-						'class' => 'wps_etmfw_colorpicker',
-						'placeholder' => __( 'Enter colour/colour code', 'event-tickets-manager-for-woocommerce' ),
-					);
-			}
+		} else {
+			$etmfw_email_template_settings[] =
+				array(
+					'title' => __( 'Ticket Header Text Colour', 'event-tickets-manager-for-woocommerce' ),
+					'type'  => 'text',
+					'description'  => __( 'Select the colour code( e.g. #FFFFFF ).', 'event-tickets-manager-for-woocommerce' ),
+					'id'    => 'wps_etmfw_ticket_text_color',
+					'value' => get_option( 'wps_etmfw_ticket_text_color', '' ),
+					'class' => 'wps_etmfw_colorpicker',
+					'placeholder' => __( 'Enter colour/colour code', 'event-tickets-manager-for-woocommerce' ),
+				);
+			$etmfw_email_template_settings[] =
+				array(
+					'title' => __( 'Ticket Body Text Colour', 'event-tickets-manager-for-woocommerce' ),
+					'type'  => 'text',
+					'description'  => __( 'Select the colour code( e.g. #FFFFFF ).', 'event-tickets-manager-for-woocommerce' ),
+					'id'    => 'wps_etmfw_ticket_body_text_color',
+					'value' => get_option( 'wps_etmfw_ticket_body_text_color', '' ),
+					'class' => 'wps_etmfw_colorpicker',
+					'placeholder' => __( 'Enter colour/colour code', 'event-tickets-manager-for-woocommerce' ),
+				);
 		}
 		$etmfw_email_template_settings = apply_filters( 'wps_etmfw_extent_email_template_settings_array', $etmfw_email_template_settings );
 		$etmfw_email_template_settings[] = array(
@@ -2157,7 +2165,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		 */
 	public function wps_etmfw_css_control_callbck() {
 		$screen_id = $this->etmfw_get_current_screen_id();
-		if ( 'wp-swings_page_event_tickets_manager_for_woocommerce_menu' === $screen_id ) {
+		if ( $this->etmfw_is_plugin_admin_screen( $screen_id ) ) {
 			if ( $this->etmfw_is_pro_active() && is_admin() && ! wp_doing_ajax() ) {
 				?>
 					<style>

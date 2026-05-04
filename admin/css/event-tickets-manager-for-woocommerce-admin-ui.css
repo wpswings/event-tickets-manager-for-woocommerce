@@ -1245,6 +1245,17 @@ body.wps-etmfw-growth-modal-open {
 	width: min(340px, calc(100vw - 64px));
 }
 
+.wps-etmfw-ui-control-box--colorpicker {
+	padding: 0;
+	border: 0;
+	background: transparent;
+	box-shadow: none;
+}
+
+.wps-etmfw-ui-control-box--colorpicker .wps-etmfw-picker {
+	max-width: none;
+}
+
 .wps-etmfw-ui-field--textarea .wps-etmfw-ui-control-box,
 .wps-etmfw-ui-field--wp_editor .wps-etmfw-ui-editor-wrap {
 	width: min(540px, calc(100vw - 64px));

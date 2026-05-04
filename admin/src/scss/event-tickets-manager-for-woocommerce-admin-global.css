@@ -1279,8 +1279,9 @@ select.wps_etmfw_preview_select_border_type:focus {
 
 
 .wps_etmfw_colorpicker {
-    max-width: 100px;
-    max-height: 20px;
+    width: 100%;
+    max-width: 255px;
+    min-height: 36px;
 }
 
 .wps_etmfw_helper_text {
@@ -1421,23 +1422,30 @@ select.wps_etmfw_preview_select_border_type:focus {
 .wps_etmfw_creation_setting td:before {
     align-items: center;
     background: #d8ffd6;
-    top: 0;
+    top: 6px;
     color: #078800;
     content: "PRO";
     display: inline-flex;
     font-size: 10px;
+    font-weight: 800;
     justify-content: center;
-    right: 0;
-    padding: 5px 10px 5px 2px;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    pointer-events: none;
+    right: -10px;
+    padding: 6px 12px 6px 4px;
     position: absolute;
+    z-index: 2;
     width: 60px;
     clip-path: polygon(100% 0, 80% 50%, 100% 100%, 0 100%, 0 0);
 }
 
 .wps_etmfw_creation_setting td {
-    padding-top: 15px;
+    overflow: visible;
+    padding-top: 34px;
     padding-left: 25px;
-    position: relative
+    position: relative;
+    vertical-align: top;
 }
 
 .wps_etmfw_class_for_pro {
@@ -1481,6 +1489,15 @@ div#wps_etmfw_event_data {
     .wps-header-container h1.wps-header-title {
         flex: 1 0 100%;
         max-width: 100%;
+    }
+
+    .wps_etmfw_creation_setting td {
+        padding-top: 30px;
+        padding-left: 18px;
+    }
+
+    .wps_etmfw_creation_setting td:before {
+        right: -4px;
     }
     
 }

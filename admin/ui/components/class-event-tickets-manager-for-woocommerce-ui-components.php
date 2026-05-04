@@ -155,12 +155,19 @@ class Event_Tickets_Manager_For_Woocommerce_UI_Components {
 	 * @return void
 	 */
 	protected static function render_input( $field, $type, $value ) {
+		$field_class = self::get_field_class( $field );
+		$wrapper_class = 'wps-etmfw-ui-control-box wps-etmfw-ui-control-box--input';
+
+		if ( false !== strpos( $field_class, 'wps_etmfw_colorpicker' ) ) {
+			$wrapper_class .= ' wps-etmfw-ui-control-box--colorpicker';
+		}
+
 		$attributes = array(
 			'type'        => $type,
 			'id'          => self::get_field_id( $field ),
 			'name'        => self::get_field_name( $field ),
 			'value'       => is_scalar( $value ) ? $value : '',
-			'class'       => 'wps-etmfw-ui-input ' . self::get_field_class( $field ),
+			'class'       => 'wps-etmfw-ui-input ' . $field_class,
 			'placeholder' => isset( $field['placeholder'] ) ? $field['placeholder'] : '',
 		);
 
@@ -182,7 +189,7 @@ class Event_Tickets_Manager_For_Woocommerce_UI_Components {
 			$attributes = array_merge( $attributes, $field['custom_attributes'] );
 		}
 
-		echo '<div class="wps-etmfw-ui-control-box wps-etmfw-ui-control-box--input">';
+		echo '<div class="' . esc_attr( $wrapper_class ) . '">';
 		echo '<input ' . self::build_attributes( $attributes ) . ' />';
 		echo '</div>';
 	}

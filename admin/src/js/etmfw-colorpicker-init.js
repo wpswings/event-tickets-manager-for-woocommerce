@@ -25,17 +25,34 @@
         return $input.closest('.wps-etmfw-ui-field').find('.wps-etmfw-ui-field__description').first();
     }
 
+    function getFieldLabel($input) {
+        var $tableHeading = $input.closest('tr').children('th').first();
+        var labelText = '';
+
+        if ( $tableHeading.length ) {
+            labelText = $tableHeading.text();
+        }
+
+        if ( ! labelText ) {
+            labelText = $input.closest('.wps-form-group').find('.wps-form-label, label').first().text();
+        }
+
+        return (labelText || '').replace(/\s+/g, ' ').trim();
+    }
+
     function ensurePickerStructure($input) {
         var $picker = $input.closest('.wp-picker-container');
         var $result = $picker.find('.wp-color-result').first();
         var $meta;
         var $description;
+        var fieldLabel = getFieldLabel($input);
 
         if ( ! $picker.length || ! $result.length ) {
             return $picker;
         }
 
         $picker.addClass('wps-etmfw-picker');
+        $picker.attr('data-etmfw-label', fieldLabel || 'Color');
 
         $meta = $picker.children('.wps-etmfw-picker-meta');
         if ( ! $meta.length ) {
@@ -67,7 +84,7 @@
         $picker.css('--etmfw-picked-color', normalized);
         $picker.toggleClass('has-color-value', !! ($input.val() || '').toString().trim());
         $picker.find('[data-etmfw-color-hex]').text(normalized);
-        $picker.find('.wp-color-result').attr('aria-label', 'Color ' + normalized);
+        $picker.find('.wp-color-result').attr('aria-label', ($picker.attr('data-etmfw-label') || 'Color') + ' ' + normalized);
     }
 
     window.etmfwInitColorPickers = function( context ) {
@@ -106,7 +123,10 @@
                 mutations.forEach(function(mutation){
                     Array.prototype.forEach.call(mutation.addedNodes, function(node){
                         try {
-                            if ( node.querySelector && node.querySelector('.wps_etmfw_colorpicker') ) {
+                            if (
+                                ( node.classList && node.classList.contains('wps_etmfw_colorpicker') ) ||
+                                ( node.querySelector && node.querySelector('.wps_etmfw_colorpicker') )
+                            ) {
                                 window.etmfwInitColorPickers(node);
                             }
                         } catch(e) {}
