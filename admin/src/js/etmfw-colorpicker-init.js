@@ -73,16 +73,21 @@
         return $picker;
     }
 
-    function syncPickerState($input) {
+    function syncPickerState($input, explicitValue) {
         var $picker = ensurePickerStructure($input);
-        var normalized = normalizeHexColor($input.val());
+        var rawValue = typeof explicitValue === 'undefined' ? $input.val() : explicitValue;
+        var normalized = normalizeHexColor(rawValue);
 
         if ( ! $picker.length ) {
             return;
         }
 
+        if ( typeof explicitValue !== 'undefined' ) {
+            $input.val(rawValue);
+        }
+
         $picker.css('--etmfw-picked-color', normalized);
-        $picker.toggleClass('has-color-value', !! ($input.val() || '').toString().trim());
+        $picker.toggleClass('has-color-value', !! (rawValue || '').toString().trim());
         $picker.find('[data-etmfw-color-hex]').text(normalized);
         $picker.find('.wp-color-result').attr('aria-label', ($picker.attr('data-etmfw-label') || 'Color') + ' ' + normalized);
     }
@@ -92,14 +97,21 @@
 
         $( context ).find('.wps_etmfw_colorpicker').each(function(){
             var $input = $(this);
+            var isInHiddenTabPanel = $input.closest('.wps-etmfw-tab-panel[hidden]').length > 0;
+
+            if ( ! $input.data('etmfw-initialized') && isInHiddenTabPanel ) {
+                return;
+            }
 
             if ( ! $input.data('etmfw-initialized') && typeof $input.wpColorPicker === 'function' ) {
                 $input.wpColorPicker({
-                    change: function() {
-                        syncPickerState($input);
+                    change: function(event, ui) {
+                        var selectedColor = ui && ui.color ? ui.color.toString() : $input.val();
+
+                        syncPickerState($input, selectedColor);
                     },
                     clear: function() {
-                        syncPickerState($input);
+                        syncPickerState($input, '');
                     }
                 });
                 $input.data('etmfw-initialized', true);

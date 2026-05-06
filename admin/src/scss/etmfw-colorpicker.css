@@ -3,6 +3,7 @@
     position: relative;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 14px;
     width: 100%;
     min-height: 0;
@@ -21,6 +22,7 @@
 }
 
 .wps-etmfw-picker:focus-within {
+    z-index: 60;
     border-color: #d7b58d;
     box-shadow: 0 0 0 3px rgba(233, 203, 161, 0.34), 0 12px 24px rgba(97, 68, 32, 0.08);
     transform: translateY(-1px);
@@ -112,11 +114,13 @@
 }
 
 .wps-etmfw-picker .wp-picker-holder {
-    position: absolute;
-    top: calc(100% + 12px);
-    left: 0;
-    z-index: 40;
-    margin: 0;
+    position: relative;
+    top: auto;
+    left: auto;
+    z-index: 1;
+    order: 3;
+    flex: 0 0 100%;
+    margin: 2px 0 0;
 }
 
 .wps-etmfw-picker .iris-picker {
@@ -127,9 +131,7 @@
 }
 
 .wps-etmfw-picker .wp-picker-clear,
-.wps-etmfw-picker .wp-picker-default,
-.wps-etmfw-picker .wp-picker-open,
-.wps-etmfw-picker .wp-picker-toggle {
+.wps-etmfw-picker .wp-picker-default {
     display: none !important;
 }
 

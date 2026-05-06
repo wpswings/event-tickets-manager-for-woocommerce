@@ -105,7 +105,7 @@
 			if ( 1 == wps_event_pro_is_enable ) {
 				proFields.show();
 			} else {
-				proFields.hide();
+			//	proFields.hide();
 			}
 		}
 

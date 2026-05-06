@@ -1633,9 +1633,7 @@ a.wps-rma__popup-for-pro-link:hover {
     pointer-events: none;
 }
 
-.wps-etmfw-radio-switch-class-pro-tag .wps-form-group__control .mdc-floating-label {
-    display: none;
-}
+
 
 
 @media screen and (max-width:768px) {

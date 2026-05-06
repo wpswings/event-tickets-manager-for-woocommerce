@@ -47,6 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			activeTab = tabKey;
 			tabsContainer.dataset.activeTab = tabKey;
+
+			if ( typeof window.etmfwInitColorPickers === 'function' ) {
+				window.requestAnimationFrame( () => {
+					window.etmfwInitColorPickers( targetPanel );
+				} );
+			}
+
 			if ( updateHistory ) {
 				const url = new URL( window.location.href );
 				url.searchParams.set( 'etmfw_tab', tabKey );

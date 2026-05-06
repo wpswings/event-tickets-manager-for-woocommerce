@@ -346,26 +346,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			return;
 		}
 
-		// If Pro is active: disable the CSS pseudo-element that prints the "PRO"
-		// badge (so Pro users don't see a 'PRO' marker). If Pro is not active,
-		// keep hiding pro-only controls so free users can't access them.
-		if ( $this->etmfw_is_pro_active() ) {
-			// Hide any visual "Pro" markers for pro users so they don't see
-			// promotional ribbons or pseudo-elements that were intended for
-			// free users. This keeps the admin UI clean for paid installs.
-			echo '<style>';
-			echo '.wps_etmfw_creation_setting td:before{display:none!important;}';
-			echo '.wps_etmfw_premium_strip, .wps_etmfw_premium_strip:after{display:none!important;}';
-			echo '.wps-etmfw-radio-switch-class-pro-tag .wps-form-group__label:before{display:none!important;}';
-			echo '.wps-etmfw-radio-switch-class-pro-tag .wps-form-group__control:before{display:none!important;}';
-			echo '</style>';
-			return;
-		}
-
-		echo '<style>
-			.etmfw-radio-switch-class-pro,.wps-etmfw-radio-switch-class-pro-tag{display:none!important;}
-			.wps-form-group[class*="class-pro"],.wps-form-group [class*="-class-pro"],.wps-form-group [class*="class-pro"]{display:none!important;}
-			</style>';
+		
 	}
 
 	/**
