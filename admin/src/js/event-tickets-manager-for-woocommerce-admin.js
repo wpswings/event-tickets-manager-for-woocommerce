@@ -297,20 +297,6 @@
             }
         });
 
-        function wps_checking_for_pro(){
-            var wps_event_pro_is_enable = etmfw_admin_param.is_pro_active;
-            if(1 != wps_event_pro_is_enable){
-            var element = document.getElementById("wps_etmfw_is_for_pro");
-            element.classList.add("wps_etmfw_class_for_pro");
-            $('#wps_etmfw_new_layout_setting_save_3').hide();
-            }else{
-            var element = document.getElementById("wps_etmfw_is_for_pro");
-            //    element.classList.remove("wps_etmfw_class_for_pro");
-            }
-        }
-
-        wps_checking_for_pro();
-
     });
 
     $(window).load(function() {
@@ -325,7 +311,7 @@
         $('.wps-etmfw-appearance-nav-tab a').removeClass('nav-tab-active');
         $(this).addClass('nav-tab-active');
         $('.wps-etmfw-template-section').css("display", "block");
-        $('.wps_etmfw_table_column_wrapper').css("display", "none");
+        $('.wps_etmfw_table_column_wrapper').addClass('wps-etmfw-appearance-section-hidden').css("display", "none");
     });
     $(document).on('click', '.wps-etmfw-appearance-design', function(e) {
         var $designSection = $('.wps_etmfw_table_column_wrapper');
@@ -333,6 +319,7 @@
         $('.wps-etmfw-appearance-nav-tab a').removeClass('nav-tab-active');
         $(this).addClass('nav-tab-active');
         $('.wps-etmfw-template-section').css("display", "none");
+        $designSection.removeClass('wps-etmfw-appearance-section-hidden');
         $designSection.css("display", "block");
 
         if ( typeof window.etmfwInitColorPickers === 'function' ) {
