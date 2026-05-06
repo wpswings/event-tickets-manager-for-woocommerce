@@ -421,7 +421,7 @@ ob_start();
 
 				<!-- Preview start -->
 				<div class="wps_etmfw_offer_preview" >
-				<div class="wps_etmfw_offer_preview_in" >
+				<div class="wps_etmfw_offer_preview_in" > 
 					<?php $wps_ubo_selected_template = ! empty( get_option( 'wps_etmfw_ticket_template' ) ) ? get_option( 'wps_etmfw_ticket_template' ) : '1'; ?>
 					<h3 class="wps_ubo_offer_preview_heading"><?php esc_html_e( 'PDF Ticket Preview', 'event-tickets-manager-for-woocommerce' ); ?></h3>
 					<?php if ( 1 === (int) $wps_ubo_selected_template ) { ?>

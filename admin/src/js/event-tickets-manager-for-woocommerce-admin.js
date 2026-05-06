@@ -1,3 +1,6 @@
+
+
+
 (function($) {
     'use strict';
 
@@ -30,6 +33,7 @@
      */
 
     $(document).ready(function () {
+        $('.wps_etmfw_table_column_wrapper').addClass('wps-etmfw-appearance-section-hidden').css("display", "none");
         $('#wps_etmfwp_include_barcode').change(function () {
             console.log('barcode');
             if ($(this).is(":checked")) {
@@ -305,9 +309,11 @@
             $(document).find('.wps-defaut-multiselect').select2();
         }
     });
+
     // PDF Setting Layout Section JS - start.
     $(document).on('click', '.wps-etmfw-appearance-template', function(e) {
         e.preventDefault();
+    
         $('.wps-etmfw-appearance-nav-tab a').removeClass('nav-tab-active');
         $(this).addClass('nav-tab-active');
         $('.wps-etmfw-template-section').css("display", "block");
@@ -329,7 +335,6 @@
         }
     });
 
-		
 	// Live Preview JS start.
 
 	// Border Styling.
@@ -383,3 +388,17 @@
             }
         }
 })(jQuery);
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -14,76 +14,32 @@ document.addEventListener('DOMContentLoaded', () => {
 		input.addEventListener('change', syncState);
 	});
 
-	const tabsContainer = document.querySelector('.wps-etmfw-tab-panels');
+	// Tab switching with page refresh to ensure proper CSS loading
 	const tabLinks = document.querySelectorAll('.wps-etmfw-ui-tab[data-tab-key]');
-	if ( tabsContainer && tabLinks.length && typeof URL !== 'undefined' ) {
-		let activeTab = tabsContainer.dataset.activeTab || tabLinks[0].dataset.tabKey;
 
-		const setActiveTab = ( tabKey, updateHistory = false ) => {
-			if ( ! tabKey || activeTab === tabKey ) {
-				return;
-			}
+	// Remove the default click prevention and let tabs work as regular links
+	// This will cause page refresh which ensures CSS loads properly
+	tabLinks.forEach( ( link ) => {
+		// Remove any existing click handlers that prevent default
+		link.removeEventListener( 'click', function(e) { e.preventDefault(); } );
 
-			const targetPanel = tabsContainer.querySelector( `.wps-etmfw-tab-panel[data-tab-key="${ tabKey }"]` );
-			if ( ! targetPanel ) {
-				return;
-			}
-
-			tabLinks.forEach( ( link ) => {
-				link.classList.toggle( 'is-active', link.dataset.tabKey === tabKey );
-			} );
-
-			tabsContainer.querySelectorAll( '.wps-etmfw-tab-panel' ).forEach( ( panel ) => {
-				const isActive = panel.dataset.tabKey === tabKey;
-				panel.classList.toggle( 'is-active', isActive );
-				if ( isActive ) {
-					panel.removeAttribute( 'hidden' );
-					panel.setAttribute( 'aria-hidden', 'false' );
-				} else {
-					panel.setAttribute( 'hidden', '' );
-					panel.setAttribute( 'aria-hidden', 'true' );
-				}
-			} );
-
-			activeTab = tabKey;
-			tabsContainer.dataset.activeTab = tabKey;
-
-			if ( typeof window.etmfwInitColorPickers === 'function' ) {
-				window.requestAnimationFrame( () => {
-					window.etmfwInitColorPickers( targetPanel );
-				} );
-			}
-
-			if ( updateHistory ) {
-				const url = new URL( window.location.href );
-				url.searchParams.set( 'etmfw_tab', tabKey );
-				window.history.pushState( { etmfwTab: tabKey }, '', url );
-			}
-		};
-
-		const getTabFromHistory = () => {
-			const params = new URL( window.location.href ).searchParams;
-			return params.get( 'etmfw_tab' );
-		};
-
-		tabLinks.forEach( ( link ) => {
-			link.addEventListener( 'click', ( event ) => {
-				event.preventDefault();
-				const tabKey = link.dataset.tabKey;
-				if ( tabKey ) {
-					setActiveTab( tabKey, true );
-				}
-			} );
+		// Ensure the link works normally for page refresh
+		link.addEventListener( 'click', ( ) => {
+			// Allow the default link behavior to trigger page refresh
+			// The href already contains the proper URL with etmfw_tab parameter
+			// No need to prevent default or manipulate history
 		} );
+	} );
 
-		window.addEventListener( 'popstate', ( event ) => {
-			const stateTab = event.state && event.state.etmfwTab ? event.state.etmfwTab : getTabFromHistory();
-			if ( stateTab ) {
-				setActiveTab( stateTab, false );
-			}
-		} );
-
-		setActiveTab( activeTab, false );
+	// Initialize color pickers if present on the current tab
+	const tabsContainer = document.querySelector('.wps-etmfw-tab-panels');
+	if ( tabsContainer && typeof window.etmfwInitColorPickers === 'function' ) {
+		const activePanel = tabsContainer.querySelector( '.wps-etmfw-tab-panel.is-active' );
+		if ( activePanel ) {
+			window.requestAnimationFrame( () => {
+				window.etmfwInitColorPickers( activePanel );
+			} );
+		}
 	}
 
 	const growthModal = document.querySelector( '[data-wps-etmfw-growth-modal="true"]' );
@@ -302,3 +258,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 });
+
+
+
