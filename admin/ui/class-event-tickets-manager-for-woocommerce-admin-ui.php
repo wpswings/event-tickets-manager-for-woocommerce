@@ -60,14 +60,14 @@ class Event_Tickets_Manager_For_Woocommerce_Admin_UI {
 				),
 				array(
 					'label' => __( 'Documentation', 'event-tickets-manager-for-woocommerce' ),
-					'url'   => 'https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-admin&utm_campaign=documentation',
+					'url'   => 'https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-event-org&utm_medium=event-org-backend&utm_campaign=documentation',
 				),
 				array(
 					'label' => __( 'Support', 'event-tickets-manager-for-woocommerce' ),
-					'url'   => 'https://wpswings.com/submit-query/?utm_source=wpswings-events-support&utm_medium=events-admin&utm_campaign=support',
+					'url'   => 'https://wpswings.com/contact-us/?utm_source=wpswings-event-org&utm_medium=event-org-backend&utm_campaign=contact-us',
 				),
 			),
-			'support_url' => 'https://wpswings.com/submit-query/?utm_source=wpswings-events-support&utm_medium=events-admin&utm_campaign=support',
+			'support_url' => 'https://wpswings.com/contact-us/?utm_source=wpswings-event-org&utm_medium=event-org-backend&utm_campaign=contact-us',
 			'support_label' => __( 'Contact Us', 'event-tickets-manager-for-woocommerce' ),
 			'explore_label' => __( 'View More Plugins', 'event-tickets-manager-for-woocommerce' ),
 		);

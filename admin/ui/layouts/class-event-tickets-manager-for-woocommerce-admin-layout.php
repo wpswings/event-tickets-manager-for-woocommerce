@@ -228,7 +228,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin_Layout {
 			'help_links' => array(),
 			'support_url' => '',
 			'support_label' => __( 'Contact Support', 'event-tickets-manager-for-woocommerce' ),
-			'explore_url' => 'https://wpswings.com/plugins/?utm_source=wpswings-events&utm_medium=events-admin&utm_campaign=explore-more',
+			'explore_url' => 'https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-event-org&utm_medium=event-org-backend&utm_campaign=woocommerce-plugins',
 			'explore_label' => __( 'Browse Plugins', 'event-tickets-manager-for-woocommerce' ),
 		);
 		$args     = wp_parse_args( $args, $defaults );
