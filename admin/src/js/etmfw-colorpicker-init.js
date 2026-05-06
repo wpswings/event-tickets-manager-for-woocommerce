@@ -92,14 +92,21 @@
         $picker.find('.wp-color-result').attr('aria-label', ($picker.attr('data-etmfw-label') || 'Color') + ' ' + normalized);
     }
 
+    function shouldDeferColorPickerInitialization($input) {
+        if ( ! $input || ! $input.length ) {
+            return false;
+        }
+
+        return ! $input.is(':visible') || $input.closest('.wps-etmfw-appearance-section-hidden, .wps-etmfw-tab-panel[hidden], [hidden]').length > 0;
+    }
+
     window.etmfwInitColorPickers = function( context ) {
         context = context || document;
 
         $( context ).find('.wps_etmfw_colorpicker').each(function(){
             var $input = $(this);
-            var isInHiddenTabPanel = $input.closest('.wps-etmfw-tab-panel[hidden]').length > 0;
 
-            if ( ! $input.data('etmfw-initialized') && isInHiddenTabPanel ) {
+            if ( ! $input.data('etmfw-initialized') && shouldDeferColorPickerInitialization($input) ) {
                 return;
             }
 

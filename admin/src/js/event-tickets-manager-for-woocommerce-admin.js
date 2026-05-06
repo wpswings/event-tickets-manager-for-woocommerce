@@ -328,10 +328,18 @@
         $('.wps_etmfw_table_column_wrapper').css("display", "none");
     });
     $(document).on('click', '.wps-etmfw-appearance-design', function(e) {
+        var $designSection = $('.wps_etmfw_table_column_wrapper');
+
         $('.wps-etmfw-appearance-nav-tab a').removeClass('nav-tab-active');
         $(this).addClass('nav-tab-active');
         $('.wps-etmfw-template-section').css("display", "none");
-        $('.wps_etmfw_table_column_wrapper').css("display", "block");
+        $designSection.css("display", "block");
+
+        if ( typeof window.etmfwInitColorPickers === 'function' ) {
+            window.setTimeout(function() {
+                window.etmfwInitColorPickers($designSection.get(0) || document);
+            }, 0);
+        }
     });
 
 		
