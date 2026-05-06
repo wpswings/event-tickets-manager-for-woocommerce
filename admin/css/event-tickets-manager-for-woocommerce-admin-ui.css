@@ -1181,6 +1181,54 @@ body.wps-etmfw-growth-modal-open {
 	color: var(--wps-etmfw-ui-text);
 }
 
+.wps-etmfw-radio-switch-class-pro-tag .wps-etmfw-ui-field__control {
+	position: relative;
+}
+
+.wps-etmfw-radio-switch-class-pro-tag .wps-etmfw-ui-field__control::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	border-radius: 14px;
+	background: rgba(243, 255, 245, 0.68);
+	pointer-events: none;
+}
+
+.wps-etmfw-ui-pro-pill {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: 8px;
+	padding: 2px 8px;
+	border-radius: 999px;
+	background: #0aa000;
+	color: #fff;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	line-height: 1.4;
+	text-transform: uppercase;
+	vertical-align: middle;
+}
+
+.wps-etmfw-radio-switch-class-pro-tag .wps-etmfw-ui-input:disabled,
+.wps-etmfw-radio-switch-class-pro-tag .wps-etmfw-ui-textarea:disabled,
+.wps-etmfw-radio-switch-class-pro-tag .wps-etmfw-ui-select:disabled,
+.wps-etmfw-radio-switch-class-pro-tag .wps-etmfw-ui-toggle__input:disabled,
+.wps-etmfw-radio-switch-class-pro-tag input:disabled,
+.wps-etmfw-radio-switch-class-pro-tag button:disabled,
+.wps-etmfw-radio-switch-class-pro-tag select:disabled,
+.wps-etmfw-radio-switch-class-pro-tag textarea:disabled {
+	cursor: not-allowed;
+}
+
+.wps-etmfw-radio-switch-class-pro-tag .wps-etmfw-ui-toggle,
+.wps-etmfw-radio-switch-class-pro-tag .wps-etmfw-ui-checkbox,
+.wps-etmfw-radio-switch-class-pro-tag .wps-etmfw-ui-radio {
+	cursor: not-allowed;
+}
+
 .wps-etmfw-ui-field--radio-switch .wps-etmfw-ui-field__control,
 .wps-etmfw-ui-field--checkbox .wps-etmfw-ui-field__control,
 .wps-etmfw-ui-field--wps-new-checkbox .wps-etmfw-ui-field__control,

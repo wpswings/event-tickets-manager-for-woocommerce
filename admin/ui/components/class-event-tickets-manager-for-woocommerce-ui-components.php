@@ -61,6 +61,10 @@ class Event_Tickets_Manager_For_Woocommerce_UI_Components {
 			'wps-etmfw-ui-field--' . sanitize_html_class( $type ),
 		);
 
+		if ( self::should_lock_pro_field( $field ) ) {
+			$row_classes[] = 'wps-etmfw-radio-switch-class-pro-tag';
+		}
+
 		if ( in_array( $type, array( 'button', 'submit' ), true ) ) {
 			$row_classes[] = 'wps-etmfw-ui-field--actions';
 		}
@@ -70,7 +74,12 @@ class Event_Tickets_Manager_For_Woocommerce_UI_Components {
 		if ( ! in_array( $type, array( 'button', 'submit' ), true ) ) {
 			echo '<div class="wps-etmfw-ui-field__meta">';
 			if ( ! empty( $field['title'] ) ) {
-				echo '<label class="wps-etmfw-ui-field__label" for="' . esc_attr( self::get_field_id( $field ) ) . '">' . esc_html( $field['title'] ) . '</label>';
+				echo '<label class="wps-etmfw-ui-field__label" for="' . esc_attr( self::get_field_id( $field ) ) . '">';
+				echo '<span class="wps-etmfw-ui-field__label-text">' . esc_html( $field['title'] ) . '</span>';
+				if ( self::should_lock_pro_field( $field ) ) {
+					echo '<span class="wps-etmfw-ui-pro-pill">' . esc_html__( 'Pro', 'event-tickets-manager-for-woocommerce' ) . '</span>';
+				}
+				echo '</label>';
 			}
 
 			if ( ! empty( $field['description'] ) && ! in_array( $type, array( 'wps_simple_text', 'wps-new-checkbox' ), true ) ) {
@@ -189,6 +198,8 @@ class Event_Tickets_Manager_For_Woocommerce_UI_Components {
 			$attributes = array_merge( $attributes, $field['custom_attributes'] );
 		}
 
+		$attributes = self::maybe_lock_pro_attributes( $field, $attributes );
+
 		echo '<div class="' . esc_attr( $wrapper_class ) . '">';
 		echo '<input ' . self::build_attributes( $attributes ) . ' />';
 		echo '</div>';
@@ -213,6 +224,8 @@ class Event_Tickets_Manager_For_Woocommerce_UI_Components {
 		if ( ! empty( $field['required'] ) && 'yes' === $field['required'] ) {
 			$attributes['required'] = 'required';
 		}
+
+		$attributes = self::maybe_lock_pro_attributes( $field, $attributes );
 
 		echo '<div class="wps-etmfw-ui-control-box wps-etmfw-ui-control-box--textarea">';
 		echo '<textarea ' . self::build_attributes( $attributes ) . '>' . esc_textarea( is_scalar( $value ) ? (string) $value : '' ) . '</textarea>';
@@ -240,6 +253,8 @@ class Event_Tickets_Manager_For_Woocommerce_UI_Components {
 		if ( $is_multiple ) {
 			$attributes['multiple'] = 'multiple';
 		}
+
+		$attributes = self::maybe_lock_pro_attributes( $field, $attributes );
 
 		echo '<div class="wps-etmfw-ui-control-box wps-etmfw-ui-control-box--select">';
 		echo '<select ' . self::build_attributes( $attributes ) . '>';
@@ -276,11 +291,20 @@ class Event_Tickets_Manager_For_Woocommerce_UI_Components {
 		$input_id = self::get_field_id( $field );
 		echo '<label class="wps-etmfw-ui-checkbox" for="' . esc_attr( $input_id ) . '">';
 		printf(
-			'<input type="checkbox" id="%1$s" name="%2$s" class="%3$s" value="1" %4$s />',
-			esc_attr( $input_id ),
-			esc_attr( self::get_field_name( $field ) ),
-			esc_attr( trim( self::get_field_class( $field ) ) ),
-			checked( self::is_checked_value( $value ), true, false )
+			'<input %1$s />',
+			self::build_attributes(
+				self::maybe_lock_pro_attributes(
+					$field,
+					array(
+						'type'  => 'checkbox',
+						'id'    => $input_id,
+						'name'  => self::get_field_name( $field ),
+						'class' => trim( self::get_field_class( $field ) ),
+						'value' => '1',
+						'checked' => self::is_checked_value( $value ),
+					)
+				)
+			)
 		);
 		echo '<span class="wps-etmfw-ui-checkbox__indicator" aria-hidden="true"></span>';
 		if ( ! empty( $field['description'] ) ) {
@@ -304,11 +328,19 @@ class Event_Tickets_Manager_For_Woocommerce_UI_Components {
 			$input_id = self::get_field_id( $field ) . '-' . sanitize_html_class( (string) $option_value );
 			echo '<label class="wps-etmfw-ui-radio" for="' . esc_attr( $input_id ) . '">';
 			printf(
-				'<input type="radio" id="%1$s" name="%2$s" value="%3$s" %4$s />',
-				esc_attr( $input_id ),
-				esc_attr( self::get_field_name( $field ) ),
-				esc_attr( $option_value ),
-				checked( (string) $value, (string) $option_value, false )
+				'<input %1$s />',
+				self::build_attributes(
+					self::maybe_lock_pro_attributes(
+						$field,
+						array(
+							'type'  => 'radio',
+							'id'    => $input_id,
+							'name'  => self::get_field_name( $field ),
+							'value' => $option_value,
+							'checked' => (string) $value === (string) $option_value,
+						)
+					)
+				)
 			);
 			echo '<span class="wps-etmfw-ui-radio__indicator" aria-hidden="true"></span>';
 			echo '<span class="wps-etmfw-ui-radio__label">' . esc_html( $option_label ) . '</span>';
@@ -331,13 +363,23 @@ class Event_Tickets_Manager_For_Woocommerce_UI_Components {
 
 		echo '<label class="wps-etmfw-ui-toggle" for="' . esc_attr( $input_id ) . '" data-state="' . esc_attr( $checked ? 'on' : 'off' ) . '">';
 		printf(
-			'<input type="checkbox" id="%1$s" name="%2$s" class="wps-etmfw-ui-toggle__input %3$s" value="on" role="switch" aria-label="%4$s" aria-checked="%5$s" %6$s />',
-			esc_attr( $input_id ),
-			esc_attr( self::get_field_name( $field ) ),
-			esc_attr( trim( self::get_field_class( $field ) ) ),
-			esc_attr( isset( $field['title'] ) ? $field['title'] : __( 'Toggle setting', 'event-tickets-manager-for-woocommerce' ) ),
-			$checked ? 'true' : 'false',
-			checked( $checked, true, false )
+			'<input %1$s />',
+			self::build_attributes(
+				self::maybe_lock_pro_attributes(
+					$field,
+					array(
+						'type'         => 'checkbox',
+						'id'           => $input_id,
+						'name'         => self::get_field_name( $field ),
+						'class'        => 'wps-etmfw-ui-toggle__input ' . trim( self::get_field_class( $field ) ),
+						'value'        => 'on',
+						'role'         => 'switch',
+						'aria-label'   => isset( $field['title'] ) ? $field['title'] : __( 'Toggle setting', 'event-tickets-manager-for-woocommerce' ),
+						'aria-checked' => $checked ? 'true' : 'false',
+						'checked'      => $checked,
+					)
+				)
+			)
 		);
 		echo '<span class="wps-etmfw-ui-toggle__track" aria-hidden="true"></span>';
 		echo '<span class="wps-etmfw-ui-toggle__thumb" aria-hidden="true"></span>';
@@ -353,13 +395,14 @@ class Event_Tickets_Manager_For_Woocommerce_UI_Components {
 	 */
 	protected static function render_button( $field ) {
 		$button_text = isset( $field['button_text'] ) ? $field['button_text'] : __( 'Save Changes', 'event-tickets-manager-for-woocommerce' );
-		printf(
-			'<button type="submit" id="%1$s" name="%2$s" class="wps-etmfw-ui-button wps-etmfw-ui-button--primary %3$s">%4$s</button>',
-			esc_attr( self::get_field_id( $field ) ),
-			esc_attr( self::get_field_name( $field ) ),
-			esc_attr( trim( self::get_field_class( $field ) ) ),
-			esc_html( $button_text )
+		$attributes  = array(
+			'type'  => 'submit',
+			'id'    => self::get_field_id( $field ),
+			'name'  => self::get_field_name( $field ),
+			'class' => 'wps-etmfw-ui-button wps-etmfw-ui-button--primary ' . trim( self::get_field_class( $field ) ),
 		);
+		$attributes  = self::maybe_lock_pro_attributes( $field, $attributes );
+		echo '<button ' . self::build_attributes( $attributes ) . '>' . esc_html( $button_text ) . '</button>';
 	}
 
 	/**
@@ -521,6 +564,65 @@ class Event_Tickets_Manager_For_Woocommerce_UI_Components {
 	 */
 	protected static function get_field_class( $field ) {
 		return isset( $field['class'] ) ? $field['class'] : '';
+	}
+
+	/**
+	 * Check whether the field is marked as pro-only.
+	 *
+	 * @param array $field Settings field.
+	 * @return bool
+	 */
+	protected static function is_pro_only_field( $field ) {
+		$field_class = self::get_field_class( $field );
+
+		return is_string( $field_class ) && false !== strpos( $field_class, 'class-pro' );
+	}
+
+	/**
+	 * Check whether the pro plugin is active.
+	 *
+	 * @return bool
+	 */
+	protected static function is_pro_plugin_active() {
+		static $is_pro_active = null;
+
+		if ( null === $is_pro_active ) {
+			if ( function_exists( 'is_plugin_active' ) ) {
+				$is_pro_active = is_plugin_active( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php' );
+			} elseif ( function_exists( 'get_option' ) ) {
+				$is_pro_active = in_array( 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php', (array) get_option( 'active_plugins', array() ), true );
+			} else {
+				$is_pro_active = false;
+			}
+		}
+
+		return (bool) $is_pro_active;
+	}
+
+	/**
+	 * Check whether the field should be locked in the free plugin UI.
+	 *
+	 * @param array $field Settings field.
+	 * @return bool
+	 */
+	protected static function should_lock_pro_field( $field ) {
+		return self::is_pro_only_field( $field ) && ! self::is_pro_plugin_active();
+	}
+
+	/**
+	 * Add disabled state to pro-only fields in the free plugin UI.
+	 *
+	 * @param array $field Settings field.
+	 * @param array $attributes HTML attributes.
+	 * @return array
+	 */
+	protected static function maybe_lock_pro_attributes( $field, $attributes ) {
+		if ( self::should_lock_pro_field( $field ) ) {
+			$attributes['disabled']      = true;
+			$attributes['aria-disabled'] = 'true';
+		}
+
+		return $attributes;
 	}
 
 	/**
