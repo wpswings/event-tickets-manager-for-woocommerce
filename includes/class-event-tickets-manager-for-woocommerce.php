@@ -309,7 +309,6 @@ class Event_Tickets_Manager_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_wps_etmfw_make_user_checkin', $etmfw_plugin_public, 'wps_etmfw_make_user_checkin_for_event' );
 			$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_make_user_checkin', $etmfw_plugin_public, 'wps_etmfw_make_user_checkin_for_event' );
 			$this->loader->add_action( 'wp_ajax_wps_etmfw_edit_user_info', $etmfw_plugin_public, 'wps_etmfw_edit_user_info_for_event' );
-			$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_edit_user_info', $etmfw_plugin_public, 'wps_etmfw_edit_user_info_for_event' );
 			$this->loader->add_action( 'woocommerce_available_payment_gateways', $etmfw_plugin_public, 'wps_etmfw_unset_cod_payment_gateway_for_event' );
 			$this->loader->add_filter( 'woocommerce_available_payment_gateways', $etmfw_plugin_public , 'restrict_cod_for_specific_product_types', 10,1 );
 			$this->loader->add_filter( 'woocommerce_is_purchasable', $etmfw_plugin_public, 'wps_etmfw_handle_expired_events', 10, 2 );

@@ -1202,6 +1202,38 @@ a.wps_etmfw_template_link_pro img {
     border-left: 1px solid rgba(0, 0, 0, 0.18);
 }
 
+@media screen and (max-width: 1024px) {
+    .wps_etmfw_ticket_layout_div_wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .wps_etmfw_template_select-wrapper {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 16px;
+    }
+
+    .wps_etmfw_template_select-wrapper .wps_etmfw_template_select {
+        margin-bottom: 0;
+    }
+
+    .wps_etmfw_template_select-wrapper .wps_etmfw_template_select img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .wps_etmfw_offer_preview {
+        padding: 20px 0 0;
+        border-left: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.18);
+    }
+
+    .wps_etmfw_offer_preview_in {
+        position: static;
+    }
+}
+
 .wps_etmfw_offer_preview_in {
     position: sticky;
     top: 24px;
@@ -1260,13 +1292,13 @@ select.wps_etmfw_preview_select_border_type:focus {
 }
 
 @media screen and (max-width:768px) {
-    .wps_etmfw_ticket_layout_div_wrapper {
-        display: block;
-    }
-
     h3.wps_ubo_offer_preview_heading {
         position: sticky;
         left: 0;
+    }
+
+    .wps_etmfw_offer_preview_in {
+        overflow-x: auto;
     }
 
     .wps_etmfw_offer_preview_in table {

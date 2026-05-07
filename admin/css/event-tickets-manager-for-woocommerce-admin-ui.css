@@ -145,7 +145,7 @@
 
 .wps-etmfw-ui-page-grid {
 	display: grid;
-	grid-template-columns: minmax(0, 1fr) 320px;
+	grid-template-columns: minmax(0, 1fr) 260px;
 	gap: 18px;
 	margin-top: 22px;
 	align-items: start;
@@ -212,6 +212,7 @@
 	justify-content: space-between;
 	gap: 20px;
 	margin-bottom: 0;
+	flex-wrap: wrap;
 }
 
 .wps-etmfw-ui-card__heading h2 {
@@ -1628,6 +1629,23 @@ body.wps-etmfw-growth-modal-open {
 @media (max-width: 1180px) {
 	.wps-etmfw-ui-page-grid {
 		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 1100px) {
+	.wps-etmfw-ui-field,
+	.wps-etmfw-ui-field--radio-switch,
+	.wps-etmfw-ui-field--checkbox,
+	.wps-etmfw-ui-field--wps-new-checkbox,
+	.wps-etmfw-ui-field--select,
+	.wps-etmfw-ui-field--wps_simple_text {
+		grid-template-columns: 1fr;
+		gap: 14px;
+	}
+
+	.wps-etmfw-ui-field--textarea .wps-etmfw-ui-control-box,
+	.wps-etmfw-ui-field--wp_editor .wps-etmfw-ui-editor-wrap {
+		width: 100%;
 	}
 }
 

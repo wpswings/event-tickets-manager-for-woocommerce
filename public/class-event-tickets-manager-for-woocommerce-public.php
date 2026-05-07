@@ -173,7 +173,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 			}
 		}
 
-		wp_enqueue_script( $this->plugin_name . 'public-org-custom-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-org-custom-public.js', array( 'jquery', 'jquery-ui-sortable' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name . 'public-org-custom-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/event-tickets-manager-for-woocommerce-org-custom-public.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-mouse', 'jquery-ui-sortable' ), $this->version, false );
 
 		wp_localize_script(
 			$this->plugin_name . 'public-org-custom-js',
@@ -1492,9 +1492,25 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		check_ajax_referer( 'wps-etmfw-verify-public-nonce', 'wps_nonce' );
 
 		$response['result'] = false;
+
+		if ( ! is_user_logged_in() ) {
+			wp_send_json( $response );
+		}
+
 		$posted_value = ! empty( $_REQUEST['form_value'] ) ? map_deep( wp_unslash( $_REQUEST['form_value'] ), 'sanitize_text_field' ) : array();
-		$order_id = isset( $_REQUEST['order_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['order_id'] ) ) : '';
+		$order_id = isset( $_REQUEST['order_id'] ) ? absint( wp_unslash( $_REQUEST['order_id'] ) ) : 0;
 		$order = wc_get_order( $order_id );
+
+		if ( ! $order instanceof WC_Order ) {
+			wp_send_json( $response );
+		}
+
+		$current_user_id = get_current_user_id();
+		$is_owner = ( (int) $order->get_user_id() === $current_user_id && $current_user_id > 0 );
+		if ( ! $is_owner && ! current_user_can( 'edit_shop_orders' ) ) {
+			wp_send_json( $response );
+		}
+
 		foreach ( $order->get_items() as $item_id => $item ) {
 			$product = $item->get_product();
 			if ( $product instanceof WC_Product && $product->is_type( 'event_ticket_manager' ) ) {
