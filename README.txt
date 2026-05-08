@@ -221,7 +221,7 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 20. Product Data - Event Settings - Frontend Set Price For Specific User Type 
 21. Product Data - Event Settings - Custom Fields 
 22. Product Data - Event Settings - Frontend Of Custom Fields 
-23. Purchased Events Overview
+23. Purchased Events Overview For Admins
 24. Event Check-In Page
 
 == Frequently Asked Questions ==
@@ -253,6 +253,10 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 
 == Changelog ==
+
+= 1.5.6 – Released on 8 May 2026 =
+* New: Vulnerability update 
+* Enhancement: Security fixes
 
 = 1.5.5 – Released on 6 May 2026 =
 * New : Compatibility With Latest WP (6.9.4) and WC (10.7).
@@ -468,7 +472,6 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Upgrade Notice == 
 
-= 1.5.5 – Released on 6 May 2026 =
-* New : Compatibility With Latest WP (6.9.4) and WC (10.7)
-* Enhancement : Plugin Optimization
-* Enhancement : UI/UX update
+= 1.5.6 – Released on 8 May 2026 =
+* New: Vulnerability update 
+* Enhancement: Security fixes
