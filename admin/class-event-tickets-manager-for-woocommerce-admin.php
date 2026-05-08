@@ -316,7 +316,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			wp_enqueue_script( $this->plugin_name . 'admin-edit-product-js' );
 		}
 
-		if ( $this->etmfw_is_plugin_admin_screen( $screen_id ) || 'product' === $screen_id ) {
+		if ( $this->etmfw_is_plugin_admin_screen( $screen_id ) || 'product' === $screen_id || 'woocommerce_page_wc-orders' === $screen_id || 'shop_order' === $screen_id ) {
 			wp_enqueue_script( $this->plugin_name . 'org-custom-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/js/event-tickets-manager-for-woocommerce-org-custom-admin.js', array( 'jquery', 'jquery-ui-sortable' ), $this->version, true );
 
 			wp_localize_script(

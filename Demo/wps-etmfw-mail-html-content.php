@@ -99,7 +99,7 @@ $wps_etmfw_hide_details_pdf_ticket = get_option( 'wps_wet_hide_details_pdf_ticke
 									</table>
 								</td>
 								<?php if ( 'on' == get_option( 'wps_etmfwp_include_barcode' ) ) { ?>
-								<td style="background: white;">
+								<td style="background: #000000;">
 								<?php } else { ?>
 								<td style="background: #000000;">
 								<?php } ?>

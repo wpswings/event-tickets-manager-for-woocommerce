@@ -2453,7 +2453,8 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$wps_etmfw_barcode_color = ! empty( get_option( 'wps_etmfw_pdf_barcode_color' ) ) ? get_option( 'wps_etmfw_pdf_barcode_color' ) : 'black';
 
 				$barcode = new \Com\Tecnick\Barcode\Barcode();
-				$bobj = $barcode->getBarcodeObj( 'C128B', "{$ticket_number}", 450, 70, $wps_etmfw_barcode_color, array( 0, 0, 0, 0 ) );
+				$bobj = $barcode->getBarcodeObj( 'C128B', "{$ticket_number}", 450, 150, $wps_etmfw_barcode_color, array( 200, 100, 200, 100 ) );
+				$bobj->setBackgroundColor( 'white' );
 
 				$wps_image_data = $bobj->getPngData();
 

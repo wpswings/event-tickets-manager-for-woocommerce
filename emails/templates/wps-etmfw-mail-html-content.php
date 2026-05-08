@@ -101,7 +101,7 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 									</table>
 								</td>
 								<?php if('on' == get_option( 'wps_etmfwp_include_barcode' )){ ?>
-								<td style="background: white;">
+								<td style="background: #000000;">
 								<?php } else { ?>
 								<td style="background: #000000">
 								<?php } ?>
@@ -110,7 +110,7 @@ if('on' == get_option( 'wps_etmfw_prod_logo_plugin' ) ){
 											<tr>
 											<?php if('on' == get_option( 'wps_etmfwp_include_barcode' )){ ?>
 												<td style="text-align: center;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">
-													<h3 class="wps_etmfw_pdf_text_colour"  style="color: <?php echo esc_attr( 'black' ); ?>;"><?php esc_html_e( 'Your Ticket', 'event-tickets-manager-for-woocommerce' ); ?></h3>
+													<h3 class="wps_etmfw_pdf_text_colour"  style="color: <?php echo esc_attr( 'white' ); ?>;"><?php esc_html_e( 'Your Ticket', 'event-tickets-manager-for-woocommerce' ); ?></h3>
 												</td>
 												<?php } else { ?>
 													<td style="text-align: center;color: <?php echo esc_attr( $wps_etmfw_text_color ); ?>;">

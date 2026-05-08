@@ -357,6 +357,20 @@ ob_start();
 					<span class="wps_etmfw_helper_text"><?php echo esc_html( $attribute_description ); ?></span>
 				</td>
 				</tr>
+				<?php if ( 5 === (int) $wps_ubo_selected_template ) { ?>
+					<tr valign="top">
+						<th><?php esc_html_e( 'Select Header Background Color', 'event-tickets-manager-for-woocommerce' ); ?></th>
+						<td>
+						<?php
+						$attribute_description = esc_html__( 'Select different header background color for PDF Ticket.', 'event-tickets-manager-for-woocommerce' );
+						$wps_etmfw_header_background_color = ! empty( get_option( 'wps_etmfw_pdf_header_background_color' ) ) ? get_option( 'wps_etmfw_pdf_header_background_color' ) : '';
+						?>
+						<input type="text" name="wps_etmfw_pdf_header_background_color" class="wps_etmfw_colorpicker wps_etmfw_select_ticket_header_background" value="<?php echo esc_attr( $wps_etmfw_header_background_color ); ?>">
+						<span class="wps_etmfw_helper_text"><?php echo esc_html( $attribute_description ); ?></span>
+					</td>
+					</tr>
+				<?php } ?>
+				<?php if ( ( 1 == (int) $wps_ubo_selected_template ) || 2 == (int) $wps_ubo_selected_template || 3 == (int) $wps_ubo_selected_template || 4 == (int) $wps_ubo_selected_template || ( 5 == (int) $wps_ubo_selected_template ) ) { ?>
 				<tr valign="top">
 					<th><?php esc_html_e( 'Select Background Color', 'event-tickets-manager-for-woocommerce' ); ?></th>
 						<td>
@@ -403,7 +417,48 @@ ob_start();
 				</td>
 				</tr>
 
-				</tbody>
+				<tr valign="top">
+					<th><?php esc_html_e( 'Select QR Size', 'event-tickets-manager-for-woocommerce' ); ?></th>
+					<td>
+					<?php
+					$attribute_description = esc_html__( 'Select different QR size for PDF Ticket.', 'event-tickets-manager-for-woocommerce' );
+					$wps_etmfw_qr_size = ! empty( get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 'wps_etmfw_qr_size' ) : '';
+					?>
+					<input type="range" min="100" value="<?php echo esc_attr( $wps_etmfw_qr_size ); ?>"  max="220" value="" name='wps_etmfw_qr_size' class="wps_etmfw_qr_size_slider" />
+					<span class="wps_etmfw_qr_size_slider_span" ><?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?></span>
+					<span class="wps_etmfw_helper_text"><?php echo esc_html( $attribute_description ); ?></span>
+				</td>
+				</tr>
+				<?php } ?>
+				<tr class="wps_etmfw_hide_setting" valign="top">
+					<th><?php echo esc_html_e( 'Select Background Image', 'event-tickets-manager-for-woocommerce' ); ?></th>
+					<td>
+					<?php
+					$attribute_description = esc_html__( 'Set different background image for pdf ticket template like Mellifluous and Demure.', 'event-tickets-manager-for-woocommerce' );
+					$wps_etmfw_background_image = ! empty( get_option( 'wps_etmfw_background_image' ) ) ? get_option( 'wps_etmfw_background_image' ) : '';
+					$image_attributes = wp_get_attachment_image_src( $wps_etmfw_background_image, 'thumbnail' );
+					?>
+					<?php
+					if ( ! empty( $image_attributes[0] ) ) {
+						?>
+					<div class="wps_wocuf_saved_custom_image">
+					<a href="#" class="wps_etmfw_upload_image_button button"><img src="<?php echo esc_url( $image_attributes[0] ); ?>" style="max-width:150px;display:block;"></a>
+					<input type="hidden" name="wps_etmfw_background_image" id="wps_etmfw_background_image_1" value="<?php echo esc_attr( $wps_etmfw_background_image ); ?>">
+					<a href="#" class="wps_etmfw_remove_image_button button" style="display:inline-block;margin-top: 10px;display:inline-block;"><?php esc_html_e( 'Remove Image', 'event-tickets-manager-for-woocommerce' ); ?></a>
+				</div>
+				<?php } else { ?>
+						<div class="wps_wocuf_saved_custom_image"> 
+						<a href="#" class="wps_etmfw_upload_image_button button"><?php esc_html_e( 'Upload image', 'event-tickets-manager-for-woocommerce' ); ?></a>
+						<input type="hidden" name="wps_etmfw_background_image" id="wps_etmfw_background_image" value="<?php echo esc_attr( get_option( 'm1' ) ); ?>">
+						<a href="#" class="wps_etmfw_remove_image_button button" style="display:inline-block;margin-top: 10px;display:none;"><?php esc_html_e( 'Remove Image', 'event-tickets-manager-for-woocommerce' ); ?></a>
+						</div>
+						<?php } ?>
+					<span class="wps_etmfw_helper_text"><?php echo esc_html( $attribute_description ); ?></span>
+					</td>
+				</tr>
+
+				</tbody>PDF Ticket Preview
+
 				</table>
 				</div>
 				<div class="wps-form-group wps-etmfw-layout-actions">
