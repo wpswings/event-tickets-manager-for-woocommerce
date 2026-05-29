@@ -14,18 +14,23 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-global $etmfw_wps_etmfw_obj;
 $etmfw_email_template_settings = apply_filters( 'wps_etmfw_email_template_settings_array', array() );
+$tab_context                   = Event_Tickets_Manager_For_Woocommerce_Admin_UI::get_tab_context( 'event-tickets-manager-for-woocommerce-email-template' );
 ?>
-<!--  template file for admin settings. -->
-<form action="" method="POST" class="wps-etmfw-email-template-section-form">
-<input type="hidden" name="wps_event_nonce" value="<?php echo esc_html( wp_create_nonce( 'wps_event_nonce' ) ); ?>">
-
-	<div class="etmfw-secion-wrap">
-		<?php
-		$etmfw_email_template_html = $etmfw_wps_etmfw_obj->wps_etmfw_plug_generate_html( $etmfw_email_template_settings );
-		echo esc_html( $etmfw_email_template_html );
-		wp_nonce_field( 'wps-etmfw-email-template-nonce', 'wps-etmfw-email-template-nonce-field' );
-		?>
-	</div>
-</form>
+<?php
+Event_Tickets_Manager_For_Woocommerce_Admin_Layout::render_settings_card(
+	array(
+		'eyebrow'           => $tab_context['eyebrow'],
+		'title'             => $tab_context['title'],
+		'description'       => $tab_context['description'],
+		'documentation_url' => $tab_context['documentation_url'],
+		'form_class'        => 'wps-etmfw-email-template-section-form',
+		'fields'            => $etmfw_email_template_settings,
+		'nonce_name'        => 'wps_event_nonce',
+		'nonce_action'      => 'wps_event_nonce',
+		'extra_hidden_fields' => array(
+			'wps-etmfw-email-template-nonce-field' => wp_create_nonce( 'wps-etmfw-email-template-nonce' ),
+		),
+	)
+);
+?>

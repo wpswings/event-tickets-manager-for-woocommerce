@@ -39,6 +39,61 @@
 
   $(document).ready(function () {
 
+    function wpsEtmfwValidateUserTypeInventoryRows() {
+      var $table = $(".wps_etmfwpp_user_field_table");
+      var $errorBox = $(".wps_etmfwpp_inventory_error");
+      var isValid = true;
+
+      if (!$table.length) {
+        return true;
+      }
+
+      $table.find(".wps_etmfwpp_user_field_wrap").each(function () {
+        var $row = $(this);
+        var $minInput = $row.find('input[name*="[_inventory_min]"]');
+        var $maxInput = $row.find('input[name*="[_inventory_max]"]');
+        var minValue = $.trim($minInput.val());
+        var maxValue = $.trim($maxInput.val());
+
+        $row.removeAttr("data-inventory-range-invalid");
+
+        $minInput.css({
+          borderColor: "",
+          boxShadow: "",
+        });
+        $maxInput.css({
+          borderColor: "",
+          boxShadow: "",
+        });
+
+        if (minValue !== "" && maxValue !== "") {
+          var parsedMin = parseInt(minValue, 10);
+          var parsedMax = parseInt(maxValue, 10);
+
+          if (!Number.isNaN(parsedMin) && !Number.isNaN(parsedMax) && parsedMin > parsedMax) {
+            isValid = false;
+            $row.attr("data-inventory-range-invalid", "true");
+            $minInput.css({
+              borderColor: "#b32d2e",
+              boxShadow: "0 0 0 1px #b32d2e",
+            });
+            $maxInput.css({
+              borderColor: "#b32d2e",
+              boxShadow: "0 0 0 1px #b32d2e",
+            });
+          }
+        }
+      });
+
+      if (!isValid) {
+        $errorBox.text("Inventory Min cannot be greater than Inventory Max.").show();
+      } else {
+        $errorBox.text("").hide();
+      }
+
+      return isValid;
+    }
+
     $("#general_product_data .options_group.show_if_simple.show_if_external.show_if_variable" ).addClass("show_if_event_ticket_manager").show();
     //for General tab.
     $(".options_group.pricing").addClass("show_if_event_ticket_manager").show();
@@ -201,6 +256,25 @@
         $('#wps_limit_user_purchase_event_wc').show();
       } else {
         $('#wps_limit_user_purchase_event_wc').hide();
+      }
+    });
+
+    $(document).on("input change", ".wps_etmfwpp_field_inventory", function () {
+      wpsEtmfwValidateUserTypeInventoryRows();
+    });
+
+    $(document).on("submit", "#post", function (e) {
+      if ($("#product-type").val() !== "event_ticket_manager") {
+        return true;
+      }
+
+      if (!wpsEtmfwValidateUserTypeInventoryRows()) {
+        e.preventDefault();
+        var $firstInvalidField = $(".wps_etmfwpp_user_field_wrap[data-inventory-range-invalid='true']").first().find('input[name*="[_inventory_min]"]').first();
+
+        if ($firstInvalidField.length) {
+          $firstInvalidField.trigger("focus");
+        }
       }
     });
   });
@@ -407,7 +481,7 @@
       var fieldsetId = $(document).find('.wps_etmfwpp_user_field_table').find('.wps_etmfwpp_user_field_wrap').last().attr('data-id');
       fieldsetId = fieldsetId?fieldsetId.replace(/[^0-9]/gi, ''):0;
       let mainId = Number(fieldsetId) + 1;
-      var field_html = '<tr class="wps_etmfwpp_user_field_wrap" data-id="'+mainId+'"><td class="etmfwpp-user-drag-icon"><i class="dashicons dashicons-move"></i></td><td class="form-field wps_etmfwpp_label_fields"><input type="text" class="wps_etmfwpp_field_label" min = 0 style="" name="etmfwppp_fields['+mainId+'][_label]" id="label_fields_'+mainId+'" value="" placeholder="" required></td><td class="form-field wps_etmfwpp_price_fields"><input type="number" class="wps_etmfwpp_field_price" min = 0 id ="wps_recurring_value_id" name="etmfwppp_fields['+mainId+'][_price]" id="price_fields_'+mainId+'" required></td><td class="wps_etmfwpp_remove_row"><input type="button" name="wps_user_type_remove" class="wps_user_type_remove" value="Remove"></td></tr>';
+      var field_html = '<tr class="wps_etmfwpp_user_field_wrap" data-id="'+mainId+'"><td class="etmfwpp-user-drag-icon"><i class="dashicons dashicons-move"></i></td><td class="form-field wps_etmfwpp_label_fields"><input type="text" class="wps_etmfwpp_field_label" min = 0 style="" name="etmfwppp_fields['+mainId+'][_label]" id="label_fields_'+mainId+'" value="" placeholder="" required></td><td class="form-field wps_etmfwpp_price_fields"><input type="number" class="wps_etmfwpp_field_price" min = 0 id ="wps_recurring_value_id" name="etmfwppp_fields['+mainId+'][_price]" id="price_fields_'+mainId+'" required></td><td class="form-field wps_etmfwpp_inventory_fields"><input type="number" class="wps_etmfwpp_field_inventory" min = 0 name="etmfwppp_fields['+mainId+'][_inventory_min]" id="inventory_min_fields_'+mainId+'" value=""></td><td class="form-field wps_etmfwpp_inventory_fields"><input type="number" class="wps_etmfwpp_field_inventory" min = 0 name="etmfwppp_fields['+mainId+'][_inventory_max]" id="inventory_max_fields_'+mainId+'" value=""></td><td class="wps_etmfwpp_remove_row"><input type="button" name="wps_user_type_remove" class="wps_user_type_remove" value="Remove"></td></tr>';
       $(document).find('.wps_etmfwpp_user_field_body').append( field_html );
     } else {
         alert('Please fill out all previous inputs before adding a new row. 1');

@@ -49,17 +49,18 @@ span.wps-etmfw-event-product-order-listing {
 
 /* Submit button */
 .wps_new_attendee input[type="submit"] {
-  background-color: #4caf50;
+  background-color: #000000;
   color: #fff;
   padding: 10px 15px;
-  border: none;
+  border: 1px solid #000000;
   border-radius: 3px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, border-color 0.3s;
 }
 
 .wps_new_attendee input[type="submit"]:hover {
-  background-color: #45a049;
+  background-color: #1a1a1a;
+  border-color: #1a1a1a;
 }
 
 /* Additional information */
@@ -96,4 +97,23 @@ span.wps-etmfw-event-product-order-listing {
     margin: 0;
     font-size: 14px;
     font-weight: 600;
+}
+
+#wps_show_attendee_set,
+.wps_etmfw_event_display_wrapper input[type="submit"],
+#wps_etmfw_resend_mail_button {
+  background: #000000 !important;
+  border-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+#wps_show_attendee_set:hover,
+#wps_show_attendee_set:focus,
+.wps_etmfw_event_display_wrapper input[type="submit"]:hover,
+.wps_etmfw_event_display_wrapper input[type="submit"]:focus,
+#wps_etmfw_resend_mail_button:hover,
+#wps_etmfw_resend_mail_button:focus {
+  background: #1a1a1a !important;
+  border-color: #1a1a1a !important;
+  color: #ffffff !important;
 }

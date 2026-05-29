@@ -19,6 +19,9 @@ global $etmfw_wps_etmfw_obj;
 $etmfw_default_status = $etmfw_wps_etmfw_obj->wps_etmfw_plug_system_status();
 $etmfw_wordpress_details = is_array( $etmfw_default_status['wp'] ) && ! empty( $etmfw_default_status['wp'] ) ? $etmfw_default_status['wp'] : array();
 $etmfw_php_details = is_array( $etmfw_default_status['php'] ) && ! empty( $etmfw_default_status['php'] ) ? $etmfw_default_status['php'] : array();
+$tab_context            = Event_Tickets_Manager_For_Woocommerce_Admin_UI::get_tab_context( 'event-tickets-manager-for-woocommerce-system-status' );
+
+ob_start();
 ?>
 <div class="wps-etmfw-table-wrap">
 	<div class="wps-col-wrap">
@@ -72,3 +75,7 @@ $etmfw_php_details = is_array( $etmfw_default_status['php'] ) && ! empty( $etmfw
 		</div>
 	</div>
 </div>
+<?php
+$content = ob_get_clean();
+
+Event_Tickets_Manager_For_Woocommerce_Admin_Layout::render_content_card( $tab_context, $content );

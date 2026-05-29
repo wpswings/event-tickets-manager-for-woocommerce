@@ -27,96 +27,65 @@ if ( ! $id_nonce_verified ) {
 $etmfw_default_tabs = $etmfw_wps_etmfw_obj->wps_etmfw_plug_default_tabs();
 $plugin_path = 'event-tickets-manager-for-woocommerce-pro/event-tickets-manager-for-woocommerce-pro.php';
 $wps_pro_is_active = false;
+$tab_meta_label     = 'v' . $etmfw_wps_etmfw_obj->etmfw_get_version() . ( $wps_pro_is_active ? ' Pro' : '' );
 // Check if the plugin is active.
 if ( is_plugin_active( $plugin_path ) ) {
 	$wps_pro_is_active = true;
+	$tab_meta_label    = 'v' . $etmfw_wps_etmfw_obj->etmfw_get_version() . ' Pro';
 }
 ?>
+<div class="wps-etmfw-ui-shell">
+	<?php Event_Tickets_Manager_For_Woocommerce_Admin_Layout::render_header( Event_Tickets_Manager_For_Woocommerce_Admin_UI::get_header_config() ); ?>
 
-<header>
-	<div class="wps-header-container wps-bg-white wps-r-8">
-		<h1 class="wps-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', $etmfw_wps_etmfw_obj->etmfw_get_plugin_name() ) ) ); ?></h1>
-		<a href="https://demo.wpswings.com/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-event-demo&utm_medium=event-org-backend&utm_campaign=demo" target="_blank" class="wps-link"><?php esc_html_e( 'Demo', 'event-tickets-manager-for-woocommerce' ); ?></a>
-		<span>|</span>
-		<?php if ( ! $wps_pro_is_active ) { ?>
-		<a href="https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-event-pro&utm_medium=event-org-backend&utm_campaign=go-pro" target="_blank" class="wps-link"><?php esc_html_e( 'Go Pro', 'event-tickets-manager-for-woocommerce' ); ?></a>
-		<span>|</span>
-		<?php } ?>
-		<?php if (  $wps_pro_is_active ) { ?>
-		<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-pro-page&utm_campaign=documentation" target="_blank" class="wps-link"><?php esc_html_e( 'Documentation', 'event-tickets-manager-for-woocommerce' ); ?></a>
-		<?php } else { ?>
-		<a href="https://docs.wpswings.com/event-tickets-manager-for-woocommerce/?utm_source=wpswings-events-doc&utm_medium=events-org-backend&utm_campaign=documentation" target="_blank" class="wps-link"><?php esc_html_e( 'Documentation', 'event-tickets-manager-for-woocommerce' ); ?></a>
-		<?php } ?>
-		<span>|</span>
-		<?php if (  $wps_pro_is_active ) { ?>
-		<a href="https://www.youtube.com/watch?v=kSlD1p1SQEA&t=3s" target="_blank" class="wps-link"><?php esc_html_e( 'Video', 'event-tickets-manager-for-woocommerce' ); ?></a>
-		<?php } else  { ?>
-		<a href="https://www.youtube.com/embed/9KyB4qpal6M" target="_blank" class="wps-link"><?php esc_html_e( 'Video', 'event-tickets-manager-for-woocommerce' ); ?></a>
-		<?php } ?>
-		<span>|</span>
-		<a href="https://wpswings.com/submit-query/?utm_source=wpswings-events-support&utm_medium=events-org-backend&utm_campaign=support" target="_blank" class="wps-link"><?php esc_html_e( 'Support', 'event-tickets-manager-for-woocommerce' ); ?></a>
-	</div>
-</header>
+	<?php
+	do_action( 'wps_etmfw_licensed_tab_section' );
+	if ( ! $error_notice ) {
+		$wps_etmfw_error_text = esc_html__( 'Settings saved !', 'event-tickets-manager-for-woocommerce' );
+		$etmfw_wps_etmfw_obj->wps_etmfw_plug_admin_notice( $wps_etmfw_error_text, 'success' );
+	}
+	?>
 
-<?php
-do_action( 'wps_etmfw_licensed_tab_section' );
-if ( ! $error_notice ) {
-	$wps_etmfw_error_text = esc_html__( 'Settings saved !', 'event-tickets-manager-for-woocommerce' );
-	$etmfw_wps_etmfw_obj->wps_etmfw_plug_admin_notice( $wps_etmfw_error_text, 'success' );
-}
-?>
-<main class="wps-main wps-bg-white wps-r-8">
-	<nav class="wps-navbar">
-		<ul class="wps-navbar__items">
-			<?php
-			if ( is_array( $etmfw_default_tabs ) && ! empty( $etmfw_default_tabs ) ) {
+	<?php Event_Tickets_Manager_For_Woocommerce_Admin_Layout::render_tabs( $etmfw_default_tabs, $etmfw_active_tab, 'event_tickets_manager_for_woocommerce_menu', $tab_meta_label ); ?>
 
-				foreach ( $etmfw_default_tabs as $etmfw_tab_key => $etmfw_default_tabs ) {
+	<?php Event_Tickets_Manager_For_Woocommerce_Admin_Layout::open_page_grid(); ?>
 
-					$etmfw_tab_classes = 'wps-link ';
-
-					if ( ! empty( $etmfw_active_tab ) && $etmfw_active_tab === $etmfw_tab_key ) {
-						$etmfw_tab_classes .= 'active';
-					}
-					?>
-					<li>
-						<a id="<?php echo esc_attr( $etmfw_tab_key ); ?>" href="<?php echo esc_url( admin_url( 'admin.php?page=event_tickets_manager_for_woocommerce_menu' ) . '&etmfw_tab=' . esc_attr( $etmfw_tab_key ) ); ?>" class="<?php echo esc_attr( $etmfw_tab_classes ); ?>"><?php echo esc_html( $etmfw_default_tabs['title'] ); ?></a>
-					</li>
-					<?php
-				}
-			}
+	<?php
+	do_action( 'wps_etmfw_settings_saved' );
+	do_action( 'wps_etmfw_before_general_settings_form' );
+	if ( empty( $etmfw_active_tab ) ) {
+		$etmfw_active_tab = 'event-tickets-manager-for-woocommerce-general';
+	}
+	?>
+	<div class="wps-etmfw-tab-panels" data-active-tab="<?php echo esc_attr( $etmfw_active_tab ); ?>">
+		<?php
+		$initial_active_tab = $etmfw_active_tab;
+		foreach ( $etmfw_default_tabs as $tab_key => $tab ) {
+			$tab_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/' . $tab_key . '.php';
+			$panel_active = $initial_active_tab === $tab_key;
+			$etmfw_active_tab = $tab_key;
+			$GLOBALS['etmfw_active_tab'] = $tab_key;
+			ob_start();
+			$etmfw_wps_etmfw_obj->wps_etmfw_plug_load_template( $tab_path, $tab_key );
+			$tab_content = ob_get_clean();
 			?>
-		</ul>
-	</nav>
-
-	<section class="wps-section">
-		<div class="wps-rma__popup-for-pro-wrap">
-			<div class="wps-rma__popup-for-pro-shadow"></div>
-			<div class="wps-rma__popup-for-pro">
-				<span class="wps-rma__popup-for-pro-close">+</span>
-				<h2 class="wps-rma__popup-for-pro-title"><?php esc_html_e( 'Want More ?? Go Pro !!', 'event-tickets-manager-for-woocommerce' ); ?></h2>
-				<p class="wps-rma__popup-for-pro-content"><i><?php echo esc_html__( 'The Pro Version will unlock all of the feature', 'event-tickets-manager-for-woocommerce' ) . '<br/>' . esc_html__( 'This will easily process event tickets, allow sharing of tickets, resend tickets, and QRCode generation, twilio integration, and email notifications feature making it the perfect event management system', 'event-tickets-manager-for-woocommerce' ); ?></i></p>
-				<div class="wps-rma__popup-for-pro-link-wrap">
-					<a target="_blank" href="https://wpswings.com/product/event-tickets-manager-for-woocommerce-pro/?utm_source=wpswings-events-pro&utm_medium=events-org-backend&utm_campaign=go-pro" class="wps-rma__popup-for-pro-link"><?php esc_html_e( 'Go pro now', 'event-tickets-manager-for-woocommerce' ); ?></a>
-				</div>
+			<div
+				class="wps-etmfw-tab-panel<?php echo $panel_active ? ' is-active' : ''; ?>"
+				data-tab-key="<?php echo esc_attr( $tab_key ); ?>"
+				role="tabpanel"
+				aria-hidden="<?php echo $panel_active ? 'false' : 'true'; ?>"
+				<?php echo $panel_active ? '' : 'hidden'; ?>
+			>
+				<?php echo $tab_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</div>
-		</div>
-
-		<div>
 			<?php
-				do_action( 'wps_etmfw_settings_saved' );
-				do_action( 'wps_etmfw_before_general_settings_form' );
-				// if submenu is directly clicked on woocommerce.
-			if ( empty( $etmfw_active_tab ) ) {
-				$etmfw_active_tab = 'wps_etmfw_plug_general';
-			}
-					// look for the path based on the tab id in the admin templates.
-					$etmfw_tab_content_path = 'admin/partials/' . $etmfw_active_tab . '.php';
+		}
+		$etmfw_active_tab = $initial_active_tab;
+		$GLOBALS['etmfw_active_tab'] = $initial_active_tab;
+		?>
+	</div>
+	<?php
+	do_action( 'wps_etmfw_after_general_settings_form' );
+	?>
 
-					$etmfw_tab_content_path = EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/' . $etmfw_active_tab . '.php';
-					$etmfw_wps_etmfw_obj->wps_etmfw_plug_load_template( $etmfw_tab_content_path, $etmfw_active_tab );
-
-				do_action( 'wps_etmfw_after_general_settings_form' );
-			?>
-		</div>
-	</section>
+	<?php Event_Tickets_Manager_For_Woocommerce_Admin_Layout::close_page_grid( Event_Tickets_Manager_For_Woocommerce_Admin_UI::get_sidebar_config() ); ?>
+</div>

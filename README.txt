@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: event booking, wordpress calendar, event schedule, zoom integration, tickets
 Requires at least: 6.7
-Tested up to: 6.9.0
+Tested up to: 6.9.4
 WC requires at least: 6.5
-WC tested up to: 10.4.3
-Stable tag: 1.5.3
+WC tested up to: 10.7
+Stable tag: 1.5.6
 Requires PHP: 7.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -221,7 +221,7 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 20. Product Data - Event Settings - Frontend Set Price For Specific User Type 
 21. Product Data - Event Settings - Custom Fields 
 22. Product Data - Event Settings - Frontend Of Custom Fields 
-23. Purchased Events Overview
+23. Purchased Events Overview For Admins
 24. Event Check-In Page
 
 == Frequently Asked Questions ==
@@ -253,6 +253,19 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 
 == Changelog ==
+
+= 1.5.6 – Released on 8 May 2026 =
+* New: Vulnerability update 
+* Enhancement: Security fixes
+
+= 1.5.5 – Released on 6 May 2026 =
+* New : Compatibility With Latest WP (6.9.4) and WC (10.7).
+* Enhancement : Plugin Optimization.
+* Enhancement : UI/UX update.
+
+= 1.5.4 – Released on 3 April 2026 =
+* New : Compatibility with latest WP (6.9.4) and WC (10.6.2).
+* Fix: PatchStack-Vulnerability-Issues.
 
 = 1.5.3 – Released on 30 January 2026 =
 * New   : Multi Select number of ticket according to user type.
@@ -458,5 +471,7 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 * First version
 
 == Upgrade Notice == 
-= 1.5.3 – Released on 30 January 2026 =
-* New   : Multi Select number of ticket according to user type.
+
+= 1.5.6 – Released on 8 May 2026 =
+* New: Vulnerability update 
+* Enhancement: Security fixes

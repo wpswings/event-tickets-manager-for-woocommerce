@@ -1,0 +1,258 @@
+<style>
+  .ui-compare {
+    display: grid;
+    gap: 18px;
+  }
+  .ui-compare .card-body p {
+    margin-bottom: 0;
+  }
+  .ui-mini {
+    background: linear-gradient(180deg, #fbf7ff 0%, #f6efff 100%);
+    border: 1px solid #ead9fb;
+    border-radius: 24px;
+    padding: 18px;
+    min-height: 340px;
+  }
+  .ui-mini__hero {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px;
+    border: 1px solid #ead9fb;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.8);
+    margin-bottom: 18px;
+  }
+  .ui-mini__eyebrow {
+    display: inline-block;
+    margin-bottom: 8px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #f0a200;
+  }
+  .ui-mini__title {
+    margin: 0 0 8px;
+    color: #1e1661;
+    font-weight: 800;
+  }
+  .ui-mini__copy {
+    margin: 0;
+    color: #776f97;
+    line-height: 1.5;
+  }
+  .ui-mini__button {
+    align-self: flex-start;
+    padding: 12px 18px;
+    border-radius: 14px;
+    background: #0d0d0d;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .ui-mini__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 220px;
+    gap: 16px;
+  }
+  .ui-mini__panel,
+  .ui-mini__side {
+    border: 1px solid #ead9fb;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.92);
+    padding: 16px;
+  }
+  .ui-mini__tabs {
+    display: flex;
+    gap: 16px;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #e5ddf2;
+    color: #3d6eff;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .ui-mini__tabs span:first-child {
+    position: relative;
+  }
+  .ui-mini__tabs span:first-child::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -13px;
+    height: 3px;
+    border-radius: 999px;
+    background: #3d6eff;
+  }
+  .ui-mini__setting {
+    border: 1px solid #efddfb;
+    border-radius: 18px;
+    background: #fff;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+  }
+  .ui-mini__setting:last-child {
+    margin-bottom: 0;
+  }
+  .ui-mini__setting strong,
+  .ui-mini__side h4 {
+    display: block;
+    margin-bottom: 8px;
+    color: #1f145f;
+  }
+  .ui-mini__side h4 {
+    margin-top: 0;
+    font-size: 16px;
+    line-height: 1.2;
+  }
+  .ui-mini__pill {
+    display: inline-block;
+    width: 58px;
+    height: 30px;
+    border-radius: 999px;
+    background: #ffb100;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+  .ui-mini__muted {
+    color: #736b93;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .ui-mini--a .ui-mini__title {
+    font-size: 21px;
+    line-height: 1.25;
+  }
+  .ui-mini--a .ui-mini__hero,
+  .ui-mini--a .ui-mini__panel,
+  .ui-mini--a .ui-mini__side {
+    box-shadow: 0 4px 12px rgba(64, 28, 97, 0.04);
+  }
+  .ui-mini--b .ui-mini__title {
+    font-size: 26px;
+    line-height: 1.18;
+  }
+  .ui-mini--b .ui-mini__hero,
+  .ui-mini--b .ui-mini__panel,
+  .ui-mini--b .ui-mini__side {
+    box-shadow: 0 10px 26px rgba(64, 28, 97, 0.06);
+  }
+  .ui-mini--b .ui-mini__panel,
+  .ui-mini--b .ui-mini__side {
+    border-radius: 22px;
+  }
+  .ui-mini--c .ui-mini__title {
+    font-size: 29px;
+    line-height: 1.12;
+  }
+  .ui-mini--c .ui-mini__hero {
+    background: linear-gradient(135deg, #fff8ff 0%, #fffdfd 100%);
+  }
+  .ui-mini--c .ui-mini__panel,
+  .ui-mini--c .ui-mini__side {
+    box-shadow: 0 16px 30px rgba(64, 28, 97, 0.08);
+  }
+  .ui-note {
+    margin-top: 12px;
+    font-size: 12px;
+    color: #54497b;
+  }
+</style>
+
+<h2>Shared Settings Layout Directions</h2>
+<p class="subtitle">Goal: make all settings/tabs screens feel closer to the screenshot by adjusting heading scale, spacing, card softness, and sidebar treatment in the shared layout.</p>
+
+<div class="cards ui-compare">
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="ui-mini ui-mini--a">
+        <div class="ui-mini__hero">
+          <div>
+            <span class="ui-mini__eyebrow">PDF SETTINGS</span>
+            <h3 class="ui-mini__title">Conservative polish</h3>
+            <p class="ui-mini__copy">Larger headings, cleaner spacing, minimal visual risk.</p>
+          </div>
+          <div class="ui-mini__button">Docs</div>
+        </div>
+        <div class="ui-mini__body">
+          <div class="ui-mini__panel">
+            <div class="ui-mini__tabs"><span>Icon Display</span><span>Header</span><span>Body</span><span>Footer</span></div>
+            <div class="ui-mini__setting"><strong>Logged in Users</strong><span class="ui-mini__pill"></span><span class="ui-mini__muted">Typography fixed first. Layout stays mostly current.</span></div>
+            <div class="ui-mini__setting"><strong>Guest</strong><span class="ui-mini__pill"></span><span class="ui-mini__muted">Safe shared pass. Least noticeable visual shift.</span></div>
+          </div>
+          <div class="ui-mini__side">
+            <h4>Need help?</h4>
+            <p class="ui-mini__muted">Keeps sidebar simple and functional.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A. Conservative</h3>
+      <p>Fixes heading scale and alignment with small spacing tweaks. Lowest risk, but still a bit flatter than the screenshot.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="ui-mini ui-mini--b">
+        <div class="ui-mini__hero">
+          <div>
+            <span class="ui-mini__eyebrow">PDF SETTINGS</span>
+            <h3 class="ui-mini__title">Balanced screenshot match</h3>
+            <p class="ui-mini__copy">Shared heading system, softer cards, more breathing room, stronger sidebar hierarchy.</p>
+          </div>
+          <div class="ui-mini__button">Read Documentation</div>
+        </div>
+        <div class="ui-mini__body">
+          <div class="ui-mini__panel">
+            <div class="ui-mini__tabs"><span>Icon Display</span><span>Header</span><span>Body</span><span>Footer</span></div>
+            <div class="ui-mini__setting"><strong>Logged in Users</strong><span class="ui-mini__pill"></span><span class="ui-mini__muted">Closer heading sizes. Cards and tab row feel lighter and more premium.</span></div>
+            <div class="ui-mini__setting"><strong>Guest</strong><span class="ui-mini__pill"></span><span class="ui-mini__muted">Best balance between screenshot fidelity and reusable shared CSS.</span></div>
+          </div>
+          <div class="ui-mini__side">
+            <h4>Need help with this plugin?</h4>
+            <p class="ui-mini__muted">Sidebar gets stronger headings and cleaner stacked resources.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B. Balanced</h3>
+      <p>Recommended. Uses shared typography tokens and shared card spacing to get closer to the screenshot without over-redesigning every tab.</p>
+      <p class="ui-note">Recommended</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="ui-mini ui-mini--c">
+        <div class="ui-mini__hero">
+          <div>
+            <span class="ui-mini__eyebrow">PDF SETTINGS</span>
+            <h3 class="ui-mini__title">High-style redesign</h3>
+            <p class="ui-mini__copy">Pushes scale, shadows, and layout drama harder across all settings pages.</p>
+          </div>
+          <div class="ui-mini__button">Read Documentation</div>
+        </div>
+        <div class="ui-mini__body">
+          <div class="ui-mini__panel">
+            <div class="ui-mini__tabs"><span>Icon Display</span><span>Header</span><span>Body</span><span>Footer</span></div>
+            <div class="ui-mini__setting"><strong>Logged in Users</strong><span class="ui-mini__pill"></span><span class="ui-mini__muted">Most visually similar to the screenshot. Highest chance of feeling too custom elsewhere.</span></div>
+            <div class="ui-mini__setting"><strong>Guest</strong><span class="ui-mini__pill"></span><span class="ui-mini__muted">Better for a dedicated redesign, not a light shared pass.</span></div>
+          </div>
+          <div class="ui-mini__side">
+            <h4>Need help with this plugin?</h4>
+            <p class="ui-mini__muted">More dramatic, but less neutral across tabs.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C. Aggressive</h3>
+      <p>Gets closest visually, but increases the risk that some tabs feel over-styled or inconsistent with nearby WordPress admin patterns.</p>
+    </div>
+  </div>
+</div>

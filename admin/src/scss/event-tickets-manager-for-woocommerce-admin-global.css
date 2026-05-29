@@ -74,8 +74,8 @@
 ===================================*/
 
 :root {
-    --mdc-theme-primary: #2196f3;
-    --mdc-theme-secondary: #2196f3;
+    --mdc-theme-primary: #000000;
+    --mdc-theme-secondary: #000000;
 }
 
 body,
@@ -85,7 +85,7 @@ html {
 }
 
 body {
-    background-color: #E5F4FE !important;
+    background-color: #F7F1FF !important;
 }
 
 *,
@@ -220,10 +220,10 @@ select {
     font-family: "NunitoSans-ExtraBold";
     font-style: normal;
     font-weight: 800;
-    font-size: 20px;
-    line-height: 24px;
+    font-size: 24px;
+    line-height: 1.2;
     letter-spacing: 0.3px;
-    color: #2196f3;
+    color: #24183f;
     flex: 1 0 50%;
     max-width: calc(100% - 200px);
 }
@@ -291,6 +291,29 @@ select {
     border-radius: 35px !important;
     padding: 12px 24px !important;
     height: 100%;
+}
+
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .mdc-button--raised,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .generate-token,
+.wp-swings_page_home .mdc-button--raised,
+.wp-swings_page_home .generate-token {
+    background: #000000 !important;
+    border-color: #000000 !important;
+    color: #ffffff !important;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.16);
+}
+
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .mdc-button--raised:hover,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .mdc-button--raised:focus,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .generate-token:hover,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .generate-token:focus,
+.wp-swings_page_home .mdc-button--raised:hover,
+.wp-swings_page_home .mdc-button--raised:focus,
+.wp-swings_page_home .generate-token:hover,
+.wp-swings_page_home .generate-token:focus {
+    background: #1a1a1a !important;
+    border-color: #1a1a1a !important;
+    color: #ffffff !important;
 }
 
 #wps-etmfw-table-inner-container {
@@ -373,10 +396,56 @@ select {
     height: 48px;
 }
 
+.wps-form-group__control .mdc-switch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 34px;
+}
+
+.wps-form-group__control .mdc-switch::after {
+    content: "off";
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 12px);
+    transform: translateY(-50%);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: lowercase;
+    color: #9fa6bf;
+}
+
+.wps-form-group__control .mdc-switch.mdc-switch--checked::after {
+    content: "on";
+    color: #d88f00;
+}
+
+.wps-form-group__control .mdc-switch .mdc-switch__track {
+    background-color: #ffffff;
+    border-color: #c8cedd;
+    opacity: 1;
+}
+
+.wps-form-group__control .mdc-switch .mdc-switch__thumb {
+    background-color: #9fa6bf;
+    border-color: #9fa6bf;
+}
+
+.wps-form-group__control .mdc-switch.mdc-switch--checked .mdc-switch__track {
+    background-color: #ffffff;
+    border-color: #ffb000;
+}
+
+.wps-form-group__control .mdc-switch.mdc-switch--checked .mdc-switch__thumb {
+    background-color: #ffb000;
+    border-color: #ffb000;
+}
+
 .wps-btn-primary {
     color: #ffffff;
-    background-color: #6200ee;
-    border-color: #004EB6;
+    background-color: #000000;
+    border-color: #000000;
 }
 
 .wps-btn {
@@ -398,10 +467,14 @@ select {
     border-radius: 35px;
     letter-spacing: 0.3px;
     text-transform: capitalize;
+    background-color: #000000;
+    border-color: #000000;
 }
 
 .wps-btn-primary:hover {
     color: #fff;
+    background-color: #1a1a1a;
+    border-color: #1a1a1a;
 }
 
 .wps-shadow-panel h3 {
@@ -613,6 +686,46 @@ button#wps_etmfw_mail_setting_upload_logo_button {
     right: -170px;
 }
 
+.wps_etmfw_mail_setting_upload_logo_box .wps-etmfw-ui-composed-control {
+    width: min(520px, calc(100vw - 64px));
+    align-items: center;
+}
+
+.wps_etmfw_mail_setting_upload_logo_box button#wps_etmfw_mail_setting_upload_logo_button {
+    position: static;
+    right: auto;
+}
+
+.wps_etmfw_mail_setting_upload_logo_box #wps_etmfw_mail_setting_remove_logo {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    flex-wrap: wrap;
+    position: static;
+    top: auto;
+    right: auto;
+    height: auto;
+    min-height: 80px;
+}
+
+.wps_etmfw_mail_setting_upload_logo_box .wps-etmfw-ui-preview-remove {
+    position: static;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: 40px;
+    padding: 0 16px;
+    border: 1px solid #e7d8f4;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #111111;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+}
+
 @media only screen and (max-width: 992px) {
 
     .wps_etmfw_plugin_benefit ol li,
@@ -782,6 +895,41 @@ button#wps_etmfw_mail_setting_upload_logo_button {
 
 .generate-token {
     margin-top: 15px !important;
+}
+
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .button-primary,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .button.button-primary,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu input[type="submit"]:not(.wps_hide_save_button),
+.wp-swings_page_home .button-primary,
+.wp-swings_page_home .button.button-primary,
+.wp-swings_page_home input[type="submit"]:not(.wps_hide_save_button),
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu a.wps-wpr-go-pro,
+.wp-swings_page_home a.wps-wpr-go-pro {
+    background: #000000 !important;
+    border-color: #000000 !important;
+    color: #ffffff !important;
+    box-shadow: none;
+}
+
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .button-primary:hover,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .button-primary:focus,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .button.button-primary:hover,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu .button.button-primary:focus,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu input[type="submit"]:not(.wps_hide_save_button):hover,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu input[type="submit"]:not(.wps_hide_save_button):focus,
+.wp-swings_page_home .button-primary:hover,
+.wp-swings_page_home .button-primary:focus,
+.wp-swings_page_home .button.button-primary:hover,
+.wp-swings_page_home .button.button-primary:focus,
+.wp-swings_page_home input[type="submit"]:not(.wps_hide_save_button):hover,
+.wp-swings_page_home input[type="submit"]:not(.wps_hide_save_button):focus,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu a.wps-wpr-go-pro:hover,
+.wp-swings_page_event_tickets_manager_for_woocommerce_menu a.wps-wpr-go-pro:focus,
+.wp-swings_page_home a.wps-wpr-go-pro:hover,
+.wp-swings_page_home a.wps-wpr-go-pro:focus {
+    background: #1a1a1a !important;
+    border-color: #1a1a1a !important;
+    color: #ffffff !important;
 }
 
 .wps-etmfw-number .mdc-text-field {
@@ -988,55 +1136,141 @@ a.wps_etmfw_template_link_pro img {
 /* backend design starts  */
 
 .wps-etmfw-appearance-nav-tab {
-    border-bottom: 1px solid var(--mdc-theme-primary);
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    border-bottom: 1px solid #3977f4;
+    padding-bottom: 0;
 }
 
 .wps-etmfw-appearance-nav-tab a.nav-tab.nav-tab {
-    background: none;
-    border: 1px solid var(--mdc-theme-primary);
-    border-bottom: none;
-    color: var(--mdc-theme-primary);
-    margin: 0 5px 0 0;
+    min-height: 36px;
+    padding: 0 18px;
+    border: 1px solid #3977f4;
+    border-bottom-color: transparent;
+    border-radius: 0;
+    background: #ffffff;
+    color: #3977f4;
+    font-family: 'NunitoSans-Bold', sans-serif;
+    font-size: 14px;
+    line-height: 34px;
+    margin: 0;
     float: unset;
-    padding: 5px 10px;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: none;
+    position: relative;
+    top: 1px;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .wps-etmfw-appearance-nav-tab a.nav-tab.nav-tab-active {
-    background: var(--mdc-theme-primary);
-    border: none;
-    color: #fff;
+    background: #3977f4;
+    border-color: #3977f4;
+    border-bottom-color: #3977f4;
+    color: #ffffff;
+    box-shadow: none;
+}
+
+.wps-etmfw-appearance-nav-tab a.nav-tab.nav-tab:hover,
+.wps-etmfw-appearance-nav-tab a.nav-tab.nav-tab:focus {
+    background: #edf4ff;
+    border-color: #3977f4;
+    color: #3977f4;
+}
+
+.wps-etmfw-appearance-nav-tab a.nav-tab.nav-tab-active:hover,
+.wps-etmfw-appearance-nav-tab a.nav-tab.nav-tab-active:focus {
+    background: #3977f4;
+    border-color: #3977f4;
+    border-bottom-color: #3977f4;
+    color: #ffffff;
 }
 
 .wps_etmfw_ticket_layout_div_wrapper {
     display: grid;
-    grid-template-columns: 30% auto;
+    grid-template-columns: minmax(320px, 360px) minmax(0, 1fr);
     gap: 20px;
-    padding: 25px 0;
-}
-
-.wps_etmfw_temp_class.wps_etmfw_template_select-wrapper {
-    display: grid;
-    grid-template-columns: 1fr;
+    align-items: start;
+    padding: 24px 0;
 }
 
 .wps_etmfw_offer_preview {
     position: relative;
-    padding: 20px 0 20px 20px;
-    border-left: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 0 0 20px 20px;
+    border-left: 1px solid rgba(0, 0, 0, 0.18);
+}
+
+@media screen and (max-width: 1024px) {
+    .wps_etmfw_ticket_layout_div_wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .wps_etmfw_template_select-wrapper {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 16px;
+    }
+
+    .wps_etmfw_template_select-wrapper .wps_etmfw_template_select {
+        margin-bottom: 0;
+    }
+
+    .wps_etmfw_template_select-wrapper .wps_etmfw_template_select img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .wps_etmfw_offer_preview {
+        padding: 20px 0 0;
+        border-left: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.18);
+    }
+
+    .wps_etmfw_offer_preview_in {
+        position: static;
+    }
 }
 
 .wps_etmfw_offer_preview_in {
     position: sticky;
-    top: 40px;
+    top: 24px;
     overflow: auto;
 }
 
 h3.wps_ubo_offer_preview_heading {
-    padding: 0 0 15px;
+    padding: 0 0 18px;
     text-transform: uppercase;
-    font-size: 24px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+}
+
+select.wps_etmfw_preview_select_border_type {
+    width: 100%;
+    max-width: 205px;
+    min-height: 52px;
+    padding: 0 46px 0 16px !important;
+    border: 1px solid #d8cfed !important;
+    border-radius: 14px;
+    background-color: #ffffff;
+    color: #24183f !important;
+    font-family: 'NunitoSans-SemiBold', sans-serif;
+    font-size: 15px;
+    line-height: 50px;
+    box-shadow: 0 10px 22px rgba(98, 74, 146, 0.08);
+}
+
+select.wps_etmfw_preview_select_border_type:hover {
+    border-color: #c4b0eb !important;
+    color: #24183f !important;
+}
+
+select.wps_etmfw_preview_select_border_type:focus {
+    border-color: #b697f2 !important;
+    box-shadow: 0 0 0 3px rgba(182, 151, 242, 0.18) !important;
 }
 
 .wps_etmfw_offer_preview_in table {
@@ -1058,13 +1292,13 @@ h3.wps_ubo_offer_preview_heading {
 }
 
 @media screen and (max-width:768px) {
-    .wps_etmfw_ticket_layout_div_wrapper {
-        display: block;
-    }
-
     h3.wps_ubo_offer_preview_heading {
         position: sticky;
         left: 0;
+    }
+
+    .wps_etmfw_offer_preview_in {
+        overflow-x: auto;
     }
 
     .wps_etmfw_offer_preview_in table {
@@ -1076,8 +1310,9 @@ h3.wps_ubo_offer_preview_heading {
 
 
 .wps_etmfw_colorpicker {
-    max-width: 100px;
-    max-height: 20px;
+    width: 100%;
+    max-width: 255px;
+    min-height: 36px;
 }
 
 .wps_etmfw_helper_text {
@@ -1086,26 +1321,208 @@ h3.wps_ubo_offer_preview_heading {
     display: inline-block;
 }
 
-.wps_etmfw_creation_setting td:before {
+.wps-etmfw-size-slider {
+    --etmfw-slider-progress: 40%;
+    max-width: 255px;
+    padding: 10px 12px 12px;
+    border: 1px solid #e7def7;
+    border-radius: 16px;
+    background: linear-gradient(180deg, #ffffff 0%, #fcfaff 100%);
+    box-shadow: 0 8px 18px rgba(90, 67, 140, 0.06);
+}
+
+.wps-etmfw-size-slider__top {
+    display: flex;
     align-items: center;
-    background: #d8ffd6;
-    top: 0;
-    color: #078800;
-    content: "PRO";
+    gap: 10px;
+}
+
+.wps-etmfw-size-slider__range {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 1 1 auto;
+    width: 100%;
+    height: 6px;
+    margin: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #4f46e5 0%, #4f46e5 var(--etmfw-slider-progress), #ddd6f3 var(--etmfw-slider-progress), #ddd6f3 100%);
+    outline: none;
+}
+
+.wps-etmfw-size-slider__range::-webkit-slider-runnable-track {
+    height: 6px;
+    border-radius: 999px;
+    background: transparent;
+}
+
+.wps-etmfw-size-slider__range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    margin-top: -6px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #4f46e5;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.28);
+    cursor: pointer;
+}
+
+.wps-etmfw-size-slider__range::-moz-range-track {
+    height: 6px;
+    border: 0;
+    border-radius: 999px;
+    background: #ddd6f3;
+}
+
+.wps-etmfw-size-slider__range::-moz-range-progress {
+    height: 6px;
+    border-radius: 999px;
+    background: #4f46e5;
+}
+
+.wps-etmfw-size-slider__range::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #4f46e5;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.28);
+    cursor: pointer;
+}
+
+.wps-etmfw-size-slider__value {
     display: inline-flex;
-    font-size: 10px;
+    align-items: center;
     justify-content: center;
-    right: 0;
-    padding: 5px 10px 5px 2px;
-    position: absolute;
-    width: 60px;
-    clip-path: polygon(100% 0, 80% 50%, 100% 100%, 0 100%, 0 0);
+    min-width: 58px;
+    min-height: 30px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: #eef2ff;
+    color: #312e81;
+    font-family: 'NunitoSans-Bold', sans-serif;
+    font-size: 13px;
+    line-height: 1;
+}
+
+.wps-etmfw-size-slider__scale {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
+    color: #8879a8;
+    font-size: 11px;
+    line-height: 1;
+}
+
+.wps-etmfw-layout-actions .wps-form-group__control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.wps-etmfw-layout-button.mdc-button {
+    min-width: 96px;
+    min-height: 44px;
+    padding: 0 24px !important;
+    border: 1px solid #3977f4 !important;
+    border-radius: 999px !important;
+    background: #3977f4 !important;
+    color: #ffffff !important;
+    box-shadow: 0 10px 22px rgba(57, 119, 244, 0.24);
+}
+
+.wps-etmfw-layout-button.mdc-button .mdc-button__label {
+    color: inherit;
+    font-family: 'NunitoSans-Bold', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.wps-etmfw-layout-button.mdc-button.wps-etmfw-layout-button--secondary {
+    background: #3977f4 !important;
+    border-color: #3977f4 !important;
+    color: #ffffff !important;
+}
+
+.wps-etmfw-layout-button.mdc-button:hover,
+.wps-etmfw-layout-button.mdc-button:focus {
+    background: #2d66d6 !important;
+    border-color: #2d66d6 !important;
+    color: #ffffff !important;
+    box-shadow: 0 14px 26px rgba(57, 119, 244, 0.28);
+}
+
+.wps-etmfw-ui-pro-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 18px;
+    padding: 0 7px;
+    border-radius: 999px;
+    background: #0aa000;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.wps-etmfw-appearance-nav-tab a.nav-tab.nav-tab-active .wps-etmfw-ui-pro-pill {
+    background: #ffffff;
+    color: #3977f4;
+}
+
+.wps_etmfw_table_column_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.wps_etmfw_table_column_wrapper .wps_etmfw_table {
+    padding-right: 28px;
+}
+
+.wps_etmfw_creation_setting {
+    margin: 0;
+    border-collapse: separate;
+    border-spacing: 0 22px;
+}
+
+.wps_etmfw_creation_setting th {
+    width: 150px;
+    padding: 8px 0 0;
+    color: #111111;
+    font-family: 'NunitoSans-Bold', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: left;
+    vertical-align: top;
+}
+
+.wps_etmfw_creation_setting td:before {
+    display: none !important;
 }
 
 .wps_etmfw_creation_setting td {
-    padding-top: 15px;
-    padding-left: 25px;
-    position: relative
+    overflow: visible;
+    padding: 0 0 0 18px;
+    position: relative;
+    vertical-align: top;
+}
+
+.wps_etmfw_helper_text {
+    display: block;
+    max-width: 210px;
+    margin-top: 8px;
+    color: #9a7d5f;
+    font-size: 12px;
+    line-height: 1.35;
 }
 
 .wps_etmfw_class_for_pro {
@@ -1149,6 +1566,14 @@ div#wps_etmfw_event_data {
     .wps-header-container h1.wps-header-title {
         flex: 1 0 100%;
         max-width: 100%;
+    }
+
+    .wps_etmfw_creation_setting td {
+        padding-left: 14px;
+    }
+
+    .wps_etmfw_creation_setting th {
+        width: 132px;
     }
     
 }
@@ -1255,6 +1680,7 @@ a.wps-rma__popup-for-pro-link:hover {
     align-items: center;
     /* color: #00b81f; */
     font-weight: 600;
+    pointer-events: none;
 }
 
 .wps-etmfw-radio-switch-class-pro-tag .wps-form-group__label {
@@ -1280,15 +1706,11 @@ a.wps-rma__popup-for-pro-link:hover {
     position: absolute;
     transform: rotate(45deg);
     width: 60px;
-}
-
-.wps-etmfw-radio-switch-class-pro-tag .wps-form-group__control .mdc-floating-label {
-    display: none;
-}
-
-.wps-etmfw-radio-switch-class-pro-tag .wps-form-group__control div {
     pointer-events: none;
 }
+
+
+
 
 @media screen and (max-width:768px) {
     .wps-etmfw-radio-switch-class-pro-tag .wps-form-group__label {

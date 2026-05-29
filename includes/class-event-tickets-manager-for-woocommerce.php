@@ -130,6 +130,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		if ( is_admin() ) {
 
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-event-tickets-manager-for-woocommerce-for-wp-talk-to-expert-form.php';
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/ui/components/class-event-tickets-manager-for-woocommerce-ui-components.php';
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/ui/layouts/class-event-tickets-manager-for-woocommerce-admin-layout.php';
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/ui/class-event-tickets-manager-for-woocommerce-admin-ui.php';
+
 			// The class responsible for defining all actions that occur in the admin area.
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-event-tickets-manager-for-woocommerce-admin.php';
 
@@ -178,7 +183,8 @@ class Event_Tickets_Manager_For_Woocommerce {
 	 */
 	private function event_tickets_manager_for_woocommerce_admin_hooks() {
 
-		$etmfw_plugin_admin = new Event_Tickets_Manager_For_Woocommerce_Admin( $this->etmfw_get_plugin_name(), $this->etmfw_get_version() );
+		$etmfw_plugin_admin        = new Event_Tickets_Manager_For_Woocommerce_Admin( $this->etmfw_get_plugin_name(), $this->etmfw_get_version() );
+		$etmfw_talk_to_expert_form = new Event_Tickets_Manager_For_Woocommerce_For_Wp_Talk_To_Expert_Form();
 		$etmfw_resend_pdf_ticket_admin = get_option( 'wps_etmfw_resend_plugin', '' );
 		$wps_plugin_list = get_option( 'active_plugins' );
 		$wps_is_pro_active = false;
@@ -199,6 +205,7 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_filter( 'wps_etmfw_general_settings_array', $etmfw_plugin_admin, 'wps_etmfw_admin_general_settings_page', 10 );
 		$this->loader->add_filter( 'wps_etmfw_integration_settings_array', $etmfw_plugin_admin, 'wps_etmfw_admin_integration_settings_page', 10 );
 		$this->loader->add_filter( 'wps_etmfw_email_template_settings_array', $etmfw_plugin_admin, 'wps_etmfw_admin_email_template_settings_page', 10 );
+		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'wps_etmfw_register_settings_api_fields', 5 );
 		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'wps_etmfw_admin_save_tab_settings' );
 		$wps_etmfw_enable_plugin = get_option( 'wps_etmfw_enable_plugin', false );
 
@@ -213,6 +220,8 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_filter( 'plugin_row_meta', $etmfw_plugin_admin, 'wps_etmfw_plugin_row_meta', 10, 2 );
 		$this->loader->add_action( 'wp_ajax_wps_etmfw_get_event_geocode', $etmfw_plugin_admin, 'wps_etmfw_get_event_geocode_value' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_get_event_geocode', $etmfw_plugin_admin, 'wps_etommfw_get_event_geocode_value' );
+		$this->loader->add_action( 'wp_ajax_wps_pgfw_submit_talk_to_expert', $etmfw_talk_to_expert_form, 'wps_etmfw_submit_talk_to_expert' );
+		$this->loader->add_action( 'wp_ajax_wps_etmfw_submit_talk_to_expert', $etmfw_talk_to_expert_form, 'wps_etmfw_submit_talk_to_expert' );
 		// Custom product type.
 		$this->loader->add_action( 'plugins_loaded', $etmfw_plugin_admin, 'wps_wgc_register_event_ticket_manager_product_type' );
 
@@ -300,7 +309,6 @@ class Event_Tickets_Manager_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_wps_etmfw_make_user_checkin', $etmfw_plugin_public, 'wps_etmfw_make_user_checkin_for_event' );
 			$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_make_user_checkin', $etmfw_plugin_public, 'wps_etmfw_make_user_checkin_for_event' );
 			$this->loader->add_action( 'wp_ajax_wps_etmfw_edit_user_info', $etmfw_plugin_public, 'wps_etmfw_edit_user_info_for_event' );
-			$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfw_edit_user_info', $etmfw_plugin_public, 'wps_etmfw_edit_user_info_for_event' );
 			$this->loader->add_action( 'woocommerce_available_payment_gateways', $etmfw_plugin_public, 'wps_etmfw_unset_cod_payment_gateway_for_event' );
 			$this->loader->add_filter( 'woocommerce_available_payment_gateways', $etmfw_plugin_public , 'restrict_cod_for_specific_product_types', 10,1 );
 			$this->loader->add_filter( 'woocommerce_is_purchasable', $etmfw_plugin_public, 'wps_etmfw_handle_expired_events', 10, 2 );
