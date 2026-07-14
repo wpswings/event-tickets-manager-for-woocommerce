@@ -373,11 +373,13 @@
     });
 
     var wps_recurring_type = document.getElementById('wps_recurring_type');
-    var wps_set_recurring_type = wps_recurring_type.options[wps_recurring_type.selectedIndex].text;
-    if ('Daily' == wps_set_recurring_type) {
-      $('.wps_event_daily_duration_wrap').show(1000);
-    } else {
-      $('.wps_event_daily_duration_wrap').hide(1000);
+    if (wps_recurring_type) {
+      var wps_set_recurring_type = wps_recurring_type.options[wps_recurring_type.selectedIndex].text;
+      if ('Daily' == wps_set_recurring_type) {
+        $('.wps_event_daily_duration_wrap').show(1000);
+      } else {
+        $('.wps_event_daily_duration_wrap').hide(1000);
+      }
     }
 
     $('#wps_recurring_type').on('change', function () {
@@ -393,16 +395,22 @@
   $(document).ready(function () {
 
     $('#publish').on('click', function (e) {
-      // Get the "Start Time" input value.
-      var wps_start_time_input = document.querySelector('.wps_event_daily_start_time input[name="wps_event_daily_start_time_val"]');
-      var wps_start_time_value = wps_start_time_input.value;
-      
-      // Get the "End Time" input value.
-      var  wps_end_time_input = document.querySelector('.wps_event_daily_end_time input[name="wps_event_daily_end_time_val"]');
-      var wps_end_time_value = wps_end_time_input.value;
+      // Event-tab inputs are rendered with `required` for every product type but
+      // hidden by the `show_if_event_ticket_manager` wrapper for others. Strip the
+      // attribute so HTML5 validation doesn't block saving simple/variable products.
+      if ($('#product-type').val() !== 'event_ticket_manager') {
+        $('#etmfw_start_date_time, #etmfw_end_date_time, #etmfw_event_venue').removeAttr('required');
+        return;
+      }
 
-      var wps_start_time_timestamp = wps_time_to_timestamp(wps_start_time_value);
-      var wps_end_time_timestamp = wps_time_to_timestamp(wps_end_time_value);
+      var wps_start_time_input = document.querySelector('.wps_event_daily_start_time input[name="wps_event_daily_start_time_val"]');
+      var wps_end_time_input = document.querySelector('.wps_event_daily_end_time input[name="wps_event_daily_end_time_val"]');
+      if (!wps_start_time_input || !wps_end_time_input) {
+        return;
+      }
+
+      var wps_start_time_timestamp = wps_time_to_timestamp(wps_start_time_input.value);
+      var wps_end_time_timestamp = wps_time_to_timestamp(wps_end_time_input.value);
 
       if (wps_end_time_timestamp < wps_start_time_timestamp) {
         e.preventDefault();
