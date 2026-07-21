@@ -207,6 +207,8 @@ class Event_Tickets_Manager_For_Woocommerce {
 		$this->loader->add_filter( 'wps_etmfw_email_template_settings_array', $etmfw_plugin_admin, 'wps_etmfw_admin_email_template_settings_page', 10 );
 		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'wps_etmfw_register_settings_api_fields', 5 );
 		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'wps_etmfw_admin_save_tab_settings' );
+		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'wps_etmfw_handle_events_bulk_delete', 20 );
+		$this->loader->add_action( 'admin_init', $etmfw_plugin_admin, 'wps_etmfw_handle_events_filter_redirect', 15 );
 		$wps_etmfw_enable_plugin = get_option( 'wps_etmfw_enable_plugin', false );
 
 		if ( 'on' == $wps_etmfw_enable_plugin ) {

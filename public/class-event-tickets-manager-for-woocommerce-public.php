@@ -453,8 +453,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		if ( $wps_etmfw_enable ) {
 			if ( $old_status != $new_status ) {
 				$confirmed_statuses = array( 'processing', 'completed' );
-				$cancel_statuses = array( 'cancelled', 'refunded', 'failed' );
-				if ( in_array( $old_status, $confirmed_statuses, true ) && in_array( $new_status, $cancel_statuses, true ) ) {
+				$cancel_statuses    = array( 'cancelled', 'refunded', 'failed' );
+				// Fire on ANY transition into a cancel status so that cancelled → refunded
+				// (two-step cancellation) also updates ticket status. The PRO handler decides
+				// whether to promote the waitlist based on $old_status.
+				if ( in_array( $new_status, $cancel_statuses, true ) ) {
 					do_action( 'wps_etmfw_promote_waitlist_on_cancel', $order_id, $old_status, $new_status );
 				}
 				if ( $temp_status == $new_status ) {
@@ -781,6 +784,27 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	}
 
 	/**
+	 * Check whether an order item meta key belongs on the given ticket.
+	 *
+	 * Meta keys with no numeric suffix (e.g. "Event Venue") apply to every
+	 * ticket. Meta keys with a numeric suffix (e.g. "Name 12", "Email 12")
+	 * only belong on the ticket whose index equals that full number - matched
+	 * against the whole trailing number, not just its last digit, so indexes
+	 * of 10 and above aren't confused with each other.
+	 *
+	 * @since 1.0.0
+	 * @param string $meta_key Order item meta key.
+	 * @param int    $j Current ticket index (1-based).
+	 * @return bool
+	 */
+	private function wps_etmfw_meta_key_matches_ticket( $meta_key, $j ) {
+		if ( ! preg_match( '/(\d+)$/', $meta_key, $matches ) ) {
+			return true;
+		}
+		return (int) $matches[1] === (int) $j;
+	}
+
+	/**
 	 * Generate html content for ticket pdf.
 	 *
 	 * @since 1.0.0
@@ -888,7 +912,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								. "</h4><p style='color:#000;font-size:14px;margin:0 0 2px;letter-spacing:0.5px;border-bottom:1px solid #FFC525;padding:5px 0;'>";
 
 				foreach ( $item_meta_data as $key => $value ) {
-					if ( isset( $value->key ) && ! empty( $value->value ) && ( ! ctype_digit( substr( $value->key, -1 ) ) || substr( $value->key, -1 ) == $j ) ) {
+					if ( isset( $value->key ) && ! empty( $value->value ) && $this->wps_etmfw_meta_key_matches_ticket( $value->key, $j ) ) {
 						if ( '_reduced_stock' === $value->key ) {
 							continue;
 						}
@@ -909,7 +933,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								. '<tr><td style="padding: 20px 0 10px;"><h2 style="margin: 0;font-size: 24px;color:black;">Details :-</h2></td></tr>';
 
 				foreach ( $item_meta_data as $key => $value ) {
-					if ( isset( $value->key ) && ! empty( $value->value ) && ( ! ctype_digit( substr( $value->key, -1 ) ) || substr( $value->key, -1 ) == $j ) ) {
+					if ( isset( $value->key ) && ! empty( $value->value ) && $this->wps_etmfw_meta_key_matches_ticket( $value->key, $j ) ) {
 						if ( '_reduced_stock' === $value->key ) {
 							continue;
 						}
@@ -935,7 +959,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 								. esc_attr( $wps_etmfw_text_color ) . ';">Details :-</h2></td></tr>';
 
 				foreach ( $item_meta_data as $key => $value ) {
-					if ( isset( $value->key ) && ! empty( $value->value ) && ( ! ctype_digit( substr( $value->key, -1 ) ) || substr( $value->key, -1 ) == $j ) ) {
+					if ( isset( $value->key ) && ! empty( $value->value ) && $this->wps_etmfw_meta_key_matches_ticket( $value->key, $j ) ) {
 						if ( '_reduced_stock' === $value->key ) {
 							continue;
 						}
@@ -3251,6 +3275,52 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	}
 	
 	/**
+	 * Calculate the "days before event" price increase that currently applies.
+	 *
+	 * Picks the rule for the smallest "days before" threshold that still covers
+	 * today, so the price rises as the event approaches. A rule with label 0
+	 * applies on the day of the event.
+	 *
+	 * @param array  $rules      Array of price rules ( each with label, type, price ).
+	 * @param float  $orig_price Base event price ( used for percentage rules ).
+	 * @param string $start_date Event start date/time string.
+	 * @return float Increase amount to add to the base price ( 0 if no rule applies ).
+	 */
+	public function wps_etmfw_get_days_price_increase( $rules, $orig_price, $start_date ) {
+		$increase = 0;
+		if ( empty( $rules ) || ! is_array( $rules ) || empty( $start_date ) ) {
+			return $increase;
+		}
+		$start_timestamp = strtotime( $start_date );
+		if ( ! $start_timestamp ) {
+			return $increase;
+		}
+		// Compare whole calendar days, in the store timezone, so "day of" means 0.
+		$start_midnight = strtotime( gmdate( 'Y-m-d 00:00:00', $start_timestamp ) );
+		$now_midnight   = strtotime( current_time( 'Y-m-d' ) . ' 00:00:00' );
+		$days_before    = (int) round( ( $start_midnight - $now_midnight ) / DAY_IN_SECONDS );
+		if ( $days_before < 0 ) {
+			return $increase;
+		}
+		$matched_label = null;
+		foreach ( $rules as $value ) {
+			if ( ! isset( $value['label'] ) || ! is_numeric( $value['label'] ) ) {
+				continue;
+			}
+			$label = (int) $value['label'];
+			if ( $days_before <= $label && ( null === $matched_label || $label < $matched_label ) ) {
+				$matched_label = $label;
+				if ( isset( $value['type'] ) && 'percentage' === $value['type'] ) {
+					$increase = ( (float) $orig_price * (float) $value['price'] ) / 100;
+				} else {
+					$increase = (float) $value['price'];
+				}
+			}
+		}
+		return $increase;
+	}
+
+	/**
 	 * Change event price.
 	 *
 	 * @param string $price_html is a price value.
@@ -3294,27 +3364,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 						$wps_etmfw_field_days_price_data = $etmfw_product_array['wps_etmfw_field_days_price_data'];
 						$orig_price = $etmfw_product_array['etmfw_event_price'];
 						$start_date = $etmfw_product_array['event_start_date_time'];
-						$start_timestamp = strtotime( $start_date );
-						$current_date_time = strtotime( gmdate( 'Y-m-d h:i ', time() ) );
-						$diff = (int) $start_timestamp - $current_date_time;
-						if ( ! empty( $wps_etmfw_field_days_price_data ) && is_array( $wps_etmfw_field_days_price_data ) ) {
-							foreach ( $wps_etmfw_field_days_price_data as $key => $value ) {
-								$no_of_days = $value['label'];
-								$no_of_days_to_seconds = ( (int) $no_of_days + 1 ) * 86400;
-								if ( 0 != $no_of_days ) {
-									$wps_days_price = 0;
-									if ( $diff <= $no_of_days_to_seconds ) {
-
-										if ( 'fixed' == $value['type'] ) {
-
-											$wps_days_price = $wps_days_price + $value['price'];
-										} else if ( 'percentage' == $value['type'] ) {
-											$wps_days_price = $wps_days_price + ( ( $orig_price * $value['price'] ) / 100 );
-										}
-									}
-								}
-							}
-						}
+						$wps_days_price = $this->wps_etmfw_get_days_price_increase( $wps_etmfw_field_days_price_data, $orig_price, $start_date );
 					}
 					$wps_total_price = (float) $wps_days_price + (float) $wps_stock_price + (float) $orig_price;
 					update_option( 'wps_total_increased_value', $wps_total_price );

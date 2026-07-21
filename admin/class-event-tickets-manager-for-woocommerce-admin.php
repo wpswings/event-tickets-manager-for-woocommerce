@@ -68,6 +68,26 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		$this->version = $version;
 		$this->etmfw_public = new Event_Tickets_Manager_For_Woocommerce_Public( $plugin_name, $version );
 		add_action( 'admin_head', array( $this, 'etmfw_hide_pro_only_settings' ) );
+		add_action( 'admin_notices', array( $this, 'wps_etmfw_csv_import_error_notice' ) );
+	}
+
+	/**
+	 * Display CSV import validation errors as an admin notice.
+	 *
+	 * @since 1.0.0
+	 */
+	public function wps_etmfw_csv_import_error_notice() {
+		$error_message = get_transient( 'wps_etmfw_csv_import_errors' );
+		if ( $error_message ) {
+			delete_transient( 'wps_etmfw_csv_import_errors' );
+			echo '<div class="notice notice-error is-dismissible"><p>' . wp_kses_post( $error_message ) . '</p></div>';
+		}
+
+		$success_message = get_transient( 'wps_etmfw_csv_import_success' );
+		if ( $success_message ) {
+			delete_transient( 'wps_etmfw_csv_import_success' );
+			echo '<div class="notice notice-success is-dismissible"><p>' . wp_kses_post( $success_message ) . '</p></div>';
+		}
 	}
 
 	/**
@@ -301,7 +321,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		if ( 'product' === $screen_id ) {
 			// Date Time Picker Library.
 			wp_enqueue_script( 'wps-etmfw-date-time', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/jquery.datetimepicker.full.js', array( 'jquery' ), $this->version, true );
-			wp_register_script( $this->plugin_name . 'admin-edit-product-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/js/event-tickets-manager-for-woocommerce-edit-product.js', array( 'jquery', 'wps-etmfw-date-time', 'jquery-ui-sortable' ), $this->version, true );
+			wp_register_script( $this->plugin_name . 'admin-edit-product-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/js/event-tickets-manager-for-woocommerce-edit-product.js', array( 'jquery', 'wps-etmfw-date-time', 'jquery-ui-sortable' ), time(), true );
 
 			wp_localize_script(
 				$this->plugin_name . 'admin-edit-product-js',
@@ -316,7 +336,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			wp_enqueue_script( $this->plugin_name . 'admin-edit-product-js' );
 		}
 
-		if ( $this->etmfw_is_plugin_admin_screen( $screen_id ) || 'product' === $screen_id || 'woocommerce_page_wc-orders' === $screen_id || 'shop_order' === $screen_id ) {
+		if ( $this->etmfw_is_plugin_admin_screen( $screen_id ) || 'product' === $screen_id || 'woocommerce_page_wc-orders' === $screen_id || 'shop_order' === $screen_id || 'woocommerce_page_wps-etmfw-events-info' === $screen_id ) {
 			wp_enqueue_script( $this->plugin_name . 'org-custom-js', EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/js/event-tickets-manager-for-woocommerce-org-custom-admin.js', array( 'jquery', 'jquery-ui-sortable' ), $this->version, true );
 
 			wp_localize_script(
@@ -1579,6 +1599,79 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		do_action( 'wps_etmfw_admin_sub_menu' );
 	}
 
+	/**
+	 * Handle bulk delete for the Events list table.
+	 *
+	 * Runs on admin_init (before any HTML is output) so wp_safe_redirect works.
+	 *
+	 * @since 1.0.0
+	 */
+	public function wps_etmfw_handle_events_bulk_delete() {
+		if ( empty( $_POST['page'] ) || 'wps-etmfw-events-info' !== $_POST['page'] ) {
+			return;
+		}
+
+		$action = '';
+		if ( ! empty( $_POST['action'] ) && '-1' !== $_POST['action'] ) {
+			$action = sanitize_text_field( wp_unslash( $_POST['action'] ) );
+		} elseif ( ! empty( $_POST['action2'] ) && '-1' !== $_POST['action2'] ) {
+			$action = sanitize_text_field( wp_unslash( $_POST['action2'] ) );
+		}
+
+		if ( 'bulk-delete' !== $action ) {
+			return;
+		}
+
+		if ( empty( $_POST['wps-etmfw-events'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps-etmfw-events'] ) ), 'wps-etmfw-events' ) ) {
+			wp_die( esc_html__( 'Security check failed.', 'event-tickets-manager-for-woocommerce' ) );
+		}
+
+		if ( empty( $_POST['wps_etmfw_event_ids'] ) ) {
+			return;
+		}
+
+		foreach ( map_deep( wp_unslash( $_POST['wps_etmfw_event_ids'] ), 'sanitize_text_field' ) as $order_id ) {
+			$order = wc_get_order( (int) $order_id );
+			if ( $order ) {
+				$order->delete( false );
+			}
+		}
+
+		wp_safe_redirect( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) );
+		exit;
+	}
+
+	/**
+	 * Convert the event filter POST into a GET redirect so the selected filter
+	 * value is in the URL and WP_List_Table pagination links carry it forward.
+	 *
+	 * @since 1.0.0
+	 */
+	public function wps_etmfw_handle_events_filter_redirect() {
+		if ( empty( $_POST['page'] ) || 'wps-etmfw-events-info' !== $_POST['page'] ) {
+			return;
+		}
+
+		if ( ! isset( $_POST['wps_event_filter'] ) ) {
+			return;
+		}
+
+		$filter_value = isset( $_POST['wps_export_select_events'] )
+			? sanitize_text_field( wp_unslash( $_POST['wps_export_select_events'] ) )
+			: '';
+
+		$redirect_url = add_query_arg(
+			array(
+				'page'                    => 'wps-etmfw-events-info',
+				'wps_export_select_events' => rawurlencode( $filter_value ),
+			),
+			admin_url( 'admin.php' )
+		);
+
+		wp_safe_redirect( $redirect_url );
+		exit;
+	}
+
 		/**
 		 * Display events information on events panel.
 		 *
@@ -1646,26 +1739,101 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 				$csv_data = array_map( 'str_getcsv', file( $csv_file ) );
 
 				// Process each row in the CSV starting from index 1.
-				$wps_count_item = count( $csv_data );
+				$wps_count_item   = count( $csv_data );
+				$wps_row_errors   = array();
+				$wps_created_ids  = array();
+
 				for ( $i = 1; $i < $wps_count_item; $i++ ) {
-					$row = $csv_data[ $i ];
+					$row        = $csv_data[ $i ];
+					$row_number = $i + 1; // Human-readable row number (header = row 1).
+					$errors     = array();
 
-					// Assuming CSV structure: product_id,customer_id,quantity,custom_meta_value.
-					$product_id = (int) $row[0];           // Product Id.
-					$customer_id = get_current_user_id();  // User Id.
-					$quantity = (int) $row[2];             // quantity.
-					$custom_meta_value = $row[3];          // User name.
-					$billing_address = array(              // Billing Address.
-						'first_name' => $row[3], // Replace with the first name.
+					// Validate required column count.
+					if ( count( $row ) < 6 ) {
+						/* translators: %d: row number */
+						$wps_row_errors[] = sprintf( __( 'Row %d: Missing columns. Expected at least 6 columns (Product ID, Order Note, Quantity, Name, Email, Phone).', 'event-tickets-manager-for-woocommerce' ), $row_number );
+						continue;
+					}
+
+					// Validate Product ID: must be a positive integer and an existing WC product.
+					$product_id = (int) $row[0];
+					if ( $product_id <= 0 ) {
+						/* translators: %d: row number */
+						$errors[] = sprintf( __( 'Row %d: Product ID must be a positive integer.', 'event-tickets-manager-for-woocommerce' ), $row_number );
+					} elseif ( ! wc_get_product( $product_id ) ) {
+						/* translators: 1: row number, 2: product ID */
+						$errors[] = sprintf( __( 'Row %d: Product ID %d does not exist.', 'event-tickets-manager-for-woocommerce' ), $row_number, $product_id );
+					}
+
+					// Validate Quantity: must be a positive integer.
+					$quantity = (int) $row[2];
+					if ( $quantity <= 0 ) {
+						/* translators: %d: row number */
+						$errors[] = sprintf( __( 'Row %d: Quantity must be a positive integer.', 'event-tickets-manager-for-woocommerce' ), $row_number );
+					}
+
+					// Validate Name: must not be empty.
+					$custom_meta_value = isset( $row[3] ) ? trim( $row[3] ) : '';
+					if ( '' === $custom_meta_value ) {
+						/* translators: %d: row number */
+						$errors[] = sprintf( __( 'Row %d: Name (column 4) is required.', 'event-tickets-manager-for-woocommerce' ), $row_number );
+					}
+
+					// Validate Email: must be a valid email address.
+					$billing_email = isset( $row[4] ) ? sanitize_email( trim( $row[4] ) ) : '';
+					if ( empty( $billing_email ) || ! is_email( $billing_email ) ) {
+						/* translators: %d: row number */
+						$errors[] = sprintf( __( 'Row %d: Email (column 5) is missing or invalid.', 'event-tickets-manager-for-woocommerce' ), $row_number );
+					}
+
+					// Validate Phone: must not be empty and contain only digits, spaces, +, -, ().
+					$billing_phone = isset( $row[5] ) ? trim( $row[5] ) : '';
+					if ( '' === $billing_phone ) {
+						/* translators: %d: row number */
+						$errors[] = sprintf( __( 'Row %d: Phone (column 6) is required.', 'event-tickets-manager-for-woocommerce' ), $row_number );
+					} elseif ( ! preg_match( '/^[0-9\s\+\-\(\)]{7,20}$/', $billing_phone ) ) {
+						/* translators: %d: row number */
+						$errors[] = sprintf( __( 'Row %d: Phone (column 6) format is invalid.', 'event-tickets-manager-for-woocommerce' ), $row_number );
+					}
+
+					// If any errors found for this row, collect and skip order creation.
+					if ( ! empty( $errors ) ) {
+						$wps_row_errors = array_merge( $wps_row_errors, $errors );
+						continue;
+					}
+
+					// Assuming CSV structure: product_id,order_note,quantity,name,email,phone.
+					$customer_id = get_current_user_id();
+					$billing_address = array(
+						'first_name' => $custom_meta_value,
 					);
-
-					$billing_email = $row[4];   // User Email.
-					$billing_phone = $row[5];   // User Phone.
-
-					$wps_order_note = $row[1];  // order note.
+					$wps_order_note = isset( $row[1] ) ? sanitize_text_field( trim( $row[1] ) ) : '';
 
 					// Create order.
 					$order_id = $this->wps_create_order_from_csv( $product_id, $wps_order_note, $customer_id, $quantity, $custom_meta_value, $billing_address, $billing_email, $billing_phone );
+					if ( $order_id ) {
+						$wps_created_ids[] = $order_id;
+					}
+				}
+
+				if ( ! empty( $wps_row_errors ) ) {
+					$error_message = '<strong>' . __( 'CSV Import Errors:', 'event-tickets-manager-for-woocommerce' ) . '</strong><ul>';
+					foreach ( $wps_row_errors as $wps_error ) {
+						$error_message .= '<li>' . esc_html( $wps_error ) . '</li>';
+					}
+					$error_message .= '</ul>';
+					set_transient( 'wps_etmfw_csv_import_errors', $error_message, 60 );
+				}
+
+				if ( ! empty( $wps_created_ids ) ) {
+					$orders_url     = admin_url( 'edit.php?post_type=shop_order' );
+					$success_message = sprintf(
+						/* translators: 1: number of orders created, 2: WooCommerce orders URL */
+						__( '<strong>CSV Import Successful:</strong> %1$d order(s) created. <a href="%2$s">View Orders &rarr;</a>', 'event-tickets-manager-for-woocommerce' ),
+						count( $wps_created_ids ),
+						esc_url( $orders_url )
+					);
+					set_transient( 'wps_etmfw_csv_import_success', $success_message, 60 );
 				}
 			}
 		}
@@ -1727,6 +1895,13 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 		// Calculate totals and save the order.
 		$order->calculate_totals();
 		$order->save();
+
+		// Transition to the status that triggers ticket generation so this order's
+		// tickets are registered in wps_etmfw_generated_tickets (required for
+		// cancellation to update ticket status later).
+		$wps_etmfw_in_processing = get_option( 'wps_wet_enable_after_payment_done_ticket', false );
+		$target_status           = ( 'on' === $wps_etmfw_in_processing ) ? 'processing' : 'completed';
+		$order->update_status( $target_status, __( 'Order created via CSV import.', 'event-tickets-manager-for-woocommerce' ) );
 
 		// Return the order ID.
 		return $order->get_id();
