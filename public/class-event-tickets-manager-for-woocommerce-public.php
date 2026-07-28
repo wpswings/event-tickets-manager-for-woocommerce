@@ -3016,6 +3016,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @return bool
 	 */
 	public function wps_etmfw_validate_user_type_quantities( $passed, $product_id, $quantity ) {
+		if ( apply_filters( 'wps_etmfw_skip_user_type_multi_add', false, $product_id ) ) {
+			return $passed;
+		}
+
 		if ( empty( $_POST['wps_etwmfw_atc_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_etwmfw_atc_nonce'] ) ), 'wps_etwmfw_atc_nonce' ) ) {
 			return $passed;
 		}
@@ -3051,6 +3055,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @return int
 	 */
 	public function wps_etmfw_set_user_type_total_quantity( $quantity, $product_id ) {
+		if ( apply_filters( 'wps_etmfw_skip_user_type_multi_add', false, $product_id ) ) {
+			return $quantity;
+		}
+
 		if ( empty( $_POST['wps_etwmfw_atc_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_etwmfw_atc_nonce'] ) ), 'wps_etwmfw_atc_nonce' ) ) {
 			return $quantity;
 		}
@@ -3085,6 +3093,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function wps_etmfw_add_user_type_items_on_add_to_cart( $cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data ) {
+		if ( apply_filters( 'wps_etmfw_skip_user_type_multi_add', false, $product_id ) ) {
+			return;
+		}
+
 		if ( empty( $_POST['wps_etwmfw_atc_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_etwmfw_atc_nonce'] ) ), 'wps_etwmfw_atc_nonce' ) ) {
 			return;
 		}
