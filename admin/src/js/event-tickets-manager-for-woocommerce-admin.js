@@ -144,6 +144,9 @@
         jQuery('body').on('click', '.wps_etmfw_upload_image_button', function(e) {
 
             e.preventDefault();
+            if (jQuery(this).closest('.wps-etmfw-radio-switch-class-pro-tag').length) {
+                return;
+            }
             var button = jQuery(this),
                 custom_uploader = wp.media({
                     title: 'Insert image',
@@ -162,6 +165,9 @@
 
         jQuery('body').on('click', '.wps_etmfw_remove_image_button', function(e) {
             e.preventDefault();
+            if (jQuery(this).closest('.wps-etmfw-radio-switch-class-pro-tag').length) {
+                return false;
+            }
             jQuery(this).hide().prev().val('').prev().addClass('button').html('Upload image');
             return false;
         });
