@@ -88,4 +88,6 @@ if ( is_plugin_active( $plugin_path ) ) {
 	?>
 
 	<?php Event_Tickets_Manager_For_Woocommerce_Admin_Layout::close_page_grid( Event_Tickets_Manager_For_Woocommerce_Admin_UI::get_sidebar_config() ); ?>
+
+	<?php require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'templates/backend/event-tickets-manager-for-woocommerce-go-pro-popup.php'; ?>
 </div>
