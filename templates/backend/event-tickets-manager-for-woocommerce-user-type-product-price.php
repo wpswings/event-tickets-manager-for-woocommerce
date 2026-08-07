@@ -44,8 +44,7 @@ $allowed_html = array(
 				<th></th>
 				<th class="etmfwppp_field_label"><?php esc_html_e( 'User Type', 'event-tickets-manager-for-woocommerce' ); ?></th>
 				<th class="etmfwppp_field_type"><?php esc_html_e( 'Price', 'event-tickets-manager-for-woocommerce' ); ?></th>
-				<th class="etmfwppp_field_inventory"><?php esc_html_e( 'Inventory Min', 'event-tickets-manager-for-woocommerce' ); ?></th>
-				<th class="etmfwppp_field_inventory"><?php esc_html_e( 'Inventory Max', 'event-tickets-manager-for-woocommerce' ); ?></th>
+				<th class="etmfwppp_field_inventory"><?php esc_html_e( 'Stock Limit', 'event-tickets-manager-for-woocommerce' ); ?></th>
 				<th class="etmfwppp_field_actions"><?php esc_html_e( 'Actions', 'event-tickets-manager-for-woocommerce' ); ?></th>
 			</tr>
 			</thead>
@@ -81,10 +80,7 @@ $allowed_html = array(
 									<input type="number" class="wps_etmfwpp_field_price" style="" name="etmfwppp_fields[<?php echo esc_attr( $row_id ); ?>][_price]" id="price_fields_<?php echo esc_attr( $row_id ); ?>" value="<?php echo esc_attr( $row_value['price'] ); ?>" placeholder="" min="0" required>
 									</td>
 									<td class="form-field wps_etmfwpp_inventory_fields">
-									<input type="number" class="wps_etmfwpp_field_inventory" style="" name="etmfwppp_fields[<?php echo esc_attr( $row_id ); ?>][_inventory_min]" id="inventory_min_fields_<?php echo esc_attr( $row_id ); ?>" value="<?php echo esc_attr( isset( $row_value['inventory_min'] ) ? $row_value['inventory_min'] : '' ); ?>" placeholder="" min="0">
-									</td>
-									<td class="form-field wps_etmfwpp_inventory_fields">
-									<input type="number" class="wps_etmfwpp_field_inventory" style="" name="etmfwppp_fields[<?php echo esc_attr( $row_id ); ?>][_inventory_max]" id="inventory_max_fields_<?php echo esc_attr( $row_id ); ?>" value="<?php echo esc_attr( isset( $row_value['inventory_max'] ) ? $row_value['inventory_max'] : '' ); ?>" placeholder="" min="0">
+									<input type="number" class="wps_etmfwpp_field_inventory" style="" name="etmfwppp_fields[<?php echo esc_attr( $row_id ); ?>][_stock_limit]" id="stock_limit_fields_<?php echo esc_attr( $row_id ); ?>" value="<?php echo esc_attr( isset( $row_value['stock_limit'] ) ? $row_value['stock_limit'] : '' ); ?>" placeholder="<?php esc_attr_e( 'Unlimited', 'event-tickets-manager-for-woocommerce' ); ?>" min="0">
 									</td>
 									<td class="wps_etmfwpp_remove_row">
 										<input type="button" name="wps_etmfwpp_remove_fields_button" class="wps_user_type_remove" value="Remove">
@@ -94,7 +90,7 @@ $allowed_html = array(
 						<?php endif; ?>
 						<tfoot>
 						<tr>
-						<td colspan="6">
+						<td colspan="5">
 								<input type="button" name="wps_etmfwppp_user_add_fields_button" class="button wps_etmfwppp_user_add_fields_button" value="<?php esc_attr_e( 'Add Price Rule', 'event-tickets-manager-for-woocommerce' ); ?>">
 							</td>
 						</tr>

@@ -127,6 +127,13 @@ div#wps_etmwf_event_venue img {
 
 .wps_etmfw_product_wrapper {
   flex: 1 0 100%;
+  /* Flex items get an implicit content-based minimum width (min-width:auto) that
+     flex-shrink:0 does NOT override — without this, a wide child (e.g. the Pro
+     seat map's scrollable grid) forces this wrapper, and everything above it up
+     to form.cart, wider than the actual column, with no scrollbar to reach the
+     cut-off part. min-width:0 lets it shrink to the column's real width so the
+     seat map's own internal scrollbar can do its job instead. */
+  min-width: 0;
 }
 
 .product-type-event_ticket_manager form.cart {
