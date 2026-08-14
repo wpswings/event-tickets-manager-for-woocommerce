@@ -1652,7 +1652,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			}
 		}
 
-		wp_safe_redirect( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) );
+		wp_safe_redirect( isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : admin_url() );
 		exit;
 	}
 
@@ -1663,12 +1663,25 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	 * @since 1.0.0
 	 */
 	public function wps_etmfw_handle_events_filter_redirect() {
+		// Routing checks only (is this admin_init POST even for our filter form?) — not
+		// used for anything sensitive yet, so verifying a nonce this early would mean
+		// requiring OUR nonce on every unrelated admin_init POST across all of wp-admin.
+		// The real nonce check below runs before $_POST['wps_export_select_events'] (the
+		// value that actually ends up in the redirect) is ever read.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( empty( $_POST['page'] ) || 'wps-etmfw-events-info' !== $_POST['page'] ) {
 			return;
 		}
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( ! isset( $_POST['wps_event_filter'] ) ) {
 			return;
+		}
+
+		// The filter select/submit is rendered by the Pro plugin (wps_wet_event_export_extra_tablenav())
+		// inside this same list-table form, alongside this hidden nonce field.
+		if ( empty( $_POST['wps_etmfw_report_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_etmfw_report_nonce'] ) ), 'wps-etmfw-report-nonce' ) ) {
+			wp_die( esc_html__( 'Security check failed.', 'event-tickets-manager-for-woocommerce' ) );
 		}
 
 		$filter_value = isset( $_POST['wps_export_select_events'] )

@@ -3,9 +3,9 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: event booking, wordpress calendar, event schedule, zoom integration, tickets
 Requires at least: 6.7
-Tested up to: 7.0.2
+Tested up to: 7.0.4
 WC requires at least: 6.5
-WC tested up to: 10.9.4
+WC tested up to: 11.0.1
 Stable tag: 1.5.8
 Requires PHP: 7.4
 License: GNU General Public License v3.0
