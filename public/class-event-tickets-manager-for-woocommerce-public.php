@@ -1041,7 +1041,12 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 */
 	public function wps_etmfw_generate_ticket_pdf( $wps_ticket_content, $order, $order_id, $ticket_number ) {
 		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'package/lib/dompdf/vendor/autoload.php';
-		$dompdf = new Dompdf( array( 'enable_remote' => true ) );
+		$dompdf = new Dompdf(
+			array(
+				'enable_remote' => true,
+				'defaultFont'   => 'DejaVu Sans',
+			)
+		);
 		$wps_set_the_pdf_ticket_template = get_option( 'wps_etmfw_ticket_template', '1' );
 		if ( '5' == $wps_set_the_pdf_ticket_template ) {
 			$dompdf->setPaper( 'A4' );
