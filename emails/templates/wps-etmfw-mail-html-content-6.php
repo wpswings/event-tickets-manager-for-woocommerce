@@ -46,7 +46,7 @@ $wps_etmfw_hide_details_pdf_ticket = get_option( 'wps_wet_hide_details_pdf_ticke
 ?>
 <!-- Template Start -->
 
-<table border='0' cellpadding='0' cellspacing='0' role='presentation' style='width: 100%;font-family:Arial, Helvetica, sans-serif;border:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>' id="wps_new_template_border">
+<table border='0' cellpadding='0' cellspacing='0' role='presentation' style='width: 100%;font-family:'DejaVu Sans', Arial, Helvetica, sans-serif;border:2px <?php echo esc_attr( $wps_etmfw_border_type . ' ' . $wps_etmfw_border_color ); ?>' id="wps_new_template_border">
 	<tbody>
 		<tr>
 			<td style="width:30%;border:1px solid #bc8a00;border-right:none;">
