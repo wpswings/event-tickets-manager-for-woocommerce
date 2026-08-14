@@ -253,9 +253,10 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 
 == Changelog ==
+= 1.5.8 – Released on 14 Auguest 2026 = 
+* New: Compatibility with WooCommerce 11.0.1 and WordPress 7.0.4
 
 = 1.5.7 – Released on 14 July 2026 =
-
 * New: Compatibility with WooCommerce 10.9.4 and WordPress 7.0.1
 * Fixes: An issue where the QR code check-in functionality was not working as expected.
 * Fixes: Resolved a compatibility issue that prevented updates to other WooCommerce products when the plugin was active. 
@@ -483,13 +484,5 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 == Upgrade Notice == 
 
-= 1.5.7 – Released on 14 July 2026 =
-
-* New: Compatibility with WooCommerce 10.9.4 and WordPress 7.0.1
-* Fixes: An issue where the QR code check-in functionality was not working as expected.
-* Fixes: Resolved a compatibility issue that prevented updates to other WooCommerce products when the plugin was active. 
-* Fixes: JavaScript errors in Event Tickets Manager 1.5.6 / Pro 2.3.3 on WordPress 7.0, WooCommerce 10.8.1, and PHP 8.4.
-* Fixes: Fixed an issue where the General settings fields disappeared from the Product Settings page after a product was marked as an event and saved.
-* Fixes: Corrected a problem that prevented events from displaying all associated tickets after the event product name was changed.
-* Fixes: Resolved pagination issues that caused filtered event results to reset and display all events instead of maintaining the selected filters.
-* Fixes: Fixed an issue where ticket status updates were not synchronized correctly when events were canceled, ensuring accurate order and Ticket management.
+= 1.5.8 – Released on 14 August 2026 =
+* New: Compatibility with WooCommerce 11.0.1 and WordPress 7.0.4
