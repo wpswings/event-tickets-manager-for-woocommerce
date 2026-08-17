@@ -1624,7 +1624,7 @@ span.wps-rma__popup-for-pro-close {
     transform: translate(-50%, -50%) scale(1);
 }
 
-h2.wps-rma__popup-for-pro-title {
+h3.wps-rma__popup-for-pro-title {
     font-size: 32px;
     line-height: 1.25;
     margin: 0 0 15px;
@@ -1736,6 +1736,15 @@ a.wps-rma__popup-for-pro-link:hover {
     table.wps-wetm-form-table tr input {
         width: 100%;
     }
+}
+
+.wps_etmfw_creation_setting tr.wps-etmfw-radio-switch-class-pro-tag select,
+.wps_etmfw_creation_setting tr.wps-etmfw-radio-switch-class-pro-tag input,
+.wps_etmfw_creation_setting tr.wps-etmfw-radio-switch-class-pro-tag .wp-picker-container,
+.wps_etmfw_creation_setting tr.wps-etmfw-radio-switch-class-pro-tag .wps-etmfw-size-slider,
+.wps_etmfw_creation_setting tr.wps-etmfw-radio-switch-class-pro-tag .wps_etmfw_upload_image_button,
+.wps_etmfw_creation_setting tr.wps-etmfw-radio-switch-class-pro-tag .wps_etmfw_remove_image_button {
+    pointer-events: none;
 }
 
 /*Pro Tag End */

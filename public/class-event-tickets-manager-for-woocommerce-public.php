@@ -87,7 +87,7 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @since    1.0.0
 	 */
 	public function etmfw_public_enqueue_styles() {
-		wp_enqueue_style( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/scss/event-tickets-manager-for-woocommerce-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL . 'public/src/scss/event-tickets-manager-for-woocommerce-public.css', array(), filemtime( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'public/src/scss/event-tickets-manager-for-woocommerce-public.css' ), 'all' );
 	}
 
 	/**
@@ -913,7 +913,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 				foreach ( $item_meta_data as $key => $value ) {
 					if ( isset( $value->key ) && ! empty( $value->value ) && $this->wps_etmfw_meta_key_matches_ticket( $value->key, $j ) ) {
-						if ( '_reduced_stock' === $value->key ) {
+						if ( '_' === substr( $value->key, 0, 1 ) ) {
+							// Skip WooCommerce's own convention for internal/protected order-item meta
+							// (a leading underscore), not just the single _reduced_stock key this
+							// previously special-cased -- e.g. Pro's internal _wps_etmfwp_seat_key
+							// reference meta must never appear in the customer-facing PDF.
 							continue;
 						}
 						$additinal_info .= '<span style="margin:0 10px 0 0;">';
@@ -934,7 +938,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 				foreach ( $item_meta_data as $key => $value ) {
 					if ( isset( $value->key ) && ! empty( $value->value ) && $this->wps_etmfw_meta_key_matches_ticket( $value->key, $j ) ) {
-						if ( '_reduced_stock' === $value->key ) {
+						if ( '_' === substr( $value->key, 0, 1 ) ) {
+							// Skip WooCommerce's own convention for internal/protected order-item meta
+							// (a leading underscore), not just the single _reduced_stock key this
+							// previously special-cased -- e.g. Pro's internal _wps_etmfwp_seat_key
+							// reference meta must never appear in the customer-facing PDF.
 							continue;
 						}
 						$additinal_info .= '<tr><td style="padding: 5px 0;"><p style="margin: 0;color : black">'
@@ -960,7 +968,11 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 				foreach ( $item_meta_data as $key => $value ) {
 					if ( isset( $value->key ) && ! empty( $value->value ) && $this->wps_etmfw_meta_key_matches_ticket( $value->key, $j ) ) {
-						if ( '_reduced_stock' === $value->key ) {
+						if ( '_' === substr( $value->key, 0, 1 ) ) {
+							// Skip WooCommerce's own convention for internal/protected order-item meta
+							// (a leading underscore), not just the single _reduced_stock key this
+							// previously special-cased -- e.g. Pro's internal _wps_etmfwp_seat_key
+							// reference meta must never appear in the customer-facing PDF.
 							continue;
 						}
 						$additinal_info .= '<tr><td style="padding: 5px 0;"><p style="margin: 0;color : '
@@ -1029,7 +1041,12 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 */
 	public function wps_etmfw_generate_ticket_pdf( $wps_ticket_content, $order, $order_id, $ticket_number ) {
 		require_once EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_PATH . 'package/lib/dompdf/vendor/autoload.php';
-		$dompdf = new Dompdf( array( 'enable_remote' => true ) );
+		$dompdf = new Dompdf(
+			array(
+				'enable_remote' => true,
+				'defaultFont'   => 'DejaVu Sans',
+			)
+		);
 		$wps_set_the_pdf_ticket_template = get_option( 'wps_etmfw_ticket_template', '1' );
 		if ( '5' == $wps_set_the_pdf_ticket_template ) {
 			$dompdf->setPaper( 'A4' );
@@ -2963,6 +2980,31 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	}
 
 	/**
+	 * Sum how much of a specific User Type, for a specific product, is already
+	 * sitting in the current cart (matched by product id + the event_role label
+	 * cart items are tagged with in wps_etmfw_add_user_type_items_on_add_to_cart()).
+	 *
+	 * @param int    $product_id Product ID.
+	 * @param string $label      User Type label.
+	 * @return int
+	 */
+	private function wps_etmfw_get_user_type_qty_in_cart( $product_id, $label ) {
+		if ( ! isset( WC()->cart ) || ! WC()->cart ) {
+			return 0;
+		}
+
+		$qty_in_cart = 0;
+		foreach ( WC()->cart->get_cart() as $cart_item ) {
+			if ( isset( $cart_item['event_role']['role'] ) && $cart_item['event_role']['role'] === $label
+				&& isset( $cart_item['data'] ) && is_object( $cart_item['data'] ) && $cart_item['data']->get_id() === (int) $product_id ) {
+				$qty_in_cart += isset( $cart_item['quantity'] ) ? (int) $cart_item['quantity'] : 0;
+			}
+		}
+
+		return $qty_in_cart;
+	}
+
+	/**
 	 * Get selected user type quantities from the request for a product.
 	 *
 	 * @param int $product_id Product ID.
@@ -2997,6 +3039,33 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				continue;
 			}
 
+			// The frontend qty stepper's max="" attribute is only a UI hint — clamp
+			// here too, so editing it in devtools can't bypass a Ticket Type's Stock Limit.
+			$stock_limit = isset( $user_type_data[ $key ]['stock_limit'] ) && '' !== $user_type_data[ $key ]['stock_limit'] ? absint( $user_type_data[ $key ]['stock_limit'] ) : null;
+			if ( null !== $stock_limit ) {
+				// Clamping the newly-submitted qty to the limit isn't enough on its own:
+				// this same clamp runs on every add-to-cart request, but WooCommerce
+				// merges repeated adds of the same product+User Type into one line, so
+				// clicking "Add to cart" with qty 3 twice (limit 3) would otherwise
+				// still end up as qty 6. Subtract what's already in the cart for this
+				// exact User Type first, so the two requests can never combine past it.
+				$already_in_cart = $this->wps_etmfw_get_user_type_qty_in_cart( $product_id, $label );
+				$stock_limit      = max( 0, $stock_limit - $already_in_cart );
+				if ( $qty > $stock_limit ) {
+					if ( $stock_limit > 0 ) {
+						/* translators: 1: User Type label, 2: quantity actually added. */
+						wc_add_notice( sprintf( __( 'Only %2$d more "%1$s" ticket(s) could be added — its Stock Limit has been reached.', 'event-tickets-manager-for-woocommerce' ), $label, $stock_limit ), 'notice' );
+					} else {
+						/* translators: %s: User Type label. */
+						wc_add_notice( sprintf( __( '"%s" has already reached its Stock Limit in your cart.', 'event-tickets-manager-for-woocommerce' ), $label ), 'error' );
+					}
+					$qty = $stock_limit;
+				}
+			}
+			if ( $qty <= 0 ) {
+				continue;
+			}
+
 			$items[] = array(
 				'label' => $label,
 				'price' => $price,
@@ -3016,6 +3085,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @return bool
 	 */
 	public function wps_etmfw_validate_user_type_quantities( $passed, $product_id, $quantity ) {
+		if ( apply_filters( 'wps_etmfw_skip_user_type_multi_add', false, $product_id ) ) {
+			return $passed;
+		}
+
 		if ( empty( $_POST['wps_etwmfw_atc_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_etwmfw_atc_nonce'] ) ), 'wps_etwmfw_atc_nonce' ) ) {
 			return $passed;
 		}
@@ -3051,6 +3124,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @return int
 	 */
 	public function wps_etmfw_set_user_type_total_quantity( $quantity, $product_id ) {
+		if ( apply_filters( 'wps_etmfw_skip_user_type_multi_add', false, $product_id ) ) {
+			return $quantity;
+		}
+
 		if ( empty( $_POST['wps_etwmfw_atc_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_etwmfw_atc_nonce'] ) ), 'wps_etwmfw_atc_nonce' ) ) {
 			return $quantity;
 		}
@@ -3085,6 +3162,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function wps_etmfw_add_user_type_items_on_add_to_cart( $cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data ) {
+		if ( apply_filters( 'wps_etmfw_skip_user_type_multi_add', false, $product_id ) ) {
+			return;
+		}
+
 		if ( empty( $_POST['wps_etwmfw_atc_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_etwmfw_atc_nonce'] ) ), 'wps_etwmfw_atc_nonce' ) ) {
 			return;
 		}

@@ -1489,9 +1489,24 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 					}
 
 					$wps_etmfw_field_user_type_price_data = ! empty( $_POST['etmfwppp_fields'] ) ? map_deep( wp_unslash( $_POST['etmfwppp_fields'] ), 'sanitize_text_field' ) : array();
-					$wps_etmfw_inventory_range_validation = self::validate_user_type_inventory_ranges( $wps_etmfw_field_user_type_price_data );
-					if ( ! $wps_etmfw_inventory_range_validation['is_valid'] ) {
-						WC_Admin_Meta_Boxes::add_error( __( 'Inventory Min cannot be greater than Inventory Max.', 'event-tickets-manager-for-woocommerce' ) );
+
+					// Read stock management straight from this same $_POST rather than
+					// $product->get_stock_quantity() — WooCommerce's own product-data save
+					// runs as a separate save_post callback, so the product object here may
+					// not yet reflect a stock quantity just submitted in this same request.
+					$wps_etmfw_manage_stock = isset( $_POST['_manage_stock'] ) && 'yes' === $_POST['_manage_stock'];
+					$wps_etmfw_stock_qty    = isset( $_POST['_stock'] ) && '' !== $_POST['_stock'] ? (int) $_POST['_stock'] : null;
+
+					$wps_etmfw_stock_limit_validation = self::validate_user_type_stock_limits( $wps_etmfw_field_user_type_price_data, $wps_etmfw_manage_stock, $wps_etmfw_stock_qty );
+					if ( ! $wps_etmfw_stock_limit_validation['is_valid'] ) {
+						WC_Admin_Meta_Boxes::add_error(
+							sprintf(
+								/* translators: 1: sum of stock limits, 2: product stock quantity. */
+								__( 'The combined Stock Limit of all Ticket Types (%1$d) cannot exceed the product\'s own stock quantity (%2$d).', 'event-tickets-manager-for-woocommerce' ),
+								$wps_etmfw_stock_limit_validation['sum'],
+								$wps_etmfw_stock_qty
+							)
+						);
 						return;
 					}
 					$wps_etmfw_field_days_user_type_data_array = array();
@@ -1502,8 +1517,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 									'label' => $value['_label'],
 									'type' => $value['_type'],
 									'price' => $value['_price'],
-									'inventory_min' => isset( $value['_inventory_min'] ) ? $value['_inventory_min'] : '',
-									'inventory_max' => isset( $value['_inventory_max'] ) ? $value['_inventory_max'] : '',
+									'stock_limit' => isset( $value['_stock_limit'] ) ? $value['_stock_limit'] : '',
 								);
 							}
 						}
@@ -1536,34 +1550,35 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	}
 
 	/**
-	 * Validate inventory min/max ranges for user-type pricing rows.
+	 * Validate that the combined Stock Limit of all user-type pricing rows does
+	 * not exceed the product's own WooCommerce stock quantity, when the product
+	 * has stock management enabled. A ticket type with no Stock Limit set is
+	 * treated as unlimited and excluded from the sum (matching the historical
+	 * "empty inventory_max = no cap" behavior this field replaces).
 	 *
-	 * @param array $rows Submitted user-type pricing rows.
-	 * @return array{is_valid: bool, row: int|null}
+	 * @param array    $rows         Submitted user-type pricing rows.
+	 * @param bool     $manage_stock Whether the product has stock management enabled.
+	 * @param int|null $stock_qty    The product's submitted stock quantity, or null if not set.
+	 * @return array{is_valid: bool, sum: int}
 	 */
-	private static function validate_user_type_inventory_ranges( $rows ) {
-		if ( ! is_array( $rows ) ) {
+	private static function validate_user_type_stock_limits( $rows, $manage_stock, $stock_qty ) {
+		if ( ! is_array( $rows ) || ! $manage_stock || null === $stock_qty ) {
 			return array(
 				'is_valid' => true,
-				'row'      => null,
+				'sum'      => 0,
 			);
 		}
 
-		foreach ( $rows as $index => $row ) {
-			$inventory_min = isset( $row['_inventory_min'] ) && '' !== $row['_inventory_min'] ? (int) $row['_inventory_min'] : null;
-			$inventory_max = isset( $row['_inventory_max'] ) && '' !== $row['_inventory_max'] ? (int) $row['_inventory_max'] : null;
-
-			if ( null !== $inventory_min && null !== $inventory_max && $inventory_min > $inventory_max ) {
-				return array(
-					'is_valid' => false,
-					'row'      => is_numeric( $index ) ? (int) $index : null,
-				);
+		$sum = 0;
+		foreach ( $rows as $row ) {
+			if ( isset( $row['_stock_limit'] ) && '' !== $row['_stock_limit'] ) {
+				$sum += (int) $row['_stock_limit'];
 			}
 		}
 
 		return array(
-			'is_valid' => true,
-			'row'      => null,
+			'is_valid' => $sum <= $stock_qty,
+			'sum'      => $sum,
 		);
 	}
 
@@ -1637,7 +1652,7 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 			}
 		}
 
-		wp_safe_redirect( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) );
+		wp_safe_redirect( isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : admin_url() );
 		exit;
 	}
 
@@ -1648,12 +1663,25 @@ class Event_Tickets_Manager_For_Woocommerce_Admin {
 	 * @since 1.0.0
 	 */
 	public function wps_etmfw_handle_events_filter_redirect() {
+		// Routing checks only (is this admin_init POST even for our filter form?) — not
+		// used for anything sensitive yet, so verifying a nonce this early would mean
+		// requiring OUR nonce on every unrelated admin_init POST across all of wp-admin.
+		// The real nonce check below runs before $_POST['wps_export_select_events'] (the
+		// value that actually ends up in the redirect) is ever read.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( empty( $_POST['page'] ) || 'wps-etmfw-events-info' !== $_POST['page'] ) {
 			return;
 		}
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( ! isset( $_POST['wps_event_filter'] ) ) {
 			return;
+		}
+
+		// The filter select/submit is rendered by the Pro plugin (wps_wet_event_export_extra_tablenav())
+		// inside this same list-table form, alongside this hidden nonce field.
+		if ( empty( $_POST['wps_etmfw_report_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_etmfw_report_nonce'] ) ), 'wps-etmfw-report-nonce' ) ) {
+			wp_die( esc_html__( 'Security check failed.', 'event-tickets-manager-for-woocommerce' ) );
 		}
 
 		$filter_value = isset( $_POST['wps_export_select_events'] )

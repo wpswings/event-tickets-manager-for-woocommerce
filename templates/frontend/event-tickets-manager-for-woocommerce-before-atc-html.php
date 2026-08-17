@@ -60,7 +60,7 @@ if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
 	$map_api_key = get_option( 'wps_etmfw_google_maps_api_key', '' );
 
 	$wps_etmfw_field_user_type_price_data = isset( $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data'] ) ? $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data'] : array();
-	if ( ! empty( $wps_etmfw_field_user_type_price_data ) && is_array( $wps_etmfw_field_user_type_price_data ) ) {
+	if ( ! empty( $wps_etmfw_field_user_type_price_data ) && is_array( $wps_etmfw_field_user_type_price_data ) && apply_filters( 'wps_etmfw_show_ticket_type_qty_block', true, $product_id ) ) {
 		$product = wc_get_product( $product_id );
 		$current_product_price = 0;
 		?>
@@ -74,10 +74,9 @@ if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
 				<div class="wps-etmfw-user-type-qty">
 						<button type="button" class="wps-etmfw-minus">-</button>
 						<?php
-						$inventory_min = isset( $value['inventory_min'] ) && '' !== $value['inventory_min'] ? max( 0, (int) $value['inventory_min'] ) : 0;
-						$inventory_max = isset( $value['inventory_max'] ) && '' !== $value['inventory_max'] ? max( 0, (int) $value['inventory_max'] ) : '';
+						$stock_limit = isset( $value['stock_limit'] ) && '' !== $value['stock_limit'] ? max( 0, (int) $value['stock_limit'] ) : '';
 						?>
-						<input type="number" class="qty" min="<?php echo esc_attr( $inventory_min ); ?>" <?php echo '' !== $inventory_max ? 'max="' . esc_attr( $inventory_max ) . '"' : ''; ?> step="1" inputmode="numeric" name="wps_etmfw_user_type_qty[<?php echo esc_attr( $key ); ?>]" value="<?php echo esc_attr( $inventory_min ); ?>">
+						<input type="number" class="qty" min="0" <?php echo '' !== $stock_limit ? 'max="' . esc_attr( $stock_limit ) . '"' : ''; ?> step="1" inputmode="numeric" name="wps_etmfw_user_type_qty[<?php echo esc_attr( $key ); ?>]" value="0">
 						<button type="button" class="wps-etmfw-plus">+</button>
 					</div>
 				</div>
@@ -86,6 +85,7 @@ if ( in_array( $wps_plugin, $wps_plugin_list ) ) {
 		</p>
 		<?php
 	}
+	do_action( 'wps_etmfw_render_seat_map', $product_id, $wps_etmfw_field_user_type_price_data );
 	?>
 	<div class="wps_etmfw_addition_info_section">
 		<?php

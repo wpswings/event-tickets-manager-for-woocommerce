@@ -1224,6 +1224,21 @@ body.wps-etmfw-growth-modal-open {
 	cursor: not-allowed;
 }
 
+/* WP core's forms.css sets opacity: 0.7 on input[type=checkbox]:disabled with higher
+   specificity than .wps-etmfw-ui-toggle__input's opacity: 0, exposing the native checkbox. */
+.wps-etmfw-ui-toggle__input:disabled {
+	opacity: 0 !important;
+}
+
+.wps-etmfw-ui-select:disabled {
+	appearance: none !important;
+	-webkit-appearance: none !important;
+	-moz-appearance: none !important;
+	background-repeat: no-repeat !important;
+	background-position: right 14px center !important;
+	background-size: 16px 16px !important;
+}
+
 .wps-etmfw-radio-switch-class-pro-tag .wps-etmfw-ui-toggle,
 .wps-etmfw-radio-switch-class-pro-tag .wps-etmfw-ui-checkbox,
 .wps-etmfw-radio-switch-class-pro-tag .wps-etmfw-ui-radio {

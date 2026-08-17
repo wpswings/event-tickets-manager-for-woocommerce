@@ -111,9 +111,16 @@ $tab_context               = Event_Tickets_Manager_For_Woocommerce_Admin_UI::get
 $design_tab_classes        = array( 'nav-tab', 'wps-etmfw-appearance-design' );
 $design_panel_classes      = array( 'wps_etmfw_table_column_wrapper', 'wps-etmfw-appearance-section-hidden' );
 
+$wps_etmfw_pro_row_class = '';
+$wps_etmfw_pro_pill      = '';
+$wps_etmfw_pro_disabled  = '';
+
 if ( ! $wps_is_pro_active ) {
-	$design_tab_classes[]   = 'wps-etmfw-appearance-design--locked';
-	$design_panel_classes[] = 'wps_etmfw_class_for_pro';
+	$design_tab_classes[]     = 'wps-etmfw-appearance-design--locked';
+	$design_tab_classes[]     = 'wps-etmfw-radio-switch-class-pro-tag';
+	$wps_etmfw_pro_row_class = ' wps-etmfw-radio-switch-class-pro-tag';
+	$wps_etmfw_pro_pill      = '<span class="wps-etmfw-ui-pro-pill">' . esc_html__( 'Pro', 'event-tickets-manager-for-woocommerce' ) . '</span>';
+	$wps_etmfw_pro_disabled  = 'disabled';
 }
 
 ob_start();
@@ -312,14 +319,14 @@ ob_start();
 				<table class="form-table wps_etmfw_creation_setting">
 				<tbody>
 				<!-- Border style start. -->
-				<tr valign="top">
-					<th><?php esc_html_e( 'Select Border Type', 'event-tickets-manager-for-woocommerce' ); ?></th>
+				<tr valign="top" class="<?php echo esc_attr( trim( $wps_etmfw_pro_row_class ) ); ?>">
+					<th><?php esc_html_e( 'Select Border Type', 'event-tickets-manager-for-woocommerce' ); ?><?php echo wp_kses_post( $wps_etmfw_pro_pill ); ?></th>
 					<td>
 					<?php $wps_etmfw_border_type = ! empty( get_option( 'wps_etmfw_border_type' ) ) ? get_option( 'wps_etmfw_border_type' ) : 'solid'; ?>
 				<label>
 
 				<!-- Select options for border. -->
-				<select name="wps_etmfw_border_type" class="wps_etmfw_preview_select_border_type" >
+				<select name="wps_etmfw_border_type" class="wps_etmfw_preview_select_border_type" <?php echo esc_attr( $wps_etmfw_pro_disabled ); ?>>
 
 				<?php
 				$border_type_array = array(
@@ -345,59 +352,59 @@ ob_start();
 				   </td>
 				</tr>
 
-				<tr valign="top">
-					<th><?php esc_html_e( 'Select Border Color', 'event-tickets-manager-for-woocommerce' ); ?></th>
+				<tr valign="top" class="<?php echo esc_attr( trim( $wps_etmfw_pro_row_class ) ); ?>">
+					<th><?php esc_html_e( 'Select Border Color', 'event-tickets-manager-for-woocommerce' ); ?><?php echo wp_kses_post( $wps_etmfw_pro_pill ); ?></th>
 					<td>
 					<?php
 					$attribute_description = esc_html__( 'Select  different border color for PDF Ticket.', 'event-tickets-manager-for-woocommerce' );
 					$wps_etmfw_border_color = ! empty( get_option( 'wps_etmfw_pdf_border_color' ) ) ? get_option( 'wps_etmfw_pdf_border_color' ) : '#000000';
 					$wps_etmfw_border_color = 'black' === strtolower( $wps_etmfw_border_color ) ? '#000000' : $wps_etmfw_border_color;
 					?>
-					<input type="text" name="wps_etmfw_pdf_border_color" class="wps_etmfw_colorpicker wps_etmfw_select_ticket_border_color" value="<?php echo esc_attr( $wps_etmfw_border_color ); ?>">
+					<input type="text" name="wps_etmfw_pdf_border_color" class="wps_etmfw_colorpicker wps_etmfw_select_ticket_border_color" value="<?php echo esc_attr( $wps_etmfw_border_color ); ?>" <?php echo esc_attr( $wps_etmfw_pro_disabled ); ?>>
 					<span class="wps_etmfw_helper_text"><?php echo esc_html( $attribute_description ); ?></span>
 				</td>
 				</tr>
 				<?php if ( 5 === (int) $wps_ubo_selected_template ) { ?>
-					<tr valign="top">
-						<th><?php esc_html_e( 'Select Header Background Color', 'event-tickets-manager-for-woocommerce' ); ?></th>
+					<tr valign="top" class="<?php echo esc_attr( trim( $wps_etmfw_pro_row_class ) ); ?>">
+						<th><?php esc_html_e( 'Select Header Background Color', 'event-tickets-manager-for-woocommerce' ); ?><?php echo wp_kses_post( $wps_etmfw_pro_pill ); ?></th>
 						<td>
 						<?php
 						$attribute_description = esc_html__( 'Select different header background color for PDF Ticket.', 'event-tickets-manager-for-woocommerce' );
 						$wps_etmfw_header_background_color = ! empty( get_option( 'wps_etmfw_pdf_header_background_color' ) ) ? get_option( 'wps_etmfw_pdf_header_background_color' ) : '';
 						?>
-						<input type="text" name="wps_etmfw_pdf_header_background_color" class="wps_etmfw_colorpicker wps_etmfw_select_ticket_header_background" value="<?php echo esc_attr( $wps_etmfw_header_background_color ); ?>">
+						<input type="text" name="wps_etmfw_pdf_header_background_color" class="wps_etmfw_colorpicker wps_etmfw_select_ticket_header_background" value="<?php echo esc_attr( $wps_etmfw_header_background_color ); ?>" <?php echo esc_attr( $wps_etmfw_pro_disabled ); ?>>
 						<span class="wps_etmfw_helper_text"><?php echo esc_html( $attribute_description ); ?></span>
 					</td>
 					</tr>
 				<?php } ?>
 				<?php if ( ( 1 == (int) $wps_ubo_selected_template ) || 2 == (int) $wps_ubo_selected_template || 3 == (int) $wps_ubo_selected_template || 4 == (int) $wps_ubo_selected_template || ( 5 == (int) $wps_ubo_selected_template ) ) { ?>
-				<tr valign="top">
-					<th><?php esc_html_e( 'Select Background Color', 'event-tickets-manager-for-woocommerce' ); ?></th>
+				<tr valign="top" class="<?php echo esc_attr( trim( $wps_etmfw_pro_row_class ) ); ?>">
+					<th><?php esc_html_e( 'Select Background Color', 'event-tickets-manager-for-woocommerce' ); ?><?php echo wp_kses_post( $wps_etmfw_pro_pill ); ?></th>
 						<td>
 					<?php
 					$attribute_description = esc_html__( 'Select different background color for PDF Ticket.', 'event-tickets-manager-for-woocommerce' );
 					$wps_etmfw_background_color = ! empty( get_option( 'wps_etmfw_pdf_background_color' ) ) ? get_option( 'wps_etmfw_pdf_background_color' ) : '#2196f3';
 					?>
-					<input type="text" name="wps_etmfw_pdf_background_color" class="wps_etmfw_colorpicker wps_etmfw_select_ticket_background" value="<?php echo esc_attr( $wps_etmfw_background_color ); ?>">
+					<input type="text" name="wps_etmfw_pdf_background_color" class="wps_etmfw_colorpicker wps_etmfw_select_ticket_background" value="<?php echo esc_attr( $wps_etmfw_background_color ); ?>" <?php echo esc_attr( $wps_etmfw_pro_disabled ); ?>>
 					<span class="wps_etmfw_helper_text"><?php echo esc_html( $attribute_description ); ?></span>
 				</td>
 				</tr>
-				
-				<tr valign="top">
-					<th><?php esc_html_e( 'Select Text Color', 'event-tickets-manager-for-woocommerce' ); ?></th>
+
+				<tr valign="top" class="<?php echo esc_attr( trim( $wps_etmfw_pro_row_class ) ); ?>">
+					<th><?php esc_html_e( 'Select Text Color', 'event-tickets-manager-for-woocommerce' ); ?><?php echo wp_kses_post( $wps_etmfw_pro_pill ); ?></th>
 					<td>
 					<?php
 					$attribute_description = esc_html__( 'Select different text color for PDF Ticket.', 'event-tickets-manager-for-woocommerce' );
 					$wps_etmfw_pdf_text_color = ! empty( get_option( 'wps_etmfw_pdf_text_color' ) ) ? get_option( 'wps_etmfw_pdf_text_color' ) : '#0f0b0b';
 					?>
-					<input type="text" name="wps_etmfw_pdf_text_color" class="wps_etmfw_colorpicker wps_etmfw_pdf_text_color" value="<?php echo esc_attr( $wps_etmfw_pdf_text_color ); ?>">
+					<input type="text" name="wps_etmfw_pdf_text_color" class="wps_etmfw_colorpicker wps_etmfw_pdf_text_color" value="<?php echo esc_attr( $wps_etmfw_pdf_text_color ); ?>" <?php echo esc_attr( $wps_etmfw_pro_disabled ); ?>>
 					<span class="wps_etmfw_helper_text"><?php echo esc_html( $attribute_description ); ?></span>
 				</td>
 				</tr>
 
-				
-				<tr valign="top">
-					<th><?php esc_html_e( 'Select Logo Size', 'event-tickets-manager-for-woocommerce' ); ?></th>
+
+				<tr valign="top" class="<?php echo esc_attr( trim( $wps_etmfw_pro_row_class ) ); ?>">
+					<th><?php esc_html_e( 'Select Logo Size', 'event-tickets-manager-for-woocommerce' ); ?><?php echo wp_kses_post( $wps_etmfw_pro_pill ); ?></th>
 					<td>
 					<?php
 					$attribute_description = esc_html__( 'Select different logo size for PDF Ticket.', 'event-tickets-manager-for-woocommerce' );
@@ -405,7 +412,7 @@ ob_start();
 					?>
 					<div class="wps-etmfw-size-slider wps-etmfw-size-slider--logo">
 						<div class="wps-etmfw-size-slider__top">
-							<input type="range" min="100" value="<?php echo esc_attr( $wps_etmfw_logo_size ); ?>" max="200" name="wps_etmfw_logo_size" class="wps_etmfw_logo_size_slider wps-etmfw-size-slider__range" />
+							<input type="range" min="100" value="<?php echo esc_attr( $wps_etmfw_logo_size ); ?>" max="200" name="wps_etmfw_logo_size" class="wps_etmfw_logo_size_slider wps-etmfw-size-slider__range" <?php echo esc_attr( $wps_etmfw_pro_disabled ); ?> />
 							<span class="wps_etmfw_logo_size_slider_span wps-etmfw-size-slider__value"><?php echo esc_attr( $wps_etmfw_logo_size . 'px' ); ?></span>
 						</div>
 						<div class="wps-etmfw-size-slider__scale">
@@ -417,21 +424,21 @@ ob_start();
 				</td>
 				</tr>
 
-				<tr valign="top">
-					<th><?php esc_html_e( 'Select QR Size', 'event-tickets-manager-for-woocommerce' ); ?></th>
+				<tr valign="top" class="<?php echo esc_attr( trim( $wps_etmfw_pro_row_class ) ); ?>">
+					<th><?php esc_html_e( 'Select QR Size', 'event-tickets-manager-for-woocommerce' ); ?><?php echo wp_kses_post( $wps_etmfw_pro_pill ); ?></th>
 					<td>
 					<?php
 					$attribute_description = esc_html__( 'Select different QR size for PDF Ticket.', 'event-tickets-manager-for-woocommerce' );
 					$wps_etmfw_qr_size = ! empty( get_option( 'wps_etmfw_qr_size' ) ) ? get_option( 'wps_etmfw_qr_size' ) : '';
 					?>
-					<input type="range" min="100" value="<?php echo esc_attr( $wps_etmfw_qr_size ); ?>"  max="220" value="" name='wps_etmfw_qr_size' class="wps_etmfw_qr_size_slider" />
+					<input type="range" min="100" value="<?php echo esc_attr( $wps_etmfw_qr_size ); ?>"  max="220" value="" name='wps_etmfw_qr_size' class="wps_etmfw_qr_size_slider" <?php echo esc_attr( $wps_etmfw_pro_disabled ); ?> />
 					<span class="wps_etmfw_qr_size_slider_span" ><?php echo esc_attr( $wps_etmfw_qr_size . 'px' ); ?></span>
 					<span class="wps_etmfw_helper_text"><?php echo esc_html( $attribute_description ); ?></span>
 				</td>
 				</tr>
 				<?php } ?>
-				<tr class="wps_etmfw_hide_setting" valign="top">
-					<th><?php echo esc_html_e( 'Select Background Image', 'event-tickets-manager-for-woocommerce' ); ?></th>
+				<tr class="wps_etmfw_hide_setting<?php echo esc_attr( $wps_etmfw_pro_row_class ); ?>" valign="top">
+					<th><?php echo esc_html_e( 'Select Background Image', 'event-tickets-manager-for-woocommerce' ); ?><?php echo wp_kses_post( $wps_etmfw_pro_pill ); ?></th>
 					<td>
 					<?php
 					$attribute_description = esc_html__( 'Set different background image for pdf ticket template like Mellifluous and Demure.', 'event-tickets-manager-for-woocommerce' );

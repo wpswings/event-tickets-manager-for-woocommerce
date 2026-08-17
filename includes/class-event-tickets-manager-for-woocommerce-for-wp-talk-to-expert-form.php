@@ -57,7 +57,7 @@ class Event_Tickets_Manager_For_Woocommerce_For_Wp_Talk_To_Expert_Form {
 			);
 		}
 
-		$raw_payload = isset( $_POST['form_data'] ) ? wp_unslash( $_POST['form_data'] ) : '';
+		$raw_payload = isset( $_POST['form_data'] ) ? sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) : '';
 		$form_data   = json_decode( $raw_payload, true );
 
 		if ( empty( $form_data ) || ! is_array( $form_data ) ) {
