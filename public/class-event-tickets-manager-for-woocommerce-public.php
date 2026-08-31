@@ -2339,31 +2339,28 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 				$date_month_short = substr( $wps_event_formated_start_month, 0, 3 );
 				$image_style = 'background-image:url(' . esc_url( $wps_product_image_src ) . ');';
 
-				$html .= '<a href="' . esc_url( $product_url ) . '" class="wps-etmw-card-link" id="wps-etmw_list-card">
+				$html .= '<a href="' . esc_url( $product_url ) . '" class="wps-etmw-card-link" aria-label="' . esc_attr( $product_name ) . '">
 					<article class="wps-etmw-card">
-						<header class="wps-etmw-card-top">
+						<div class="wps-etmw-card-media">
+							<figure class="wps-etmw-card-image" style="' . esc_attr( $image_style ) . '" aria-hidden="true"></figure>
 							<div class="wps-etmw-card-badge">
 								<span class="wps-etmw-card-day-short">' . esc_html( $date_label ) . '</span>
 								<span class="wps-etmw-card-date-day">' . esc_html( $wps_event_formated_start_date ) . '</span>
 								<span class="wps-etmw-card-date-month">' . esc_html( $date_month_short ) . '</span>
 							</div>
-							<div class="wps-etmw-card-endcap">
-								<span class="wps-etmw-card-tag">' . esc_html__( 'Event Tickets', 'event-tickets-manager-for-woocommerce' ) . '</span>
-								<span class="wps-etmw-card-time">
-									' . esc_html( $wps_event_formated_start_date_time ) . ' ' . esc_html__( 'Onwards', 'event-tickets-manager-for-woocommerce' ) . '
-								</span>
-							</div>
-						</header>
+						</div>
 
-						<div class="wps-etmw-card-body">
-							<figure class="wps-etmw-card-image" style="' . esc_attr( $image_style ) . '" aria-hidden="true"></figure>
-							<div class="wps-etmw-card-meta">
-								<h4>' . esc_html( $product_name ) . '</h4>
-								<p class="wps-etmw-card-venue">
-									<img src="' . esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . 'public/src/image/map_pin.svg" alt="" />
-									' . esc_html( $wps_etmfw_product_array['etmfw_event_venue'] ) . '
-								</p>
-							</div>
+						<div class="wps-etmw-card-content">
+							<span class="wps-etmw-card-tag">' . esc_html__( 'Event Tickets', 'event-tickets-manager-for-woocommerce' ) . '</span>
+							<h4 class="wps-etmw-card-title">' . esc_html( $product_name ) . '</h4>
+							<p class="wps-etmw-card-time">
+								<img src="' . esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . 'public/src/image/clock.svg" alt="" />
+								' . esc_html( $wps_event_formated_start_date_time ) . ' ' . esc_html__( 'Onwards', 'event-tickets-manager-for-woocommerce' ) . '
+							</p>
+							<p class="wps-etmw-card-venue">
+								<img src="' . esc_url( EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_DIR_URL ) . 'public/src/image/map_pin.svg" alt="" />
+								' . esc_html( $wps_etmfw_product_array['etmfw_event_venue'] ) . '
+							</p>
 						</div>
 
 						<footer class="wps-etmw-card-footer">
