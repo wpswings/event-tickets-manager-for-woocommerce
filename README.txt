@@ -253,6 +253,14 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 
 == Changelog ==
+
+= 1.5.9 – Released on 15 September 2026 =
+* New: Compatibility with WooCommerce 11.1.0 and WordPress 7.1
+* Enhancement: Event Product Listing Page Design - Event Card UX
+* Enhancement: Event Calendar UI/UX Improvements (High Priority)
+* New: Quick Event Preview
+* New: PHP 8.3 Compatibility Audit & Fixes
+
 = 1.5.8 – Released on 14 Auguest 2026 = 
 * New: Compatibility with WooCommerce 11.0.1 and WordPress 7.0.4
 
@@ -483,6 +491,9 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 * First version
 
 == Upgrade Notice == 
-
-= 1.5.8 – Released on 14 August 2026 =
-* New: Compatibility with WooCommerce 11.0.1 and WordPress 7.0.4
+= 1.5.9 – Released on 15 September 2026 =
+* New: Compatibility with WooCommerce 11.1.0 and WordPress 7.1
+* Enhancement: Event Product Listing Page Design - Event Card UX
+* Enhancement: Event Calendar UI/UX Improvements (High Priority)
+* New: Quick Event Preview
+* New: PHP 8.3 Compatibility Audit & Fixes
