@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: event booking, wordpress calendar, event schedule, zoom integration, tickets
 Requires at least: 6.7
-Tested up to: 7.0.4
+Tested up to: 7.1
 WC requires at least: 6.5
-WC tested up to: 11.0.1
-Stable tag: 1.5.8
+WC tested up to: 11.1.0
+Stable tag: 1.5.9
 Requires PHP: 7.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -253,6 +253,14 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 
 
 == Changelog ==
+
+= 1.5.9 – Released on 15 September 2026 =
+* New: Compatibility with WooCommerce 11.1.0 and WordPress 7.1
+* Enhancement: Event Product Listing Page Design - Event Card UX
+* Enhancement: Event Calendar UI/UX Improvements (High Priority)
+* New: Quick Event Preview
+* New: PHP 8.3 Compatibility Audit & Fixes
+
 = 1.5.8 – Released on 14 Auguest 2026 = 
 * New: Compatibility with WooCommerce 11.0.1 and WordPress 7.0.4
 
@@ -483,6 +491,9 @@ Please visit the WP Swings [**knowledge base**](https://support.wpswings.com/wor
 * First version
 
 == Upgrade Notice == 
-
-= 1.5.8 – Released on 14 August 2026 =
-* New: Compatibility with WooCommerce 11.0.1 and WordPress 7.0.4
+= 1.5.9 – Released on 15 September 2026 =
+* New: Compatibility with WooCommerce 11.1.0 and WordPress 7.1
+* Enhancement: Event Product Listing Page Design - Event Card UX
+* Enhancement: Event Calendar UI/UX Improvements (High Priority)
+* New: Quick Event Preview
+* New: PHP 8.3 Compatibility Audit & Fixes

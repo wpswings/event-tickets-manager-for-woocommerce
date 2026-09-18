@@ -37,7 +37,7 @@ $template = '<table class="wps-wuc__email-template" style=" border: 1px solid #0
 					<tbody>
 						<tr style="font-size: 16px;">
 							
-							<th style="width: 25%;">Purchaser</th>
+							<th style="width: 25%;">' . esc_html__( 'Purchaser', 'event-tickets-manager-for-woocommerce' ) . '</th>
 						</tr>						
 						<tr style="font-size: 16px;">
 							
@@ -52,7 +52,7 @@ $template = '<table class="wps-wuc__email-template" style=" border: 1px solid #0
 								[FEATUREDIMAGE]
 							</td>						
 							<td>
-								<h3 style="color: #000000; font-size: 26px; margin: 20px 0 0; text-align: left;">Check In For This Event</h3>
+								<h3 style="color: #000000; font-size: 26px; margin: 20px 0 0; text-align: left;">' . esc_html__( 'Check In For This Event', 'event-tickets-manager-for-woocommerce' ) . '</h3>
 														
 								<p style="font-size: 16px;">[TIME]</p>
 								<p style="font-size: 16px;">[VENUE]</p>	

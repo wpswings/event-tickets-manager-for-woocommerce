@@ -44,6 +44,7 @@ class Event_Tickets_Manager_For_Woocommerce_Activator {
 		wp_clear_scheduled_hook( 'wpswings_tracker_send_event' );
 		wp_schedule_event( time() + 10, apply_filters( 'wpswings_tracker_event_recurrence', 'daily' ), 'wpswings_tracker_send_event' );
         update_option('wps_etmfw_ticket_template' , '1');
+		update_option( 'wps_etmfw_logo_size', '133' );
 	}
 
 	/**
