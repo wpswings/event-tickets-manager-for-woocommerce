@@ -1962,10 +1962,9 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @link http://www.wpswings.com/
 	 */
 	public function wps_etmfwp_sharing_tickets_org() {
-		$secure_nonce      = wp_create_nonce( 'wps-event-auth-nonce' );
-		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-event-auth-nonce' );
-		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', 'event-tickets-manager-for-woocommerce' ) );
+		check_ajax_referer( 'wps-etmfw-verify-public-nonce', 'wps_nonce' );
+		if ( ! is_user_logged_in() ) {
+			wp_die( esc_html__( 'You must be logged in to transfer a ticket.', 'event-tickets-manager-for-woocommerce' ) );
 		}
 		$response['result'] = false;
 		$product_id = isset( $_REQUEST['for_event'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['for_event'] ) ) : '';
@@ -2943,19 +2942,21 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$product_price_on_user_select = isset( $_REQUEST['user_type_value_data'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['user_type_value_data'] ) ) : '';
 		$wps_product_type_name = isset( $_REQUEST['user_type_name_data'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['user_type_name_data'] ) ) : '';
 
-		if ( ! empty( $user_type_data ) && is_array( $user_type_data ) ) {
-			$is_valid_selection = false;
-			foreach ( $user_type_data as $type ) {
-				if ( isset( $type['label'], $type['price'] )
-					&& $type['label'] === $wps_product_type_name
-					&& (string) $type['price'] === (string) $product_price_on_user_select ) {
-					$is_valid_selection = true;
-					break;
-				}
+		if ( empty( $user_type_data ) || ! is_array( $user_type_data ) ) {
+			wp_send_json_error( array( 'message' => 'Invalid product.' ) );
+		}
+
+		$is_valid_selection = false;
+		foreach ( $user_type_data as $type ) {
+			if ( isset( $type['label'], $type['price'] )
+				&& $type['label'] === $wps_product_type_name
+				&& (string) $type['price'] === (string) $product_price_on_user_select ) {
+				$is_valid_selection = true;
+				break;
 			}
-			if ( ! $is_valid_selection ) {
-				wp_send_json_error( array( 'message' => 'Invalid user type selection.' ) );
-			}
+		}
+		if ( ! $is_valid_selection ) {
+			wp_send_json_error( array( 'message' => 'Invalid user type selection.' ) );
 		}
 
 		$wps_base_price_condition = isset( $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] ) ? $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] : array();

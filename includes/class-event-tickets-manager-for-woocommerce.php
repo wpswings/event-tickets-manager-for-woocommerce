@@ -349,9 +349,9 @@ class Event_Tickets_Manager_For_Woocommerce {
 			$this->loader->add_filter( 'wc_shipping_enabled', $etmfw_plugin_public, 'wps_etmfw_wc_shipping_enabled' );
 			$this->loader->add_filter( 'woocommerce_cart_needs_shipping', $etmfw_plugin_public, 'wps_etmfw_wc_shipping_enabled' );
 			
-			// Ajax For sharing the tickets.
+			// Ajax For sharing the tickets. Logged-in only: the transfer form is only ever rendered
+			// on the My Account event dashboard, and ownership is verified against the current user's own orders.
 			$this->loader->add_action( 'wp_ajax_wps_etmfwp_transfer_ticket_org', $etmfw_plugin_public, 'wps_etmfwp_sharing_tickets_org', 11 );
-			$this->loader->add_action( 'wp_ajax_nopriv_wps_etmfwp_transfer_ticket_org', $etmfw_plugin_public, 'wps_etmfwp_sharing_tickets_org', 11 );
 
 			// Ajax For User Type Pricing.
 			$this->loader->add_action( 'wp_ajax_wps_etmfwp_user_type_fun_calbck', $etmfw_plugin_public, 'wps_user_type_ajax_callbck', 10 );
