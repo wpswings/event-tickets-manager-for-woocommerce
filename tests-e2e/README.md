@@ -71,6 +71,14 @@ one shared WordPress database — running them in parallel would race on wp-admi
   trigger.
 - **10-my-account-tickets** — My Account "Event Tickets" endpoint and table.
 - **11-expired-event** — expired events hide Add to Cart and show the expiry notice.
+- **12-compatibility** — plugin active at the expected version (`EXPECTED_PLUGIN_VERSION`,
+  default `1.6.0`), not in WooCommerce's "incompatible with enabled features" list, and no
+  PHP notices or JS errors raised from this plugin's own files on settings, Events list,
+  product editor and single product screens. PHP notices only show up with
+  `WP_DEBUG_DISPLAY` on.
+- **13-frontend-event-display** — single product page: date/time/venue block, ticket-type
+  picker (names, prices, plus/minus, stock-limit cap, add to cart), and required custom
+  attendee fields (marker, `required` attribute, empty-field block).
 
 ## 5. Known limitations / follow-ups
 
