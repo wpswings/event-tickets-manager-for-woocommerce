@@ -77,6 +77,11 @@ module.exports = {
     eventTime: '#wps_etmwf_event_time .wps_etmfw_date_label',
     eventVenue: '#wps_etmwf_event_venue',
     userTypeRow: '.wps_etmfw_user_type_list .wps_etmfw_user_type_row',
+    userTypeName: '.wps_etmfw_user_type_name',
+    userTypePrice: '.wps_etmfw_user_type_price',
+    userTypeRowQty: 'input.qty',
+    // Custom fields render as name="wps_etmfw_<label lowercased, spaces -> underscores>".
+    additionalFieldInput: (label) => `[name="wps_etmfw_${label.toLowerCase().replace(/ /g, '_')}"]`,
     userTypeMinus: 'button.wps-etmfw-minus',
     userTypePlus: 'button.wps-etmfw-plus',
     userTypeQtyInput: (n) => `input.qty[name="wps_etmfw_user_type_qty[${n}]"]`,
@@ -130,5 +135,11 @@ module.exports = {
     orderReceivedTitle: '.woocommerce-order',
     orderStatusSelect: '#order_status',
     updateOrderButton: 'button.save_order, button[name="save"]',
+  },
+
+  plugins: {
+    // Row on wp-admin > Plugins, keyed by the plugin basename WordPress stores.
+    pluginRow: 'tr[data-plugin="event-tickets-manager-for-woocommerce/event-tickets-manager-for-woocommerce.php"]',
+    deactivateLink: 'span.deactivate a',
   },
 };
