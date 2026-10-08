@@ -72,7 +72,8 @@ one shared WordPress database — running them in parallel would race on wp-admi
 - **10-my-account-tickets** — My Account "Event Tickets" endpoint and table.
 - **11-expired-event** — expired events hide Add to Cart and show the expiry notice.
 - **12-compatibility** — plugin active at the expected version (`EXPECTED_PLUGIN_VERSION`,
-  default `1.6.0`), not in WooCommerce's "incompatible with enabled features" list, and no
+  default `1.6.1`), site meets the declared WP/WC minimums, admin assets carry the
+  release version in `?ver=`, the WooCommerce Orders screen (HPOS or legacy) loads cleanly, not in WooCommerce's "incompatible with enabled features" list, and no
   PHP notices or JS errors raised from this plugin's own files on settings, Events list,
   product editor and single product screens. PHP notices only show up with
   `WP_DEBUG_DISPLAY` on.
