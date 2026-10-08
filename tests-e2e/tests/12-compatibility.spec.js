@@ -8,7 +8,22 @@ const S = require('../utils/selectors');
 // WooCommerce's "incompatible" list (it declares custom_order_tables and
 // cart_checkout_blocks support in the main plugin file), and raise no PHP or JS
 // errors of its own on the screens it touches.
-const EXPECTED_VERSION = process.env.EXPECTED_PLUGIN_VERSION || '1.6.0';
+const EXPECTED_VERSION = process.env.EXPECTED_PLUGIN_VERSION || '1.6.1';
+
+// Minimums from the plugin header ("Requires at least" / "WC requires at least").
+const MIN_WP_VERSION = '6.7';
+const MIN_WC_VERSION = '6.5';
+
+/** Numeric dotted-version compare: returns <0, 0 or >0 like strcmp. */
+function compareVersions(a, b) {
+  const pa = a.split('.').map(Number);
+  const pb = b.split('.').map(Number);
+  for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+    const diff = (pa[i] || 0) - (pb[i] || 0);
+    if (diff) return diff;
+  }
+  return 0;
+}
 
 // Matches only errors raised from this plugin's own folder — not the -pro add-on,
 // and not other plugins on the site — so an unrelated notice can't fail the suite.
@@ -46,6 +61,47 @@ test.describe('Compatibility: plugin loads cleanly on current WP / WC', () => {
     // an undeclared or false-declared feature (e.g. HPOS) would put the plugin here.
     await page.goto('/wp-admin/plugins.php?plugin_status=incompatible_with_feature');
     await expect(page.locator(S.plugins.pluginRow)).toHaveCount(0);
+  });
+
+  test(`site meets the declared minimums (WP ${MIN_WP_VERSION}+, WC ${MIN_WC_VERSION}+)`, async ({ page }) => {
+    // WordPress prints its version in the generator meta tag on the front end.
+    await page.goto('/');
+    const generatorMeta = page.locator('meta[name="generator"][content^="WordPress"]').first();
+    const generator = (await generatorMeta.count()) ? await generatorMeta.getAttribute('content') : null;
+    test.skip(!generator, 'Theme/plugin removes the WordPress generator tag, cannot read the WP version');
+    const wpVersion = generator.replace('WordPress', '').trim();
+
+    await page.goto('/wp-admin/plugins.php');
+    const wcRowText = await page.locator('tr[data-plugin="woocommerce/woocommerce.php"]').innerText();
+    const wcVersion = (wcRowText.match(/Version\s+([\d.]+)/) || [])[1];
+    expect(wcVersion, 'WooCommerce version on the Plugins screen').toBeTruthy();
+
+    test.info().annotations.push({ type: 'environment', description: `WordPress ${wpVersion}, WooCommerce ${wcVersion}` });
+    expect(compareVersions(wpVersion, MIN_WP_VERSION), `WordPress ${wpVersion} >= ${MIN_WP_VERSION}`).toBeGreaterThanOrEqual(0);
+    expect(compareVersions(wcVersion, MIN_WC_VERSION), `WooCommerce ${wcVersion} >= ${MIN_WC_VERSION}`).toBeGreaterThanOrEqual(0);
+  });
+
+  test(`plugin admin assets are cache-busted with version ${EXPECTED_VERSION}`, async ({ page }) => {
+    // The settings screen enqueues its admin UI stylesheet with
+    // EVENT_TICKETS_MANAGER_FOR_WOOCOMMERCE_VERSION as ?ver=. If that constant lags
+    // behind the plugin header, browsers keep serving the previous release's assets.
+    await page.goto('/wp-admin/admin.php?page=event_tickets_manager_for_woocommerce_menu');
+    const adminCss = page.locator('link[rel="stylesheet"][href*="event-tickets-manager-for-woocommerce-admin-ui.css"]');
+    await expect(adminCss).toHaveCount(1);
+    expect(await adminCss.getAttribute('href')).toContain(`ver=${EXPECTED_VERSION}`);
+  });
+
+  test('WooCommerce Orders screen (HPOS or legacy) raises no PHP errors from the plugin', async ({ page }) => {
+    // Follow the real Orders menu link so the test works whichever order storage is on:
+    // admin.php?page=wc-orders with HPOS, edit.php?post_type=shop_order without.
+    await page.goto('/wp-admin/');
+    const ordersLink = page.locator('#adminmenu a[href*="page=wc-orders"], #adminmenu a[href*="post_type=shop_order"]').first();
+    const href = await ordersLink.getAttribute('href');
+    expect(href, 'WooCommerce Orders menu link').toBeTruthy();
+
+    await page.goto(new URL(href, page.url()).toString());
+    await expect(page.locator('body')).not.toContainText('Fatal error');
+    await expectNoOwnPhpErrors(page);
   });
 
   test('WooCommerce Features settings page loads', async ({ page }) => {
