@@ -5,7 +5,7 @@ Tags: event booking, wordpress calendar, event schedule, zoom integration, ticke
 Requires at least: 6.7
 Tested up to: 7.1.3
 WC requires at least: 6.5
-WC tested up to: 11.1.2
+WC tested up to: 11.2.1
 Stable tag: 1.6.1
 Requires PHP: 7.4
 License: GNU General Public License v3.0
