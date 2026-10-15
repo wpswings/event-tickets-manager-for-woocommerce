@@ -80,6 +80,10 @@ one shared WordPress database — running them in parallel would race on wp-admi
 - **13-frontend-event-display** — single product page: date/time/venue block, ticket-type
   picker (names, prices, plus/minus, stock-limit cap, add to cart), and required custom
   attendee fields (marker, `required` attribute, empty-field block).
+- **14-sales-dashboard-widget** — the "Event Tickets Sales" Dashboard widget (moved from
+  Pro): title, five stats in order, full/half widths, number/price formatting, stat
+  links, widget CSS loaded on the Dashboard only, and "Upcoming events" updating live
+  after publishing an event. The widget is re-enabled via Screen Options if hidden.
 
 ## 5. Known limitations / follow-ups
 
