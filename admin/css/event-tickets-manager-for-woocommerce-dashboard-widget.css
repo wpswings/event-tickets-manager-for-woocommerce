@@ -1,0 +1,72 @@
+/**
+ * Styles for the "Event Tickets Sales" wp-admin Dashboard widget (moved from Pro).
+ * Only enqueued on the Dashboard screen (index.php).
+ */
+
+#wps_etmfwp_sales_dashboard .inside {
+	margin: 0;
+	padding: 0;
+}
+
+.wps-etmfwp-status-list {
+	margin: 0;
+	overflow: hidden;
+}
+
+.wps-etmfwp-status-list li {
+	box-sizing: border-box;
+	float: left;
+	width: 50%;
+	margin: 0;
+	padding: 0;
+	border-top: 1px solid #ececec;
+	list-style: none;
+}
+
+.wps-etmfwp-status-list li:first-child {
+	border-top: 0;
+}
+
+.wps-etmfwp-status-list li.wps-etmfwp-full {
+	width: 100%;
+	clear: both;
+}
+
+.wps-etmfwp-status-list li a {
+	position: relative;
+	display: block;
+	padding: 9px 12px 9px 44px;
+	color: #555d66;
+	text-decoration: none;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+.wps-etmfwp-status-list li a:hover,
+.wps-etmfwp-status-list li a:focus {
+	background-color: #f6f7f7;
+}
+
+.wps-etmfwp-status-list li .dashicons {
+	position: absolute;
+	top: 50%;
+	left: 12px;
+	transform: translateY(-50%);
+	width: 20px;
+	height: 20px;
+	font-size: 20px;
+	color: #82878c;
+}
+
+.wps-etmfwp-status-list li .wps-etmfwp-stat-label {
+	display: block;
+}
+
+.wps-etmfwp-status-list li strong {
+	display: block;
+	margin-top: 2px;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 1.2;
+	color: #1d2327;
+}

@@ -137,6 +137,20 @@ module.exports = {
     updateOrderButton: 'button.save_order, button[name="save"]',
   },
 
+  // wp-admin Dashboard "Event Tickets Sales" widget
+  // (admin/class-event-tickets-manager-for-woocommerce-sales-dashboard.php).
+  dashboard: {
+    salesWidget: '#wps_etmfwp_sales_dashboard',
+    salesWidgetTitle: '#wps_etmfwp_sales_dashboard h2',
+    salesWidgetScreenOption: '#wps_etmfwp_sales_dashboard-hide',
+    screenOptionsToggle: '#show-settings-link',
+    statList: '#wps_etmfwp_sales_dashboard ul.wps-etmfwp-status-list',
+    statRows: '#wps_etmfwp_sales_dashboard ul.wps-etmfwp-status-list > li',
+    stat: (key) => `#wps_etmfwp_sales_dashboard li.wps-etmfwp-${key}`,
+    statLink: (key) => `#wps_etmfwp_sales_dashboard li.wps-etmfwp-${key} > a`,
+    statValue: (key) => `#wps_etmfwp_sales_dashboard li.wps-etmfwp-${key} strong`,
+  },
+
   plugins: {
     // Row on wp-admin > Plugins, keyed by the plugin basename WordPress stores.
     pluginRow: 'tr[data-plugin="event-tickets-manager-for-woocommerce/event-tickets-manager-for-woocommerce.php"]',

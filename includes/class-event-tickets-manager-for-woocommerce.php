@@ -138,6 +138,9 @@ class Event_Tickets_Manager_For_Woocommerce {
 			// The class responsible for defining all actions that occur in the admin area.
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-event-tickets-manager-for-woocommerce-admin.php';
 
+			// The "Event Tickets Sales" wp-admin Dashboard widget.
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-event-tickets-manager-for-woocommerce-sales-dashboard.php';
+
 			// The class responsible for on-boarding steps for plugin.
 			if ( is_dir( plugin_dir_path( dirname( __FILE__ ) ) . 'onboarding' ) && ! class_exists( 'Event_Tickets_Manager_For_Woocommerce_Onboarding_Steps' ) ) {
 				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-event-tickets-manager-for-woocommerce-onboarding-steps.php';
@@ -195,6 +198,11 @@ class Event_Tickets_Manager_For_Woocommerce {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $etmfw_plugin_admin, 'etmfw_admin_enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $etmfw_plugin_admin, 'etmfw_admin_enqueue_scripts' );
+
+		// Basic sales report: "Event Tickets Sales" wp-admin Dashboard widget.
+		$etmfw_sales_dashboard = new Event_Tickets_Manager_For_Woocommerce_Sales_Dashboard( $this->etmfw_get_version() );
+		$this->loader->add_action( 'wp_dashboard_setup', $etmfw_sales_dashboard, 'wps_etmfw_register_sales_dashboard_widget' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $etmfw_sales_dashboard, 'wps_etmfw_enqueue_sales_dashboard_styles' );
 
 		// Add settings menu for Event Tickets Manager for WooCommerce.
 		$this->loader->add_action( 'admin_menu', $etmfw_plugin_admin, 'etmfw_options_page' );
