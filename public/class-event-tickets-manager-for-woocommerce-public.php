@@ -2961,19 +2961,16 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 
 		$wps_base_price_condition = isset( $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] ) && ! empty( $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] ) ? $wps_etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] : array();
 
-		if ( 'base_price' == $wps_base_price_condition ) {
-			$wps_total_price = get_option( 'wps_total_increased_value' );
-		} elseif ( 'not_base_price' == $wps_base_price_condition ) {
-			$wps_total_price = 0;
-		} else {
-			$wps_total_price = 0;
+		$wps_total_price = 0;
+		if ( 'base_price' === $wps_base_price_condition ) {
+			$wps_total_price = $this->wps_etmfw_get_event_base_price( wc_get_product( $wps_product_id ) );
 		}
 
-		$final_price = ( $product_price_on_user_select + $wps_total_price );
+		// Price preview only. This endpoint is public, so it must never persist anything
+		// that later feeds cart pricing; cart prices are derived per item from the product.
+		$final_price = ( (float) $product_price_on_user_select + (float) $wps_total_price );
 		$response = wc_price( $final_price );
 		echo wp_json_encode( $response );
-		update_option( 'wps_user_type_value', $product_price_on_user_select );
-		update_option( 'wps_user_type_text', $wps_product_type_name );
 		wp_die();
 	}
 
@@ -3213,42 +3210,96 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 		$cart_data = $cart->get_cart();
 		$base_price_applied = array();
 		foreach ( $cart_data as $cart_item_key => $cart_item ) {
-			if ( 'event_ticket_manager' === $cart_item['data']->get_type() && isset( $cart_item['event_role'] ) ) {
-				$product = $cart_item['data'];
-				if ( isset( $product ) && is_object( $product ) ) {
-					$price_html        = $cart_item['data']->get_price();
-					$custom_cart_data = $cart_item['event_role'];
-					$product_id = $product->get_id();
-					$etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
+			if ( ! isset( $cart_item['data'], $cart_item['event_role'] ) || ! is_object( $cart_item['data'] ) || 'event_ticket_manager' !== $cart_item['data']->get_type() ) {
+				continue;
+			}
+			$product             = $cart_item['data'];
+			$product_id          = $product->get_id();
+			$etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
+			$role_label          = isset( $cart_item['event_role']['role'] ) ? (string) $cart_item['event_role']['role'] : '';
 
-					if ( ! empty( $etmfw_product_array ) && is_array( $etmfw_product_array ) && array_key_exists( 'wps_etmfw_field_user_type_price_data', $etmfw_product_array ) && array_key_exists( 'etmfw_event_price', $etmfw_product_array ) ) {
-						$wps_etmfw_field_days_price_data = $etmfw_product_array['wps_etmfw_field_user_type_price_data'];
-						if ( ! empty( $wps_etmfw_field_days_price_data ) && is_array( $wps_etmfw_field_days_price_data ) ) {
-							$price_html = $custom_cart_data['price'];
-						}
+			// The price always comes from this product's own Ticket Type configuration,
+			// matched by label. Never trust a price carried in from a request or a shared option.
+			$type_price = $this->wps_etmfw_get_user_type_price( $etmfw_product_array, $role_label );
+			if ( null === $type_price ) {
+				// Label no longer exists on this product (or was never valid): drop the line
+				// instead of selling it at an unverified price.
+				$cart->remove_cart_item( $cart_item_key );
+				continue;
+			}
+			$price_html = $type_price;
+
+			$wps_base_price_condition = isset( $etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] ) && ! empty( $etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] ) ? $etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] : '';
+			if ( 'base_price' === $wps_base_price_condition && empty( $base_price_applied[ $product_id ] ) ) {
+				// Only apply the base price once per product so the total equals base price plus the type totals.
+				$wps_total_price = $this->wps_etmfw_get_event_base_price( wc_get_product( $product_id ) );
+				$quantity        = isset( $cart_item['quantity'] ) ? max( 1, (int) $cart_item['quantity'] ) : 1;
+				$line_total      = ( $price_html * $quantity ) + $wps_total_price;
+				$price_html      = $line_total / $quantity;
+				$base_price_applied[ $product_id ] = true;
+			}
+
+			$product->set_price( $price_html );
+		}
+	}
+
+	/**
+	 * Look up the configured price of a Ticket Type on a product by its label.
+	 *
+	 * @param array  $etmfw_product_array Product's wps_etmfw_product_array meta.
+	 * @param string $label               Ticket Type label.
+	 * @return float|null Price, or null if the product has no such Ticket Type.
+	 */
+	private function wps_etmfw_get_user_type_price( $etmfw_product_array, $label ) {
+		if ( '' === $label || empty( $etmfw_product_array['wps_etmfw_field_user_type_price_data'] ) || ! is_array( $etmfw_product_array['wps_etmfw_field_user_type_price_data'] ) ) {
+			return null;
+		}
+		foreach ( $etmfw_product_array['wps_etmfw_field_user_type_price_data'] as $type ) {
+			if ( isset( $type['label'], $type['price'] ) && (string) $type['label'] === $label ) {
+				return (float) $type['price'];
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Current base price of an event product: event price plus any active
+	 * stock-based and days-before-event increases. Computed per product so no
+	 * request can influence another product's price.
+	 *
+	 * @param WC_Product|false $product Product.
+	 * @return float
+	 */
+	public function wps_etmfw_get_event_base_price( $product ) {
+		if ( ! $product || ! is_object( $product ) ) {
+			return 0;
+		}
+		$etmfw_product_array = get_post_meta( $product->get_id(), 'wps_etmfw_product_array', true );
+		if ( empty( $etmfw_product_array ) || ! is_array( $etmfw_product_array ) || ! array_key_exists( 'etmfw_event_price', $etmfw_product_array ) ) {
+			return 0;
+		}
+		$orig_price      = $etmfw_product_array['etmfw_event_price'];
+		$stock           = $product->get_stock_quantity();
+		$wps_stock_price = 0;
+		$wps_days_price  = 0;
+
+		if ( ! empty( $etmfw_product_array['wps_etmfw_field_stock_price_data'] ) && is_array( $etmfw_product_array['wps_etmfw_field_stock_price_data'] ) && 0 != $stock ) {
+			foreach ( $etmfw_product_array['wps_etmfw_field_stock_price_data'] as $value ) {
+				if ( isset( $value['label'], $value['type'], $value['price'] ) && $stock == $value['label'] ) {
+					if ( 'fixed' == $value['type'] ) {
+						$wps_stock_price = (float) $value['price'];
+					} elseif ( 'percentage' == $value['type'] ) {
+						$wps_stock_price = ( (float) $orig_price * (float) $value['price'] ) / 100;
 					}
-
-					$wps_base_price_condition = isset( $etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] ) && ! empty( $etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] ) ? $etmfw_product_array['wps_etmfw_field_user_type_price_data_baseprice'] : array();
-					$apply_base_price = false;
-					if ( 'base_price' === $wps_base_price_condition && empty( $base_price_applied[ $product_id ] ) ) {
-						$apply_base_price = true;
-					}
-
-					if ( $apply_base_price ) {
-						// Only apply the base price once per product so the total equals base price plus the type totals.
-						$wps_total_price = get_option( 'wps_total_increased_value', 0 );
-						$quantity        = isset( $cart_item['quantity'] ) ? max( 1, (int) $cart_item['quantity'] ) : 1;
-						$line_total      = ( $price_html * $quantity ) + $wps_total_price;
-						$price_html      = $line_total / $quantity;
-						$base_price_applied[ $product_id ] = true;
-					}
-
-					$cart_item['data']->set_price( $price_html );
 				}
 			}
-			delete_option( 'wps_user_type_value' );
-			delete_option( 'wps_user_type_text' );
 		}
+		if ( array_key_exists( 'wps_etmfw_field_days_price_data', $etmfw_product_array ) ) {
+			$start_date     = isset( $etmfw_product_array['event_start_date_time'] ) ? $etmfw_product_array['event_start_date_time'] : '';
+			$wps_days_price = $this->wps_etmfw_get_days_price_increase( $etmfw_product_array['wps_etmfw_field_days_price_data'], $orig_price, $start_date );
+		}
+
+		return (float) $wps_days_price + (float) $wps_stock_price + (float) $orig_price;
 	}
 
 	/**
@@ -3273,21 +3324,10 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @return array
 	 */
 	public function wps_user_type_add_moredata_on_cart( $cart_item_data, $product_id, $variation_id ) {
-
-		$engraving_text = get_option( 'wps_user_type_text' );
-		$price = get_option( 'wps_user_type_value' );
-
-		if ( empty( $engraving_text ) ) {
-			return $cart_item_data;
-		}
-		if ( 'Select User Type' !== $engraving_text ) {
-				$custom_data = array(
-					'role' => $engraving_text,
-					'price'   => $price,
-				);
-
-				$cart_item_data['event_role'] = $custom_data;
-		}
+		// Ticket Types are attached per cart item by wps_etmfw_add_user_type_items_on_add_to_cart(),
+		// using labels and prices read from the product itself. The legacy path that copied the
+		// site-wide wps_user_type_value / wps_user_type_text options onto any added item let one
+		// visitor set the price of another visitor's ticket, so it has been removed.
 		return $cart_item_data;
 	}
 
@@ -3407,58 +3447,14 @@ class Event_Tickets_Manager_For_Woocommerce_Public {
 	 * @return string
 	 */
 	public function wps_etmfwp_change_event_price( $price_html, $product ) {
-		if ( isset( $product ) && is_object( $product ) && is_product() ) {
-			if ( $product->is_type( 'event_ticket_manager' ) ) {
-				$product_id = $product->get_id();
-				$etmfw_product_array = get_post_meta( $product_id, 'wps_etmfw_product_array', true );
-				$stock = $product->get_stock_quantity();
-				$wps_days_price = 0;
-				$wps_stock_price = 0;
-				$orig_price = 0;
-
-				if ( ! empty( $etmfw_product_array ) && is_array( $etmfw_product_array ) ) {
-
-					if ( ! empty( $etmfw_product_array ) && is_array( $etmfw_product_array ) && array_key_exists( 'wps_etmfw_field_stock_price_data', $etmfw_product_array ) && array_key_exists( 'etmfw_event_price', $etmfw_product_array ) ) {
-						$wps_etmfw_field_stock_price_data = $etmfw_product_array['wps_etmfw_field_stock_price_data'];
-						$orig_price = $etmfw_product_array['etmfw_event_price'];
-						if ( ! empty( $wps_etmfw_field_stock_price_data ) && is_array( $wps_etmfw_field_stock_price_data ) ) {
-							foreach ( $wps_etmfw_field_stock_price_data as $key => $value ) {
-								if ( 0 != $stock ) {
-
-									if ( $stock == $value['label'] ) {
-										$wps_stock_price = 0;
-
-										if ( 'fixed' == $value['type'] ) {
-
-											$wps_stock_price  = ( $wps_stock_price + $value['price'] );
-										} else if ( 'percentage' == $value['type'] ) {
-											$wps_stock_price = $wps_stock_price + ( ( $orig_price * $value['price'] ) / 100 );
-										}
-									}
-								}
-							}
-						}
-					}
-					if ( ! empty( $etmfw_product_array ) && is_array( $etmfw_product_array ) && array_key_exists( 'wps_etmfw_field_days_price_data', $etmfw_product_array ) && array_key_exists( 'etmfw_event_price', $etmfw_product_array ) ) {
-						$wps_etmfw_field_days_price_data = $etmfw_product_array['wps_etmfw_field_days_price_data'];
-						$orig_price = $etmfw_product_array['etmfw_event_price'];
-						$start_date = $etmfw_product_array['event_start_date_time'];
-						$wps_days_price = $this->wps_etmfw_get_days_price_increase( $wps_etmfw_field_days_price_data, $orig_price, $start_date );
-					}
-					$wps_total_price = (float) $wps_days_price + (float) $wps_stock_price + (float) $orig_price;
-					update_option( 'wps_total_increased_value', $wps_total_price );
-					$price_html = wc_price( (float) $wps_days_price + (float) $wps_stock_price + (float) $orig_price );
-					return $price_html;
-				} else {
-					return $price_html;
-				}
-			} else {
-				return $price_html;
-			}
-		} else {
+		if ( ! isset( $product ) || ! is_object( $product ) || ! is_product() || ! $product->is_type( 'event_ticket_manager' ) ) {
 			return $price_html;
 		}
-
+		$etmfw_product_array = get_post_meta( $product->get_id(), 'wps_etmfw_product_array', true );
+		if ( empty( $etmfw_product_array ) || ! is_array( $etmfw_product_array ) ) {
+			return $price_html;
+		}
+		return wc_price( $this->wps_etmfw_get_event_base_price( $product ) );
 	}
 
 	/**
